@@ -95,9 +95,9 @@ codegen/
 # STM32 / Embedded build outputs
 # =========================================================
 
-firmware/**/Debug/
-firmware/**/Release/
-firmware/**/build/
+firmware/**/MDK-ARM/
+firmware/**/Drivers/
+firmware/**/Core/
 
 *.o
 *.obj
