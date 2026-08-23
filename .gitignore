@@ -1,0 +1,230 @@
+# =========================================================
+# OS / Editor
+# =========================================================
+
+.DS_Store
+Thumbs.db
+
+.idea/
+
+.vscode/.browse.*
+.vscode/ipch/
+.vscode/*.log
+
+*~
+*.swp
+*.swo
+
+
+# =========================================================
+# ROS2 / colcon
+# =========================================================
+
+ros2_ws/build/
+ros2_ws/install/
+ros2_ws/log/
+
+build/
+install/
+log/
+
+# ROS bag
+*.db3
+*.mcap
+metadata.yaml
+
+
+# =========================================================
+# Python
+# =========================================================
+
+__pycache__/
+*.py[cod]
+
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+.venv/
+venv/
+env/
+
+.ipynb_checkpoints/
+
+
+# =========================================================
+# MATLAB / Simulink
+# =========================================================
+
+# MATLAB autosave / backup
+*.asv
+*.m~
+
+# Simulink cache
+*.slxc
+
+# MATLAB / Simulink generated folders
+slprj/
+codegen/
+
+# MEX binaries
+*.mex*
+*.oct
+
+# MATLAB temporary / generated files
+*.autosave
+
+# Do NOT ignore:
+# *.m
+# *.mlx
+# *.mat
+
+# GSD runtime and local Cross-AI configuration
+.planning/runtime/
+.planning/cc-provider.local
+.planning/cc-tier.local
+.planning/cc-providers.psd1
+
+# Local codebase-memory index; rebuild on each system
+.codebase-memory/
+# *.slx
+# *.sldd
+
+
+# =========================================================
+# STM32 / Embedded build outputs
+# =========================================================
+
+firmware/**/Debug/
+firmware/**/Release/
+firmware/**/build/
+
+*.o
+*.obj
+*.d
+*.su
+
+*.elf
+*.axf
+*.out
+
+*.bin
+*.hex
+*.map
+*.list
+*.lst
+
+# CubeIDE workspace metadata should not live inside repo
+.metadata/
+
+# Keep these if using STM32CubeIDE:
+# .project
+# .cproject
+# *.ioc
+
+
+# =========================================================
+# C / C++
+# =========================================================
+
+*.a
+*.so
+*.dll
+*.dylib
+
+*.exe
+
+CMakeCache.txt
+CMakeFiles/
+cmake-build-*/
+
+
+# =========================================================
+# MuJoCo / Simulation runtime
+# =========================================================
+
+simulation/**/logs/
+simulation/**/output/
+simulation/**/results/
+
+*.log
+
+
+# =========================================================
+# Experiment / analysis outputs
+# =========================================================
+
+results/
+outputs/
+artifacts/
+
+analysis/**/results/
+analysis/**/output/
+
+experiments/**/results/
+experiments/**/output/
+
+
+# =========================================================
+# Robot experiment data
+# =========================================================
+
+# Raw experiment data can become very large.
+data/**
+
+# But keep directory structure / documentation.
+!data/**/
+!data/**/.gitkeep
+!data/**/README.md
+
+
+# =========================================================
+# ROS / robot runtime files
+# =========================================================
+
+*.bag
+*.bag.active
+
+core
+core.*
+
+*.pid
+
+
+# =========================================================
+# Secrets / machine-local configuration
+# =========================================================
+
+.env
+.env.*
+!.env.example
+
+*.secret
+*.secrets
+
+config/local/
+config/**/local.*
+
+# Private keys / certificates
+*.pem
+*.key
+*.p12
+
+# API/provider local configuration
+*.local
+*.local.yaml
+*.local.yml
+*.local.json
+
+
+# =========================================================
+# Temporary files
+# =========================================================
+
+tmp/
+temp/
+.cache/
+
+*.tmp
+*.bak
+*.old
