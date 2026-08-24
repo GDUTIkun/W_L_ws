@@ -31,7 +31,10 @@ static const float kHipKneeEffortLimit = 12.0f;
 static const float kWheelEffortLimit = 6.0f;
 static const float kHipKneeSlewPerCycle = 0.10f;
 static const float kWheelSlewPerCycle = 0.06f;
-static const float kIdentificationC620CurrentLimitA = 1.0f;
+// C620 CAN current command full scale: +/-16384 raw counts = +/-20 A.
+// Do not add an identification-specific derating here: the requested range
+// must cover the driver command range for current-to-torque identification.
+static const float kC620CommandCurrentLimitA = 20.0f;
 static const float kIdentificationHoldCurrentSlewPerCycle = 0.05f;
 static const float kDegreesToRadians = 3.14159265358979323846f / 180.0f;
 static const float kGravityMps2 = 9.80665f;
@@ -300,7 +303,7 @@ uint8_t GetActuatorType(uint8_t actuator_index)
 float GetIdentificationCurrentLimitA(uint8_t actuator_index)
 {
     return IsC620Actuator(actuator_index) ?
-        kIdentificationC620CurrentLimitA : 0.0f;
+        kC620CommandCurrentLimitA : 0.0f;
 }
 
 float GetActuatorPosition(uint8_t actuator_index)

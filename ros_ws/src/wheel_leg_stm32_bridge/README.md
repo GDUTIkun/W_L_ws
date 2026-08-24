@@ -48,7 +48,7 @@ CRC 使用 CRC16-CCITT，初值 `0xFFFF`，覆盖 `type`、`payload_len`、`seq`
 - bridge 只在收到合法 ROS 命令后才开始下发帧。
 - ROS 命令必须持续刷新；默认超过 `100 ms` 未刷新时，bridge 发送一次 `enable=0, estop=1`，随后停止心跳，让 STM 自身的 100 ms 超时继续兜底。
 - 辨识命令发生上游超时或急停后，恢复输出应使用新的 `trial_id`；复用旧 ID 不会重新触发已开始或已结束的 STM-local step。
-- 非有限或超过 `±1.0 A` 的电流、非 3508+C620 的执行器索引、非法 excitation 或超出 STM 时长约束的辨识命令会被拒绝。
+- 非有限或超过 C620 协议满量程 `±20.0 A` 的电流、非 3508+C620 的执行器索引、非法 excitation 或超出 STM 时长约束的辨识命令会被拒绝。
 - 串口写入使用非阻塞队列；未发完时不会覆盖当前帧，并通过 `status.tx_partial_writes/tx_skipped_busy` 暴露压力。
 - 串口断开后每秒尝试重连，不会把断线期间积压的旧帧补发。
 

@@ -38,7 +38,7 @@ bool finiteNormalCommand(const msg::NormalCommand &message) {
 bool validIdentificationCommand(const msg::IdentificationCommand &message) {
   return (message.actuator_index == 2U || message.actuator_index == 5U) &&
          message.excitation <= 1U && std::isfinite(message.target_current_a) &&
-         std::abs(message.target_current_a) <= 1.0F &&
+         std::abs(message.target_current_a) <= 20.0F &&
          message.step_delay_ms <= 5000U &&
          message.step_duration_ms <= 2000U &&
          !(message.excitation == 1U && message.step_duration_ms == 0U);
