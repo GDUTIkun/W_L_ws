@@ -32,6 +32,14 @@ typedef struct
     uint32_t tx_skip_in_flight;
 } UartProtocolTestStats;
 
+typedef struct
+{
+    uint8_t active;
+    uint8_t selected_actuator;
+    uint8_t c620_threshold_current_enabled;
+    uint8_t reserved;
+} UartProtocolTestIdentificationControl;
+
 extern volatile UartProtocolTestStats uart2_protocol_test_stats;
 
 void UartProtocolTest_Init(void);
@@ -39,6 +47,9 @@ void UartProtocolTest_Process(void);
 void UartProtocolTest_GetStats(UartProtocolTestStats *out);
 void UartProtocolTest_ResetStats(void);
 void UartProtocolTest_FillActuatorCommand(float *out_efforts, uint32_t effort_count);
+void UartProtocolTest_GetIdentificationControl(
+    UartProtocolTestIdentificationControl *out);
+void UartProtocolTest_ProcessIdentificationTelemetry(void);
 uint8_t UartProtocolTest_GetSafetyState(void);
 
 #ifdef __cplusplus

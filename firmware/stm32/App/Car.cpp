@@ -169,9 +169,23 @@ uint8_t debugflag = 0;
 void Motor_Control_Task(void* pv)
 {
     float actuator_efforts[6] = {0.0f};
+    UartProtocolTestIdentificationControl identification_control = {0};
+    TickType_t previous_wake_time = xTaskGetTickCount();
     while(1)
     {
         UartProtocolTest_FillActuatorCommand(actuator_efforts, 6);
+        UartProtocolTest_GetIdentificationControl(&identification_control);
+
+        const bool identification_active =
+            identification_control.active != 0u;
+        motor_3508_L.Set_Threshold_Current_Enabled(
+            !identification_active ||
+            (identification_control.selected_actuator == 2u &&
+             identification_control.c620_threshold_current_enabled != 0u));
+        motor_3508_R.Set_Threshold_Current_Enabled(
+            !identification_active ||
+            (identification_control.selected_actuator == 5u &&
+             identification_control.c620_threshold_current_enabled != 0u));
 
         motor_GIM6010_L_hip.Set_Target_Torque(actuator_efforts[0]);
         motor_GIM6010_L_knee.Set_Target_Torque(actuator_efforts[1]);
@@ -186,6 +200,8 @@ void Motor_Control_Task(void* pv)
         motor_GIM6010_L_knee.TIM_Calculate_PeriodElapsedCallback();
         motor_GIM6010_R_hip.TIM_Calculate_PeriodElapsedCallback();
         motor_GIM6010_R_knee.TIM_Calculate_PeriodElapsedCallback();
+
+        UartProtocolTest_ProcessIdentificationTelemetry();
 //        l_knee_angle =  Basic_Math_Rad_To_Deg(motor_GIM6010_L_knee.Get_Now_Angle());
 //        r_knee_angle =  Basic_Math_Rad_To_Deg(motor_GIM6010_R_knee.Get_Now_Angle());
 //        l_hip_angle =  Basic_Math_Rad_To_Deg(motor_GIM6010_L_hip.Get_Now_Angle());
@@ -193,7 +209,7 @@ void Motor_Control_Task(void* pv)
 //        l_knee_relative_angle = Normalize_Deg_Signed(l_knee_angle - l_hip_angle);
 //        r_knee_relative_angle = Normalize_Deg_Signed(r_knee_angle - r_hip_angle);
         
-        vTaskDelay(1);
+        xTaskDelayUntil(&previous_wake_time, pdMS_TO_TICKS(1));
     }
 }
 

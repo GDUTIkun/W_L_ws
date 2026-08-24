@@ -1,3 +1,9 @@
-/tools/
-/plannig_input/
+# Graphify 聚焦文档、Phase 记录、实验/分析/launch 脚本及其关系。
+# 产品 C/C++ 结构交给 CBM；本地索引和图输出不回灌语料。
 /.codebase-memory/
+/graphify-out/
+/.graphify/
+/data/
+/firmware/
+/ros_ws/src/*/src/
+/ros_ws/src/*/include/

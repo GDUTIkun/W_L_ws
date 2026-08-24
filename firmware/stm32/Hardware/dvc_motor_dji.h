@@ -115,6 +115,10 @@ public:
 
     inline float Get_Feedforward_Torque() const;
 
+    inline uint32_t Get_Command_Raw() const;
+
+    inline uint32_t Get_Feedback_Raw() const;
+
     inline void Set_Target_Torque(const float &__Target_Torque);
 
     inline void Set_Feedforward_Torque(const float &__Feedforward_Torque);
@@ -153,6 +157,9 @@ protected:
     uint32_t Pre_Flag;
     // 输出量
     float Out;
+    // 最后一次发送和接收的原始32位浮点位模式
+    uint32_t Command_Raw;
+    uint32_t Feedback_Raw;
 
     // 读变量
 
@@ -205,6 +212,14 @@ public:
 
     inline float Get_Feedforward_Torque() const;
 
+    inline uint32_t Get_Command_Raw() const;
+
+    inline uint32_t Get_Feedback_Raw() const;
+
+    inline void Set_Threshold_Current_Enabled(bool enabled);
+
+    inline bool Get_Threshold_Current_Enabled() const;
+
     inline void Set_Target_Torque(const float &__Target_Torque);
     inline void Set_Feedforward_Torque(const float &__Feedforward_Torque);
 
@@ -246,6 +261,11 @@ protected:
     uint32_t Pre_Flag;
     // 输出量
     float Out;
+    // 低16位保存C620发送/反馈的有符号原始电流计数
+    uint32_t Command_Raw;
+    uint32_t Feedback_Raw;
+    // 正常运行默认保留原有小电流补偿；辨识基线可显式关闭
+    bool Threshold_Current_Enabled;
 
     // 读变量
 
@@ -276,7 +296,8 @@ protected:
 inline Class_Motor_DJI_GIM6010::Class_Motor_DJI_GIM6010()
     : CAN_Manage_Object(0), Angle_Offset(0.0f),
     ENCODER_NUM_PER_ROUND(8192), OUT_MAX(16384.0f), Flag(0), Pre_Flag(0), 
-    Out(0.0f), Motor_DJI_Status(Motor_DJI_Status_DISABLE), 
+    Out(0.0f), Command_Raw(0u), Feedback_Raw(0u),
+    Motor_DJI_Status(Motor_DJI_Status_DISABLE),
    Target_Torque(0.0f), Feedforward_Torque(0.0f)
 {
 }
@@ -287,7 +308,8 @@ inline Class_Motor_DJI_C620::Class_Motor_DJI_C620()
     ENCODER_NUM_PER_ROUND(8192), CURRENT_TO_TORQUE(0.3f),
     CURRENT_TO_OUT(16384.0f / 20.0f), OUT_MAX(16384.0f), 
     Threshold_Current(300),Flag(0), Pre_Flag(0), 
-    Out(0.0f), Motor_DJI_Status(Motor_DJI_Status_DISABLE), 
+    Out(0.0f), Command_Raw(0u), Feedback_Raw(0u),
+    Threshold_Current_Enabled(true), Motor_DJI_Status(Motor_DJI_Status_DISABLE),
     Target_Torque(0.0f), Feedforward_Torque(0.0f)
 {
 }
@@ -350,6 +372,16 @@ inline float Class_Motor_DJI_GIM6010::Get_Target_Torque() const
 inline float Class_Motor_DJI_GIM6010::Get_Feedforward_Torque() const
 {
     return (Feedforward_Torque);
+}
+
+inline uint32_t Class_Motor_DJI_GIM6010::Get_Command_Raw() const
+{
+    return Command_Raw;
+}
+
+inline uint32_t Class_Motor_DJI_GIM6010::Get_Feedback_Raw() const
+{
+    return Feedback_Raw;
 }
 
 
@@ -432,6 +464,26 @@ inline float Class_Motor_DJI_C620::Get_Target_Torque() const
 inline float Class_Motor_DJI_C620::Get_Feedforward_Torque() const
 {
     return (Feedforward_Torque);
+}
+
+inline uint32_t Class_Motor_DJI_C620::Get_Command_Raw() const
+{
+    return Command_Raw;
+}
+
+inline uint32_t Class_Motor_DJI_C620::Get_Feedback_Raw() const
+{
+    return Feedback_Raw;
+}
+
+inline void Class_Motor_DJI_C620::Set_Threshold_Current_Enabled(bool enabled)
+{
+    Threshold_Current_Enabled = enabled;
+}
+
+inline bool Class_Motor_DJI_C620::Get_Threshold_Current_Enabled() const
+{
+    return Threshold_Current_Enabled;
 }
 
 /**

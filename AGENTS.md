@@ -1,92 +1,90 @@
-# Project Agent Workflow
+# Project Agent Rules
 
-> 将本模板合并到目标项目 `AGENTS.md`，并根据真实项目补充目录边界、技术栈和验证命令。删除所有不适用内容。
+本仓库用于将轮腿机器人控制系统从 Simulink 逐步迁移到 MuJoCo 和真实机器。所有工作必须遵守“先定义与验证，再提高控制复杂度”的原则。
+
+## Source of Truth
+
+- 仓库入口与目录职责：`README.md` 及各子目录 README。
+- 阶段状态：`docs/workflow/ROADMAP.md`。
+- Phase 流程与模板：`docs/workflow/PHASES.md`、`docs/workflow/templates/`。
+- 当前代码事实：实际源码与 CBM 索引。
+- 历史设计、实验结论和文档/脚本关系：Graphify。
+
+本项目不使用 GSD，不创建 `.planning/`、`planning_input/` 或其他 GSD 状态和产物。
 
 ## Technical Decision Ownership
 
-- 开放的技术决策属于 Codex。
-- 数学模型、状态/输入定义、物理或业务假设、控制/系统架构、识别结构和 evidence 解释不得仅因实现规模大而下放。
-- 已冻结且没有未决技术选择的实现可以交给执行器。
-- 代码完成不等于技术结论或 evidence 获批；Codex 负责最终技术验证。
+- 开放技术决策由 Codex 负责。
+- 数学模型、状态/输入定义、坐标系与符号、物理假设、控制架构、辨识结构和证据解释不得仅因实现规模大而下放。
+- 已冻结且没有未决技术选择的工作可以进入实现。
+- 代码完成不等于模型、参数、控制效果或实验结论获批。
+- 依赖证据的结论必须读取真实仿真或实验结果；没有证据时建立验证任务或 decision gate，不得猜测。
 
-## Planning Pipeline
+## Manual Phase Workflow
 
-```text
-Chat（技术推理/设计）
-  -> planning_input/design/<Phase>--design.md
-  -> Codex Grounding（CBM 当前代码结构；可选 Graphify 历史知识）
-  -> planning_input/grounding/<Phase>--grounding.md
-  -> GSD Planner
-  -> .planning/phases/<Phase>/NN-PLAN.md
-  -> 执行器实施与生成 evidence
-  -> Codex Verifier
-```
-
-计划输入与 GSD 自动产物分离：
+每项实质工作使用一个 `docs/workflow/phases/NN-name/` Phase：
 
 ```text
-planning_input/design/       强技术设计，不写具体代码变更清单
-planning_input/grounding/    已落地到当前代码结构的文件/符号/影响面规格
-.planning/                   GSD 自动生成的 PROJECT/ROADMAP/STATE/PLAN/SUMMARY 等
+ROADMAP
+  → PLAN（目标、范围、冻结决策、任务、验收和验证）
+  → 实现与真实验证
+  → REVIEW（PASS 或 REWORK）
+  → RECORD（仅 PASS 后创建）
+  → ROADMAP complete
 ```
+
+- 状态固定为 `planned → active → review → complete`；无法继续时使用 `blocked`。
+- PLAN 内的任务使用稳定 ID；不要另建重复任务台账。
+- REVIEW 存在未解决 blocking finding 时必须为 `REWORK`。
+- 范围外工作进入遗留项或新 Phase，不顺带扩张当前 Phase。
+- README 只维护稳定职责与入口，进度只写入 ROADMAP 和 Phase 文档。
 
 ## Grounding
 
-- Grounding 阶段不重新设计已批准的技术决策。
-- 使用 codebase-memory-mcp 查询当前代码结构、符号、调用关系和改动面。
-- Graphify 仅用于已有研究知识、历史设计理由和实验结论。
-- 当前代码与历史知识冲突时，以当前代码结构为准，并记录冲突。
-- 未解决的技术决策转成明确的 `CODEX_DECISION` 任务，不伪装为冻结实现。
+- Grounding 只把已批准设计映射到当前代码，不重新设计已冻结决策。
+- 先用 CBM 查询当前文件、符号、调用关系、数据流和影响面。
+- CBM 覆盖不足、文件未索引或需要查字面量时，再直接读取/搜索源码。
+- Graphify 只用于历史设计理由、实验结论、Phase RECORD 和工程脚本关系。
+- 当前源码与历史图冲突时，以当前源码为准，并在 PLAN 记录冲突。
+- 需要新仿真或实验才能回答的问题，转成验证任务或放行门槛。
 
-## Execution Routing
+## Implementation and Verification
 
-```text
-CODEX_DECISION = 存在开放技术决策
-Cross-AI/Executor = 规格已冻结的实现
-```
-
-- 难度不是保留或下放工作的唯一依据；关键是规格是否冻结。
-- 执行器必须严格按 PLAN 工作，不得扩张范围或重做架构决策。
-- evidence 依赖型结论必须读取真实 evidence，不得从代码完成推断成功。
+- 实现必须遵守当前 Phase 的 Scope、Frozen Decisions 和接口约束。
+- 修改前检查工作树，保留用户已有且与当前任务无关的更改。
+- 不修改第三方、生成或构建目录，除非任务明确要求。
+- 自动验证记录真实命令和结果；人工或昂贵验证提供明确入口、输出位置和通过条件。
+- MuJoCo PASS、Real FAIL 时停留在当前验证层排查失配，不继续增加控制复杂度。
+- 最终技术验证由 Codex 负责，不能从提交、构建或任务状态推断 evidence PASS。
 
 ## Code and Knowledge Tools
 
-### codebase-memory-mcp
+### CBM
 
-- 用于当前代码的函数、类、模块、调用关系、数据流和改动影响分析。
-- 新 workspace 必须单独索引；不要迁移其他机器的 MCP 索引。
-- 大规模重构后重新索引。
+- 用于 live code discovery、调用/数据流追踪和改动影响分析。
+- 新 workspace 单独索引；大规模外部修改或结构重构后刷新索引。
+- 文档、第三方库和生成物不进入 CBM 主索引。
 
-### Graphify（可选）
+### Graphify
 
-- 只查询目标项目真实存在的知识图。
-- 用于论文、笔记、实验、历史设计理由和知识关系。
-- 不用于替代 live code discovery。
-- 如果目标项目没有知识图，删除或禁用本节依赖。
+- 用于设计文档、实验记录、Phase 历史和工程脚本关系。
+- 不替代 CBM 或源码读取。
+- 只查询本 workspace 的真实本地图；文档或脚本发生重大变化后，通过独立维护动作更新图。
 
-## Long-Running Executor Wait Policy
+## Directory Boundaries
 
-- Orchestrator 只协调，不频繁轮询健康 executor。
-- executor 启动后，停止与该 PLAN 冲突的实现、测试和工作树修改，等待原生完成结果。
-- Cross-AI 使用 `.planning/config.json` 中的同步命令，并等待结构化结果。
-- 长运行本身不等于 stall；文本沉默、日志量或 token 使用量不是健康指标。
-- stall surveillance 只能作为异常恢复后备，不能变成持续轮询。
-- completion 后再检查 SUMMARY、提交和验证证据。
+- `docs/`：设计、实验方法、证据解释和人工工作流。
+- `firmware/stm32/`：STM32 自研实时逻辑；HAL、FreeRTOS、MDK 等第三方/生成区域不作为普通修改面。
+- `ros_ws/`：主机和树莓派共用的 ROS2 packages、launch 和配置。
+- `simulation/simulink_baseline/`：成功复现、受控的 Simulink 对照基线；`simulation/mujoco/`：MuJoCo 模型与场景。
+- `tools/`：非产品运行时的实验、分析和维护脚本。
+- `graphify-out/`、`.codebase-memory/`、构建输出、日志和实验数据是本地生成内容，不作为产品源码。
 
-## Executor Watchdog Event Protocol
+## Current Architecture Constraints
 
-- 生命周期事件通过 `.planning/scripts/gsd-event.ps1` 发布。
-- 每次 PLAN 执行生成唯一 `execution_id`，同一次执行始终复用该值。
-- wrapper 发布 `STARTED` 和终止事件；执行器只在自然边界发布 `PROGRESS` 或长操作前发布 `LONG_OPERATION`。
-- 不发布周期心跳。
-- 成功必须有真实验证、最终提交和对应 SUMMARY；失败必须有简洁原因。
-- 同一 PLAN 必须使用项目级 OS 文件锁拒绝并发执行。
-- watchdog 只能观察并写通知；不得杀死、重启、恢复或接管 executor。
-
-## Project Directory Boundaries
-
-- Agent_Config/ is the workflow migration reference; do not put project implementation or generated workflow state inside it.
-- planning_input/design/ contains approved technical designs; planning_input/grounding/ contains codebase-grounded change specifications.
-- .planning/ contains GSD configuration, executor scripts, and GSD-generated project/phase artifacts; .planning/runtime/ and local Cross-AI settings are untracked.
-- .gsd/ is GSD runtime state. No product-source, test, data, or experiment directories exist yet; establish their boundaries when the project is initialized.
-- Graphify is disabled until this workspace has a real, local knowledge graph.
+- Simulink 是算法对照基线；Controller Core 手工迁移为 C++，不采用代码生成作为生产主线。
+- 主机 profile 运行 Controller + MuJoCo Adapter。
+- 树莓派 profile 运行同一 Controller + Hardware Adapter。
+- MuJoCo 与真机最终使用统一 RobotState/TorqueCommand 边界。
+- 树莓派—STM32 正式通信方案、消息精确 schema、关节顺序、坐标与时间语义仍需独立 Phase 冻结。
+- 现有 UART2 实现是实验候选，不是已批准的生产协议。

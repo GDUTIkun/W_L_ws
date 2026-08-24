@@ -1,0 +1,17 @@
+builtin_interfaces/Time stamp
+bool serial_open
+uint64 rx_bytes
+uint64 rx_frames_ok
+uint64 rx_crc_errors
+uint64 rx_length_errors
+uint64 rx_sync_losses
+uint64 rx_seq_gaps
+uint64 rx_unknown_type
+uint64 tx_frames
+uint64 tx_bytes
+uint64 tx_write_errors
+uint64 tx_partial_writes
+uint64 tx_skipped_busy
+uint8 last_rx_type
+uint16 last_rx_seq
+uint32 last_rx_age_ms

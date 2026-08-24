@@ -8,7 +8,10 @@
 static const uint8_t kFrameHead0 = 0xA5;
 static const uint8_t kFrameHead1 = 0x5A;
 static const uint8_t kFrameTypeCommand = 0x01;
+static const uint8_t kFrameTypeIdentificationCommand = 0x02;
 static const uint8_t kFrameTypeState = 0x81;
+static const uint8_t kFrameTypeIdentificationState = 0x82;
+static const uint8_t kIdentificationProtocolVersion = 1u;
 static const uint8_t kSafetyStateDisabled = 0;
 static const uint8_t kSafetyStateEnabled = 1;
 static const uint8_t kSafetyStateTimeout = 2;
@@ -16,15 +19,41 @@ static const uint8_t kSafetyStateEstop = 3;
 static const uint8_t kSafetyStateFault = 4;
 static const uint8_t kJointCount = 6;
 static const uint8_t kCommandPayloadLen = 2u + kJointCount * 4u;
+static const uint8_t kIdentificationCommandPayloadLen = 24u;
+static const uint8_t kIdentificationStatePayloadLen = 56u;
 static const uint8_t kMaxPayloadLen = 160u;
 static const uint32_t kStatusPeriodMs = 5u;
+static const uint32_t kIdentificationStatusPeriodMs = 2u;
 static const uint32_t kCommandTimeoutMs = 100u;
+static const uint32_t kIdentificationMaxDelayMs = 5000u;
+static const uint32_t kIdentificationMaxDurationMs = 2000u;
 static const float kHipKneeEffortLimit = 12.0f;
 static const float kWheelEffortLimit = 6.0f;
 static const float kHipKneeSlewPerCycle = 0.10f;
 static const float kWheelSlewPerCycle = 0.06f;
+static const float kIdentificationC620EffortLimit = 3.0f;
+static const float kIdentificationGIM6010EffortLimit = 3.0f;
+static const float kIdentificationHoldSlewPerCycle = 0.05f;
 static const float kDegreesToRadians = 3.14159265358979323846f / 180.0f;
 static const float kGravityMps2 = 9.80665f;
+static const uint8_t kIdentificationFlagC620ThresholdCurrent = 1u << 0;
+
+enum IdentificationExcitation {
+    kIdentificationExcitationHold = 0,
+    kIdentificationExcitationStep = 1,
+};
+
+enum IdentificationStepState {
+    kIdentificationStepIdle = 0,
+    kIdentificationStepDelay = 1,
+    kIdentificationStepActive = 2,
+    kIdentificationStepComplete = 3,
+};
+
+enum IdentificationActuatorType {
+    kIdentificationActuatorGIM6010 = 1,
+    kIdentificationActuatorC620 = 2,
+};
 
 enum RxState {
     kHead0,
@@ -83,6 +112,7 @@ uint16_t g_seq = 0u;
 uint16_t g_rx_crc = 0u;
 uint16_t g_tx_seq = 0u;
 uint32_t g_last_status_tick_ms = 0u;
+uint32_t g_last_identification_status_tick_ms = 0u;
 uint8_t g_payload[kMaxPayloadLen] = {0};
 uint8_t g_status_frame[2 + 4 + sizeof(StatePayload) + 2] = {0};
 StatePayload g_state_payload = {};
@@ -96,6 +126,19 @@ uint8_t g_command_estop = 0u;
 uint8_t g_last_command_timeout = 1u;
 uint8_t g_safety_state = kSafetyStateDisabled;
 uint32_t g_last_valid_command_tick_ms = 0u;
+uint8_t g_identification_mode = 0u;
+uint8_t g_identification_selected_actuator = 0u;
+uint8_t g_identification_excitation = kIdentificationExcitationHold;
+uint8_t g_identification_flags = 0u;
+uint8_t g_identification_step_state = kIdentificationStepIdle;
+uint32_t g_identification_trial_id = 0u;
+uint32_t g_identification_start_tick_ms = 0u;
+uint32_t g_identification_delay_ms = 0u;
+uint32_t g_identification_duration_ms = 0u;
+uint32_t g_identification_sample_seq = 0u;
+float g_identification_target_torque = 0.0f;
+float g_identification_tau_requested = 0.0f;
+float g_identification_tau_applied = 0.0f;
 
 uint16_t Crc16CcittUpdate(uint16_t crc, uint8_t data)
 {
@@ -156,6 +199,14 @@ void WriteU32Le(uint8_t *dst, uint32_t value)
     dst[3] = static_cast<uint8_t>((value >> 24) & 0xFFu);
 }
 
+uint32_t ReadU32Le(const uint8_t *src)
+{
+    return static_cast<uint32_t>(src[0]) |
+           (static_cast<uint32_t>(src[1]) << 8) |
+           (static_cast<uint32_t>(src[2]) << 16) |
+           (static_cast<uint32_t>(src[3]) << 24);
+}
+
 void WriteF32Le(uint8_t *dst, float value)
 {
     uint32_t raw = 0u;
@@ -165,13 +216,17 @@ void WriteF32Le(uint8_t *dst, float value)
 
 float ReadF32Le(const uint8_t *src)
 {
-    uint32_t raw = static_cast<uint32_t>(src[0]) |
-                   (static_cast<uint32_t>(src[1]) << 8) |
-                   (static_cast<uint32_t>(src[2]) << 16) |
-                   (static_cast<uint32_t>(src[3]) << 24);
+    const uint32_t raw = ReadU32Le(src);
     float value = 0.0f;
     std::memcpy(&value, &raw, sizeof(value));
     return value;
+}
+
+bool IsFiniteFloat(float value)
+{
+    uint32_t raw = 0u;
+    std::memcpy(&raw, &value, sizeof(raw));
+    return (raw & 0x7F800000u) != 0x7F800000u;
 }
 
 float ConstrainSymmetric(float value, float limit)
@@ -232,17 +287,104 @@ uint32_t BuildCanErrorCount(uint8_t online_mask)
     return offline_count;
 }
 
-void DecodeCommandPayload()
+bool IsC620Actuator(uint8_t actuator_index)
 {
-    if (g_frame_type != kFrameTypeCommand) {
-        uart2_protocol_test_stats.length_errors++;
-        return;
+    return actuator_index == 2u || actuator_index == 5u;
+}
+
+uint8_t GetActuatorType(uint8_t actuator_index)
+{
+    return IsC620Actuator(actuator_index) ?
+        kIdentificationActuatorC620 : kIdentificationActuatorGIM6010;
+}
+
+float GetIdentificationEffortLimit(uint8_t actuator_index)
+{
+    return IsC620Actuator(actuator_index) ?
+        kIdentificationC620EffortLimit : kIdentificationGIM6010EffortLimit;
+}
+
+float GetActuatorPosition(uint8_t actuator_index)
+{
+    switch (actuator_index) {
+    case 0u: return motor_GIM6010_L_hip.Get_Now_Angle();
+    case 1u: return motor_GIM6010_L_knee.Get_Now_Angle();
+    case 2u: return motor_3508_L.Get_Now_Angle();
+    case 3u: return motor_GIM6010_R_hip.Get_Now_Angle();
+    case 4u: return motor_GIM6010_R_knee.Get_Now_Angle();
+    case 5u: return motor_3508_R.Get_Now_Angle();
+    default: return 0.0f;
     }
+}
+
+float GetActuatorVelocity(uint8_t actuator_index)
+{
+    switch (actuator_index) {
+    case 0u: return motor_GIM6010_L_hip.Get_Now_Omega();
+    case 1u: return motor_GIM6010_L_knee.Get_Now_Omega();
+    case 2u: return motor_3508_L.Get_Now_Omega();
+    case 3u: return motor_GIM6010_R_hip.Get_Now_Omega();
+    case 4u: return motor_GIM6010_R_knee.Get_Now_Omega();
+    case 5u: return motor_3508_R.Get_Now_Omega();
+    default: return 0.0f;
+    }
+}
+
+float GetActuatorFeedbackTorque(uint8_t actuator_index)
+{
+    switch (actuator_index) {
+    case 0u: return motor_GIM6010_L_hip.Get_Now_Torque();
+    case 1u: return motor_GIM6010_L_knee.Get_Now_Torque();
+    case 2u: return motor_3508_L.Get_Now_Torque();
+    case 3u: return motor_GIM6010_R_hip.Get_Now_Torque();
+    case 4u: return motor_GIM6010_R_knee.Get_Now_Torque();
+    case 5u: return motor_3508_R.Get_Now_Torque();
+    default: return 0.0f;
+    }
+}
+
+uint32_t GetActuatorCommandRaw(uint8_t actuator_index)
+{
+    switch (actuator_index) {
+    case 0u: return motor_GIM6010_L_hip.Get_Command_Raw();
+    case 1u: return motor_GIM6010_L_knee.Get_Command_Raw();
+    case 2u: return motor_3508_L.Get_Command_Raw();
+    case 3u: return motor_GIM6010_R_hip.Get_Command_Raw();
+    case 4u: return motor_GIM6010_R_knee.Get_Command_Raw();
+    case 5u: return motor_3508_R.Get_Command_Raw();
+    default: return 0u;
+    }
+}
+
+uint32_t GetActuatorFeedbackRaw(uint8_t actuator_index)
+{
+    switch (actuator_index) {
+    case 0u: return motor_GIM6010_L_hip.Get_Feedback_Raw();
+    case 1u: return motor_GIM6010_L_knee.Get_Feedback_Raw();
+    case 2u: return motor_3508_L.Get_Feedback_Raw();
+    case 3u: return motor_GIM6010_R_hip.Get_Feedback_Raw();
+    case 4u: return motor_GIM6010_R_knee.Get_Feedback_Raw();
+    case 5u: return motor_3508_R.Get_Feedback_Raw();
+    default: return 0u;
+    }
+}
+
+void ExitIdentificationMode()
+{
+    g_identification_mode = 0u;
+    g_identification_step_state = kIdentificationStepIdle;
+    g_identification_tau_requested = 0.0f;
+    g_identification_tau_applied = 0.0f;
+}
+
+void DecodeNormalCommandPayload()
+{
     if (g_payload_len != kCommandPayloadLen) {
         uart2_protocol_test_stats.length_errors++;
         return;
     }
 
+    ExitIdentificationMode();
     g_command_enable = g_payload[0];
     g_command_estop = g_payload[1];
     for (uint8_t i = 0; i < kJointCount; ++i) {
@@ -250,6 +392,74 @@ void DecodeCommandPayload()
     }
     g_last_valid_command_tick_ms = HAL_GetTick();
     g_last_command_timeout = 0u;
+}
+
+void DecodeIdentificationCommandPayload()
+{
+    if (g_payload_len != kIdentificationCommandPayloadLen ||
+        g_payload[0] != kIdentificationProtocolVersion) {
+        uart2_protocol_test_stats.length_errors++;
+        return;
+    }
+
+    const uint8_t selected_actuator = g_payload[3];
+    const uint8_t excitation = g_payload[4];
+    const uint32_t trial_id = ReadU32Le(g_payload + 8u);
+    const float target_torque = ReadF32Le(g_payload + 12u);
+    const uint32_t delay_ms = ReadU32Le(g_payload + 16u);
+    const uint32_t duration_ms = ReadU32Le(g_payload + 20u);
+
+    const bool invalid_step =
+        excitation == kIdentificationExcitationStep && duration_ms == 0u;
+    if (selected_actuator >= kJointCount ||
+        excitation > kIdentificationExcitationStep ||
+        !IsFiniteFloat(target_torque) ||
+        delay_ms > kIdentificationMaxDelayMs ||
+        duration_ms > kIdentificationMaxDurationMs || invalid_step) {
+        uart2_protocol_test_stats.length_errors++;
+        return;
+    }
+
+    const uint32_t now = HAL_GetTick();
+    const bool new_trial =
+        g_identification_mode == 0u || trial_id != g_identification_trial_id;
+
+    g_identification_mode = 1u;
+    g_command_enable = g_payload[1];
+    g_command_estop = g_payload[2];
+    g_last_valid_command_tick_ms = now;
+    g_last_command_timeout = 0u;
+
+    if (new_trial) {
+        g_identification_selected_actuator = selected_actuator;
+        g_identification_excitation = excitation;
+        g_identification_flags =
+            g_payload[5] & kIdentificationFlagC620ThresholdCurrent;
+        g_identification_trial_id = trial_id;
+        g_identification_target_torque = target_torque;
+        g_identification_delay_ms = delay_ms;
+        g_identification_duration_ms = duration_ms;
+        g_identification_start_tick_ms = now;
+        g_identification_step_state =
+            excitation == kIdentificationExcitationStep ?
+            (delay_ms == 0u ? kIdentificationStepActive :
+                             kIdentificationStepDelay) :
+            kIdentificationStepActive;
+        for (uint8_t i = 0u; i < kJointCount; ++i) {
+            g_applied_efforts[i] = 0.0f;
+        }
+    }
+}
+
+void DecodeCommandPayload()
+{
+    if (g_frame_type == kFrameTypeCommand) {
+        DecodeNormalCommandPayload();
+    } else if (g_frame_type == kFrameTypeIdentificationCommand) {
+        DecodeIdentificationCommandPayload();
+    } else {
+        uart2_protocol_test_stats.length_errors++;
+    }
 }
 
 void MarkFrameOk()
@@ -488,11 +698,20 @@ void EncodeStatePayload(const StatePayload &payload, uint8_t *dst)
 
 void TrySendStatusFrame()
 {
+    if (g_identification_mode != 0u) {
+        return;
+    }
+
     const uint32_t now = HAL_GetTick();
     if ((now - g_last_status_tick_ms) < kStatusPeriodMs) {
         return;
     }
     g_last_status_tick_ms = now;
+
+    if (g_tx_in_flight != 0u) {
+        uart2_protocol_test_stats.tx_skip_in_flight++;
+        return;
+    }
 
     FillStatePayload(&g_state_payload, now);
 
@@ -510,11 +729,6 @@ void TrySendStatusFrame()
     WriteU16Le(g_status_frame + crc_index, crc);
 
     const uint16_t frame_len = static_cast<uint16_t>(crc_index + 2u);
-    if (g_tx_in_flight != 0u) {
-        uart2_protocol_test_stats.tx_skip_in_flight++;
-        return;
-    }
-
     g_tx_in_flight = 1u;
     g_tx_frame_len = frame_len;
     g_tx_in_flight_seq = g_tx_seq;
@@ -523,6 +737,141 @@ void TrySendStatusFrame()
 
     if (tx_status == HAL_OK) {
     } else {
+        g_tx_in_flight = 0u;
+        uart2_protocol_test_stats.tx_errors++;
+        if (tx_status == HAL_BUSY) {
+            uart2_protocol_test_stats.tx_busy_errors++;
+        } else if (tx_status == HAL_TIMEOUT) {
+            uart2_protocol_test_stats.tx_timeout_errors++;
+        } else if (tx_status == HAL_ERROR) {
+            uart2_protocol_test_stats.tx_hal_error_errors++;
+        }
+    }
+}
+
+void TrySendIdentificationFrame()
+{
+    if (g_identification_mode == 0u) {
+        return;
+    }
+
+    const uint32_t now = HAL_GetTick();
+    if ((now - g_last_identification_status_tick_ms) <
+        kIdentificationStatusPeriodMs) {
+        return;
+    }
+    g_last_identification_status_tick_ms = now;
+    g_identification_sample_seq++;
+
+    if (g_tx_in_flight != 0u) {
+        uart2_protocol_test_stats.tx_skip_in_flight++;
+        return;
+    }
+
+    uint8_t selected = 0u;
+    uint8_t excitation = 0u;
+    uint8_t safety_state = 0u;
+    uint8_t flags = 0u;
+    uint8_t step_state = 0u;
+    uint8_t online_mask = 0u;
+    uint32_t sample_seq = 0u;
+    uint32_t trial_id = 0u;
+    uint32_t last_valid_command_tick_ms = 0u;
+    uint32_t command_raw = 0u;
+    uint32_t feedback_raw = 0u;
+    uint32_t comm_rx_error_count = 0u;
+    float tau_requested = 0.0f;
+    float tau_applied = 0.0f;
+    float feedback_torque = 0.0f;
+    float position = 0.0f;
+    float velocity = 0.0f;
+
+    // Keep one telemetry sample internally coherent if UART/CAN IRQs arrive
+    // while the DMA frame is being assembled.
+    __disable_irq();
+    selected = g_identification_selected_actuator;
+    excitation = g_identification_excitation;
+    safety_state = g_safety_state;
+    flags = g_identification_flags;
+    step_state = g_identification_step_state;
+    online_mask = BuildOnlineMask();
+    sample_seq = g_identification_sample_seq;
+    trial_id = g_identification_trial_id;
+    last_valid_command_tick_ms = g_last_valid_command_tick_ms;
+    tau_requested = g_identification_tau_requested;
+    tau_applied = g_identification_tau_applied;
+    command_raw = GetActuatorCommandRaw(selected);
+    feedback_raw = GetActuatorFeedbackRaw(selected);
+    feedback_torque = GetActuatorFeedbackTorque(selected);
+    position = GetActuatorPosition(selected);
+    velocity = GetActuatorVelocity(selected);
+    comm_rx_error_count =
+        uart2_protocol_test_stats.length_errors +
+        uart2_protocol_test_stats.sync_losses +
+        uart2_protocol_test_stats.rx_seq_gaps +
+        uart2_protocol_test_stats.uart_errors;
+    __enable_irq();
+
+    const uint8_t selected_online =
+        (online_mask & (1u << selected)) != 0u ? 1u : 0u;
+    const uint32_t command_age_ms =
+        last_valid_command_tick_ms == 0u ? 0xFFFFFFFFu :
+        now - last_valid_command_tick_ms;
+
+    uint16_t offset = 0u;
+    g_status_frame[6u + offset++] = kIdentificationProtocolVersion;
+    g_status_frame[6u + offset++] = selected;
+    g_status_frame[6u + offset++] = GetActuatorType(selected);
+    g_status_frame[6u + offset++] = excitation;
+    g_status_frame[6u + offset++] = safety_state;
+    g_status_frame[6u + offset++] = flags;
+    g_status_frame[6u + offset++] = selected_online;
+    g_status_frame[6u + offset++] = step_state;
+    WriteU32Le(g_status_frame + 6u + offset, sample_seq);
+    offset += 4u;
+    WriteU32Le(g_status_frame + 6u + offset, now);
+    offset += 4u;
+    WriteU32Le(g_status_frame + 6u + offset, trial_id);
+    offset += 4u;
+    WriteF32Le(g_status_frame + 6u + offset, tau_requested);
+    offset += 4u;
+    WriteF32Le(g_status_frame + 6u + offset, tau_applied);
+    offset += 4u;
+    WriteU32Le(g_status_frame + 6u + offset, command_raw);
+    offset += 4u;
+    WriteU32Le(g_status_frame + 6u + offset, feedback_raw);
+    offset += 4u;
+    WriteF32Le(g_status_frame + 6u + offset, feedback_torque);
+    offset += 4u;
+    WriteF32Le(g_status_frame + 6u + offset, position);
+    offset += 4u;
+    WriteF32Le(g_status_frame + 6u + offset, velocity);
+    offset += 4u;
+    WriteU32Le(g_status_frame + 6u + offset, command_age_ms);
+    offset += 4u;
+    WriteU32Le(g_status_frame + 6u + offset, comm_rx_error_count);
+
+    g_status_frame[0] = kFrameHead0;
+    g_status_frame[1] = kFrameHead1;
+    g_status_frame[2] = kFrameTypeIdentificationState;
+    g_status_frame[3] = kIdentificationStatePayloadLen;
+    WriteU16Le(g_status_frame + 4, g_tx_seq);
+
+    const uint16_t crc = Crc16Ccitt(
+        g_status_frame + 2,
+        static_cast<uint16_t>(4u + kIdentificationStatePayloadLen));
+    const uint16_t crc_index =
+        static_cast<uint16_t>(6u + kIdentificationStatePayloadLen);
+    WriteU16Le(g_status_frame + crc_index, crc);
+
+    const uint16_t frame_len = static_cast<uint16_t>(crc_index + 2u);
+    g_tx_in_flight = 1u;
+    g_tx_frame_len = frame_len;
+    g_tx_in_flight_seq = g_tx_seq;
+    const HAL_StatusTypeDef tx_status =
+        HAL_UART_Transmit_DMA(&huart2, g_status_frame, frame_len);
+
+    if (tx_status != HAL_OK) {
         g_tx_in_flight = 0u;
         uart2_protocol_test_stats.tx_errors++;
         if (tx_status == HAL_BUSY) {
@@ -546,11 +895,25 @@ extern "C" void UartProtocolTest_Init(void)
     g_tx_frame_len = 0u;
     g_tx_in_flight_seq = 0u;
     g_last_status_tick_ms = HAL_GetTick();
+    g_last_identification_status_tick_ms = g_last_status_tick_ms;
     g_last_valid_command_tick_ms = 0u;
     g_command_enable = 0u;
     g_command_estop = 0u;
     g_last_command_timeout = 1u;
     g_safety_state = kSafetyStateDisabled;
+    g_identification_mode = 0u;
+    g_identification_selected_actuator = 0u;
+    g_identification_excitation = kIdentificationExcitationHold;
+    g_identification_flags = 0u;
+    g_identification_step_state = kIdentificationStepIdle;
+    g_identification_trial_id = 0u;
+    g_identification_start_tick_ms = 0u;
+    g_identification_delay_ms = 0u;
+    g_identification_duration_ms = 0u;
+    g_identification_sample_seq = 0u;
+    g_identification_target_torque = 0.0f;
+    g_identification_tau_requested = 0.0f;
+    g_identification_tau_applied = 0.0f;
     for (uint8_t i = 0u; i < kJointCount; ++i) {
         g_target_efforts[i] = 0.0f;
         g_applied_efforts[i] = 0.0f;
@@ -629,6 +992,13 @@ extern "C" void UartProtocolTest_FillActuatorCommand(
     uint32_t last_valid_command_tick_ms = 0u;
     uint8_t command_enable = 0u;
     uint8_t command_estop = 0u;
+    uint8_t identification_mode = 0u;
+    uint8_t identification_selected_actuator = 0u;
+    uint8_t identification_excitation = kIdentificationExcitationHold;
+    uint32_t identification_start_tick_ms = 0u;
+    uint32_t identification_delay_ms = 0u;
+    uint32_t identification_duration_ms = 0u;
+    float identification_target_torque = 0.0f;
 
     __disable_irq();
     for (uint8_t i = 0u; i < kJointCount; ++i) {
@@ -637,6 +1007,13 @@ extern "C" void UartProtocolTest_FillActuatorCommand(
     last_valid_command_tick_ms = g_last_valid_command_tick_ms;
     command_enable = g_command_enable;
     command_estop = g_command_estop;
+    identification_mode = g_identification_mode;
+    identification_selected_actuator = g_identification_selected_actuator;
+    identification_excitation = g_identification_excitation;
+    identification_start_tick_ms = g_identification_start_tick_ms;
+    identification_delay_ms = g_identification_delay_ms;
+    identification_duration_ms = g_identification_duration_ms;
+    identification_target_torque = g_identification_target_torque;
     __enable_irq();
 
     const uint32_t now = HAL_GetTick();
@@ -648,15 +1025,71 @@ extern "C" void UartProtocolTest_FillActuatorCommand(
         g_last_command_timeout = 1u;
     }
 
-    uint8_t online_mask = BuildOnlineMask();
+    const uint8_t online_mask = BuildOnlineMask();
     if (command_estop != 0u) {
         g_safety_state = kSafetyStateEstop;
     } else if (timed_out) {
         g_safety_state = kSafetyStateTimeout;
     } else if (command_enable == 0u) {
         g_safety_state = kSafetyStateDisabled;
+    } else if (identification_mode != 0u &&
+               (online_mask & (1u << identification_selected_actuator)) == 0u) {
+        g_safety_state = kSafetyStateFault;
     } else {
         g_safety_state = kSafetyStateEnabled;
+    }
+
+    if (identification_mode != 0u) {
+        float requested_torque = 0.0f;
+        uint8_t step_state = kIdentificationStepActive;
+
+        if (identification_excitation == kIdentificationExcitationHold) {
+            requested_torque = identification_target_torque;
+        } else {
+            const uint32_t elapsed = now - identification_start_tick_ms;
+            if (elapsed < identification_delay_ms) {
+                step_state = kIdentificationStepDelay;
+            } else if ((elapsed - identification_delay_ms) <
+                       identification_duration_ms) {
+                step_state = kIdentificationStepActive;
+                requested_torque = identification_target_torque;
+            } else {
+                step_state = kIdentificationStepComplete;
+            }
+        }
+
+        for (uint8_t i = 0u; i < kJointCount; ++i) {
+            g_applied_efforts[i] = 0.0f;
+            if (out_efforts != 0 && i < effort_count) {
+                out_efforts[i] = 0.0f;
+            }
+        }
+
+        float applied_torque = 0.0f;
+        if (g_safety_state == kSafetyStateEnabled) {
+            const float limited_torque = ConstrainSymmetric(
+                requested_torque,
+                GetIdentificationEffortLimit(
+                    identification_selected_actuator));
+            if (identification_excitation == kIdentificationExcitationStep) {
+                applied_torque = limited_torque;
+            } else {
+                applied_torque = ApplySlewLimit(
+                    g_identification_tau_applied,
+                    limited_torque,
+                    kIdentificationHoldSlewPerCycle);
+            }
+            g_applied_efforts[identification_selected_actuator] = applied_torque;
+            if (out_efforts != 0 &&
+                identification_selected_actuator < effort_count) {
+                out_efforts[identification_selected_actuator] = applied_torque;
+            }
+        }
+
+        g_identification_step_state = step_state;
+        g_identification_tau_requested = requested_torque;
+        g_identification_tau_applied = applied_torque;
+        return;
     }
 
     for (uint8_t i = 0u; i < kJointCount; ++i) {
@@ -677,6 +1110,28 @@ extern "C" void UartProtocolTest_FillActuatorCommand(
             out_efforts[i] = g_applied_efforts[i];
         }
     }
+}
+
+extern "C" void UartProtocolTest_GetIdentificationControl(
+    UartProtocolTestIdentificationControl *out)
+{
+    if (out == 0) {
+        return;
+    }
+
+    __disable_irq();
+    out->active = g_identification_mode;
+    out->selected_actuator = g_identification_selected_actuator;
+    out->c620_threshold_current_enabled =
+        (g_identification_flags &
+         kIdentificationFlagC620ThresholdCurrent) != 0u ? 1u : 0u;
+    out->reserved = 0u;
+    __enable_irq();
+}
+
+extern "C" void UartProtocolTest_ProcessIdentificationTelemetry(void)
+{
+    TrySendIdentificationFrame();
 }
 
 extern "C" uint8_t UartProtocolTest_GetSafetyState(void)

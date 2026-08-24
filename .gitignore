@@ -20,9 +20,9 @@ Thumbs.db
 # ROS2 / colcon
 # =========================================================
 
-ros2_ws/build/
-ros2_ws/install/
-ros2_ws/log/
+ros_ws/build/
+ros_ws/install/
+ros_ws/log/
 
 build/
 install/
@@ -78,12 +78,6 @@ codegen/
 # *.m
 # *.mlx
 # *.mat
-
-# GSD runtime and local Cross-AI configuration
-.planning/runtime/
-.planning/cc-provider.local
-.planning/cc-tier.local
-.planning/cc-providers.psd1
 
 # Local codebase-memory index; rebuild on each system
 .codebase-memory/
@@ -176,6 +170,8 @@ data/**
 !data/**/
 !data/**/.gitkeep
 !data/**/README.md
+!data/**/manifest.yaml
+!data/**/manifest.yml
 
 
 # =========================================================
@@ -229,4 +225,4 @@ temp/
 *.bak
 *.old
 
-*graphify-out
+/graphify-out/

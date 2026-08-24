@@ -207,7 +207,11 @@ void Class_Motor_DJI_GIM6010::Data_Process(uint8_t data_id)
     }
     else if ((data_id & 0x0F) == 0x0C)
     {
-        Rx_Data.Now_Torque = Math_BitsToFloat((tmp_buffer[7] << 24) | (tmp_buffer[6] << 16) | (tmp_buffer[5] << 8) | tmp_buffer[4]);
+        Feedback_Raw = (static_cast<uint32_t>(tmp_buffer[7]) << 24) |
+                       (static_cast<uint32_t>(tmp_buffer[6]) << 16) |
+                       (static_cast<uint32_t>(tmp_buffer[5]) << 8) |
+                       static_cast<uint32_t>(tmp_buffer[4]);
+        Rx_Data.Now_Torque = Math_BitsToFloat(Feedback_Raw);
     }
 }
     
@@ -224,11 +228,11 @@ void Class_Motor_DJI_GIM6010::Output()
         return;
     }
 
-    uint32_t out_bits = Math_FloatToBits(Out);
-    Tx_Data[3] = (out_bits >> 24) & 0xFF;
-    Tx_Data[2] = (out_bits >> 16) & 0xFF;
-    Tx_Data[1] = (out_bits >> 8) & 0xFF;
-    Tx_Data[0] = out_bits & 0xFF;
+    Command_Raw = Math_FloatToBits(Out);
+    Tx_Data[3] = (Command_Raw >> 24) & 0xFF;
+    Tx_Data[2] = (Command_Raw >> 16) & 0xFF;
+    Tx_Data[1] = (Command_Raw >> 8) & 0xFF;
+    Tx_Data[0] = Command_Raw & 0xFF;
 }
 
 
@@ -247,6 +251,7 @@ void Class_Motor_DJI_GIM6010::Output()
 void Class_Motor_DJI_C620::Init(const FDCAN_HandleTypeDef *hcan, const Enum_Motor_DJI_ID &__CAN_Rx_ID)
 {
     CAN_Manage_Object = &CAN1_Manage_Object;
+    CAN_Rx_ID = __CAN_Rx_ID;
     Tx_Data = allocate_tx_data(hcan,  __CAN_Rx_ID);
 }
 
@@ -289,7 +294,7 @@ void Class_Motor_DJI_C620::TIM_100ms_Alive_PeriodElapsedCallback()
 void Class_Motor_DJI_C620::TIM_Calculate_PeriodElapsedCallback()
 {
     Out = (Target_Torque + Feedforward_Torque) / Gearbox_Rate / CURRENT_TO_TORQUE * CURRENT_TO_OUT;
-    if(Math_Abs(Out) < Threshold_Current)
+    if(Threshold_Current_Enabled && Math_Abs(Out) < Threshold_Current)
         Out = Out + Math_Sign(Out)*Threshold_Current;
     Basic_Math_Constrain(&Out, -OUT_MAX, OUT_MAX);
 
@@ -314,6 +319,7 @@ void Class_Motor_DJI_C620::Data_Process()
     Basic_Math_Endian_Reverse_16((void *) &tmp_buffer->Encoder_Reverse, (void *) &tmp_encoder);
     Basic_Math_Endian_Reverse_16((void *) &tmp_buffer->Omega_Reverse, (void *) &tmp_omega);
     Basic_Math_Endian_Reverse_16((void *) &tmp_buffer->Current_Reverse, (void *) &tmp_current);
+    Feedback_Raw = static_cast<uint32_t>(static_cast<uint16_t>(tmp_current));
 
     // 计算圈数与总编码器值
     delta_encoder = tmp_encoder - Rx_Data.Pre_Encoder;
@@ -349,8 +355,10 @@ void Class_Motor_DJI_C620::Output()
         return;
     }
 
-    Tx_Data[0] = (int16_t) Out >> 8;
-    Tx_Data[1] = (int16_t) Out;
+    const int16_t command = static_cast<int16_t>(Out);
+    Command_Raw = static_cast<uint32_t>(static_cast<uint16_t>(command));
+    Tx_Data[0] = command >> 8;
+    Tx_Data[1] = command;
 }
 
 /************************ COPYRIGHT(C) USTC-ROBOWALKER **************************/
