@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mujoco model="wheel_leg">
+  <compiler angle="radian" meshdir="assets"/>
+
+  <option gravity="0 0 0"/>
+
+  <asset>
+  <!-- base -->
+    <mesh file="zong_zhuang____base_1__di_ban__1.stl"/>
+    <mesh file="zong_zhuang____base_1__dian_chi__1.stl"/>
+    <mesh file="zong_zhuang____base_1__dian_chi__2.stl"/>
+    <mesh file="zong_zhuang____base_1__zhou_cheng_zhi_zuo_16_46_48_m6_1.stl"/>
+    <mesh file="zong_zhuang____base_1__zhou_cheng_zhi_zuo_16_46_48_m6_2.stl"/>
+    <mesh file="zong_zhuang____base_1__lv_fang_tong_100_20_200_y_2.stl"/>
+    <mesh file="zong_zhuang____base_1__lv_fang_tong_100_20_200_y_3.stl"/>
+    <mesh file="zong_zhuang____base_1__lv_fang_tong_100_20_200_2.stl"/>
+    <mesh file="zong_zhuang____base_1__lv_fang_tong_100_30_2.stl"/>
+    <mesh file="base__joint_motor_assembly_1.stl"/>
+    <mesh file="base__joint_motor_assembly_2.stl"/>
+  <!-- left_thigh -->
+    <mesh file="zong_zhuang____left_thigh_1_16_zhi_cheng_jia__1.stl"/>
+    <mesh file="zong_zhuang____left_thigh_1_16_zhi_cheng_jia__2.stl"/>
+    <mesh file="zong_zhuang____left_thigh_1__guan_jie_dian_ji_2_dian_kuai__1.stl"/>
+    <mesh file="zong_zhuang____left_thigh_1__guan_jie_dian_ji_2_fa_lan_jie_pian__3.stl"/>
+    <mesh file="zong_zhuang____left_thigh_1__guan_jie_dian_ji_dian_kuai__1.stl"/>
+    <mesh file="zong_zhuang____left_thigh_1__da_tui__1.stl"/>
+    <mesh file="zong_zhuang____left_thigh_1__fa_lan_dian_kuai_jie_pian__1.stl"/>
+    <mesh file="zong_zhuang____left_thigh_1__tan_guan__1.stl"/>
+    <mesh file="left_thigh__joint_motor_assembly_1.stl"/>
+  <!-- right_thigh -->
+    <mesh file="zong_zhuang____right_thigh_1_16_zhi_cheng_jia__1.stl"/>
+    <mesh file="zong_zhuang____right_thigh_1_16_zhi_cheng_jia__2.stl"/>
+    <mesh file="zong_zhuang____right_thigh_1__guan_jie_dian_ji_2_dian_kuai__1.stl"/>
+    <mesh file="zong_zhuang____right_thigh_1__guan_jie_dian_ji_2_fa_lan_jie_pian__3.stl"/>
+    <mesh file="zong_zhuang____right_thigh_1__guan_jie_dian_ji_dian_kuai__1.stl"/>
+    <mesh file="zong_zhuang____right_thigh_1__da_tui__1.stl"/>
+    <mesh file="zong_zhuang____right_thigh_1__fa_lan_dian_kuai_jie_pian__1.stl"/>
+    <mesh file="zong_zhuang____right_thigh_1__tan_guan__1.stl"/>
+    <mesh file="right_thigh__joint_motor_assembly_1.stl"/>
+  <!-- left_connect1 -->
+    <mesh file="zong_zhuang____left_connect1_1__da_tui_lian_gan_1_1.stl"/>
+    <mesh file="zong_zhuang____left_connect1_1__da_tui_lian_gan_1_dian_kuai__1.stl"/>
+
+  <!-- right_connect1 -->
+    <mesh file="zong_zhuang____right_connect1_1__da_tui_lian_gan_1_1.stl"/>
+    <mesh file="zong_zhuang____right_connect1_1__da_tui_lian_gan_1_dian_kuai__1.stl"/>
+  <!-- left_connect2 -->
+    <mesh file="zong_zhuang____left_connect2_1__dian_pian__m3_10_1_1.stl"/>
+    <mesh file="zong_zhuang____left_connect2_1__dian_pian__m3_10_1_2.stl"/>
+    <mesh file="zong_zhuang____left_connect2_1__dian_pian__m3_10_1_3.stl"/>
+    <mesh file="zong_zhuang____left_connect2_1__dian_pian__m3_10_1_4.stl"/>
+    <mesh file="zong_zhuang____left_connect2_1__da_tui_lian_gan_2_1.stl"/>
+    <mesh file="zong_zhuang____left_connect2_1__da_tui_lian_gan_2_2.stl"/>
+    <mesh file="zong_zhuang____left_connect2_1__tao_tong_luo_mu_m3_8_10_1.stl"/>
+    <mesh file="zong_zhuang____left_connect2_1__tao_tong_luo_mu_m3_8_10_2.stl"/>
+    <mesh file="zong_zhuang____left_connect2_1__zhou_cheng_8_22_10_1.stl"/>
+    <mesh file="zong_zhuang____left_connect2_1__zhou_cheng_8_22_10_2.stl"/>
+  <!-- right_connect2 -->
+    <mesh file="zong_zhuang____right_connect2_2__dian_pian__m3_10_1_1.stl"/>
+    <mesh file="zong_zhuang____right_connect2_2__dian_pian__m3_10_1_2.stl"/>
+    <mesh file="zong_zhuang____right_connect2_2__dian_pian__m3_10_1_3.stl"/>
+    <mesh file="zong_zhuang____right_connect2_2__dian_pian__m3_10_1_4.stl"/>
+    <mesh file="zong_zhuang____right_connect2_2__da_tui_lian_gan_2_1.stl"/>
+    <mesh file="zong_zhuang____right_connect2_2__da_tui_lian_gan_2_2.stl"/>
+    <mesh file="zong_zhuang____right_connect2_2__tao_tong_luo_mu_m3_8_10_1.stl"/>
+    <mesh file="zong_zhuang____right_connect2_2__tao_tong_luo_mu_m3_8_10_2.stl"/>
+    <mesh file="zong_zhuang____right_connect2_2__zhou_cheng_8_22_10_1.stl"/>
+    <mesh file="zong_zhuang____right_connect2_2__zhou_cheng_8_22_10_2.stl"/>
+  <!-- left_calf -->
+    <mesh file="zong_zhuang____left_calf_1__dian_pian__m5_14_1_2.stl"/>
+    <mesh file="zong_zhuang____left_calf_1__dian_pian__m5_14_1_3.stl"/>
+    <mesh file="zong_zhuang____left_calf_1__dian_pian__m6_10_0_5_1.stl"/>
+    <mesh file="zong_zhuang____left_calf_1__tao_tong_luo_mu_m5_12_20_1.stl"/>
+    <mesh file="zong_zhuang____left_calf_1__xiao_tui__1.stl"/>
+    <mesh file="zong_zhuang____left_calf_1__wu_shua_dian_ji_jia_ban_1_1.stl"/>
+    <mesh file="zong_zhuang____left_calf_1__wu_shua_dian_ji_jia_ban_2_1.stl"/>
+    <mesh file="zong_zhuang____left_calf_1__zhou_cheng_32_12_10_1.stl"/>
+    <mesh file="left_calf__dc_motor_assembly_1.stl"/>
+  <!-- right_calf -->
+    <mesh file="zong_zhuang____right_calf_1__dian_pian__m5_14_1_2.stl"/>
+    <mesh file="zong_zhuang____right_calf_1__dian_pian__m5_14_1_3.stl"/>
+    <mesh file="zong_zhuang____right_calf_1__dian_pian__m6_10_0_5_1.stl"/>
+    <mesh file="zong_zhuang____right_calf_1__tao_tong_luo_mu_m5_12_20_1.stl"/>
+    <mesh file="zong_zhuang____right_calf_1__xiao_tui__1.stl"/>
+    <mesh file="zong_zhuang____right_calf_1__wu_shua_dian_ji_jia_ban_1_1.stl"/>
+    <mesh file="zong_zhuang____right_calf_1__wu_shua_dian_ji_jia_ban_2_1.stl"/>
+    <mesh file="zong_zhuang____right_calf_1__zhou_cheng_32_12_10_1.stl"/>
+    <mesh file="right_calf__dc_motor_assembly_1.stl"/>
+  <!-- left_wheel -->
+    <mesh file="zong_zhuang____left_wheel_1.stl"/>
+  <!-- right_wheel -->
+    <mesh file="zong_zhuang____right_wheel_1.stl"/>
+  </asset>
+
+  <default>
+    <geom contype="1" conaffinity="1"/>
+    <default class="base_default"/>
+    <default class="left_thigh_default"/>
+    <default class="right_thigh_default"/>
+    <default class="left_connect1_default"/>
+    <default class="right_connect1_default"/>
+    <default class="left_connect2_default"/>
+    <default class="right_connect2_default"/>
+    <default class="left_calf_default"/>
+    <default class="right_calf_default"/>
+    <default class="left_wheel_default"/>
+    <default class="right_wheel_default"/>
+  </default>
+  
+
+  <worldbody>
+    <light name="top" pos="0 0 2"/>
+
+    <body name="base_body" pos="0 0 0.6">
+      <freejoint/>
+      <site name="base_frame" pos="0 0 0" size="0.02" rgba="1 0 0 1"/>
+      <geom type="mesh" mesh="zong_zhuang____base_1__di_ban__1" mass="0.2000" class="base_default"/>
+      <geom type="mesh" mesh="zong_zhuang____base_1__dian_chi__1" mass="0.5210" class="base_default"/>
+      <geom type="mesh" mesh="zong_zhuang____base_1__dian_chi__2" mass="0.5210" class="base_default"/>
+      <geom type="mesh" mesh="zong_zhuang____base_1__zhou_cheng_zhi_zuo_16_46_48_m6_1" mass="0.0700" class="base_default"/>
+      <geom type="mesh" mesh="zong_zhuang____base_1__zhou_cheng_zhi_zuo_16_46_48_m6_2" mass="0.0700" class="base_default"/>
+      <geom type="mesh" mesh="zong_zhuang____base_1__lv_fang_tong_100_20_200_y_2" mass="0.1200" class="base_default"/>
+      <geom type="mesh" mesh="zong_zhuang____base_1__lv_fang_tong_100_20_200_y_3" mass="0.1200" class="base_default"/>
+      <geom type="mesh" mesh="zong_zhuang____base_1__lv_fang_tong_100_20_200_2" mass="0.1260" class="base_default"/>
+      <geom type="mesh" mesh="zong_zhuang____base_1__lv_fang_tong_100_30_2" mass="0.0520" class="base_default"/>
+      <geom type="mesh" mesh="base__joint_motor_assembly_1" mass="0.3940" class="base_default"/>
+      <geom type="mesh" mesh="base__joint_motor_assembly_2" mass="0.3940" class="base_default"/>
+      
+      <body name="right_thigh_body" pos="-0.0775 -0.04425 -0.02 " euler="-1.5708 0 -1.5708">
+        <joint name="right_hip_joint" type="hinge" pos="0 0 0" axis="0 0 1"/>
+
+        <geom type="mesh" mesh="zong_zhuang____right_thigh_1_16_zhi_cheng_jia__1" mass="0.0300" class="right_thigh_default"/>
+        <geom type="mesh" mesh="zong_zhuang____right_thigh_1_16_zhi_cheng_jia__2" mass="0.0300" class="right_thigh_default"/>
+        <geom type="mesh" mesh="zong_zhuang____right_thigh_1__guan_jie_dian_ji_2_dian_kuai__1" mass="0.0300" class="right_thigh_default"/>
+        <geom type="mesh" mesh="zong_zhuang____right_thigh_1__guan_jie_dian_ji_2_fa_lan_jie_pian__3" mass="0.0740" class="right_thigh_default"/>
+        <geom type="mesh" mesh="zong_zhuang____right_thigh_1__guan_jie_dian_ji_dian_kuai__1" mass="0.0300" class="right_thigh_default"/>
+        <geom type="mesh" mesh="zong_zhuang____right_thigh_1__da_tui__1" mass="0.1250" class="right_thigh_default"/>
+        <geom type="mesh" mesh="zong_zhuang____right_thigh_1__fa_lan_dian_kuai_jie_pian__1" mass="0.0120" class="right_thigh_default"/>
+        <geom type="mesh" mesh="zong_zhuang____right_thigh_1__tan_guan__1" mass="0.1010" class="right_thigh_default"/>
+        <geom type="mesh" mesh="right_thigh__joint_motor_assembly_1" mass="0.3940" class="right_thigh_default"/>
+
+        <body name="right_calf_body" pos="-0.04350 -0.17467 -0.12525" euler="0 0 3.14159">
+          <joint name="right_knee_joint" type="hinge" pos="0 0 0" axis="0 0 1"/>
+          <site name="right_calf_site" pos="0.03180 -0.03859  -0.01050" size="0.01" rgba="0 0 1 1"/>
+
+          <geom type="mesh" mesh="zong_zhuang____right_calf_1__dian_pian__m5_14_1_2" mass="0.0001" class="right_calf_default"/>
+          <geom type="mesh" mesh="zong_zhuang____right_calf_1__dian_pian__m5_14_1_3" mass="0.0001" class="right_calf_default"/>
+          <geom type="mesh" mesh="zong_zhuang____right_calf_1__dian_pian__m6_10_0_5_1" mass="0.0001" class="right_calf_default"/>
+          <geom type="mesh" mesh="zong_zhuang____right_calf_1__tao_tong_luo_mu_m5_12_20_1" mass="0.0010" class="right_calf_default"/>
+          <geom type="mesh" mesh="zong_zhuang____right_calf_1__xiao_tui__1" mass="0.1510" class="right_calf_default"/>
+          <geom type="mesh" mesh="zong_zhuang____right_calf_1__wu_shua_dian_ji_jia_ban_1_1" mass="0.0130" class="right_calf_default"/>
+          <geom type="mesh" mesh="zong_zhuang____right_calf_1__wu_shua_dian_ji_jia_ban_2_1" mass="0.0100" class="right_calf_default"/>
+          <geom type="mesh" mesh="zong_zhuang____right_calf_1__zhou_cheng_32_12_10_1" mass="0.0350" class="right_calf_default"/>
+          <geom type="mesh" mesh="right_calf__dc_motor_assembly_1" mass="0.3860" class="right_calf_default"/>
+
+          <body name="right_wheel_body" pos="0.14297 -0.17368 -0.04280">
+            <joint name="right_wheel_joint" type="hinge" pos="0 0 0" axis="0 0 1"/>
+
+            <geom type="mesh" mesh="zong_zhuang____right_wheel_1" mass="0.3431" class="right_wheel_default"/>
+          </body>
+        </body>
+
+        <body name="right_connect1_body" pos="0 0 -0.1235" euler="3.14159 0 0">
+          <joint name="right_connect1_joint" type="hinge" pos="0 0 0" axis="0 0 1"/>
+        
+          <geom type="mesh" mesh="zong_zhuang____right_connect1_1__da_tui_lian_gan_1_1" mass="0.0370" class="right_connect1_default"/>
+          <geom type="mesh" mesh="zong_zhuang____right_connect1_1__da_tui_lian_gan_1_dian_kuai__1" mass="0.0110" class="right_connect1_default"/>
+        
+            <body name="right_connect2_body" pos="-0.03180 -0.03859 0.01225" euler="3.14159 0 0">
+              <joint name="right_connect2_joint" type="hinge" pos="0 0 0" axis="0 0 1"/>
+              <site name="right_connect2_site" pos="-0.04350 -0.17467 0" size="0.01" rgba="0 1 0 1"/>
+
+              <geom type="mesh" mesh="zong_zhuang____right_connect2_2__dian_pian__m3_10_1_1" mass="0.0001" class="right_connect2_default"/>
+              <geom type="mesh" mesh="zong_zhuang____right_connect2_2__dian_pian__m3_10_1_2" mass="0.0001" class="right_connect2_default"/>
+              <geom type="mesh" mesh="zong_zhuang____right_connect2_2__dian_pian__m3_10_1_3" mass="0.0001" class="right_connect2_default"/>
+              <geom type="mesh" mesh="zong_zhuang____right_connect2_2__dian_pian__m3_10_1_4" mass="0.0001" class="right_connect2_default"/>
+              <geom type="mesh" mesh="zong_zhuang____right_connect2_2__da_tui_lian_gan_2_1" mass="0.0367" class="right_connect2_default"/>
+              <geom type="mesh" mesh="zong_zhuang____right_connect2_2__da_tui_lian_gan_2_2" mass="0.0367" class="right_connect2_default"/>
+              <geom type="mesh" mesh="zong_zhuang____right_connect2_2__tao_tong_luo_mu_m3_8_10_1" mass="0.0010" class="right_connect2_default"/>
+              <geom type="mesh" mesh="zong_zhuang____right_connect2_2__tao_tong_luo_mu_m3_8_10_2" mass="0.0010" class="right_connect2_default"/>
+              <geom type="mesh" mesh="zong_zhuang____right_connect2_2__zhou_cheng_8_22_10_1" mass="0.0170" class="right_connect2_default"/>
+              <geom type="mesh" mesh="zong_zhuang____right_connect2_2__zhou_cheng_8_22_10_2" mass="0.0170" class="right_connect2_default"/>
+            </body>
+        </body>
+        
+      
+      </body>
+
+      <body name="left_thigh_body" pos="-0.0775 0.04425 -0.02 " euler="-1.5708 0 -1.5708">
+        <joint name="left_hip_joint" type="hinge" pos="0 0 0" axis="0 0 1"/>
+
+        <geom type="mesh" mesh="zong_zhuang____left_thigh_1_16_zhi_cheng_jia__1" mass="0.0300" class="left_thigh_default"/>
+        <geom type="mesh" mesh="zong_zhuang____left_thigh_1_16_zhi_cheng_jia__2" mass="0.0300" class="left_thigh_default"/>
+        <geom type="mesh" mesh="zong_zhuang____left_thigh_1__guan_jie_dian_ji_2_dian_kuai__1" mass="0.0300" class="left_thigh_default"/>
+        <geom type="mesh" mesh="zong_zhuang____left_thigh_1__guan_jie_dian_ji_2_fa_lan_jie_pian__3" mass="0.0740" class="left_thigh_default"/>
+        <geom type="mesh" mesh="zong_zhuang____left_thigh_1__guan_jie_dian_ji_dian_kuai__1" mass="0.0300" class="left_thigh_default"/>
+        <geom type="mesh" mesh="zong_zhuang____left_thigh_1__da_tui__1" mass="0.1250" class="left_thigh_default"/>
+        <geom type="mesh" mesh="zong_zhuang____left_thigh_1__fa_lan_dian_kuai_jie_pian__1" mass="0.0120" class="left_thigh_default"/>
+        <geom type="mesh" mesh="zong_zhuang____left_thigh_1__tan_guan__1" mass="0.1010" class="left_thigh_default"/>
+        <geom type="mesh" mesh="left_thigh__joint_motor_assembly_1" mass="0.3940" class="left_thigh_default"/>
+
+          <body name="left_calf_body" pos="-0.04350 -0.17467 0.12525" euler="0 0 3.14159">
+            <joint name="left_knee_joint" type="hinge" pos="0 0 0" axis="0 0 1"/>
+            <site name="left_calf_site" pos="0.03180 -0.03859  0.01050" size="0.01" rgba="0 0 1 1"/>
+
+            <geom type="mesh" mesh="zong_zhuang____left_calf_1__dian_pian__m5_14_1_2" mass="0.0001" class="left_calf_default"/>
+            <geom type="mesh" mesh="zong_zhuang____left_calf_1__dian_pian__m5_14_1_3" mass="0.0001" class="left_calf_default"/>
+            <geom type="mesh" mesh="zong_zhuang____left_calf_1__dian_pian__m6_10_0_5_1" mass="0.0001" class="left_calf_default"/>
+            <geom type="mesh" mesh="zong_zhuang____left_calf_1__tao_tong_luo_mu_m5_12_20_1" mass="0.0010" class="left_calf_default"/>
+            <geom type="mesh" mesh="zong_zhuang____left_calf_1__xiao_tui__1" mass="0.1510" class="left_calf_default"/>
+            <geom type="mesh" mesh="zong_zhuang____left_calf_1__wu_shua_dian_ji_jia_ban_1_1" mass="0.0130" class="left_calf_default"/>
+            <geom type="mesh" mesh="zong_zhuang____left_calf_1__wu_shua_dian_ji_jia_ban_2_1" mass="0.0100" class="left_calf_default"/>
+            <geom type="mesh" mesh="zong_zhuang____left_calf_1__zhou_cheng_32_12_10_1" mass="0.0350" class="left_calf_default"/>
+            <geom type="mesh" mesh="left_calf__dc_motor_assembly_1" mass="0.3860" class="left_calf_default"/>
+            
+            <body name="left_wheel_body" pos="0.14297 -0.17368 0.04280">
+                <joint name="left_wheel_joint" type="hinge" pos="0 0 0" axis="0 0 1"/>
+
+                <geom type="mesh" mesh="zong_zhuang____left_wheel_1" mass="0.3431" class="left_wheel_default"/>
+            </body>
+          </body>
+
+          <body name="left_connect1_body" pos="0 0 0.1235">
+            <joint name="left_connect1_joint" type="hinge" pos="0 0 0" axis="0 0 1"/>
+        
+            <geom type="mesh" mesh="zong_zhuang____left_connect1_1__da_tui_lian_gan_1_1" mass="0.0370" class="left_connect1_default"/>
+            <geom type="mesh" mesh="zong_zhuang____left_connect1_1__da_tui_lian_gan_1_dian_kuai__1" mass="0.0110" class="left_connect1_default"/>
+        
+            <body name="left_connect2_body" pos="-0.03180 0.03859 0.01225">
+              <joint name="left_connect2_joint" type="hinge" pos="0 0 0" axis="0 0 1"/>
+              <site name="left_connect2_site" pos="-0.04350 -0.17467 0" size="0.01" rgba="0 1 0 1"/>
+
+              <geom type="mesh" mesh="zong_zhuang____left_connect2_1__dian_pian__m3_10_1_1" mass="0.0001" class="left_connect2_default"/>
+              <geom type="mesh" mesh="zong_zhuang____left_connect2_1__dian_pian__m3_10_1_2" mass="0.0001" class="left_connect2_default"/>
+              <geom type="mesh" mesh="zong_zhuang____left_connect2_1__dian_pian__m3_10_1_3" mass="0.0001" class="left_connect2_default"/>
+              <geom type="mesh" mesh="zong_zhuang____left_connect2_1__dian_pian__m3_10_1_4" mass="0.0001" class="left_connect2_default"/>
+              <geom type="mesh" mesh="zong_zhuang____left_connect2_1__da_tui_lian_gan_2_1" mass="0.0367" class="left_connect2_default"/>
+              <geom type="mesh" mesh="zong_zhuang____left_connect2_1__da_tui_lian_gan_2_2" mass="0.0367" class="left_connect2_default"/>
+              <geom type="mesh" mesh="zong_zhuang____left_connect2_1__tao_tong_luo_mu_m3_8_10_1" mass="0.0010" class="left_connect2_default"/>
+              <geom type="mesh" mesh="zong_zhuang____left_connect2_1__tao_tong_luo_mu_m3_8_10_2" mass="0.0010" class="left_connect2_default"/>
+              <geom type="mesh" mesh="zong_zhuang____left_connect2_1__zhou_cheng_8_22_10_1" mass="0.0170" class="left_connect2_default"/>
+              <geom type="mesh" mesh="zong_zhuang____left_connect2_1__zhou_cheng_8_22_10_2" mass="0.0170" class="left_connect2_default"/>
+            </body>
+        </body>
+        
+      </body>
+
+    </body>
+  </worldbody>
+
+  <sensor>
+    <accelerometer name="base_accel" site="base_frame"/>
+    <gyro name="base_gyro" site="base_frame"/>
+    <framequat name="base_quat" objtype="site" objname="base_frame"/>
+
+    <jointpos name="left_hip_encoder" joint="left_hip_joint"/>
+    <jointvel name="left_hip_encoder_vel" joint="left_hip_joint"/>
+    <jointpos name="right_hip_encoder" joint="right_hip_joint"/>
+    <jointvel name="right_hip_encoder_vel" joint="right_hip_joint"/>
+
+    <jointpos name="left_connect1_encoder" joint="left_connect1_joint"/>
+    <jointvel name="left_connect1_encoder_vel" joint="left_connect1_joint"/>
+    <jointpos name="right_connect1_encoder" joint="right_connect1_joint"/>
+    <jointvel name="right_connect1_encoder_vel" joint="right_connect1_joint"/>
+
+    <jointpos name="left_calf_encoder" joint="left_knee_joint"/>
+    <jointvel name="left_calf_encoder_vel" joint="left_knee_joint"/>
+    <jointpos name="right_calf_encoder" joint="right_knee_joint"/>
+    <jointvel name="right_calf_encoder_vel" joint="right_knee_joint"/>
+
+    <jointpos name="left_wheel_encoder" joint="left_wheel_joint"/>
+    <jointvel name="left_wheel_encoder_vel" joint="left_wheel_joint"/>
+    <jointpos name="right_wheel_encoder" joint="right_wheel_joint"/>
+    <jointvel name="right_wheel_encoder_vel" joint="right_wheel_joint"/>
+  </sensor>
+
+  <equality>
+    <weld body1="base_body" body2="world"/>
+    <connect site1="left_connect2_site" site2="left_calf_site" /> 
+    <connect site1="right_connect2_site" site2="right_calf_site" />
+  </equality>
+
+</mujoco>
