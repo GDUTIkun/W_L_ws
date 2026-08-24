@@ -259,6 +259,7 @@ void Debug_Task(void* pv)
 {
     TickType_t last_report_tick = xTaskGetTickCount();
     UartProtocolTestStats stats = {0};
+    UartProtocolTestIdentificationControl identification = {0};
 
     while(1)
     {
@@ -267,9 +268,11 @@ void Debug_Task(void* pv)
         {
             last_report_tick = now;
             UartProtocolTest_GetStats(&stats);
-            printf("uart2 rx_ok=%lu rx_crc=%lu rx_gap=%lu uart_err=%lu tx=%lu tx_err=%lu busy=%lu to=%lu herr=%lu tx_skip=%lu last_rx=%u last_tx=%u gap_ms=[%lu,%lu]\r\n",
+            UartProtocolTest_GetIdentificationControl(&identification);
+            printf("uart2 rx_ok=%lu crc=%lu len=%lu gap=%lu uerr=%lu tx=%lu txerr=%lu busy=%lu to=%lu herr=%lu skip=%lu seq=%u/%u type=0x%02X gap_ms=[%lu,%lu] ident=%u wheel=%u direct_i=%u threshold=%u safety=%u\r\n",
                    (unsigned long)stats.frames_ok,
                    (unsigned long)stats.crc_errors,
+                   (unsigned long)stats.length_errors,
                    (unsigned long)stats.rx_seq_gaps,
                    (unsigned long)stats.uart_errors,
                    (unsigned long)stats.tx_frames,
@@ -280,8 +283,14 @@ void Debug_Task(void* pv)
                    (unsigned long)stats.tx_skip_in_flight,
                    (unsigned int)stats.last_seq,
                    (unsigned int)stats.last_tx_seq,
+                   (unsigned int)stats.last_type,
                    (unsigned long)stats.min_frame_gap_ms,
-                   (unsigned long)stats.max_frame_gap_ms);
+                   (unsigned long)stats.max_frame_gap_ms,
+                   (unsigned int)identification.active,
+                   (unsigned int)identification.selected_actuator,
+                   (unsigned int)identification.c620_direct_current_mode,
+                   (unsigned int)identification.c620_threshold_current_enabled,
+                   (unsigned int)UartProtocolTest_GetSafetyState());
         }
 
         if(debugflag == 1)

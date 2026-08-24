@@ -1,8 +1,24 @@
-# MuJoCo → Real 当前更新路线
+# Simulink → MuJoCo → Real 分层验证路线
 
 当前路线的核心目标不变：
 
-> **不要直接把 Simulink 控制器和参数整包搬到 MuJoCo / 真机，而是从传感器、执行器、机械模型、动力学到控制器逐层验证。**
+> **Simulink 保留为算法对照基线；MuJoCo 先完成多刚体实现正确性验证，再与真机做共同辨识和分层闭环验证。**
+
+Simulink 中已验证的算法使用了简化刚体假设，而 MuJoCo 和真机的目标 plant 是多刚体系统。因此，从 Simulink 迁移到 MuJoCo 不能只是“换一个仿真器调参”，而必须分开回答两个问题：
+
+1. **实现正确性：** 坐标、运动学、多刚体拓扑和动力学实现是否正确；
+2. **模型一致性：** MuJoCo 参数、执行器和接触特性是否与真机足够一致。
+
+只有第一个问题通过后，才用 MuJoCo 和真机的共同实验回答第二个问题。MuJoCo 运动学、单腿动力学和实验接口会直接被后续控制与真机验证复用，不是抛弃性工作。
+
+## 四个放行门
+
+| 放行门 | 要回答的问题 | 通过后才进入 |
+| --- | --- | --- |
+| A. 语义统一 | 同名变量是否代表同一物理量 | MuJoCo 运动学测试 |
+| B. MuJoCo 实现正确 | 多刚体几何与动力学是否自洽 | MuJoCo–真机共同辨识 |
+| C. Plant 基本一致 | 执行器、重力、摩擦、惯量与耦合是否可信 | 轮子接触与关节闭环 |
+| D. 分层闭环通过 | MuJoCo 与真机是否在当前控制层一致 | 更高层控制 |
 
 每完成一层：
 
@@ -75,7 +91,89 @@ IMU angular velocity
 
 ---
 
-# 1. 拆机前基础传感器检查
+# 1. MuJoCo 运动学测试
+
+坐标系、单位和物理语义冻结后，立即在 MuJoCo 做运动学测试。这一步验证当前运动学算法与 MuJoCo 几何定义基本正确，不做真机参数辨识，也不用闭环效果替代几何验证。
+
+首先冻结：
+
+- 单腿刚体拓扑与关节顺序；
+- 每个 joint、body、site 的 frame；
+- joint axis、零位、正方向和限位；
+- hip、knee、wheel center、contact point 的定义；
+- wheel rolling direction；
+- Controller state 到 MuJoCo q、dq 的映射。
+
+在零位、边界附近及若干典型工作姿态比较：
+
+| 对照项 | 基准 |
+| --- | --- |
+| 解析/现有算法 FK | MuJoCo body/site pose |
+| 解析/现有算法 Jacobian | MuJoCo Jacobian |
+| Jacobian 速度预测 | 有限差分位移 |
+| 关节正向微小扰动 | 末端实际移动方向 |
+
+覆盖至少包括：
+
+- hip position / orientation；
+- knee position / orientation；
+- wheel center position / orientation；
+- contact point；
+- wheel rolling direction；
+- contact Jacobian。
+
+测试计划必须根据数值量级冻结位置、姿态和 Jacobian 容差；没有超差的典型姿态与方向性错误才可 PASS。
+
+> **运动学 PASS 只证明几何、坐标和 Jacobian 实现基本正确，不证明质量、惯量、执行器或接触模型正确。**
+
+---
+
+# 2. 建立完整的单腿多刚体模型
+
+运动学通过后，先在 MuJoCo 中建立一条可独立验证的完整单腿 plant，再做 MuJoCo–真机共同辨识。
+
+第一版边界为：
+
+- base fixed；
+- single leg；
+- no ground contact；
+- 保留全部单腿刚体和关节；
+- 在已约定的关节边界输入 torque；
+- 可观测 q、dq、joint torque 和所需 body/site state。
+
+模型必须显式包含：
+
+- 真实刚体拓扑和几何；
+- 各刚体 mass、COM、inertia；
+- 关节轴、限位和必要阻尼；
+- 未被 CAD 刚体惯量覆盖的执行器反射惯量接口；
+- 重力与传感器/状态输出语义。
+
+每个质量、质心和惯量参数都要记录来源、单位和是否待辨识。此时允许使用 CAD、称重或规格书给出的 nominal 参数，但不能把 nominal 值写成真机已校准结论。
+
+此阶段不引入轮地接触、floating base、WBC 或 NMPC，避免多个未验证因素同时进场。
+
+---
+
+# 3. MuJoCo 单腿动力学内部验证
+
+接入真机辨识前，对完整单腿多刚体模型做一轮模型内部验证。这里验证的是“结构和实现是否自洽”，不是“参数是否已与真机匹配”。
+
+按照从静态到动态的顺序验证：
+
+1. **静力学：** 多个姿态下的重力方向、重力力矩和静态平衡；
+2. **惯量矩阵：** \(M(q)\) 的维度、对称性、正定性与姿态依赖性；
+3. **正逆动力学一致性：** 给定 \((q,\dot q,\ddot q)\) 计算力矩，再用相同状态和力矩恢复加速度；
+4. **耦合测试：** 单关节激励时其他关节的惯性耦合方向和数量级；
+5. **开环回放：** 在无接触、明确初值和受限力矩下记录 \(q\)、\(\dot q\)、\(\ddot q\) 与能量收支。
+
+Simulink 只在与其简化刚体假设重合的工况下作为算法回归对照。两者不一致时，先判定是实现错误还是已知的模型忠实度差异，不为了追求波形一致而把 MuJoCo 退化成简化模型。
+
+通过条件：运动学无超差、正逆动力学在冻结容差内自洽、惯量矩阵无异常，并且已有可重复的单腿开环测试。达到后才进入真机侧低风险实验和共同辨识。
+
+---
+
+# 4. 拆机前基础传感器检查
 
 这里只做最基础的数据可信度检查。
 
@@ -126,7 +224,7 @@ tau_est
 
 ---
 
-# 2. 拆机执行器测试
+# 5. 拆机执行器测试
 
 测试对象：
 
@@ -146,7 +244,7 @@ tau_est
 
 ---
 
-## 2.1 静态力矩标定
+## 5.1 静态力矩标定
 
 装置：
 
@@ -214,7 +312,7 @@ $$
 
 ---
 
-## 2.2 执行器自身摩擦
+## 5.2 执行器自身摩擦
 
 关闭主动输出，用力臂缓慢拖动输出轴。
 
@@ -258,13 +356,13 @@ $$
 
 ---
 
-## 2.3 执行器等效惯量
+## 5.3 执行器等效惯量
 
 [[拆机力矩测试]]
 
 ---
 
-# 3. 装回机器人
+# 6. 装回机器人
 
 拆机阶段完成：
 
@@ -282,7 +380,7 @@ Jactuator
 
 ---
 
-# 4. 更新 MuJoCo 基础执行器模型
+# 7. 更新 MuJoCo 基础执行器模型
 
 把拆机得到的信息补到 MuJoCo。
 
@@ -322,66 +420,37 @@ CAD 没有建模的
 
 ---
 
-# 5. 装机后的正式 Sensor / RobotState 测试
+# 8. 装机后的正式 Sensor / RobotState 测试
 
 
 [[传感器过低通]]
 
 ---
 
-# 6. ROS2 / MuJoCo / Real 统一架构
+# 9. ROS2 / MuJoCo / Real 统一架构
 
 [[ros2 架构]]
 
 ---
 
-# 7. 运动学验证
+# MuJoCo–真机共同辨识约定
 
-暂时不进入完整动力学。
+从这里开始，目标由“证明 MuJoCo 实现自洽”切换为“辨识并验证 MuJoCo 与真机的差异”。后续正式辨识尽量复用同一套：
 
-先验证：
+- 初始姿态与关节锁定条件；
+- 输入力矩或运动轨迹；
+- 安全限幅与停止条件；
+- RobotState / TorqueCommand 字段和时间语义；
+- 采样、日志和数据质量检查；
+- 分析脚本、拟合方法、指标与图表。
 
-```text
-FK
-Jacobian
-hip position
-knee position
-wheel center
-contact point
-wheel rolling direction
-contact Jacobian
-```
+同一实验先在 MuJoCo 跑通，再以低风险配置在真机执行。脚本和接口的复用是正式工程资产；但 MuJoCo 与真机的参数集、噪声、延迟和安全边界必须分别保存，不能为了共用代码强行设为相同。
 
-选择多个典型姿态：
-
-```text
-q0
-q0 + Δq1
-q0 + Δq2
-...
-```
-
-比较：
-
-```text
-解析模型
-vs
-MuJoCo
-```
-
-确保：
-
-```text
-position
-orientation
-Jacobian
-```
-
-一致。
+上述约定只适用于专门设计、用于形成辨识结论或放行证据的正式实验。临时画图、小测试和调试探针可以轻量处理，不必走完整实验流程；但它们不能直接替代正式 PASS 证据，除非补齐可重复条件、输入、输出和判据。
 
 ---
 
-# 8. 静态重力 / Mass / COM 验证
+# 10. 静态重力 / Mass / COM 验证
 
 固定 base，使腿悬空。
 
@@ -439,7 +508,7 @@ gravity model
 
 ---
 
-# 9. 装机后的关节总摩擦
+# 11. 装机后的关节总摩擦
 
 这时测的不再只是执行器内部摩擦，而是：
 
@@ -469,7 +538,7 @@ $$
 
 ---
 
-## 9.1 选定姿态 $q_0$
+## 11.1 选定姿态 $q_0$
 
 固定 base，锁住其他关节。
 
@@ -477,7 +546,7 @@ $$
 
 ---
 
-## 9.2 静止保持
+## 11.2 静止保持
 
 在：
 
@@ -495,7 +564,7 @@ $$
 
 ---
 
-## 9.3 正向低速经过 $q_0$
+## 11.3 正向低速经过 $q_0$
 
 令：
 
@@ -521,7 +590,7 @@ $$
 
 ---
 
-## 9.4 反向低速经过 $q_0$
+## 11.4 反向低速经过 $q_0$
 
 令：
 
@@ -568,7 +637,7 @@ damping
 
 ---
 
-# 10. 关节等效惯量 $J_{\rm eq}$
+# 12. 关节等效惯量 $J_{\rm eq}$
 
 前置条件：
 
@@ -588,7 +657,7 @@ friction
 
 ---
 
-# 11. $J_{\rm eq,real}$ ↔ MuJoCo $M_{jj}$
+# 13. $J_{\rm eq,real}$ ↔ MuJoCo $M_{jj}$
 
 MuJoCo 设置：
 
@@ -661,9 +730,9 @@ $$
 
 ---
 
-# 12. 完整动力学验证
+# 14. MuJoCo–真机完整单腿动力学验证
 
-进一步检查：
+第 3 节已经验证 MuJoCo 单腿动力学实现自洽；这里不再重新建模，而是使用相同输入、状态定义和分析方法检查 nominal/calibrated MuJoCo 与真机是否一致：
 
 $$
 M(q)\ddot q
@@ -682,6 +751,8 @@ $$
 ```text
 inertia
 dynamic coupling
+cross-joint response
+residual structure
 ```
 
 而不是只看单个：
@@ -690,9 +761,11 @@ $$
 M_{jj}
 $$
 
+如果残差具有明显的姿态、速度或加速度依赖性，应分别回到 mass/COM、friction、inertia/耦合项检查，不能只靠提高 PD 增益掩盖。
+
 ---
 
-# 13. Wheel Contact
+# 15. Wheel Contact
 
 单独验证：
 
@@ -716,7 +789,7 @@ friction
 
 ---
 
-# 14. Joint PD + Gravity Compensation
+# 16. Joint PD + Gravity Compensation
 
 完成 plant 校准后第一次真正闭环：
 
@@ -768,7 +841,7 @@ physical parameters
 
 ---
 
-# 15. Floating-base 简单站立
+# 17. Floating-base 简单站立
 
 关节级闭环可靠后释放 base。
 
@@ -800,7 +873,7 @@ wheel-ground contact
 
 ---
 
-# 16. Weighted WBC
+# 18. Weighted WBC
 
 逐层恢复：
 
@@ -834,7 +907,7 @@ Real PASS
 
 ---
 
-# 17. NMPC
+# 19. NMPC
 
 先人工给：
 
@@ -872,7 +945,7 @@ tau
 
 ---
 
-# 18. Roll / Yaw / Turning
+# 20. Roll / Yaw / Turning
 
 逐步增加：
 
@@ -894,7 +967,7 @@ large yaw
 
 ---
 
-# 19. Differential Identification
+# 21. Differential Identification
 
 最后用同样的辨识流程分别研究：
 
@@ -929,36 +1002,38 @@ Model_R
 # 最终主链路
 
 ```text
-0. 坐标 / 单位 / 符号
+0. 冻结坐标 / 单位 / 符号 / 状态语义
 ↓
-1. 拆机前基础传感器检查
+1. MuJoCo FK / Jacobian / frame / rolling direction 测试
+↓
+2. 建立 fixed-base、no-contact 的完整单腿多刚体模型
+↓
+3. MuJoCo 静力学、M(q)、正逆动力学、耦合与开环回放自检
+   ── Gate B：先证明模型实现正确，再进入真机辨识
+↓
+4. 拆机前基础传感器检查
    raw 数据干净即可，不正式定低通
 ↓
-2. 拆机静态 torque mapping
+5. 拆机 torque mapping / 执行器摩擦 / Jactuator
 ↓
-3. 拆机执行器自身摩擦
+6. 装回机器人
 ↓
-4. 拆机 Jactuator
+7. 更新 MuJoCo actuator / armature
 ↓
-5. 装回机器人
+8. 装机 Sensor / RobotState 正式测试与最终滤波
 ↓
-6. 更新 MuJoCo actuator / armature
+9. ROS2 / MuJoCo / Real 接口统一
 ↓
-7. 装机 Sensor / RobotState 正式测试
+10. MuJoCo–真机共同 gravity / mass / COM 辨识
 ↓
-8. FFT / PSD → 确定最终 fc / τ
+11. 装机关节总摩擦
 ↓
-9. ROS2 / RobotState 统一
-↓
-10. FK / Jacobian
-↓
-11. gravity / mass / COM
-↓
-12. 装机关节总摩擦
+12. Jeq_real 辨识
 ↓
 13. Jeq_real ↔ Mjj_MuJoCo
 ↓
-14. 完整 inertia / dynamic coupling
+14. MuJoCo–真机完整单腿 inertia / dynamic coupling 验证
+   ── Gate C：plant 基本一致
 ↓
 15. wheel contact
 ↓
@@ -981,15 +1056,13 @@ $$
 \boxed{
 \text{定义正确}
 \rightarrow
-\text{力矩可信}
+\text{运动学正确}
 \rightarrow
-\text{执行器可信}
+\text{多刚体动力学实现正确}
 \rightarrow
-\text{状态可信}
+\text{力矩与状态可信}
 \rightarrow
-\text{机械模型可信}
-\rightarrow
-\text{动力学可信}
+\text{MuJoCo / Real 参数一致}
 \rightarrow
 \text{接触可信}
 \rightarrow
@@ -997,6 +1070,8 @@ $$
 }
 $$
 
-其中最新调整最关键的一点是：
+其中最关键的顺序约束是：
 
-> **拆机阶段 raw 数据足够干净就不加低通；最终滤波参数等执行器装回整机后，在真实结构振动和工作状态下再正式确定。**
+> **坐标与物理语义统一后，先完成 MuJoCo 运动学测试和完整单腿多刚体动力学自检；只有 MuJoCo 实现正确性通过，才开始 MuJoCo–真机共同辨识。**
+
+同时保留原有滤波原则：拆机阶段 raw 数据足够干净就不加低通；最终滤波参数等执行器装回整机后，在真实结构振动和工作状态下再正式确定。
