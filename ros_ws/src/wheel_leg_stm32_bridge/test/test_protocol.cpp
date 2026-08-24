@@ -66,7 +66,7 @@ TEST(Protocol, RejectsCorruptedFrameCrc) {
 
 TEST(Protocol, DecodesIdentificationTelemetryV1) {
   std::vector<std::uint8_t> payload;
-  payload.push_back(1U);
+  payload.push_back(2U);
   payload.push_back(2U);
   payload.push_back(2U);
   payload.push_back(1U);
@@ -90,11 +90,11 @@ TEST(Protocol, DecodesIdentificationTelemetryV1) {
 
   protocol::IdentificationTelemetry telemetry;
   ASSERT_TRUE(protocol::decodeIdentificationTelemetry(payload, telemetry));
-  EXPECT_EQ(telemetry.protocol_version, 1U);
+  EXPECT_EQ(telemetry.protocol_version, 2U);
   EXPECT_EQ(telemetry.actuator_index, 2U);
   EXPECT_EQ(telemetry.sample_seq, 123U);
   EXPECT_EQ(telemetry.trial_id, 99U);
-  EXPECT_FLOAT_EQ(telemetry.tau_applied_nm, 1.25F);
+  EXPECT_FLOAT_EQ(telemetry.current_applied_a, 1.25F);
   EXPECT_EQ(telemetry.driver_feedback_raw, 0x00000456U);
   EXPECT_FLOAT_EQ(telemetry.velocity_rad_s, -0.4F);
 }

@@ -98,10 +98,10 @@ std::vector<std::uint8_t> encodeIdentificationCommand(
   payload.push_back(command.estop ? 1U : 0U);
   payload.push_back(command.actuator_index);
   payload.push_back(command.excitation);
-  payload.push_back(command.c620_threshold_current_enabled ? 1U : 0U);
+  payload.push_back(0U);  // Threshold_Current is forbidden for current identification.
   appendU16Le(payload, 0U);
   appendU32Le(payload, command.trial_id);
-  appendF32Le(payload, command.target_torque_nm);
+  appendF32Le(payload, command.target_current_a);
   appendU32Le(payload, command.step_delay_ms);
   appendU32Le(payload, command.step_duration_ms);
   return payload;
@@ -176,15 +176,15 @@ bool decodeIdentificationTelemetry(
   offset += 4U;
   telemetry.trial_id = readU32Le(payload.data() + offset);
   offset += 4U;
-  telemetry.tau_requested_nm = readF32Le(payload.data() + offset);
+  telemetry.current_requested_a = readF32Le(payload.data() + offset);
   offset += 4U;
-  telemetry.tau_applied_nm = readF32Le(payload.data() + offset);
+  telemetry.current_applied_a = readF32Le(payload.data() + offset);
   offset += 4U;
   telemetry.driver_command_raw = readU32Le(payload.data() + offset);
   offset += 4U;
   telemetry.driver_feedback_raw = readU32Le(payload.data() + offset);
   offset += 4U;
-  telemetry.feedback_torque_nm = readF32Le(payload.data() + offset);
+  telemetry.feedback_current_a = readF32Le(payload.data() + offset);
   offset += 4U;
   telemetry.position_rad = readF32Le(payload.data() + offset);
   offset += 4U;

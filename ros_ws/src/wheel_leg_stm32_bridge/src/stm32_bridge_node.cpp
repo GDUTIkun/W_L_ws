@@ -36,8 +36,9 @@ bool finiteNormalCommand(const msg::NormalCommand &message) {
 }
 
 bool validIdentificationCommand(const msg::IdentificationCommand &message) {
-  return message.actuator_index < protocol::kJointCount &&
-         message.excitation <= 1U && std::isfinite(message.target_torque_nm) &&
+  return (message.actuator_index == 2U || message.actuator_index == 5U) &&
+         message.excitation <= 1U && std::isfinite(message.target_current_a) &&
+         std::abs(message.target_current_a) <= 1.0F &&
          message.step_delay_ms <= 5000U &&
          message.step_duration_ms <= 2000U &&
          !(message.excitation == 1U && message.step_duration_ms == 0U);
@@ -293,10 +294,8 @@ class Stm32BridgeNode final : public rclcpp::Node {
     command.estop = force_estop ? true : identification_command_.estop;
     command.actuator_index = identification_command_.actuator_index;
     command.excitation = identification_command_.excitation;
-    command.c620_threshold_current_enabled =
-        identification_command_.c620_threshold_current_enabled;
     command.trial_id = identification_command_.trial_id;
-    command.target_torque_nm = identification_command_.target_torque_nm;
+    command.target_current_a = identification_command_.target_current_a;
     command.step_delay_ms = identification_command_.step_delay_ms;
     command.step_duration_ms = identification_command_.step_duration_ms;
     queueFrame(
@@ -415,11 +414,11 @@ class Stm32BridgeNode final : public rclcpp::Node {
     message.sample_seq = telemetry.sample_seq;
     message.stm_tick_ms = telemetry.stm_tick_ms;
     message.trial_id = telemetry.trial_id;
-    message.tau_requested_nm = telemetry.tau_requested_nm;
-    message.tau_applied_nm = telemetry.tau_applied_nm;
+    message.current_requested_a = telemetry.current_requested_a;
+    message.current_applied_a = telemetry.current_applied_a;
     message.driver_command_raw = telemetry.driver_command_raw;
     message.driver_feedback_raw = telemetry.driver_feedback_raw;
-    message.feedback_torque_nm = telemetry.feedback_torque_nm;
+    message.feedback_current_a = telemetry.feedback_current_a;
     message.position_rad = telemetry.position_rad;
     message.velocity_rad_s = telemetry.velocity_rad_s;
     message.command_age_ms = telemetry.command_age_ms;

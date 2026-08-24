@@ -11,11 +11,11 @@ uint8 step_state
 uint32 sample_seq
 uint32 stm_tick_ms
 uint32 trial_id
-float32 tau_requested_nm
-float32 tau_applied_nm
+float32 current_requested_a
+float32 current_applied_a
 uint32 driver_command_raw
 uint32 driver_feedback_raw
-float32 feedback_torque_nm
+float32 feedback_current_a
 float32 position_rad
 float32 velocity_rad_s
 uint32 command_age_ms
