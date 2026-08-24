@@ -27,7 +27,7 @@
 
 ## 执行器辨识实验扩展
 
-UART2 候选协议保留原有普通命令 `0x01` 和状态 `0x81`，另增加版本为 1 的辨识命令 `0x02` 与紧凑遥测 `0x82`。该扩展只服务 Phase 05 台架实验，不是生产协议。
+UART2 候选协议保留原有普通命令 `0x01` 和状态 `0x81`，另增加版本为 2 的 3508+C620 电流辨识命令 `0x02` 与紧凑遥测 `0x82`。该扩展只服务 Phase 05 台架实验，不是生产协议。
 
 辨识模式使用现有六执行器索引：
 
@@ -47,16 +47,16 @@ UART2 候选协议保留原有普通命令 `0x01` 和状态 `0x81`，另增加�
 | 0 | `u8` | version | 固定为 `1` |
 | 1 | `u8` | enable | `1` 才允许所选执行器输出 |
 | 2 | `u8` | estop | 非零立即使所有执行器输出归零 |
-| 3 | `u8` | actuator_index | 上表中的单一执行器 |
+| 3 | `u8` | actuator_index | 仅允许 `2` 或 `5`（3508+C620） |
 | 4 | `u8` | excitation | `0=hold`，`1=STM-local step` |
-| 5 | `u8` | flags | bit0：显式启用 C620 `Threshold_Current`；基线辨识必须为 0 |
+| 5 | `u8` | flags | 必须为 0；电流辨识强制关闭 C620 `Threshold_Current` |
 | 6 | `u16` | reserved | 发送 0 |
 | 8 | `u32` | trial_id | 新 ID 触发新试验；重复 ID 仅作为心跳，不重启阶跃 |
-| 12 | `f32` | target_torque | 输出轴目标力矩，`N·m` |
+| 12 | `f32` | target_current_a | 目标电机电流，`A` |
 | 16 | `u32` | step_delay_ms | 阶跃前零输出延迟，最大 5000 ms |
 | 20 | `u32` | step_duration_ms | 阶跃持续时间，最大 2000 ms；step 模式必须非零 |
 
-辨识模式硬限制为所选执行器 `±3 N·m`，100 ms 无有效命令即立即归零；所选执行器离线进入 fault，其余五路始终强制为零。hold 使用 `0.05 N·m/control-cycle` 斜率限制，step 在 STM 的 1 ms 电机任务中按 STM tick 产生边沿。
+3508+C620 电流辨识硬限制为 `±1.0 A`，100 ms 无有效命令即立即归零；所选执行器离线进入 fault，其余五路始终强制为零。hold 使用 `0.05 A/control-cycle` 斜率限制，step 在 STM 的 1 ms 电机任务中按 STM tick 产生边沿。
 
 `0x82` payload 固定 56 bytes，辨识模式下按 2 ms 周期发送，并暂停完整 `0x81` 状态帧：
 
@@ -73,11 +73,11 @@ UART2 候选协议保留原有普通命令 `0x01` 和状态 `0x81`，另增加�
 | 8 | `u32` | sample_seq | 应发送采样序号；跳号表示发送忙或丢样 |
 | 12 | `u32` | stm_tick_ms | STM 单调 tick，ms |
 | 16 | `u32` | trial_id | 当前试验 ID |
-| 20 | `f32` | tau_requested | 未限幅的试验波形，`N·m` |
-| 24 | `f32` | tau_applied | 安全、限幅/斜率处理后的命令，`N·m` |
+| 20 | `f32` | current_requested_a | 未限幅的试验波形，`A` |
+| 24 | `f32` | current_applied_a | 安全、限幅/斜率处理后的实际电流命令，`A` |
 | 28 | `u32` | driver_command_raw | C620 低 16 位为有符号电流计数；GIM6010 为发送 float 位模式 |
 | 32 | `u32` | driver_feedback_raw | C620 低 16 位为有符号反馈电流；GIM6010 为反馈力矩 float 位模式 |
-| 36 | `f32` | feedback_torque | 驱动反馈换算力矩，仅作解释变量，`N·m` |
+| 36 | `f32` | feedback_current_a | 驱动反馈换算电流，`A` |
 | 40 | `f32` | position | 当前输出轴/机构映射角度，`rad` |
 | 44 | `f32` | velocity | 当前输出轴/机构映射角速度，`rad/s` |
 | 48 | `u32` | command_age_ms | 距最后有效命令的 STM 时间 |

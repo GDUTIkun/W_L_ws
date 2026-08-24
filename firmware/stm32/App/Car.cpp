@@ -178,6 +178,14 @@ void Motor_Control_Task(void* pv)
 
         const bool identification_active =
             identification_control.active != 0u;
+        const bool identification_current_left =
+            identification_active &&
+            identification_control.c620_direct_current_mode != 0u &&
+            identification_control.selected_actuator == 2u;
+        const bool identification_current_right =
+            identification_active &&
+            identification_control.c620_direct_current_mode != 0u &&
+            identification_control.selected_actuator == 5u;
         motor_3508_L.Set_Threshold_Current_Enabled(
             !identification_active ||
             (identification_control.selected_actuator == 2u &&
@@ -189,10 +197,18 @@ void Motor_Control_Task(void* pv)
 
         motor_GIM6010_L_hip.Set_Target_Torque(actuator_efforts[0]);
         motor_GIM6010_L_knee.Set_Target_Torque(actuator_efforts[1]);
-        motor_3508_L.Set_Target_Torque(actuator_efforts[2]);
+        if (identification_current_left) {
+            motor_3508_L.Set_Target_Current(actuator_efforts[2]);
+        } else {
+            motor_3508_L.Set_Target_Torque(actuator_efforts[2]);
+        }
         motor_GIM6010_R_hip.Set_Target_Torque(actuator_efforts[3]);
         motor_GIM6010_R_knee.Set_Target_Torque(actuator_efforts[4]);
-        motor_3508_R.Set_Target_Torque(actuator_efforts[5]);
+        if (identification_current_right) {
+            motor_3508_R.Set_Target_Current(actuator_efforts[5]);
+        } else {
+            motor_3508_R.Set_Target_Torque(actuator_efforts[5]);
+        }
 
         motor_3508_L.TIM_Calculate_PeriodElapsedCallback();
         motor_3508_R.TIM_Calculate_PeriodElapsedCallback();

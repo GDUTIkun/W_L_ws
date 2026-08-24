@@ -11,7 +11,7 @@ static const uint8_t kFrameTypeCommand = 0x01;
 static const uint8_t kFrameTypeIdentificationCommand = 0x02;
 static const uint8_t kFrameTypeState = 0x81;
 static const uint8_t kFrameTypeIdentificationState = 0x82;
-static const uint8_t kIdentificationProtocolVersion = 1u;
+static const uint8_t kIdentificationProtocolVersion = 2u;
 static const uint8_t kSafetyStateDisabled = 0;
 static const uint8_t kSafetyStateEnabled = 1;
 static const uint8_t kSafetyStateTimeout = 2;
@@ -31,9 +31,8 @@ static const float kHipKneeEffortLimit = 12.0f;
 static const float kWheelEffortLimit = 6.0f;
 static const float kHipKneeSlewPerCycle = 0.10f;
 static const float kWheelSlewPerCycle = 0.06f;
-static const float kIdentificationC620EffortLimit = 3.0f;
-static const float kIdentificationGIM6010EffortLimit = 3.0f;
-static const float kIdentificationHoldSlewPerCycle = 0.05f;
+static const float kIdentificationC620CurrentLimitA = 1.0f;
+static const float kIdentificationHoldCurrentSlewPerCycle = 0.05f;
 static const float kDegreesToRadians = 3.14159265358979323846f / 180.0f;
 static const float kGravityMps2 = 9.80665f;
 static const uint8_t kIdentificationFlagC620ThresholdCurrent = 1u << 0;
@@ -136,9 +135,9 @@ uint32_t g_identification_start_tick_ms = 0u;
 uint32_t g_identification_delay_ms = 0u;
 uint32_t g_identification_duration_ms = 0u;
 uint32_t g_identification_sample_seq = 0u;
-float g_identification_target_torque = 0.0f;
-float g_identification_tau_requested = 0.0f;
-float g_identification_tau_applied = 0.0f;
+float g_identification_target_current_a = 0.0f;
+float g_identification_current_requested_a = 0.0f;
+float g_identification_current_applied_a = 0.0f;
 
 uint16_t Crc16CcittUpdate(uint16_t crc, uint8_t data)
 {
@@ -298,10 +297,10 @@ uint8_t GetActuatorType(uint8_t actuator_index)
         kIdentificationActuatorC620 : kIdentificationActuatorGIM6010;
 }
 
-float GetIdentificationEffortLimit(uint8_t actuator_index)
+float GetIdentificationCurrentLimitA(uint8_t actuator_index)
 {
     return IsC620Actuator(actuator_index) ?
-        kIdentificationC620EffortLimit : kIdentificationGIM6010EffortLimit;
+        kIdentificationC620CurrentLimitA : 0.0f;
 }
 
 float GetActuatorPosition(uint8_t actuator_index)
@@ -330,15 +329,11 @@ float GetActuatorVelocity(uint8_t actuator_index)
     }
 }
 
-float GetActuatorFeedbackTorque(uint8_t actuator_index)
+float GetActuatorFeedbackCurrent(uint8_t actuator_index)
 {
     switch (actuator_index) {
-    case 0u: return motor_GIM6010_L_hip.Get_Now_Torque();
-    case 1u: return motor_GIM6010_L_knee.Get_Now_Torque();
-    case 2u: return motor_3508_L.Get_Now_Torque();
-    case 3u: return motor_GIM6010_R_hip.Get_Now_Torque();
-    case 4u: return motor_GIM6010_R_knee.Get_Now_Torque();
-    case 5u: return motor_3508_R.Get_Now_Torque();
+    case 2u: return motor_3508_L.Get_Now_Current();
+    case 5u: return motor_3508_R.Get_Now_Current();
     default: return 0.0f;
     }
 }
@@ -373,8 +368,8 @@ void ExitIdentificationMode()
 {
     g_identification_mode = 0u;
     g_identification_step_state = kIdentificationStepIdle;
-    g_identification_tau_requested = 0.0f;
-    g_identification_tau_applied = 0.0f;
+    g_identification_current_requested_a = 0.0f;
+    g_identification_current_applied_a = 0.0f;
 }
 
 void DecodeNormalCommandPayload()
@@ -405,15 +400,15 @@ void DecodeIdentificationCommandPayload()
     const uint8_t selected_actuator = g_payload[3];
     const uint8_t excitation = g_payload[4];
     const uint32_t trial_id = ReadU32Le(g_payload + 8u);
-    const float target_torque = ReadF32Le(g_payload + 12u);
+    const float target_current_a = ReadF32Le(g_payload + 12u);
     const uint32_t delay_ms = ReadU32Le(g_payload + 16u);
     const uint32_t duration_ms = ReadU32Le(g_payload + 20u);
 
     const bool invalid_step =
         excitation == kIdentificationExcitationStep && duration_ms == 0u;
-    if (selected_actuator >= kJointCount ||
+    if (!IsC620Actuator(selected_actuator) ||
         excitation > kIdentificationExcitationStep ||
-        !IsFiniteFloat(target_torque) ||
+        !IsFiniteFloat(target_current_a) ||
         delay_ms > kIdentificationMaxDelayMs ||
         duration_ms > kIdentificationMaxDurationMs || invalid_step) {
         uart2_protocol_test_stats.length_errors++;
@@ -433,10 +428,11 @@ void DecodeIdentificationCommandPayload()
     if (new_trial) {
         g_identification_selected_actuator = selected_actuator;
         g_identification_excitation = excitation;
-        g_identification_flags =
-            g_payload[5] & kIdentificationFlagC620ThresholdCurrent;
+        // Direct-current identification forbids Threshold_Current so the
+        // excitation is not contaminated by firmware dead-zone compensation.
+        g_identification_flags = 0u;
         g_identification_trial_id = trial_id;
-        g_identification_target_torque = target_torque;
+        g_identification_target_current_a = target_current_a;
         g_identification_delay_ms = delay_ms;
         g_identification_duration_ms = duration_ms;
         g_identification_start_tick_ms = now;
@@ -780,9 +776,9 @@ void TrySendIdentificationFrame()
     uint32_t command_raw = 0u;
     uint32_t feedback_raw = 0u;
     uint32_t comm_rx_error_count = 0u;
-    float tau_requested = 0.0f;
-    float tau_applied = 0.0f;
-    float feedback_torque = 0.0f;
+    float current_requested_a = 0.0f;
+    float current_applied_a = 0.0f;
+    float feedback_current_a = 0.0f;
     float position = 0.0f;
     float velocity = 0.0f;
 
@@ -798,11 +794,11 @@ void TrySendIdentificationFrame()
     sample_seq = g_identification_sample_seq;
     trial_id = g_identification_trial_id;
     last_valid_command_tick_ms = g_last_valid_command_tick_ms;
-    tau_requested = g_identification_tau_requested;
-    tau_applied = g_identification_tau_applied;
+    current_requested_a = g_identification_current_requested_a;
+    current_applied_a = g_identification_current_applied_a;
     command_raw = GetActuatorCommandRaw(selected);
     feedback_raw = GetActuatorFeedbackRaw(selected);
-    feedback_torque = GetActuatorFeedbackTorque(selected);
+    feedback_current_a = GetActuatorFeedbackCurrent(selected);
     position = GetActuatorPosition(selected);
     velocity = GetActuatorVelocity(selected);
     comm_rx_error_count =
@@ -833,15 +829,15 @@ void TrySendIdentificationFrame()
     offset += 4u;
     WriteU32Le(g_status_frame + 6u + offset, trial_id);
     offset += 4u;
-    WriteF32Le(g_status_frame + 6u + offset, tau_requested);
+    WriteF32Le(g_status_frame + 6u + offset, current_requested_a);
     offset += 4u;
-    WriteF32Le(g_status_frame + 6u + offset, tau_applied);
+    WriteF32Le(g_status_frame + 6u + offset, current_applied_a);
     offset += 4u;
     WriteU32Le(g_status_frame + 6u + offset, command_raw);
     offset += 4u;
     WriteU32Le(g_status_frame + 6u + offset, feedback_raw);
     offset += 4u;
-    WriteF32Le(g_status_frame + 6u + offset, feedback_torque);
+    WriteF32Le(g_status_frame + 6u + offset, feedback_current_a);
     offset += 4u;
     WriteF32Le(g_status_frame + 6u + offset, position);
     offset += 4u;
@@ -911,9 +907,9 @@ extern "C" void UartProtocolTest_Init(void)
     g_identification_delay_ms = 0u;
     g_identification_duration_ms = 0u;
     g_identification_sample_seq = 0u;
-    g_identification_target_torque = 0.0f;
-    g_identification_tau_requested = 0.0f;
-    g_identification_tau_applied = 0.0f;
+    g_identification_target_current_a = 0.0f;
+    g_identification_current_requested_a = 0.0f;
+    g_identification_current_applied_a = 0.0f;
     for (uint8_t i = 0u; i < kJointCount; ++i) {
         g_target_efforts[i] = 0.0f;
         g_applied_efforts[i] = 0.0f;
@@ -998,7 +994,7 @@ extern "C" void UartProtocolTest_FillActuatorCommand(
     uint32_t identification_start_tick_ms = 0u;
     uint32_t identification_delay_ms = 0u;
     uint32_t identification_duration_ms = 0u;
-    float identification_target_torque = 0.0f;
+    float identification_target_current_a = 0.0f;
 
     __disable_irq();
     for (uint8_t i = 0u; i < kJointCount; ++i) {
@@ -1013,7 +1009,7 @@ extern "C" void UartProtocolTest_FillActuatorCommand(
     identification_start_tick_ms = g_identification_start_tick_ms;
     identification_delay_ms = g_identification_delay_ms;
     identification_duration_ms = g_identification_duration_ms;
-    identification_target_torque = g_identification_target_torque;
+    identification_target_current_a = g_identification_target_current_a;
     __enable_irq();
 
     const uint32_t now = HAL_GetTick();
@@ -1040,11 +1036,11 @@ extern "C" void UartProtocolTest_FillActuatorCommand(
     }
 
     if (identification_mode != 0u) {
-        float requested_torque = 0.0f;
+        float requested_current_a = 0.0f;
         uint8_t step_state = kIdentificationStepActive;
 
         if (identification_excitation == kIdentificationExcitationHold) {
-            requested_torque = identification_target_torque;
+            requested_current_a = identification_target_current_a;
         } else {
             const uint32_t elapsed = now - identification_start_tick_ms;
             if (elapsed < identification_delay_ms) {
@@ -1052,7 +1048,7 @@ extern "C" void UartProtocolTest_FillActuatorCommand(
             } else if ((elapsed - identification_delay_ms) <
                        identification_duration_ms) {
                 step_state = kIdentificationStepActive;
-                requested_torque = identification_target_torque;
+                requested_current_a = identification_target_current_a;
             } else {
                 step_state = kIdentificationStepComplete;
             }
@@ -1065,30 +1061,30 @@ extern "C" void UartProtocolTest_FillActuatorCommand(
             }
         }
 
-        float applied_torque = 0.0f;
+        float applied_current_a = 0.0f;
         if (g_safety_state == kSafetyStateEnabled) {
-            const float limited_torque = ConstrainSymmetric(
-                requested_torque,
-                GetIdentificationEffortLimit(
+            const float limited_current_a = ConstrainSymmetric(
+                requested_current_a,
+                GetIdentificationCurrentLimitA(
                     identification_selected_actuator));
             if (identification_excitation == kIdentificationExcitationStep) {
-                applied_torque = limited_torque;
+                applied_current_a = limited_current_a;
             } else {
-                applied_torque = ApplySlewLimit(
-                    g_identification_tau_applied,
-                    limited_torque,
-                    kIdentificationHoldSlewPerCycle);
+                applied_current_a = ApplySlewLimit(
+                    g_identification_current_applied_a,
+                    limited_current_a,
+                    kIdentificationHoldCurrentSlewPerCycle);
             }
-            g_applied_efforts[identification_selected_actuator] = applied_torque;
+            g_applied_efforts[identification_selected_actuator] = applied_current_a;
             if (out_efforts != 0 &&
                 identification_selected_actuator < effort_count) {
-                out_efforts[identification_selected_actuator] = applied_torque;
+                out_efforts[identification_selected_actuator] = applied_current_a;
             }
         }
 
         g_identification_step_state = step_state;
-        g_identification_tau_requested = requested_torque;
-        g_identification_tau_applied = applied_torque;
+        g_identification_current_requested_a = requested_current_a;
+        g_identification_current_applied_a = applied_current_a;
         return;
     }
 
@@ -1125,7 +1121,7 @@ extern "C" void UartProtocolTest_GetIdentificationControl(
     out->c620_threshold_current_enabled =
         (g_identification_flags &
          kIdentificationFlagC620ThresholdCurrent) != 0u ? 1u : 0u;
-    out->reserved = 0u;
+    out->c620_direct_current_mode = g_identification_mode != 0u ? 1u : 0u;
     __enable_irq();
 }
 

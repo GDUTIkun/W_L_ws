@@ -120,7 +120,6 @@ public:
     inline uint32_t Get_Feedback_Raw() const;
 
     inline void Set_Target_Torque(const float &__Target_Torque);
-
     inline void Set_Feedforward_Torque(const float &__Feedforward_Torque);
 
     void CAN_RxCpltCallback(uint8_t data_id);
@@ -206,6 +205,8 @@ public:
 
     inline float Get_Now_Torque() const;
 
+    inline float Get_Now_Current() const;
+
     inline float Get_Target_Torque() const;
 
     inline float Get_Feedforward_Omega() const;
@@ -221,6 +222,8 @@ public:
     inline bool Get_Threshold_Current_Enabled() const;
 
     inline void Set_Target_Torque(const float &__Target_Torque);
+
+    inline void Set_Target_Current(const float &__Target_Current);
     inline void Set_Feedforward_Torque(const float &__Feedforward_Torque);
 
     void CAN_RxCpltCallback();
@@ -266,6 +269,9 @@ protected:
     uint32_t Feedback_Raw;
     // 正常运行默认保留原有小电流补偿；辨识基线可显式关闭
     bool Threshold_Current_Enabled;
+    // Identification can bypass the inferred output-torque conversion and
+    // command the C620 motor-current setpoint directly.
+    bool Current_Command_Mode;
 
     // 读变量
 
@@ -277,6 +283,7 @@ protected:
     // 读写变量
     // 目标的扭矩, Nm
     float Target_Torque;
+    float Target_Current;
     // 前馈的扭矩, Nm
     float Feedforward_Torque;
 
@@ -309,8 +316,9 @@ inline Class_Motor_DJI_C620::Class_Motor_DJI_C620()
     CURRENT_TO_OUT(16384.0f / 20.0f), OUT_MAX(16384.0f), 
     Threshold_Current(300),Flag(0), Pre_Flag(0), 
     Out(0.0f), Command_Raw(0u), Feedback_Raw(0u),
-    Threshold_Current_Enabled(true), Motor_DJI_Status(Motor_DJI_Status_DISABLE),
-    Target_Torque(0.0f), Feedforward_Torque(0.0f)
+    Threshold_Current_Enabled(true), Current_Command_Mode(false),
+    Motor_DJI_Status(Motor_DJI_Status_DISABLE), Target_Torque(0.0f),
+    Target_Current(0.0f), Feedforward_Torque(0.0f)
 {
 }
 
@@ -466,6 +474,12 @@ inline float Class_Motor_DJI_C620::Get_Feedforward_Torque() const
     return (Feedforward_Torque);
 }
 
+inline float Class_Motor_DJI_C620::Get_Now_Current() const
+{
+    return static_cast<float>(static_cast<int16_t>(Feedback_Raw & 0xFFFFu)) /
+           CURRENT_TO_OUT;
+}
+
 inline uint32_t Class_Motor_DJI_C620::Get_Command_Raw() const
 {
     return Command_Raw;
@@ -494,6 +508,13 @@ inline bool Class_Motor_DJI_C620::Get_Threshold_Current_Enabled() const
 inline void Class_Motor_DJI_C620::Set_Target_Torque(const float &__Target_Torque)
 {
     Target_Torque = __Target_Torque;
+    Current_Command_Mode = false;
+}
+
+inline void Class_Motor_DJI_C620::Set_Target_Current(const float &__Target_Current)
+{
+    Target_Current = __Target_Current;
+    Current_Command_Mode = true;
 }
 
 /**

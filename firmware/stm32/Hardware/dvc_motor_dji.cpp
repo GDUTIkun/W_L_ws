@@ -293,7 +293,14 @@ void Class_Motor_DJI_C620::TIM_100ms_Alive_PeriodElapsedCallback()
  */
 void Class_Motor_DJI_C620::TIM_Calculate_PeriodElapsedCallback()
 {
-    Out = (Target_Torque + Feedforward_Torque) / Gearbox_Rate / CURRENT_TO_TORQUE * CURRENT_TO_OUT;
+    if (Current_Command_Mode)
+    {
+        Out = Target_Current * CURRENT_TO_OUT;
+    }
+    else
+    {
+        Out = (Target_Torque + Feedforward_Torque) / Gearbox_Rate / CURRENT_TO_TORQUE * CURRENT_TO_OUT;
+    }
     if(Threshold_Current_Enabled && Math_Abs(Out) < Threshold_Current)
         Out = Out + Math_Sign(Out)*Threshold_Current;
     Basic_Math_Constrain(&Out, -OUT_MAX, OUT_MAX);

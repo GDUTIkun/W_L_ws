@@ -37,7 +37,7 @@ typedef struct
     uint8_t active;
     uint8_t selected_actuator;
     uint8_t c620_threshold_current_enabled;
-    uint8_t reserved;
+    uint8_t c620_direct_current_mode;
 } UartProtocolTestIdentificationControl;
 
 extern volatile UartProtocolTestStats uart2_protocol_test_stats;
