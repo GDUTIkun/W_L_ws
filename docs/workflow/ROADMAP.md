@@ -12,7 +12,7 @@
 
 ## 当前总体状态
 
-- Simulink 控制仿真：接近验证完成，尚未迁入仓库。
+- Simulink 控制仿真：平地验证基线已迁入并通过目标路径 smoke；terrain adaptation 仍未完成。
 - MuJoCo：尚未落地可运行工程。
 - ROS2：存在不完整的消息转换骨架，不能视为完整 workspace。
 - STM32：已有固件和 UART2 实验通信实现；生产链路尚未冻结。
@@ -22,7 +22,7 @@
 
 | 顺序 | 阶段 | 状态 | Phase | 放行条件/证据 |
 | --- | --- | --- | --- | --- |
-| 01 | 迁入 Simulink 基线与验证入口 | planned | — | 基线模型、运行方式和当前验证结果可复现 |
+| 01 | 迁入 Simulink 基线与验证入口 | complete | [Phase 01](phases/01-simulink-baseline-import/PLAN.md) | 基线模型、运行方式和当前验证结果可复现 |
 | 02 | 坐标系、单位、关节顺序与接口语义 | planned | — | Simulink、MuJoCo、Controller、真机物理语义一致 |
 | 03 | ROS2 公共类型与 Controller Core 骨架 | planned | — | 纯 C++ 核心边界和聚合消息契约通过测试 |
 | 04 | MuJoCo 基础模型与 Adapter | planned | — | 状态/命令闭环通路可运行，基础语义检查通过 |

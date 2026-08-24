@@ -21,9 +21,12 @@
 
 使用主题名称，例如 `coordinate-conventions.md`、`actuator-model.md`、`mujoco-parameter-provenance.md`。一个文档只描述一个稳定模型契约。
 
+## 当前模型文档
+
+- [Simulink MPC–WM-WBC baseline](simulink_mpc_wm_wbc_baseline.md)：三维 Simscape plant、16-state NMPC、12-DoF weighted WM-WBC、slack 契约、采样链、平地证据和 terrain failure 边界。
+
 ## 维护规则
 
 - 参数必须附来源：CAD、器件手册、静态标定、辨识结果或假设。
 - 模型变更必须说明对 Simulink、MuJoCo、Controller、STM32 的影响。
 - 未经真实证据支持的参数标记为候选，不写成已验证结论。
-

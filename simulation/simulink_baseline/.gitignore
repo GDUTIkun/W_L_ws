@@ -1,0 +1,7 @@
+/work/
+/slprj/
+*.slxc
+*.autosave
+**/large_yaw_last_raw.mat
+**/large_yaw_turning_regression.csv
+**/large_yaw_timeseries/
