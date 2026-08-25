@@ -113,7 +113,16 @@
 
     <body name="base_body" pos="0 0 0.6">
       <freejoint/>
+      <!-- Legacy CAD-origin sensor placeholder. This is not the torso COM
+           and must not be treated as the real IMU mounting frame. -->
       <site name="base_frame" pos="0 0 0" size="0.02" rgba="1 0 0 1"/>
+      <!-- Phase-02 canonical base/control origin: nominal torso rigid-body
+           COM computed from the current imported geoms and masses. Its axes
+           inherit base_body (MuJoCo/canonical FLU). The coordinate-contract
+           test fails if later mass edits make this marker stale. -->
+      <site name="base_control_frame"
+            pos="-0.077378152 0.000000810 -0.032277680"
+            size="0.015" rgba="0 1 1 1"/>
       <geom type="mesh" mesh="zong_zhuang____base_1__di_ban__1" mass="0.2000" class="base_default"/>
       <geom type="mesh" mesh="zong_zhuang____base_1__dian_chi__1" mass="0.5210" class="base_default"/>
       <geom type="mesh" mesh="zong_zhuang____base_1__dian_chi__2" mass="0.5210" class="base_default"/>

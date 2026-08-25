@@ -118,6 +118,11 @@ def main() -> None:
                 "worldRotationAtQpos0": vector(
                     data.xmat[body_id].reshape(3, 3)
                 ),
+                "mass": float(model.body_mass[body_id]),
+                "localInertialCom": vector(model.body_ipos[body_id]),
+                "worldInertialComAtQpos0": vector(data.xipos[body_id]),
+                "subtreeMass": float(model.body_subtreemass[body_id]),
+                "subtreeComWorldAtQpos0": vector(data.subtree_com[body_id]),
             }
         )
 
@@ -229,6 +234,27 @@ def main() -> None:
         },
     }
 
+    base_body_id = mujoco.mj_name2id(
+        model, mujoco.mjtObj.mjOBJ_BODY, "base_body"
+    )
+    base_control_site_id = mujoco.mj_name2id(
+        model, mujoco.mjtObj.mjOBJ_SITE, "base_control_frame"
+    )
+    base_frame_contract = {
+        "cadFrame": "base_body",
+        "legacySensorPlaceholder": "base_frame",
+        "controlFrame": "base_control_frame",
+        "controlFrameLocalPosition": vector(
+            model.site_pos[base_control_site_id]
+        ),
+        "compiledTorsoLocalCom": vector(model.body_ipos[base_body_id]),
+        "controlFrameWorldPositionAtQpos0": vector(
+            data.site_xpos[base_control_site_id]
+        ),
+        "compiledTorsoWorldComAtQpos0": vector(data.xipos[base_body_id]),
+        "realImuFrame": None,
+    }
+
     manifest = {
         "schemaVersion": 1,
         "generatedAt": datetime.now(timezone.utc).isoformat(),
@@ -259,6 +285,7 @@ def main() -> None:
         "sensors": sensors,
         "positiveJointPerturbations": perturbations,
         "runtimeProbes": runtime_probes,
+        "baseFrameContract": base_frame_contract,
         "interpretationLimits": [
             "The model has zero actuators, so torque direction is not tested.",
             "The base freejoint is constrained by a world weld.",

@@ -1,9 +1,9 @@
 ﻿{
     "schemaVersion":  1,
-    "generatedAt":  "2026-08-24T23:12:00.9027400+08:00",
+    "generatedAt":  "2026-08-25T10:43:19.3643351+08:00",
     "source":  {
                    "modelPath":  "simulation/mujoco/model/wheel_leg.xml",
-                   "modelSha256":  "37DF33DA5B7A901A239878CD7E467D273968BDFF82AF3E7EA97C2DCE084EA7FD",
+                   "modelSha256":  "6AB5480C12874025B20364ACCACB48928A290A0EC47405D5D9E94B284AE7846C",
                    "scenePath":  "simulation/mujoco/model/scence.xml",
                    "sceneSha256":  "4A540721BFA83A5FED215D9AA9F7689E00F93F08A2ED23EFC2F49CE43DD25C15"
                },
@@ -43,6 +43,16 @@
                                      {
                                          "name":  "base_frame",
                                          "pos":  "0 0 0",
+                                         "orientationAttribute":  {
+
+                                                                  },
+                                         "orientationValue":  {
+
+                                                              }
+                                     },
+                                     {
+                                         "name":  "base_control_frame",
+                                         "pos":  "-0.077378152 0.000000810 -0.032277680",
                                          "orientationAttribute":  {
 
                                                                   },
@@ -439,6 +449,16 @@
                                            }
                   },
                   {
+                      "name":  "base_control_frame",
+                      "pos":  "-0.077378152 0.000000810 -0.032277680",
+                      "orientationAttribute":  {
+
+                                               },
+                      "orientationValue":  {
+
+                                           }
+                  },
+                  {
                       "name":  "right_calf_site",
                       "pos":  "0.03180 -0.03859  -0.01050",
                       "orientationAttribute":  {
@@ -660,7 +680,7 @@
     "integrity":  {
                       "bodyCount":  11,
                       "jointCount":  10,
-                      "siteCount":  5,
+                      "siteCount":  6,
                       "sensorCount":  19,
                       "duplicatePublicNames":  [
 

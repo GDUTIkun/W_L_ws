@@ -1,6 +1,8 @@
 # Phase 02 用户坐标方向核对单
 
-Status: `waiting for user evidence after automated audit`
+Status: `Simulink/MuJoCo world-axis evidence reviewed; real joint/IMU deferred`
+
+2026-08-25 回传审查见 `evidence/manual/REVIEW.md`。A/B 的 world 轴与 frame 证据已通过；C 未执行，并按用户决定在 MuJoCo frame/site 落地后转入真机验证。该延期不等同于 DG05 或真实 IMU PASS。
 
 自动审计已经确认 frame 拓扑、字段排列、旧 MJCF joint axis、compiled gravity 和基础 sensor 行为。本单只要求 GUI/实物才能可靠确认的项目，不要求你修改 `source.slx` 或原始 `wheel_leg.xml`。
 
@@ -13,10 +15,10 @@ Status: `waiting for user evidence after automated audit`
    open_proformance_test(false);
    open_system('source/PD_only')
    ```
-
 2. 截图 `World Frame1 -> Rigid Transform -> 6-DOF Joint`，确保能看见 block 名和连接线。
 3. 打开 `Rigid Transform` 参数，截图其 `Translation: +Y`、无 rotation。
 4. 打开 `Rigid Transform5` 与 `Rigid Transform10`：
+
    - `Transform5` 应为 `+Z, 0.2 m`，连接右髋；
    - `Transform10` 应为 `+Z, -0.2 m`，连接左髋。
 5. 运行一个已有短仿真使 Mechanics Explorer 打开；启用 frame/axis 显示，截取 World、base、左右 hip 三者同屏图。请用箭头或文字标出你观察到的“前、上、右”。
@@ -75,17 +77,17 @@ mujoco_06_top_view.png
 
 填写：
 
-| Joint/sensor | `q>0` 或轴正向的实际运动 | `dq>0` 是否同向 | MuJoCo 当前候选 | Controller 当前语义 | PASS/不确定 |
-| --- | --- | --- | --- | --- | --- |
-| left hip |  |  |  |  |  |
-| left knee |  |  |  |  |  |
-| left wheel |  |  | 正 q 候选为前滚 | 前滚/后滚待映射 |  |
-| right hip |  |  |  |  |  |
-| right knee |  |  |  |  |  |
-| right wheel |  |  | 正 q 候选为前滚 | 前滚/后滚待映射 |  |
-| IMU roll |  |  |  | 正 roll 绕 `{S}` +X |  |
-| IMU pitch |  |  |  | 正 pitch 绕 `{S}` +Z |  |
-| IMU yaw |  |  |  | 正 yaw 为左转 |  |
+| Joint/sensor | `q>0` 或轴正向的实际运动 | `dq>0` 是否同向 | MuJoCo 当前候选 | Controller 当前语义   | PASS/不确定 |
+| ------------ | -------------------------- | ----------------- | --------------- | --------------------- | ----------- |
+| left hip     |                            |                   |                 |                       |             |
+| left knee    |                            |                   |                 |                       |             |
+| left wheel   |                            |                   | 正 q 候选为前滚 | 前滚/后滚待映射       |             |
+| right hip    |                            |                   |                 |                       |             |
+| right knee   |                            |                   |                 |                       |             |
+| right wheel  |                            |                   | 正 q 候选为前滚 | 前滚/后滚待映射       |             |
+| IMU roll     |                            |                   |                 | 正 roll 绕`{S}` +X  |             |
+| IMU pitch    |                            |                   |                 | 正 pitch 绕`{S}` +Z |             |
+| IMU yaw      |                            |                   |                 | 正 yaw 为左转         |             |
 
 ## D. 交付给 Codex
 
@@ -96,4 +98,3 @@ docs/workflow/phases/02-coordinate-interface-contract/evidence/manual/
 ```
 
 如果不希望把图片提交到仓库，也可以告诉我它们的本地绝对路径。Codex 会读取这些真实产物，更新 DG05/DG06/DG07；仅口头说“看起来一致”不会标为 PASS。
-

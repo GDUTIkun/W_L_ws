@@ -8,8 +8,8 @@ Status: `evidence captured`
 - MATLAB：R2024b，`24.2.0.2712019`
 - 自动清单：`simulink_frame_manifest.json`
 - 生成脚本：`tools/maintenance/inspect_simulink_frames.m`
-- 审计前后模型 SHA256 均为 `EF6C7876B156DC36A1AEC0EBCA169D9205B3A042408760D585A88D3860530A58`
-- 模型 `Dirty` 状态为 `off -> off`；本次只读审计没有保存或修改 `source.slx`。
+- 当前用户批准模型 SHA256 为 `B4036771E6F01614A2F85E0C0D980C24E56C2CEC7372DEA1AE31832EEB6BE279`。
+- 最新 manifest 覆盖用户有意断开的 `PD_only/6-DOF Joint` LConn2–LConn7；模型加载回调报告 `Dirty on -> on`，inspector 本身未保存 `source.slx`。
 
 MathWorks 的 6-DOF Joint 定义说明：Px/Py/Pz 分别是 follower 相对 base、沿 base frame X/Y/Z 轴的位移；球副 Q 是 follower 相对 base 的四元数，角速度按所选 resolution frame 表达。参见 [6-DOF Joint](https://www.mathworks.com/help/sm/ref/6dofjoint.html) 与 [Rotational Measurements](https://www.mathworks.com/help/sm/ug/rotational-measurements.html)。
 
@@ -102,3 +102,10 @@ Controller/WBC 公共数组仍采用 left block before right block；表格先�
 - 将真机 encoder `q>0`、`dq>0` 和安全低速 torque 正方向与同一语义表对齐。
 - 验证 IMU 的安装 frame、输出四元数含义和加速度是否为 specific force；这些不能从当前 `source.slx` 推断。
 
+## 2026-08-25 人工证据复核
+
+`evidence/manual/正视.png`、`右视.png`、`俯视.png` 已从三个视角确认 Simscape 物理轴为 X 前、Y 上、Z 右；`word2body.png` 确认 World 到 6-DOF Joint base 之间没有旋转，只有 +Y 平移。Rigid Transform5/10 已由自动 manifest 覆盖且用户再次确认，因此不要求重复截图。
+
+这组轴会影响脚本，但现有 baseline 已一致处理：`full_base_nmpc_state_signal.m` 将平移量打包为 `[Sx,Sz,Sy]`，`spatial_two_leg_qp_core.m` 再用 `[1,3,2]` 恢复物理 `[Sx,Sy,Sz]`，`controller_attitude_kinematics.m` 使用物理 X/Z/Y 的 roll/pitch/yaw 轴。结论是保留 baseline，不再额外交换；在 Adapter 边界用 `R_N_from_S` 转到 FLU。
+
+复查工作树版本时发现 `source/PD_only/6-DOF Joint` 的 LConn2–LConn7 已断开。用户于 2026-08-25 确认该修改有意；manifest 已按当前模型重生成。坐标参数和右侧测量连接未变，随后 5 s smoke 通过。

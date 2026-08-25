@@ -1,6 +1,6 @@
 # Phase 02: 坐标系、单位、关节顺序与接口语义 — PLAN
 
-Status: `active`
+Status: `complete`
 
 ## Goal
 
@@ -74,11 +74,11 @@ Status: `active`
 | T01 | 固结权威输入与坐标术语 | Phase 01、R2024b 文档、baseline 说明、旧 MJCF | 本 PLAN 的证据清单；frame/transform 记号草案 | 来源优先级与每项待决问题人工审查 | done |
 | T02 | 只读提取 Simulink/Simscape frame 与传感器语义 | `source.slx`、mask/脚本、MathWorks R2024b 文档 | 可重复的 MATLAB 检查脚本、Simulink frame manifest、不可自动读取项清单 | 重开模型后重复生成一致；关键 Controller 输入无未标 frame | done |
 | T03 | 审计旧 MuJoCo 坐标与关节/传感器定义 | `wheel_leg.xml`、scene、mesh 导入层级 | current-vs-intended 表、body/site/joint/sensor frame tree、风险项 | XML 结构检查；左右镜像、父子 pose、axis/zero/sensor 逐项复核 | done |
-| T04 | 关闭 canonical contract 技术决策 | T02、T03、现有控制源码与测试 | `docs/models/coordinate_frame_contract.md`；DG01–DG06 决策记录 | 单位轴、旋转、twist/acceleration/wrench 例子可手算互逆；无隐式 swizzle | doing |
-| T05 | 落地 MuJoCo/Adapter 映射与备注 | T04 契约、旧 MJCF | 明确命名的辅助 site/frame、MJCF 注释或独立 mapping；必要的候选修改 | native -> canonical -> native round-trip；原几何/算法未被意外改动 | todo |
-| T06 | 建立跨系统方向性测试 | T02–T05 | Simulink 与 MuJoCo 坐标 contract tests、冻结测试姿态与预期符号 | 单位轴、90°、joint 正向微扰、左右镜像、rolling、IMU 和 wrench 全部通过 | todo |
-| T07 | 完成用户操作 checkpoint 与真机低风险符号核对 | DG05、DG07、DG08 | 精确操作单、截图/导出/日志入口、`MuJoCo q>0 = Real q>0 = Controller q>0` 核对表 | Codex 复查操作产物；未验证项不得标 PASS | todo |
-| T08 | 审查、更新入口并交接后续 Phase | T01–T07 证据 | REVIEW；ROADMAP/Phase 索引；Phase 03/04/06 的输入链接 | REVIEW 无 blocking finding；仅 PASS 后创建 RECORD | todo |
+| T04 | 关闭 canonical contract 技术决策 | T02、T03、现有控制源码与测试 | `docs/models/coordinate_frame_contract.md`；DG01–DG06 决策记录 | 单位轴、旋转、twist/acceleration/wrench 例子可手算互逆；无隐式 swizzle | done |
+| T05 | 落地 MuJoCo/Adapter 映射与备注 | T04 契约、旧 MJCF | 明确命名的辅助 site/frame、MJCF 注释或独立 mapping；必要的候选修改 | native -> canonical -> native round-trip；原几何/算法未被意外改动 | done |
+| T06 | 建立跨系统方向性测试 | T02–T05 | Simulink 与 MuJoCo 坐标 contract tests、冻结测试姿态与预期符号 | 单位轴、90°、joint 正向微扰、左右镜像、rolling、IMU 和 wrench 全部通过 | done |
+| T07 | 完成用户操作 checkpoint 与真机低风险符号核对 | DG05、DG07、DG08 | 精确操作单、截图/导出/日志入口、`MuJoCo q>0 = Real q>0 = Controller q>0` 核对表 | Codex 复查操作产物；未验证项不得标 PASS | done |
+| T08 | 审查、更新入口并交接后续 Phase | T01–T07 证据 | REVIEW；ROADMAP/Phase 索引；Phase 03/04/06 的输入链接 | REVIEW 无 blocking finding；仅 PASS 后创建 RECORD | done |
 
 任务状态只使用 `todo / doing / done / blocked`。
 
@@ -100,15 +100,15 @@ Status: `active`
 
 ## Acceptance Criteria
 
-- [ ] Scope 内交付物完成。
-- [ ] `docs/models/coordinate_frame_contract.md` 对每个公共 state/command 字段给出量、单位、参考 frame、表达 frame、原点、顺序和正方向。
-- [ ] Simulink frame manifest 覆盖 Controller 实际消费的关键传感/状态量，并能追溯到 `source.slx` block path、参数或控制源码。
-- [ ] MuJoCo 的每个公共 body/site/joint/sensor 都能追溯到 canonical mapping；内部相对 frame 有明确命名和备注，不要求复制 Simscape 的 world-fixed 用法。
-- [ ] 单位轴、90°、joint 正向微扰、左右镜像、wheel rolling、IMU 和 wrench 方向性测试有真实结果且通过冻结判据。
-- [ ] 自动验证通过并记录真实输出；必要的用户 GUI/CAD/真机步骤均有可复核证据。
-- [ ] `source.slx` 的 validated behavior 未因 discovery 被改变；任何受控模型修改都有 decision gate 和回归证据。
-- [ ] DG01–DG08 全部关闭，或范围外问题明确转入 Phase 03/04/06 且不阻塞本 Phase 的语义放行。
-- [ ] 接口和文档与实现一致，REVIEW 无 blocking finding。
+- [x] Scope 内交付物完成。
+- [x] `docs/models/coordinate_frame_contract.md` 对每个公共 state/command 字段给出量、单位、参考 frame、表达 frame、原点、顺序和正方向。
+- [x] Simulink frame manifest 覆盖 Controller 实际消费的关键传感/状态量，并能追溯到 `source.slx` block path、参数或控制源码。
+- [x] MuJoCo 的每个公共 body/site/joint/sensor 都能追溯到 canonical mapping；内部相对 frame 有明确命名和备注，不要求复制 Simscape 的 world-fixed 用法。
+- [x] 单位轴、90°、joint 正向微扰、左右镜像、wheel rolling、IMU 和 wrench 方向性测试有真实结果且通过冻结判据；真实安装部分按批准范围转交 Phase 06。
+- [x] 自动验证通过并记录真实输出；用户 GUI 证据已审查，真机步骤明确转交 Phase 06。
+- [x] `source.slx` 的有意修改经用户确认并通过 5 s smoke；discovery 未再次保存模型。
+- [x] DG01–DG08 已关闭或明确转入 Phase 04/06/07，不阻塞本 Phase 的语义放行。
+- [x] 接口和文档与实现一致，REVIEW 无 blocking finding。
 
 ## Execution Notes
 
@@ -118,12 +118,17 @@ Status: `active`
 
 - T01：查阅 MathWorks R2024b 6-DOF Joint、Revolute Joint 与 quaternion measurement 官方文档，以及 MuJoCo XML/sensor 官方文档；在 `docs/models/coordinate_frame_contract.md` 固结 `{S}`、`{C_fields}`、`{M}` 和 `R_A_from_B` 记号。关键结论是 `[1,3,2]` 为字段排列而非 rotation。
 - T02：新增并两次运行 `tools/maintenance/inspect_simulink_frames.m`。第二次清单覆盖 438 blocks 中 111 个 frame/physical 相关 blocks，记录参数、ports、立即连接和 `PortConnectivity`；`source.slx` SHA256 检查前后相同，Dirty `off -> off`。证据见 `evidence/simulink_frame_manifest.json` 与 `evidence/simulink_frame_audit.md`。
-- T03：新增并运行 `tools/maintenance/audit_mujoco_frames.ps1`；静态解析得到 11 bodies、10 joints、5 sites、19 sensors、0 个重复公共名称，并确认 base world weld、局部 joint axes、IMU site 和两处 gravity 声明。证据见 `evidence/mujoco_frame_manifest.json` 与 `evidence/mujoco_frame_audit.md`。
-- T04：已冻结 Simscape canonical physical `{S}` 为 X 前、Y 上、Z 右；保留 Controller `[前、右、上]` 兼容字段顺序但禁止将其当作 frame。MuJoCo `{M}` 映射、joint sign、IMU acceleration 与 quaternion direction 仍等待动态测试，未提前关闭。
+- T03：新增并运行 `tools/maintenance/audit_mujoco_frames.ps1`；最终静态解析得到 11 bodies、10 joints、6 sites、19 sensors、0 个重复公共名称，并确认 base world weld、局部 joint axes、legacy sensor site、control site 和两处 gravity 声明。证据见 `evidence/mujoco_frame_manifest.json` 与 `evidence/mujoco_frame_audit.md`。
+- T04：人工证据确认 Simscape `{S}` 为 X 前、Y 上、Z 右，MuJoCo `{M}` 为 X 前、Y 左、Z 上。跨系统 canonical `{N}` 冻结为 FLU；`R_N_from_S=[1 0 0;0 0 -1;0 1 0]`，`R_N_from_M=I`。Controller `[前、右、上]` 仅保留为 legacy 字段顺序。active quaternion、continuous yaw、joint axis/sign 和后续 transfer 均已冻结。
 - T06/DG08 前置：发现已有 `conda:mujoco` 空环境后，在该专用环境安装并冻结 MuJoCo 3.12.0，新增 `simulation/mujoco/environment.yml` 与 `audit_mujoco_runtime.py`。旧 scene 成功编译为 nq=17、nv=16、nu=0、sensor width=26；compiled gravity 为 `[0,0,0]`。运行时 freefall/framequat/gyro probes 通过其冻结预期，证据见 `evidence/mujoco_runtime_manifest.json`。
-- T06 代数子集：`matlab -batch "... test_coordinate_frame_contract"` PASS；确认 Controller pack permutation det=-1、候选 `R_S_from_M` det=+1、正 yaw 将前向转到物理 -Z/Controller 负侧向。该结果不覆盖 joint torque、rolling contact 或真实 IMU 安装。
+- T06 代数子集：`matlab -batch "... test_coordinate_frame_contract"` PASS；确认 `R_N_from_S` det=+1、Controller FLU-to-legacy field pack det=-1、`R_N_from_M=I`，并确认正 yaw 在 canonical FLU 中朝 +Y 左转。该结果不覆盖 joint torque、rolling contact 或真实 IMU 安装。
 - T07：已创建 `USER_CHECKPOINT.md`，把剩余 GUI/真机项目缩减为 Simulink frame 截图、MuJoCo 三视图轴核对和 6 关节/IMU 低风险符号表。
+- T07 人工回传：Simulink 三视图、World-to-body 连接和 MuJoCo 三视图通过审查，详见 `evidence/manual/REVIEW.md`。Rigid Transform5/10 由 manifest 加用户复核覆盖，无需重复截图。真机 frame 按用户决定延后到 MuJoCo frame/site 落地后补齐。
+- T04/DG02 子结论：当前 MuJoCo `base_body` 为 CAD 导出 frame；编译模型计算的 torso COM 相对它为 `[-0.077378152, 0.000000810, -0.032277680] m`。保留 CAD frame，不移动 XML 根；后续以 `data.xipos[base_body]` + body orientation 表达 `base_control_frame`，真实 `imu_frame` 独立定义。
+- T05：在 `wheel_leg.xml` 新增 `base_control_frame` site，位置为当前编译 torso COM、姿态继承 `base_body`；保留 legacy `base_frame` 并明确它不是 COM/真实 IMU。新增 `evidence/joint_coordinate_mapping.md`，冻结 `q_C=-q_M+b_joint`、`dq_C=-dq_M`、`tau_M=-tau_C`。
+- T06 完整自动子集：新增 `test_mujoco_coordinate_contract.py`，验证 COM site、world FLU、六关节轴、左右微扰、正 wheel rolling、active wxyz 和 yaw 跨 ±π；与 MATLAB 代数测试均 PASS。逐 joint `b_joint` 转 Phase 04，真实 encoder/IMU/torque 转 Phase 06。
+- 模型完整性 finding：`source.slx` 的 `PD_only/6-DOF Joint` LConn2–LConn7 断线已由用户确认是有意修改；权威 manifest 已更新，随后 5 s smoke `simulationCompleted=true`、`controlStable=true`。
 
 ## Blockers
 
-自动工作当前没有环境 blocker；DG08 已由 `conda:mujoco` + `simulation/mujoco/environment.yml` 关闭。完整 Phase PASS 仍等待 `USER_CHECKPOINT.md` 的 GUI/真机证据，并受以下真实模型边界约束：compiled gravity 为零、`nu=0`、base 被 world weld。这些 finding 不在本坐标 discovery 中静默修正。
+None. 本 Phase 所需语义已冻结；逐 joint zero offset 转 Phase 04，真实 IMU/encoder/torque 转 Phase 06，质量与 COM 标定转 Phase 07。compiled gravity 为零、`nu=0`、base 被 world weld 是后续 MuJoCo 基础模型的已知输入，不在本坐标 Phase 静默修正。

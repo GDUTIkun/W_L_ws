@@ -1,13 +1,13 @@
 {
   "schemaVersion": "simulink-frame-manifest/1.0.0",
-  "generatedUtc": "2026-08-24T15:01:39Z",
+  "generatedUtc": "2026-08-25T02:39:00Z",
   "matlabRelease": "2024b",
   "matlabVersion": "24.2.0.2712019 (R2024b)",
   "repoRoot": "D:\\Workspace\\W_L_ws",
   "modelFile": "D:\\Workspace\\W_L_ws\\simulation\\simulink_baseline\\model\\simulate\\two_legs\\source.slx",
   "modelName": "source",
-  "modelDirtyBefore": "off",
-  "modelDirtyAfter": "off",
+  "modelDirtyBefore": "on",
+  "modelDirtyAfter": "on",
   "totalBlocks": 438,
   "includedBlocks": 111,
   "selectionPolicy": [
@@ -238,32 +238,32 @@
         {
           "type": "LConn2",
           "position": "[-419 -75]",
-          "neighbors": "source/PD_only/Simulink-PS\nConverter8"
+          "neighbors": []
         },
         {
           "type": "LConn3",
           "position": "[-419 -45]",
-          "neighbors": "source/PD_only/Simulink-PS\nConverter9"
+          "neighbors": []
         },
         {
           "type": "LConn4",
           "position": "[-419 -15]",
-          "neighbors": "source/PD_only/Simulink-PS\nConverter10"
+          "neighbors": []
         },
         {
           "type": "LConn5",
           "position": "[-419 15]",
-          "neighbors": "source/PD_only/Simulink-PS\nConverter11"
+          "neighbors": []
         },
         {
           "type": "LConn6",
           "position": "[-419 45]",
-          "neighbors": "source/PD_only/Simulink-PS\nConverter12"
+          "neighbors": []
         },
         {
           "type": "LConn7",
           "position": "[-419 75]",
-          "neighbors": "source/PD_only/Simulink-PS\nConverter13"
+          "neighbors": []
         },
         {
           "type": "RConn1",
@@ -1394,8 +1394,8 @@
           "name": "",
           "portType": "connection",
           "physical": true,
-          "connected": true,
-          "peers": "source/PD_only/Simulink-PS\nConverter8 [connection 1]"
+          "connected": false,
+          "peers": []
         },
         {
           "category": "LConn",
@@ -1403,8 +1403,8 @@
           "name": "",
           "portType": "connection",
           "physical": true,
-          "connected": true,
-          "peers": "source/PD_only/Simulink-PS\nConverter9 [connection 1]"
+          "connected": false,
+          "peers": []
         },
         {
           "category": "LConn",
@@ -1412,8 +1412,8 @@
           "name": "",
           "portType": "connection",
           "physical": true,
-          "connected": true,
-          "peers": "source/PD_only/Simulink-PS\nConverter10 [connection 1]"
+          "connected": false,
+          "peers": []
         },
         {
           "category": "LConn",
@@ -1421,8 +1421,8 @@
           "name": "",
           "portType": "connection",
           "physical": true,
-          "connected": true,
-          "peers": "source/PD_only/Simulink-PS\nConverter11 [connection 1]"
+          "connected": false,
+          "peers": []
         },
         {
           "category": "LConn",
@@ -1430,8 +1430,8 @@
           "name": "",
           "portType": "connection",
           "physical": true,
-          "connected": true,
-          "peers": "source/PD_only/Simulink-PS\nConverter12 [connection 1]"
+          "connected": false,
+          "peers": []
         },
         {
           "category": "LConn",
@@ -1439,8 +1439,8 @@
           "name": "",
           "portType": "connection",
           "physical": true,
-          "connected": true,
-          "peers": "source/PD_only/Simulink-PS\nConverter13 [connection 1]"
+          "connected": false,
+          "peers": []
         },
         {
           "category": "RConn",
@@ -10637,7 +10637,7 @@
         {
           "type": "RConn1",
           "position": "[-566 110]",
-          "neighbors": "source/PD_only/6-DOF Joint"
+          "neighbors": []
         }
       ],
       "parameters": [
@@ -10714,8 +10714,8 @@
           "name": "",
           "portType": "connection",
           "physical": true,
-          "connected": true,
-          "peers": "source/PD_only/6-DOF Joint [connection 4]"
+          "connected": false,
+          "peers": []
         }
       ]
     },
@@ -10779,7 +10779,7 @@
         {
           "type": "RConn1",
           "position": "[-566 145]",
-          "neighbors": "source/PD_only/6-DOF Joint"
+          "neighbors": []
         }
       ],
       "parameters": [
@@ -10856,8 +10856,8 @@
           "name": "",
           "portType": "connection",
           "physical": true,
-          "connected": true,
-          "peers": "source/PD_only/6-DOF Joint [connection 5]"
+          "connected": false,
+          "peers": []
         }
       ]
     },
@@ -10921,7 +10921,7 @@
         {
           "type": "RConn1",
           "position": "[-566 180]",
-          "neighbors": "source/PD_only/6-DOF Joint"
+          "neighbors": []
         }
       ],
       "parameters": [
@@ -10998,8 +10998,8 @@
           "name": "",
           "portType": "connection",
           "physical": true,
-          "connected": true,
-          "peers": "source/PD_only/6-DOF Joint [connection 6]"
+          "connected": false,
+          "peers": []
         }
       ]
     },
@@ -11063,7 +11063,7 @@
         {
           "type": "RConn1",
           "position": "[-566 210]",
-          "neighbors": "source/PD_only/6-DOF Joint"
+          "neighbors": []
         }
       ],
       "parameters": [
@@ -11140,8 +11140,8 @@
           "name": "",
           "portType": "connection",
           "physical": true,
-          "connected": true,
-          "peers": "source/PD_only/6-DOF Joint [connection 7]"
+          "connected": false,
+          "peers": []
         }
       ]
     },
@@ -12199,7 +12199,7 @@
         {
           "type": "RConn1",
           "position": "[-566 40]",
-          "neighbors": "source/PD_only/6-DOF Joint"
+          "neighbors": []
         }
       ],
       "parameters": [
@@ -12276,8 +12276,8 @@
           "name": "",
           "portType": "connection",
           "physical": true,
-          "connected": true,
-          "peers": "source/PD_only/6-DOF Joint [connection 2]"
+          "connected": false,
+          "peers": []
         }
       ]
     },
@@ -12341,7 +12341,7 @@
         {
           "type": "RConn1",
           "position": "[-566 75]",
-          "neighbors": "source/PD_only/6-DOF Joint"
+          "neighbors": []
         }
       ],
       "parameters": [
@@ -12418,8 +12418,8 @@
           "name": "",
           "portType": "connection",
           "physical": true,
-          "connected": true,
-          "peers": "source/PD_only/6-DOF Joint [connection 3]"
+          "connected": false,
+          "peers": []
         }
       ]
     },

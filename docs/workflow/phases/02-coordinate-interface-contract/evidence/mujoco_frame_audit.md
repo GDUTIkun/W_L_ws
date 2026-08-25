@@ -1,6 +1,6 @@
 # 旧 MuJoCo 模型 frame/joint/sensor 审计
 
-Status: `import facts captured; convention not approved`
+Status: `world axes approved; origin/joint/real semantics partial`
 
 ## 可重复入口
 
@@ -109,3 +109,20 @@ qpos0 下，左右 hip/knee/wheel 的 compiled world axis 都约为 native `+Y`�
 ## 暂不修改原模型的理由
 
 当前尚未关闭 joint zero/sign、MuJoCo X 正向、compiled gravity 和动态运行环境四个 gate。此时旋转 mesh、改 joint axis、删 weld 或覆盖 Euler 会把“导入事实”和“批准语义”混在一起。第一步应在候选副本中加载并做 frame/FK 微扰；验证通过后，再决定只加辅助 site/注释，还是需要 CAD/GUI 重导出。
+
+## 2026-08-25 人工轴向与 COM 复核
+
+人工三视图与已有 XML/FK 数值一致，确认当前 MuJoCo world 为 X 前、Y 左、Z 上。因此旧文中的“候选”升级为批准的 world 轴结论：canonical `{N}` 也采用 FLU，`R_N_from_M=I`；到 Simscape 的旋转只用于 baseline 边界，不再作为 MuJoCo Adapter 的永久 world swizzle。
+
+当前 `base_body` 原点来自 SolidWorks 导出，应命名为 `base_cad_frame`。MuJoCo 编译模型已经从 geom 质量计算出机身刚体的 nominal 惯性 COM：
+
+```text
+base_body mass = 2.588 kg
+base_body local inertial COM = [-0.077378152, 0.000000810, -0.032277680] m
+```
+
+后续 `base_control_frame` 采用与 `base_cad_frame` 平行、原点位于该 torso COM 的定义。运行时位置可读 `data.xipos[base_body]`，姿态仍读 `data.xmat[base_body]`；不要使用惯性主轴 quaternion，也不要把构型相关的整机 `subtree_com` 当成 torso base。当前 identity `base_frame` site 只是 CAD frame 别名，真实 `imu_frame` 必须等待安装 pose。
+
+不建议直接移动 XML 的 `base_body` 原点。保持导入树不动，在 Adapter 或显式辅助 site 中表达 COM frame，能够利用 MuJoCo 的局部坐标便利并避免同步补偿全部 child/geom/site pose。质量与 COM 的最终真机标定转入 Phase 07。
+
+最终落地新增 `base_control_frame` site，位置为当前 compiled torso COM，轴继承 `base_body`；`base_frame` 保留为 legacy CAD-origin sensor placeholder。`test_mujoco_coordinate_contract.py` 已验证 site 与 `body_ipos/xipos` 一致，并冻结六个驱动关节的 MuJoCo `+N_y` 与 Simscape `-N_y` 相反关系、左右微扰、正向 rolling、active wxyz quaternion 和 continuous yaw。逐关节零位偏置见 `joint_coordinate_mapping.md`，转 Phase 04 标定。

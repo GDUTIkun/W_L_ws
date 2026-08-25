@@ -23,8 +23,8 @@
 | 顺序 | 阶段 | 状态 | Phase | 放行条件/证据 |
 | --- | --- | --- | --- | --- |
 | 01 | 迁入 Simulink 基线与验证入口 | complete | [Phase 01](phases/01-simulink-baseline-import/PLAN.md) | 基线模型、运行方式和当前验证结果可复现 |
-| 02 | 坐标系、单位、关节顺序与接口语义 | active | [Phase 02](phases/02-coordinate-interface-contract/PLAN.md) | Simulink、MuJoCo、Controller、真机物理语义一致 |
-| 03 | ROS2 公共类型与 Controller Core 骨架 | planned | — | 纯 C++ 核心边界和聚合消息契约通过测试 |
+| 02 | 坐标系、单位、关节顺序与接口语义 | complete | [Phase 02](phases/02-coordinate-interface-contract/PLAN.md) | FLU canonical、Simscape/MuJoCo 映射、COM frame 与 joint sign 契约通过审查；真机安装验证转 Phase 06 |
+| 03 | 统一 Robot 接口与 Controller Core 骨架 | planned | [Phase 03](phases/03-robot-interface-controller-core/PLAN.md) | 纯 C++ 核心边界和聚合消息契约通过测试 |
 | 04 | MuJoCo 基础模型与 Adapter | planned | — | 状态/命令闭环通路可运行，基础语义检查通过 |
 | 05 | 执行器力矩映射、摩擦与附加惯量 | active | [Phase 05](phases/05-actuator-torque-identification/PLAN.md) | 3508+C620 先跑通；各执行器真实辨识完成，MuJoCo 与实验在预先规定误差内一致 |
 | 06 | RobotState 与传感器正式验证 | planned | — | 时间戳、单位、方向、滤波和延迟满足控制要求 |
