@@ -4,7 +4,7 @@
 
 ## Active
 
-- [Phase 05：执行器力矩辨识与模型校准](05-actuator-torque-identification/PLAN.md) — Phase 14 前置已 PASS；从通信/计量/同步/安全 gate 继续，不自动开始真机正式实验。
+None.
 
 ## Planned
 
@@ -16,7 +16,7 @@ None.
 
 ## Blocked
 
-None.
+- [Phase 05：执行器力矩辨识与模型校准](05-actuator-torque-identification/PLAN.md) — Phase 14 前置已 PASS；当前按用户决定冻结真机相关执行，解除冻结后从通信/计量/同步/安全 gate 恢复。
 
 ## Complete
 

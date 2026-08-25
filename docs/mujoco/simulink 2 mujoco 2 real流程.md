@@ -11,6 +11,59 @@ Simulink 中已验证的算法使用了简化刚体假设，而 MuJoCo 和真机
 
 只有第一个问题通过后，才用 MuJoCo 和真机的共同实验回答第二个问题。MuJoCo 运动学、单腿动力学和实验接口会直接被后续控制与真机验证复用，不是抛弃性工作。
 
+## 当前执行策略：先纯仿真，再用辨识模型完整复现
+
+当前冻结所有真机上电、板级联调、传感器采集、Load Cell pilot 和正式辨识。Phase 05 保留已有实现与实验设计，但在用户解除冻结前不继续执行。冻结期间不原地扩张已完成的 Phase 14，也暂不在本文件中制定详细新 Phase；纯仿真总体顺序固定为：
+
+```text
+当前 nominal baseline
+→ 完整闭链运动学、接触点与 Jacobian 补强
+→ Controller ↔ MuJoCo 可重复闭环
+→ Joint PD 与重力补偿
+→ 轮地接触与 floating-base
+→ 简单站立
+→ WBC
+→ NMPC
+```
+
+上述各层只形成 simulation-only 结论，不提前关闭依赖真实计量、真机响应或 MuJoCo–real 一致性的 gate。真机工作恢复后，先执行执行器、传感器、质量/COM、惯量/耦合和接触的共同辨识，形成新的 identified plant profile，再按完全相同的层次从运动学开始重跑：
+
+```text
+nominal profile 的第一轮结果（保留）
+                    ↓ 同一 runner / schema / acceptance 口径
+identified profile 的第二轮结果（新增）
+                    ↓
+nominal ↔ identified ↔ real 三方比较
+```
+
+### 复用与非覆盖契约
+
+每一层的交付必须可被第二轮直接复用，至少包括：
+
+- 稳定的命令入口和 RobotState/TorqueCommand 边界；
+- 版本化场景、激励、seed、阈值和日志 schema；
+- 记录模型 revision、参数 profile、Controller 版本、求解器设置和输入 hash 的 manifest；
+- 可重复执行的 runner，以及 raw → processed → report 的确定性入口；
+- 与 plant 参数解耦的控制实现，nominal/identified 差异由显式 profile 选择，不靠修改算法源码切换；
+- 新 run 写入新的日期/模型 ID 目录，已完成 Phase 的 evidence 和历史 run 不原地覆盖。
+
+第二轮允许修正模型与参数，但不得把第一轮改写成“从未发生”。需要废弃的配置保留 provenance，并由新记录声明 `supersedes`、原因和影响范围。
+
+### SolidWorks 模型修订
+
+后续髋部电机或连接件尺寸改变并重新从 SolidWorks 导出，在保持 joint/body/site 命名、关节拓扑和 canonical 接口稳定时，Adapter、runner 和控制层应可以直接复用；但新导出仍视为新的 plant revision，而不是覆盖 `wheel_leg.xml` nominal baseline。
+
+每个新 revision 至少重新检查：
+
+- mesh、joint/body/site 名称和父子拓扑；
+- joint origin、axis、limit、零位和左右镜像；
+- 闭链连接点、可达工作空间与奇异位形；
+- collision geometry、轮心和接触点；
+- 由几何/质量变化引起的 mass、COM、inertia 与 Adapter offset 变化；
+- Phase 04 Adapter 回归，以及 Phase 14 运动学、质量矩阵、约束、正逆动力学和能量回归。
+
+因此，小尺寸修改通常不要求重写控制架构，但必须通过 revision diff 和自动回归证明“影响可接受”，不能凭外观相近沿用旧 PASS。
+
 ## 四个放行门
 
 | 放行门             | 要回答的问题                           | 通过后才进入         |
