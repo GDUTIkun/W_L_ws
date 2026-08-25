@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+config_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
+export GRAPHIFY_ALLOW_LOCAL_PROVIDERS=1
+export MIMO_API_KEY=$(jq -r '.mimo.api_key // empty' "$config_dir/providers.json")
+test -n "$MIMO_API_KEY"
+exec graphify "$@"

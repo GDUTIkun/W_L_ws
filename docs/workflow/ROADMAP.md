@@ -14,7 +14,7 @@
 
 - Simulink 控制仿真：平地验证基线已迁入并通过目标路径 smoke；terrain adaptation 仍未完成。
 - MuJoCo：尚未落地可运行工程。
-- ROS2：存在不完整的消息转换骨架，不能视为完整 workspace。
+- ROS2：canonical Core/messages/wrapper 已通过 Jazzy build/test；MuJoCo/Hardware Adapter 与部署 profile 尚未落地。
 - STM32：已有固件和 UART2 实验通信实现；生产链路尚未冻结。
 - 真机迁移：按照 MuJoCo PASS → 真机低风险验证的方式逐层推进。
 
@@ -24,7 +24,7 @@
 | --- | --- | --- | --- | --- |
 | 01 | 迁入 Simulink 基线与验证入口 | complete | [Phase 01](phases/01-simulink-baseline-import/PLAN.md) | 基线模型、运行方式和当前验证结果可复现 |
 | 02 | 坐标系、单位、关节顺序与接口语义 | complete | [Phase 02](phases/02-coordinate-interface-contract/PLAN.md) | FLU canonical、Simscape/MuJoCo 映射、COM frame 与 joint sign 契约通过审查；真机安装验证转 Phase 06 |
-| 03 | 统一 Robot 接口与 Controller Core 骨架 | planned | [Phase 03](phases/03-robot-interface-controller-core/PLAN.md) | 纯 C++ 核心边界和聚合消息契约通过测试 |
+| 03 | 统一 Robot 接口与 Controller Core 骨架 | complete | [Phase 03](phases/03-robot-interface-controller-core/PLAN.md) | C++ Core、聚合消息、ROS2 wrapper 与 Jazzy pub/sub 测试通过 |
 | 04 | MuJoCo 基础模型与 Adapter | planned | — | 状态/命令闭环通路可运行，基础语义检查通过 |
 | 05 | 执行器力矩映射、摩擦与附加惯量 | active | [Phase 05](phases/05-actuator-torque-identification/PLAN.md) | 3508+C620 先跑通；各执行器真实辨识完成，MuJoCo 与实验在预先规定误差内一致 |
 | 06 | RobotState 与传感器正式验证 | planned | — | 时间戳、单位、方向、滤波和延迟满足控制要求 |
