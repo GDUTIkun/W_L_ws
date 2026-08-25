@@ -1,0 +1,679 @@
+﻿{
+    "schemaVersion":  1,
+    "generatedAt":  "2026-08-24T23:12:00.9027400+08:00",
+    "source":  {
+                   "modelPath":  "simulation/mujoco/model/wheel_leg.xml",
+                   "modelSha256":  "37DF33DA5B7A901A239878CD7E467D273968BDFF82AF3E7EA97C2DCE084EA7FD",
+                   "scenePath":  "simulation/mujoco/model/scence.xml",
+                   "sceneSha256":  "4A540721BFA83A5FED215D9AA9F7689E00F93F08A2ED23EFC2F49CE43DD25C15"
+               },
+    "compiler":  {
+                     "angle":  "radian",
+                     "eulerSequence":  "xyz (MJCF default, intrinsic)",
+                     "coordinate":  "local (only supported MJCF mode)"
+                 },
+    "declaredOptions":  {
+                            "includedModelGravity":  "0 0 0",
+                            "sceneGravity":  "0 0 -9.81",
+                            "sceneTimestep":  "0.002"
+                        },
+    "include":  {
+                    "file":  "wheel_leg.xml",
+                    "matchesAuditedModel":  true
+                },
+    "bodies":  [
+                   {
+                       "name":  "base_body",
+                       "path":  "base_body",
+                       "parent":  "world",
+                       "pose":  {
+                                    "pos":  "0 0 0.6",
+                                    "orientationAttribute":  {
+
+                                                             },
+                                    "orientationValue":  {
+
+                                                         }
+                                },
+                       "joints":  [
+
+                                  ],
+                       "freeJoint":  true,
+                       "sites":  [
+                                     {
+                                         "name":  "base_frame",
+                                         "pos":  "0 0 0",
+                                         "orientationAttribute":  {
+
+                                                                  },
+                                         "orientationValue":  {
+
+                                                              }
+                                     }
+                                 ]
+                   },
+                   {
+                       "name":  "right_thigh_body",
+                       "path":  "base_body/right_thigh_body",
+                       "parent":  "base_body",
+                       "pose":  {
+                                    "pos":  "-0.0775 -0.04425 -0.02 ",
+                                    "orientationAttribute":  "euler",
+                                    "orientationValue":  "-1.5708 0 -1.5708"
+                                },
+                       "joints":  [
+                                      {
+                                          "name":  "right_hip_joint",
+                                          "type":  "hinge",
+                                          "pos":  "0 0 0",
+                                          "axis":  "0 0 1",
+                                          "axisExpressionFrame":  "local body frame",
+                                          "range":  null
+                                      }
+                                  ],
+                       "freeJoint":  false,
+                       "sites":  [
+
+                                 ]
+                   },
+                   {
+                       "name":  "right_calf_body",
+                       "path":  "base_body/right_thigh_body/right_calf_body",
+                       "parent":  "right_thigh_body",
+                       "pose":  {
+                                    "pos":  "-0.04350 -0.17467 -0.12525",
+                                    "orientationAttribute":  "euler",
+                                    "orientationValue":  "0 0 3.14159"
+                                },
+                       "joints":  [
+                                      {
+                                          "name":  "right_knee_joint",
+                                          "type":  "hinge",
+                                          "pos":  "0 0 0",
+                                          "axis":  "0 0 1",
+                                          "axisExpressionFrame":  "local body frame",
+                                          "range":  null
+                                      }
+                                  ],
+                       "freeJoint":  false,
+                       "sites":  [
+                                     {
+                                         "name":  "right_calf_site",
+                                         "pos":  "0.03180 -0.03859  -0.01050",
+                                         "orientationAttribute":  {
+
+                                                                  },
+                                         "orientationValue":  {
+
+                                                              }
+                                     }
+                                 ]
+                   },
+                   {
+                       "name":  "right_wheel_body",
+                       "path":  "base_body/right_thigh_body/right_calf_body/right_wheel_body",
+                       "parent":  "right_calf_body",
+                       "pose":  {
+                                    "pos":  "0.14297 -0.17368 -0.04280",
+                                    "orientationAttribute":  {
+
+                                                             },
+                                    "orientationValue":  {
+
+                                                         }
+                                },
+                       "joints":  [
+                                      {
+                                          "name":  "right_wheel_joint",
+                                          "type":  "hinge",
+                                          "pos":  "0 0 0",
+                                          "axis":  "0 0 1",
+                                          "axisExpressionFrame":  "local body frame",
+                                          "range":  null
+                                      }
+                                  ],
+                       "freeJoint":  false,
+                       "sites":  [
+
+                                 ]
+                   },
+                   {
+                       "name":  "right_connect1_body",
+                       "path":  "base_body/right_thigh_body/right_connect1_body",
+                       "parent":  "right_thigh_body",
+                       "pose":  {
+                                    "pos":  "0 0 -0.1235",
+                                    "orientationAttribute":  "euler",
+                                    "orientationValue":  "3.14159 0 0"
+                                },
+                       "joints":  [
+                                      {
+                                          "name":  "right_connect1_joint",
+                                          "type":  "hinge",
+                                          "pos":  "0 0 0",
+                                          "axis":  "0 0 1",
+                                          "axisExpressionFrame":  "local body frame",
+                                          "range":  null
+                                      }
+                                  ],
+                       "freeJoint":  false,
+                       "sites":  [
+
+                                 ]
+                   },
+                   {
+                       "name":  "right_connect2_body",
+                       "path":  "base_body/right_thigh_body/right_connect1_body/right_connect2_body",
+                       "parent":  "right_connect1_body",
+                       "pose":  {
+                                    "pos":  "-0.03180 -0.03859 0.01225",
+                                    "orientationAttribute":  "euler",
+                                    "orientationValue":  "3.14159 0 0"
+                                },
+                       "joints":  [
+                                      {
+                                          "name":  "right_connect2_joint",
+                                          "type":  "hinge",
+                                          "pos":  "0 0 0",
+                                          "axis":  "0 0 1",
+                                          "axisExpressionFrame":  "local body frame",
+                                          "range":  null
+                                      }
+                                  ],
+                       "freeJoint":  false,
+                       "sites":  [
+                                     {
+                                         "name":  "right_connect2_site",
+                                         "pos":  "-0.04350 -0.17467 0",
+                                         "orientationAttribute":  {
+
+                                                                  },
+                                         "orientationValue":  {
+
+                                                              }
+                                     }
+                                 ]
+                   },
+                   {
+                       "name":  "left_thigh_body",
+                       "path":  "base_body/left_thigh_body",
+                       "parent":  "base_body",
+                       "pose":  {
+                                    "pos":  "-0.0775 0.04425 -0.02 ",
+                                    "orientationAttribute":  "euler",
+                                    "orientationValue":  "-1.5708 0 -1.5708"
+                                },
+                       "joints":  [
+                                      {
+                                          "name":  "left_hip_joint",
+                                          "type":  "hinge",
+                                          "pos":  "0 0 0",
+                                          "axis":  "0 0 1",
+                                          "axisExpressionFrame":  "local body frame",
+                                          "range":  null
+                                      }
+                                  ],
+                       "freeJoint":  false,
+                       "sites":  [
+
+                                 ]
+                   },
+                   {
+                       "name":  "left_calf_body",
+                       "path":  "base_body/left_thigh_body/left_calf_body",
+                       "parent":  "left_thigh_body",
+                       "pose":  {
+                                    "pos":  "-0.04350 -0.17467 0.12525",
+                                    "orientationAttribute":  "euler",
+                                    "orientationValue":  "0 0 3.14159"
+                                },
+                       "joints":  [
+                                      {
+                                          "name":  "left_knee_joint",
+                                          "type":  "hinge",
+                                          "pos":  "0 0 0",
+                                          "axis":  "0 0 1",
+                                          "axisExpressionFrame":  "local body frame",
+                                          "range":  null
+                                      }
+                                  ],
+                       "freeJoint":  false,
+                       "sites":  [
+                                     {
+                                         "name":  "left_calf_site",
+                                         "pos":  "0.03180 -0.03859  0.01050",
+                                         "orientationAttribute":  {
+
+                                                                  },
+                                         "orientationValue":  {
+
+                                                              }
+                                     }
+                                 ]
+                   },
+                   {
+                       "name":  "left_wheel_body",
+                       "path":  "base_body/left_thigh_body/left_calf_body/left_wheel_body",
+                       "parent":  "left_calf_body",
+                       "pose":  {
+                                    "pos":  "0.14297 -0.17368 0.04280",
+                                    "orientationAttribute":  {
+
+                                                             },
+                                    "orientationValue":  {
+
+                                                         }
+                                },
+                       "joints":  [
+                                      {
+                                          "name":  "left_wheel_joint",
+                                          "type":  "hinge",
+                                          "pos":  "0 0 0",
+                                          "axis":  "0 0 1",
+                                          "axisExpressionFrame":  "local body frame",
+                                          "range":  null
+                                      }
+                                  ],
+                       "freeJoint":  false,
+                       "sites":  [
+
+                                 ]
+                   },
+                   {
+                       "name":  "left_connect1_body",
+                       "path":  "base_body/left_thigh_body/left_connect1_body",
+                       "parent":  "left_thigh_body",
+                       "pose":  {
+                                    "pos":  "0 0 0.1235",
+                                    "orientationAttribute":  {
+
+                                                             },
+                                    "orientationValue":  {
+
+                                                         }
+                                },
+                       "joints":  [
+                                      {
+                                          "name":  "left_connect1_joint",
+                                          "type":  "hinge",
+                                          "pos":  "0 0 0",
+                                          "axis":  "0 0 1",
+                                          "axisExpressionFrame":  "local body frame",
+                                          "range":  null
+                                      }
+                                  ],
+                       "freeJoint":  false,
+                       "sites":  [
+
+                                 ]
+                   },
+                   {
+                       "name":  "left_connect2_body",
+                       "path":  "base_body/left_thigh_body/left_connect1_body/left_connect2_body",
+                       "parent":  "left_connect1_body",
+                       "pose":  {
+                                    "pos":  "-0.03180 0.03859 0.01225",
+                                    "orientationAttribute":  {
+
+                                                             },
+                                    "orientationValue":  {
+
+                                                         }
+                                },
+                       "joints":  [
+                                      {
+                                          "name":  "left_connect2_joint",
+                                          "type":  "hinge",
+                                          "pos":  "0 0 0",
+                                          "axis":  "0 0 1",
+                                          "axisExpressionFrame":  "local body frame",
+                                          "range":  null
+                                      }
+                                  ],
+                       "freeJoint":  false,
+                       "sites":  [
+                                     {
+                                         "name":  "left_connect2_site",
+                                         "pos":  "-0.04350 -0.17467 0",
+                                         "orientationAttribute":  {
+
+                                                                  },
+                                         "orientationValue":  {
+
+                                                              }
+                                     }
+                                 ]
+                   }
+               ],
+    "joints":  [
+                   {
+                       "name":  "right_hip_joint",
+                       "type":  "hinge",
+                       "pos":  "0 0 0",
+                       "axis":  "0 0 1",
+                       "axisExpressionFrame":  "local body frame",
+                       "range":  null
+                   },
+                   {
+                       "name":  "right_knee_joint",
+                       "type":  "hinge",
+                       "pos":  "0 0 0",
+                       "axis":  "0 0 1",
+                       "axisExpressionFrame":  "local body frame",
+                       "range":  null
+                   },
+                   {
+                       "name":  "right_wheel_joint",
+                       "type":  "hinge",
+                       "pos":  "0 0 0",
+                       "axis":  "0 0 1",
+                       "axisExpressionFrame":  "local body frame",
+                       "range":  null
+                   },
+                   {
+                       "name":  "right_connect1_joint",
+                       "type":  "hinge",
+                       "pos":  "0 0 0",
+                       "axis":  "0 0 1",
+                       "axisExpressionFrame":  "local body frame",
+                       "range":  null
+                   },
+                   {
+                       "name":  "right_connect2_joint",
+                       "type":  "hinge",
+                       "pos":  "0 0 0",
+                       "axis":  "0 0 1",
+                       "axisExpressionFrame":  "local body frame",
+                       "range":  null
+                   },
+                   {
+                       "name":  "left_hip_joint",
+                       "type":  "hinge",
+                       "pos":  "0 0 0",
+                       "axis":  "0 0 1",
+                       "axisExpressionFrame":  "local body frame",
+                       "range":  null
+                   },
+                   {
+                       "name":  "left_knee_joint",
+                       "type":  "hinge",
+                       "pos":  "0 0 0",
+                       "axis":  "0 0 1",
+                       "axisExpressionFrame":  "local body frame",
+                       "range":  null
+                   },
+                   {
+                       "name":  "left_wheel_joint",
+                       "type":  "hinge",
+                       "pos":  "0 0 0",
+                       "axis":  "0 0 1",
+                       "axisExpressionFrame":  "local body frame",
+                       "range":  null
+                   },
+                   {
+                       "name":  "left_connect1_joint",
+                       "type":  "hinge",
+                       "pos":  "0 0 0",
+                       "axis":  "0 0 1",
+                       "axisExpressionFrame":  "local body frame",
+                       "range":  null
+                   },
+                   {
+                       "name":  "left_connect2_joint",
+                       "type":  "hinge",
+                       "pos":  "0 0 0",
+                       "axis":  "0 0 1",
+                       "axisExpressionFrame":  "local body frame",
+                       "range":  null
+                   }
+               ],
+    "sites":  [
+                  {
+                      "name":  "base_frame",
+                      "pos":  "0 0 0",
+                      "orientationAttribute":  {
+
+                                               },
+                      "orientationValue":  {
+
+                                           }
+                  },
+                  {
+                      "name":  "right_calf_site",
+                      "pos":  "0.03180 -0.03859  -0.01050",
+                      "orientationAttribute":  {
+
+                                               },
+                      "orientationValue":  {
+
+                                           }
+                  },
+                  {
+                      "name":  "right_connect2_site",
+                      "pos":  "-0.04350 -0.17467 0",
+                      "orientationAttribute":  {
+
+                                               },
+                      "orientationValue":  {
+
+                                           }
+                  },
+                  {
+                      "name":  "left_calf_site",
+                      "pos":  "0.03180 -0.03859  0.01050",
+                      "orientationAttribute":  {
+
+                                               },
+                      "orientationValue":  {
+
+                                           }
+                  },
+                  {
+                      "name":  "left_connect2_site",
+                      "pos":  "-0.04350 -0.17467 0",
+                      "orientationAttribute":  {
+
+                                               },
+                      "orientationValue":  {
+
+                                           }
+                  }
+              ],
+    "sensors":  [
+                    {
+                        "type":  "base_accel",
+                        "name":  "base_accel",
+                        "attributes":  {
+                                           "name":  "base_accel",
+                                           "site":  "base_frame"
+                                       }
+                    },
+                    {
+                        "type":  "base_gyro",
+                        "name":  "base_gyro",
+                        "attributes":  {
+                                           "name":  "base_gyro",
+                                           "site":  "base_frame"
+                                       }
+                    },
+                    {
+                        "type":  "base_quat",
+                        "name":  "base_quat",
+                        "attributes":  {
+                                           "name":  "base_quat",
+                                           "objtype":  "site",
+                                           "objname":  "base_frame"
+                                       }
+                    },
+                    {
+                        "type":  "left_hip_encoder",
+                        "name":  "left_hip_encoder",
+                        "attributes":  {
+                                           "name":  "left_hip_encoder",
+                                           "joint":  "left_hip_joint"
+                                       }
+                    },
+                    {
+                        "type":  "left_hip_encoder_vel",
+                        "name":  "left_hip_encoder_vel",
+                        "attributes":  {
+                                           "name":  "left_hip_encoder_vel",
+                                           "joint":  "left_hip_joint"
+                                       }
+                    },
+                    {
+                        "type":  "right_hip_encoder",
+                        "name":  "right_hip_encoder",
+                        "attributes":  {
+                                           "name":  "right_hip_encoder",
+                                           "joint":  "right_hip_joint"
+                                       }
+                    },
+                    {
+                        "type":  "right_hip_encoder_vel",
+                        "name":  "right_hip_encoder_vel",
+                        "attributes":  {
+                                           "name":  "right_hip_encoder_vel",
+                                           "joint":  "right_hip_joint"
+                                       }
+                    },
+                    {
+                        "type":  "left_connect1_encoder",
+                        "name":  "left_connect1_encoder",
+                        "attributes":  {
+                                           "name":  "left_connect1_encoder",
+                                           "joint":  "left_connect1_joint"
+                                       }
+                    },
+                    {
+                        "type":  "left_connect1_encoder_vel",
+                        "name":  "left_connect1_encoder_vel",
+                        "attributes":  {
+                                           "name":  "left_connect1_encoder_vel",
+                                           "joint":  "left_connect1_joint"
+                                       }
+                    },
+                    {
+                        "type":  "right_connect1_encoder",
+                        "name":  "right_connect1_encoder",
+                        "attributes":  {
+                                           "name":  "right_connect1_encoder",
+                                           "joint":  "right_connect1_joint"
+                                       }
+                    },
+                    {
+                        "type":  "right_connect1_encoder_vel",
+                        "name":  "right_connect1_encoder_vel",
+                        "attributes":  {
+                                           "name":  "right_connect1_encoder_vel",
+                                           "joint":  "right_connect1_joint"
+                                       }
+                    },
+                    {
+                        "type":  "left_calf_encoder",
+                        "name":  "left_calf_encoder",
+                        "attributes":  {
+                                           "name":  "left_calf_encoder",
+                                           "joint":  "left_knee_joint"
+                                       }
+                    },
+                    {
+                        "type":  "left_calf_encoder_vel",
+                        "name":  "left_calf_encoder_vel",
+                        "attributes":  {
+                                           "name":  "left_calf_encoder_vel",
+                                           "joint":  "left_knee_joint"
+                                       }
+                    },
+                    {
+                        "type":  "right_calf_encoder",
+                        "name":  "right_calf_encoder",
+                        "attributes":  {
+                                           "name":  "right_calf_encoder",
+                                           "joint":  "right_knee_joint"
+                                       }
+                    },
+                    {
+                        "type":  "right_calf_encoder_vel",
+                        "name":  "right_calf_encoder_vel",
+                        "attributes":  {
+                                           "name":  "right_calf_encoder_vel",
+                                           "joint":  "right_knee_joint"
+                                       }
+                    },
+                    {
+                        "type":  "left_wheel_encoder",
+                        "name":  "left_wheel_encoder",
+                        "attributes":  {
+                                           "name":  "left_wheel_encoder",
+                                           "joint":  "left_wheel_joint"
+                                       }
+                    },
+                    {
+                        "type":  "left_wheel_encoder_vel",
+                        "name":  "left_wheel_encoder_vel",
+                        "attributes":  {
+                                           "name":  "left_wheel_encoder_vel",
+                                           "joint":  "left_wheel_joint"
+                                       }
+                    },
+                    {
+                        "type":  "right_wheel_encoder",
+                        "name":  "right_wheel_encoder",
+                        "attributes":  {
+                                           "name":  "right_wheel_encoder",
+                                           "joint":  "right_wheel_joint"
+                                       }
+                    },
+                    {
+                        "type":  "right_wheel_encoder_vel",
+                        "name":  "right_wheel_encoder_vel",
+                        "attributes":  {
+                                           "name":  "right_wheel_encoder_vel",
+                                           "joint":  "right_wheel_joint"
+                                       }
+                    }
+                ],
+    "equalities":  [
+                       {
+                           "type":  "weld",
+                           "attributes":  {
+                                              "body1":  "base_body",
+                                              "body2":  "world"
+                                          }
+                       },
+                       {
+                           "type":  "connect",
+                           "attributes":  {
+                                              "site1":  "left_connect2_site",
+                                              "site2":  "left_calf_site"
+                                          }
+                       },
+                       {
+                           "type":  "connect",
+                           "attributes":  {
+                                              "site1":  "right_connect2_site",
+                                              "site2":  "right_calf_site"
+                                          }
+                       }
+                   ],
+    "integrity":  {
+                      "bodyCount":  11,
+                      "jointCount":  10,
+                      "siteCount":  5,
+                      "sensorCount":  19,
+                      "duplicatePublicNames":  [
+
+                                               ],
+                      "baseFreeJointPresent":  true,
+                      "baseWeldedToWorld":  true,
+                      "allJointAxesExplicit":  true
+                  },
+    "auditNotes":  [
+                       "This manifest records imported MJCF facts only; it does not approve the coordinate convention.",
+                       "Body positions and orientations are local to their parent body.",
+                       "Joint axes are expressed in the local body frame containing the joint.",
+                       "The base_frame site has no orientation attribute, so it inherits base_body orientation.",
+                       "Dynamic sensor meaning requires loading the compiled model; this static audit does not resolve duplicate option precedence across include boundaries."
+                   ]
+}
