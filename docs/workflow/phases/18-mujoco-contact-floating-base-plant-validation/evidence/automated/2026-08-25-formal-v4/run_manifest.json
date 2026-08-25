@@ -1,0 +1,61 @@
+{
+  "contact": {
+    "condim": 3,
+    "cone": "pyramidal",
+    "friction": [
+      1.0,
+      0.005,
+      0.0001
+    ],
+    "gap_m": 0.0,
+    "iterations": 100,
+    "line_search_iterations": 50,
+    "margin_m": 0.0,
+    "solimp": [
+      0.9,
+      0.95,
+      0.001,
+      0.5,
+      2.0
+    ],
+    "solref": [
+      0.02,
+      1.0
+    ],
+    "solver": "Newton"
+  },
+  "created_utc": "2026-08-25T15:01:46.112929+00:00",
+  "hardware_data_used": false,
+  "inputs": {
+    "simulation/mujoco/config/phase18_nominal.json": "9d66cfc8e026438fb9222912ebba4c396203af5a2c6d17899c9b826f63a2563b",
+    "simulation/mujoco/model/phase18_floating_contact.xml": "8728a77c5da33a60dbcd895fd01ad788826b244ed0994190b1294ecf52c651ee",
+    "simulation/mujoco/model/phase18_wheel_contact_probe.xml": "a7733c858d85d681cfe862c98619988718a84134218660e7fdb6b0d91ffd6721",
+    "simulation/mujoco/model/wheel_leg.xml": "d7d46cd47d92097fb21d0d5923c83dfac07a5f1c48e2be65deb8e98c4a67f0d9",
+    "tools/experiments/run_mujoco_contact_floating_base.py": "de0fcd903aca2883c5fa9f7dff9affbd362312d9b082b1f41219a9c9ea9fcc6f"
+  },
+  "model_revision": "current_nominal",
+  "outputs": {
+    "floating_a.csv": "cb1bd813e8c920a549bd6434bba9f7ae0e4c427d318ce904aa52b50e519832ac",
+    "floating_b.csv": "cb1bd813e8c920a549bd6434bba9f7ae0e4c427d318ce904aa52b50e519832ac",
+    "lateral_mu_0.csv": "3b314f14768146d321517a7a6db54ee5d8502f52946cc3955756df80739e4ce8",
+    "lateral_mu_1.csv": "65da1442464e6fc3751edf3eb51f3b8910f27d5cc24e6151f6b365f4cbcd2f4d",
+    "lateral_mu_2.csv": "dfce0bb44b02d2dfd3b800ac0a361775e605ad13566b753bda3b25db08c4497f",
+    "lateral_negative.csv": "6c0cc3beb6221afd29171a6f6d71b076313fb42dfe0a18e6e2f2ec2acbcdcdb6",
+    "probe_normal.csv": "51dd1e92ec5f001350dda54432913bcd53b8a44e36dc681397400cd266fd936f",
+    "rolling_mu_0.csv": "635b323651f4870f3e79e8215d0afa71ea139b5b840fe3921764d6d268c6f32b",
+    "rolling_mu_1.csv": "60b86881f628782ebb5d5d9541feee3c8ef856ee024a49fa308fa08694d85853",
+    "rolling_mu_2.csv": "497c5faa54de152519991833ce6d06235b74cfced2fb952f015ba7a225ad3557",
+    "rolling_negative.csv": "2f3c277e301c0349031c30ba83076fee4968c6b08556d3ca279af3d3742f37e2"
+  },
+  "profile": "current_nominal_wheel_contact_floating",
+  "schema_version": 1,
+  "timing": {
+    "control_period_s": 0.01,
+    "physics_steps_per_control": 5,
+    "physics_timestep_s": 0.002
+  },
+  "versions": {
+    "mujoco": "3.7.0",
+    "python": "3.10.20"
+  }
+}

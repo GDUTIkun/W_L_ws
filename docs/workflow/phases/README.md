@@ -28,6 +28,7 @@ None.
 - [Phase 15：MuJoCo 完整闭链运动学与 Jacobian 验证](15-mujoco-closed-chain-kinematics/PLAN.md) — 2026-08-25 PASS；完成 210 样本被动装配、独立 FK、reduced Jacobian、有限差分、速度/虚功、方向和非覆盖复用验证，未连接真机。
 - [Phase 16：Controller ↔ MuJoCo 确定性闭环运行基线](16-controller-mujoco-deterministic-loop/PLAN.md) — 2026-08-25 PASS；完成 2 ms physics、10 ms control、5-step ZOH、双时钟/reset/fail-safe、逐 tick 日志和非覆盖 replay，未新增控制算法、未连接真机。
 - [Phase 17：nominal Joint PD 与重力补偿](17-nominal-joint-pd-gravity-compensation/PLAN.md) — 2026-08-25 PASS；完成解析 reduced gravity、canonical Joint PD、保持/阶跃/限幅/扰动/对称/replay 与非覆盖 profile 验证，未连接真机。
+- [Phase 18：nominal 轮地接触与 floating-base plant 验证](18-mujoco-contact-floating-base-plant-validation/PLAN.md) — 2026-08-25 PASS；完成 wheel-only collision、actual-wheel normal/rolling/lateral/friction、零控制 free-flight/touchdown、base state/reset/replay 和历史回归，未连接真机、未做站立。
 
 ## 建立新 Phase
 

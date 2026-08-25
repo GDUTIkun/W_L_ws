@@ -20,7 +20,7 @@
 
 ## 当前路线决策：两轮复现与非覆盖
 
-- 第一轮使用当前 nominal MuJoCo 模型，继续完成可独立验证和复用的纯仿真工作；总体次序为：完整闭链运动学/Jacobian 补强 → Controller↔MuJoCo 闭环 → Joint PD/重力补偿 → 轮地接触与 floating-base → 简单站立 → WBC → NMPC。前三项已由 Phase 15/16/17 完成，下一层是尚未制定详细 Phase 的轮地接触与 floating-base plant 验证。任何 simulation-only PASS 都不能写成真机 PASS。
+- 第一轮使用当前 nominal MuJoCo 模型，继续完成可独立验证和复用的纯仿真工作；总体次序为：完整闭链运动学/Jacobian 补强 → Controller↔MuJoCo 闭环 → Joint PD/重力补偿 → 轮地接触与 floating-base → 简单站立 → WBC → NMPC。前三项已由 Phase 15/16/17 完成，下一层已制定为 Phase 18 的轮地接触与 floating-base plant 验证。任何 simulation-only PASS 都不能写成真机 PASS。
 - 第二轮在真机工作解冻后执行 MuJoCo–真机共同辨识；形成新的 identified plant profile 后，按第一轮相同的输入契约、runner、日志 schema、阈值口径和控制层次从头重跑。第二轮是对第一轮的复现与比较，不替换第一轮。
 - 每个后续阶段都必须把模型版本、参数 profile、Controller 版本、求解器配置、seed/激励、阈值和输入文件 hash 写入 manifest；运行输出进入新的带日期/模型 ID 的目录。已完成 Phase 的 PLAN/REVIEW/RECORD 和正式 evidence 不原地覆盖，修订通过新 Phase、新 run 或带 `supersedes` 关系的记录追加。
 - 当前 `wheel_leg.xml` 与 Phase 14 evidence 作为 nominal baseline 保留。后续 SolidWorks 调整髋部电机或连接件尺寸并重新导出时，必须建立新的模型 revision，保留旧导出和 hash；重新检查 joint/body/site 名称与拓扑、frame/axis/zero offset、closure、collision、mass/COM/inertia，并重跑 Adapter、运动学和内部动力学回归。接口不变时控制与验证入口应直接复用，但不能假定几何和惯量结果自动不变。
@@ -37,7 +37,7 @@
 | 06 | 完整闭链运动学、接触点与 Jacobian 验证 | complete | [Phase 15](phases/15-mujoco-closed-chain-kinematics/PLAN.md) | 210 样本 nominal 装配分支、被动解、工作域、reduced Jacobian、有限差分、速度与虚功通过 REVIEW；入口可跨 revision 非覆盖复用 |
 | 07 | Controller ↔ MuJoCo 确定性闭环运行基线 | complete | [Phase 16](phases/16-controller-mujoco-deterministic-loop/PLAN.md) | 不接真机、不新增控制算法；2 ms/10 ms/5-step fixed loop、双时钟/reset/fail-safe、逐 tick 日志、replay 与非覆盖 gate 通过 REVIEW |
 | 08 | nominal Joint PD 与重力补偿 | complete | [Phase 17](phases/17-nominal-joint-pd-gravity-compensation/PLAN.md) | 不接真机；解析 reduced gravity + canonical Joint PD 已通过双 oracle、保持、正负阶跃、限幅、扰动、对称与 replay 审查 |
-| 09 | nominal 轮地接触与 floating-base plant 验证 | planned | — | 不接真机；normal/rolling/lateral/friction、滑移趋势、base state 和 reset 在冻结工况内通过，不提前做站立 |
+| 09 | nominal 轮地接触与 floating-base plant 验证 | complete | [Phase 18](phases/18-mujoco-contact-floating-base-plant-validation/PLAN.md) | 不接真机；wheel-only contact、normal/rolling/lateral/friction、零控制 touchdown、base state/reset 已通过 REVIEW，不提前做站立 |
 | 10 | nominal floating-base 简单站立 | planned | — | 不接真机；在已验证 contact 与 joint control 上完成 z/pitch/leg posture/wheel position 的仿真站立 |
 | 11 | nominal Weighted WBC | planned | — | 不接真机；约束、任务、软接触和限幅逐层通过，保留可对 identified profile 重跑的入口 |
 | 12 | nominal NMPC | planned | — | 不接真机；NMPC → WBC → torque 全链路在 nominal profile 中通过并保存非覆盖证据 |
@@ -48,7 +48,7 @@
 | 17 | identified profile 分层复现与三方比较 | planned | — | 使用同一 runner/schema/阈值从运动学到 NMPC 追加重跑，保留 nominal ↔ identified ↔ real 对照，不覆盖第一轮 |
 | 18 | Roll/Yaw/Turning 与差分辨识 | planned | — | 在前述两轮证据基础上验证工作范围与鲁棒裕量 |
 
-README 与工作流骨架属于仓库引导建设，不作为产品开发 Phase。Phase 14/15/16/17 已完成；Phase 05 因当前真机冻结而 blocked。Phase 15/16/17 的 PASS 都只属于 simulation-only；恢复 Phase 05 时，它们不替代通信、Load Cell、同步和安全放行条件。
+README 与工作流骨架属于仓库引导建设，不作为产品开发 Phase。Phase 14/15/16/17/18 已完成；下一层是尚未制定详细 Phase 的 nominal floating-base 简单站立。Phase 05 因当前真机冻结而 blocked。上述 PASS 都只属于 simulation-only；恢复 Phase 05 时，它们不替代通信、Load Cell、同步和安全放行条件。
 
 详细技术次序以 [MuJoCo → Real 当前更新路线](../mujoco/simulink%202%20mujoco%202%20real流程.md) 为准。建立真实 Phase 后，用 Phase 链接替换表中的“—”。
 

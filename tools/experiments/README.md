@@ -24,3 +24,4 @@
 - `run_mujoco_closed_chain_kinematics.py`：执行 Phase 15 的 profile-driven 闭链被动解、独立 FK、约束降维 Jacobian、有限差分、速度、虚功、工作域与非覆盖验证。方法见 `docs/experiments/mujoco_closed_chain_kinematics_validation.md`。
 - `run_mujoco_controller_loop.py`：编排 Phase 16 的 C++ Controller↔Adapter↔MuJoCo 固定步数循环，校验 5-step ZOH、双时钟、reset/fail-safe、fresh/reset replay，并生成逐 tick CSV、SHA-256 manifest 和汇总。方法见 `docs/experiments/mujoco_controller_loop_validation.md`。
 - `run_mujoco_joint_pd_gravity.py`：编排 Phase 17 的解析重力双 oracle、Joint PD+gravity hold/阶跃/对称/扰动/饱和/replay 正式矩阵，并生成非覆盖逐 tick evidence 与 manifest。方法见 `docs/experiments/mujoco_joint_pd_gravity_validation.md`。
+- `run_mujoco_contact_floating_base.py`：执行 Phase 18 的 actual-wheel probe 与完整机器人零控制 floating-base 验证，覆盖 wheel-only collision、normal/rolling/lateral/friction、触地、base state、闭链和 reset replay。方法见 `docs/experiments/mujoco_contact_floating_base_validation.md`。

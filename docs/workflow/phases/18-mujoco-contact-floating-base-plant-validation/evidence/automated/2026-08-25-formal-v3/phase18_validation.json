@@ -1,0 +1,143 @@
+{
+  "checks": {
+    "all_rows_finite": true,
+    "floating_closure_bounded": true,
+    "floating_contacts_both_wheels": true,
+    "floating_free_fall_gravity": true,
+    "floating_penetration_bounded": true,
+    "floating_quaternion_normalized": true,
+    "friction_does_not_add_energy": true,
+    "friction_force_bounded": true,
+    "lateral_bidirectional": true,
+    "lateral_friction_trend": true,
+    "no_unexpected_contact_pairs": true,
+    "normal_impulse_balance": true,
+    "normal_left_right_symmetry": true,
+    "normal_static_load": true,
+    "penetration_bounded": true,
+    "reset_replay_exact": true,
+    "rolling_direction": true,
+    "rolling_left_right_symmetry": true,
+    "rolling_requires_friction": true,
+    "wheel_only_collision_mask": true
+  },
+  "hardware_data_used": false,
+  "interpretation_limit": "Current nominal MuJoCo internal wheel-contact and zero-command floating-base evidence only; no standing, calibrated tire/ground, actuator, or real-hardware claim.",
+  "metrics": {
+    "floating_summary": {
+      "first_contact_step": 26,
+      "free_fall_acceleration_error_m_s2": 0.0008129800569740553,
+      "max_closure_residual_m": 0.0001153163729117319,
+      "max_penetration_m": 0.0032409424655467714,
+      "max_quaternion_norm_error": 7.771561172376096e-16
+    },
+    "lateral_mu_0": {
+      "left_mass_kg": 1.3431,
+      "left_vertical_impulse_error_n_s": 0.00014381885587688714,
+      "left_vertical_impulse_n_s": 13.1759006227482,
+      "right_mass_kg": 1.3431,
+      "right_vertical_impulse_error_n_s": 0.0001238865050101623,
+      "right_vertical_impulse_n_s": 13.175604578825268,
+      "unexpected_pairs": 0.0
+    },
+    "lateral_mu_1": {
+      "left_mass_kg": 1.3431,
+      "left_vertical_impulse_error_n_s": 0.0002652287116582386,
+      "left_vertical_impulse_n_s": 13.175534372354386,
+      "right_mass_kg": 1.3431,
+      "right_vertical_impulse_error_n_s": 0.000268835995713701,
+      "right_vertical_impulse_n_s": 13.174937110645065,
+      "unexpected_pairs": 0.0
+    },
+    "lateral_mu_2": {
+      "left_mass_kg": 1.3431,
+      "left_vertical_impulse_error_n_s": 0.00012693825191689712,
+      "left_vertical_impulse_n_s": 13.17668529339269,
+      "right_mass_kg": 1.3431,
+      "right_vertical_impulse_error_n_s": 0.0004582176566287899,
+      "right_vertical_impulse_n_s": 13.177412897601684,
+      "unexpected_pairs": 0.0
+    },
+    "lateral_negative": {
+      "left_mass_kg": 1.3431,
+      "left_vertical_impulse_error_n_s": 0.00022636100707984497,
+      "left_vertical_impulse_n_s": 13.175535496858958,
+      "right_mass_kg": 1.3431,
+      "right_vertical_impulse_error_n_s": 0.00026075498300670574,
+      "right_vertical_impulse_n_s": 13.175534145217311,
+      "unexpected_pairs": 0.0
+    },
+    "lateral_summary": {
+      "mu0_final_speed_m_s": 0.2999058285730666,
+      "mu1_final_speed_m_s": 1.2764493609699967e-18,
+      "mu2_final_speed_m_s": 3.0513173167454505e-18
+    },
+    "max_friction_power_w": 0.000668495993320626,
+    "normal_summary": {
+      "max_penetration_m": 0.003296063277396004,
+      "max_static_load_relative_error": 9.846899650131914e-05,
+      "max_vertical_impulse_error_n_s": 0.0002150280057691134
+    },
+    "probe_normal": {
+      "left_mass_kg": 1.3431,
+      "left_vertical_impulse_error_n_s": 0.0002150280057691134,
+      "left_vertical_impulse_n_s": 13.176013458543284,
+      "right_mass_kg": 1.3431,
+      "right_vertical_impulse_error_n_s": 0.00014543838077507587,
+      "right_vertical_impulse_n_s": 13.174536726068458,
+      "unexpected_pairs": 0.0
+    },
+    "rolling_mu_0": {
+      "left_mass_kg": 1.3431,
+      "left_vertical_impulse_error_n_s": 0.03400223286108428,
+      "left_vertical_impulse_n_s": 13.228230092027328,
+      "right_mass_kg": 1.3431,
+      "right_vertical_impulse_error_n_s": 0.02555786944953553,
+      "right_vertical_impulse_n_s": 13.103239713989096,
+      "unexpected_pairs": 0.0
+    },
+    "rolling_mu_1": {
+      "left_mass_kg": 1.3431,
+      "left_vertical_impulse_error_n_s": 0.004827704206414651,
+      "left_vertical_impulse_n_s": 13.18323208429385,
+      "right_mass_kg": 1.3431,
+      "right_vertical_impulse_error_n_s": 0.00702861229633811,
+      "right_vertical_impulse_n_s": 13.173440670247906,
+      "unexpected_pairs": 0.0
+    },
+    "rolling_mu_2": {
+      "left_mass_kg": 1.3431,
+      "left_vertical_impulse_error_n_s": 0.006318162388987858,
+      "left_vertical_impulse_n_s": 13.165855538705634,
+      "right_mass_kg": 1.3431,
+      "right_vertical_impulse_error_n_s": 0.004765327264404817,
+      "right_vertical_impulse_n_s": 13.18029222260491,
+      "unexpected_pairs": 0.0
+    },
+    "rolling_negative": {
+      "left_mass_kg": 1.3431,
+      "left_vertical_impulse_error_n_s": 0.0006107384180822351,
+      "left_vertical_impulse_n_s": 13.187874135363536,
+      "right_mass_kg": 1.3431,
+      "right_vertical_impulse_error_n_s": 0.006862716002547842,
+      "right_vertical_impulse_n_s": 13.166718645923154,
+      "unexpected_pairs": 0.0
+    },
+    "rolling_summary": {
+      "frictionless_displacement_m": [
+        8.2047321927854e-06,
+        -4.9364180714214335e-05
+      ],
+      "negative_displacement_m": [
+        -0.15070031617119226,
+        -0.147444399773903
+      ],
+      "positive_displacement_m": [
+        0.14814935897320633,
+        0.14268518988738588
+      ]
+    }
+  },
+  "overall_pass": true,
+  "schema_version": 1
+}

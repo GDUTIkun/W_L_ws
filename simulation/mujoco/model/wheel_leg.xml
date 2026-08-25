@@ -91,7 +91,9 @@
   </asset>
 
   <default>
-    <geom contype="1" conaffinity="1"/>
+    <!-- Imported CAD meshes carry mass/inertia but are not collision shapes.
+         Phase 18 enables only the two named wheel meshes explicitly. -->
+    <geom contype="0" conaffinity="0"/>
     <default class="base_default"/>
     <default class="left_thigh_default"/>
     <default class="right_thigh_default"/>
@@ -163,7 +165,8 @@
           <body name="right_wheel_body" pos="0.14297 -0.17368 -0.04280">
             <joint name="right_wheel_joint" type="hinge" pos="0 0 0" axis="0 0 1"/>
 
-            <geom name="right_wheel_collision" type="mesh" mesh="zong_zhuang____right_wheel_1" mass="0.3431" class="right_wheel_default"/>
+            <geom name="right_wheel_collision" type="mesh" mesh="zong_zhuang____right_wheel_1"
+                  mass="0.3431" class="right_wheel_default" contype="0" conaffinity="1"/>
           </body>
         </body>
 
@@ -223,7 +226,8 @@
             <body name="left_wheel_body" pos="0.14297 -0.17368 0.04280">
                 <joint name="left_wheel_joint" type="hinge" pos="0 0 0" axis="0 0 1"/>
 
-                <geom name="left_wheel_collision" type="mesh" mesh="zong_zhuang____left_wheel_1" mass="0.3431" class="left_wheel_default"/>
+                <geom name="left_wheel_collision" type="mesh" mesh="zong_zhuang____left_wheel_1"
+                      mass="0.3431" class="left_wheel_default" contype="0" conaffinity="1"/>
             </body>
           </body>
 

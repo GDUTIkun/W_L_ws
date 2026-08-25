@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mujoco model="wheel_leg_phase18_wheel_probe">
+  <compiler angle="radian" autolimits="true" meshdir="assets"/>
+  <option timestep="0.002" gravity="0 0 -9.81" integrator="implicitfast"
+          solver="Newton" cone="pyramidal" iterations="100" ls_iterations="50"/>
+
+  <asset>
+    <mesh name="left_wheel_mesh" file="zong_zhuang____left_wheel_1.stl"/>
+    <mesh name="right_wheel_mesh" file="zong_zhuang____right_wheel_1.stl"/>
+  </asset>
+
+  <worldbody>
+    <geom name="floor" type="plane" size="0 0 0.25" condim="3"
+          contype="1" conaffinity="0" friction="1 0.005 0.0001"
+          solref="0.02 1" solimp="0.9 0.95 0.001 0.5 2"/>
+
+    <body name="left_probe_carriage" pos="0 0.15 0.06">
+      <joint name="left_probe_x" type="slide" axis="1 0 0"/>
+      <joint name="left_probe_y" type="slide" axis="0 1 0"/>
+      <joint name="left_probe_z" type="slide" axis="0 0 1"/>
+      <geom type="box" size="0.02 0.02 0.02" mass="1" contype="0" conaffinity="0"/>
+      <body name="left_wheel_body" euler="-1.5707963267948966 0 0">
+        <joint name="left_wheel_joint" type="hinge" axis="0 0 1"/>
+        <geom name="left_wheel_collision" type="mesh" mesh="left_wheel_mesh"
+              mass="0.3431" contype="0" conaffinity="1"/>
+      </body>
+    </body>
+
+    <body name="right_probe_carriage" pos="0 -0.15 0.06">
+      <joint name="right_probe_x" type="slide" axis="1 0 0"/>
+      <joint name="right_probe_y" type="slide" axis="0 1 0"/>
+      <joint name="right_probe_z" type="slide" axis="0 0 1"/>
+      <geom type="box" size="0.02 0.02 0.02" mass="1" contype="0" conaffinity="0"/>
+      <body name="right_wheel_body" euler="-1.5707963267948966 0 0">
+        <joint name="right_wheel_joint" type="hinge" axis="0 0 1"/>
+        <geom name="right_wheel_collision" type="mesh" mesh="right_wheel_mesh"
+              mass="0.3431" contype="0" conaffinity="1"/>
+      </body>
+    </body>
+  </worldbody>
+
+  <actuator>
+    <motor name="left_wheel_torque" joint="left_wheel_joint" gear="1"/>
+    <motor name="right_wheel_torque" joint="right_wheel_joint" gear="1"/>
+  </actuator>
+</mujoco>

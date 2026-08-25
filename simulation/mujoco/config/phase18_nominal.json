@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "profile": "current_nominal_wheel_contact_floating",
+  "model_revision": "current_nominal",
+  "probe_scene": "simulation/mujoco/model/phase18_wheel_contact_probe.xml",
+  "floating_scene": "simulation/mujoco/model/phase18_floating_contact.xml",
+  "included_model": "simulation/mujoco/model/wheel_leg.xml",
+  "physics_timestep_s": 0.002,
+  "control_period_s": 0.01,
+  "physics_steps_per_control": 5,
+  "wheel_radius_m": 0.05,
+  "contact": {
+    "solver": "Newton",
+    "cone": "pyramidal",
+    "iterations": 100,
+    "line_search_iterations": 50,
+    "condim": 3,
+    "friction": [1.0, 0.005, 0.0001],
+    "solref": [0.02, 1.0],
+    "solimp": [0.9, 0.95, 0.001, 0.5, 2.0],
+    "margin_m": 0.0,
+    "gap_m": 0.0
+  },
+  "cases": {
+    "probe_steps": 500,
+    "probe_settle_steps": 250,
+    "wheel_torque_nm": 0.1,
+    "initial_speed_m_s": 0.3,
+    "friction_sweep": [0.0, 1.0, 2.0],
+    "floating_steps": 100,
+    "floating_base_z_m": 0.27
+  },
+  "thresholds": {
+    "static_load_relative_error": 0.01,
+    "vertical_impulse_error_n_s": 0.005,
+    "max_penetration_m": 0.004,
+    "left_right_relative_error": 0.05,
+    "rolling_min_forward_displacement_m": 0.1,
+    "rolling_frictionless_max_displacement_m": 0.0001,
+    "lateral_velocity_ratio": 0.1,
+    "friction_cone_tolerance_n": 0.05,
+    "friction_power_tolerance_w": 0.001,
+    "free_fall_acceleration_error_m_s2": 0.01,
+    "quaternion_norm_error": 1e-12,
+    "closure_residual_m": 0.0002,
+    "determinism_absolute": 0.0
+  }
+}
