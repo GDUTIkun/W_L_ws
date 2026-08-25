@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "run_id": "phase15",
+  "profile": "nominal",
+  "mujoco_version": "3.7.0",
+  "seed": 1505,
+  "config_path": "simulation/mujoco/config/phase15_nominal.json",
+  "config_sha256": "48563f5e8be64ec48b2de7e9efe4c0c02c78b73af0ee6b47f3d98a8e21c9e2dc",
+  "scene_path": "simulation/mujoco/model/phase14_contact_free.xml",
+  "scene_sha256": "c353f3a6bd457a5732fa2464ec66e7faadf9694e31f5fb58be204d63f5686654",
+  "included_model_path": "simulation/mujoco/model/wheel_leg.xml",
+  "included_model_sha256": "a4b1f2e243b6715038b24637325db89cbf820f0ea4eccaafbf832dcaeb71893a",
+  "runner_path": "tools/experiments/run_mujoco_closed_chain_kinematics.py",
+  "runner_sha256": "e4b401d1b216c1c24946d6f73c2c61cd7eddc0c7f9c32d206d0dfacd981219e5",
+  "solver": {
+    "position_tolerance_m": 1e-12,
+    "step_tolerance_rad": 1e-13,
+    "max_iterations": 25,
+    "max_step_rad": 0.5,
+    "rcond": 1e-12
+  },
+  "workspace_rad": {
+    "hip": [
+      -0.65,
+      -0.325,
+      0.0,
+      0.325,
+      0.65
+    ],
+    "knee": [
+      -0.75,
+      -0.5,
+      -0.25,
+      0.0,
+      0.25,
+      0.5,
+      0.75
+    ],
+    "wheel": [
+      -1.0,
+      0.0,
+      1.0
+    ]
+  },
+  "thresholds": {
+    "profile_model_position_m": 1e-12,
+    "profile_model_rotation_matrix": 1e-12,
+    "mesh_nominal_radius_deviation_m": 0.0002,
+    "closure_position_m": 1e-11,
+    "passive_reference_rad": 1e-10,
+    "branch_reverse_rad": 1e-10,
+    "passive_block_min_singular_value": 0.005,
+    "passive_block_condition_number": 40.0,
+    "fk_position_m": 1e-10,
+    "fk_rotation_matrix": 1e-10,
+    "full_jacobian": 1e-09,
+    "constraint_tangent": 1e-10,
+    "reduced_jacobian": 1e-09,
+    "finite_difference_linear": 5e-07,
+    "finite_difference_angular": 5e-07,
+    "velocity": 5e-07,
+    "virtual_work_nm": 1e-10,
+    "power_w": 1e-10,
+    "mirror_position_m": 1e-10,
+    "left_right_frame_rotation_matrix": 1e-10,
+    "rolling_direction": 1e-12,
+    "determinism_absolute": 0.0
+  },
+  "supersedes": null,
+  "hardware_data_used": false
+}

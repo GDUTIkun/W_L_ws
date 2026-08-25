@@ -43,6 +43,7 @@ if(BUILD_TESTING)
 endif()
 
 install(DIRECTORY include/ DESTINATION include)
+install(DIRECTORY config DESTINATION share/${PROJECT_NAME})
 install(TARGETS
   wheel_leg_conversions wheel_leg_controller_node controller_node
   EXPORT export_wheel_leg_ros

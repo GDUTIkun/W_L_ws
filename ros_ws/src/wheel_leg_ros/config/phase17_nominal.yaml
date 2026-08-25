@@ -1,0 +1,11 @@
+wheel_leg_controller:
+  ros__parameters:
+    controller.mode: joint_pd_gravity
+    controller.enable_pd: true
+    controller.enable_gravity: true
+    controller.gravity_profile: current_nominal
+    controller.reference_position_rad: [-1.3267204090965414, 2.2088002542738268, 0.0, -1.3267204090965414, 2.2088002542738268, 0.0]
+    controller.reference_velocity_rad_s: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    controller.kp_nm_per_rad: [12.0, 12.0, 0.3, 12.0, 12.0, 0.3]
+    controller.kd_nm_s_per_rad: [1.5, 1.5, 0.05, 1.5, 1.5, 0.05]
+    controller.torque_limit_nm: [6.0, 6.0, 1.0, 6.0, 6.0, 1.0]

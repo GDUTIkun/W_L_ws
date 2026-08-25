@@ -41,3 +41,5 @@ cd /home/t/W_L_ws
 ```
 
 That path executes one Controller tick per five MuJoCo physics steps and refuses to overwrite a non-empty output directory. The ROS launch remains a transport/schema/reset compatibility smoke, not the determinism authority.
+
+For the opt-in fixed-base Joint PD and nominal gravity validation, use `tools/experiments/run_mujoco_joint_pd_gravity.py`. It reuses the same executable/loop and appends reference, PD, gravity, raw torque, saturation and disturbance columns; it does not establish contact, standing or hardware validity.

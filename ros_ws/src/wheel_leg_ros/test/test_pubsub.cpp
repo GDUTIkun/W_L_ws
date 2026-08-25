@@ -1,8 +1,10 @@
 #include <atomic>
 #include <chrono>
+#include <cmath>
 #include <limits>
 #include <memory>
 #include <thread>
+#include <vector>
 
 #include "gtest/gtest.h"
 #include "rclcpp/rclcpp.hpp"
@@ -89,6 +91,127 @@ TEST(ControllerNode, ValidStatePublishesOnlyZeroTorque) {
   spin_for(std::chrono::milliseconds(100));
   EXPECT_EQ(received.load(), post_reset_count);
   (void)subscription;
+}
+
+TEST(ControllerNode, ExplicitJointProfileRequiresCompleteValidParameters) {
+  rclcpp::NodeOptions options;
+  options.parameter_overrides({
+      rclcpp::Parameter("controller.mode", "joint_pd_gravity"),
+      rclcpp::Parameter("controller.enable_pd", true),
+      rclcpp::Parameter("controller.enable_gravity", true),
+      rclcpp::Parameter(
+          "controller.reference_position_rad",
+          std::vector<double>{-1.3267204090965414, 2.2088002542738268, 0.0,
+                              -1.3267204090965414, 2.2088002542738268, 0.0}),
+      rclcpp::Parameter(
+          "controller.reference_velocity_rad_s",
+          std::vector<double>(wheel_leg::kJointCount, 0.0)),
+      rclcpp::Parameter(
+          "controller.kp_nm_per_rad",
+          std::vector<double>(wheel_leg::kJointCount, 1.0)),
+      rclcpp::Parameter(
+          "controller.kd_nm_s_per_rad",
+          std::vector<double>(wheel_leg::kJointCount, 0.1)),
+      rclcpp::Parameter(
+          "controller.torque_limit_nm",
+          std::vector<double>(wheel_leg::kJointCount, 5.0)),
+      rclcpp::Parameter("controller.gravity_profile", "current_nominal"),
+  });
+  {
+    auto controller =
+        std::make_shared<wheel_leg_ros::ControllerNode>(options);
+    auto probe = std::make_shared<rclcpp::Node>("wheel_leg_profile_probe");
+    auto publisher = probe->create_publisher<wheel_leg_msgs::msg::RobotState>(
+        "robot_state", rclcpp::SensorDataQoS());
+    std::atomic<bool> received{false};
+    std::atomic<bool> finite_nonzero_same_time{false};
+    auto subscription =
+        probe->create_subscription<wheel_leg_msgs::msg::TorqueCommand>(
+            "torque_command", 10,
+            [&](wheel_leg_msgs::msg::TorqueCommand::SharedPtr message) {
+              bool finite = true;
+              bool nonzero = false;
+              for (const double torque : message->joint_torque_nm) {
+                finite &= std::isfinite(torque);
+                nonzero |= torque != 0.0;
+              }
+              finite_nonzero_same_time =
+                  finite && nonzero && message->source_sample_time_ns == 123U;
+              received = true;
+            });
+    rclcpp::executors::SingleThreadedExecutor executor;
+    executor.add_node(controller);
+    executor.add_node(probe);
+    const auto deadline =
+        std::chrono::steady_clock::now() + std::chrono::seconds(3);
+    while ((publisher->get_subscription_count() == 0 ||
+            subscription->get_publisher_count() == 0) &&
+           std::chrono::steady_clock::now() < deadline) {
+      executor.spin_some();
+      std::this_thread::sleep_for(std::chrono::milliseconds(2));
+    }
+    ASSERT_GT(publisher->get_subscription_count(), 0U);
+    wheel_leg_msgs::msg::RobotState state;
+    state.q_n_from_b.w = 1.0;
+    state.sample_time_ns = 123U;
+    publisher->publish(state);
+    const auto message_deadline =
+        std::chrono::steady_clock::now() + std::chrono::seconds(1);
+    while (!received && std::chrono::steady_clock::now() < message_deadline) {
+      executor.spin_some();
+      std::this_thread::sleep_for(std::chrono::milliseconds(2));
+    }
+    EXPECT_TRUE(received);
+    EXPECT_TRUE(finite_nonzero_same_time);
+  }
+
+  rclcpp::NodeOptions configured_options;
+  configured_options.parameter_overrides({
+      rclcpp::Parameter("controller.mode", "joint_pd_gravity"),
+      rclcpp::Parameter(
+          "controller.reference_position_rad",
+          std::vector<double>(wheel_leg::kJointCount, 0.0)),
+      rclcpp::Parameter(
+          "controller.reference_velocity_rad_s",
+          std::vector<double>(wheel_leg::kJointCount, 0.0)),
+      rclcpp::Parameter(
+          "controller.kp_nm_per_rad",
+          std::vector<double>(wheel_leg::kJointCount, 1.0)),
+      rclcpp::Parameter(
+          "controller.kd_nm_s_per_rad",
+          std::vector<double>(wheel_leg::kJointCount, 0.1)),
+      rclcpp::Parameter(
+          "controller.torque_limit_nm",
+          std::vector<double>(wheel_leg::kJointCount, 5.0)),
+      rclcpp::Parameter("controller.gravity_profile", "configured_harmonics"),
+      rclcpp::Parameter(
+          "controller.gravity_canonical_offset_rad",
+          std::vector<double>(wheel_leg::kJointCount, 0.0)),
+      rclcpp::Parameter(
+          "controller.gravity_left_sin_torque_nm",
+          std::vector<double>(3, 0.0)),
+      rclcpp::Parameter(
+          "controller.gravity_left_cos_torque_nm",
+          std::vector<double>(3, 0.0)),
+      rclcpp::Parameter(
+          "controller.gravity_right_sin_torque_nm",
+          std::vector<double>(3, 0.0)),
+      rclcpp::Parameter(
+          "controller.gravity_right_cos_torque_nm",
+          std::vector<double>(3, 0.0)),
+  });
+  EXPECT_NO_THROW(
+      std::make_shared<wheel_leg_ros::ControllerNode>(configured_options));
+
+  rclcpp::NodeOptions invalid_options;
+  invalid_options.parameter_overrides({
+      rclcpp::Parameter("controller.mode", "joint_pd_gravity"),
+      rclcpp::Parameter(
+          "controller.torque_limit_nm", std::vector<double>{1.0, 2.0}),
+  });
+  EXPECT_THROW(
+      std::make_shared<wheel_leg_ros::ControllerNode>(invalid_options),
+      std::runtime_error);
 }
 
 int main(int argc, char **argv) {

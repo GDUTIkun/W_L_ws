@@ -8,6 +8,7 @@
 #include <iomanip>
 #include <iostream>
 #include <memory>
+#include <sstream>
 #include <stdexcept>
 #include <string>
 
@@ -35,6 +36,23 @@ struct Options {
   int episodes{2};
   int ticks{100};
   int physics_steps_per_control{5};
+  bool enable_pd{true};
+  bool enable_gravity{true};
+  std::array<double, wheel_leg::kJointCount> reference{
+      -1.3267204090965414, 2.2088002542738268, 0.0,
+      -1.3267204090965414, 2.2088002542738268, 0.0};
+  std::array<double, wheel_leg::kJointCount> reference_step{};
+  std::array<double, wheel_leg::kJointCount> kp{
+      12.0, 12.0, 0.3, 12.0, 12.0, 0.3};
+  std::array<double, wheel_leg::kJointCount> kd{
+      1.5, 1.5, 0.05, 1.5, 1.5, 0.05};
+  std::array<double, wheel_leg::kJointCount> torque_limit{
+      6.0, 6.0, 1.0, 6.0, 6.0, 1.0};
+  std::array<double, wheel_leg::kJointCount> disturbance{};
+  int reference_tick{-1};
+  int disturbance_tick{-1};
+  wheel_leg::GravityProfile gravity_profile{
+      wheel_leg::currentNominalGravityProfile()};
 };
 
 int parsePositive(const std::string &value, const char *name) {
@@ -43,6 +61,66 @@ int parsePositive(const std::string &value, const char *name) {
     throw std::invalid_argument(std::string(name) + " must be positive");
   }
   return parsed;
+}
+
+int parseInteger(const std::string &value, const char *name) {
+  try {
+    return std::stoi(value);
+  } catch (const std::exception &) {
+    throw std::invalid_argument(std::string(name) + " must be an integer");
+  }
+}
+
+std::array<double, wheel_leg::kJointCount> parseJointVector(
+    const std::string &value, const char *name) {
+  std::array<double, wheel_leg::kJointCount> result{};
+  std::istringstream stream(value);
+  std::string item;
+  std::size_t index = 0;
+  while (std::getline(stream, item, ',')) {
+    if (index >= result.size()) {
+      throw std::invalid_argument(std::string(name) + " must contain six values");
+    }
+    result[index++] = std::stod(item);
+  }
+  if (index != result.size() || !std::all_of(
+          result.begin(), result.end(),
+          [](double number) { return std::isfinite(number); })) {
+    throw std::invalid_argument(std::string(name) + " must contain six finite values");
+  }
+  return result;
+}
+
+std::array<double, 3> parseTriple(
+    const std::string &value, const char *name) {
+  std::array<double, 3> result{};
+  std::istringstream stream(value);
+  std::string item;
+  std::size_t index = 0;
+  while (std::getline(stream, item, ',')) {
+    if (index >= result.size()) {
+      throw std::invalid_argument(std::string(name) + " must contain three values");
+    }
+    result[index++] = std::stod(item);
+  }
+  if (index != result.size() || !std::all_of(
+          result.begin(), result.end(),
+          [](double number) { return std::isfinite(number); })) {
+    throw std::invalid_argument(std::string(name) + " must contain three finite values");
+  }
+  return result;
+}
+
+void setHarmonicCoefficients(
+    std::array<wheel_leg::GravityHarmonic, 3> &harmonics,
+    const std::array<double, 3> &values, bool sine) {
+  for (std::size_t index = 0; index < harmonics.size(); ++index) {
+    if (sine) {
+      harmonics[index].sin_torque_nm = values[index];
+    } else {
+      harmonics[index].cos_torque_nm = values[index];
+    }
+  }
 }
 
 Options parseOptions(int argc, char **argv) {
@@ -71,6 +149,50 @@ Options parseOptions(int argc, char **argv) {
     } else if (argument == "--physics-steps-per-control") {
       options.physics_steps_per_control =
           parsePositive(value, "physics-steps-per-control");
+    } else if (argument == "--enable-pd") {
+      options.enable_pd = parseInteger(value, "enable-pd") != 0;
+    } else if (argument == "--enable-gravity") {
+      options.enable_gravity = parseInteger(value, "enable-gravity") != 0;
+    } else if (argument == "--reference") {
+      options.reference = parseJointVector(value, "reference");
+    } else if (argument == "--reference-step") {
+      options.reference_step = parseJointVector(value, "reference-step");
+    } else if (argument == "--kp") {
+      options.kp = parseJointVector(value, "kp");
+    } else if (argument == "--kd") {
+      options.kd = parseJointVector(value, "kd");
+    } else if (argument == "--torque-limit") {
+      options.torque_limit = parseJointVector(value, "torque-limit");
+    } else if (argument == "--disturbance") {
+      options.disturbance = parseJointVector(value, "disturbance");
+    } else if (argument == "--reference-tick") {
+      options.reference_tick = parseInteger(value, "reference-tick");
+    } else if (argument == "--disturbance-tick") {
+      options.disturbance_tick = parseInteger(value, "disturbance-tick");
+    } else if (argument == "--gravity-offset") {
+      const auto offsets = parseJointVector(value, "gravity-offset");
+      std::copy_n(
+          offsets.begin(), 3,
+          options.gravity_profile.left.canonical_offset_rad.begin());
+      std::copy_n(
+          offsets.begin() + 3, 3,
+          options.gravity_profile.right.canonical_offset_rad.begin());
+    } else if (argument == "--gravity-left-sin") {
+      setHarmonicCoefficients(
+          options.gravity_profile.left.harmonics,
+          parseTriple(value, "gravity-left-sin"), true);
+    } else if (argument == "--gravity-left-cos") {
+      setHarmonicCoefficients(
+          options.gravity_profile.left.harmonics,
+          parseTriple(value, "gravity-left-cos"), false);
+    } else if (argument == "--gravity-right-sin") {
+      setHarmonicCoefficients(
+          options.gravity_profile.right.harmonics,
+          parseTriple(value, "gravity-right-sin"), true);
+    } else if (argument == "--gravity-right-cos") {
+      setHarmonicCoefficients(
+          options.gravity_profile.right.harmonics,
+          parseTriple(value, "gravity-right-cos"), false);
     } else {
       throw std::invalid_argument("Unknown option: " + argument);
     }
@@ -78,8 +200,9 @@ Options parseOptions(int argc, char **argv) {
   if (options.model_path.empty() || options.output_path.empty()) {
     throw std::invalid_argument("--model and --output are required");
   }
-  if (options.scenario != "nominal" && options.scenario != "faults") {
-    throw std::invalid_argument("scenario must be nominal or faults");
+  if (options.scenario != "nominal" && options.scenario != "faults" &&
+      options.scenario != "control") {
+    throw std::invalid_argument("scenario must be nominal, faults, or control");
   }
   if (options.scenario == "faults" &&
       (options.episodes < 2 || options.ticks < 20)) {
@@ -131,7 +254,18 @@ int run(const Options &options) {
   adapter_config.command_enabled = true;
   wheel_leg_mujoco::Adapter adapter(model.get(), adapter_config);
   wheel_leg::ControllerCore controller;
-  if (!controller.configure(wheel_leg::ControllerConfig{})) {
+  wheel_leg::ControllerConfig controller_config;
+  if (options.scenario == "control") {
+    controller_config.mode = wheel_leg::ControllerMode::kJointPdGravity;
+    controller_config.enable_pd = options.enable_pd;
+    controller_config.enable_gravity = options.enable_gravity;
+    controller_config.initial_reference.position_rad = options.reference;
+    controller_config.kp_nm_per_rad = options.kp;
+    controller_config.kd_nm_s_per_rad = options.kd;
+    controller_config.torque_limit_nm = options.torque_limit;
+    controller_config.gravity_profile = options.gravity_profile;
+  }
+  if (!controller.configure(controller_config)) {
     throw std::runtime_error("Controller configuration failed");
   }
 
@@ -152,17 +286,40 @@ int run(const Options &options) {
   writeIndexedHeader(output, "dq_", wheel_leg::kJointCount);
   writeIndexedHeader(output, "tau_", wheel_leg::kJointCount);
   writeIndexedHeader(output, "ctrl_", wheel_leg::kJointCount);
+  writeIndexedHeader(output, "reference_", wheel_leg::kJointCount);
+  writeIndexedHeader(output, "tau_pd_", wheel_leg::kJointCount);
+  writeIndexedHeader(output, "tau_gravity_", wheel_leg::kJointCount);
+  writeIndexedHeader(output, "tau_raw_", wheel_leg::kJointCount);
+  writeIndexedHeader(output, "saturated_", wheel_leg::kJointCount);
+  writeIndexedHeader(output, "disturbance_", wheel_leg::kJointCount);
   output << '\n' << std::setprecision(17);
 
   wheel_leg::TorqueCommand saved_old_command;
   bool have_saved_old_command = false;
   constexpr std::uint64_t kControlPeriodNs = 10'000'000U;
   constexpr std::uint64_t kPhysicsPeriodNs = 2'000'000U;
+  std::array<int, wheel_leg::kJointCount> driven_dofs{};
+  for (std::size_t joint = 0; joint < wheel_leg::kJointCount; ++joint) {
+    const int joint_id = model->actuator_trnid[2 * static_cast<int>(joint)];
+    driven_dofs[joint] = model->jnt_dofadr[joint_id];
+  }
 
   for (int episode = 0; episode < options.episodes; ++episode) {
     adapter.reset(data.get());
     controller.reset();
     for (int tick = 0; tick < options.ticks; ++tick) {
+      wheel_leg::JointReference active_reference;
+      active_reference.position_rad = options.reference;
+      if (options.scenario == "control" && options.reference_tick >= 0 &&
+          tick >= options.reference_tick) {
+        for (std::size_t joint = 0; joint < wheel_leg::kJointCount; ++joint) {
+          active_reference.position_rad[joint] += options.reference_step[joint];
+        }
+      }
+      if (options.scenario == "control" &&
+          !controller.setReference(active_reference)) {
+        throw std::runtime_error("Controller reference update failed");
+      }
       const std::uint64_t receipt_time_ns =
           static_cast<std::uint64_t>(tick) * kControlPeriodNs;
       const auto state = adapter.extractState(data.get());
@@ -226,6 +383,14 @@ int run(const Options &options) {
           physics_receipt_time_ns += 100'000'001U;
         }
         adapter.writeControls(data.get(), physics_receipt_time_ns);
+        std::fill(data->qfrc_applied, data->qfrc_applied + model->nv, 0.0);
+        if (options.scenario == "control" &&
+            tick == options.disturbance_tick) {
+          for (std::size_t joint = 0; joint < wheel_leg::kJointCount; ++joint) {
+            data->qfrc_applied[driven_dofs[joint]] =
+                -options.disturbance[joint];
+          }
+        }
         if (physics_step == 0) {
           std::copy_n(data->ctrl, wheel_leg::kJointCount, interval_ctrl.begin());
         } else {
@@ -238,8 +403,10 @@ int run(const Options &options) {
         mj_step(model.get(), data.get());
       }
 
-      if (!result.accepted() || !allZero(result.command.joint_torque_nm)) {
-        throw std::runtime_error("Phase 16 Core must accept finite state and output zero");
+      if (!result.accepted() ||
+          (options.scenario != "control" &&
+           !allZero(result.command.joint_torque_nm))) {
+        throw std::runtime_error("Controller output invariant failed");
       }
       output << options.scenario << ',' << episode << ',' << tick << ','
              << tick * options.physics_steps_per_control << ','
@@ -261,6 +428,15 @@ int run(const Options &options) {
       writeRange(output, state.joint_velocity_rad_s);
       writeRange(output, result.command.joint_torque_nm);
       writeRange(output, interval_ctrl);
+      writeRange(output, active_reference.position_rad);
+      writeRange(output, result.tau_pd_nm);
+      writeRange(output, result.tau_gravity_nm);
+      writeRange(output, result.tau_raw_nm);
+      writeRange(output, result.saturated);
+      const auto applied_disturbance =
+          (tick == options.disturbance_tick) ? options.disturbance
+                                             : decltype(options.disturbance){};
+      writeRange(output, applied_disturbance);
       output << '\n';
     }
   }

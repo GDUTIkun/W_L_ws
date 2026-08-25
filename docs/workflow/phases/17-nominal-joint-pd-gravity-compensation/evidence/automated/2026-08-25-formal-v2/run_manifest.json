@@ -1,0 +1,56 @@
+{
+  "created_utc": "2026-08-25T13:58:57.630907+00:00",
+  "hardware_data_used": false,
+  "inputs": {
+    "ros_ws/build/wheel_leg_mujoco/deterministic_loop": "7bc3bbfec1ad32edaf3d3487cad1256b9fcf391e219323cf82b885b1a1fc4d99",
+    "ros_ws/src/wheel_leg_core/include/wheel_leg_core/controller_core.hpp": "7674f96dbd0af540a06944eadf016cb3bf8ffcb82cfa336a53f2dd176405604e",
+    "ros_ws/src/wheel_leg_core/src/controller_core.cpp": "70581ab545d870f2fc6ecc1334dc2c564addf3989a630ae22f8b4295b1df6467",
+    "ros_ws/src/wheel_leg_mujoco/src/deterministic_loop.cpp": "27b952703ca211b6db0aa6000b765e4045b938573a2e6eb97a999c71b69fc73f",
+    "simulation/mujoco/config/phase15_nominal.json": "48563f5e8be64ec48b2de7e9efe4c0c02c78b73af0ee6b47f3d98a8e21c9e2dc",
+    "simulation/mujoco/config/phase17_nominal.json": "7df491165d06cdb4d61f74583cdd745f8f5a7bbcc94eb5b391794ac22cdf9e4b",
+    "simulation/mujoco/model/phase16_contact_free.xml": "1d6cba048055131591c79d9c3c17baf6cd5e072f2360a8e4b19ba7bf7f8590fa",
+    "simulation/mujoco/model/wheel_leg.xml": "a4b1f2e243b6715038b24637325db89cbf820f0ea4eccaafbf832dcaeb71893a",
+    "tools/experiments/run_mujoco_joint_pd_gravity.py": "b030463e9807ccee9c9f2443d07f6c9f1904d6aa0aa03cd85c9f7a0d85d24c4b"
+  },
+  "model_revision": "current_nominal",
+  "outputs": {
+    "disturbance_0.csv": "6d3a17e8415aee1794bea857827421e249b580953ce64af9c01a27f9a7bb4e2f",
+    "disturbance_1.csv": "29ad8ed3a0e14a646d945477eed11f3b89d0df190112f29dc845909c9e652609",
+    "disturbance_2.csv": "8ae9093f7805135942a1c24f36b14d7ec0107506f1774f6dbb016fab441bf2c4",
+    "gravity_short.csv": "e2fbf150a06dbf3edb65d771c8b9da2ba494f991a39d30c1f38be505a75c8df4",
+    "pd_gravity_hold.csv": "05f4b660a6b644426200b56e1840c1b54452a07a86bb38047d64d037af130834",
+    "pd_only_hold.csv": "4d67c3b4b77ba44ede91537aa2d5a1a78ccc4d874de19c2a202e02661e37009b",
+    "replay_a.csv": "17cf3dcb8d2353ccaaf3cf2cd3b01e617667ce69429946c6c328fa27eaa300a5",
+    "replay_b.csv": "17cf3dcb8d2353ccaaf3cf2cd3b01e617667ce69429946c6c328fa27eaa300a5",
+    "saturation.csv": "4fb428a02c3509c3de1af3ec0053402287e4c6516c4a1632f7065ff155f19471",
+    "step_j0_neg.csv": "72a20de7bba91d205e7c9a81b861fb2fe5fb9d49127173ea71ba31a4b4dcf0a8",
+    "step_j0_pos.csv": "3f459a5a2d3d2fba69fc1e1a0902fdd773a72decf48f0ed0eaecf70d94153355",
+    "step_j1_neg.csv": "e6295caff3f45a450dbef38febfca6c7d3cf514ec6aa9ed38f5a4954d0f9957d",
+    "step_j1_pos.csv": "82155e56a625d4871b84b918d3af42d58c347e910be01c1d47d6e45a14514610",
+    "step_j2_neg.csv": "759f806d8dc2261ff3b0f00cca7e1f173ae1790843b7c3dc58ec5641a70e170b",
+    "step_j2_pos.csv": "b3ee4b9f20c6888066917aaae8dc637793bbd2ea8f52e99237a4d2fdf0de400e",
+    "step_j3_neg.csv": "0907232b8794af0c5431a6af31bce44ecf9a61afe3c78e522b4434647048e21a",
+    "step_j3_pos.csv": "e7c21179d531b8e1554144d7cad8f69d2f50d69ceb6307a1a825a1082f0afdee",
+    "step_j4_neg.csv": "64d5ff9782d97662713c6bb6f0c462f032f3646526b6b473dd850c8cee022507",
+    "step_j4_pos.csv": "ecd490cdb98a50cc517b7cec9f0a8d347ffe786eb2c6f93db37b40dfbc08e3a9",
+    "step_j5_neg.csv": "87d228f8977400d12a25714405687e2358003e96061c18ea6c9d2f86fe455db4",
+    "step_j5_pos.csv": "88c7fcbe96864b603384e250cec2337f5af0b9503edd24c8f948bf0fc3d3c05b",
+    "symmetric_0.csv": "65fac38e174a7920c164a656d2eade790fab2ef9586a3e8848bbea4c61b724b0",
+    "symmetric_1.csv": "9c468d4d267f4142e345f73dd84c7eb0e1f49b543be5ff7e7adcb737462d5a4e",
+    "symmetric_2.csv": "72d79f43ba2c11d540104982e75d2e118421f8960cddfa77523f2eb87acda014",
+    "zero_short.csv": "4545416f7e69aeb0a6d4fd5ef1a63a1f4736393e944b8fa1b66dad334e9ca195"
+  },
+  "profile": "current_nominal_joint_pd_gravity",
+  "schema_version": 1,
+  "timing": {
+    "control_period_s": 0.01,
+    "physics_steps_per_control": 5,
+    "physics_timestep_s": 0.002
+  },
+  "versions": {
+    "mujoco": "3.7.0",
+    "python": "3.10.20",
+    "ros_distro": "jazzy",
+    "runner": "wheel_leg_mujoco_deterministic_loop schema=1 mujoco=3.7.0"
+  }
+}

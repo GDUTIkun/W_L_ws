@@ -1,7 +1,7 @@
 {
   "mimo": {
     "base_url": "https://api.xiaomimimo.com/v1",
-    "default_model": "mimo-v2.5-pro",
+    "default_model": "mimo-v2.5",
     "api_key": "sk-ct4tcpodrhh3g6lpg47d2hyjur2mkcldou0bzsho98vkfz3h",
     "env_key": "MIMO_API_KEY",
     "model_env_key": "GRAPHIFY_MIMO_MODEL",

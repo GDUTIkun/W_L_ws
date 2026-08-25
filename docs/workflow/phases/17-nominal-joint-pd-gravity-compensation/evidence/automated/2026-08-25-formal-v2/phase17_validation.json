@@ -1,0 +1,143 @@
+{
+  "checks": {
+    "all_disturbance_recovery": true,
+    "all_logs_finite_and_zoh": true,
+    "all_single_joint_steps": true,
+    "cpp_gravity_matches_profile": true,
+    "fresh_process_exact": true,
+    "gravity_matches_potential_gradient": true,
+    "gravity_matches_reduced_bias": true,
+    "gravity_short_improves_zero": true,
+    "left_right_symmetry": true,
+    "pd_gravity_hold_bounded": true,
+    "pd_gravity_improves_pd_only": true,
+    "post_sum_saturation": true,
+    "reset_replay_exact": true,
+    "wheel_com_eccentricity_retained": true
+  },
+  "hardware_data_used": false,
+  "interpretation_limit": "Simulation-only current nominal fixed-base/contact-disabled Joint PD and gravity evidence; no contact, standing, actuator, realtime, or real-hardware claim.",
+  "metrics": {
+    "disturbances": {
+      "0": {
+        "final_recovery_error_rad": 0.0028311494195756293,
+        "pass": true
+      },
+      "1": {
+        "final_recovery_error_rad": 0.002831150865477694,
+        "pass": true
+      },
+      "2": {
+        "final_recovery_error_rad": 0.0028311093149884226,
+        "pass": true
+      }
+    },
+    "gravity": {
+      "max_abs_wheel_gravity_nm": 0.0004066488568223635,
+      "max_cpp_profile_error_nm": 0.0,
+      "max_potential_gradient_error_nm": 6.781867303851108e-09,
+      "max_reduced_bias_error_nm": 5.2660098504020425e-12,
+      "samples": 150
+    },
+    "holds": {
+      "gravity_short_final_drift_rad": 0.05899521253146939,
+      "pd_gravity_final_error_rad": 0.002831108892225487,
+      "pd_gravity_max_velocity_rad_s": 0.10717515412876705,
+      "pd_only_final_error_rad": 0.11586166481582882,
+      "zero_short_final_drift_rad": 3.615859770835225
+    },
+    "steps": {
+      "step_j0_neg": {
+        "final_error_rad": 0.0028506772726233365,
+        "max_velocity_rad_s": 0.5730155872810513,
+        "overshoot_ratio": 0.030614690714479698,
+        "pass": true,
+        "settling_time_s": 0.3
+      },
+      "step_j0_pos": {
+        "final_error_rad": 0.0027792212314159404,
+        "max_velocity_rad_s": 0.6305555101372033,
+        "overshoot_ratio": 0.0,
+        "pass": true,
+        "settling_time_s": 0.46
+      },
+      "step_j1_neg": {
+        "final_error_rad": 0.002335175037405879,
+        "max_velocity_rad_s": 0.5543915128777728,
+        "overshoot_ratio": 0.02978472378160374,
+        "pass": true,
+        "settling_time_s": 0.3
+      },
+      "step_j1_pos": {
+        "final_error_rad": 0.0017326482962989331,
+        "max_velocity_rad_s": 0.6094938168408405,
+        "overshoot_ratio": 0.0,
+        "pass": true,
+        "settling_time_s": 0.37
+      },
+      "step_j2_neg": {
+        "final_error_rad": 7.074738044898776e-06,
+        "max_velocity_rad_s": 1.8024079009182006,
+        "overshoot_ratio": 0.0,
+        "pass": true,
+        "settling_time_s": 0.89
+      },
+      "step_j2_pos": {
+        "final_error_rad": 1.9099502801156465e-05,
+        "max_velocity_rad_s": 1.8024676043711414,
+        "overshoot_ratio": 7.662705349531507e-05,
+        "pass": true,
+        "settling_time_s": 0.88
+      },
+      "step_j3_neg": {
+        "final_error_rad": 0.0028491936701298126,
+        "max_velocity_rad_s": 0.5731608332208564,
+        "overshoot_ratio": 0.03058153870945407,
+        "pass": true,
+        "settling_time_s": 0.3
+      },
+      "step_j3_pos": {
+        "final_error_rad": 0.0027778207482243022,
+        "max_velocity_rad_s": 0.6306631083948259,
+        "overshoot_ratio": 0.0,
+        "pass": true,
+        "settling_time_s": 0.46
+      },
+      "step_j4_neg": {
+        "final_error_rad": 0.002333868878445333,
+        "max_velocity_rad_s": 0.5544833475620771,
+        "overshoot_ratio": 0.029755695997844833,
+        "pass": true,
+        "settling_time_s": 0.3
+      },
+      "step_j4_pos": {
+        "final_error_rad": 0.0017312369927822147,
+        "max_velocity_rad_s": 0.6095076366499286,
+        "overshoot_ratio": 0.0,
+        "pass": true,
+        "settling_time_s": 0.37
+      },
+      "step_j5_neg": {
+        "final_error_rad": 2.3439663067781336e-05,
+        "max_velocity_rad_s": 1.8028071507608403,
+        "overshoot_ratio": 9.411897335276365e-05,
+        "pass": true,
+        "settling_time_s": 0.89
+      },
+      "step_j5_pos": {
+        "final_error_rad": 2.745482989521819e-05,
+        "max_velocity_rad_s": 1.8034920548678608,
+        "overshoot_ratio": 0.0,
+        "pass": true,
+        "settling_time_s": 0.89
+      }
+    },
+    "symmetry": {
+      "0": 9.852851751146474e-06,
+      "1": 7.241393335188917e-06,
+      "2": 8.133227442346205e-05
+    }
+  },
+  "overall_pass": true,
+  "schema_version": 1
+}

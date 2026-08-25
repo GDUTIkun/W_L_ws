@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "profile": "current_nominal_joint_pd_gravity",
+  "model_revision": "current_nominal",
+  "scene": "simulation/mujoco/model/phase16_contact_free.xml",
+  "included_model": "simulation/mujoco/model/wheel_leg.xml",
+  "phase15_config": "simulation/mujoco/config/phase15_nominal.json",
+  "physics_timestep_s": 0.002,
+  "control_period_s": 0.01,
+  "physics_steps_per_control": 5,
+  "canonical_offset_rad": [-1.3267204090965414, 2.2088002542738268, 0.0, -1.3267204090965414, 2.2088002542738268, 0.0],
+  "controller": {
+    "kp_nm_per_rad": [12.0, 12.0, 0.3, 12.0, 12.0, 0.3],
+    "kd_nm_s_per_rad": [1.5, 1.5, 0.05, 1.5, 1.5, 0.05],
+    "torque_limit_nm": [6.0, 6.0, 1.0, 6.0, 6.0, 1.0]
+  },
+  "gravity_profile": {
+    "representation": "analytic_native_joint_harmonics_tau_canonical",
+    "native_wave_numbers": [[1, 0, 0], [1, 1, 0], [1, 1, 1]],
+    "left_sin_torque_nm": [-0.45200450502449818, -1.2121269563787503, 0.00019620802794421259],
+    "left_cos_torque_nm": [-1.7829178461202144, 1.4701911157792322, 0.00035741999080506598],
+    "right_sin_torque_nm": [-0.4519471424166111, -1.2107526253360692, -0.00038444708065832856],
+    "right_cos_torque_nm": [-1.7833009239989861, 1.4713235883642201, -0.00012107063092493468],
+    "provenance": "current_nominal compiled body mass/COM/transforms, nominal passive closure branch, q_C=-q_M+b; all three harmonics retained including wheel COM eccentricity"
+  },
+  "formal_cases": {
+    "ticks": 400,
+    "reference_tick": 50,
+    "step_amplitude_rad": [0.1, 0.1, 0.25],
+    "disturbance_tick": 100,
+    "disturbance_torque_nm": [2.0, 2.0, 0.2]
+  },
+  "thresholds": {
+    "gravity_oracle_max_error_nm": 5e-9,
+    "gravity_potential_max_error_nm": 5e-7,
+    "final_error_hip_knee_rad": 0.004,
+    "final_error_wheel_rad": 0.001,
+    "settling_time_s": 1.0,
+    "overshoot_ratio": 0.15,
+    "max_velocity_hip_knee_rad_s": 1.5,
+    "max_velocity_wheel_rad_s": 2.0,
+    "hold_error_rad": 0.015,
+    "symmetry_error_rad": 0.003,
+    "recovery_error_rad": 0.015,
+    "max_zoh_ctrl_difference_nm": 0.0,
+    "determinism_absolute": 0.0
+  }
+}
