@@ -13,7 +13,7 @@ Simulink 中已验证的算法使用了简化刚体假设，而 MuJoCo 和真机
 
 ## 当前执行策略：先纯仿真，再用辨识模型完整复现
 
-当前冻结所有真机上电、板级联调、传感器采集、Load Cell pilot 和正式辨识。Phase 05 保留已有实现与实验设计，但在用户解除冻结前不继续执行。冻结期间不原地扩张已完成的 Phase 14，也暂不在本文件中制定详细新 Phase；纯仿真总体顺序固定为：
+当前冻结所有真机上电、板级联调、传感器采集、Load Cell pilot 和正式辨识。Phase 05 保留已有实现与实验设计，但在用户解除冻结前不继续执行。冻结期间不原地扩张已完成的 Phase 14；纯仿真总体顺序固定为：
 
 ```text
 当前 nominal baseline
@@ -25,6 +25,8 @@ Simulink 中已验证的算法使用了简化刚体假设，而 MuJoCo 和真机
 → WBC
 → NMPC
 ```
+
+其中第一项已由 [Phase 15](../workflow/phases/15-mujoco-closed-chain-kinematics/RECORD.md) 完成 current nominal 闭链运动学和 reduced Jacobian 验证；其余项仍只保留总体顺序，尚未制定详细 Phase。
 
 上述各层只形成 simulation-only 结论，不提前关闭依赖真实计量、真机响应或 MuJoCo–real 一致性的 gate。真机工作恢复后，先执行执行器、传感器、质量/COM、惯量/耦合和接触的共同辨识，形成新的 identified plant profile，再按完全相同的层次从运动学开始重跑：
 

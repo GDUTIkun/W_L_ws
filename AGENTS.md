@@ -69,7 +69,9 @@ ROADMAP
 
 - 用于设计文档、实验记录、Phase 历史和工程脚本关系。
 - 不替代 CBM 或源码读取。
-- 只查询本 workspace 的真实本地图；文档或脚本发生重大变化后，通过独立维护动作更新图。
+- Codex 只允许查询本 workspace 的现有本地图，只使用 `graphify query`、`graphify path` 和 `graphify explain`。
+- Codex 不得执行 Graphify 的 `extract`、`--update`、全量重建、聚类重建或语义提取，也不得为这些操作派生子代理；这些操作会消耗用户额度。
+- 当现有图缺少最新内容时，Codex 应明确说明图已过期，并提供一份可直接交给其他 Claude 执行的 Graphify 增量维护 prompt；Codex 自身不得更新 `graphify-out/`。
 
 ## Directory Boundaries
 

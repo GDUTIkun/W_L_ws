@@ -7,6 +7,7 @@
 - `model/phase14_contact_free.xml`：完整双腿、无地面/无 contact 的约束验证 fixture。
 - `model/phase14_single_leg.xml`：固定基座、无 contact 的五刚体闭链单腿 fixture；含三路 actuator、两路被动关节和三维独立运动子空间。
 - `config/phase14_validation.json`：Phase 14 的采样、激励、seed 和冻结阈值。
+- `config/phase15_nominal.json`：Phase 15 nominal profile 的左右闭链几何、接触点、工作域、solver、有限差分和冻结阈值。
 
 正式内部动力学验证入口：
 
@@ -16,3 +17,12 @@ cd /home/t/W_L_ws
 ```
 
 该验证只支持“MuJoCo 内部自洽”结论；参数与真机一致性必须由后续共同辨识 Phase 关闭。
+
+完整闭链运动学与 reduced Jacobian 验证入口：
+
+```bash
+cd /home/t/W_L_ws
+./.venv/bin/python tools/experiments/run_mujoco_closed_chain_kinematics.py
+```
+
+该入口拒绝覆盖非空结果目录。未来模型 revision/identified profile 应使用新 config 和 run ID，不替换 nominal evidence。

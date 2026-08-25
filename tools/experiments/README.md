@@ -21,3 +21,4 @@
 ## 当前入口
 
 - `run_mujoco_internal_dynamics.py`：执行 Phase 14 的 MuJoCo-only FK/Jacobian、重力、质量矩阵、正逆动力学、闭链、耦合、能量和确定性回放验证。方法见 `docs/experiments/mujoco_internal_dynamics_validation.md`，默认输出到 Phase 14 evidence。
+- `run_mujoco_closed_chain_kinematics.py`：执行 Phase 15 的 profile-driven 闭链被动解、独立 FK、约束降维 Jacobian、有限差分、速度、虚功、工作域与非覆盖验证。方法见 `docs/experiments/mujoco_closed_chain_kinematics_validation.md`。

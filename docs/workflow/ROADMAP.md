@@ -34,17 +34,18 @@
 | 03 | 统一 Robot 接口与 Controller Core 骨架 | complete | [Phase 03](phases/03-robot-interface-controller-core/PLAN.md) | C++ Core、聚合消息、ROS2 wrapper 与 Jazzy pub/sub 测试通过 |
 | 04 | MuJoCo 基础模型与 Adapter | complete | [Phase 04](phases/04-mujoco-model-adapter/PLAN.md) | MuJoCo 3.7.0 状态/零力矩闭环、fixed/floating sanity、映射与 fail-safe 通过审查 |
 | 05 | MuJoCo 运动学与内部动力学验证 | complete | [Phase 14](phases/14-mujoco-internal-dynamics-validation/PLAN.md) | 不接真机；FK/Jacobian、重力、M(q)、正逆动力学、约束、耦合、能量与开环回放自洽并通过审查 |
-| 06 | 执行器力矩映射、摩擦与附加惯量 | blocked | [Phase 05](phases/05-actuator-torque-identification/PLAN.md) | Phase 14 前置已 PASS；当前按用户决定冻结真机工作，解冻后仍须关闭自身 DG01–DG06，才能执行真实辨识与 MuJoCo 对应验证 |
-| 07 | RobotState 与传感器正式验证 | planned | — | Phase 14 PASS 后才接真机；时间戳、单位、方向、滤波和延迟满足控制要求 |
-| 08 | MuJoCo–真机运动学、重力、质量与 COM 辨识 | planned | — | 复用 Phase 14 基线，FK/Jacobian/重力矩及 mass/COM 得到模型与实验支持 |
-| 09 | MuJoCo–真机完整惯量、动力学耦合与接触辨识 | planned | — | 复用 Phase 14 激励与分析，关键动力学和接触趋势在预定误差内一致 |
-| 10 | Joint PD 与重力补偿 | planned | — | 单关节、整腿及扰动恢复在两端通过 |
-| 11 | Floating-base 简单站立 | planned | — | 低风险保护条件下稳定站立 |
-| 12 | Weighted WBC | planned | — | 约束、任务和限幅逐层验证通过 |
-| 13 | NMPC | planned | — | NMPC → WBC → torque 全链路稳定 |
-| 14 | Roll/Yaw/Turning 与差分辨识 | planned | — | 工作范围与鲁棒裕量有真实证据支持 |
+| 06 | 完整闭链运动学、接触点与 Jacobian 验证 | complete | [Phase 15](phases/15-mujoco-closed-chain-kinematics/PLAN.md) | 210 样本 nominal 装配分支、被动解、工作域、reduced Jacobian、有限差分、速度与虚功通过 REVIEW；入口可跨 revision 非覆盖复用 |
+| 07 | 执行器力矩映射、摩擦与附加惯量 | blocked | [Phase 05](phases/05-actuator-torque-identification/PLAN.md) | Phase 14 前置已 PASS；当前按用户决定冻结真机工作，解冻后仍须关闭自身 DG01–DG06，才能执行真实辨识与 MuJoCo 对应验证 |
+| 08 | RobotState 与传感器正式验证 | planned | — | Phase 14 PASS 后才接真机；时间戳、单位、方向、滤波和延迟满足控制要求 |
+| 09 | MuJoCo–真机运动学、重力、质量与 COM 辨识 | planned | — | 复用 Phase 14/15 基线，FK/Jacobian/重力矩及 mass/COM 得到模型与实验支持 |
+| 10 | MuJoCo–真机完整惯量、动力学耦合与接触辨识 | planned | — | 复用 Phase 14/15 激励与分析，关键动力学和接触趋势在预定误差内一致 |
+| 11 | Joint PD 与重力补偿 | planned | — | 单关节、整腿及扰动恢复在两端通过 |
+| 12 | Floating-base 简单站立 | planned | — | 低风险保护条件下稳定站立 |
+| 13 | Weighted WBC | planned | — | 约束、任务和限幅逐层验证通过 |
+| 14 | NMPC | planned | — | NMPC → WBC → torque 全链路稳定 |
+| 15 | Roll/Yaw/Turning 与差分辨识 | planned | — | 工作范围与鲁棒裕量有真实证据支持 |
 
-README 与工作流骨架属于仓库引导建设，不作为产品开发 Phase。Phase 14 已完成；Phase 05 因当前真机冻结而 blocked。下一执行方向是上方 simulation-only 总体路线，建立具体 Phase 前先讨论并冻结范围；未来恢复 Phase 05 时，Phase 14 PASS 仍不替代其通信、Load Cell、同步和安全放行条件。
+README 与工作流骨架属于仓库引导建设，不作为产品开发 Phase。Phase 14/15 已完成；Phase 05 因当前真机冻结而 blocked。Phase 15 的 PASS 仍为 simulation-only；未来恢复 Phase 05 时，Phase 14/15 PASS 不替代其通信、Load Cell、同步和安全放行条件。
 
 详细技术次序以 [MuJoCo → Real 当前更新路线](../mujoco/simulink%202%20mujoco%202%20real流程.md) 为准。建立真实 Phase 后，用 Phase 链接替换表中的“—”。
 

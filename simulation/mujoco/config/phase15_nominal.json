@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "profile": "nominal",
+  "frozen_at": "2026-08-25T00:00:00+08:00",
+  "mujoco_version": "3.7.0",
+  "scene": "simulation/mujoco/model/phase14_contact_free.xml",
+  "included_model": "simulation/mujoco/model/wheel_leg.xml",
+  "seed": 1505,
+  "sides": {
+    "left": {
+      "active_joints": [
+        "left_hip_joint",
+        "left_knee_joint",
+        "left_wheel_joint"
+      ],
+      "passive_joints": [
+        "left_connect1_joint",
+        "left_connect2_joint"
+      ],
+      "wheel_body": "left_wheel_body",
+      "wheel_geom": "left_wheel_collision",
+      "calf_site": "left_calf_site",
+      "connect_site": "left_connect2_site",
+      "expected_passive_from_knee": [1.0, -1.0],
+      "geometry": {
+        "base_position_m": [0.0, 0.0, 0.6],
+        "thigh_position_m": [-0.0775, 0.04425, -0.02],
+        "thigh_euler_xyz_rad": [-1.5707963267948966, 0.0, -1.5707963267948966],
+        "calf_position_m": [-0.0435, -0.17467, 0.12525],
+        "calf_euler_xyz_rad": [0.0, 0.0, 3.141592653589793],
+        "wheel_position_m": [0.14297, -0.17368, 0.0428],
+        "connect1_position_m": [0.0, 0.0, 0.1235],
+        "connect1_euler_xyz_rad": [0.0, 0.0, 0.0],
+        "connect2_position_m": [-0.0318, 0.03859, 0.01225],
+        "connect2_euler_xyz_rad": [0.0, 0.0, 0.0],
+        "calf_site_position_m": [0.0318, -0.03859, 0.0105],
+        "connect_site_position_m": [-0.0435, -0.17467, 0.0]
+      }
+    },
+    "right": {
+      "active_joints": [
+        "right_hip_joint",
+        "right_knee_joint",
+        "right_wheel_joint"
+      ],
+      "passive_joints": [
+        "right_connect1_joint",
+        "right_connect2_joint"
+      ],
+      "wheel_body": "right_wheel_body",
+      "wheel_geom": "right_wheel_collision",
+      "calf_site": "right_calf_site",
+      "connect_site": "right_connect2_site",
+      "expected_passive_from_knee": [-1.0, -1.0],
+      "geometry": {
+        "base_position_m": [0.0, 0.0, 0.6],
+        "thigh_position_m": [-0.0775, -0.04425, -0.02],
+        "thigh_euler_xyz_rad": [-1.5707963267948966, 0.0, -1.5707963267948966],
+        "calf_position_m": [-0.0435, -0.17467, -0.12525],
+        "calf_euler_xyz_rad": [0.0, 0.0, 3.141592653589793],
+        "wheel_position_m": [0.14297, -0.17368, -0.0428],
+        "connect1_position_m": [0.0, 0.0, -0.1235],
+        "connect1_euler_xyz_rad": [3.141592653589793, 0.0, 0.0],
+        "connect2_position_m": [-0.0318, -0.03859, 0.01225],
+        "connect2_euler_xyz_rad": [3.141592653589793, 0.0, 0.0],
+        "calf_site_position_m": [0.0318, -0.03859, -0.0105],
+        "connect_site_position_m": [-0.0435, -0.17467, 0.0]
+      }
+    }
+  },
+  "contact_point": {
+    "wheel_center_local_m": [0.0, 0.0, 0.0],
+    "wheel_axis_local": [0.0, 0.0, 1.0],
+    "nominal_radius_m": 0.05,
+    "contact_point_at_zero_local_m": [0.05, 0.0, 0.0],
+    "simulink_simplified_radius_m": 0.08,
+    "provenance": "0.05 m is nominalized from the compiled MuJoCo collision meshes' approximately 0.10 m radial diameter about the wheel joint axis; it is not a real-hardware calibration and is distinct from the Simulink 0.08 m simplification."
+  },
+  "workspace_rad": {
+    "hip": [-0.65, -0.325, 0.0, 0.325, 0.65],
+    "knee": [-0.75, -0.5, -0.25, 0.0, 0.25, 0.5, 0.75],
+    "wheel": [-1.0, 0.0, 1.0]
+  },
+  "active_velocity_rad_s": [0.13, -0.09, 0.17],
+  "test_wrench_world": {
+    "force_n": [1.2, -0.4, 2.1],
+    "torque_nm": [0.3, -0.2, 0.15]
+  },
+  "solver": {
+    "position_tolerance_m": 1e-12,
+    "step_tolerance_rad": 1e-13,
+    "max_iterations": 25,
+    "max_step_rad": 0.5,
+    "rcond": 1e-12
+  },
+  "finite_difference_eps_rad": [0.0001, 0.00003, 0.00001],
+  "formal_finite_difference_eps_rad": 0.00001,
+  "thresholds": {
+    "profile_model_position_m": 1e-12,
+    "profile_model_rotation_matrix": 1e-12,
+    "mesh_nominal_radius_deviation_m": 0.0002,
+    "closure_position_m": 1e-11,
+    "passive_reference_rad": 1e-10,
+    "branch_reverse_rad": 1e-10,
+    "passive_block_min_singular_value": 0.005,
+    "passive_block_condition_number": 40.0,
+    "fk_position_m": 1e-10,
+    "fk_rotation_matrix": 1e-10,
+    "full_jacobian": 1e-9,
+    "constraint_tangent": 1e-10,
+    "reduced_jacobian": 1e-9,
+    "finite_difference_linear": 5e-7,
+    "finite_difference_angular": 5e-7,
+    "velocity": 5e-7,
+    "virtual_work_nm": 1e-10,
+    "power_w": 1e-10,
+    "mirror_position_m": 1e-10,
+    "left_right_frame_rotation_matrix": 1e-10,
+    "rolling_direction": 1e-12,
+    "determinism_absolute": 0.0
+  }
+}

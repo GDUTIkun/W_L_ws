@@ -1,0 +1,158 @@
+{
+  "schema_version": 1,
+  "overall_pass": true,
+  "run_manifest": {
+    "schema_version": 1,
+    "run_id": "2026-08-25-nominal",
+    "profile": "nominal",
+    "mujoco_version": "3.7.0",
+    "seed": 1505,
+    "config_path": "simulation/mujoco/config/phase15_nominal.json",
+    "config_sha256": "48563f5e8be64ec48b2de7e9efe4c0c02c78b73af0ee6b47f3d98a8e21c9e2dc",
+    "scene_path": "simulation/mujoco/model/phase14_contact_free.xml",
+    "scene_sha256": "c353f3a6bd457a5732fa2464ec66e7faadf9694e31f5fb58be204d63f5686654",
+    "included_model_path": "simulation/mujoco/model/wheel_leg.xml",
+    "included_model_sha256": "a4b1f2e243b6715038b24637325db89cbf820f0ea4eccaafbf832dcaeb71893a",
+    "runner_path": "tools/experiments/run_mujoco_closed_chain_kinematics.py",
+    "runner_sha256": "e4b401d1b216c1c24946d6f73c2c61cd7eddc0c7f9c32d206d0dfacd981219e5",
+    "solver": {
+      "position_tolerance_m": 1e-12,
+      "step_tolerance_rad": 1e-13,
+      "max_iterations": 25,
+      "max_step_rad": 0.5,
+      "rcond": 1e-12
+    },
+    "workspace_rad": {
+      "hip": [
+        -0.65,
+        -0.325,
+        0.0,
+        0.325,
+        0.65
+      ],
+      "knee": [
+        -0.75,
+        -0.5,
+        -0.25,
+        0.0,
+        0.25,
+        0.5,
+        0.75
+      ],
+      "wheel": [
+        -1.0,
+        0.0,
+        1.0
+      ]
+    },
+    "thresholds": {
+      "profile_model_position_m": 1e-12,
+      "profile_model_rotation_matrix": 1e-12,
+      "mesh_nominal_radius_deviation_m": 0.0002,
+      "closure_position_m": 1e-11,
+      "passive_reference_rad": 1e-10,
+      "branch_reverse_rad": 1e-10,
+      "passive_block_min_singular_value": 0.005,
+      "passive_block_condition_number": 40.0,
+      "fk_position_m": 1e-10,
+      "fk_rotation_matrix": 1e-10,
+      "full_jacobian": 1e-09,
+      "constraint_tangent": 1e-10,
+      "reduced_jacobian": 1e-09,
+      "finite_difference_linear": 5e-07,
+      "finite_difference_angular": 5e-07,
+      "velocity": 5e-07,
+      "virtual_work_nm": 1e-10,
+      "power_w": 1e-10,
+      "mirror_position_m": 1e-10,
+      "left_right_frame_rotation_matrix": 1e-10,
+      "rolling_direction": 1e-12,
+      "determinism_absolute": 0.0
+    },
+    "supersedes": null,
+    "hardware_data_used": false
+  },
+  "checks": {
+    "geometry_profile": {
+      "pass": true,
+      "max_profile_model_position_error_m": 5.551115123125783e-17,
+      "max_profile_model_rotation_matrix_error": 1.7225464241988333e-16,
+      "max_mesh_nominal_radius_deviation_m": 0.00012075152764200875,
+      "max_rolling_direction_error": 5.551115123125782e-18,
+      "simulink_radius_is_not_used": true
+    },
+    "assembly_branch": {
+      "pass": true,
+      "sides": {
+        "left": {
+          "pass": true,
+          "converged": true,
+          "knee_samples": 7,
+          "max_solver_iterations": 5,
+          "max_closure_residual_m": 2.831068712794149e-15,
+          "max_passive_reference_error_rad": 1.1224354778960333e-13,
+          "max_reverse_path_error_rad": 1.120215031846783e-13
+        },
+        "right": {
+          "pass": true,
+          "converged": true,
+          "knee_samples": 7,
+          "max_solver_iterations": 5,
+          "max_closure_residual_m": 2.8033131371785203e-15,
+          "max_passive_reference_error_rad": 1.099120794378905e-13,
+          "max_reverse_path_error_rad": 1.0969003483296547e-13
+        }
+      }
+    },
+    "workspace": {
+      "pass": true,
+      "samples_per_side": 105,
+      "total_samples": 210,
+      "max_closure_residual_m": 3.247402347028583e-15,
+      "min_passive_block_singular_value": 0.007370926269926887,
+      "max_passive_block_condition_number": 30.199307571475952
+    },
+    "fk_and_full_jacobian": {
+      "pass": true,
+      "max_position_error_m": 2.7755575615628914e-16,
+      "max_rotation_matrix_error": 6.661338147750939e-16,
+      "max_full_jacobian_error": 6.049014748177263e-16
+    },
+    "reduced_jacobian": {
+      "pass": true,
+      "max_constraint_tangent_residual": 1.3341414346989982e-16,
+      "max_analytic_mujoco_reduced_jacobian_error": 6.049014748177263e-16,
+      "finite_difference_by_epsilon": {
+        "0.0001": {
+          "linear": 5.827310300965394e-10,
+          "angular": 2.6907365224815294e-12
+        },
+        "3e-05": {
+          "linear": 5.3732907012715714e-11,
+          "angular": 7.2237790000166656e-12
+        },
+        "1e-05": {
+          "linear": 1.462234500149151e-11,
+          "angular": 1.7825296794171663e-11
+        }
+      }
+    },
+    "velocity_and_virtual_work": {
+      "pass": true,
+      "max_velocity_error": 9.927373409609361e-17,
+      "max_virtual_work_error_nm": 2.220446049250313e-16,
+      "max_power_error_w": 2.7755575615628914e-17
+    },
+    "left_right_symmetry": {
+      "pass": true,
+      "max_mirrored_position_error_m": 2.498001805406602e-16,
+      "frame_contract": "positions mirror across the XZ plane; left/right wheel body frames share the same right-handed axes",
+      "max_shared_frame_rotation_matrix_error": 0.0
+    },
+    "determinism": {
+      "pass": true,
+      "max_absolute_numeric_difference": 0.0,
+      "summary_exact_match": true
+    }
+  }
+}
