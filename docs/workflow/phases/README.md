@@ -4,7 +4,6 @@
 
 ## Active
 
-- [Phase 02：坐标系、单位、关节顺序与接口语义](02-coordinate-interface-contract/PLAN.md) — 以 Simulink 控制语义为基准冻结 canonical contract；MuJoCo 可保留方便的相对 frame，但跨边界变换必须显式且通过方向性测试。
 - [Phase 05：执行器力矩辨识与模型校准](05-actuator-torque-identification/PLAN.md) — 先以 3508+C620 跑通完整链路，再覆盖 GIM6010 和 MuJoCo 参数对应验证。
 
 ## Review
@@ -17,7 +16,10 @@ None.
 
 ## Complete
 
-None.
+- [Phase 01：迁入 Simulink 基线与验证入口](01-simulink-baseline-import/PLAN.md)
+- [Phase 02：坐标系、单位、关节顺序与接口语义](02-coordinate-interface-contract/PLAN.md)
+- [Phase 03：统一 Robot 接口与 Controller Core 骨架](03-robot-interface-controller-core/PLAN.md)
+- [Phase 04：MuJoCo 基础模型与 Adapter](04-mujoco-model-adapter/PLAN.md)
 
 ## 建立新 Phase
 

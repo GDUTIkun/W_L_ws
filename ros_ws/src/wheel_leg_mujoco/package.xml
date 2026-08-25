@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="3">
-  <name>wheel_leg_ros</name>
+  <name>wheel_leg_mujoco</name>
   <version>0.1.0</version>
-  <description>ROS2 conversions and minimal wrapper for the wheel-leg Controller Core.</description>
+  <description>MuJoCo Adapter for canonical wheel-leg RobotState and TorqueCommand.</description>
   <maintainer email="maintainer@example.com">wheel-leg maintainers</maintainer>
   <license>MIT</license>
   <buildtool_depend>ament_cmake</buildtool_depend>
@@ -10,6 +10,9 @@
   <depend>std_srvs</depend>
   <depend>wheel_leg_core</depend>
   <depend>wheel_leg_msgs</depend>
+  <depend>wheel_leg_ros</depend>
   <test_depend>ament_cmake_gtest</test_depend>
+  <exec_depend>launch</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
   <export><build_type>ament_cmake</build_type></export>
 </package>

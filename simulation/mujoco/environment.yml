@@ -5,5 +5,4 @@ dependencies:
   - python=3.12
   - pip
   - pip:
-      - mujoco==3.12.0
-
+      - mujoco==3.7.0

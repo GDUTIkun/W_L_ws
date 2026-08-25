@@ -27,6 +27,7 @@
 - [`src/wheel_leg_core/`](src/wheel_leg_core/README.md) 提供 ROS 无关的 canonical types、契约校验与安全零输出 Core。
 - [`src/wheel_leg_msgs/`](src/wheel_leg_msgs/README.md) 提供冻结的聚合 RobotState/TorqueCommand 消息。
 - [`src/wheel_leg_ros/`](src/wheel_leg_ros/README.md) 提供显式 quaternion/字段转换和最小 Controller wrapper。
+- [`src/wheel_leg_mujoco/`](src/wheel_leg_mujoco/README.md) 提供 MuJoCo 3.7.0 Adapter、fixed/floating headless runner 和零输出闭环 launch。
 - [`src/wheel_leg_stm32_bridge/`](src/wheel_leg_stm32_bridge/README.md) 是 Phase 05 的自包含实验串口 bridge，覆盖当前 STM 普通帧和辨识帧；它不冻结未来统一 RobotState/TorqueCommand 或生产通信协议。
 
 接口字段和时间/frame 语义见 [`docs/interfaces/robot_state_torque_command.md`](../docs/interfaces/robot_state_torque_command.md)。

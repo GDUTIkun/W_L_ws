@@ -8,7 +8,6 @@
 namespace wheel_leg {
 
 struct ControllerConfig {
-  std::uint64_t max_state_age_ns{100'000'000};
   double quaternion_norm_tolerance{1.0e-6};
 };
 
@@ -16,8 +15,6 @@ enum class StepStatus {
   kOk,
   kNotConfigured,
   kInvalidState,
-  kFutureState,
-  kStaleState,
   kNonMonotonicState,
 };
 
@@ -33,8 +30,7 @@ class ControllerCore {
  public:
   [[nodiscard]] bool configure(const ControllerConfig &config);
   void reset();
-  [[nodiscard]] StepResult step(
-      const RobotState &state, std::uint64_t now_ns);
+  [[nodiscard]] StepResult step(const RobotState &state);
 
  private:
   ControllerConfig config_{};

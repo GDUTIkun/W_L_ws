@@ -4,6 +4,6 @@
 
 - 订阅：`robot_state` (`wheel_leg_msgs/msg/RobotState`)
 - 发布：`torque_command` (`wheel_leg_msgs/msg/TorqueCommand`)
-- 参数：`max_state_age_ms`，默认 `100`
+- 服务：`reset_controller` (`std_srvs/srv/Trigger`)
 
-wrapper 使用主机 `steady_clock` 检查状态年龄；Adapter 必须先把采样时间映射到同一主机单调时钟域。无效、过期、未来或非单调状态被拒绝且不发布命令。
+Core 只使用源系统的 `sample_time_ns` 做严格顺序和 `dt`；transport freshness 由 Adapter 使用本机 receipt steady clock 独立判断。无效或非单调状态被拒绝且不发布命令，源时间复位前必须显式调用 reset 服务。

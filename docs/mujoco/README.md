@@ -30,11 +30,10 @@
 
 ## 当前状态
 
-文档定义了目标迁移路线，但 MuJoCo 工程、统一 ROS2 接口及控制核心尚未完整实现。
+Phase 04 已交付 MuJoCo 3.7.0 基础 Adapter、统一 ROS2 状态/力矩通路和 fixed/floating headless 入口；当前只通过接口映射、安全零输出与有界运行验证，不代表参数标定、站立控制或真机一致性。实现入口见 [`wheel_leg_mujoco`](../../ros_ws/src/wheel_leg_mujoco/README.md)，证据见 [Phase 04](../workflow/phases/04-mujoco-model-adapter/RECORD.md)。
 
 ## 维护规则
 
 - 新实验结论必须附真实数据或 Phase RECORD 链接。
 - 坐标系、单位、状态定义和接口语义的变更必须显式记录。
 - 项目进度放入 `docs/workflow/ROADMAP.md`，不在本目录重复维护。
-

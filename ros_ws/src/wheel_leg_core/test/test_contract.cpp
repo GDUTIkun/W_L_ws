@@ -24,8 +24,8 @@ int main() {
   assert(validateRobotState(state) == ValidationError::kNone);
 
   ControllerCore core;
-  assert(core.configure({100'000'000, 1.0e-6}));
-  const auto first = core.step(state, 1'010'000'000);
+  assert(core.configure({1.0e-6}));
+  const auto first = core.step(state);
   assert(first.accepted());
   assert(first.dt_s == 0.0);
   for (const double torque : first.command.joint_torque_nm) {
@@ -33,20 +33,14 @@ int main() {
   }
 
   state.sample_time_ns += 5'000'000;
-  const auto second = core.step(state, 1'015'000'000);
+  const auto second = core.step(state);
   assert(second.accepted());
   assert(std::abs(second.dt_s - 0.005) < 1.0e-12);
-  assert(core.step(state, 1'015'000'000).status ==
+  assert(core.step(state).status ==
          StepStatus::kNonMonotonicState);
 
-  state.sample_time_ns += 1;
-  assert(core.step(state, state.sample_time_ns - 1).status ==
-         StepStatus::kFutureState);
-  assert(core.step(state, state.sample_time_ns + 100'000'001).status ==
-         StepStatus::kStaleState);
-
   state.q_n_from_b = {2.0, 0.0, 0.0, 0.0};
-  assert(core.step(state, state.sample_time_ns).status ==
+  assert(core.step(state).status ==
          StepStatus::kInvalidState);
   state.q_n_from_b = {1.0, 0.0, 0.0, 0.0};
   state.joint_velocity_rad_s[2] =
@@ -65,5 +59,5 @@ int main() {
   assert(validateTorqueCommand(invalid_command) == ValidationError::kNonFinite);
 
   core.reset();
-  assert(core.step(state, state.sample_time_ns).accepted());
+  assert(core.step(state).accepted());
 }

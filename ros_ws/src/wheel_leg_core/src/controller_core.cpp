@@ -54,8 +54,7 @@ ValidationError validateTorqueCommand(const TorqueCommand &command) {
 }
 
 bool ControllerCore::configure(const ControllerConfig &config) {
-  if (config.max_state_age_ns == 0 ||
-      !std::isfinite(config.quaternion_norm_tolerance) ||
+  if (!std::isfinite(config.quaternion_norm_tolerance) ||
       config.quaternion_norm_tolerance < 0.0) {
     return false;
   }
@@ -67,8 +66,7 @@ bool ControllerCore::configure(const ControllerConfig &config) {
 
 void ControllerCore::reset() { last_sample_time_ns_.reset(); }
 
-StepResult ControllerCore::step(
-    const RobotState &state, std::uint64_t now_ns) {
+StepResult ControllerCore::step(const RobotState &state) {
   StepResult result;
   result.command.source_sample_time_ns = state.sample_time_ns;
   if (!configured_) {
@@ -77,14 +75,6 @@ StepResult ControllerCore::step(
   if (validateRobotState(state, config_.quaternion_norm_tolerance) !=
       ValidationError::kNone) {
     result.status = StepStatus::kInvalidState;
-    return result;
-  }
-  if (state.sample_time_ns > now_ns) {
-    result.status = StepStatus::kFutureState;
-    return result;
-  }
-  if (now_ns - state.sample_time_ns > config_.max_state_age_ns) {
-    result.status = StepStatus::kStaleState;
     return result;
   }
   if (last_sample_time_ns_ && state.sample_time_ns <= *last_sample_time_ns_) {

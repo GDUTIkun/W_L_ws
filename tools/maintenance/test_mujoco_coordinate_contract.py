@@ -245,7 +245,8 @@ def main() -> None:
     print("  base_control_frame: torso COM position + base_body axes")
     print("  driven joints: MuJoCo +N_y = Simscape -S_z")
     print("  quaternion: active wxyz; positive yaw continuity verified")
-    print("  joint zero offsets and real IMU installation remain external gates")
+    print("  joint zero offsets are validated by wheel_leg_mujoco adapter tests")
+    print("  real IMU installation remains an external gate")
 
 
 if __name__ == "__main__":

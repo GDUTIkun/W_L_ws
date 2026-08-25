@@ -2,8 +2,6 @@
 <mujoco model="wheel_leg">
   <compiler angle="radian" meshdir="assets"/>
 
-  <option gravity="0 0 0"/>
-
   <asset>
   <!-- base -->
     <mesh file="zong_zhuang____base_1__di_ban__1.stl"/>
@@ -165,7 +163,7 @@
           <body name="right_wheel_body" pos="0.14297 -0.17368 -0.04280">
             <joint name="right_wheel_joint" type="hinge" pos="0 0 0" axis="0 0 1"/>
 
-            <geom type="mesh" mesh="zong_zhuang____right_wheel_1" mass="0.3431" class="right_wheel_default"/>
+            <geom name="right_wheel_collision" type="mesh" mesh="zong_zhuang____right_wheel_1" mass="0.3431" class="right_wheel_default"/>
           </body>
         </body>
 
@@ -225,7 +223,7 @@
             <body name="left_wheel_body" pos="0.14297 -0.17368 0.04280">
                 <joint name="left_wheel_joint" type="hinge" pos="0 0 0" axis="0 0 1"/>
 
-                <geom type="mesh" mesh="zong_zhuang____left_wheel_1" mass="0.3431" class="left_wheel_default"/>
+                <geom name="left_wheel_collision" type="mesh" mesh="zong_zhuang____left_wheel_1" mass="0.3431" class="left_wheel_default"/>
             </body>
           </body>
 
@@ -257,6 +255,16 @@
     </body>
   </worldbody>
 
+  <!-- Unit-gear native torque actuators. Canonical sign conversion stays in the Adapter. -->
+  <actuator>
+    <motor name="left_hip_torque" joint="left_hip_joint" gear="1"/>
+    <motor name="left_knee_torque" joint="left_knee_joint" gear="1"/>
+    <motor name="left_wheel_torque" joint="left_wheel_joint" gear="1"/>
+    <motor name="right_hip_torque" joint="right_hip_joint" gear="1"/>
+    <motor name="right_knee_torque" joint="right_knee_joint" gear="1"/>
+    <motor name="right_wheel_torque" joint="right_wheel_joint" gear="1"/>
+  </actuator>
+
   <sensor>
     <accelerometer name="base_accel" site="base_frame"/>
     <gyro name="base_gyro" site="base_frame"/>
@@ -284,9 +292,9 @@
   </sensor>
 
   <equality>
-    <weld body1="base_body" body2="world"/>
-    <connect site1="left_connect2_site" site2="left_calf_site" /> 
-    <connect site1="right_connect2_site" site2="right_calf_site" />
+    <weld name="base_weld" body1="base_body" body2="world"/>
+    <connect name="left_leg_closure" site1="left_connect2_site" site2="left_calf_site"/>
+    <connect name="right_leg_closure" site1="right_connect2_site" site2="right_calf_site"/>
   </equality>
 
 </mujoco>

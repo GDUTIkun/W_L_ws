@@ -1,0 +1,1194 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-25T04:46:04.307843+00:00",
+  "runtime": {
+    "mujocoVersion": "3.7.0",
+    "environment": ".venv (uv)",
+    "reproduction": "uv venv .venv && uv pip install --python .venv/bin/python mujoco==3.7.0"
+  },
+  "source": {
+    "scenePath": "simulation/mujoco/model/scence.xml",
+    "sceneSha256": "66CEDE35AD67DFDA852AA15B1E6F4469AA892130A5C9E13761518157AA9F6A1D"
+  },
+  "compiled": {
+    "nq": 17,
+    "nv": 16,
+    "nu": 6,
+    "numberOfSensors": 19,
+    "sensorDataWidth": 26,
+    "gravity": [
+      0.0,
+      0.0,
+      -9.81
+    ],
+    "timestep": 0.002,
+    "qpos0": [
+      0.0,
+      0.0,
+      0.6,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "bodies": [
+    {
+      "name": "base_body",
+      "parent": "world",
+      "worldPositionAtQpos0": [
+        0.0,
+        0.0,
+        0.6
+      ],
+      "worldRotationAtQpos0": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "mass": 2.5880000000000005,
+      "localInertialCom": [
+        -0.07737815204697132,
+        8.094965674265526e-07,
+        -0.03227768029287019
+      ],
+      "worldInertialComAtQpos0": [
+        -0.07737815204697132,
+        8.094965674265526e-07,
+        0.5677223197071298
+      ],
+      "subtreeMass": 6.4344,
+      "subtreeComWorldAtQpos0": [
+        -0.08734381176303486,
+        9.300783028750655e-05,
+        0.5223536276392748
+      ]
+    },
+    {
+      "name": "right_thigh_body",
+      "parent": "base_body",
+      "worldPositionAtQpos0": [
+        -0.0775,
+        -0.04425,
+        0.58
+      ],
+      "worldRotationAtQpos0": [
+        -3.673205103305044e-06,
+        0.9999999999932536,
+        5.551115123125783e-17,
+        3.6732051032495328e-06,
+        1.3492373884815834e-11,
+        0.9999999999932536,
+        0.9999999999865075,
+        3.6732051032495328e-06,
+        -3.673205103360555e-06
+      ],
+      "mass": 0.826,
+      "localInertialCom": [
+        -0.0022996862476442666,
+        -0.010095189409752554,
+        -0.08653831603981041
+      ],
+      "worldInertialComAtQpos0": [
+        -0.08759518096246519,
+        -0.13078832448658206,
+        0.5777005945436696
+      ],
+      "subtreeMass": 1.9232,
+      "subtreeComWorldAtQpos0": [
+        -0.09404189755703163,
+        -0.16096816599618022,
+        0.4918508792533397
+      ]
+    },
+    {
+      "name": "right_calf_body",
+      "parent": "right_thigh_body",
+      "worldPositionAtQpos0": [
+        -0.2521698402143996,
+        -0.1695001597859337,
+        0.5364998184707908
+      ],
+      "worldRotationAtQpos0": [
+        6.326794896593935e-06,
+        -0.9999999999799856,
+        5.551115123125783e-17,
+        -3.6732051031385105e-06,
+        -2.3239576929512396e-11,
+        0.9999999999932536,
+        -0.9999999999732394,
+        -6.326794896482912e-06,
+        -3.6732051032495328e-06
+      ],
+      "mass": 0.5963,
+      "localInertialCom": [
+        0.11793516110568367,
+        -0.1433619151391673,
+        0.00526140017915898
+      ],
+      "worldInertialComAtQpos0": [
+        -0.1088071789265262,
+        -0.16423919280351415,
+        0.4185655450634942
+      ],
+      "subtreeMass": 0.9394,
+      "subtreeComWorldAtQpos0": [
+        -0.09774708955610815,
+        -0.18450109694060077,
+        0.4093804195797888
+      ]
+    },
+    {
+      "name": "right_wheel_body",
+      "parent": "right_calf_body",
+      "worldPositionAtQpos0": [
+        -0.07848893567600934,
+        -0.2123006849397423,
+        0.39353107452553276
+      ],
+      "worldRotationAtQpos0": [
+        6.326794896593935e-06,
+        -0.9999999999799856,
+        5.551115123125783e-17,
+        -3.6732051031385105e-06,
+        -2.3239576929512396e-11,
+        0.9999999999932536,
+        -0.9999999999732394,
+        -6.326794896482912e-06,
+        -3.6732051032495328e-06
+      ],
+      "mass": 0.3431,
+      "localInertialCom": [
+        0.00011422123248387527,
+        3.597071589790871e-05,
+        -0.007415140339568024
+      ],
+      "worldInertialComAtQpos0": [
+        -0.07852490566925222,
+        -0.21971582569881914,
+        0.3934168803028039
+      ],
+      "subtreeMass": 0.3431,
+      "subtreeComWorldAtQpos0": [
+        -0.07852490566925222,
+        -0.21971582569881917,
+        0.3934168803028039
+      ]
+    },
+    {
+      "name": "right_connect1_body",
+      "parent": "right_thigh_body",
+      "worldPositionAtQpos0": [
+        -0.0775,
+        -0.16774999999916682,
+        0.5800004536408302
+      ],
+      "worldRotationAtQpos0": [
+        -3.6732051032495328e-06,
+        -0.9999999999897329,
+        -2.6535897932888908e-06,
+        3.6732051032495328e-06,
+        2.653576300859495e-06,
+        -0.9999999999897329,
+        0.9999999999865075,
+        -3.6732148504525775e-06,
+        3.6731953561575104e-06
+      ],
+      "mass": 0.048,
+      "localInertialCom": [
+        -0.011476326327073941,
+        -0.013927440937263011,
+        0.010298750255969914
+      ],
+      "worldInertialComAtQpos0": [
+        -0.06357254423663812,
+        -0.17804882936745864,
+        0.5685242163017156
+      ],
+      "subtreeMass": 0.1578,
+      "subtreeComWorldAtQpos0": [
+        -0.10572967032749682,
+        -0.17884974874484552,
+        0.533428097171725
+      ]
+    },
+    {
+      "name": "right_connect2_body",
+      "parent": "right_connect1_body",
+      "worldPositionAtQpos0": [
+        -0.038909915698948895,
+        -0.18000021920847278,
+        0.5482006403872635
+      ],
+      "worldRotationAtQpos0": [
+        -3.6732051032495328e-06,
+        0.9999999999791707,
+        5.307179586633293e-06,
+        3.673205103416066e-06,
+        -5.307166094203897e-06,
+        0.9999999999791707,
+        0.9999999999865075,
+        3.6732245975446e-06,
+        -3.673185609065488e-06
+      ],
+      "mass": 0.10980000000000001,
+      "localInertialCom": [
+        -0.030114792877772373,
+        -0.08524921423305111,
+        0.000799999960147455
+      ],
+      "worldInertialComAtQpos0": [
+        -0.12415901506666999,
+        -0.17919987743441354,
+        0.5180855314318384
+      ],
+      "subtreeMass": 0.10980000000000001,
+      "subtreeComWorldAtQpos0": [
+        -0.12415901506666999,
+        -0.1791998774344135,
+        0.5180855314318384
+      ]
+    },
+    {
+      "name": "left_thigh_body",
+      "parent": "base_body",
+      "worldPositionAtQpos0": [
+        -0.0775,
+        0.04425,
+        0.58
+      ],
+      "worldRotationAtQpos0": [
+        -3.673205103305044e-06,
+        0.9999999999932536,
+        5.551115123125783e-17,
+        3.6732051032495328e-06,
+        1.3492373884815834e-11,
+        0.9999999999932536,
+        0.9999999999865075,
+        3.6732051032495328e-06,
+        -3.673205103360555e-06
+      ],
+      "mass": 0.826,
+      "localInertialCom": [
+        -0.002306765376285603,
+        -0.010047913704284322,
+        0.08643350113345301
+      ],
+      "worldInertialComAtQpos0": [
+        -0.08754790523099418,
+        0.13068349265951196,
+        0.5776928802277201
+      ],
+      "subtreeMass": 1.9232,
+      "subtreeComWorldAtQpos0": [
+        -0.09405625391473917,
+        0.16127825054593345,
+        0.49180491228165285
+      ]
+    },
+    {
+      "name": "left_calf_body",
+      "parent": "left_thigh_body",
+      "worldPositionAtQpos0": [
+        -0.2521698402143996,
+        0.1694998402123763,
+        0.5364988983329123
+      ],
+      "worldRotationAtQpos0": [
+        6.326794896593935e-06,
+        -0.9999999999799856,
+        5.551115123125783e-17,
+        -3.6732051031385105e-06,
+        -2.3239576929512396e-11,
+        0.9999999999932536,
+        -0.9999999999732394,
+        -6.326794896482912e-06,
+        -3.6732051032495328e-06
+      ],
+      "mass": 0.5963,
+      "localInertialCom": [
+        0.11817009224709184,
+        -0.14316832780956693,
+        -0.004261398815806688
+      ],
+      "worldInertialComAtQpos0": [
+        -0.10900076476976153,
+        0.16523800733693964,
+        0.41832972753862036
+      ],
+      "subtreeMass": 0.9394,
+      "subtreeComWorldAtQpos0": [
+        -0.0978180495415737,
+        0.1851346109175044,
+        0.40929326839016456
+      ]
+    },
+    {
+      "name": "left_wheel_body",
+      "parent": "left_calf_body",
+      "worldPositionAtQpos0": [
+        -0.07848893567600934,
+        0.2122993150579902,
+        0.3935298399612975
+      ],
+      "worldRotationAtQpos0": [
+        6.326794896593935e-06,
+        -0.9999999999799856,
+        5.551115123125783e-17,
+        -3.6732051031385105e-06,
+        -2.3239576929512396e-11,
+        0.9999999999932536,
+        -0.9999999999732394,
+        -6.326794896482912e-06,
+        -3.6732051032495328e-06
+      ],
+      "mass": 0.3431,
+      "localInertialCom": [
+        -5.829442826290297e-05,
+        -0.00010619134315086336,
+        0.0074151403411230315
+      ],
+      "worldInertialComAtQpos0": [
+        -0.0783827447016775,
+        0.21971445561319308,
+        0.3935881078240783
+      ],
+      "subtreeMass": 0.3431,
+      "subtreeComWorldAtQpos0": [
+        -0.0783827447016775,
+        0.21971445561319308,
+        0.3935881078240783
+      ]
+    },
+    {
+      "name": "left_connect1_body",
+      "parent": "left_thigh_body",
+      "worldPositionAtQpos0": [
+        -0.0775,
+        0.16774999999916682,
+        0.5799995463591697
+      ],
+      "worldRotationAtQpos0": [
+        -3.673205103305044e-06,
+        0.9999999999932536,
+        5.551115123125783e-17,
+        3.6732051032495328e-06,
+        1.3492373884815834e-11,
+        0.9999999999932536,
+        0.9999999999865075,
+        3.6732051032495328e-06,
+        -3.673205103360555e-06
+      ],
+      "mass": 0.048,
+      "localInertialCom": [
+        -0.011476440241484764,
+        0.013927347066523581,
+        0.010298750255969946
+      ],
+      "worldInertialComAtQpos0": [
+        -0.06357261077825152,
+        0.17804870809993634,
+        0.5685231194464201
+      ],
+      "subtreeMass": 0.1578,
+      "subtreeComWorldAtQpos0": [
+        -0.10572967090412437,
+        0.17940629288516263,
+        0.5334270716492858
+      ]
+    },
+    {
+      "name": "left_connect2_body",
+      "parent": "left_connect1_body",
+      "worldPositionAtQpos0": [
+        -0.038909883192338054,
+        0.17999988319168256,
+        0.5481996431118212
+      ],
+      "worldRotationAtQpos0": [
+        -3.673205103305044e-06,
+        0.9999999999932536,
+        5.551115123125783e-17,
+        3.6732051032495328e-06,
+        1.3492373884815834e-11,
+        0.9999999999932536,
+        0.9999999999865075,
+        3.6732051032495328e-06,
+        -3.673205103360555e-06
+      ],
+      "mass": 0.10980000000000001,
+      "localInertialCom": [
+        -0.030114792881217326,
+        -0.08524921423219325,
+        -2.8231057395578377e-14
+      ],
+      "worldInertialComAtQpos0": [
+        -0.12415898680614529,
+        0.17999977257269323,
+        0.5180845370931615
+      ],
+      "subtreeMass": 0.10980000000000001,
+      "subtreeComWorldAtQpos0": [
+        -0.12415898680614527,
+        0.1799997725726932,
+        0.5180845370931615
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "name": "<mjOBJ_JOINT:0>",
+      "type": 0,
+      "qposAddress": 0,
+      "dofAddress": 0,
+      "localAxis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "worldAxisAtQpos0": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "body": "base_body"
+    },
+    {
+      "name": "right_hip_joint",
+      "type": 3,
+      "qposAddress": 7,
+      "dofAddress": 6,
+      "localAxis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "worldAxisAtQpos0": [
+        5.551115123125783e-17,
+        0.9999999999932536,
+        -3.6732051031940216e-06
+      ],
+      "body": "right_thigh_body"
+    },
+    {
+      "name": "right_knee_joint",
+      "type": 3,
+      "qposAddress": 8,
+      "dofAddress": 7,
+      "localAxis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "worldAxisAtQpos0": [
+        5.551115123125783e-17,
+        0.9999999999932536,
+        -3.6732051031940216e-06
+      ],
+      "body": "right_calf_body"
+    },
+    {
+      "name": "right_wheel_joint",
+      "type": 3,
+      "qposAddress": 9,
+      "dofAddress": 8,
+      "localAxis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "worldAxisAtQpos0": [
+        5.551115123125783e-17,
+        0.9999999999932536,
+        -3.6732051031940216e-06
+      ],
+      "body": "right_wheel_body"
+    },
+    {
+      "name": "right_connect1_joint",
+      "type": 3,
+      "qposAddress": 10,
+      "dofAddress": 9,
+      "localAxis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "worldAxisAtQpos0": [
+        -2.6535897932888908e-06,
+        -0.9999999999897329,
+        3.673195356324044e-06
+      ],
+      "body": "right_connect1_body"
+    },
+    {
+      "name": "right_connect2_joint",
+      "type": 3,
+      "qposAddress": 11,
+      "dofAddress": 10,
+      "localAxis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "worldAxisAtQpos0": [
+        5.307179586633293e-06,
+        0.9999999999791707,
+        -3.673185609009977e-06
+      ],
+      "body": "right_connect2_body"
+    },
+    {
+      "name": "left_hip_joint",
+      "type": 3,
+      "qposAddress": 12,
+      "dofAddress": 11,
+      "localAxis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "worldAxisAtQpos0": [
+        5.551115123125783e-17,
+        0.9999999999932536,
+        -3.6732051031940216e-06
+      ],
+      "body": "left_thigh_body"
+    },
+    {
+      "name": "left_knee_joint",
+      "type": 3,
+      "qposAddress": 13,
+      "dofAddress": 12,
+      "localAxis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "worldAxisAtQpos0": [
+        5.551115123125783e-17,
+        0.9999999999932536,
+        -3.6732051031940216e-06
+      ],
+      "body": "left_calf_body"
+    },
+    {
+      "name": "left_wheel_joint",
+      "type": 3,
+      "qposAddress": 14,
+      "dofAddress": 13,
+      "localAxis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "worldAxisAtQpos0": [
+        5.551115123125783e-17,
+        0.9999999999932536,
+        -3.6732051031940216e-06
+      ],
+      "body": "left_wheel_body"
+    },
+    {
+      "name": "left_connect1_joint",
+      "type": 3,
+      "qposAddress": 15,
+      "dofAddress": 14,
+      "localAxis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "worldAxisAtQpos0": [
+        5.551115123125783e-17,
+        0.9999999999932536,
+        -3.6732051031940216e-06
+      ],
+      "body": "left_connect1_body"
+    },
+    {
+      "name": "left_connect2_joint",
+      "type": 3,
+      "qposAddress": 16,
+      "dofAddress": 15,
+      "localAxis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "worldAxisAtQpos0": [
+        5.551115123125783e-17,
+        0.9999999999932536,
+        -3.6732051031940216e-06
+      ],
+      "body": "left_connect2_body"
+    }
+  ],
+  "sites": [
+    {
+      "name": "base_frame",
+      "body": "base_body",
+      "worldPositionAtQpos0": [
+        0.0,
+        0.0,
+        0.6
+      ],
+      "worldRotationAtQpos0": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "name": "base_control_frame",
+      "body": "base_body",
+      "worldPositionAtQpos0": [
+        -0.077378152,
+        8.1e-07,
+        0.56772232
+      ],
+      "worldRotationAtQpos0": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "name": "right_calf_site",
+      "body": "right_calf_body",
+      "worldPositionAtQpos0": [
+        -0.21357963902309424,
+        -0.1800002765928883,
+        0.5047001011913104
+      ],
+      "worldRotationAtQpos0": [
+        6.326794896593935e-06,
+        -0.9999999999799856,
+        5.551115123125783e-17,
+        -3.6732051031385105e-06,
+        -2.3239576929512396e-11,
+        0.9999999999932536,
+        -0.9999999999732394,
+        -6.326794896482912e-06,
+        -3.6732051032495328e-06
+      ]
+    },
+    {
+      "name": "right_connect2_site",
+      "body": "right_connect2_body",
+      "worldPositionAtQpos0": [
+        -0.21357975591088862,
+        -0.1799994519901931,
+        0.5046999987857099
+      ],
+      "worldRotationAtQpos0": [
+        -3.6732051032495328e-06,
+        0.9999999999791707,
+        5.307179586633293e-06,
+        3.673205103416066e-06,
+        -5.307166094203897e-06,
+        0.9999999999791707,
+        0.9999999999865075,
+        3.6732245975446e-06,
+        -3.673185609065488e-06
+      ]
+    },
+    {
+      "name": "left_calf_site",
+      "body": "left_calf_body",
+      "worldPositionAtQpos0": [
+        -0.21357963902309424,
+        0.17999972340528,
+        0.5046991039161248
+      ],
+      "worldRotationAtQpos0": [
+        6.326794896593935e-06,
+        -0.9999999999799856,
+        5.551115123125783e-17,
+        -3.6732051031385105e-06,
+        -2.3239576929512396e-11,
+        0.9999999999932536,
+        -0.9999999999732394,
+        -6.326794896482912e-06,
+        -3.6732051032495328e-06
+      ]
+    },
+    {
+      "name": "left_connect2_site",
+      "body": "left_connect2_body",
+      "worldPositionAtQpos0": [
+        -0.21357972340673764,
+        0.17999972340490386,
+        0.5046990015136728
+      ],
+      "worldRotationAtQpos0": [
+        -3.673205103305044e-06,
+        0.9999999999932536,
+        5.551115123125783e-17,
+        3.6732051032495328e-06,
+        1.3492373884815834e-11,
+        0.9999999999932536,
+        0.9999999999865075,
+        3.6732051032495328e-06,
+        -3.673205103360555e-06
+      ]
+    }
+  ],
+  "sensors": [
+    {
+      "name": "base_accel",
+      "type": 1,
+      "dimension": 3,
+      "dataAddress": 0,
+      "valueAtQpos0": [
+        -1.4425936055753905,
+        0.03457620349928098,
+        8.848284185960873
+      ]
+    },
+    {
+      "name": "base_gyro",
+      "type": 3,
+      "dimension": 3,
+      "dataAddress": 3,
+      "valueAtQpos0": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "base_quat",
+      "type": 27,
+      "dimension": 4,
+      "dataAddress": 6,
+      "valueAtQpos0": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "left_hip_encoder",
+      "type": 9,
+      "dimension": 1,
+      "dataAddress": 10,
+      "valueAtQpos0": [
+        0.0
+      ]
+    },
+    {
+      "name": "left_hip_encoder_vel",
+      "type": 10,
+      "dimension": 1,
+      "dataAddress": 11,
+      "valueAtQpos0": [
+        0.0
+      ]
+    },
+    {
+      "name": "right_hip_encoder",
+      "type": 9,
+      "dimension": 1,
+      "dataAddress": 12,
+      "valueAtQpos0": [
+        0.0
+      ]
+    },
+    {
+      "name": "right_hip_encoder_vel",
+      "type": 10,
+      "dimension": 1,
+      "dataAddress": 13,
+      "valueAtQpos0": [
+        0.0
+      ]
+    },
+    {
+      "name": "left_connect1_encoder",
+      "type": 9,
+      "dimension": 1,
+      "dataAddress": 14,
+      "valueAtQpos0": [
+        0.0
+      ]
+    },
+    {
+      "name": "left_connect1_encoder_vel",
+      "type": 10,
+      "dimension": 1,
+      "dataAddress": 15,
+      "valueAtQpos0": [
+        0.0
+      ]
+    },
+    {
+      "name": "right_connect1_encoder",
+      "type": 9,
+      "dimension": 1,
+      "dataAddress": 16,
+      "valueAtQpos0": [
+        0.0
+      ]
+    },
+    {
+      "name": "right_connect1_encoder_vel",
+      "type": 10,
+      "dimension": 1,
+      "dataAddress": 17,
+      "valueAtQpos0": [
+        0.0
+      ]
+    },
+    {
+      "name": "left_calf_encoder",
+      "type": 9,
+      "dimension": 1,
+      "dataAddress": 18,
+      "valueAtQpos0": [
+        0.0
+      ]
+    },
+    {
+      "name": "left_calf_encoder_vel",
+      "type": 10,
+      "dimension": 1,
+      "dataAddress": 19,
+      "valueAtQpos0": [
+        0.0
+      ]
+    },
+    {
+      "name": "right_calf_encoder",
+      "type": 9,
+      "dimension": 1,
+      "dataAddress": 20,
+      "valueAtQpos0": [
+        0.0
+      ]
+    },
+    {
+      "name": "right_calf_encoder_vel",
+      "type": 10,
+      "dimension": 1,
+      "dataAddress": 21,
+      "valueAtQpos0": [
+        0.0
+      ]
+    },
+    {
+      "name": "left_wheel_encoder",
+      "type": 9,
+      "dimension": 1,
+      "dataAddress": 22,
+      "valueAtQpos0": [
+        0.0
+      ]
+    },
+    {
+      "name": "left_wheel_encoder_vel",
+      "type": 10,
+      "dimension": 1,
+      "dataAddress": 23,
+      "valueAtQpos0": [
+        0.0
+      ]
+    },
+    {
+      "name": "right_wheel_encoder",
+      "type": 9,
+      "dimension": 1,
+      "dataAddress": 24,
+      "valueAtQpos0": [
+        0.0
+      ]
+    },
+    {
+      "name": "right_wheel_encoder_vel",
+      "type": 10,
+      "dimension": 1,
+      "dataAddress": 25,
+      "valueAtQpos0": [
+        0.0
+      ]
+    }
+  ],
+  "actuators": [
+    {
+      "name": "left_hip_torque",
+      "joint": "left_hip_joint",
+      "ctrlAddress": 0,
+      "gear": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "left_knee_torque",
+      "joint": "left_knee_joint",
+      "ctrlAddress": 1,
+      "gear": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "left_wheel_torque",
+      "joint": "left_wheel_joint",
+      "ctrlAddress": 2,
+      "gear": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "right_hip_torque",
+      "joint": "right_hip_joint",
+      "ctrlAddress": 3,
+      "gear": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "right_knee_torque",
+      "joint": "right_knee_joint",
+      "ctrlAddress": 4,
+      "gear": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "right_wheel_torque",
+      "joint": "right_wheel_joint",
+      "ctrlAddress": 5,
+      "gear": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  ],
+  "equalities": [
+    {
+      "name": "base_weld",
+      "activeAtReset": true,
+      "type": 1
+    },
+    {
+      "name": "left_leg_closure",
+      "activeAtReset": true,
+      "type": 0
+    },
+    {
+      "name": "right_leg_closure",
+      "activeAtReset": true,
+      "type": 0
+    }
+  ],
+  "namedContactGeoms": {
+    "floor": 0,
+    "left_wheel_collision": 61,
+    "right_wheel_collision": 30
+  },
+  "positiveJointPerturbations": [
+    {
+      "joint": "left_hip_joint",
+      "observedBody": "left_wheel_body",
+      "epsilonRad": 1e-06,
+      "dWorldPositionDqAtZero": [
+        -0.18646954277889982,
+        3.6221026178395732e-09,
+        0.0009889357388548348
+      ],
+      "rotationDeltaFrobeniusPerRad": 1.4142135624860879
+    },
+    {
+      "joint": "left_knee_joint",
+      "observedBody": "left_wheel_body",
+      "epsilonRad": 1e-06,
+      "dWorldPositionDqAtZero": [
+        -0.14296890114839922,
+        -6.379619055252306e-07,
+        -0.1736809045194132
+      ],
+      "rotationDeltaFrobeniusPerRad": 1.41421356242721
+    },
+    {
+      "joint": "left_wheel_joint",
+      "observedBody": "left_wheel_body",
+      "epsilonRad": 1e-06,
+      "dWorldPositionDqAtZero": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotationDeltaFrobeniusPerRad": 1.41421356242721
+    },
+    {
+      "joint": "right_hip_joint",
+      "observedBody": "right_wheel_body",
+      "epsilonRad": 1e-06,
+      "dWorldPositionDqAtZero": [
+        -0.1864695428066554,
+        3.6221026178395732e-09,
+        0.0009889356833436835
+      ],
+      "rotationDeltaFrobeniusPerRad": 1.4142135624860879
+    },
+    {
+      "joint": "right_knee_joint",
+      "observedBody": "right_wheel_body",
+      "epsilonRad": 1e-06,
+      "dWorldPositionDqAtZero": [
+        -0.14296890114839922,
+        -6.379619055252306e-07,
+        -0.1736809045194132
+      ],
+      "rotationDeltaFrobeniusPerRad": 1.41421356242721
+    },
+    {
+      "joint": "right_wheel_joint",
+      "observedBody": "right_wheel_body",
+      "epsilonRad": 1e-06,
+      "dWorldPositionDqAtZero": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotationDeltaFrobeniusPerRad": 1.41421356242721
+    }
+  ],
+  "runtimeProbes": {
+    "freefallWithInjectedGravity": {
+      "injectedGravityNative": [
+        0.0,
+        0.0,
+        -9.81
+      ],
+      "allEqualityConstraintsDisabled": true,
+      "baseTranslationalQaccNative": [
+        1.191923938250333e-05,
+        9.351249030466329e-05,
+        -9.809881353038572
+      ],
+      "baseAccelerometerLocal": [
+        1.191923938250333e-05,
+        9.351249030466329e-05,
+        0.00011864696142970451
+      ],
+      "expected": "near zero specific force during freefall"
+    },
+    "baseFramequatPositive90AboutNativeZ": {
+      "injectedBaseQposQuaternionWxyz": [
+        0.7071067811865476,
+        0.0,
+        0.0,
+        0.7071067811865475
+      ],
+      "reportedFramequatWxyz": [
+        0.7071067811865476,
+        0.0,
+        0.0,
+        0.7071067811865475
+      ]
+    },
+    "baseGyroPositiveNativeZ": {
+      "injectedAngularRateRadPerSecond": [
+        0.0,
+        0.0,
+        0.25
+      ],
+      "reportedGyroLocalRadPerSecond": [
+        0.0,
+        0.0,
+        0.25
+      ]
+    }
+  },
+  "baseFrameContract": {
+    "cadFrame": "base_body",
+    "legacySensorPlaceholder": "base_frame",
+    "controlFrame": "base_control_frame",
+    "controlFrameLocalPosition": [
+      -0.077378152,
+      8.1e-07,
+      -0.03227768
+    ],
+    "compiledTorsoLocalCom": [
+      -0.07737815204697132,
+      8.094965674265526e-07,
+      -0.03227768029287019
+    ],
+    "controlFrameWorldPositionAtQpos0": [
+      -0.077378152,
+      8.1e-07,
+      0.56772232
+    ],
+    "compiledTorsoWorldComAtQpos0": [
+      -0.07737815204697132,
+      8.094965674265526e-07,
+      0.5677223197071298
+    ],
+    "realImuFrame": null
+  },
+  "interpretationLimits": [
+    "The six unit-gear actuators validate interface order/sign only; they are not calibrated hardware models.",
+    "The base freejoint is constrained by base_weld unless the Adapter explicitly selects floating mode.",
+    "Direct qpos perturbations report kinematic-tree derivatives; they do not solve closed-loop equality constraints.",
+    "Mesh appearance and real encoder/IMU installation directions remain external evidence gates."
+  ]
+}

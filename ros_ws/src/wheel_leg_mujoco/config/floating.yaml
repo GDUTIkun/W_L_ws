@@ -1,0 +1,7 @@
+wheel_leg_mujoco:
+  ros__parameters:
+    floating_base: true
+    command_enabled: true
+    command_timeout_ms: 100
+    max_source_lag_ms: 50
+    state_publish_decimation: 5

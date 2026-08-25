@@ -18,7 +18,7 @@ All vectors use SI units and Phase 02 canonical world `{N}`: X forward, Y left, 
 
 | C++ field | Type | Unit / order | Exact semantic |
 | --- | --- | --- | --- |
-| `sample_time_ns` | `uint64` | ns | Acquisition time mapped into the Controller host's monotonic clock domain. It is not Unix/ROS wall time and must strictly increase between accepted samples. |
+| `sample_time_ns` | `uint64` | ns | Source-system monotonic acquisition time. MuJoCo uses deterministically rounded `mjData.time`; hardware later defines its own source-to-host mapping. It is not Unix/ROS wall time and must strictly increase between accepted samples until an explicit reset. |
 | `base_position_n_m` | `double[3]` | m, `[Nx,Ny,Nz]` | Position of the origin of `B` relative to the origin of `{N}`, expressed in `{N}`. |
 | `q_n_from_b` | `double[4]` | `[w,x,y,z]` | Active unit quaternion rotating vectors expressed in `B` into `{N}`. `q` and `-q` are equivalent. |
 | `base_linear_velocity_n_m_s` | `double[3]` | m/s, `[Nx,Ny,Nz]` | Velocity of the origin of `B` relative to `{N}`, expressed in `{N}`. |
@@ -51,17 +51,19 @@ Every numeric field must be finite. Quaternion norm error must not exceed the co
 ## Controller lifecycle
 
 ```text
-configure(config) → reset() → step(state, now_ns) ...
+configure(config) → reset() → step(state) ...
 ```
 
-- `configure` validates `max_state_age_ns` and quaternion tolerance and resets history.
+- `configure` validates quaternion tolerance and resets history.
 - `reset` clears only time/history state; it produces no command.
-- `step` validates fields, rejects samples from the future, samples older than `max_state_age_ns`, and timestamps not strictly newer than the last accepted sample.
+- `step` validates fields and rejects timestamps not strictly newer than the last accepted source sample.
 - The first accepted sample has `dt=0`; later calls derive `dt` from consecutive accepted sample times. A rejected sample never advances history.
 - `step` is deterministic for the same configuration, reset state and input sequence. Errors are returned as `StepStatus`; validation does not throw.
 - Until a separately validated algorithm is migrated, every accepted call returns exactly six finite zero torques. Rejected calls also carry a value-initialized zero command, but the ROS wrapper does not publish it.
 
 This contract leaves Planner/NMPC/WBC scheduling inside the Core. Later multi-rate modules may use the accepted sample time and derived `dt` without changing the Adapter boundary.
+
+Source sample time and host receipt time are separate clock domains. Core never subtracts them. A ROS/transport Adapter records receipt time with its local steady clock and applies its watchdog there; where meaningful, it may separately compare a command's `source_sample_time_ns` with the current source clock. A source clock rollback is invalid until an explicit reset clears both Controller and Adapter history.
 
 ## Package and dependency direction
 

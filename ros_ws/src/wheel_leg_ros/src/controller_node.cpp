@@ -1,7 +1,5 @@
 #include "wheel_leg_ros/controller_node.hpp"
 
-#include <chrono>
-#include <cstdint>
 #include <stdexcept>
 #include <utility>
 
@@ -11,14 +9,7 @@ namespace wheel_leg_ros {
 
 ControllerNode::ControllerNode(const rclcpp::NodeOptions &options)
     : Node("wheel_leg_controller", options) {
-  const auto max_state_age_ms =
-      declare_parameter<std::int64_t>("max_state_age_ms", 100);
-  if (max_state_age_ms <= 0) {
-    throw std::invalid_argument("max_state_age_ms must be positive");
-  }
   wheel_leg::ControllerConfig config;
-  config.max_state_age_ns =
-      static_cast<std::uint64_t>(max_state_age_ms) * 1'000'000U;
   if (!core_.configure(config)) {
     throw std::runtime_error("invalid Controller Core configuration");
   }
@@ -30,17 +21,23 @@ ControllerNode::ControllerNode(const rclcpp::NodeOptions &options)
       [this](wheel_leg_msgs::msg::RobotState::SharedPtr message) {
         onState(std::move(message));
       });
+  reset_service_ = create_service<std_srvs::srv::Trigger>(
+      "reset_controller",
+      [this](const std::shared_ptr<std_srvs::srv::Trigger::Request>,
+             std::shared_ptr<std_srvs::srv::Trigger::Response> response) {
+        core_.reset();
+        response->success = true;
+        response->message = "Controller sample history reset";
+      });
 }
 
 void ControllerNode::onState(
     const wheel_leg_msgs::msg::RobotState::SharedPtr message) {
-  const auto now = std::chrono::steady_clock::now().time_since_epoch();
-  const auto now_ns = static_cast<std::uint64_t>(
-      std::chrono::duration_cast<std::chrono::nanoseconds>(now).count());
-  const auto result = core_.step(fromRos(*message), now_ns);
+  const auto result = core_.step(fromRos(*message));
   if (!result.accepted()) {
-    RCLCPP_WARN(
-        get_logger(), "RobotState rejected by Controller Core (status=%d)",
+    RCLCPP_WARN_THROTTLE(
+        get_logger(), *get_clock(), 1000,
+        "RobotState rejected by Controller Core (status=%d)",
         static_cast<int>(result.status));
     return;
   }

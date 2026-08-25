@@ -82,6 +82,10 @@ def main() -> None:
     output_path = (repo_root / args.output).resolve()
 
     model = mujoco.MjModel.from_xml_path(str(scene_path))
+    if mujoco.__version__ != "3.7.0":
+        raise AssertionError(
+            f"Expected project MuJoCo 3.7.0, got {mujoco.__version__}."
+        )
     data = mujoco.MjData(model)
     mujoco.mj_forward(model, data)
 
@@ -158,6 +162,41 @@ def main() -> None:
                 ),
             }
         )
+
+    actuators = []
+    for actuator_id in range(model.nu):
+        joint_id = int(model.actuator_trnid[actuator_id, 0])
+        actuators.append(
+            {
+                "name": object_name(
+                    model, mujoco.mjtObj.mjOBJ_ACTUATOR, actuator_id
+                ),
+                "joint": object_name(
+                    model, mujoco.mjtObj.mjOBJ_JOINT, joint_id
+                ),
+                "ctrlAddress": actuator_id,
+                "gear": vector(model.actuator_gear[actuator_id]),
+            }
+        )
+
+    equalities = []
+    for equality_id in range(model.neq):
+        equalities.append(
+            {
+                "name": object_name(
+                    model, mujoco.mjtObj.mjOBJ_EQUALITY, equality_id
+                ),
+                "activeAtReset": bool(model.eq_active0[equality_id]),
+                "type": int(model.eq_type[equality_id]),
+            }
+        )
+
+    named_contact_geoms = {}
+    for geom_name in ("floor", "left_wheel_collision", "right_wheel_collision"):
+        geom_id = mujoco.mj_name2id(
+            model, mujoco.mjtObj.mjOBJ_GEOM, geom_name
+        )
+        named_contact_geoms[geom_name] = int(geom_id)
 
     epsilon = 1e-6
     perturbations = []
@@ -260,10 +299,8 @@ def main() -> None:
         "generatedAt": datetime.now(timezone.utc).isoformat(),
         "runtime": {
             "mujocoVersion": mujoco.__version__,
-            "environment": "conda:mujoco",
-            "reproduction": (
-                "conda env update -n mujoco -f simulation/mujoco/environment.yml"
-            ),
+            "environment": ".venv (uv)",
+            "reproduction": "uv venv .venv && uv pip install --python .venv/bin/python mujoco==3.7.0",
         },
         "source": {
             "scenePath": str(args.scene).replace("\\", "/"),
@@ -283,12 +320,15 @@ def main() -> None:
         "joints": joints,
         "sites": sites,
         "sensors": sensors,
+        "actuators": actuators,
+        "equalities": equalities,
+        "namedContactGeoms": named_contact_geoms,
         "positiveJointPerturbations": perturbations,
         "runtimeProbes": runtime_probes,
         "baseFrameContract": base_frame_contract,
         "interpretationLimits": [
-            "The model has zero actuators, so torque direction is not tested.",
-            "The base freejoint is constrained by a world weld.",
+            "The six unit-gear actuators validate interface order/sign only; they are not calibrated hardware models.",
+            "The base freejoint is constrained by base_weld unless the Adapter explicitly selects floating mode.",
             "Direct qpos perturbations report kinematic-tree derivatives; they do not solve closed-loop equality constraints.",
             "Mesh appearance and real encoder/IMU installation directions remain external evidence gates.",
         ],
