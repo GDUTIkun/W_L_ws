@@ -18,3 +18,6 @@
 - 离线数据拟合、统计与绘图主逻辑；使用 `tools/analysis/`。
 - 产品运行时代码。
 
+## 当前入口
+
+- `run_mujoco_internal_dynamics.py`：执行 Phase 14 的 MuJoCo-only FK/Jacobian、重力、质量矩阵、正逆动力学、闭链、耦合、能量和确定性回放验证。方法见 `docs/experiments/mujoco_internal_dynamics_validation.md`，默认输出到 Phase 14 evidence。

@@ -16,14 +16,16 @@ This uses geometry, not MJCF joint ordering or raw qpos publication. Wheel rotat
 
 | Canonical joint | `b_joint` rad |
 | --- | ---: |
-| left hip | -1.3267142560755936 |
-| left knee | 2.2087998888053653 |
+| left hip | -1.3267204093873923 |
+| left knee | 2.2088002548867229 |
 | left wheel | 0.0 |
-| right hip | -1.3267192162952124 |
-| right knee | 2.2088059281609950 |
+| right hip | -1.3267204093873923 |
+| right knee | 2.2088002548867229 |
 | right wheel | 0.0 |
 
-At `q_M=0`, the left thigh vector was `[-0.17466984, 0.12524984, -0.04350110] m` and the left shank vector was `[0.17368090, 0.04279947, -0.14296906] m`. The right vectors were `[-0.17466984, -0.12525016, -0.04350018] m` and `[0.17368090, -0.04280053, -0.14296874] m`. Their sagittal angles produce the values above.
+At `q_M=0`, the left thigh vector is `[-0.17467, 0.12525, -0.04350] m` and the left shank vector is `[0.17368, 0.04280, -0.14297] m`. The right vectors mirror only the lateral component. Their sagittal angles produce the values above.
+
+Phase 14 replaced the truncated imported Euler constants (`1.5708`, `3.14159`) with exact `pi/2` and `pi` values after the truncation was shown to create a spurious closed-chain constraint rank. The offsets above were then recomputed from the corrected compiled geometry; the mapping equation and calibration method did not change.
 
 ## Independent pose regression
 

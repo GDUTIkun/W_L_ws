@@ -133,7 +133,7 @@
       <geom type="mesh" mesh="base__joint_motor_assembly_1" mass="0.3940" class="base_default"/>
       <geom type="mesh" mesh="base__joint_motor_assembly_2" mass="0.3940" class="base_default"/>
       
-      <body name="right_thigh_body" pos="-0.0775 -0.04425 -0.02 " euler="-1.5708 0 -1.5708">
+      <body name="right_thigh_body" pos="-0.0775 -0.04425 -0.02 " euler="-1.5707963267948966 0 -1.5707963267948966">
         <joint name="right_hip_joint" type="hinge" pos="0 0 0" axis="0 0 1"/>
 
         <geom type="mesh" mesh="zong_zhuang____right_thigh_1_16_zhi_cheng_jia__1" mass="0.0300" class="right_thigh_default"/>
@@ -146,7 +146,7 @@
         <geom type="mesh" mesh="zong_zhuang____right_thigh_1__tan_guan__1" mass="0.1010" class="right_thigh_default"/>
         <geom type="mesh" mesh="right_thigh__joint_motor_assembly_1" mass="0.3940" class="right_thigh_default"/>
 
-        <body name="right_calf_body" pos="-0.04350 -0.17467 -0.12525" euler="0 0 3.14159">
+        <body name="right_calf_body" pos="-0.04350 -0.17467 -0.12525" euler="0 0 3.141592653589793">
           <joint name="right_knee_joint" type="hinge" pos="0 0 0" axis="0 0 1"/>
           <site name="right_calf_site" pos="0.03180 -0.03859  -0.01050" size="0.01" rgba="0 0 1 1"/>
 
@@ -167,13 +167,13 @@
           </body>
         </body>
 
-        <body name="right_connect1_body" pos="0 0 -0.1235" euler="3.14159 0 0">
+        <body name="right_connect1_body" pos="0 0 -0.1235" euler="3.141592653589793 0 0">
           <joint name="right_connect1_joint" type="hinge" pos="0 0 0" axis="0 0 1"/>
         
           <geom type="mesh" mesh="zong_zhuang____right_connect1_1__da_tui_lian_gan_1_1" mass="0.0370" class="right_connect1_default"/>
           <geom type="mesh" mesh="zong_zhuang____right_connect1_1__da_tui_lian_gan_1_dian_kuai__1" mass="0.0110" class="right_connect1_default"/>
         
-            <body name="right_connect2_body" pos="-0.03180 -0.03859 0.01225" euler="3.14159 0 0">
+            <body name="right_connect2_body" pos="-0.03180 -0.03859 0.01225" euler="3.141592653589793 0 0">
               <joint name="right_connect2_joint" type="hinge" pos="0 0 0" axis="0 0 1"/>
               <site name="right_connect2_site" pos="-0.04350 -0.17467 0" size="0.01" rgba="0 1 0 1"/>
 
@@ -193,7 +193,7 @@
       
       </body>
 
-      <body name="left_thigh_body" pos="-0.0775 0.04425 -0.02 " euler="-1.5708 0 -1.5708">
+      <body name="left_thigh_body" pos="-0.0775 0.04425 -0.02 " euler="-1.5707963267948966 0 -1.5707963267948966">
         <joint name="left_hip_joint" type="hinge" pos="0 0 0" axis="0 0 1"/>
 
         <geom type="mesh" mesh="zong_zhuang____left_thigh_1_16_zhi_cheng_jia__1" mass="0.0300" class="left_thigh_default"/>
@@ -206,7 +206,7 @@
         <geom type="mesh" mesh="zong_zhuang____left_thigh_1__tan_guan__1" mass="0.1010" class="left_thigh_default"/>
         <geom type="mesh" mesh="left_thigh__joint_motor_assembly_1" mass="0.3940" class="left_thigh_default"/>
 
-          <body name="left_calf_body" pos="-0.04350 -0.17467 0.12525" euler="0 0 3.14159">
+          <body name="left_calf_body" pos="-0.04350 -0.17467 0.12525" euler="0 0 3.141592653589793">
             <joint name="left_knee_joint" type="hinge" pos="0 0 0" axis="0 0 1"/>
             <site name="left_calf_site" pos="0.03180 -0.03859  0.01050" size="0.01" rgba="0 0 1 1"/>
 

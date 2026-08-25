@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mujoco model="wheel_leg_phase14_single_leg">
+  <compiler angle="radian" autolimits="true"/>
+  <option timestep="0.002" gravity="0 0 -9.81" integrator="implicitfast">
+    <flag contact="disable" energy="enable" fwdinv="enable"/>
+  </option>
+
+  <!-- Fixed-base, contact-free serial branch corresponding to the imported
+       left hip -> calf -> wheel path. Inertials are the compiled MuJoCo 3.7.0
+       values from wheel_leg.xml; no closed-chain or base-weld solver forces are
+       present, so actuator/inertia/energy checks have an unambiguous 3-DoF basis. -->
+  <worldbody>
+    <body name="left_thigh_body" pos="-0.0775 0.04425 0.58"
+          euler="-1.5707963267948966 0 -1.5707963267948966">
+      <joint name="left_hip_joint" type="hinge" axis="0 0 1"/>
+      <inertial pos="-0.002306765376285603 -0.010047913704284322 0.08643350113345301"
+                quat="0.88129024732226 0.4597145785849147 -0.04864569591558103 -0.09809996167203215"
+                mass="0.826"
+                diaginertia="0.002222917533134647 0.0016653279098861164 0.0009753470358537608"/>
+
+      <body name="left_calf_body" pos="-0.04350 -0.17467 0.12525"
+            euler="0 0 3.141592653589793">
+        <joint name="left_knee_joint" type="hinge" axis="0 0 1"/>
+        <site name="left_calf_site" pos="0.03180 -0.03859 0.01050" size="0.005"/>
+        <inertial pos="0.11817009224709184 -0.14316832780956693 -0.004261398815806688"
+                  quat="0.6245135753248002 0.70422088598311 0.2469530365257092 0.23036912929238562"
+                  mass="0.5963"
+                  diaginertia="0.003593183159822323 0.0034803373511283387 0.0002519940989114182"/>
+
+        <body name="left_wheel_body" pos="0.14297 -0.17368 0.04280">
+          <joint name="left_wheel_joint" type="hinge" axis="0 0 1"/>
+          <inertial pos="-5.829442826290297e-05 -0.00010619134315086336 0.0074151403411230315"
+                    quat="0.10310958854528945 0.6995487207836373 -0.10310958854528945 0.6995487207836373"
+                    mass="0.3431"
+                    diaginertia="0.00042373759240507875 0.00024590004741612074 0.0002458802753317054"/>
+          <site name="left_wheel_center" size="0.005"/>
+        </body>
+      </body>
+
+      <body name="left_connect1_body" pos="0 0 0.1235">
+        <joint name="left_connect1_joint" type="hinge" axis="0 0 1"/>
+        <inertial pos="-0.011476440241484764 0.013927347066523581 0.010298750255969946"
+                  quat="0.29148781862959339 0.66043491906333929 -0.31156152854034913 0.61789156265963485"
+                  mass="0.048000000000000001"
+                  diaginertia="3.0872882765872972e-05 2.7042445731281775e-05 5.4389432869362334e-06"/>
+
+        <body name="left_connect2_body" pos="-0.03180 0.03859 0.01225">
+          <joint name="left_connect2_joint" type="hinge" axis="0 0 1"/>
+          <site name="left_connect2_site" pos="-0.04350 -0.17467 0" size="0.005"/>
+          <inertial pos="-0.030114792881217326 -0.085249214232193254 -2.8231057395578377e-14"
+                    quat="0.55714582460646289 0.43541765022055062 -0.55714582460646289 0.43541765022055062"
+                    mass="0.10980000000000001"
+                    diaginertia="0.00056082726617041271 0.00055463686493638614 1.8376790580550672e-05"/>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+
+  <actuator>
+    <motor name="left_hip_torque" joint="left_hip_joint" gear="1"/>
+    <motor name="left_knee_torque" joint="left_knee_joint" gear="1"/>
+    <motor name="left_wheel_torque" joint="left_wheel_joint" gear="1"/>
+  </actuator>
+
+  <equality>
+    <connect name="left_leg_closure" site1="left_connect2_site" site2="left_calf_site"/>
+  </equality>
+</mujoco>

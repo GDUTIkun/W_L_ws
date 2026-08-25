@@ -20,19 +20,32 @@ Simulink 中已验证的算法使用了简化刚体假设，而 MuJoCo 和真机
 | C. Plant 基本一致  | 执行器、重力、摩擦、惯量与耦合是否可信 | 轮子接触与关节闭环   |
 | D. 分层闭环通过    | MuJoCo 与真机是否在当前控制层一致      | 更高层控制           |
 
-每完成一层：
+Gate B 之前的执行顺序固定为纯仿真：
 
 ```text
-MuJoCo PASS
-↓
-真机对应低风险验证
-↓
-MuJoCo / Real 基本一致
-↓
-进入下一层
+Phase 04 基础 Adapter PASS
+→ MuJoCo 运动学验证
+→ MuJoCo 单腿/多刚体动力学内部验证
+→ Gate B PASS
 ```
 
-如果：
+在 Gate B PASS 之前不进行新的真机上电、关节转动、板级联调、传感器采集、Load Cell pilot 或执行器辨识。已有 Phase 05 实验代码只保留，不作为硬件已放行的依据。
+
+当前状态（2026-08-25）：Phase 14 已以 MuJoCo-only 证据通过 Gate B。该放行只允许后续 Phase 按各自安全门进入共同辨识，不代表任何真机实验、执行器参数或 MuJoCo–real 一致性已经通过。
+
+Gate B 通过后，每一层共同辨识才使用：
+
+```text
+同一实验先在 MuJoCo 跑通
+↓
+真机对应低风险实验
+↓
+MuJoCo / Real 在预定误差内一致
+↓
+进入下一层控制复杂度
+```
+
+如果共同辨识阶段出现：
 
 ```text
 MuJoCo PASS
@@ -64,17 +77,15 @@ roll / pitch / yaw 正方向
 减速比定义
 ```
 
-真机人工缓慢转动关节，确认：
+Gate B 之前只在 Simulink 契约、MuJoCo joint 微扰和自动几何测试中确认：
 
 ```text
 MuJoCo q > 0
 =
-Real q > 0
-=
 Controller q > 0
 ```
 
-同时检查：
+真机 encoder/IMU/torque 的安装方向不在这里提前操作；它们在 Gate B PASS 后的 Hardware Adapter/传感器验证 Phase 中，以低风险步骤补齐：
 
 ```text
 encoder q
@@ -83,11 +94,11 @@ IMU orientation
 IMU angular velocity
 ```
 
-这一步只解决：
+仿真侧这一步只解决：
 
-> **三个系统中的同一个变量，是不是代表同一个物理量。**
+> **Simulink、MuJoCo 和 Controller 中的同一个变量，是不是代表同一个物理量。**
 
-没通过之前不进入后面的辨识。
+没通过之前不进入 MuJoCo 动力学验证；MuJoCo 动力学 Gate B 未通过之前不接真机。
 
 ---
 

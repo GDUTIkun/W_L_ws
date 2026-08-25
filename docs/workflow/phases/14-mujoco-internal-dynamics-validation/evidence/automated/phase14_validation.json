@@ -1,0 +1,140 @@
+{
+  "schema_version": 1,
+  "overall_pass": true,
+  "config_path": "simulation/mujoco/config/phase14_validation.json",
+  "config_sha256": "170cc15a98db5e69dae2f8be105b50d74d1f20ef3f76d8103d287c17711f4db2",
+  "scene_path": "simulation/mujoco/model/phase14_contact_free.xml",
+  "scene_sha256": "c353f3a6bd457a5732fa2464ec66e7faadf9694e31f5fb58be204d63f5686654",
+  "included_model_path": "simulation/mujoco/model/wheel_leg.xml",
+  "included_model_sha256": "a4b1f2e243b6715038b24637325db89cbf820f0ea4eccaafbf832dcaeb71893a",
+  "single_leg_scene_path": "simulation/mujoco/model/phase14_single_leg.xml",
+  "single_leg_scene_sha256": "750b55bd027f3de32236c7cdead1555badcbb0be3fbc55724be4f60c8fb837fb",
+  "mujoco_version": "3.7.0",
+  "checks": {
+    "fixture": {
+      "pass": true,
+      "nq": 17,
+      "nv": 16,
+      "nu": 6,
+      "equalities": [
+        "base_weld",
+        "left_leg_closure",
+        "right_leg_closure"
+      ],
+      "actuator_joints": [
+        "left_hip_joint",
+        "left_knee_joint",
+        "left_wheel_joint",
+        "right_hip_joint",
+        "right_knee_joint",
+        "right_wheel_joint"
+      ],
+      "contact_disabled": true,
+      "floor_absent": true,
+      "single_leg_max_compiled_inertial_difference": 0.0,
+      "single_leg_dimensions": {
+        "nq": 5,
+        "nv": 5,
+        "nu": 3,
+        "neq": 1
+      },
+      "single_leg_constraint_rank": 2,
+      "single_leg_independent_dofs": 3,
+      "single_leg_mode": "formal fixed-base/contact-free five-body closed leg with three actuators and compiled imported inertials",
+      "full_constraint_mode": "base_weld and both named leg closures active"
+    },
+    "kinematics": {
+      "pass": true,
+      "samples": 7,
+      "max_position_error_m": 1.1102230246251565e-16,
+      "max_rotation_matrix_error": 5.551115123125783e-16,
+      "max_jacobian_error": 4.440892098500626e-16,
+      "worst_sample": "boundary_a:left",
+      "positive_wheel_rolling_direction_flu": [
+        1.0,
+        -0.0,
+        -0.0
+      ]
+    },
+    "gravity": {
+      "pass": true,
+      "max_generalized_force_error_nm": 5.182058671060474e-09,
+      "max_static_acceleration": 0.0,
+      "unconstrained_base_freefall_z_m_s2": -9.810000000000013,
+      "worst_sample": "boundary_a"
+    },
+    "mass_matrix": {
+      "pass": true,
+      "unconstrained_dimension": 16,
+      "max_symmetry_error": 0.0,
+      "min_full_eigenvalue": 0.00014066702391522356,
+      "min_driven_submatrix_eigenvalue": 0.0004014091799870769,
+      "max_condition_number": 46288.02407044508,
+      "worst_sample": "zero",
+      "constraint_jacobian_rank": 10,
+      "constrained_nullspace_dimension": 6,
+      "constrained_min_eigenvalue": 0.0004174460961969215
+    },
+    "forward_inverse": {
+      "pass": true,
+      "max_acceleration_round_trip_error": 1.291189377639057e-13,
+      "max_mass_equation_error": 1.4210854715202004e-14,
+      "worst_sample": "seeded_b"
+    },
+    "constraints": {
+      "pass": true,
+      "mode": "complete double-leg model, base weld and both loop closures active, gravity/contact/input disabled",
+      "steps": 100,
+      "finite": true,
+      "max_constraint_position_m": 1.1102230246251565e-16,
+      "max_constraint_velocity_m_s": 1.1425755483621535e-15,
+      "max_solver_iterations": 1
+    },
+    "coupling": {
+      "pass": true,
+      "native_unit_ctrl_to_driven_qacc_rad_s2": [
+        [
+          45.097765416062295,
+          -23.153074544083367,
+          -21.354415345822883
+        ],
+        [
+          -23.153074544083367,
+          36.07026755315455,
+          -13.41818404968465
+        ],
+        [
+          -21.354415345822883,
+          -13.418184049684651,
+          2394.615726368193
+        ]
+      ],
+      "actuator_generalized_force_mapping_error": 0.0,
+      "minimum_diagonal_response_rad_s2": 36.07026755315455,
+      "max_within_side_off_diagonal_rad_s2": 23.153074544083367,
+      "reciprocity_error_rad_s2": 1.7763568394002505e-15,
+      "sign_interpretation": "positive native ctrl produces positive native joint acceleration; canonical TorqueCommand is negated by Adapter"
+    },
+    "energy": {
+      "pass": true,
+      "steps": 250,
+      "gravity_disabled": true,
+      "initial_mechanical_energy_j": 0.0,
+      "final_mechanical_energy_j": 0.0003931683458706474,
+      "integrated_actuator_work_j": 0.00038673038443016414,
+      "max_absolute_balance_error_j": 6.43796144048325e-06,
+      "max_relative_balance_error": 0.01529157425649422
+    },
+    "replay": {
+      "pass": true,
+      "finite": true,
+      "determinism_max_absolute_difference": 0.0,
+      "max_constraint_position_m": 0.0,
+      "max_constraint_velocity_m_s": 0.0,
+      "max_solver_iterations": 0.0,
+      "max_abs_joint_position_rad": 0.47657751117969366,
+      "max_abs_joint_velocity_rad_s": 1.4075117483116533,
+      "max_abs_joint_acceleration_rad_s2": 4.754663584405709
+    }
+  }
+}

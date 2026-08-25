@@ -60,3 +60,7 @@ None.
 ## Verdict
 
 `PASS`
+
+## Post-review Route Amendment
+
+2026-08-25：本 REVIEW 的 Phase 04 技术结论不变；后续路线按用户要求先执行 [Phase 14 MuJoCo 运动学与内部动力学验证](../14-mujoco-internal-dynamics-validation/PLAN.md)，该 Phase 随后已 PASS。原“Phase 07/08 处理 dynamics fidelity”的表述现在仅指后续 MuJoCo–真机参数一致性，不再承担 MuJoCo 内部自洽的前置验证。

@@ -11,8 +11,8 @@ namespace wheel_leg_mujoco {
 
 inline constexpr std::array<double, wheel_leg::kJointCount>
     kDefaultJointOffsetsRad{
-        -1.3267142560755936, 2.2087998888053653, 0.0,
-        -1.3267192162952124, 2.2088059281609950, 0.0};
+        -1.3267204093873923, 2.2088002548867229, 0.0,
+        -1.3267204093873923, 2.2088002548867229, 0.0};
 
 struct AdapterConfig {
   std::array<double, wheel_leg::kJointCount> joint_offsets_rad{

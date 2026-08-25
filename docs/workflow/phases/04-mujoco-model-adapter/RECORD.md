@@ -52,8 +52,8 @@ Status: `complete`
 
 - 本 Phase 对应阶段：ROADMAP Phase 04
 - 状态变化：`planned → active → review → complete`
-- 当前并行 active Phase：Phase 05 执行器力矩辨识与模型校准
-- 下一软件迁移建议 Phase：Phase 06 RobotState 与传感器正式验证
+- 2026-08-25 路线修订后，下一执行项为 [Phase 14 MuJoCo 运动学与内部动力学验证](../14-mujoco-internal-dynamics-validation/PLAN.md)；该 Phase 随后已完成并 PASS。
+- Phase 05 执行器辨识曾在 Phase 14 REVIEW PASS 前为 `blocked`；Phase 14 完成后已按工作流恢复，后续真机工作仍须满足各自安全 gate。
 
 ## Key Links
 

@@ -30,7 +30,9 @@
 
 ## 当前状态
 
-Phase 04 已交付 MuJoCo 3.7.0 基础 Adapter、统一 ROS2 状态/力矩通路和 fixed/floating headless 入口；当前只通过接口映射、安全零输出与有界运行验证，不代表参数标定、站立控制或真机一致性。实现入口见 [`wheel_leg_mujoco`](../../ros_ws/src/wheel_leg_mujoco/README.md)，证据见 [Phase 04](../workflow/phases/04-mujoco-model-adapter/RECORD.md)。
+Phase 04 已交付 MuJoCo 3.7.0 基础 Adapter、统一 ROS2 状态/力矩通路和 fixed/floating headless 入口；Phase 14 已进一步通过 nominal plant 的 FK/Jacobian、重力、质量矩阵、正逆动力学、闭链、耦合、能量与确定性回放内部自洽验证。实现入口见 [`wheel_leg_mujoco`](../../ros_ws/src/wheel_leg_mujoco/README.md) 与 [`simulation/mujoco`](../../simulation/mujoco/README.md)。
+
+Phase 14 的 [RECORD](../workflow/phases/14-mujoco-internal-dynamics-validation/RECORD.md) 只支持“MuJoCo 内部自洽”，不支持“与真机一致”。当前下一步恢复为 [Phase 05 执行器力矩辨识与模型校准](../workflow/phases/05-actuator-torque-identification/PLAN.md)，仍须先关闭其通信、Load Cell、同步与安全 gate。
 
 ## 维护规则
 

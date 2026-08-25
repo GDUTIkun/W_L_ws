@@ -4,7 +4,11 @@
 
 ## Active
 
-- [Phase 05：执行器力矩辨识与模型校准](05-actuator-torque-identification/PLAN.md) — 先以 3508+C620 跑通完整链路，再覆盖 GIM6010 和 MuJoCo 参数对应验证。
+- [Phase 05：执行器力矩辨识与模型校准](05-actuator-torque-identification/PLAN.md) — Phase 14 前置已 PASS；从通信/计量/同步/安全 gate 继续，不自动开始真机正式实验。
+
+## Planned
+
+None.
 
 ## Review
 
@@ -20,6 +24,7 @@ None.
 - [Phase 02：坐标系、单位、关节顺序与接口语义](02-coordinate-interface-contract/PLAN.md)
 - [Phase 03：统一 Robot 接口与 Controller Core 骨架](03-robot-interface-controller-core/PLAN.md)
 - [Phase 04：MuJoCo 基础模型与 Adapter](04-mujoco-model-adapter/PLAN.md)
+- [Phase 14：MuJoCo 运动学与内部动力学验证](14-mujoco-internal-dynamics-validation/PLAN.md)
 
 ## 建立新 Phase
 

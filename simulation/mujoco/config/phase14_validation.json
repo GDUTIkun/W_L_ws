@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "frozen_at": "2026-08-25T00:00:00+08:00",
+  "mujoco_version": "3.7.0",
+  "scene": "simulation/mujoco/model/phase14_contact_free.xml",
+  "included_model": "simulation/mujoco/model/wheel_leg.xml",
+  "single_leg_scene": "simulation/mujoco/model/phase14_single_leg.xml",
+  "seed": 1404,
+  "joint_order": [
+    "left_hip_joint",
+    "left_knee_joint",
+    "left_wheel_joint",
+    "right_hip_joint",
+    "right_knee_joint",
+    "right_wheel_joint"
+  ],
+  "samples_rad": {
+    "zero": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+    "typical_a": [0.2, -0.35, 0.4, -0.15, 0.3, -0.25],
+    "typical_b": [-0.3, 0.25, -0.5, 0.35, -0.2, 0.45],
+    "boundary_a": [0.65, -0.75, 1.0, -0.6, 0.7, -1.0],
+    "boundary_b": [-0.65, 0.75, -1.0, 0.6, -0.7, 1.0],
+    "seeded_a": [0.117, -0.421, 0.683, -0.239, 0.512, -0.774],
+    "seeded_b": [-0.488, 0.193, -0.337, 0.544, -0.611, 0.286]
+  },
+  "inverse_velocity_rad_s": [0.11, -0.08, 0.17, -0.13, 0.07, -0.19],
+  "inverse_acceleration_rad_s2": [-0.4, 0.3, 0.5, 0.2, -0.35, -0.45],
+  "replay": {
+    "steps": 250,
+    "torque_amplitude_nm": 0.002,
+    "frequency_hz": 0.7
+  },
+  "thresholds": {
+    "fk_position_m": 1e-10,
+    "fk_rotation_matrix": 1e-10,
+    "jacobian": 2e-9,
+    "gravity_generalized_force_nm": 2e-5,
+    "static_acceleration": 1e-8,
+    "mass_symmetry": 1e-12,
+    "mass_min_eigenvalue": 1e-5,
+    "mass_condition_number": 100000.0,
+    "forward_inverse_acceleration": 2e-8,
+    "constraint_position_m": 2e-5,
+    "constraint_velocity_m_s": 2e-4,
+    "coupling_reciprocity_rad_s2": 2e-9,
+    "energy_balance_relative": 0.03,
+    "bounded_joint_position_rad": 3.0,
+    "bounded_joint_velocity_rad_s": 20.0,
+    "bounded_joint_acceleration_rad_s2": 500.0,
+    "determinism_absolute": 0.0
+  }
+}

@@ -24,6 +24,7 @@ Status: `active`
 - 第一执行批次使用 3508+C620，先完成低风险链路跑通，再完成其三类正式辨识与重复性检查。
 - 3508+C620 链路通过后，以相同数据契约和证据标准扩展到 GIM6010；器件特有的命令换算和安全限值允许由配置表达。
 - 形成带适用条件、单位、方向、固件/脚本版本和不确定度说明的逐执行器参数集，并在 MuJoCo 基础模型可用后完成对应参数校准与比较。
+- 本 Phase 的所有真机执行均以前置 [Phase 14 MuJoCo 内部动力学验证](../14-mujoco-internal-dynamics-validation/PLAN.md) REVIEW PASS 为条件；前置门关闭前只保留现有实现和文档，不继续板级联调、pilot 或正式实验。
 
 ## Out of Scope
 
@@ -44,6 +45,7 @@ Status: `active`
 - 惯量实验的阶跃时序由 STM 本地执行或由等价的确定性底层机制执行；普通 ROS/USB 消息到达抖动不能定义阶跃边沿。
 - 不对编码器位置直接连续差分两次；加速度从明确窗口内的运动模型拟合获得，并报告窗口、残差和不确定度。
 - 执行顺序固定为：3508+C620 链路跑通 → 3508+C620 正式辨识 → GIM6010 适配与正式辨识 → MuJoCo 参数校准。
+- 上述执行顺序整体位于 Phase 14 之后；Phase 14 未 PASS 时不得以“软件已写好”绕过 MuJoCo-only Gate B 接触真机。
 - 本 Phase 的实验消息/协议扩展是测试接口，不自动升级为生产协议。
 
 ## Open Questions / Decision Gates
@@ -54,7 +56,7 @@ Status: `active`
 - **DG04 定量阈值：** 根据设备精度、pilot 噪声和重复性，在正式批次之前冻结稳定窗口、拟合残差、重复性和 MuJoCo 对应误差阈值；不得根据正式结果反向放宽阈值。
 - **DG05 安全包络：** 分别冻结 3508+C620 与 GIM6010 的电流/力矩、速度、行程、持续时间和温升上限，并经空载低幅测试确认急停与超时归零。
 - **DG06 GIM6010 夹具与命令语义：** 在完成 3508 垂直切片后，确认 GIM6010 的安装、输出轴方向、反馈量含义和可用力矩范围，再开始其正式批次。
-- **DG07 MuJoCo 依赖：** Phase 04 提供可运行模型与参数入口后才执行 MuJoCo 校准；此前可以完成真实执行器辨识，但不能关闭本 Phase 的 MuJoCo 对应验收项。
+- **DG07 / CLOSED MuJoCo 前置验证：** Phase 14 已证明 nominal MuJoCo plant 内部自洽并 REVIEW PASS。该结论只解除本前置 blocker，不替代 DG01–DG06、真机计量质量或 MuJoCo–real 对应证据。
 
 ## Interfaces and Compatibility
 
@@ -123,7 +125,9 @@ Status: `active`
 - 2026-08-23（偏差记录）：T02 通信资产尚未入仓，本次依用户指示先基于仓库现有 `uart_protocol_test.*` 实验候选实现 STM 端扩展。未来 grounding 必须让未入仓主机通信层适配该版本化实验帧，或在 REVIEW 前记录并审查等价迁移；本实现不冻结生产协议。
 - 2026-08-23（T02）：用户提供 `docs/temp/stm32_ros_comm_task.md` 作为旧通信接口与现场记录。Grounding 结论为：帧头、CRC16-CCITT、序号、921600 8N1、`0x01/0x81` 和 200 Hz 口径可复用；旧 ROS package 源码、`wheel_leg_msgs` 与 `wheel_leg_common` 不在当前仓库，不能直接复制其 ROS API。已新增自包含实验 package `ros_ws/src/wheel_leg_stm32_bridge/`，兼容当前 STM 的 `0x01/0x81`，并实现 Phase 05 的 `0x02/0x82`、非阻塞串口、重同步、断线重连、上游命令 100 ms 看门狗、typed 辨识消息及协议单元测试源码。当前 Windows workspace 未提供 ROS2/Jazzy 构建环境，尚未执行 colcon、串口回环或板级联调，因此 T02 保持 `doing`、DG01 保持开放。
 - 2026-08-24（T03/T02）：首轮对象已冻结为 3508+C620，辨识激励从“输出轴力矩请求”改为“直接电流请求”。`0x02/0x82` 升级为 V2：ROS/STM 以 `A` 传递请求、实际和反馈电流，辨识模式仅接受 actuator index `2/5`，强制关闭 `Threshold_Current`。按辨识需要移除了额外的 `±1.0 A` 保守限幅，ROS 与 STM 仅在 C620 协议满量程 `±20.0 A`（`±16384` 原始计数）饱和。真实输出轴力矩只由经校准 Load Cell 与力臂计算；后续拟合得到电流—真实力矩关系后，再另行冻结通用力矩接口，不能将本 V2 电流帧解释为生产 torque 命令。
+- 2026-08-25（路线纠正）：用户确认先不动真机，先完成一轮 MuJoCo 动力学验证。Phase 05 保留稳定编号和已有源码，但状态改为 `blocked`；T02/T03 的部分实现保持不回退，执行状态改为 `blocked`。只有 Phase 14 REVIEW PASS 后才允许恢复 ROS↔STM 板级联调、真机 pilot 和正式辨识。
+- 2026-08-25（前置恢复）：Phase 14 REVIEW PASS，Gate B 关闭。本 Phase 按工作流从 `blocked → active`，T02/T03 恢复 `doing`；本次状态恢复没有执行板级联调、上电、pilot 或正式真机实验，下一步仍须先关闭 DG01–DG05。
 
 ## Blockers
 
-None. DG01–DG05 是开始正式硬件批次前的放行门槛；当前仍可推进实验规程、通信资产 grounding 和离线分析测试。
+None. Phase 14 前置 blocker 已关闭；DG01–DG06 仍是本 Phase 内部放行门，不因状态恢复自动视为完成。

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mujoco model="wheel_leg_phase14_contact_free">
+  <compiler angle="radian" autolimits="true"/>
+  <option timestep="0.002" gravity="0 0 -9.81" integrator="implicitfast"
+          density="1.225" viscosity="1.8e-5">
+    <flag contact="disable" energy="enable" fwdinv="enable"/>
+  </option>
+
+  <!-- Formal Phase-14 plant: same imported robot, no floor, and contact disabled.
+       Tests select either base_weld-only (one serial leg branch) or all named
+       equality constraints (complete double-leg closed-chain regression). -->
+  <include file="wheel_leg.xml"/>
+</mujoco>
