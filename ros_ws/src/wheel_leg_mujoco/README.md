@@ -31,3 +31,13 @@ ros2 service call /reset_controller std_srvs/srv/Trigger '{}'
 Simulation resets first so its command/history and ctrl are immediately zero; Controller resets second so no old-epoch state can be accepted between the two calls.
 
 The fixed mode is a mapping/zero-loop smoke. Floating mode is only a bounded state/reset sanity check; neither mode demonstrates standing or calibrated dynamics.
+
+For deterministic experiment evidence, use the ROS-independent installed executable through the repository wrapper:
+
+```bash
+cd /home/t/W_L_ws
+./.venv/bin/python tools/experiments/run_mujoco_controller_loop.py \
+  --output-dir data/experiments/<new-phase16-run-id>/raw
+```
+
+That path executes one Controller tick per five MuJoCo physics steps and refuses to overwrite a non-empty output directory. The ROS launch remains a transport/schema/reset compatibility smoke, not the determinism authority.

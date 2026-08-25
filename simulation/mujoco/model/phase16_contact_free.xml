@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mujoco model="wheel_leg_phase16_contact_free">
+  <compiler angle="radian" autolimits="true"/>
+  <option timestep="0.002" gravity="0 0 -9.81" integrator="implicitfast"
+          density="1.225" viscosity="1.8e-5">
+    <flag contact="disable"/>
+  </option>
+
+  <include file="wheel_leg.xml"/>
+
+  <!-- Adapter keeps resolving its production object contract; contact is disabled. -->
+  <worldbody>
+    <geom name="floor" type="plane" pos="0 0 0" size="0 0 0.25"
+          contype="1" conaffinity="1" condim="3"/>
+  </worldbody>
+</mujoco>

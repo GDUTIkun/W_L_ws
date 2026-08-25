@@ -26,7 +26,7 @@ Simulink 中已验证的算法使用了简化刚体假设，而 MuJoCo 和真机
 → NMPC
 ```
 
-其中第一项已由 [Phase 15](../workflow/phases/15-mujoco-closed-chain-kinematics/RECORD.md) 完成 current nominal 闭链运动学和 reduced Jacobian 验证；其余项仍只保留总体顺序，尚未制定详细 Phase。
+其中第一项已由 [Phase 15](../workflow/phases/15-mujoco-closed-chain-kinematics/RECORD.md) 完成 current nominal 闭链运动学和 reduced Jacobian 验证；第二项已制定为 [Phase 16](../workflow/phases/16-controller-mujoco-deterministic-loop/PLAN.md)，只建立确定性执行/重放基线，不提前实现 Joint PD。后续控制层仍只保留总体顺序，尚未制定详细 Phase。
 
 上述各层只形成 simulation-only 结论，不提前关闭依赖真实计量、真机响应或 MuJoCo–real 一致性的 gate。真机工作恢复后，先执行执行器、传感器、质量/COM、惯量/耦合和接触的共同辨识，形成新的 identified plant profile，再按完全相同的层次从运动学开始重跑：
 

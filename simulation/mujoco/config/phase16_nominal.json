@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "profile": "nominal",
+  "model_revision": "current_nominal",
+  "scene": "simulation/mujoco/model/phase16_contact_free.xml",
+  "physics_timestep_s": 0.002,
+  "control_period_s": 0.01,
+  "physics_steps_per_control": 5,
+  "nominal": {
+    "episodes": 2,
+    "ticks_per_episode": 100
+  },
+  "faults": {
+    "episodes": 2,
+    "ticks_per_episode": 20,
+    "duplicate_state_tick": 1,
+    "future_command_tick": 2,
+    "stale_command_tick": 6,
+    "timeout_seed_tick": 7,
+    "receipt_timeout_tick": 8,
+    "recovery_tick": 9,
+    "reset_old_command_episode": 1,
+    "reset_old_command_tick": 0
+  },
+  "thresholds": {
+    "max_abs_nominal_torque_nm": 0.0,
+    "max_abs_nominal_ctrl_nm": 0.0,
+    "max_zoh_ctrl_difference_nm": 0.0,
+    "max_replay_numeric_difference": 0.0
+  }
+}

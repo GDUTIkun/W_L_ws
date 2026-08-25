@@ -38,6 +38,11 @@ target_link_libraries(
 ament_target_dependencies(mujoco_node rclcpp std_srvs wheel_leg_msgs)
 target_compile_options(mujoco_node PRIVATE -Wall -Wextra -Wpedantic -Werror)
 
+add_executable(deterministic_loop src/deterministic_loop.cpp)
+target_link_libraries(deterministic_loop wheel_leg_mujoco_adapter)
+target_compile_options(
+  deterministic_loop PRIVATE -Wall -Wextra -Wpedantic -Werror)
+
 if(BUILD_TESTING)
   find_package(ament_cmake_gtest REQUIRED)
   ament_add_gtest(test_adapter test/test_adapter.cpp)
@@ -52,7 +57,7 @@ install(DIRECTORY launch config DESTINATION share/${PROJECT_NAME})
 install(DIRECTORY
   ${CMAKE_CURRENT_SOURCE_DIR}/../../../simulation/mujoco/model
   DESTINATION share/${PROJECT_NAME}/simulation)
-install(TARGETS wheel_leg_mujoco_adapter mujoco_node
+install(TARGETS wheel_leg_mujoco_adapter mujoco_node deterministic_loop
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION lib/${PROJECT_NAME})

@@ -39,6 +39,7 @@ if(BUILD_TESTING)
   ament_add_gtest(test_pubsub test/test_pubsub.cpp)
   target_link_libraries(test_pubsub wheel_leg_controller_node)
   ament_target_dependencies(test_pubsub rclcpp std_srvs wheel_leg_msgs)
+  set_tests_properties(test_pubsub PROPERTIES ENVIRONMENT "ROS_DOMAIN_ID=232")
 endif()
 
 install(DIRECTORY include/ DESTINATION include)

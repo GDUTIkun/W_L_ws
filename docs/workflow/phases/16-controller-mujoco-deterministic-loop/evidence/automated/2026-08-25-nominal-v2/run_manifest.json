@@ -1,0 +1,33 @@
+{
+  "created_utc": "2026-08-25T09:05:58.478897+00:00",
+  "hardware_data_used": false,
+  "inputs": {
+    "ros_ws/build/wheel_leg_mujoco/deterministic_loop": "1569482e945446b8e0a1b1842bfe7f9a25d2b6695e260f21972a07b08e701dd7",
+    "ros_ws/src/wheel_leg_core/src/controller_core.cpp": "aaeab100cf8ca0752e873d7a841801cbeaa8d38bb4275af4724b22f5c802fe38",
+    "ros_ws/src/wheel_leg_mujoco/src/adapter.cpp": "8824a7e7cda9a699f27062a0a67e80f621b23f0ef526e0d7beaba184ed126a6d",
+    "ros_ws/src/wheel_leg_mujoco/src/deterministic_loop.cpp": "d8a1f7066e9adab93000286b4e6c741f529bfa3d6a7e5e47e0a80d402e479db2",
+    "simulation/mujoco/config/phase16_nominal.json": "2ee809c3e90101cda2e3d051bf4c82a3a9db5e75c89b227b73b7509c5d864918",
+    "simulation/mujoco/model/phase16_contact_free.xml": "1d6cba048055131591c79d9c3c17baf6cd5e072f2360a8e4b19ba7bf7f8590fa",
+    "simulation/mujoco/model/wheel_leg.xml": "a4b1f2e243b6715038b24637325db89cbf820f0ea4eccaafbf832dcaeb71893a",
+    "tools/experiments/run_mujoco_controller_loop.py": "94235ae952be299a292758c789b93b145b5baaf4442c099d9e61006aba17758b"
+  },
+  "model_revision": "current_nominal",
+  "outputs": {
+    "faults.csv": "78d7b328015dfbfdec72f87f448f7f0c348985d383f80c31be3b7cb8b5f235c9",
+    "nominal_a.csv": "f0b310075659d06ab2088fbdd4567de9c7404e14392b8aec7eea3e52e7432e9a",
+    "nominal_b.csv": "f0b310075659d06ab2088fbdd4567de9c7404e14392b8aec7eea3e52e7432e9a"
+  },
+  "profile": "nominal",
+  "schema_version": 1,
+  "timing": {
+    "control_period_s": 0.01,
+    "physics_steps_per_control": 5,
+    "physics_timestep_s": 0.002
+  },
+  "versions": {
+    "compiler": "c++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+    "python": "3.10.20",
+    "ros_distro": "jazzy",
+    "runner": "wheel_leg_mujoco_deterministic_loop schema=1 mujoco=3.7.0"
+  }
+}

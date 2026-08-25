@@ -6,8 +6,10 @@
 - `model/wheel_leg.xml`：完整 imported 多刚体模型。
 - `model/phase14_contact_free.xml`：完整双腿、无地面/无 contact 的约束验证 fixture。
 - `model/phase14_single_leg.xml`：固定基座、无 contact 的五刚体闭链单腿 fixture；含三路 actuator、两路被动关节和三维独立运动子空间。
+- `model/phase16_contact_free.xml`：保留 nominal 双腿闭链、`base_weld` 和 Adapter 命名对象，但全局关闭 contact 的确定性闭环 fixture。
 - `config/phase14_validation.json`：Phase 14 的采样、激励、seed 和冻结阈值。
 - `config/phase15_nominal.json`：Phase 15 nominal profile 的左右闭链几何、接触点、工作域、solver、有限差分和冻结阈值。
+- `config/phase16_nominal.json`：Phase 16 的 2 ms physics、10 ms control、5-step ZOH、episode、fault schedule 和阈值。
 
 正式内部动力学验证入口：
 
@@ -26,3 +28,13 @@ cd /home/t/W_L_ws
 ```
 
 该入口拒绝覆盖非空结果目录。未来模型 revision/identified profile 应使用新 config 和 run ID，不替换 nominal evidence。
+
+Controller ↔ MuJoCo 确定性闭环入口：
+
+```bash
+cd /home/t/W_L_ws
+./.venv/bin/python tools/experiments/run_mujoco_controller_loop.py \
+  --output-dir data/experiments/<new-phase16-run-id>/raw
+```
+
+此入口直接运行 C++ Controller Core/Adapter/MuJoCo 循环；Python 只负责编排、校验、manifest 和比较。当前 Core 固定输出零力矩，因此本验证不代表控制效果或站立能力。

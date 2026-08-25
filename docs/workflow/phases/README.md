@@ -26,6 +26,7 @@ None.
 - [Phase 04：MuJoCo 基础模型与 Adapter](04-mujoco-model-adapter/PLAN.md)
 - [Phase 14：MuJoCo 运动学与内部动力学验证](14-mujoco-internal-dynamics-validation/PLAN.md)
 - [Phase 15：MuJoCo 完整闭链运动学与 Jacobian 验证](15-mujoco-closed-chain-kinematics/PLAN.md) — 2026-08-25 PASS；完成 210 样本被动装配、独立 FK、reduced Jacobian、有限差分、速度/虚功、方向和非覆盖复用验证，未连接真机。
+- [Phase 16：Controller ↔ MuJoCo 确定性闭环运行基线](16-controller-mujoco-deterministic-loop/PLAN.md) — 2026-08-25 PASS；完成 2 ms physics、10 ms control、5-step ZOH、双时钟/reset/fail-safe、逐 tick 日志和非覆盖 replay，未新增控制算法、未连接真机。
 
 ## 建立新 Phase
 

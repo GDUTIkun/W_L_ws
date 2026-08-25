@@ -36,27 +36,38 @@ TEST(ControllerNode, ValidStatePublishesOnlyZeroTorque) {
   executor.add_node(probe);
   wheel_leg_msgs::msg::RobotState state;
   state.q_n_from_b.w = 1.0;
+  state.sample_time_ns = 10'000'000U;
 
-  const auto deadline = std::chrono::steady_clock::now() + std::chrono::seconds(3);
-  while (received.load() == 0 && std::chrono::steady_clock::now() < deadline) {
-    state.sample_time_ns += 10'000'000U;
-    publisher->publish(state);
-    executor.spin_some();
-    std::this_thread::sleep_for(std::chrono::milliseconds(10));
-  }
-  EXPECT_GT(received.load(), 0);
+  auto spin_until = [&](auto predicate, std::chrono::milliseconds timeout) {
+    const auto deadline = std::chrono::steady_clock::now() + timeout;
+    while (!predicate() && std::chrono::steady_clock::now() < deadline) {
+      executor.spin_some();
+      std::this_thread::sleep_for(std::chrono::milliseconds(2));
+    }
+    return predicate();
+  };
+  auto spin_for = [&](std::chrono::milliseconds duration) {
+    const auto deadline = std::chrono::steady_clock::now() + duration;
+    while (std::chrono::steady_clock::now() < deadline) {
+      executor.spin_some();
+      std::this_thread::sleep_for(std::chrono::milliseconds(2));
+    }
+  };
+
+  ASSERT_TRUE(spin_until(
+      [&]() {
+        return publisher->get_subscription_count() > 0 &&
+               subscription->get_publisher_count() > 0;
+      },
+      std::chrono::seconds(3)));
+  publisher->publish(state);
+  ASSERT_TRUE(spin_until(
+      [&]() { return received.load() == 1; }, std::chrono::seconds(1)));
   EXPECT_TRUE(all_zero.load());
 
-  for (int index = 0; index < 20; ++index) {
-    executor.spin_some();
-    std::this_thread::sleep_for(std::chrono::milliseconds(5));
-  }
   const int accepted_count = received.load();
   publisher->publish(state);
-  for (int index = 0; index < 10; ++index) {
-    executor.spin_some();
-    std::this_thread::sleep_for(std::chrono::milliseconds(5));
-  }
+  spin_for(std::chrono::milliseconds(100));
   EXPECT_EQ(received.load(), accepted_count);
 
   ASSERT_TRUE(reset_client->wait_for_service(std::chrono::seconds(1)));
@@ -67,20 +78,15 @@ TEST(ControllerNode, ValidStatePublishesOnlyZeroTorque) {
       rclcpp::FutureReturnCode::SUCCESS);
   ASSERT_TRUE(reset_future.get()->success);
   publisher->publish(state);
-  for (int index = 0; index < 10; ++index) {
-    executor.spin_some();
-    std::this_thread::sleep_for(std::chrono::milliseconds(5));
-  }
-  EXPECT_GT(received.load(), accepted_count);
+  ASSERT_TRUE(spin_until(
+      [&]() { return received.load() == accepted_count + 1; },
+      std::chrono::seconds(1)));
   const int post_reset_count = received.load();
 
   state.sample_time_ns += 1;
   state.joint_position_rad[0] = std::numeric_limits<double>::quiet_NaN();
   publisher->publish(state);
-  for (int index = 0; index < 10; ++index) {
-    executor.spin_some();
-    std::this_thread::sleep_for(std::chrono::milliseconds(5));
-  }
+  spin_for(std::chrono::milliseconds(100));
   EXPECT_EQ(received.load(), post_reset_count);
   (void)subscription;
 }

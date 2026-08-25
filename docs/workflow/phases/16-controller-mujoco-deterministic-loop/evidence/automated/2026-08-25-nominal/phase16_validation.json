@@ -1,0 +1,43 @@
+{
+  "checks": {
+    "all_commands_accepted": true,
+    "all_core_steps_accepted": true,
+    "contact_disabled": true,
+    "controller_dt": true,
+    "duplicate_state_rejected": true,
+    "fault_core_output_remains_zero": true,
+    "fault_log_finite": true,
+    "fault_zoh_exact": true,
+    "finite": true,
+    "fresh_process_csv_exact": true,
+    "fresh_process_numeric_exact": true,
+    "future_command_rejected": true,
+    "physics_tick_accounting": true,
+    "post_timeout_recovery": true,
+    "receipt_timeout_fails_to_zero": true,
+    "reset_old_command_rejected_and_new_epoch_recovers": true,
+    "reset_replay_exact": true,
+    "row_count": true,
+    "source_and_receipt_time": true,
+    "stale_command_rejected": true,
+    "timeout_seed_applied": true,
+    "zero_core_torque": true,
+    "zero_native_ctrl": true,
+    "zoh_exact": true
+  },
+  "hardware_data_used": false,
+  "interpretation_limit": "Simulation-only execution, clock, reset, fail-safe, logging, and replay evidence. No PD, contact-fidelity, realtime, or real-hardware claim.",
+  "metrics": {
+    "episodes": 2,
+    "fresh_process_max_numeric_difference": 0.0,
+    "fresh_process_sha256": "f0b310075659d06ab2088fbdd4567de9c7404e14392b8aec7eea3e52e7432e9a",
+    "max_abs_core_torque_nm": 0.0,
+    "max_abs_native_ctrl_nm": 0.0,
+    "max_zoh_ctrl_difference_nm": 0.0,
+    "reset_replay_max_numeric_difference": 0.0,
+    "rows": 200,
+    "ticks_per_episode": 100
+  },
+  "overall_pass": true,
+  "schema_version": 1
+}
