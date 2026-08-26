@@ -116,4 +116,53 @@ int main() {
   assert(!controlled_core.setReference(invalid_reference));
   controlled.kp_nm_per_rad[0] = -1.0;
   assert(!controlled_core.configure(controlled));
+
+  ControllerConfig standing;
+  standing.mode = ControllerMode::kSimpleStanding;
+  standing.initial_reference.position_rad = {
+      -0.96, 1.64, 0.0, -0.98, 1.64, 0.0};
+  standing.kp_nm_per_rad = {8.0, 8.0, 0.0, 8.0, 8.0, 0.0};
+  standing.kd_nm_s_per_rad = {1.0, 1.0, 0.0, 1.0, 1.0, 0.0};
+  standing.torque_limit_nm = {10.0, 10.0, 2.0, 10.0, 10.0, 2.0};
+  standing.simple_standing.support_torque_nm = {
+      -0.15, -1.95, 0.0, 0.15, -4.42, 0.0};
+  standing.simple_standing.gain = {2.0, 3.0, 40.0, 1.0};
+  ControllerCore standing_core;
+  assert(standing_core.configure(standing));
+  RobotState standing_state;
+  standing_state.sample_time_ns = 10'000'000;
+  standing_state.base_position_n_m = {1.0, 0.0, 0.5};
+  standing_state.base_linear_velocity_n_m_s[0] = 0.1;
+  standing_state.q_n_from_b = {
+      std::cos(0.01 / 2.0), 0.0, std::sin(0.01 / 2.0), 0.0};
+  standing_state.base_angular_velocity_n_rad_s[1] = 0.2;
+  standing_state.joint_position_rad = standing.initial_reference.position_rad;
+  standing_state.contact_state = {
+      ContactState::kContact, ContactState::kContact};
+  const auto standing_first = standing_core.step(standing_state);
+  assert(standing_first.accepted());
+  const double expected_wheel = -(3.0 * 0.1 + 40.0 * 0.01 + 1.0 * 0.2);
+  assert(std::abs(standing_first.command.joint_torque_nm[2] - expected_wheel) < 1e-12);
+  assert(standing_first.command.joint_torque_nm[2] ==
+         standing_first.command.joint_torque_nm[5]);
+  assert(standing_first.command.joint_torque_nm[0] == -0.15);
+  standing_state.sample_time_ns += 10'000'000;
+  standing_state.joint_position_rad[0] -= 0.01;
+  const auto standing_second = standing_core.step(standing_state);
+  assert(standing_second.accepted());
+  assert(std::abs(standing_second.command.joint_torque_nm[0] + 0.07) < 1e-12);
+  standing_state.sample_time_ns += 10'000'000;
+  standing_state.contact_state[0] = ContactState::kNoContact;
+  const auto standing_trip = standing_core.step(standing_state);
+  assert(standing_trip.status == StepStatus::kSafetyLatched);
+  assert(standing_trip.safety_latched);
+  for (const double torque : standing_trip.command.joint_torque_nm) {
+    assert(torque == 0.0);
+  }
+  standing_state.sample_time_ns += 10'000'000;
+  standing_state.contact_state[0] = ContactState::kContact;
+  assert(standing_core.step(standing_state).status == StepStatus::kSafetyLatched);
+  standing_core.reset();
+  standing_state.sample_time_ns += 10'000'000;
+  assert(standing_core.step(standing_state).accepted());
 }

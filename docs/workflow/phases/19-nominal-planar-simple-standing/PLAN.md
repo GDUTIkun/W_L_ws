@@ -1,10 +1,12 @@
 # Phase 19: 显式二维 sagittal 简单站立 — PLAN v2
 
-Status: `review`
+Status: `complete`
 
 Supersedes for execution: [`PLAN-v1-2026-08-26-REWORK.md`](PLAN-v1-2026-08-26-REWORK.md)
 
 Preserved failed review: [`REVIEW-v1-2026-08-26-REWORK.md`](REVIEW-v1-2026-08-26-REWORK.md)
+
+Preserved v2 pre-freeze review: [`REVIEW-v2-2026-08-26-REWORK.md`](REVIEW-v2-2026-08-26-REWORK.md)
 
 ## Goal
 
@@ -24,7 +26,7 @@ Preserved failed review: [`REVIEW-v1-2026-08-26-REWORK.md`](REVIEW-v1-2026-08-26
 - 在 exact planar plant 上重新求解 upright、双轮接触、零速度、左右 wheel torque 都为零的 contact-aware equilibrium；允许在 Phase 15 工作域内选择由当前模型左右差异决定的 side-specific leg reference。
 - standing state 固定为 `x_s=[x-x_ref, dx, theta, dtheta]`，来自 canonical `base_control_frame` site position/Jacobian twist/quaternion/world angular velocity；reset 锚定 `x_ref`。
 - hip/knee 使用 contact-equilibrium support + fixed-reference PD；wheel position PD 和 wheel gravity项禁用，左右轮只接受完全相等的 common balance torque。
-- 从 `2 ms × 5` 的完整 planar contact plant 数值生成 10 ms local `A/B`，冻结 gain、poles、controllability、affine drift、holdout residual 和有效 envelope；runtime Core 不依赖 MuJoCo。
+- 从 `2 ms × 5` 的完整 planar contact plant 数值生成 10 ms local `A/B`，冻结 gain、poles、controllability、affine drift、holdout residual 和有效 envelope；用不重置隐藏状态的完整非线性 plant 作为最终预冻结 oracle，runtime Core 不依赖 MuJoCo。
 - 预冻结 gate 通过后，扩展 Controller Core 的 opt-in `simple_standing` mode 和现有 Phase 16 deterministic C++ loop；失败则再次 REVIEW=`REWORK`，不继续堆控制层。
 - formal 覆盖 equilibrium、正负 pitch/rolling 初值、正负 base-X force/pitch moment、腿姿态扰动、saturation、contact loss、invalid/nonmonotonic、reset/replay、non-overwrite 和 Phase 02/04/14/15/16/17/18 回归。
 - 保存 source model、generator、derived model、scene、config、controller、runner 和 outputs hashes，为后续 SolidWorks revision/identified profile 重新派生、重新求 equilibrium/model/gain 提供非覆盖入口。
@@ -46,7 +48,7 @@ Preserved failed review: [`REVIEW-v1-2026-08-26-REWORK.md`](REVIEW-v1-2026-08-26
 - **Equilibrium：** upright `theta=0`、双轮接触、零速度、左右 wheel torque 精确为零。必须验证 compliant closure、constraint/contact force、normal load、qacc/generalized residual、finite 和 reset replay；不允许用控制器稳态偏差替代 equilibrium。current nominal CAD/MuJoCo 左右不严格镜像，因此冻结 side-specific active references，并限制左右差异，不用“强制同值”制造残余加速度。
 - **State/sign：** canonical world FLU，pitch 遵守 world `+Y` 右手定则；`x/dx/theta/dtheta` 由 Adapter-compatible site oracle提取。正 canonical wheel rotation/no-slip `+X` 继续继承 Phase 15。
 - **Controller：** 左右 leg 分别使用冻结的 fixed posture `support_eq + PD`；wheel 为 equal common torque `tau_common=-K*x_s`。`z` 仅由几何、腿姿态和接触间接维持并作为硬指标，不加入独立 height task。
-- **Pre-freeze first：** equilibrium、4-state model、stable poles、正负 holdout 和 full-planar-plant exploratory recovery 全通过后，才允许实现 Core/C++ formal chain。
+- **Pre-freeze first：** equilibrium、4-state model、stable poles、差分收敛、正负 holdout 和 full-planar-plant exploratory recovery 全通过后，才允许实现 Core/C++ formal chain。任意独立扰动 qpos/qvel、离开 equality/contact 约束流形的 raw full-coordinate Jacobian 只作诊断，不作为物理极点或 release gate。
 - **Fail closed：** torque、pitch、height、joint velocity、contact、finite、sample time 任一越过冻结 envelope 时输出零并锁存到 reset。
 - **Non-overwrite：** v1 失败 evidence 是永久历史；v2 exploratory、formal、replay、未来 CAD/identified runs 均使用新目录和 `supersedes` 链。
 - **3D boundary：** 完整 3D standing 是后续独立 Phase，至少需要 roll/yaw/lateral sensing、control authority 和验证矩阵；不得从本 Phase 的 2D PASS 推断自由真机或 3D MuJoCo 可站立。
@@ -57,9 +59,9 @@ Preserved failed review: [`REVIEW-v1-2026-08-26-REWORK.md`](REVIEW-v1-2026-08-26
 - **DG19-02 / CLOSED / CODE+EVIDENCE — derived-model fidelity：** generator、structural diff auditor 和 exact replay 证明除 base DOF topology 外 current nominal physics 未改变。
 - **DG19-03 / CLOSED / EVIDENCE — equilibrium：** compliant-contact/equality solve 找到 zero-wheel-torque upright equilibrium；qacc、广义力、双轮载荷、closure、one-step drift、finite 和 exact replay 全通过。
 - **DG19-04 / CLOSED / EVIDENCE — state/sign：** site/quaternion/Jacobian、finite difference、wheel rolling 和 canonical/native torque 方向一致，primary/replay exact。
-- **DG19-05 / OPEN / BLOCKING EVIDENCE — local controller：** reset-local 4-state model 虽 rank `4` 且候选谱半径 `<1`，完整 26-state sampled plant 谱半径 `1.767146`，nonlinear holdout 失败；不得进入 Core。
-- **DG19-06 / OPEN / EVIDENCE — formal envelope：** gains、limits、disturbances 和 thresholds 在 holdout 前冻结；全部 10 s cases 通过。
-- **DG19-07 / OPEN / EVIDENCE — runtime/reuse：** Core/Adapter/C++ loop、fault/reset/replay、non-overwrite、历史回归和 new-revision dry-run 全通过。
+- **DG19-05 / CLOSED / EVIDENCE — local controller：** v2 失败归因为 contact plant 上 `10 ms` ZOH 的腿部 PD `12/1.5` 过高；standing-specific `8/1` 保持原 timing contract，local model rank `4`、谱半径 `0.984789`、差分收敛，完整非线性 plant 的 nominal 与 `±0.01 rad` pitch、`±0.01 m/s` rolling 全部运行 `10 s` 并 PASS，允许进入 Core。
+- **DG19-06 / CLOSED / EVIDENCE — formal envelope：** gains、limits、disturbances 和 thresholds 已冻结；11 个 10 s normal/perturbation cases 与 4 个 fault cases 全通过。
+- **DG19-07 / CLOSED / EVIDENCE — runtime/reuse：** Core/Adapter/C++ loop、fault/reset/replay、non-overwrite、历史回归和 revision-workflow fresh-namespace dry-run 全通过。
 - **DG19-08 / CLOSED / SCOPE — claims：** 结论只限 current nominal exact-planar simulation，不是完整 3D、WBC 或真机证据。
 
 ## Tasks
@@ -70,12 +72,12 @@ Preserved failed review: [`REVIEW-v1-2026-08-26-REWORK.md`](REVIEW-v1-2026-08-26
 | P19V2-T02 | 实现 source→planar model generator 与 diff auditor | generator、generated scene/model manifest、tests | 唯一 freejoint替换；允许差异白名单外为零；DG19-02关闭 | done |
 | P19V2-T03 | 求解和验证 exact-planar contact equilibrium | equilibrium solver/profile/report | zero wheel torque、qacc/constraint/contact/closure/load/reset过阈值；DG19-03关闭 | done |
 | P19V2-T04 | 冻结 canonical state/sign/rolling contract | evaluator与正负 oracle | site/Jacobian/finite difference/rolling/native-canonical一致；DG19-04关闭 | done |
-| P19V2-T05 | 生成 local A/B 和稳定 common-wheel gain | model/gain/fit/holdout evidence | reset-local PASS，但 full 26-state/nonlinear gate FAIL；DG19-05未关闭 | blocked |
-| P19V2-T06 | 实现 Core standing mode 与 C++ planar loop | opt-in Core config/diagnostics、runner extension、tests | equal wheel torque、leg decomposition、ZOH、trip/reset、旧 mode兼容 | blocked |
-| P19V2-T07 | 建立 v2 wrapper/profile/case matrix | non-overwrite raw/summary/manifest | Python只编排/评价；hash/schema/cases/threshold完整 | blocked |
-| P19V2-T08 | 冻结 exploratory envelope 并执行 formal | 新 exploratory/formal evidence | 所有 10 s holdout/fault cases通过；DG19-06关闭 | blocked |
-| P19V2-T09 | replay、历史回归与 revision reuse audit | fresh-process、Phase 02/04/14–18 regression、dry-run | determinism/compatibility/reuse通过；DG19-07关闭 | blocked |
-| P19V2-T10 | REVIEW | 新 `REVIEW.md`；仅 PASS 后创建 RECORD | 当前 Verdict=`REWORK`，无 RECORD | done |
+| P19V2-T05 | 生成 local A/B 和稳定 common-wheel gain | model/gain/fit/holdout evidence | v3 `8/1` sampled-leg candidate 与完整 nonlinear envelope PASS；DG19-05关闭 | done |
+| P19V2-T06 | 实现 Core standing mode 与 C++ planar loop | opt-in Core config/diagnostics、runner extension、tests | equal wheel torque、leg decomposition、ZOH、trip/reset、旧 mode兼容 | done |
+| P19V2-T07 | 建立 v2 wrapper/profile/case matrix | non-overwrite raw/summary/manifest | Python只编排/评价；hash/schema/cases/threshold完整 | done |
+| P19V2-T08 | 冻结 exploratory envelope 并执行 formal | 新 exploratory/formal evidence | 所有 10 s holdout/fault cases通过；DG19-06关闭 | done |
+| P19V2-T09 | replay、历史回归与 revision reuse audit | fresh-process、Phase 02/04/14–18 regression、dry-run | determinism/compatibility/reuse通过；DG19-07关闭 | done |
+| P19V2-T10 | REVIEW | 新 `REVIEW.md`；仅 PASS 后创建 RECORD | Verdict=`PASS`，RECORD 已创建 | done |
 
 任务状态只使用 `todo / doing / done / blocked`。
 
@@ -86,7 +88,7 @@ Preserved failed review: [`REVIEW-v1-2026-08-26-REWORK.md`](REVIEW-v1-2026-08-26
 - generator unit tests：唯一 freejoint锚点、三关节 name/type/axis/order、重复运行 exact、非目标差异 fail closed。
 - full-vs-planar compiled audit：body/geom/site/inertial/active/passive joints/actuators/equalities/contact/solver/timestep exact；只允许 `nq/nv`、base joint set/address变化。
 - equilibrium：双轮 contact、零 wheel torque、有限且 side-specific 的 leg support、compliant closure、normal load、`qacc`/generalized residual、one-step drift 和 fresh reset replay。
-- local model：10 ms `A/B`、rank、affine drift、poles、中心差分步长收敛、未参与设计的正负 one/multi-step holdout，以及完整 planar contact plant recovery。
+- local model：10 ms `A/B`、rank、affine drift、poles、中心差分步长收敛、未参与设计的正负 one/multi-step holdout，以及完整 nonlinear planar contact plant recovery。raw full-coordinate Jacobian 仅记录 step sensitivity，不据此放行或否决。
 
 ### Formal
 
@@ -101,11 +103,11 @@ Preserved failed review: [`REVIEW-v1-2026-08-26-REWORK.md`](REVIEW-v1-2026-08-26
 - [ ] derived model 的唯一物理差异是 base 从 freejoint 变为 exact `X/Z/pitch` 三自由度，且生成/审计/manifest 可跨 CAD revision 重跑。
 - [ ] zero-wheel-torque upright equilibrium 通过静力、contact、closure、reset 和 finite gates。
 - [ ] canonical state/sign/rolling 与 Adapter/Phase 15 一致，公共 message 不变。
-- [ ] 4-state local model、gain、poles、drift和holdout通过，full planar contact plant 在冻结正负小扰动范围恢复。
-- [ ] Core standing mode opt-in、default-zero/Phase17兼容、左右轮力矩完全相等、故障 fail closed。
-- [ ] 全部 formal cases 至少运行 `10 s` 并通过冻结指标；determinism、non-overwrite和历史回归通过。
-- [ ] v1 REWORK evidence 和所有历史 evidence 未覆盖；v2结论明确限制为 exact-planar current nominal simulation-only。
-- [ ] REVIEW=`PASS` 后才创建 RECORD 和把 ROADMAP 标为 complete。
+- [x] 4-state local model、gain、poles、drift和holdout通过，full planar contact plant 在冻结正负小扰动范围恢复。
+- [x] Core standing mode opt-in、default-zero/Phase17兼容、左右轮力矩完全相等、故障 fail closed。
+- [x] 全部 normal formal cases 至少运行 `10 s` 并通过冻结指标；determinism、non-overwrite和历史回归通过。
+- [x] v1/v2 REWORK evidence 和所有历史 evidence 未覆盖；结论明确限制为 exact-planar current nominal simulation-only。
+- [x] REVIEW=`PASS` 后才创建 RECORD 和把 ROADMAP 标为 complete。
 
 ## Execution Notes
 
@@ -116,7 +118,10 @@ Preserved failed review: [`REVIEW-v1-2026-08-26-REWORK.md`](REVIEW-v1-2026-08-26
 - 2026-08-26：P19V2-T03 PASS。柔性闭链/接触一致求解得到 `max|qacc|=9.815e-11`、零 wheel torque 和双轮正载荷；current nominal 左右不严格镜像，冻结小幅 side-specific leg references，而非强制相同 native angles。
 - 2026-08-26：P19V2-T04 PASS。site/Jacobian/有限差分误差不超过 `1.025e-12`，native 正轮转对应 `+X` rolling，Adapter canonical/native 反号关系明确且 replay exact。
 - 2026-08-26：P19V2-T05 pre-freeze REWORK。reset-local 四状态候选谱半径 `0.984789`，但完整 26-state sampled 闭环谱半径 `1.767146` 且五个 nonlinear case 失败；按 gate 未修改 Core。
+- 2026-08-26：v3 完成归因：raw 26-state 独立坐标差分离开 equality/contact 约束流形且不随步长收敛，不能作为物理 pole oracle；真实 nonlinear 失败由 `10 ms` ZOH 下腿部 `12/1.5` sampled gain 激发。standing-specific `8/1` 不改变 timing，五个扩大后的正负 case 均完成 `10 s`，primary/replay summary hash exact，DG19-05关闭。
+- 2026-08-26：Core/C++ formal-v3 PASS。Core 首帧即要求双轮接触；runner 只在 reset 初始化阶段沿 Z 投影到 bilateral contact。正式 pitch 初态据此冻结为 `±0.005 rad`，避免把旧 `±0.01 rad` 非接触流形 reset 当作正式证据。
+- 2026-08-26：formal-v4 11 个 10 s cases、4 个双 episode fault cases、fresh replay、non-overwrite、19 tests、Phase 02/14–18 regressions 与 revision-workflow dry-run 全 PASS；formal/formal-v2/formal-v3 历史结果保留，最终 authority 为包含完整源码 hashes 的 formal-v4。
 
 ## Blockers
 
-DG19-05 blocking：必须先归因完整 sampled plant 的 equality/contact/leg 隐藏不稳定模态，并重新通过 full-state linear + nonlinear recovery；在此之前 P19V2-T06–T09 不执行。
+无 blocker。最终 REVIEW=`PASS`，RECORD 已创建，Phase complete。

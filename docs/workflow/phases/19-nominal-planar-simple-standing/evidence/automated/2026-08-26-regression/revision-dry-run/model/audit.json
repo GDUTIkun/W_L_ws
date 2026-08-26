@@ -1,0 +1,97 @@
+{
+  "passed": true,
+  "expected_topology": {
+    "full": {
+      "nq": 17,
+      "nv": 16,
+      "njnt": 11
+    },
+    "planar": {
+      "nq": 13,
+      "nv": 13,
+      "njnt": 13
+    }
+  },
+  "actual_topology": {
+    "full": {
+      "nq": 17,
+      "nv": 16,
+      "njnt": 11
+    },
+    "planar": {
+      "nq": 13,
+      "nv": 13,
+      "njnt": 13
+    }
+  },
+  "planar_base_joint_types": {
+    "base_x_joint": 2,
+    "base_z_joint": 2,
+    "base_pitch_joint": 3
+  },
+  "planar_base_joint_axes": {
+    "base_x_joint": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "base_z_joint": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "base_pitch_joint": [
+      0.0,
+      1.0,
+      0.0
+    ]
+  },
+  "max_preserved_compiled_field_difference": 0.0,
+  "max_qpos0_body_pose_difference": 0.0,
+  "max_option_difference": 0.0,
+  "field_differences": {
+    "body_mass": 0.0,
+    "body_inertia": 0.0,
+    "body_ipos": 0.0,
+    "body_iquat": 0.0,
+    "body_pos": 0.0,
+    "body_quat": 0.0,
+    "geom_type": 0.0,
+    "geom_contype": 0.0,
+    "geom_conaffinity": 0.0,
+    "geom_condim": 0.0,
+    "geom_size": 0.0,
+    "geom_pos": 0.0,
+    "geom_quat": 0.0,
+    "geom_friction": 0.0,
+    "geom_solref": 0.0,
+    "geom_solimp": 0.0,
+    "geom_margin": 0.0,
+    "geom_gap": 0.0,
+    "site_type": 0.0,
+    "site_size": 0.0,
+    "site_pos": 0.0,
+    "site_quat": 0.0,
+    "actuator_gear": 0.0,
+    "actuator_gainprm": 0.0,
+    "actuator_biasprm": 0.0,
+    "actuator_ctrlrange": 0.0,
+    "actuator_forcerange": 0.0,
+    "eq_type": 0.0,
+    "eq_data": 0.0,
+    "eq_solref": 0.0,
+    "eq_solimp": 0.0,
+    "sensor_type": 0.0,
+    "sensor_datatype": 0.0,
+    "sensor_dim": 0.0,
+    "sensor_cutoff": 0.0,
+    "sensor_noise": 0.0,
+    "jnt_type": 0.0,
+    "jnt_axis": 0.0,
+    "jnt_pos": 0.0,
+    "jnt_range": 0.0,
+    "jnt_stiffness": 0.0,
+    "jnt_margin": 0.0
+  },
+  "xml_transform_exact": true
+}

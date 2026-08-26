@@ -1,0 +1,15 @@
+{
+  "config": "/home/t/W_L_ws/simulation/mujoco/config/phase19_planar_equilibrium.json",
+  "config_sha256": "68f08fcd2e403c55cf28809580901f161f18025f41c65533ffccf705bffcbd3b",
+  "created_at": "2026-08-26T07:21:21.205937+00:00",
+  "mujoco": "3.7.0",
+  "outputs": {
+    "equilibrium.json": "6d30377af2f817ce26cfc2f59d2daad23cc51275e188102790ea81ca2abca9cf",
+    "solver_trace.json": "701d668dd559598f0724d15a1a2304d56023e779a9ca42f890ad6b8d9936d97b",
+    "summary.json": "249879aba746449929b1d2e7a1667af7327f8440dcb1d7b5bbfb4be2ad00c212"
+  },
+  "python": "3.10.20",
+  "scene": "/home/t/W_L_ws/docs/workflow/phases/19-nominal-planar-simple-standing/evidence/automated/2026-08-26-regression/revision-dry-run/model/phase19_planar_scene.xml",
+  "scene_sha256": "5943c17337c4ed15654ed06f75178c00896844b3a023d47173f3ddc25b1002e9",
+  "solver_sha256": "101ce4f5965f16a331e4ab447a391b2f509c86c484b4fda567c86272bbf3c508"
+}

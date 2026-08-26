@@ -1,0 +1,254 @@
+{
+  "cases": [
+    {
+      "bilateral_contact_fraction": 1.0,
+      "completed_ticks": 1000,
+      "final_state": [
+        -0.0006203134455384646,
+        0.0002854176174026084,
+        0.0005679442490299874,
+        -0.0072991982897508325
+      ],
+      "finite": true,
+      "id": "nominal",
+      "maximum_abs_pitch_rad": 0.002102549904242789,
+      "maximum_abs_x_m": 0.001002841729997886,
+      "maximum_height_error_m": 0.0003992618323766517,
+      "maximum_leg_error_rad": 0.01232538802564298,
+      "maximum_leg_torque_nm": 4.466283802748447,
+      "maximum_wheel_torque_nm": 0.08650697748766817,
+      "requested_ticks": 1000
+    },
+    {
+      "bilateral_contact_fraction": 1.0,
+      "completed_ticks": 1000,
+      "final_state": [
+        0.002166748958166334,
+        -0.003800681509177439,
+        0.0007348248641052594,
+        -0.026521450496538816
+      ],
+      "finite": true,
+      "id": "pitch_positive",
+      "maximum_abs_pitch_rad": 0.009953065102484072,
+      "maximum_abs_x_m": 0.0025440823763169113,
+      "maximum_height_error_m": 0.001276371575045121,
+      "maximum_leg_error_rad": 0.013331349846303353,
+      "maximum_leg_torque_nm": 4.8307193126566785,
+      "maximum_wheel_torque_nm": 0.7545890485398008,
+      "requested_ticks": 1000
+    },
+    {
+      "bilateral_contact_fraction": 1.0,
+      "completed_ticks": 1000,
+      "final_state": [
+        -0.0007032060297085252,
+        -0.00020087623220682279,
+        -5.759906034871569e-05,
+        0.04020400240191001
+      ],
+      "finite": true,
+      "id": "pitch_negative",
+      "maximum_abs_pitch_rad": 0.009913705167722749,
+      "maximum_abs_x_m": 0.0007047325442897656,
+      "maximum_height_error_m": 0.0008084553201143652,
+      "maximum_leg_error_rad": 0.0026163094108754836,
+      "maximum_leg_torque_nm": 4.539166545147149,
+      "maximum_wheel_torque_nm": 0.4281658416229608,
+      "requested_ticks": 1000
+    },
+    {
+      "bilateral_contact_fraction": 1.0,
+      "completed_ticks": 1000,
+      "final_state": [
+        -0.003757681295255194,
+        1.6463611633678798e-06,
+        0.0006683252730729728,
+        -0.023596162365725572
+      ],
+      "finite": true,
+      "id": "velocity_positive",
+      "maximum_abs_pitch_rad": 0.002247614360055885,
+      "maximum_abs_x_m": 0.0038150015333378723,
+      "maximum_height_error_m": 0.0002859341626303413,
+      "maximum_leg_error_rad": 0.008691667941084669,
+      "maximum_leg_torque_nm": 4.4649947928983815,
+      "maximum_wheel_torque_nm": 0.08719359902725607,
+      "requested_ticks": 1000
+    },
+    {
+      "bilateral_contact_fraction": 1.0,
+      "completed_ticks": 1000,
+      "final_state": [
+        -0.00399034952531073,
+        -0.0002664372213125967,
+        0.0008472804331946527,
+        -0.004706497875019012
+      ],
+      "finite": true,
+      "id": "velocity_negative",
+      "maximum_abs_pitch_rad": 0.0026776683261870013,
+      "maximum_abs_x_m": 0.004155981679976814,
+      "maximum_height_error_m": 0.00020452226166933762,
+      "maximum_leg_error_rad": 0.005485031356608383,
+      "maximum_leg_torque_nm": 4.4582456992529655,
+      "maximum_wheel_torque_nm": 0.06915308289326338,
+      "requested_ticks": 1000
+    }
+  ],
+  "checks": {
+    "nonlinear_full_plant_envelope": true,
+    "reduced_controllability": true,
+    "reduced_fd_convergence": true,
+    "reduced_stability": true,
+    "rejected_sampled_leg_gain_reproduces_failure": true
+  },
+  "decision": "ALLOW_CORE_IMPLEMENTATION",
+  "local_model": {
+    "A": [
+      [
+        0.9999999999996122,
+        0.00800829286357052,
+        -0.03178165728298654,
+        -0.00025737766050359934
+      ],
+      [
+        1.4812783108767737e-13,
+        1.001888043493305,
+        0.12007385121102024,
+        -0.03189241461331671
+      ],
+      [
+        3.707412685410995e-14,
+        2.607169648544829e-05,
+        1.0003278445665609,
+        0.0080002565804954
+      ],
+      [
+        6.140124705333349e-13,
+        0.005932925998324825,
+        0.06948627591206276,
+        0.9999937399537372
+      ]
+    ],
+    "B_canonical": [
+      7.136865820545069e-05,
+      0.017901099051274613,
+      0.0002249237844010285,
+      0.056398191880265604
+    ],
+    "affine_drift": [
+      -7.494005416219807e-16,
+      -1.8662593462618963e-13,
+      -1.351497293422935e-15,
+      -3.364068086142847e-13
+    ],
+    "closed_loop_poles": [
+      [
+        0.944228114627536,
+        0.03425621352260396
+      ],
+      [
+        0.944228114627536,
+        -0.03425621352260396
+      ],
+      [
+        0.9847830849588923,
+        0.003450036128996186
+      ],
+      [
+        0.9847830849588923,
+        -0.003450036128996186
+      ]
+    ],
+    "controllability_rank": 4,
+    "finite_difference_convergence": [
+      {
+        "maximum_abs_affine_drift": 3.364068086142847e-13,
+        "maximum_matrix_difference_from_scale_1": 1.7739905475155915e-08,
+        "scale": 0.5
+      },
+      {
+        "maximum_abs_affine_drift": 3.364068086142847e-13,
+        "maximum_matrix_difference_from_scale_1": 0.0,
+        "scale": 1.0
+      },
+      {
+        "maximum_abs_affine_drift": 3.364068086142847e-13,
+        "maximum_matrix_difference_from_scale_1": 7.04513462707057e-08,
+        "scale": 2.0
+      }
+    ],
+    "gain_canonical_tau_equals_minus_Kx": [
+      2.939716938854372,
+      5.562926010255381,
+      39.49917235500377,
+      0.6296413262862853
+    ],
+    "maximum_matrix_convergence_difference": 7.04513462707057e-08,
+    "spectral_radius": 0.9847891282759189
+  },
+  "pass": true,
+  "raw_full_coordinate_diagnostic": {
+    "authoritative_release_gate": false,
+    "reason": "Raw generalized-coordinate perturbations leave the equality/contact constraint manifold.",
+    "spectral_radius_range": [
+      1.1102077446248924,
+      10.008075147838827
+    ],
+    "step_sweep": [
+      {
+        "qpos_epsilon": 3e-06,
+        "qvel_epsilon": 3e-05,
+        "spectral_radius": 1.2821006483069821,
+        "unstable_pole_count": 5
+      },
+      {
+        "qpos_epsilon": 1e-06,
+        "qvel_epsilon": 1e-05,
+        "spectral_radius": 1.1102077446248924,
+        "unstable_pole_count": 2
+      },
+      {
+        "qpos_epsilon": 1e-07,
+        "qvel_epsilon": 1e-06,
+        "spectral_radius": 1.110207748848643,
+        "unstable_pole_count": 2
+      },
+      {
+        "qpos_epsilon": 3e-08,
+        "qvel_epsilon": 3e-07,
+        "spectral_radius": 10.008075147838827,
+        "unstable_pole_count": 5
+      }
+    ]
+  },
+  "sampled_leg_gain_attribution": {
+    "accepted_candidate_gain": [
+      8.0,
+      1.0
+    ],
+    "rejected_gain": [
+      12.0,
+      1.5
+    ],
+    "rejected_nominal_case": {
+      "bilateral_contact_fraction": 0.4305555555555556,
+      "completed_ticks": 72,
+      "final_state": [
+        0.12810396159342757,
+        0.6578553783593148,
+        -0.6066033750009561,
+        4.938454240943747
+      ],
+      "finite": true,
+      "maximum_abs_pitch_rad": 0.6066033750009561,
+      "maximum_abs_x_m": 0.12810396159342757,
+      "maximum_height_error_m": 0.05576524902723856,
+      "maximum_leg_error_rad": 0.43280642669254715,
+      "maximum_leg_torque_nm": 10.0,
+      "maximum_wheel_torque_nm": 2.0,
+      "requested_ticks": 100
+    }
+  }
+}

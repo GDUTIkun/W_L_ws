@@ -1,0 +1,220 @@
+{
+  "schema_version": 1,
+  "profile": "nominal",
+  "mujoco_version": "3.7.0",
+  "scene": "simulation/mujoco/model/phase14_contact_free.xml",
+  "scene_sha256": "c353f3a6bd457a5732fa2464ec66e7faadf9694e31f5fb58be204d63f5686654",
+  "included_model": "simulation/mujoco/model/wheel_leg.xml",
+  "included_model_sha256": "d7d46cd47d92097fb21d0d5923c83dfac07a5f1c48e2be65deb8e98c4a67f0d9",
+  "coordinate_space": "MuJoCo native SI; canonical conversion is not applied",
+  "closure": "site-to-site connect; three residual rows with numerical rank two in the planar leg",
+  "contact_point": {
+    "wheel_center_local_m": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "wheel_axis_local": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "nominal_radius_m": 0.05,
+    "contact_point_at_zero_local_m": [
+      0.05,
+      0.0,
+      0.0
+    ],
+    "simulink_simplified_radius_m": 0.08,
+    "provenance": "0.05 m is nominalized from the compiled MuJoCo collision meshes' approximately 0.10 m radial diameter about the wheel joint axis; it is not a real-hardware calibration and is distinct from the Simulink 0.08 m simplification."
+  },
+  "sides": {
+    "left": {
+      "joint_names": [
+        "left_hip_joint",
+        "left_knee_joint",
+        "left_wheel_joint",
+        "left_connect1_joint",
+        "left_connect2_joint"
+      ],
+      "joint_ids": [
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "qpos_addresses": [
+        12.0,
+        13.0,
+        14.0,
+        15.0,
+        16.0
+      ],
+      "dof_addresses": [
+        11.0,
+        12.0,
+        13.0,
+        14.0,
+        15.0
+      ],
+      "local_joint_axes": [
+        [
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "calf_site": "left_calf_site",
+      "connect_site": "left_connect2_site",
+      "wheel_body": "left_wheel_body",
+      "mesh": {
+        "geom": "left_wheel_collision",
+        "joint_axis_local": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "vertex_count": 875,
+        "body_local_bounds_min_m": [
+          -0.05002625664354003,
+          -0.05006210084933964,
+          -0.012499998961488406
+        ],
+        "body_local_bounds_max_m": [
+          0.049936148508679015,
+          0.04989142806303143,
+          0.0275000001444421
+        ],
+        "compiled_max_radial_m": 0.05012072827252209,
+        "nominal_radius_m": 0.05,
+        "nominal_radius_deviation_m": 0.00012072827252208873,
+        "axial_width_m": 0.03999999910593051
+      },
+      "positive_wheel_material_velocity_at_nominal_contact_m_per_rad": [
+        -0.05,
+        -2.7755575615628927e-18,
+        5.551115123125782e-18
+      ],
+      "positive_no_slip_rolling_displacement_m_per_rad": [
+        0.05,
+        2.7755575615628927e-18,
+        -5.551115123125782e-18
+      ]
+    },
+    "right": {
+      "joint_names": [
+        "right_hip_joint",
+        "right_knee_joint",
+        "right_wheel_joint",
+        "right_connect1_joint",
+        "right_connect2_joint"
+      ],
+      "joint_ids": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "qpos_addresses": [
+        7.0,
+        8.0,
+        9.0,
+        10.0,
+        11.0
+      ],
+      "dof_addresses": [
+        6.0,
+        7.0,
+        8.0,
+        9.0,
+        10.0
+      ],
+      "local_joint_axes": [
+        [
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "calf_site": "right_calf_site",
+      "connect_site": "right_connect2_site",
+      "wheel_body": "right_wheel_body",
+      "mesh": {
+        "geom": "right_wheel_collision",
+        "joint_axis_local": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "vertex_count": 875,
+        "body_local_bounds_min_m": [
+          -0.04988467682664604,
+          -0.04994762012539563,
+          -0.02750000014288708
+        ],
+        "body_local_bounds_max_m": [
+          0.05011532466347048,
+          0.05001922628106458,
+          0.012499998963043407
+        ],
+        "compiled_max_radial_m": 0.05012075152764201,
+        "nominal_radius_m": 0.05,
+        "nominal_radius_deviation_m": 0.00012075152764200875,
+        "axial_width_m": 0.03999999910593049
+      },
+      "positive_wheel_material_velocity_at_nominal_contact_m_per_rad": [
+        -0.05,
+        -2.7755575615628927e-18,
+        5.551115123125782e-18
+      ],
+      "positive_no_slip_rolling_displacement_m_per_rad": [
+        0.05,
+        2.7755575615628927e-18,
+        -5.551115123125782e-18
+      ]
+    }
+  },
+  "interpretation_limit": "Nominal MuJoCo geometry only; no real-hardware dimension or contact calibration is claimed."
+}

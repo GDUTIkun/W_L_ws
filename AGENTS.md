@@ -73,6 +73,20 @@ ROADMAP
 - 在没有用户允许情况下，Codex 不得执行 Graphify 的 `extract`、`--update`、全量重建、聚类重建或语义提取，也不得为这些操作派生子代理；这些操作会消耗用户额度。
 - 当现有图缺少最新内容时，Codex 应明确说明图已过期，并提供一份可直接交给其他 Claude 执行的 Graphify 增量维护 prompt；Codex 自身不得更新 `graphify-out/`。
 
+## Automatic Subagent Delegation
+
+主 Agent 应根据任务形态自主调用项目级子 Agent，无需等待用户逐次授权；不得为了使用子 Agent 而使用子 Agent。
+
+- `project_scout`：只读侦察。用于非平凡的代码定位、调用链、数据流、影响面、历史设计、实验记录和 Phase 关系查询。当前代码事实走 CBM 与源码，历史关系走现有 Graphify 本地图。
+- `phase_worker`：实现执行。仅当当前 Phase 的 Scope、Frozen Decisions、接口约束、文件所有权、验收条件和验证入口都已明确时使用。
+- 默认最多启动一个子 Agent；只有两个任务确实独立且足够大时才并行启动两个。
+- 单文件小改、强顺序依赖、仍需持续技术取舍或主 Agent 可直接快速完成的任务不委派。
+- 数学模型、状态/输入定义、坐标系、物理假设、控制架构、协议语义、证据解释和最终验收始终由主 Agent 负责。
+- 派发前，主 Agent 必须完成必要的 CBM 初查并传递当前 project、generation、已知符号/路径、coverage 缺口、Phase 任务 ID、范围边界、禁止修改区域和验证条件。
+- 子 Agent 不是独占工作区；派发实现任务时必须明确文件或模块所有权，要求保留并适配用户及其他 Agent 的已有改动，不得回退他人修改。
+- Graphify 仅允许 `graphify query`、`graphify path` 和 `graphify explain`。任何 Agent 均不得自行更新图或为更新图派生其他 Agent。
+- 主 Agent 必须复核子 Agent 返回的关键证据；子 Agent 的完成、构建或测试状态不能直接解释为模型、仿真或实验 PASS。
+
 ## Directory Boundaries
 
 - `docs/`：设计、实验方法、证据解释和人工工作流。

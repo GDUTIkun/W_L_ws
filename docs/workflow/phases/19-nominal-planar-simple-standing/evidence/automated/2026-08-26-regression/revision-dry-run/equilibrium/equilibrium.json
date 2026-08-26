@@ -1,0 +1,34 @@
+{
+  "candidate": [
+    -0.3431775504191725,
+    0.5696975530916328,
+    -0.3622567626778332,
+    0.5683402180546114,
+    -0.2522596538884179,
+    -0.5727296386244646,
+    -0.5731565367836947,
+    0.5714520442495344,
+    -0.5718682242479592,
+    0.1558228810012853,
+    1.9558769180289424,
+    -0.15272937105260695,
+    4.428369830750493
+  ],
+  "candidate_order": [
+    "right_hip_joint",
+    "right_knee_joint",
+    "left_hip_joint",
+    "left_knee_joint",
+    "base_z_joint",
+    "right_connect1_joint",
+    "right_connect2_joint",
+    "left_connect1_joint",
+    "left_connect2_joint",
+    "left_hip_torque",
+    "left_knee_torque",
+    "right_hip_torque",
+    "right_knee_torque"
+  ],
+  "iterations": 4,
+  "schema_version": 1
+}

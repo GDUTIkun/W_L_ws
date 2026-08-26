@@ -1,0 +1,460 @@
+{
+  "schema_version": 1,
+  "mujoco_version": "3.7.0",
+  "source_scene": "simulation/mujoco/model/phase14_contact_free.xml",
+  "source_scene_sha256": "c353f3a6bd457a5732fa2464ec66e7faadf9694e31f5fb58be204d63f5686654",
+  "included_model": "simulation/mujoco/model/wheel_leg.xml",
+  "included_model_sha256": "d7d46cd47d92097fb21d0d5923c83dfac07a5f1c48e2be65deb8e98c4a67f0d9",
+  "compiled_dimensions": {
+    "nq": 17,
+    "nv": 16,
+    "nu": 6,
+    "neq": 3,
+    "nbody": 12
+  },
+  "bodies": [
+    {
+      "name": "base_body",
+      "mass_kg": 2.5880000000000005,
+      "local_com_m": [
+        -0.07737815204697132,
+        8.094965674265526e-07,
+        -0.03227768029287019
+      ],
+      "principal_inertia_kg_m2": [
+        0.014346664069511518,
+        0.010146289510587735,
+        0.00848118484982045
+      ],
+      "inertial_quaternion_wxyz": [
+        0.0006555881926592066,
+        0.7067946884672915,
+        -1.77412545925848e-05,
+        0.7074184322194308
+      ],
+      "mass_source": "imported nominal geom mass",
+      "com_inertia_source": "derived by MuJoCo 3.7.0 from mesh geometry and imported nominal geom masses",
+      "hardware_status": "unverified"
+    },
+    {
+      "name": "right_thigh_body",
+      "mass_kg": 0.826,
+      "local_com_m": [
+        -0.0022996862476442666,
+        -0.010095189409752554,
+        -0.08653831603981041
+      ],
+      "principal_inertia_kg_m2": [
+        0.002228995566562637,
+        0.0016706327160272202,
+        0.0009757481677805577
+      ],
+      "inertial_quaternion_wxyz": [
+        0.45668742358211534,
+        0.8828477339387145,
+        -0.09829351227750519,
+        -0.04852691279444141
+      ],
+      "mass_source": "imported nominal geom mass",
+      "com_inertia_source": "derived by MuJoCo 3.7.0 from mesh geometry and imported nominal geom masses",
+      "hardware_status": "unverified"
+    },
+    {
+      "name": "right_calf_body",
+      "mass_kg": 0.5963,
+      "local_com_m": [
+        0.11793516110568367,
+        -0.1433619151391673,
+        0.00526140017915898
+      ],
+      "principal_inertia_kg_m2": [
+        0.00359318322161219,
+        0.0034803373688423495,
+        0.0002519941486200563
+      ],
+      "inertial_quaternion_wxyz": [
+        0.7005248487983055,
+        0.6284647758687255,
+        0.219360861004496,
+        0.2572504117931623
+      ],
+      "mass_source": "imported nominal geom mass",
+      "com_inertia_source": "derived by MuJoCo 3.7.0 from mesh geometry and imported nominal geom masses",
+      "hardware_status": "unverified"
+    },
+    {
+      "name": "right_wheel_body",
+      "mass_kg": 0.3431,
+      "local_com_m": [
+        0.00011422123248387527,
+        3.597071589790871e-05,
+        -0.007415140339568024
+      ],
+      "principal_inertia_kg_m2": [
+        0.0004237375893857504,
+        0.0002459000458754841,
+        0.00024588027365249354
+      ],
+      "inertial_quaternion_wxyz": [
+        0.0,
+        0.7071067811865489,
+        0.0,
+        0.7071067811865489
+      ],
+      "mass_source": "imported nominal geom mass",
+      "com_inertia_source": "derived by MuJoCo 3.7.0 from mesh geometry and imported nominal geom masses",
+      "hardware_status": "unverified"
+    },
+    {
+      "name": "right_connect1_body",
+      "mass_kg": 0.048,
+      "local_com_m": [
+        -0.011476326327073941,
+        -0.013927440937263011,
+        0.010298750255969914
+      ],
+      "principal_inertia_kg_m2": [
+        3.08728827483004e-05,
+        2.7042448447471435e-05,
+        5.438940577201736e-06
+      ],
+      "inertial_quaternion_wxyz": [
+        0.6604372635271553,
+        0.29148920069655154,
+        -0.6178909135265345,
+        0.31155655313826414
+      ],
+      "mass_source": "imported nominal geom mass",
+      "com_inertia_source": "derived by MuJoCo 3.7.0 from mesh geometry and imported nominal geom masses",
+      "hardware_status": "unverified"
+    },
+    {
+      "name": "right_connect2_body",
+      "mass_kg": 0.10980000000000001,
+      "local_com_m": [
+        -0.030114792877772373,
+        -0.08524921423305111,
+        0.000799999960147455
+      ],
+      "principal_inertia_kg_m2": [
+        0.0005608272661520303,
+        0.0005546368651196552,
+        1.8376790774625443e-05
+      ],
+      "inertial_quaternion_wxyz": [
+        0.5571458246064629,
+        0.4354176502205506,
+        -0.5571458246064629,
+        0.4354176502205506
+      ],
+      "mass_source": "imported nominal geom mass",
+      "com_inertia_source": "derived by MuJoCo 3.7.0 from mesh geometry and imported nominal geom masses",
+      "hardware_status": "unverified"
+    },
+    {
+      "name": "left_thigh_body",
+      "mass_kg": 0.826,
+      "local_com_m": [
+        -0.002306765376285603,
+        -0.010047913704284322,
+        0.08643350113345301
+      ],
+      "principal_inertia_kg_m2": [
+        0.002222917533134647,
+        0.0016653279098861164,
+        0.0009753470358537608
+      ],
+      "inertial_quaternion_wxyz": [
+        0.88129024732226,
+        0.4597145785849147,
+        -0.04864569591558103,
+        -0.09809996167203215
+      ],
+      "mass_source": "imported nominal geom mass",
+      "com_inertia_source": "derived by MuJoCo 3.7.0 from mesh geometry and imported nominal geom masses",
+      "hardware_status": "unverified"
+    },
+    {
+      "name": "left_calf_body",
+      "mass_kg": 0.5963,
+      "local_com_m": [
+        0.11817009224709184,
+        -0.14316832780956693,
+        -0.004261398815806688
+      ],
+      "principal_inertia_kg_m2": [
+        0.003593183159822323,
+        0.0034803373511283387,
+        0.0002519940989114182
+      ],
+      "inertial_quaternion_wxyz": [
+        0.6245135753248002,
+        0.70422088598311,
+        0.2469530365257092,
+        0.23036912929238562
+      ],
+      "mass_source": "imported nominal geom mass",
+      "com_inertia_source": "derived by MuJoCo 3.7.0 from mesh geometry and imported nominal geom masses",
+      "hardware_status": "unverified"
+    },
+    {
+      "name": "left_wheel_body",
+      "mass_kg": 0.3431,
+      "local_com_m": [
+        -5.829442826290297e-05,
+        -0.00010619134315086336,
+        0.0074151403411230315
+      ],
+      "principal_inertia_kg_m2": [
+        0.00042373759240507875,
+        0.00024590004741612074,
+        0.0002458802753317054
+      ],
+      "inertial_quaternion_wxyz": [
+        0.10310958854528945,
+        0.6995487207836373,
+        -0.10310958854528945,
+        0.6995487207836373
+      ],
+      "mass_source": "imported nominal geom mass",
+      "com_inertia_source": "derived by MuJoCo 3.7.0 from mesh geometry and imported nominal geom masses",
+      "hardware_status": "unverified"
+    },
+    {
+      "name": "left_connect1_body",
+      "mass_kg": 0.048,
+      "local_com_m": [
+        -0.011476440241484764,
+        0.013927347066523581,
+        0.010298750255969946
+      ],
+      "principal_inertia_kg_m2": [
+        3.087288276587297e-05,
+        2.7042445731281775e-05,
+        5.438943286936233e-06
+      ],
+      "inertial_quaternion_wxyz": [
+        0.2914878186295934,
+        0.6604349190633393,
+        -0.31156152854034913,
+        0.6178915626596349
+      ],
+      "mass_source": "imported nominal geom mass",
+      "com_inertia_source": "derived by MuJoCo 3.7.0 from mesh geometry and imported nominal geom masses",
+      "hardware_status": "unverified"
+    },
+    {
+      "name": "left_connect2_body",
+      "mass_kg": 0.10980000000000001,
+      "local_com_m": [
+        -0.030114792881217326,
+        -0.08524921423219325,
+        -2.8231057395578377e-14
+      ],
+      "principal_inertia_kg_m2": [
+        0.0005608272661704127,
+        0.0005546368649363861,
+        1.8376790580550672e-05
+      ],
+      "inertial_quaternion_wxyz": [
+        0.5571458246064629,
+        0.4354176502205506,
+        -0.5571458246064629,
+        0.4354176502205506
+      ],
+      "mass_source": "imported nominal geom mass",
+      "com_inertia_source": "derived by MuJoCo 3.7.0 from mesh geometry and imported nominal geom masses",
+      "hardware_status": "unverified"
+    }
+  ],
+  "joints": [
+    {
+      "name": "<mjOBJ_JOINT:0>",
+      "damping": 0.0,
+      "frictionloss": 0.0,
+      "armature": 0.0,
+      "source": "MuJoCo default because MJCF does not specify a value",
+      "hardware_status": "unknown; requires later identification"
+    },
+    {
+      "name": "right_hip_joint",
+      "damping": 0.0,
+      "frictionloss": 0.0,
+      "armature": 0.0,
+      "source": "MuJoCo default because MJCF does not specify a value",
+      "hardware_status": "unknown; requires later identification"
+    },
+    {
+      "name": "right_knee_joint",
+      "damping": 0.0,
+      "frictionloss": 0.0,
+      "armature": 0.0,
+      "source": "MuJoCo default because MJCF does not specify a value",
+      "hardware_status": "unknown; requires later identification"
+    },
+    {
+      "name": "right_wheel_joint",
+      "damping": 0.0,
+      "frictionloss": 0.0,
+      "armature": 0.0,
+      "source": "MuJoCo default because MJCF does not specify a value",
+      "hardware_status": "unknown; requires later identification"
+    },
+    {
+      "name": "right_connect1_joint",
+      "damping": 0.0,
+      "frictionloss": 0.0,
+      "armature": 0.0,
+      "source": "MuJoCo default because MJCF does not specify a value",
+      "hardware_status": "unknown; requires later identification"
+    },
+    {
+      "name": "right_connect2_joint",
+      "damping": 0.0,
+      "frictionloss": 0.0,
+      "armature": 0.0,
+      "source": "MuJoCo default because MJCF does not specify a value",
+      "hardware_status": "unknown; requires later identification"
+    },
+    {
+      "name": "left_hip_joint",
+      "damping": 0.0,
+      "frictionloss": 0.0,
+      "armature": 0.0,
+      "source": "MuJoCo default because MJCF does not specify a value",
+      "hardware_status": "unknown; requires later identification"
+    },
+    {
+      "name": "left_knee_joint",
+      "damping": 0.0,
+      "frictionloss": 0.0,
+      "armature": 0.0,
+      "source": "MuJoCo default because MJCF does not specify a value",
+      "hardware_status": "unknown; requires later identification"
+    },
+    {
+      "name": "left_wheel_joint",
+      "damping": 0.0,
+      "frictionloss": 0.0,
+      "armature": 0.0,
+      "source": "MuJoCo default because MJCF does not specify a value",
+      "hardware_status": "unknown; requires later identification"
+    },
+    {
+      "name": "left_connect1_joint",
+      "damping": 0.0,
+      "frictionloss": 0.0,
+      "armature": 0.0,
+      "source": "MuJoCo default because MJCF does not specify a value",
+      "hardware_status": "unknown; requires later identification"
+    },
+    {
+      "name": "left_connect2_joint",
+      "damping": 0.0,
+      "frictionloss": 0.0,
+      "armature": 0.0,
+      "source": "MuJoCo default because MJCF does not specify a value",
+      "hardware_status": "unknown; requires later identification"
+    }
+  ],
+  "actuators": [
+    {
+      "name": "left_hip_torque",
+      "joint": "left_hip_joint",
+      "gear": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "Phase 04 unit-gear interface actuator",
+      "hardware_status": "not a calibrated motor model"
+    },
+    {
+      "name": "left_knee_torque",
+      "joint": "left_knee_joint",
+      "gear": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "Phase 04 unit-gear interface actuator",
+      "hardware_status": "not a calibrated motor model"
+    },
+    {
+      "name": "left_wheel_torque",
+      "joint": "left_wheel_joint",
+      "gear": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "Phase 04 unit-gear interface actuator",
+      "hardware_status": "not a calibrated motor model"
+    },
+    {
+      "name": "right_hip_torque",
+      "joint": "right_hip_joint",
+      "gear": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "Phase 04 unit-gear interface actuator",
+      "hardware_status": "not a calibrated motor model"
+    },
+    {
+      "name": "right_knee_torque",
+      "joint": "right_knee_joint",
+      "gear": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "Phase 04 unit-gear interface actuator",
+      "hardware_status": "not a calibrated motor model"
+    },
+    {
+      "name": "right_wheel_torque",
+      "joint": "right_wheel_joint",
+      "gear": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "Phase 04 unit-gear interface actuator",
+      "hardware_status": "not a calibrated motor model"
+    }
+  ],
+  "solver": {
+    "timestep_s": 0.002,
+    "gravity_m_s2": [
+      0.0,
+      0.0,
+      -9.81
+    ],
+    "integrator": 3,
+    "solver": 2,
+    "iterations": 100,
+    "tolerance": 1e-08,
+    "source": "versioned Phase 14 fixture; nominal numerical configuration"
+  },
+  "interpretation_limit": "Internal-consistency evidence only; no value is validated against real hardware."
+}

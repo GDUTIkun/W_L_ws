@@ -1,0 +1,13 @@
+{
+  "config": "/home/t/W_L_ws/simulation/mujoco/config/phase19_planar_prefreeze_v3.json",
+  "config_sha256": "75831c73f8a924e73239a5fa6434ba5c45616f3b324d16e39ec107849b5e2d51",
+  "created_at": "2026-08-26T04:09:53.646396+00:00",
+  "equilibrium": "/home/t/W_L_ws/docs/workflow/phases/19-nominal-planar-simple-standing/evidence/automated/2026-08-26-planar-equilibrium/equilibrium.json",
+  "equilibrium_sha256": "6d30377af2f817ce26cfc2f59d2daad23cc51275e188102790ea81ca2abca9cf",
+  "mujoco": "3.7.0",
+  "python": "3.10.20",
+  "runner_sha256": "98bc49750b79b9ed31565be2a541624f01d1dee1903e7235abc82c3521dafa81",
+  "scene": "/home/t/W_L_ws/docs/workflow/phases/19-nominal-planar-simple-standing/evidence/automated/2026-08-26-planar-model/phase19_planar_scene.xml",
+  "scene_sha256": "5943c17337c4ed15654ed06f75178c00896844b3a023d47173f3ddc25b1002e9",
+  "summary_sha256": "7148e46aa2547342d8c02c81488a2568ba310c45264df94124ff96fe06e97214"
+}
