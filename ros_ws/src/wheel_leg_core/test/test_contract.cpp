@@ -165,4 +165,128 @@ int main() {
   standing_core.reset();
   standing_state.sample_time_ns += 10'000'000;
   assert(standing_core.step(standing_state).accepted());
+
+  ControllerConfig standing_3d;
+  standing_3d.mode = ControllerMode::kSimpleStanding3d;
+  standing_3d.initial_reference.position_rad = {
+      -0.96, 1.64, 0.0, -0.98, 1.64, 0.0};
+  standing_3d.kp_nm_per_rad = {8.0, 8.0, 0.0, 8.0, 8.0, 0.0};
+  standing_3d.kd_nm_s_per_rad = {1.0, 1.0, 0.0, 1.0, 1.0, 0.0};
+  standing_3d.torque_limit_nm = {10.0, 10.0, 2.0, 10.0, 10.0, 2.0};
+  standing_3d.simple_standing_3d.support_torque_nm = {
+      -0.15, -1.95, 0.0, 0.15, -4.42, 0.0};
+  standing_3d.simple_standing_3d.roll_direction = {
+      0.027473966948114475, -0.7181968424472815, 0.0,
+      -0.027056451311574754, 0.6947707716083865, 0.0};
+  standing_3d.simple_standing_3d.gain = {{
+      {{8.520781221808333, 4.799929364069565, 13.703478276168287,
+        0.7649548849392176, 0.41942569106346067, 0.00444884173568577,
+        -0.23153444640011986, 0.013156551066587873}},
+      {{-0.3376434292832891, 0.09256125157714908, 0.22538138286217135,
+        0.01750039879412822, 2.1610820173338374, 0.023192721532380896,
+        -1.4272581004547038, -0.028543633141425297}},
+      {{-0.5300424068388521, 0.19065648118052533, 0.2986000596028681,
+        -0.002851244985695971, 4.179584023696386, 0.04633200929446543,
+        -3.3290623037409626, -0.09933771905353059}},
+  }};
+  ControllerCore standing_3d_core;
+  assert(standing_3d_core.configure(standing_3d));
+  RobotState standing_3d_state;
+  standing_3d_state.sample_time_ns = 10'000'000;
+  standing_3d_state.base_position_n_m = {1.0, 2.0, 0.5};
+  standing_3d_state.joint_position_rad = standing_3d.initial_reference.position_rad;
+  standing_3d_state.contact_state = {
+      ContactState::kContact, ContactState::kContact};
+  assert(standing_3d_core.step(standing_3d_state).accepted());
+
+  const double roll = 0.01;
+  const double pitch = -0.02;
+  const double yaw = 0.015;
+  const QuaternionWxyz q_roll = {std::cos(roll / 2.0), std::sin(roll / 2.0), 0.0, 0.0};
+  const QuaternionWxyz q_pitch = {std::cos(pitch / 2.0), 0.0, std::sin(pitch / 2.0), 0.0};
+  const QuaternionWxyz q_yaw = {std::cos(yaw / 2.0), 0.0, 0.0, std::sin(yaw / 2.0)};
+  standing_3d_state.sample_time_ns += 10'000'000;
+  standing_3d_state.q_n_from_b = q_pitch;
+  auto three_d_result = standing_3d_core.step(standing_3d_state);
+  assert(three_d_result.accepted());
+  assert(std::abs(three_d_result.standing_state_3d[2] - pitch) < 1e-12);
+  assert(std::abs(three_d_result.standing_state_3d[4]) < 1e-12);
+  assert(std::abs(three_d_result.standing_state_3d[6]) < 1e-12);
+  standing_3d_state.sample_time_ns += 10'000'000;
+  standing_3d_state.q_n_from_b = q_roll;
+  three_d_result = standing_3d_core.step(standing_3d_state);
+  assert(three_d_result.accepted());
+  assert(std::abs(three_d_result.standing_state_3d[4] - roll) < 1e-12);
+  standing_3d_state.sample_time_ns += 10'000'000;
+  standing_3d_state.q_n_from_b = q_yaw;
+  three_d_result = standing_3d_core.step(standing_3d_state);
+  assert(three_d_result.accepted());
+  assert(std::abs(three_d_result.standing_state_3d[6] - yaw) < 1e-12);
+  standing_3d_state.sample_time_ns += 10'000'000;
+  standing_3d_state.q_n_from_b = {-q_yaw[0], -q_yaw[1], -q_yaw[2], -q_yaw[3]};
+  three_d_result = standing_3d_core.step(standing_3d_state);
+  assert(three_d_result.accepted());
+  assert(std::abs(three_d_result.standing_state_3d[6] - yaw) < 1e-12);
+
+  standing_3d_core.reset();
+  standing_3d_state.sample_time_ns += 10'000'000;
+  standing_3d_state.q_n_from_b = {1.0, 0.0, 0.0, 0.0};
+  standing_3d_state.base_angular_velocity_n_rad_s = {};
+  assert(standing_3d_core.step(standing_3d_state).accepted());
+  standing_3d_state.sample_time_ns += 10'000'000;
+  standing_3d_state.base_angular_velocity_n_rad_s = {0.0, 0.0, 0.1};
+  three_d_result = standing_3d_core.step(standing_3d_state);
+  const double expected_common = -0.013156551066587873 * 0.1;
+  const double expected_roll = 0.028543633141425297 * 0.1;
+  const double expected_yaw = 0.09933771905353059 * 0.1;
+  assert(std::abs(three_d_result.virtual_input_3d[0] - expected_common) < 1e-15);
+  assert(std::abs(three_d_result.virtual_input_3d[1] - expected_roll) < 1e-15);
+  assert(std::abs(three_d_result.virtual_input_3d[2] - expected_yaw) < 1e-15);
+  assert(std::abs(three_d_result.command.joint_torque_nm[2] -
+                  (expected_common + expected_yaw)) < 1e-15);
+  assert(std::abs(three_d_result.command.joint_torque_nm[5] -
+                  (expected_common - expected_yaw)) < 1e-15);
+  assert(std::abs(three_d_result.command.joint_torque_nm[0] -
+                  (-0.15 + standing_3d.simple_standing_3d.roll_direction[0] *
+                      expected_roll)) < 1e-15);
+
+  standing_3d_core.reset();
+  standing_3d_state.sample_time_ns += 10'000'000;
+  standing_3d_state.base_angular_velocity_n_rad_s = {};
+  assert(standing_3d_core.step(standing_3d_state).accepted());
+  standing_3d_state.sample_time_ns += 10'000'000;
+  standing_3d_state.joint_position_rad[0] -= 0.01;
+  three_d_result = standing_3d_core.step(standing_3d_state);
+  assert(three_d_result.accepted());
+  assert(std::abs(three_d_result.command.joint_torque_nm[0] + 0.07) < 1e-12);
+  standing_3d_state.joint_position_rad = standing_3d.initial_reference.position_rad;
+
+  standing_3d_state.sample_time_ns += 20'000'000;
+  assert(standing_3d_core.step(standing_3d_state).status == StepStatus::kSafetyLatched);
+  standing_3d_core.reset();
+  standing_3d_state.sample_time_ns += 10'000'000;
+  assert(standing_3d_core.step(standing_3d_state).accepted());
+  standing_3d_state.sample_time_ns += 10'000'000;
+  standing_3d_state.contact_state[0] = ContactState::kNoContact;
+  assert(standing_3d_core.step(standing_3d_state).status == StepStatus::kSafetyLatched);
+  standing_3d_core.reset();
+  standing_3d_state.contact_state[0] = ContactState::kContact;
+  standing_3d_state.sample_time_ns += 10'000'000;
+  assert(standing_3d_core.step(standing_3d_state).accepted());
+  standing_3d_state.sample_time_ns += 10'000'000;
+  standing_3d_state.base_angular_velocity_n_rad_s[2] = 100.0;
+  const auto saturated_3d = standing_3d_core.step(standing_3d_state);
+  assert(saturated_3d.status == StepStatus::kSafetyLatched);
+  assert(saturated_3d.saturated[2] || saturated_3d.saturated[5]);
+  standing_3d_core.reset();
+  standing_3d_state.sample_time_ns += 10'000'000;
+  standing_3d_state.base_angular_velocity_n_rad_s = {};
+  assert(standing_3d_core.step(standing_3d_state).accepted());
+  standing_3d_state.sample_time_ns += 10'000'000;
+  standing_3d_state.q_n_from_b = {2.0, 0.0, 0.0, 0.0};
+  assert(standing_3d_core.step(standing_3d_state).status == StepStatus::kInvalidState);
+  standing_3d_core.reset();
+  standing_3d_state.sample_time_ns += 10'000'000;
+  standing_3d_state.q_n_from_b = {1.0, 0.0, 0.0, 0.0};
+  assert(standing_3d_core.step(standing_3d_state).accepted());
 }

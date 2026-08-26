@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "profile": "current_nominal_full_3d_simple_standing_prefreeze_v5",
+  "scene": "simulation/mujoco/model/phase18_floating_contact.xml",
+  "physics_timestep_s": 0.002,
+  "control_period_s": 0.01,
+  "physics_steps_per_control": 5,
+  "leg_kp_nm_per_rad": 8.0,
+  "leg_kd_nm_s_per_rad": 1.0,
+  "torque_limit_nm": [10.0, 10.0, 2.0, 10.0, 10.0, 2.0],
+  "identification": {
+    "seed": 20,
+    "training_episodes": 192,
+    "validation_episodes": 48,
+    "ticks_per_episode": 12,
+    "excitation_ticks": 8,
+    "hold_ticks": 2,
+    "input_amplitude_nm": [0.03, 0.03, 0.03]
+  },
+  "design": {
+    "state_scale": [0.02, 0.10, 0.03, 0.50, 0.03, 0.50, 0.05, 0.50],
+    "input_scale_nm": [1.0, 1.0, 1.0],
+    "linearization_fraction_of_scale": 0.1,
+    "control_penalty": 30.0,
+    "riccati_tolerance": 1e-12,
+    "riccati_maximum_iterations": 20000,
+    "gain_scales": [1.0, 0.75, 0.5]
+  },
+  "duration_s": 10.0,
+  "disturbance_start_tick": 100,
+  "disturbance_ticks": 10,
+  "tuning_cases": [
+    {"id": "nominal"},
+    {"id": "pitch_moment_positive", "moment_nm": [0.0, 0.01, 0.0]},
+    {"id": "roll_moment_positive", "moment_nm": [0.005, 0.0, 0.0]},
+    {"id": "yaw_moment_positive", "moment_nm": [0.0, 0.0, 0.005]}
+  ],
+  "holdout_cases": [
+    {"id": "pitch_moment_negative", "moment_nm": [0.0, -0.01, 0.0]},
+    {"id": "roll_moment_negative", "moment_nm": [-0.005, 0.0, 0.0]},
+    {"id": "yaw_moment_negative", "moment_nm": [0.0, 0.0, -0.005]},
+    {"id": "force_x_positive", "force_n": [0.1, 0.0, 0.0]},
+    {"id": "force_x_negative", "force_n": [-0.1, 0.0, 0.0]},
+    {"id": "force_y_positive", "force_n": [0.0, 0.05, 0.0]},
+    {"id": "force_y_negative", "force_n": [0.0, -0.05, 0.0]},
+    {"id": "combined_positive", "force_n": [0.05, 0.025, 0.0], "moment_nm": [0.0025, 0.005, 0.0025]},
+    {"id": "combined_negative", "force_n": [-0.05, -0.025, 0.0], "moment_nm": [-0.0025, -0.005, -0.0025]}
+  ],
+  "gates": {
+    "maximum_identification_normalized_rms": 0.08,
+    "maximum_closed_loop_spectral_radius": 0.999999,
+    "maximum_abs_x_m": 0.02,
+    "maximum_abs_y_m": 0.02,
+    "maximum_height_error_m": 0.01,
+    "maximum_abs_pitch_rad": 0.03,
+    "maximum_abs_roll_rad": 0.03,
+    "maximum_abs_yaw_rad": 0.05,
+    "maximum_final_linear_speed_m_s": 0.02,
+    "maximum_final_angular_speed_rad_s": 0.10,
+    "minimum_bilateral_contact_fraction": 1.0,
+    "maximum_saturation_count": 0
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "phase": 20,
+  "profile": "current_nominal_full_3d_simple_standing_formal_v1",
+  "pass": false,
+  "failed_before_case": "roll_positive",
+  "reason": "Direct raw freejoint roll reset was outside bilateral wheel contact mode and the C++ runner refused to start that case.",
+  "interpretation": "The reset is not an admissible release oracle; no controller failure is inferred.",
+  "superseded_by": "2026-08-26-formal-v2",
+  "preserved_partial_outputs": [
+    "nominal_reset_replay.csv",
+    "pitch_positive.csv",
+    "pitch_negative.csv",
+    "roll_positive.csv (header only)"
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "profile": "current_nominal_full_3d_simple_standing_equilibrium",
+  "scene": "simulation/mujoco/model/phase18_floating_contact.xml",
+  "physics_timestep_s": 0.002,
+  "disabled_equality": "base_weld",
+  "joint_order": [
+    "right_hip_joint", "right_knee_joint", "left_hip_joint",
+    "left_knee_joint", "base_z_freejoint", "right_connect1_joint",
+    "right_connect2_joint", "left_connect1_joint", "left_connect2_joint"
+  ],
+  "driven_actuators": [
+    "left_hip_torque", "left_knee_torque",
+    "right_hip_torque", "right_knee_torque"
+  ],
+  "zero_actuators": ["left_wheel_torque", "right_wheel_torque"],
+  "seed": [
+    -0.3431775504191725, 0.5696975530916328,
+    -0.3622567626778332, 0.5683402180546114,
+    0.3477403461115821,
+    -0.5727296386244646, -0.5731565367836947,
+    0.5714520442495344, -0.5718682242479592,
+    0.1558228810012853, 1.9558769180289424,
+    -0.15272937105260695, 4.428369830750493
+  ],
+  "solver": {
+    "scales": [0.05, 0.05, 0.05, 0.05, 0.001, 0.001, 0.001, 0.001, 0.001, 1.0, 1.0, 1.0, 1.0],
+    "finite_difference_relative_step": 0.000002,
+    "initial_damping": 0.0001,
+    "maximum_iterations": 100,
+    "acceleration_target": 1e-10
+  },
+  "thresholds": {
+    "maximum_acceleration_rad_m_s2": 1e-8,
+    "maximum_generalized_force_residual": 1e-9,
+    "maximum_closure_residual_m": 0.0002,
+    "minimum_wheel_normal_load_n": 1.0,
+    "maximum_support_torque_nm": 10.0,
+    "maximum_active_side_difference_rad": 0.03,
+    "one_step_qpos_drift": 1e-10,
+    "one_step_qvel_drift": 1e-9
+  }
+}

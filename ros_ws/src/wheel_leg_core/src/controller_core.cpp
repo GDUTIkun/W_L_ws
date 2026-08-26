@@ -58,11 +58,88 @@ bool validSimpleStandingConfig(const SimpleStandingConfig &config) {
          config.support_torque_nm[5] == 0.0;
 }
 
+bool validSimpleStanding3dConfig(const SimpleStanding3dConfig &config) {
+  const std::array<double, 10> positive_values{
+      config.control_period_s,
+      config.control_period_tolerance_s,
+      config.maximum_abs_x_m,
+      config.maximum_abs_y_m,
+      config.maximum_height_error_m,
+      config.maximum_abs_roll_rad,
+      config.maximum_abs_pitch_rad,
+      config.maximum_abs_yaw_rad,
+      config.maximum_leg_error_rad,
+      config.maximum_joint_velocity_rad_s,
+  };
+  double roll_norm_squared = 0.0;
+  for (const double value : config.roll_direction) {
+    roll_norm_squared += value * value;
+  }
+  const bool finite_gain = std::all_of(
+      config.gain.begin(), config.gain.end(),
+      [](const std::array<double, 8> &row) { return allFinite(row); });
+  return allFinite(config.support_torque_nm) && finite_gain &&
+         allFinite(config.roll_direction) && allFinite(positive_values) &&
+         std::all_of(
+             positive_values.begin(), positive_values.end(),
+             [](double value) { return value > 0.0; }) &&
+         config.support_torque_nm[2] == 0.0 &&
+         config.support_torque_nm[5] == 0.0 &&
+         config.roll_direction[2] == 0.0 &&
+         config.roll_direction[5] == 0.0 &&
+         std::abs(std::sqrt(roll_norm_squared) - 1.0) <= 1.0e-6;
+}
+
 double pitchFromQuaternion(const QuaternionWxyz &quaternion) {
   const auto [w, x, y, z] = quaternion;
   return std::atan2(
       2.0 * (w * y - z * x),
       1.0 - 2.0 * (x * x + y * y));
+}
+
+double headingFromQuaternion(const QuaternionWxyz &quaternion) {
+  const auto [w, x, y, z] = quaternion;
+  return std::atan2(
+      2.0 * (w * z + x * y),
+      1.0 - 2.0 * (y * y + z * z));
+}
+
+QuaternionWxyz multiplyQuaternion(
+    const QuaternionWxyz &lhs, const QuaternionWxyz &rhs) {
+  const auto [lw, lx, ly, lz] = lhs;
+  const auto [rw, rx, ry, rz] = rhs;
+  return {
+      lw * rw - lx * rx - ly * ry - lz * rz,
+      lw * rx + lx * rw + ly * rz - lz * ry,
+      lw * ry - lx * rz + ly * rw + lz * rx,
+      lw * rz + lx * ry - ly * rx + lz * rw,
+  };
+}
+
+std::array<double, 3> orientationError(
+    const QuaternionWxyz &orientation, double heading_reference_rad) {
+  const QuaternionWxyz reference{
+      std::cos(heading_reference_rad * 0.5), 0.0, 0.0,
+      std::sin(heading_reference_rad * 0.5)};
+  auto error = multiplyQuaternion(
+      orientation, {reference[0], -reference[1], -reference[2], -reference[3]});
+  if (error[0] < 0.0) {
+    for (double &value : error) {
+      value = -value;
+    }
+  }
+  const double vector_norm =
+      std::sqrt(error[1] * error[1] + error[2] * error[2] + error[3] * error[3]);
+  if (vector_norm < 1.0e-15) {
+    return {};
+  }
+  const double scale = 2.0 * std::atan2(vector_norm, error[0]) / vector_norm;
+  return {scale * error[1], scale * error[2], scale * error[3]};
+}
+
+bool isStandingMode(ControllerMode mode) {
+  return mode == ControllerMode::kSimpleStanding ||
+         mode == ControllerMode::kSimpleStanding3d;
 }
 
 bool bothWheelsContact(const RobotState &state) {
@@ -150,7 +227,8 @@ ValidationError validateTorqueCommand(const TorqueCommand &command) {
 bool ControllerCore::configure(const ControllerConfig &config) {
   if ((config.mode != ControllerMode::kZero &&
        config.mode != ControllerMode::kJointPdGravity &&
-       config.mode != ControllerMode::kSimpleStanding) ||
+       config.mode != ControllerMode::kSimpleStanding &&
+       config.mode != ControllerMode::kSimpleStanding3d) ||
       !std::isfinite(config.quaternion_norm_tolerance) ||
       config.quaternion_norm_tolerance < 0.0 ||
       !validReference(config.initial_reference) ||
@@ -158,11 +236,14 @@ bool ControllerCore::configure(const ControllerConfig &config) {
       !allFinite(config.kd_nm_s_per_rad) ||
       !allFinite(config.torque_limit_nm) ||
       !validGravityProfile(config.gravity_profile) ||
-      !validSimpleStandingConfig(config.simple_standing)) {
+      (config.mode == ControllerMode::kSimpleStanding &&
+       !validSimpleStandingConfig(config.simple_standing)) ||
+      (config.mode == ControllerMode::kSimpleStanding3d &&
+       !validSimpleStanding3dConfig(config.simple_standing_3d))) {
     return false;
   }
   if (config.mode == ControllerMode::kJointPdGravity ||
-      config.mode == ControllerMode::kSimpleStanding) {
+      isStandingMode(config.mode)) {
     for (std::size_t joint = 0; joint < kJointCount; ++joint) {
       if (config.kp_nm_per_rad[joint] < 0.0 ||
           config.kd_nm_s_per_rad[joint] < 0.0 ||
@@ -190,6 +271,10 @@ void ControllerCore::reset() {
   reference_ = config_.initial_reference;
   standing_anchor_x_m_.reset();
   standing_anchor_height_m_.reset();
+  standing_3d_anchor_x_m_.reset();
+  standing_3d_anchor_y_m_.reset();
+  standing_3d_anchor_height_m_.reset();
+  standing_3d_anchor_heading_rad_.reset();
   standing_safety_latched_ = false;
 }
 
@@ -199,7 +284,7 @@ StepResult ControllerCore::step(const RobotState &state) {
   if (!configured_) {
     return result;
   }
-  if (config_.mode == ControllerMode::kSimpleStanding &&
+  if (isStandingMode(config_.mode) &&
       standing_safety_latched_) {
     result.status = StepStatus::kSafetyLatched;
     result.safety_latched = true;
@@ -208,14 +293,14 @@ StepResult ControllerCore::step(const RobotState &state) {
   if (validateRobotState(state, config_.quaternion_norm_tolerance) !=
       ValidationError::kNone) {
     standing_safety_latched_ =
-        config_.mode == ControllerMode::kSimpleStanding;
+        isStandingMode(config_.mode);
     result.status = StepStatus::kInvalidState;
     result.safety_latched = standing_safety_latched_;
     return result;
   }
   if (last_sample_time_ns_ && state.sample_time_ns <= *last_sample_time_ns_) {
     standing_safety_latched_ =
-        config_.mode == ControllerMode::kSimpleStanding;
+        isStandingMode(config_.mode);
     result.status = StepStatus::kNonMonotonicState;
     result.safety_latched = standing_safety_latched_;
     return result;
@@ -226,6 +311,89 @@ StepResult ControllerCore::step(const RobotState &state) {
                   1.0e9;
   }
   last_sample_time_ns_ = state.sample_time_ns;
+  if (config_.mode == ControllerMode::kSimpleStanding3d) {
+    const auto &standing = config_.simple_standing_3d;
+    if (result.dt_s != 0.0 &&
+        std::abs(result.dt_s - standing.control_period_s) >
+            standing.control_period_tolerance_s) {
+      standing_safety_latched_ = true;
+    }
+    if (!standing_3d_anchor_x_m_) {
+      standing_3d_anchor_x_m_ = state.base_position_n_m[0];
+      standing_3d_anchor_y_m_ = state.base_position_n_m[1];
+      standing_3d_anchor_height_m_ = state.base_position_n_m[2];
+      standing_3d_anchor_heading_rad_ = headingFromQuaternion(state.q_n_from_b);
+    }
+    const auto orientation = orientationError(
+        state.q_n_from_b, *standing_3d_anchor_heading_rad_);
+    result.standing_state_3d = {
+        state.base_position_n_m[0] - *standing_3d_anchor_x_m_,
+        state.base_linear_velocity_n_m_s[0],
+        orientation[1], state.base_angular_velocity_n_rad_s[1],
+        orientation[0], state.base_angular_velocity_n_rad_s[0],
+        orientation[2], state.base_angular_velocity_n_rad_s[2],
+    };
+    const std::array<std::size_t, 4> leg_joints{0, 1, 3, 4};
+    const bool leg_error_exceeded = std::any_of(
+        leg_joints.begin(), leg_joints.end(), [&](std::size_t joint) {
+          return std::abs(
+                     state.joint_position_rad[joint] -
+                     reference_.position_rad[joint]) >
+                 standing.maximum_leg_error_rad;
+        });
+    standing_safety_latched_ = standing_safety_latched_ ||
+        !bothWheelsContact(state) ||
+        std::abs(result.standing_state_3d[0]) > standing.maximum_abs_x_m ||
+        std::abs(state.base_position_n_m[1] - *standing_3d_anchor_y_m_) >
+            standing.maximum_abs_y_m ||
+        std::abs(state.base_position_n_m[2] - *standing_3d_anchor_height_m_) >
+            standing.maximum_height_error_m ||
+        std::abs(result.standing_state_3d[2]) > standing.maximum_abs_pitch_rad ||
+        std::abs(result.standing_state_3d[4]) > standing.maximum_abs_roll_rad ||
+        std::abs(result.standing_state_3d[6]) > standing.maximum_abs_yaw_rad ||
+        leg_error_exceeded || std::any_of(
+            state.joint_velocity_rad_s.begin(), state.joint_velocity_rad_s.end(),
+            [&](double velocity) {
+              return std::abs(velocity) > standing.maximum_joint_velocity_rad_s;
+            });
+    if (!standing_safety_latched_) {
+      for (std::size_t input = 0; input < result.virtual_input_3d.size(); ++input) {
+        for (std::size_t index = 0; index < result.standing_state_3d.size(); ++index) {
+          result.virtual_input_3d[input] -=
+              standing.gain[input][index] * result.standing_state_3d[index];
+        }
+      }
+      for (const std::size_t joint : leg_joints) {
+        result.tau_pd_nm[joint] =
+            config_.kp_nm_per_rad[joint] *
+                (reference_.position_rad[joint] - state.joint_position_rad[joint]) +
+            config_.kd_nm_s_per_rad[joint] *
+                (reference_.velocity_rad_s[joint] - state.joint_velocity_rad_s[joint]);
+        result.tau_support_nm[joint] = standing.support_torque_nm[joint];
+        result.tau_raw_nm[joint] = result.tau_support_nm[joint] + result.tau_pd_nm[joint] +
+            standing.roll_direction[joint] * result.virtual_input_3d[1];
+      }
+      result.tau_raw_nm[2] = result.virtual_input_3d[0] + result.virtual_input_3d[2];
+      result.tau_raw_nm[5] = result.virtual_input_3d[0] - result.virtual_input_3d[2];
+      if (!allFinite(result.tau_raw_nm)) {
+        standing_safety_latched_ = true;
+      }
+      for (std::size_t joint = 0; joint < kJointCount; ++joint) {
+        if (std::abs(result.tau_raw_nm[joint]) > config_.torque_limit_nm[joint]) {
+          result.saturated[joint] = true;
+          standing_safety_latched_ = true;
+        }
+      }
+    }
+    if (standing_safety_latched_) {
+      result.status = StepStatus::kSafetyLatched;
+      result.safety_latched = true;
+      return result;
+    }
+    result.command.joint_torque_nm = result.tau_raw_nm;
+    result.status = StepStatus::kOk;
+    return result;
+  }
   if (config_.mode == ControllerMode::kSimpleStanding) {
     const auto &standing = config_.simple_standing;
     if (result.dt_s != 0.0 &&

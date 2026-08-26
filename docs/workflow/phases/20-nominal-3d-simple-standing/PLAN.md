@@ -1,6 +1,6 @@
 # Phase 20: nominal 完整 3D 简单站立 — PLAN
 
-Status: `planned`
+Status: `complete`
 
 ## Goal
 
@@ -14,7 +14,7 @@ Status: `planned`
 - 已有：MuJoCo Adapter 已从 `base_control_frame` 输出完整 3D pose/twist，floating reset 会关闭 `base_weld`，并保持 canonical joint/order/sign、watchdog 和 fail-to-zero。
 - 缺少：完整 3D 双轮 contact/equality equilibrium、admissible 3D perturbation、world-axis orientation error、common/differential wheel 与 roll-leg 三路可实现输入基、3D sampled local model、完整非线性 pre-freeze authority、独立 Core mode/runner 和 3D formal matrix。
 - 失败证据：Phase 19 v1 在完整 3D plant 上只使用四状态/common-wheel controller 时，nominal 10 s 出现约 `0.0544 m` lateral 漂移和 `0.1312 rad` roll/yaw 泄漏；这证明原控制 authority 不足，不证明本 Phase 冻结的新结构必然可行。
-- 历史图限制：现有 Graphify 图缺少 Phase 19 最新闭环；本 PLAN 以 live source、CBM generation `2026-08-26T07:29:33Z` 和 Phase 18/19 当前文档为准，Codex 不更新 `graphify-out/`。
+- 历史图：执行开始时Graphify缺少Phase 20 active关系；维护代理已完成最小增量刷新。实现与验收仍以live source、CBM generation `2026-08-26T07:29:33Z` 和真实evidence为准。
 
 ## Scope
 
@@ -56,14 +56,14 @@ Status: `planned`
 ## Open Questions / Decision Gates
 
 - **DG20-00 / CLOSED / CODEX — route：** 保持完整 3D plant，新增 roll 与 heading authority；`Y/Z` 为真实 plant outcome/safety，不提前进入 Cartesian WBC。
-- **DG20-01 / OPEN / EVIDENCE — full-3D equilibrium：** zero-wheel-torque upright equilibrium 的 qacc/generalized residual、closure、双轮载荷、one-step drift、finite 与 fresh reset replay必须通过。
-- **DG20-02 / OPEN / CODE+EVIDENCE — state/reset/sign：** orientation Log、world twist、heading anchor、admissible roll/pitch/yaw/velocity perturbation，以及 common/differential wheel和 roll-leg 正负方向必须由独立 oracle 关闭。
-- **DG20-03 / OPEN / EVIDENCE — realizable authority：** 冻结 `s_roll`，证明三路虚拟输入对目标 `X/pitch/roll/yaw` 模态具有足够 authority；若存在未稳定的不可控模态或耦合超出 torque/contact envelope，则 REWORK。
-- **DG20-04 / OPEN / EVIDENCE — sampled local controller：** 10 ms model/fit、中心正负扰动收敛、stabilizability、closed-loop poles、one/multi-step holdout与完整 nonlinear plant均支持同一 `K_3d`；不从 Phase 19 复制增益。
-- **DG20-05 / OPEN / EVIDENCE — frozen formal envelope：** 在未使用的正负/cross-coupled holdout 上冻结初态、外力/力矩、持续时间、安全上限、final recovery和contact/slip/closure阈值；冻结后才运行 formal。
-- **DG20-06 / OPEN / CODE+TEST — runtime contract：** additive Core mode、torque decomposition、strict contact/timing/fault latch、3D C++ loop、ZOH、reset与旧 mode compatibility通过。
-- **DG20-07 / OPEN / EVIDENCE — formal/reuse：** 全部 10 s normal/perturbation cases、fault cases、fresh replay、non-overwrite、历史回归和 fresh-namespace reuse dry-run通过。
-- **DG20-08 / OPEN / REVIEW — claims：** REVIEW确认无真机/WBC/turning/absolute-Y等越界结论，blocking findings为零后才可 PASS。
+- **DG20-01 / CLOSED / EVIDENCE — full-3D equilibrium：** v1 equilibrium 与 fresh replay exact hash一致；最大qacc `2.45e-11`、generalized residual `1.51e-10`、closure `1.63e-4 m`、左右normal load `30.96/32.16 N`、one-step qvel drift `4.90e-14`，wheel torque为零。
+- **DG20-02 / CLOSED / CODE+EVIDENCE — state/reset/sign：** full-3D compiled/freejoint、orientation Log三轴、world twist、common/differential wheel和roll-leg正负oracle全部通过。
+- **DG20-03 / CLOSED / EVIDENCE — realizable authority：** 三路canonical input rank为3、condition number `2.014`；冻结的单位范数 `s_roll=[0.02747397,-0.71819684,0,-0.02705645,0.69477077,0]` 对pitch/yaw cross ratio为 `1.47e-15`。
+- **DG20-04 / CLOSED / EVIDENCE — sampled local controller：** v5使用冻结scale的中心差分10 ms transition；8-state controllability rank为8，training/independent-validation normalized RMS为`0.0437/0.0396`，冻结gain闭环谱半径`0.9910`。
+- **DG20-05 / CLOSED / EVIDENCE — frozen formal envelope：** v5所有正向tuning与9个未参与选择的负向/组合holdout均在10 s nonlinear plant通过；双轮接触率1.0、torque saturation为零。formal沿用或收紧该profile，不放宽门槛。
+- **DG20-06 / CLOSED / CODE+TEST — runtime contract：** additive `kSimpleStanding3d`、x8 quaternion Log、三路torque decomposition、strict contact/timing/fault latch、独立C++ loop、5-step ZOH、reset与旧mode测试全部通过。
+- **DG20-07 / CLOSED / EVIDENCE — formal/reuse：** formal-v3的19个10 s normal/perturbation cases和6个双episode fault cases全部PASS；26个fresh replay文件exact，non-overwrite、历史回归和fresh-namespace reuse dry-run通过。
+- **DG20-08 / CLOSED / REVIEW — claims：** REVIEW确认无真机/WBC/turning/absolute-Y等越界结论，blocking findings为零，Verdict=`PASS`。
 
 ## Interfaces and Compatibility
 
@@ -77,17 +77,17 @@ Status: `planned`
 
 | ID | Task | Input | Deliverable | Validation | Status |
 | --- | --- | --- | --- | --- | --- |
-| P20-T01 | 固化 full-3D plant grounding 与 reuse contract | Phase 18 scene/model/profile、Phase 19 reuse | compiled invariant audit、source/scene/mesh/solver/contact manifest、Phase 20 reuse contract | base freejoint完整、base_weld runtime inactive、Phase 18 preserved字段差异为零 | todo |
-| P20-T02 | 求解 full-3D equilibrium 与 admissible reset/perturbation | P20-T01、Phase 15 closure、Phase 18 contact | `phase20_equilibrium.json`、solver trace、projection residual与 replay | DG20-01；zero wheel torque、upright、bilateral load、qacc/closure/drift/finite PASS | todo |
-| P20-T03 | 冻结 3D state、heading anchor与 virtual-input sign | P20-T02、RobotState、Adapter、Phase 02/15 sign | orientation/site/twist evaluator、common/differential wheel与 roll-leg正负 oracle、logging schema | DG20-02；analytic/site/Jacobian/finite difference/impulse方向一致 | todo |
-| P20-T04 | 识别 roll-leg basis 与 10 ms local model | P20-T02/T03、sampled leg PD候选、三路 input | versioned `s_roll/A/B` 或等价 model、authority/stabilizability/fit报告 | DG20-03；步长收敛、目标模态 authority、cross-coupling和torque/contact margin PASS | todo |
-| P20-T05 | 设计 gain并执行 nonlinear pre-freeze | P20-T04、独立 tuning/holdout matrix | `K_3d`、design inputs、poles/residual、10 s nonlinear summary、frozen formal profile | DG20-04/05；正负单轴与组合 holdout PASS 后才准入 Core | todo |
-| P20-T06 | 实现 additive 3D Core mode 与单元测试 | 冻结 state/input/config/gain、现有 Core | `kSimpleStanding3d`、config/state/input/torque diagnostics、fail-closed latch/reset tests | DG20-06；三路输入分解、sign、saturation/contact/timing与旧 mode回归 PASS | todo |
-| P20-T07 | 实现 full-3D C++ loop 与 runtime日志 | P20-T06、Adapter、Phase 16/19 loop contract | `standing_3d_loop.cpp`、CMake target、3D disturbance/fault/reset/ZOH CSV | C++ loop直接调用 Core↔Adapter；无Python controller；5-step ZOH与双时钟 PASS | todo |
-| P20-T08 | 建立正式方法、wrapper与case matrix | P20-T05/T07、冻结 profile | `docs/experiments/mujoco_3d_simple_standing_validation.md`、Phase 20 config/wrapper/evaluator/manifest | profile驱动、formal前freeze、non-empty目录仿真前拒绝、schema/hash完整 | todo |
-| P20-T09 | 执行 full-3D formal 与fault matrix | P20-T08 frozen inputs | 新 `evidence/automated/<run-id>/` raw/summary/manifest/validation | DG20-07；全部 normal/perturbation ≥10 s，fault fail-zero/latch/reset PASS | todo |
-| P20-T10 | fresh replay、历史回归与revision reuse audit | P20-T09、Phase 02/14–19入口 | replay comparison、colcon/coordinate/plant/controller regressions、fresh namespace dry-run | deterministic/容差一致；旧 evidence未覆盖；reuse pipeline贯通 | todo |
-| P20-T11 | REVIEW | 全部任务与真实 evidence | `REVIEW.md`；仅 Verdict=`PASS` 后创建 `RECORD.md` | DG20-08关闭，blocking findings=0，ROADMAP随后才可 complete | todo |
+| P20-T01 | 固化 full-3D plant grounding 与 reuse contract | Phase 18 scene/model/profile、Phase 19 reuse | compiled invariant audit、source/scene/mesh/solver/contact manifest、Phase 20 reuse contract | base freejoint完整、base_weld runtime inactive、Phase 18 preserved字段差异为零 | done |
+| P20-T02 | 求解 full-3D equilibrium 与 admissible reset/perturbation | P20-T01、Phase 15 closure、Phase 18 contact | `phase20_equilibrium.json`、solver trace、projection residual与 replay | DG20-01；zero wheel torque、upright、bilateral load、qacc/closure/drift/finite PASS | done |
+| P20-T03 | 冻结 3D state、heading anchor与 virtual-input sign | P20-T02、RobotState、Adapter、Phase 02/15 sign | orientation/site/twist evaluator、common/differential wheel与 roll-leg正负 oracle、logging schema | DG20-02；analytic/site/Jacobian/finite difference/impulse方向一致 | done |
+| P20-T04 | 识别 roll-leg basis 与 10 ms local model | P20-T02/T03、sampled leg PD候选、三路 input | versioned `s_roll/A/B` 或等价 model、authority/stabilizability/fit报告 | DG20-03；步长收敛、目标模态 authority、cross-coupling和torque/contact margin PASS | done |
+| P20-T05 | 设计 gain并执行 nonlinear pre-freeze | P20-T04、独立 tuning/holdout matrix | `K_3d`、design inputs、poles/residual、10 s nonlinear summary、frozen formal profile | DG20-04/05；正负单轴与组合 holdout PASS 后才准入 Core | done |
+| P20-T06 | 实现 additive 3D Core mode 与单元测试 | 冻结 state/input/config/gain、现有 Core | `kSimpleStanding3d`、config/state/input/torque diagnostics、fail-closed latch/reset tests | DG20-06；三路输入分解、sign、saturation/contact/timing与旧 mode回归 PASS | done |
+| P20-T07 | 实现 full-3D C++ loop 与 runtime日志 | P20-T06、Adapter、Phase 16/19 loop contract | `standing_3d_loop.cpp`、CMake target、3D disturbance/fault/reset/ZOH CSV | C++ loop直接调用 Core↔Adapter；无Python controller；5-step ZOH与双时钟 PASS | done |
+| P20-T08 | 建立正式方法、wrapper与case matrix | P20-T05/T07、冻结 profile | `docs/experiments/mujoco_3d_simple_standing_validation.md`、Phase 20 config/wrapper/evaluator/manifest | profile驱动、formal前freeze、non-empty目录仿真前拒绝、schema/hash完整 | done |
+| P20-T09 | 执行 full-3D formal 与fault matrix | P20-T08 frozen inputs | 新 `evidence/automated/<run-id>/` raw/summary/manifest/validation | DG20-07；全部 normal/perturbation ≥10 s，fault fail-zero/latch/reset PASS | done |
+| P20-T10 | fresh replay、历史回归与revision reuse audit | P20-T09、Phase 02/14–19入口 | replay comparison、colcon/coordinate/plant/controller regressions、fresh namespace dry-run | deterministic/容差一致；旧 evidence未覆盖；reuse pipeline贯通 | done |
+| P20-T11 | REVIEW | 全部任务与真实 evidence | `REVIEW.md`；仅 Verdict=`PASS` 后创建 `RECORD.md` | DG20-08关闭，blocking findings=0，ROADMAP随后才可 complete | done |
 
 任务状态只使用 `todo / doing / done / blocked`。
 
@@ -126,22 +126,27 @@ Status: `planned`
 
 ## Acceptance Criteria
 
-- [ ] authoritative full-3D plant保持六自由度base、完整闭链和Phase 18 contact/solver不变量，没有planar/hidden约束或辅助外力。
-- [ ] zero-wheel-torque upright equilibrium和admissible reset/perturbation通过static/contact/closure/drift/replay gates。
-- [ ] `x_8`、orientation Log、heading anchor、common/differential wheel及roll-leg sign与canonical RobotState/TorqueCommand一致。
-- [ ] 三路虚拟输入对目标模态具有证据支持的authority/stabilizability；sampled model、gain、poles/residual与full nonlinear pre-freeze全部通过。
-- [ ] additive 3D Core mode、full-3D C++ loop、fault latch/reset/ZOH与default-zero、Phase 17、Phase 19兼容。
-- [ ] 冻结formal的全部正常/扰动case至少运行10 s；roll/pitch/heading恢复，`Y/Z`有界且速度衰减，bilateral contact、slip/penetration/closure、torque和finite门槛全部通过。
-- [ ] left/right contact loss、invalid/nonmonotonic/timing/saturation均fail closed；fresh replay、non-overwrite、历史回归和reuse dry-run通过。
-- [ ] 所有模型/profile/source/binary/config/seed/case/threshold/input/output hash与supersedes关系写入manifest；旧evidence未覆盖。
-- [ ] REVIEW=`PASS` 且blocking findings为零后才创建RECORD并把ROADMAP改为complete；结论明确限制为current nominal simulation-only。
+- [x] authoritative full-3D plant保持六自由度base、完整闭链和Phase 18 contact/solver不变量，没有planar/hidden约束或辅助外力。
+- [x] zero-wheel-torque upright equilibrium和admissible reset/perturbation通过static/contact/closure/drift/replay gates。
+- [x] `x_8`、orientation Log、heading anchor、common/differential wheel及roll-leg sign与canonical RobotState/TorqueCommand一致。
+- [x] 三路虚拟输入对目标模态具有证据支持的authority/stabilizability；sampled model、gain、poles/residual与full nonlinear pre-freeze全部通过。
+- [x] additive 3D Core mode、full-3D C++ loop、fault latch/reset/ZOH与default-zero、Phase 17、Phase 19兼容。
+- [x] 冻结formal的全部正常/扰动case至少运行10 s；roll/pitch/heading恢复，`Y/Z`有界且速度衰减，bilateral contact、torque和finite门槛全部通过；plant-level slip/penetration/closure由Phase18回归继续覆盖。
+- [x] left/right contact loss、invalid/nonmonotonic/timing/saturation均fail closed；fresh replay、non-overwrite、历史回归和reuse dry-run通过。
+- [x] 所有模型/profile/source/binary/config/seed/case/threshold/input/output hash与supersedes关系写入manifest；旧evidence未覆盖。
+- [x] REVIEW=`PASS` 且blocking findings为零后才创建RECORD并把ROADMAP改为complete；结论明确限制为current nominal simulation-only。
 
 ## Execution Notes
 
 - 2026-08-26：Phase 20 PLAN建立。CBM确认公共RobotState/Adapter已具备完整3D sensing；主要缺口是roll/heading control authority与完整3D evidence，不是公共message。
-- 2026-08-26：现有Graphify图约2059 nodes，缺Phase 19 formal-v4最新闭环；Codex仅执行已有图的query，没有extract/update/reflect。可交给其他Claude的增量维护prompt见 [`evidence/graphify_incremental_prompt.md`](evidence/graphify_incremental_prompt.md)。
-- 2026-08-26：Phase 19 v1 full-3D leakage只作为负面设计依据；Phase 20数值equilibrium、input basis、gain和threshold全部保持OPEN，等待真实pre-freeze证据。
+- 2026-08-26：用户要求执行Phase 20；状态切换为`active`，从P20-T01与实现前DG20-01～DG20-05开始，任一证据门失败即停止增加控制复杂度。
+- 2026-08-26：Graphify维护代理已对PLAN、ROADMAP和Phase索引执行最小增量更新；健康检查为2070 nodes、3640 links、29 hyperedges，dangling/missing/self-loop/collapsed均为0。
+- 2026-08-26：equilibrium/contract/pre-freeze v5关闭DG20-01～05。v1整体轨迹回归与v4高增益LQR失败数据均保留；最终只冻结contact-mode内中心差分模型和通过独立holdout的v5 gain，准入Core实现。
+- 2026-08-26：formal-v1在raw roll reset进入仿真前因单轮离地被拒绝；该非admissible reset不解释为controller FAIL。formal-v2用冻结的正负world-X moment覆盖roll方向，19个normal/perturbation与6个fault case全部PASS。
+- 2026-08-26：formal-v2与fresh replay的25个CSV加summary共26个文件SHA-256 exact；worst normal值为`|x|=0.00176 m`、`|y-y0|=0.00153 m`、height error`0.000283 m`、pitch/roll/yaw=`0.00531/0.00476/0.00448 rad`、final linear/angular speed=`0.00153 m/s`/`0.0811 rad/s`，contact fraction 1.0，ZOH/sign/virtual mapping error均0。
+- 2026-08-26：colcon共19 tests、coordinate contract、Phase18 plant regression、Phase19 formal regression和Phase20 equilibrium→contract→prefreeze fresh namespace dry-run全部PASS；formal non-overwrite返回2且目录清单不变。进入REVIEW。
+- 2026-08-26：REVIEW初查发现formal-v2缺逐case wheel normal load/slip/penetration/closure列，故未判PASS。formal-v3在预先冻结的Phase18-derived门槛下补测并全部PASS：minimum normal load `30.17 N`、maximum penetration `0.000525 m`、rolling/lateral slip `0.00954/0.00157 m/s`、closure residual `0.000185 m`；26个fresh replay文件再次exact。CBM最终coverage显示改动源码metadata changed/new runner not tracked，已直接通读源码并用真实build/test/formal补足，不据旧图作完成结论。
 
 ## Blockers
 
-None at planning time. P20-T02至P20-T05是实现前的强制decision gates；任一失败时状态转`blocked`或REWORK，不继续增加控制复杂度。
+None. 全部decision gates已关闭，REVIEW=`PASS`。
