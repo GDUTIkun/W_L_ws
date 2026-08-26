@@ -17,8 +17,9 @@ For historical design rationale, experiment records, Phase history, and
 document/script relationships, query only the existing local Graphify graph
 with `graphify query`, `graphify path`, or `graphify explain`. Never run extract,
 --update, --cluster-only, rebuild, semantic extraction, or modify graphify-out/.
-If the graph is stale, disclose the gap and return a ready-to-use incremental
-maintenance prompt for an external Claude; do not update the graph yourself.
+If the graph is stale, disclose the exact stale inputs and ask the parent to
+delegate incremental maintenance to `graphify_maintainer`; do not update the
+graph yourself and do not create an external-Claude handoff prompt.
 
 When current source conflicts with historical graph content, treat current
 source as the live-code fact and report the conflict. Return a concise summary

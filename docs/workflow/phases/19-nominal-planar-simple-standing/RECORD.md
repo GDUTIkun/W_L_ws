@@ -43,6 +43,15 @@ current nominal MuJoCo 已具备从 authoritative 3D CAD model 可重复派生�
 
 ## Reproduction
 
+动画观察入口（默认加载 formal `pitch_positive` case；在 Simulate 窗口按 `Space` 开始/暂停，关闭窗口退出）：
+
+```bash
+cd /home/t/W_L_ws
+./.venv/bin/python tools/experiments/view_mujoco_planar_standing.py
+```
+
+可用 `--case nominal`、`--case pitch_negative` 等选择 formal profile 中的 case；动画只用于观察，不能代替下述 C++ formal evidence。
+
 ```bash
 cd /home/t/W_L_ws/ros_ws
 source /opt/ros/jazzy/setup.bash

@@ -29,3 +29,4 @@
 - `solve_mujoco_planar_equilibrium.py`：求解 Phase 19 柔性闭链/接触一致、左右轮力矩严格为零的 exact-planar 静态平衡点，并输出可重放审计证据。
 - `validate_mujoco_planar_state_contract.py`：验证 Phase 19 `x/dx/pitch/pitch-rate` site/Jacobian/有限差分符号，以及 native/canonical wheel rolling 与 Adapter 符号关系。
 - `run_mujoco_planar_prefreeze.py`：同时比较 Phase 19 四状态 reset-local 模型与完整 26 状态 sampled plant，并用非线性 holdout 决定是否允许进入 Core。
+- `view_mujoco_planar_standing.py`：加载 Phase 19 冻结的 exact-planar scene/profile，在 MuJoCo viewer 中按 `2 ms / 10 ms / 5-step ZOH` 播放站立闭环；仅供动画观察，不替代 C++ formal evidence。

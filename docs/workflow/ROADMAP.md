@@ -39,7 +39,7 @@
 | 08 | nominal Joint PD 与重力补偿 | complete | [Phase 17](phases/17-nominal-joint-pd-gravity-compensation/PLAN.md) | 不接真机；解析 reduced gravity + canonical Joint PD 已通过双 oracle、保持、正负阶跃、限幅、扰动、对称与 replay 审查 |
 | 09 | nominal 轮地接触与 floating-base plant 验证 | complete | [Phase 18](phases/18-mujoco-contact-floating-base-plant-validation/PLAN.md) | 不接真机；wheel-only contact、normal/rolling/lateral/friction、零控制 touchdown、base state/reset 已通过 REVIEW，不提前做站立 |
 | 10 | exact 2D sagittal 简单站立 | complete | [Phase 19](phases/19-nominal-planar-simple-standing/PLAN.md) | formal-v4 11 个 10 s normal/perturbation + 4 个 fault cases PASS；REVIEW/RECORD 完成，仅限 current nominal exact-planar simulation |
-| 11 | nominal 完整 3D 简单站立 | planned | — | 不接真机；恢复 `Y/roll/yaw`，增加相应 sensing/control authority；不得用 Phase 19 的 2D PASS 替代 |
+| 11 | nominal 完整 3D 简单站立 | planned | [Phase 20](phases/20-nominal-3d-simple-standing/PLAN.md) | 不接真机；full-3D plant 上以 common wheel、differential wheel、差分腿力矩分别建立 `X/pitch`、heading、roll authority；`Y/Z` 作为真实 contact outcome 与硬门槛，不得用 Phase 19 的 2D PASS 替代 |
 | 12 | nominal Weighted WBC | planned | — | 不接真机；约束、任务、软接触和限幅逐层通过，保留可对 identified profile 重跑的入口 |
 | 13 | nominal NMPC | planned | — | 不接真机；NMPC → WBC → torque 全链路在 nominal profile 中通过并保存非覆盖证据 |
 | 14 | 执行器力矩映射、摩擦与附加惯量 | blocked | [Phase 05](phases/05-actuator-torque-identification/PLAN.md) | 当前冻结真机；解冻后仍须关闭 Phase 05 自身 DG01–DG06，才能执行真实辨识与 MuJoCo 对应验证 |

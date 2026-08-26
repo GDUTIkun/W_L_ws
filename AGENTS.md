@@ -69,9 +69,11 @@ ROADMAP
 
 - 用于设计文档、实验记录、Phase 历史和工程脚本关系。
 - 不替代 CBM 或源码读取。
-- Codex 只允许查询本 workspace 的现有本地图，只使用 `graphify query`、`graphify path` 和 `graphify explain`。
-- 在没有用户允许情况下，Codex 不得执行 Graphify 的 `extract`、`--update`、全量重建、聚类重建或语义提取，也不得为这些操作派生子代理；这些操作会消耗用户额度。
-- 当现有图缺少最新内容时，Codex 应明确说明图已过期，并提供一份可直接交给其他 Claude 执行的 Graphify 增量维护 prompt；Codex 自身不得更新 `graphify-out/`。
+- 日常查询只使用本 workspace 的现有本地图和 `graphify query`、`graphify path`、`graphify explain`。
+- 当本地尚无可用图、目标内容从未入图，或现有图缺少已变更的代码、文档、Phase、实验记录时，主 Agent 直接委派 `graphify_maintainer` 执行提取或更新，无需逐次询问用户；主 Agent 与 `project_scout` 不直接修改 `graphify-out/`。
+- 提取或更新按输入类型选择最低成本路径：纯代码变化优先使用无需 LLM 的 `graphify update`；首次建图、文档、Phase、实验记录或其他语义内容按 Graphify skill 的提取流程、增量清单与缓存处理，不得把 code-only update 当成语义内容已提取或更新。
+- 已有可用图时默认只处理新增或变更输入；仅首次建图或用户明确要求时才允许全量 `extract`。默认禁止 `--force`、无必要的全量重建、`cluster-only`、`reflect` 和无关的重新标注。
+- `graphify_maintainer` 只能修改 `graphify-out/` 中的 Graphify 生成内容，不得修改产品源码、Phase 文档或证据；完成后必须报告实际输入、增量/跳过项、失败项、图健康检查和未解决缺口。
 
 ## Automatic Subagent Delegation
 
@@ -79,12 +81,13 @@ ROADMAP
 
 - `project_scout`：只读侦察。用于非平凡的代码定位、调用链、数据流、影响面、历史设计、实验记录和 Phase 关系查询。当前代码事实走 CBM 与源码，历史关系走现有 Graphify 本地图。
 - `phase_worker`：实现执行。仅当当前 Phase 的 Scope、Frozen Decisions、接口约束、文件所有权、验收条件和验证入口都已明确时使用。
+- `graphify_maintainer`：最低成本的 Graphify 提取与增量维护代理。在尚未建图、目标内容未入图或现有图已过期时使用；默认由 `gpt-5.6-luna` 独立完成，不参与技术决策或证据解释。
 - 默认最多启动一个子 Agent；只有两个任务确实独立且足够大时才并行启动两个。
 - 单文件小改、强顺序依赖、仍需持续技术取舍或主 Agent 可直接快速完成的任务不委派。
 - 数学模型、状态/输入定义、坐标系、物理假设、控制架构、协议语义、证据解释和最终验收始终由主 Agent 负责。
-- 派发前，主 Agent 必须完成必要的 CBM 初查并传递当前 project、generation、已知符号/路径、coverage 缺口、Phase 任务 ID、范围边界、禁止修改区域和验证条件。
+- 派发 `project_scout` 或 `phase_worker` 前，主 Agent 必须完成必要的 CBM 初查并传递当前 project、generation、已知符号/路径、coverage 缺口、Phase 任务 ID、范围边界、禁止修改区域和验证条件。派发 `graphify_maintainer` 不要求 CBM 初查，只需传递 workspace、现有图路径、待提取或已变更输入、允许的操作边界和预期健康检查。
 - 子 Agent 不是独占工作区；派发实现任务时必须明确文件或模块所有权，要求保留并适配用户及其他 Agent 的已有改动，不得回退他人修改。
-- Graphify 仅允许 `graphify query`、`graphify path` 和 `graphify explain`。任何 Agent 均不得自行更新图或为更新图派生其他 Agent。
+- 除 `graphify_maintainer` 外，其他 Agent 只允许执行 Graphify 查询；维护代理也不得再派生子 Agent，避免额度和并发失控。
 - 主 Agent 必须复核子 Agent 返回的关键证据；子 Agent 的完成、构建或测试状态不能直接解释为模型、仿真或实验 PASS。
 
 ## Directory Boundaries

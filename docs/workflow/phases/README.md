@@ -8,11 +8,11 @@ None.
 
 ## Planned
 
-None.
+- [Phase 20：nominal 完整 3D 简单站立](20-nominal-3d-simple-standing/PLAN.md) — full-3D plant；先关闭 equilibrium、state/input sign、roll/heading authority 与 nonlinear pre-freeze gates，再进入 Core/formal。
 
 ## Review
 
-- [Phase 19：显式二维 sagittal 简单站立](19-nominal-planar-simple-standing/REVIEW.md) — v2 `REWORK`；model/equilibrium/state contract PASS，但完整 26-state sampled controller gate FAIL，未进入 Core/formal。
+None.
 
 ## Blocked
 
@@ -29,6 +29,7 @@ None.
 - [Phase 16：Controller ↔ MuJoCo 确定性闭环运行基线](16-controller-mujoco-deterministic-loop/PLAN.md) — 2026-08-25 PASS；完成 2 ms physics、10 ms control、5-step ZOH、双时钟/reset/fail-safe、逐 tick 日志和非覆盖 replay，未新增控制算法、未连接真机。
 - [Phase 17：nominal Joint PD 与重力补偿](17-nominal-joint-pd-gravity-compensation/PLAN.md) — 2026-08-25 PASS；完成解析 reduced gravity、canonical Joint PD、保持/阶跃/限幅/扰动/对称/replay 与非覆盖 profile 验证，未连接真机。
 - [Phase 18：nominal 轮地接触与 floating-base plant 验证](18-mujoco-contact-floating-base-plant-validation/PLAN.md) — 2026-08-25 PASS；完成 wheel-only collision、actual-wheel normal/rolling/lateral/friction、零控制 free-flight/touchdown、base state/reset/replay 和历史回归，未连接真机、未做站立。
+- [Phase 19：exact 2D sagittal 简单站立](19-nominal-planar-simple-standing/PLAN.md) — 2026-08-26 PASS；formal-v4 完成 11 个 10 s normal/perturbation、4 个 fault cases、fresh replay 与历史回归；仅限 current nominal exact-planar simulation。
 
 ## 建立新 Phase
 
