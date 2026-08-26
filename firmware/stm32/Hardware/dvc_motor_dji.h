@@ -120,6 +120,25 @@ public:
     inline uint32_t Get_Feedback_Raw() const;
 
     inline void Set_Target_Torque(const float &__Target_Torque);
+
+    // Native ODrive CAN Simple position command.  Position is Input_Pos in
+    // revolutions; feedforwards use rev/s and Nm and are encoded in 0.001 units.
+    // This API intentionally does not apply the mapped leg-frame convention of
+    // Get_Now_Angle().
+    void Set_Target_Position(float position_rev,
+                             float velocity_feedforward_rev_per_sec = 0.0f,
+                             float torque_feedforward_nm = 0.0f);
+
+    // Convenience form for native axis radians; no leg-frame conversion.
+    void Set_Target_Angle(float angle_rad,
+                          float velocity_feedforward_rev_per_sec = 0.0f,
+                          float torque_feedforward_nm = 0.0f);
+
+    // Native ODrive CAN Simple velocity command.  Velocity is Input_Vel in
+    // revolutions per second and torque feedforward is in Nm.  This API does
+    // not apply the mapped leg-frame convention of Get_Now_Omega().
+    void Set_Target_Velocity(float velocity_rev_per_sec,
+                             float torque_feedforward_nm = 0.0f);
     inline void Set_Feedforward_Torque(const float &__Feedforward_Torque);
 
     void CAN_RxCpltCallback(uint8_t data_id);
@@ -137,6 +156,7 @@ protected:
     Enum_Motor_DJI_ID CAN_Rx_ID;
     // 发送缓存区
     uint8_t *Tx_Data;
+    uint16_t *Tx_ID;
     // 电机原始角度零点偏置, rad. GIM6010接收后还会按腿部安装方向映射到机构角.
     float Angle_Offset;
 
@@ -175,12 +195,19 @@ protected:
     Enum_Motor_DJI_Control_Method Motor_DJI_Control_Method;
     // 目标的扭矩, Nm
     float Target_Torque;
+    float Target_Position;
+    int16_t Position_Velocity_Feedforward;
+    int16_t Position_Torque_Feedforward;
+    float Target_Velocity;
+    float Velocity_Torque_Feedforward;
     // 前馈的扭矩, Nm
     float Feedforward_Torque;
 
     // 内部函数
 
     void Data_Process(uint8_t data_id);
+
+    void Set_Control_Method(Enum_Motor_DJI_Control_Method control_method);
 
     void Output();
 };
@@ -301,11 +328,15 @@ protected:
 /* Exported function declarations --------------------------------------------*/
 
 inline Class_Motor_DJI_GIM6010::Class_Motor_DJI_GIM6010()
-    : CAN_Manage_Object(0), Angle_Offset(0.0f),
+    : CAN_Manage_Object(0), Tx_Data(0), Tx_ID(0), Angle_Offset(0.0f),
     ENCODER_NUM_PER_ROUND(8192), OUT_MAX(16384.0f), Flag(0), Pre_Flag(0), 
     Out(0.0f), Command_Raw(0u), Feedback_Raw(0u),
     Motor_DJI_Status(Motor_DJI_Status_DISABLE),
-   Target_Torque(0.0f), Feedforward_Torque(0.0f)
+    Motor_DJI_Control_Method(Motor_DJI_Control_Method_TORQUE),
+    Target_Torque(0.0f), Target_Position(0.0f),
+    Position_Velocity_Feedforward(0), Position_Torque_Feedforward(0),
+    Target_Velocity(0.0f), Velocity_Torque_Feedforward(0.0f),
+    Feedforward_Torque(0.0f)
 {
 }
 
@@ -401,6 +432,7 @@ inline uint32_t Class_Motor_DJI_GIM6010::Get_Feedback_Raw() const
 inline void Class_Motor_DJI_GIM6010::Set_Target_Torque(const float &__Target_Torque)
 {
     Target_Torque = __Target_Torque;
+    Set_Control_Method(Motor_DJI_Control_Method_TORQUE);
 }
 
 /**

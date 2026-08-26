@@ -40,14 +40,15 @@
 | 09 | nominal 轮地接触与 floating-base plant 验证 | complete | [Phase 18](phases/18-mujoco-contact-floating-base-plant-validation/PLAN.md) | 不接真机；wheel-only contact、normal/rolling/lateral/friction、零控制 touchdown、base state/reset 已通过 REVIEW，不提前做站立 |
 | 10 | exact 2D sagittal 简单站立 | complete | [Phase 19](phases/19-nominal-planar-simple-standing/PLAN.md) | formal-v4 11 个 10 s normal/perturbation + 4 个 fault cases PASS；REVIEW/RECORD 完成，仅限 current nominal exact-planar simulation |
 | 11 | nominal 完整 3D 简单站立 | planned | [Phase 20](phases/20-nominal-3d-simple-standing/PLAN.md) | 不接真机；full-3D plant 上以 common wheel、differential wheel、差分腿力矩分别建立 `X/pitch`、heading、roll authority；`Y/Z` 作为真实 contact outcome 与硬门槛，不得用 Phase 19 的 2D PASS 替代 |
-| 12 | nominal Weighted WBC | planned | — | 不接真机；约束、任务、软接触和限幅逐层通过，保留可对 identified profile 重跑的入口 |
-| 13 | nominal NMPC | planned | — | 不接真机；NMPC → WBC → torque 全链路在 nominal profile 中通过并保存非覆盖证据 |
-| 14 | 执行器力矩映射、摩擦与附加惯量 | blocked | [Phase 05](phases/05-actuator-torque-identification/PLAN.md) | 当前冻结真机；解冻后仍须关闭 Phase 05 自身 DG01–DG06，才能执行真实辨识与 MuJoCo 对应验证 |
-| 15 | RobotState 与传感器正式验证 | planned | — | 真机解冻后验证时间戳、单位、方向、滤波和延迟，形成 identified/real 可用状态边界 |
-| 16 | MuJoCo–真机运动学、重力、质量与 COM 辨识 | planned | — | 复用 Phase 14/15 基线，FK/Jacobian/重力矩及 mass/COM 得到模型与实验支持 |
-| 17 | MuJoCo–真机完整惯量、动力学耦合与接触辨识 | planned | — | 复用 Phase 14/15 激励与分析，关键动力学和接触趋势在预定误差内一致 |
-| 18 | identified profile 分层复现与三方比较 | planned | — | 使用同一 runner/schema/阈值从运动学到 NMPC 追加重跑，保留 nominal ↔ identified ↔ real 对照，不覆盖第一轮 |
-| 19 | Roll/Yaw/Turning 与差分辨识 | planned | — | 在前述两轮证据基础上验证工作范围与鲁棒裕量 |
+| 12 | 6010 CAN 原生位置控制 | blocked | [Phase 21](phases/21-6010-can-position-control/PLAN.md) | 已补齐协议编码与调度接口；真机冻结，待解冻后用 CAN 抓包与受限运动完成放行 |
+| 13 | nominal Weighted WBC | planned | — | 不接真机；约束、任务、软接触和限幅逐层通过，保留可对 identified profile 重跑的入口 |
+| 14 | nominal NMPC | planned | — | 不接真机；NMPC → WBC → torque 全链路在 nominal profile 中通过并保存非覆盖证据 |
+| 15 | 执行器力矩映射、摩擦与附加惯量 | blocked | [Phase 05](phases/05-actuator-torque-identification/PLAN.md) | 当前冻结真机；解冻后仍须关闭 Phase 05 自身 DG01–DG06，才能执行真实辨识与 MuJoCo 对应验证 |
+| 16 | RobotState 与传感器正式验证 | planned | — | 真机解冻后验证时间戳、单位、方向、滤波和延迟，形成 identified/real 可用状态边界 |
+| 17 | MuJoCo–真机运动学、重力、质量与 COM 辨识 | planned | — | 复用 Phase 14/15 基线，FK/Jacobian/重力矩及 mass/COM 得到模型与实验支持 |
+| 18 | MuJoCo–真机完整惯量、动力学耦合与接触辨识 | planned | — | 复用 Phase 14/15 激励与分析，关键动力学和接触趋势在预定误差内一致 |
+| 19 | identified profile 分层复现与三方比较 | planned | — | 使用同一 runner/schema/阈值从运动学到 NMPC 追加重跑，保留 nominal ↔ identified ↔ real 对照，不覆盖第一轮 |
+| 20 | Roll/Yaw/Turning 与差分辨识 | planned | — | 在前述两轮证据基础上验证工作范围与鲁棒裕量 |
 
 README 与工作流骨架属于仓库引导建设，不作为产品开发 Phase。Phase 14/15/16/17/18/19 已完成；Phase 19 v1/v2 REWORK 与 formal 演进证据均已非覆盖归档，最终 authority 为 formal-v4。Phase 05 因当前真机冻结而 blocked。上述 PASS 都只属于 simulation-only；恢复 Phase 05 时，它们不替代通信、Load Cell、同步和安全放行条件。
 

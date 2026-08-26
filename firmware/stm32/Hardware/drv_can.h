@@ -63,6 +63,11 @@ extern uint8_t CAN1_0x4E_Tx_Data[];
 extern uint8_t CAN1_0x6E_Tx_Data[];
 extern uint8_t CAN1_0x8E_Tx_Data[];
 
+extern uint16_t CAN1_0x2E_Tx_ID;
+extern uint16_t CAN1_0x4E_Tx_ID;
+extern uint16_t CAN1_0x6E_Tx_ID;
+extern uint16_t CAN1_0x8E_Tx_ID;
+
 
 extern uint8_t CAN_Supercap_Tx_Data[];
 

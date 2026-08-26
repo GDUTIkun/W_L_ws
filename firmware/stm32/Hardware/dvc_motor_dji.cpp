@@ -27,6 +27,7 @@
 namespace
 {
 static const float kDegToRad = PI / 180.0f;
+static const float kTwoPi = 2.0f * PI;
 
 static float g_left_hip_world_angle = 0.0f;
 static float g_right_hip_world_angle = 0.0f;
@@ -44,6 +45,20 @@ float NormalizeAnglePositive(float angle)
         angle -= 2.0f * PI;
     }
     return angle;
+}
+
+int16_t QuantizePositionFeedforward(float value)
+{
+    const float scaled = value * 1000.0f;
+    if (scaled > 32767.0f)
+    {
+        return 32767;
+    }
+    if (scaled < -32768.0f)
+    {
+        return -32768;
+    }
+    return static_cast<int16_t>(scaled);
 }
 
 void MapGIM6010AngleToLegFrame(const Enum_Motor_DJI_ID can_id,
@@ -137,6 +152,29 @@ uint8_t *allocate_tx_data(const FDCAN_HandleTypeDef *hcan,
     return (tmp_tx_data_ptr);
 }
 
+uint16_t *allocate_tx_id(const FDCAN_HandleTypeDef *hcan,
+                         const Enum_Motor_DJI_ID &__CAN_ID)
+{
+    if (hcan != &hfdcan1)
+    {
+        return 0;
+    }
+
+    switch (__CAN_ID)
+    {
+    case CAN_Motor_ID_0x2E:
+        return &CAN1_0x2E_Tx_ID;
+    case CAN_Motor_ID_0x4E:
+        return &CAN1_0x4E_Tx_ID;
+    case CAN_Motor_ID_0x6E:
+        return &CAN1_0x6E_Tx_ID;
+    case CAN_Motor_ID_0x8E:
+        return &CAN1_0x8E_Tx_ID;
+    default:
+        return 0;
+    }
+}
+
 /**
  * @brief 电机初始化
  *
@@ -151,9 +189,12 @@ void Class_Motor_DJI_GIM6010::Init(const FDCAN_HandleTypeDef *hcan, const Enum_M
     CAN_Rx_ID = __CAN_Rx_ID;
     Angle_Offset = __Angle_Offset;
     Tx_Data = allocate_tx_data(hcan, __CAN_Rx_ID);
-    uint8_t mode_data1[8] = {0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00};
+    Tx_ID = allocate_tx_id(hcan, __CAN_Rx_ID);
+    // Force the initial torque-mode frame even though the constructor default is
+    // also torque mode.
+    Motor_DJI_Control_Method = Motor_DJI_Control_Method_OMEGA;
+    Set_Control_Method(Motor_DJI_Control_Method_TORQUE);
     uint8_t mode_data2[8] = {0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
-    CAN_Transmit_Data((FDCAN_HandleTypeDef *) hcan, __CAN_Rx_ID<<5|0xB, mode_data1, 8);
     CAN_Transmit_Data((FDCAN_HandleTypeDef *) hcan, __CAN_Rx_ID<<5|0x7, mode_data2, 8);
 
 }
@@ -179,12 +220,81 @@ void Class_Motor_DJI_GIM6010::TIM_100ms_Alive_PeriodElapsedCallback()
 
 void Class_Motor_DJI_GIM6010::TIM_Calculate_PeriodElapsedCallback()
 {
-    Out = Target_Torque/8.0f;
-    // Basic_Math_Constrain(&Out, -OUT_MAX, OUT_MAX);
-
     Output();
     
     Feedforward_Torque = 0.0f;
+}
+
+void Class_Motor_DJI_GIM6010::Set_Target_Position(
+    float position_rev,
+    float velocity_feedforward_rev_per_sec,
+    float torque_feedforward_nm)
+{
+    Target_Position = position_rev;
+    Position_Velocity_Feedforward =
+        QuantizePositionFeedforward(velocity_feedforward_rev_per_sec);
+    Position_Torque_Feedforward =
+        QuantizePositionFeedforward(torque_feedforward_nm);
+    Set_Control_Method(Motor_DJI_Control_Method_ANGLE);
+}
+
+void Class_Motor_DJI_GIM6010::Set_Target_Angle(
+    float angle_rad,
+    float velocity_feedforward_rev_per_sec,
+    float torque_feedforward_nm)
+{
+    Set_Target_Position(angle_rad / kTwoPi,
+                        velocity_feedforward_rev_per_sec,
+                        torque_feedforward_nm);
+}
+
+void Class_Motor_DJI_GIM6010::Set_Target_Velocity(
+    float velocity_rev_per_sec,
+    float torque_feedforward_nm)
+{
+    Target_Velocity = velocity_rev_per_sec;
+    Velocity_Torque_Feedforward = torque_feedforward_nm;
+    Set_Control_Method(Motor_DJI_Control_Method_OMEGA);
+}
+
+void Class_Motor_DJI_GIM6010::Set_Control_Method(
+    Enum_Motor_DJI_Control_Method control_method)
+{
+    if (Motor_DJI_Control_Method == control_method && Tx_ID != 0)
+    {
+        return;
+    }
+
+    Motor_DJI_Control_Method = control_method;
+    if (CAN_Manage_Object == 0 || CAN_Manage_Object->CAN_Handler == 0 ||
+        Tx_ID == 0)
+    {
+        return;
+    }
+
+    uint8_t mode_data[8] = {0};
+    if (control_method == Motor_DJI_Control_Method_ANGLE)
+    {
+        mode_data[0] = 0x03;
+        mode_data[4] = 0x03;
+        *Tx_ID = (static_cast<uint16_t>(CAN_Rx_ID) << 5) | 0x0C;
+    }
+    else if (control_method == Motor_DJI_Control_Method_OMEGA)
+    {
+        mode_data[0] = 0x02;
+        mode_data[4] = 0x02;
+        *Tx_ID = (static_cast<uint16_t>(CAN_Rx_ID) << 5) | 0x0D;
+    }
+    else
+    {
+        mode_data[0] = 0x01;
+        mode_data[4] = 0x01;
+        *Tx_ID = (static_cast<uint16_t>(CAN_Rx_ID) << 5) | 0x0E;
+    }
+    CAN_Transmit_Data(CAN_Manage_Object->CAN_Handler,
+                      (static_cast<uint16_t>(CAN_Rx_ID) << 5) | 0x0B,
+                      mode_data,
+                      8);
 }
 
 void Class_Motor_DJI_GIM6010::Data_Process(uint8_t data_id)
@@ -228,7 +338,37 @@ void Class_Motor_DJI_GIM6010::Output()
         return;
     }
 
-    Command_Raw = Math_FloatToBits(Out);
+    if (Motor_DJI_Control_Method == Motor_DJI_Control_Method_ANGLE)
+    {
+        const uint16_t velocity_feedforward =
+            static_cast<uint16_t>(Position_Velocity_Feedforward);
+        const uint16_t torque_feedforward =
+            static_cast<uint16_t>(Position_Torque_Feedforward);
+        Command_Raw = Math_FloatToBits(Target_Position);
+        Tx_Data[4] = static_cast<uint8_t>(velocity_feedforward & 0xFF);
+        Tx_Data[5] = static_cast<uint8_t>((velocity_feedforward >> 8) & 0xFF);
+        Tx_Data[6] = static_cast<uint8_t>(torque_feedforward & 0xFF);
+        Tx_Data[7] = static_cast<uint8_t>((torque_feedforward >> 8) & 0xFF);
+    }
+    else if (Motor_DJI_Control_Method == Motor_DJI_Control_Method_OMEGA)
+    {
+        Command_Raw = Math_FloatToBits(Target_Velocity);
+        const uint32_t torque_feedforward =
+            Math_FloatToBits(Velocity_Torque_Feedforward);
+        Tx_Data[4] = static_cast<uint8_t>(torque_feedforward & 0xFF);
+        Tx_Data[5] = static_cast<uint8_t>((torque_feedforward >> 8) & 0xFF);
+        Tx_Data[6] = static_cast<uint8_t>((torque_feedforward >> 16) & 0xFF);
+        Tx_Data[7] = static_cast<uint8_t>((torque_feedforward >> 24) & 0xFF);
+    }
+    else
+    {
+        Out = Target_Torque / 8.0f;
+        Command_Raw = Math_FloatToBits(Out);
+        Tx_Data[4] = 0;
+        Tx_Data[5] = 0;
+        Tx_Data[6] = 0;
+        Tx_Data[7] = 0;
+    }
     Tx_Data[3] = (Command_Raw >> 24) & 0xFF;
     Tx_Data[2] = (Command_Raw >> 16) & 0xFF;
     Tx_Data[1] = (Command_Raw >> 8) & 0xFF;

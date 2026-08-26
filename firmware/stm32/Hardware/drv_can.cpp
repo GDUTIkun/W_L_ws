@@ -38,6 +38,10 @@ uint8_t CAN1_0x2E_Tx_Data[8];
 uint8_t CAN1_0x4E_Tx_Data[8];
 uint8_t CAN1_0x6E_Tx_Data[8];
 uint8_t CAN1_0x8E_Tx_Data[8];
+uint16_t CAN1_0x2E_Tx_ID = 0x2E;
+uint16_t CAN1_0x4E_Tx_ID = 0x4E;
+uint16_t CAN1_0x6E_Tx_ID = 0x6E;
+uint16_t CAN1_0x8E_Tx_ID = 0x8E;
 
 
 /* Private function declarations ---------------------------------------------*/
@@ -163,10 +167,10 @@ void TIM_1ms_CAN_PeriodElapsedCallback()
     }
 
     CAN_Transmit_Data(&hfdcan1, 0x200, CAN1_0x200_Tx_Data, 8);
-    CAN_Transmit_Data(&hfdcan1, 0x2E, CAN1_0x2E_Tx_Data, 8);
-    CAN_Transmit_Data(&hfdcan1, 0x4E, CAN1_0x4E_Tx_Data, 8);
-    CAN_Transmit_Data(&hfdcan1, 0x6E, CAN1_0x6E_Tx_Data, 8);
-    CAN_Transmit_Data(&hfdcan1, 0x8E, CAN1_0x8E_Tx_Data, 8);
+    CAN_Transmit_Data(&hfdcan1, CAN1_0x2E_Tx_ID, CAN1_0x2E_Tx_Data, 8);
+    CAN_Transmit_Data(&hfdcan1, CAN1_0x4E_Tx_ID, CAN1_0x4E_Tx_Data, 8);
+    CAN_Transmit_Data(&hfdcan1, CAN1_0x6E_Tx_ID, CAN1_0x6E_Tx_Data, 8);
+    CAN_Transmit_Data(&hfdcan1, CAN1_0x8E_Tx_ID, CAN1_0x8E_Tx_Data, 8);
 }
 
 /**
