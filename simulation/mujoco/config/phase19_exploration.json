@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "profile": "current-nominal-phase19-exploration",
+  "evidence_authority": "exploratory-only; not a formal Controller-Core PASS",
+  "scene": "simulation/mujoco/model/phase19_standing.xml",
+  "included_model": "simulation/mujoco/model/wheel_leg.xml",
+  "physics_timestep_s": 0.002,
+  "control_period_s": 0.01,
+  "physics_steps_per_control": 5,
+  "duration_s": 10.0,
+  "canonical_joint_offsets_rad": [
+    -1.3267204093873923,
+    2.208800254886723,
+    0.0,
+    -1.3267204093873923,
+    2.208800254886723,
+    0.0
+  ],
+  "candidate": {
+    "selection": "bounded candidate retained from deterministic seed-19 search; holdout was not used to relax thresholds",
+    "base_qpos_xyz_m": [0.0, 0.0, 0.37319986],
+    "native_active_reference_rad": [-0.455, 0.75, 0.0, -0.455, 0.75, 0.0],
+    "native_passive_reference_rad": [0.75, -0.75, -0.75, -0.75],
+    "native_support_torque_nm": [0.348219, -1.054667, 0.0, -0.432358, 6.856644, 0.0],
+    "leg_kp_nm_per_rad": 26.515937699722034,
+    "leg_kd_nm_s_per_rad": 0.7345811391523569,
+    "native_common_wheel_feedback": [
+      53.38974955953397,
+      23.20384958667149,
+      43.05493399740124,
+      0.4453300142724079
+    ],
+    "wheel_torque_limit_nm": 3.0,
+    "leg_torque_limit_nm": 12.0
+  },
+  "planar_stabilization_probe": {
+    "lateral_position_stiffness_n_per_m": 500.0,
+    "lateral_velocity_damping_n_s_per_m": 50.0,
+    "roll_rate_damping_nm_s_per_rad": 20.0,
+    "yaw_rate_damping_nm_s_per_rad": 20.0,
+    "status": "out-of-scope diagnostic probe; cannot supply Phase19 PASS"
+  },
+  "cases": [
+    {"id": "unconstrained_nominal", "initial_x_m": 0.0, "initial_pitch_rad": 0.0, "planar_stabilization": false},
+    {"id": "stabilized_nominal", "initial_x_m": 0.0, "initial_pitch_rad": 0.0, "planar_stabilization": true},
+    {"id": "stabilized_pitch_positive", "initial_x_m": 0.0, "initial_pitch_rad": 0.01, "planar_stabilization": true},
+    {"id": "stabilized_pitch_negative", "initial_x_m": 0.0, "initial_pitch_rad": -0.01, "planar_stabilization": true}
+  ],
+  "prefreeze_gates": {
+    "closed_loop_spectral_radius_max": 0.999999,
+    "final_abs_x_error_m": 0.01,
+    "final_abs_pitch_rad": 0.01,
+    "max_abs_pitch_rad": 0.1,
+    "max_abs_height_error_m": 0.02,
+    "max_abs_lateral_position_m": 0.02,
+    "max_abs_roll_or_yaw_rad": 0.05,
+    "minimum_both_wheels_contact_fraction": 0.99
+  }
+}

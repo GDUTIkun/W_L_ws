@@ -12,7 +12,7 @@ None.
 
 ## Review
 
-None.
+- [Phase 19：显式二维 sagittal 简单站立](19-nominal-planar-simple-standing/REVIEW.md) — v2 `REWORK`；model/equilibrium/state contract PASS，但完整 26-state sampled controller gate FAIL，未进入 Core/formal。
 
 ## Blocked
 

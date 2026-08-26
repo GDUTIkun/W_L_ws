@@ -1,10 +1,28 @@
-# Graphify 聚焦文档、Phase 记录、实验/分析/launch 脚本及其关系。
-# 产品 C/C++ 结构交给 CBM；本地索引和图输出不回灌语料。
-/.codebase-memory/
-/graphify-out/
-/.graphify/
-/data/
-/firmware/
-/ros_ws/src/*/src/
-/ros_ws/src/*/include/
+# Simulink 模型文件（大且无需语义）
+simulation/simulink_baseline/model/**
 
+# 数据文件（CSV/JSON 实验输出，无代码语义）
+**/evidence/automated/**/run_manifest.json
+**/evidence/automated/**/nominal*.csv
+**/evidence/automated/**/faults.csv
+**/evidence/automated/**/workspace.csv
+**/evidence/automated/**/open_loop_replay.csv
+**/evidence/automated/**/parameter_manifest.json
+**/evidence/automated/**/geometry_manifest.json
+
+# 临时/草稿文件
+tools/scratch/**
+**/*.pyc
+**/__pycache__/**
+
+# 二进制/生成文件
+simulation/simulink_baseline/model/simulate/two_legs/generated/**
+**/*.mexa64
+**/*.mexw64
+
+# Phase 14/15/16/17 的 CSV 数据目录（保留 validation.json 和 grounding/reuse_contract）
+**/evidence/automated/**/phase14/**
+**/evidence/automated/**/phase15/**
+**/evidence/automated/**/phase16/**
+**/evidence/automated/**/phase17/**
+**/evidence/automated/**/regression/**

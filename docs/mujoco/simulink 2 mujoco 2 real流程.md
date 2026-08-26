@@ -21,12 +21,13 @@ Simulink 中已验证的算法使用了简化刚体假设，而 MuJoCo 和真机
 → Controller ↔ MuJoCo 可重复闭环
 → Joint PD 与重力补偿
 → 轮地接触与 floating-base
-→ 简单站立
+→ exact 2D sagittal 简单站立
+→ 完整 3D 简单站立
 → WBC
 → NMPC
 ```
 
-其中第一项已由 [Phase 15](../workflow/phases/15-mujoco-closed-chain-kinematics/RECORD.md) 完成 current nominal 闭链运动学和 reduced Jacobian 验证；第二项已由 [Phase 16](../workflow/phases/16-controller-mujoco-deterministic-loop/RECORD.md) 完成确定性执行/重放基线；第三项已由 [Phase 17](../workflow/phases/17-nominal-joint-pd-gravity-compensation/RECORD.md) 完成 fixed-base、contact-disabled 的解析 reduced gravity model 与 canonical Joint PD 验证；[Phase 18](../workflow/phases/18-mujoco-contact-floating-base-plant-validation/RECORD.md) 已完成 actual-wheel contact primitive 与完整模型 zero-command free-flight/touchdown/state/reset。下一层是尚未制定详细 Phase 的简单站立。
+其中第一项已由 [Phase 15](../workflow/phases/15-mujoco-closed-chain-kinematics/RECORD.md) 完成 current nominal 闭链运动学和 reduced Jacobian 验证；第二项已由 [Phase 16](../workflow/phases/16-controller-mujoco-deterministic-loop/RECORD.md) 完成确定性执行/重放基线；第三项已由 [Phase 17](../workflow/phases/17-nominal-joint-pd-gravity-compensation/RECORD.md) 完成 fixed-base、contact-disabled 的解析 reduced gravity model 与 canonical Joint PD 验证；[Phase 18](../workflow/phases/18-mujoco-contact-floating-base-plant-validation/RECORD.md) 已完成 actual-wheel contact primitive 与完整模型 zero-command free-flight/touchdown/state/reset。[Phase 19 v1](../workflow/phases/19-nominal-planar-simple-standing/REVIEW-v1-2026-08-26-REWORK.md) 的预冻结证据为 `REWORK`；用户随后批准 [Phase 19 v2](../workflow/phases/19-nominal-planar-simple-standing/PLAN.md) 改为 exact 2D sagittal plant，完整 3D standing 独立顺延。
 
 上述各层只形成 simulation-only 结论，不提前关闭依赖真实计量、真机响应或 MuJoCo–real 一致性的 gate。真机工作恢复后，先执行执行器、传感器、质量/COM、惯量/耦合和接触的共同辨识，形成新的 identified plant profile，再按完全相同的层次从运动学开始重跑：
 
@@ -913,6 +914,8 @@ physical parameters
 # 17. Floating-base 简单站立
 
 关节级闭环可靠后释放 base。
+
+current nominal 第一轮的详细边界、decision gates 和验证矩阵见 [Phase 19 v2](../workflow/phases/19-nominal-planar-simple-standing/PLAN.md)。v1 [REWORK](../workflow/phases/19-nominal-planar-simple-standing/REVIEW-v1-2026-08-26-REWORK.md) 已保留；v2 不再施加诊断性 lateral/roll/yaw 外力，而是从 source model 可重复派生 base 仅含 world `X/Z/pitch` 的 exact-planar plant。Phase 19 PASS 只能证明二维 sagittal 简单站立；完整 3D standing 需要恢复 `Y/roll/yaw` 并增加相应控制 authority，单独进入后续 Phase。显式 height/wrench/contact-force 分配仍属于后续 Weighted WBC。
 
 第一版只考虑：
 

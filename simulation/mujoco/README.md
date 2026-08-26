@@ -14,6 +14,8 @@
 - `config/phase16_nominal.json`：Phase 16 的 2 ms physics、10 ms control、5-step ZOH、episode、fault schedule 和阈值。
 - `config/phase18_nominal.json`：Phase 18 solver/contact、probe/floating case matrix 和冻结阈值。
 
+Phase 19 exact-planar 模型不在本目录手工维护第二份完整 XML。使用 `tools/experiments/build_mujoco_planar_model.py` 从 `model/wheel_leg.xml` 派生到每个新 run 目录，并保存 source/generator/derived hashes；只有 base freejoint → `X/Z/pitch` 三关节差异允许通过审计。
+
 正式内部动力学验证入口：
 
 ```bash

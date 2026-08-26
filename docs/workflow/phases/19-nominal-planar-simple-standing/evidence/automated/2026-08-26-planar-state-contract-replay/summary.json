@@ -1,0 +1,40 @@
+{
+  "gates": {
+    "base_x_sign": true,
+    "base_x_velocity": true,
+    "finite": true,
+    "native_rolling": true,
+    "pitch_jacobian": true,
+    "pitch_rate": true,
+    "pitch_sign": true,
+    "site_x_jacobian": true
+  },
+  "metrics": {
+    "base_x_velocity_oracle": 0.37,
+    "canonical_adapter_relations": {
+      "actuator_torque": "native=-canonical",
+      "canonical_positive_wheel_roll": "-X",
+      "joint_position": "canonical=-native+offset",
+      "joint_velocity": "canonical=-native"
+    },
+    "finite": true,
+    "maximum_pitch_jacobian_error": 0.0,
+    "maximum_site_x_jacobian_error": 1.0249023851827133e-12,
+    "native_positive_wheel_no_slip_displacement_m_per_rad": {
+      "left": [
+        0.05,
+        -2.7755575615628915e-18,
+        -0.0
+      ],
+      "right": [
+        0.04999999999999999,
+        -0.0,
+        -0.0
+      ]
+    },
+    "pitch_rate_oracle": -0.29,
+    "positive_base_x_position_derivative": 1.000000000001,
+    "positive_pitch_derivative": 1.0
+  },
+  "pass": true
+}

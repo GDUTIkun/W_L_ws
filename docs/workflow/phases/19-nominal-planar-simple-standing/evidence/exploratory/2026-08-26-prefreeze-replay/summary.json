@@ -1,0 +1,140 @@
+{
+  "schema_version": 1,
+  "phase": 19,
+  "evidence_class": "exploratory pre-freeze decision gate",
+  "hardware_data": false,
+  "local_model": {
+    "state_order": [
+      "base_site_x_error_m",
+      "base_site_vx_m_s",
+      "pitch_rad",
+      "pitch_rate_rad_s"
+    ],
+    "input": "equal native wheel torque; canonical TorqueCommand has opposite sign",
+    "A": [
+      [
+        1.0000000000003062,
+        0.008004225213187333,
+        -0.03188025761644009,
+        -0.00025883567872364566
+      ],
+      [
+        -5.854691731421724e-13,
+        1.0008526009666494,
+        0.09930121428500685,
+        -0.03217110057900151
+      ],
+      [
+        1.0842021724855043e-13,
+        1.3303700423738206e-05,
+        1.0000117162623405,
+        0.00799544207553889
+      ],
+      [
+        1.3183898417423732e-11,
+        0.002702739465704207,
+        0.0027338069037707853,
+        0.9990913400582946
+      ]
+    ],
+    "B_native": [
+      -6.697234919417205e-05,
+      -0.01687022587994774,
+      -0.00021138597403307785,
+      -0.0532545181222005
+    ],
+    "affine_drift_one_tick": [
+      4.293232036822747e-07,
+      9.287212758257152e-05,
+      0.0003454948645146594,
+      0.08638369981346412
+    ],
+    "K_canonical_tau_equals_minus_Kx": [
+      53.38974955953397,
+      23.20384958667149,
+      43.05493399740124,
+      0.4453300142724079
+    ],
+    "controllability_rank": 4,
+    "closed_loop_poles": [
+      [
+        0.5430464146678395,
+        0.0
+      ],
+      [
+        0.965042947014595,
+        0.0
+      ],
+      [
+        1.0320097151836924,
+        0.009851698080648527
+      ],
+      [
+        1.0320097151836924,
+        -0.009851698080648527
+      ]
+    ],
+    "closed_loop_spectral_radius": 1.032056736903838,
+    "gate_pass": false
+  },
+  "cases": [
+    {
+      "case": "unconstrained_nominal",
+      "planar_stabilization": false,
+      "finite": true,
+      "final_abs_x_error_m": 0.008286437443220801,
+      "final_abs_pitch_rad": 0.009942816298586055,
+      "max_abs_pitch_rad": 0.015247689709601797,
+      "max_abs_height_error_m": 0.011286873450344848,
+      "max_abs_lateral_position_m": 0.05439914574293907,
+      "max_abs_roll_or_yaw_rad": 0.13115844435388996,
+      "both_wheels_contact_fraction": 0.999,
+      "equal_wheel_torque_max_error_nm": 0.0,
+      "gate_pass": false
+    },
+    {
+      "case": "stabilized_nominal",
+      "planar_stabilization": true,
+      "finite": true,
+      "final_abs_x_error_m": 0.026170236763930044,
+      "final_abs_pitch_rad": 0.03294848764333077,
+      "max_abs_pitch_rad": 0.07614328184630482,
+      "max_abs_height_error_m": 0.003922239299853969,
+      "max_abs_lateral_position_m": 0.021591357937406904,
+      "max_abs_roll_or_yaw_rad": 0.15526337980532606,
+      "both_wheels_contact_fraction": 0.999,
+      "equal_wheel_torque_max_error_nm": 0.0,
+      "gate_pass": false
+    },
+    {
+      "case": "stabilized_pitch_positive",
+      "planar_stabilization": true,
+      "finite": true,
+      "final_abs_x_error_m": 0.027059153417069937,
+      "final_abs_pitch_rad": 0.03528305059268654,
+      "max_abs_pitch_rad": 0.07408610797883881,
+      "max_abs_height_error_m": 0.003975511724601866,
+      "max_abs_lateral_position_m": 0.021382871592133725,
+      "max_abs_roll_or_yaw_rad": 0.13942574379087722,
+      "both_wheels_contact_fraction": 0.998,
+      "equal_wheel_torque_max_error_nm": 0.0,
+      "gate_pass": false
+    },
+    {
+      "case": "stabilized_pitch_negative",
+      "planar_stabilization": true,
+      "finite": true,
+      "final_abs_x_error_m": 0.02614865259304565,
+      "final_abs_pitch_rad": 0.03290970329652631,
+      "max_abs_pitch_rad": 0.07261896930243605,
+      "max_abs_height_error_m": 0.0040823255217212195,
+      "max_abs_lateral_position_m": 0.021999431236643892,
+      "max_abs_roll_or_yaw_rad": 0.11897416016361202,
+      "both_wheels_contact_fraction": 1.0,
+      "equal_wheel_torque_max_error_nm": 0.0,
+      "gate_pass": false
+    }
+  ],
+  "overall_pass": false,
+  "decision": "REWORK"
+}

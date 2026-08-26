@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mujoco model="wheel_leg_phase19_standing_exploration">
+  <compiler angle="radian" autolimits="true"/>
+  <option timestep="0.002" gravity="0 0 -9.81" integrator="implicitfast"
+          solver="Newton" cone="pyramidal" iterations="100" ls_iterations="50"
+          density="1.225" viscosity="1.8e-5"/>
+
+  <!-- Keep the Phase-18 wheel-only contact plant unchanged. -->
+  <include file="wheel_leg.xml"/>
+
+  <worldbody>
+    <geom name="floor" type="plane" pos="0 0 0" size="0 0 0.25"
+          contype="1" conaffinity="0" condim="3"
+          friction="1 0.005 0.0001" solref="0.02 1"
+          solimp="0.9 0.95 0.001 0.5 2" margin="0" gap="0"/>
+  </worldbody>
+</mujoco>

@@ -1,0 +1,34 @@
+{
+  "gates": {
+    "acceleration": true,
+    "bilateral_load": true,
+    "closure": true,
+    "finite": true,
+    "generalized_force": true,
+    "one_step_qpos": true,
+    "one_step_qvel": true,
+    "side_difference": true,
+    "support_torque": true,
+    "zero_wheel_torque": true
+  },
+  "metrics": {
+    "active_side_difference_rad": {
+      "hip": 0.019079212258660716,
+      "knee": 0.001357335037021401
+    },
+    "contact_count": 6,
+    "finite": true,
+    "maximum_acceleration_rad_m_s2": 9.814824688027055e-11,
+    "maximum_closure_residual_m": 0.00015865773519990745,
+    "maximum_generalized_force_residual": 2.2681945210933918e-10,
+    "maximum_support_torque_nm": 4.428369830750493,
+    "one_step_qpos_drift": 3.885780586188048e-16,
+    "one_step_qvel_drift": 1.9631156670847962e-13,
+    "wheel_normal_load_n": {
+      "left": 22.357688848898487,
+      "right": 40.763775151328346
+    },
+    "wheel_torque_exact_zero": true
+  },
+  "pass": true
+}

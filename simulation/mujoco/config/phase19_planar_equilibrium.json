@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "profile": "current_nominal_exact_planar",
+  "physics_timestep_s": 0.002,
+  "disabled_equality": "base_weld",
+  "joint_order": [
+    "right_hip_joint", "right_knee_joint", "left_hip_joint",
+    "left_knee_joint", "base_z_joint", "right_connect1_joint",
+    "right_connect2_joint", "left_connect1_joint", "left_connect2_joint"
+  ],
+  "driven_actuators": [
+    "left_hip_torque", "left_knee_torque",
+    "right_hip_torque", "right_knee_torque"
+  ],
+  "zero_actuators": ["left_wheel_torque", "right_wheel_torque"],
+  "seed": [
+    -0.34317755, 0.56969755, -0.36225677, 0.56834022, -0.25225965,
+    -0.57272964, -0.57315654, 0.57145204, -0.57186822,
+    0.15582290, 1.95587671, -0.15272939, 4.42837004
+  ],
+  "solver": {
+    "scales": [0.05, 0.05, 0.05, 0.05, 0.001, 0.001, 0.001, 0.001, 0.001, 1.0, 1.0, 1.0, 1.0],
+    "finite_difference_relative_step": 0.000002,
+    "initial_damping": 0.0001,
+    "maximum_iterations": 80,
+    "acceleration_target": 1e-10
+  },
+  "thresholds": {
+    "maximum_acceleration_rad_m_s2": 1e-8,
+    "maximum_generalized_force_residual": 1e-9,
+    "maximum_closure_residual_m": 0.0002,
+    "minimum_wheel_normal_load_n": 1.0,
+    "maximum_support_torque_nm": 10.0,
+    "maximum_active_side_difference_rad": 0.03,
+    "one_step_qpos_drift": 1e-10,
+    "one_step_qvel_drift": 1e-9
+  }
+}
