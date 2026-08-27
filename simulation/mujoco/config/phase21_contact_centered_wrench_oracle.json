@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "profile": "phase21_contact_centered_wrench_oracle_v1",
+  "model_profile": "simulation/mujoco/config/phase21_model_oracle_v8.json",
+  "continuous_contact_config": "simulation/mujoco/config/phase21_continuous_contact_oracle.json",
+  "capture_v1": "data/experiments/2026-08-27-phase21-contact-representation-capture-v1",
+  "capture_v2": "data/experiments/2026-08-27-phase21-patch-local-capture-v2",
+  "old_switches": "data/experiments/2026-08-27-phase21-patch-local-oracle-v2/switches.json",
+  "friction_coefficient": 1.0,
+  "torque_bounds_nm": [10, 10, 2, 10, 10, 2],
+  "random_seed": 2117,
+  "workspace_random_count": 8,
+  "membership_tolerance": 1e-8,
+  "geometry_variation_tolerance": 1e-12,
+  "map_variation_tolerance": 1e-12,
+  "transform_tolerance": 1e-10,
+  "virtual_work_tolerance": 1e-10,
+  "static_residual_tolerance": 1e-7,
+  "static_margin_tolerance": -1e-8,
+  "hull_qhull_options": "Qx"
+}

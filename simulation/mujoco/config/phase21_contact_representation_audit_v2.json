@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "profile": "phase21_contact_representation_audit_v2",
+  "extends": "simulation/mujoco/config/phase21_contact_representation_audit.json",
+  "supersedes": "simulation/mujoco/config/phase21_contact_representation_audit.json",
+  "contact_representation_audit": {
+    "minimum_lowest_eight_feasible_fraction": 1.0
+  }
+}

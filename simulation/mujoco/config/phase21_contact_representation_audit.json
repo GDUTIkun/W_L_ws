@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "profile": "phase21_contact_representation_audit_v1",
+  "extends": "simulation/mujoco/config/phase21_attribution.json",
+  "contact_representation_audit": {
+    "ticks": 273,
+    "analysis_start_tick": 1,
+    "analysis_end_tick": 271,
+    "support_band_sensitivity_m": [0.0001, 0.0005, 0.001],
+    "frozen_support_band_m": 0.001,
+    "minimum_normal_load_n": 1.0,
+    "friction_coefficient": 1.0,
+    "maximum_wrench_equality_residual": 1e-7,
+    "minimum_full_patch_feasible_fraction": 0.99,
+    "minimum_four_extreme_feasible_fraction": 0.99
+  }
+}

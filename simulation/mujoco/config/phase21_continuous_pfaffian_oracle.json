@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "profile": "phase21_continuous_pfaffian_oracle_v1",
+  "extends": "simulation/mujoco/config/phase21_continuous_contact_oracle.json",
+  "continuous_pfaffian_oracle": {
+    "continuous_profile": "simulation/mujoco/config/phase21_continuous_contact_oracle.json",
+    "capture_v2": "data/experiments/2026-08-27-phase21-patch-local-capture-v2",
+    "old_switches": "data/experiments/2026-08-27-phase21-patch-local-oracle-v2/switches.json",
+    "velocity_fd_steps_s": [0.0001, 0.00001, 0.000001],
+    "bias_outer_steps_s": [0.0002, 0.0001],
+    "bias_inner_step_s": 0.000001,
+    "maximum_velocity_fd_m_s": 0.000002,
+    "maximum_bias_cross_error_m_s2": 0.00002,
+    "random_seed": 2106,
+    "random_count": 8,
+    "representative_rolling_ticks": [1, 68, 136, 204, 271],
+    "wheel_rolling_sign_minimum_m_s": 0.001,
+    "maximum_wheel_rolling_radius_error_m": 0.001
+  }
+}

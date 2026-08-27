@@ -72,3 +72,5 @@ The mismatch compares the current plant contact wrench with the QP's current ide
 - The next authorized work remains a separately frozen state-dependent rolling-contact representation derivable from canonical state without MuJoCo-private contact truth, followed by the same local, saved-QP, task-attribution, and 10 s nonlinear gates.
 
 No Phase 21 gate is closed by this audit and no RECORD is permitted.
+
+The authorized representation audit and its required local follow-up have now been executed; see [rolling_contact_representation.md](rolling_contact_representation.md) and [lowest_eight_patch_local_oracle.md](lowest_eight_patch_local_oracle.md). The lowest-eight patch preserves force-resultant representability but fails selector position/Jacobian continuity, so it is rejected before Pfaffian, 78D QP, or solver work. Core integration remains prohibited and the 36-variable solver gates remain historical only.

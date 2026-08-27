@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "profile": "phase21_lowest_eight_patch_local_oracle_v1",
+  "extends": "simulation/mujoco/config/phase21_contact_representation_audit_v2.json",
+  "contact_representation_audit": {
+    "ticks": 273,
+    "analysis_start_tick": 1,
+    "analysis_end_tick": 271,
+    "support_band_sensitivity_m": [0.0001, 0.0005, 0.001],
+    "frozen_support_band_m": 0.001,
+    "minimum_normal_load_n": 1.0,
+    "friction_coefficient": 1.0,
+    "maximum_wrench_equality_residual": 1e-7,
+    "minimum_full_patch_feasible_fraction": 0.99,
+    "minimum_four_extreme_feasible_fraction": 0.99,
+    "minimum_lowest_eight_feasible_fraction": 1.0
+  },
+  "patch_local_oracle": {
+    "selector_count_per_wheel": 8,
+    "selector_order": ["world_z", "compiled_vertex_index"],
+    "control_period_s": 0.01,
+    "maximum_pose_reconstruction_error_m": 1e-12,
+    "maximum_selector_switch_position_discontinuity_m": 1e-9,
+    "maximum_selector_switch_jacobian_discontinuity": 1e-9
+  }
+}
