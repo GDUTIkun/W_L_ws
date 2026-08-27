@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "profile": "phase21_hard_layers_42d_v1",
+  "extends": "simulation/mujoco/config/phase21_hard_qp_42d.json",
+  "source_hard_profile": "simulation/mujoco/config/phase21_hard_qp_42d.json",
+  "layer_boundaries": [
+    {"name": "dynamics", "row_stop": 12},
+    {"name": "torque", "row_stop": 18},
+    {"name": "cone", "row_stop": 92},
+    {"name": "acceleration", "row_stop": 104}
+  ],
+  "gates": {
+    "maximum_oracle_complementarity_residual": 2e-6,
+    "maximum_physical_dynamics_residual": 1e-8,
+    "maximum_physical_torque_violation": 1e-8,
+    "maximum_physical_cone_violation": 1e-8,
+    "maximum_physical_acceleration_violation": 1e-8,
+    "maximum_slack_magnitude": 1e-10,
+    "minimum_static_equilibrium_margin": -1e-8,
+    "active_cone_tolerance": 2e-7,
+    "required_static_equilibrium_rows": 116,
+    "required_active_joint_count": 6
+  }
+}

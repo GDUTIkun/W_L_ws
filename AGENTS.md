@@ -53,6 +53,9 @@ ROADMAP
 - 实现必须遵守当前 Phase 的 Scope、Frozen Decisions 和接口约束。
 - 修改前检查工作树，保留用户已有且与当前任务无关的更改。
 - 不修改第三方、生成或构建目录，除非任务明确要求。
+- 仓库内 Python 实验、oracle、evaluator 和 MuJoCo formal 默认使用 `./.venv/bin/python`；除非当前 Phase 明确冻结其他解释器，不得直接使用系统 `python`/`python3`。
+- formal 写入稳定输出目录前，先用同一解释器执行依赖探针并记录版本（至少导入脚本实际需要的 MuJoCo/NumPy/SciPy 等依赖），再执行 `py_compile`；探针失败时不得创建或污染 formal 输出目录。
+- 解释器、导入或依赖缺失属于运行环境失败，不得记为模型、控制器或验证 evidence FAIL；应先切回冻结解释器重试，并在结果中保留实际解释器与依赖版本。
 - 自动验证记录真实命令和结果；人工或昂贵验证提供明确入口、输出位置和通过条件。
 - MuJoCo PASS、Real FAIL 时停留在当前验证层排查失配，不继续增加控制复杂度。
 - 最终技术验证由 Codex 负责，不能从提交、构建或任务状态推断 evidence PASS。
