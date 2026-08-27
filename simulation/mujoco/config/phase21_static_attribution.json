@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "profile": "phase21_static_attribution_v1",
+  "contact_centered_config": "simulation/mujoco/config/phase21_contact_centered_wrench_oracle.json",
+  "authoritative_run": "data/experiments/2026-08-27-phase21-contact-centered-wrench-oracle-v5",
+  "gamma_tolerance": 1e-7,
+  "epsilon_gate": 1e-7,
+  "mu_cap": 64.0,
+  "mu_bisection_iterations": 20,
+  "lp_tolerance": 1e-8
+  ,"gamma_cross_tolerance": 1e-7
+}

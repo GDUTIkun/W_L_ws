@@ -105,6 +105,14 @@ states, maximum hard residual is `2.64e-8`, minimum torque margin is `1.462 Nm`,
 H-row violation is `7.71e-13`, and maximum recovered point-force witness error is
 `2.39e-12`.
 
+A subsequent [static-failure attribution](static_failure_attribution.md) preserves this raw
+`122/173` result but corrects its scope interpretation: 44 of the 51 failures lie outside
+the already-frozen componentwise workspace and are fail-closed coverage cases.  Inside the
+envelope, the result is `122/129`, leaving seven nominal blockers.  All seven are repaired
+by removing the contact cone but not by removing torque bounds; their counterfactual
+minimum-friction median is `15.3466`.  This points to base-equilibrium/contact compatibility,
+not torque capacity or solver behavior, and does not authorize changing `mu=1`.
+
 ## Decision
 
 - The fixed contact-centered 6D wrench cone is accepted for the current nominal six-point
@@ -115,5 +123,6 @@ H-row violation is `7.71e-13`, and maximum recovered point-force witness error i
   also shows that restoring the eliminated point/internal-force variables cannot repair the
   failure.
 - P21-T04/T05/T06, solver benchmarking, hard-QP assembly and Core integration remain
-  blocked.  The next permitted work is a bounded attribution of the 51 static failures;
-  task/solver tuning and contact-geometry changes remain prohibited.
+  blocked.  The bounded attribution is complete; the next permitted work is confined to
+  the seven in-envelope base-equilibrium/contact compatibility failures.  Task/solver
+  tuning, friction changes and contact-geometry changes remain prohibited.
