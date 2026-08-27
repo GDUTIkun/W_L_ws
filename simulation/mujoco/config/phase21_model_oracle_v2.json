@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "profile": "current_nominal_weighted_wbc_model_oracle_v2",
+  "supersedes": "simulation/mujoco/config/phase21_model_oracle.json",
+  "scene": "simulation/mujoco/model/phase18_floating_contact.xml",
+  "equilibrium": "data/experiments/2026-08-26-phase20-equilibrium/equilibrium.json",
+  "phase15_profile": "simulation/mujoco/config/phase15_nominal.json",
+  "base_control_site": "base_control_frame",
+  "wheel_radius_m": 0.05,
+  "contact_point_local_m": [0.05, 0.0, 0.0],
+  "canonical_active_joints": [
+    "left_hip_joint", "left_knee_joint", "left_wheel_joint",
+    "right_hip_joint", "right_knee_joint", "right_wheel_joint"
+  ],
+  "passive_joints": [
+    "left_connect1_joint", "left_connect2_joint",
+    "right_connect1_joint", "right_connect2_joint"
+  ],
+  "closure_pairs": [
+    ["left_connect2_site", "left_calf_site"],
+    ["right_connect2_site", "right_calf_site"]
+  ],
+  "wheel_bodies": ["left_wheel_body", "right_wheel_body"],
+  "actuators": [
+    "left_hip_torque", "left_knee_torque", "left_wheel_torque",
+    "right_hip_torque", "right_knee_torque", "right_wheel_torque"
+  ],
+  "canonical_joint_offsets_rad": [
+    -1.3267204093873923, 2.2088002548867229, 0.0,
+    -1.3267204093873923, 2.2088002548867229, 0.0
+  ],
+  "samples": [
+    {"id": "equilibrium", "base_rotation_vector_rad": [0.0, 0.0, 0.0], "canonical_joint_delta_rad": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]},
+    {"id": "left_leg", "base_rotation_vector_rad": [0.0, 0.0, 0.0], "canonical_joint_delta_rad": [0.08, -0.10, 0.15, 0.0, 0.0, 0.0]},
+    {"id": "right_leg", "base_rotation_vector_rad": [0.0, 0.0, 0.0], "canonical_joint_delta_rad": [0.0, 0.0, 0.0, -0.08, 0.10, -0.15]},
+    {"id": "full_3d", "base_rotation_vector_rad": [0.02, -0.015, 0.01], "canonical_joint_delta_rad": [-0.06, 0.08, -0.12, 0.05, -0.07, 0.11]}
+  ],
+  "solver": {
+    "position_tolerance_m": 1e-12,
+    "step_tolerance_rad": 1e-13,
+    "maximum_iterations": 30,
+    "maximum_step_rad": 0.5,
+    "rcond": 1e-12,
+    "finite_difference_step": 1e-6
+  },
+  "thresholds": {
+    "maximum_closure_residual_m": 1e-10,
+    "maximum_constraint_tangent": 1e-9,
+    "maximum_base_twist_mapping": 1e-12,
+    "maximum_passive_velocity_fd_rad_s": 2e-6,
+    "maximum_passive_condition_number": 40.0,
+    "minimum_passive_singular_value": 0.005,
+    "maximum_mass_symmetry": 1e-11,
+    "minimum_mass_eigenvalue": 1e-5,
+    "maximum_actuator_map_error": 1e-10,
+    "maximum_gravity_energy_error_nm": 2e-5,
+    "maximum_contact_velocity_fd_m_s": 2e-6,
+    "maximum_virtual_work_error_w": 1e-10,
+    "maximum_forward_inverse_residual": 1e-10,
+    "minimum_contact_delassus_eigenvalue": 1e-5
+  }
+}

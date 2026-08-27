@@ -8,7 +8,7 @@ None.
 
 ## Planned
 
-None.
+- [Phase 21：nominal Weighted WBC](21-nominal-weighted-wbc/PLAN.md) — 执行中；solver与equilibrium hard-QP已通过，10 s nonlinear task pre-freeze暴露rolling-contact model阻塞，禁止Core集成。
 
 ## Review
 

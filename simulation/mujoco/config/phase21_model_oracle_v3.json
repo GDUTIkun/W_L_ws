@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "profile": "current_nominal_weighted_wbc_model_oracle_v3",
+  "extends": "simulation/mujoco/config/phase21_model_oracle_v2.json",
+  "supersedes": "simulation/mujoco/config/phase21_model_oracle_v2.json",
+  "solver": {
+    "second_difference_step": 0.0001
+  },
+  "thresholds": {
+    "maximum_contact_bias_fd_m_s2": 0.00002,
+    "maximum_coriolis_power_error_w": 0.0000001,
+    "maximum_wrench_map_error": 1e-12
+  }
+}

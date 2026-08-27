@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "profile": "current_nominal_weighted_wbc_qp_prefreeze_v5",
+  "extends": "simulation/mujoco/config/phase21_qp_prefreeze_v4.json",
+  "supersedes": "simulation/mujoco/config/phase21_qp_prefreeze_v4.json",
+  "deadline_authority": "tools/experiments/benchmark_dense_qp_solver.cpp"
+}

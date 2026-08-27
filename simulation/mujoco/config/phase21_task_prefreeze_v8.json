@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "profile": "current_nominal_weighted_wbc_task_prefreeze_v8",
+  "extends": "simulation/mujoco/config/phase21_task_prefreeze_v5.json",
+  "supersedes": "simulation/mujoco/config/phase21_task_prefreeze_v7.json",
+  "model_profile": "simulation/mujoco/config/phase21_model_oracle_v9.json"
+}

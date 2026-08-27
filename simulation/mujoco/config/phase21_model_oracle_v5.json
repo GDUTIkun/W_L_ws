@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "profile": "current_nominal_weighted_wbc_model_oracle_v5",
+  "extends": "simulation/mujoco/config/phase21_model_oracle_v4.json",
+  "supersedes": "simulation/mujoco/config/phase21_model_oracle_v4.json",
+  "solver": {
+    "flow_integration_substeps": 4,
+    "flow_integrator": "explicit_midpoint"
+  }
+}

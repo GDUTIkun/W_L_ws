@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "profile": "current_nominal_weighted_wbc_task_prefreeze_v1",
+  "model_profile": "simulation/mujoco/config/phase21_model_oracle_v8.json",
+  "qp_profile": "simulation/mujoco/config/phase21_qp_prefreeze_v5.json",
+  "duration_s": 10.0,
+  "physics_steps_per_control": 5,
+  "disturbance_start_tick": 100,
+  "disturbance_ticks": 10,
+  "task": {
+    "contact_acceleration_weight": 50.0,
+    "base_x_weight": 20.0,
+    "base_height_weight": 100.0,
+    "base_orientation_weight": 100.0,
+    "leg_posture_weight": 10.0,
+    "translation_kp_s2": [20.0, 0.0, 40.0],
+    "translation_kd_s": [8.0, 0.0, 12.0],
+    "orientation_kp_s2": [40.0, 40.0, 20.0],
+    "orientation_kd_s": [12.0, 12.0, 8.0],
+    "leg_kp_s2": 30.0,
+    "leg_kd_s": 8.0,
+    "contact_acceleration_scale_m_s2": 10.0,
+    "base_acceleration_scale_m_s2": 10.0,
+    "angular_acceleration_scale_rad_s2": 20.0,
+    "leg_acceleration_scale_rad_s2": 50.0
+  },
+  "solver": {
+    "rho": 1.0,
+    "sigma": 1e-6,
+    "absolute_tolerance": 1e-7,
+    "relative_tolerance": 1e-7,
+    "maximum_iterations": 4000
+  },
+  "tuning_cases": [
+    {"id": "nominal"},
+    {"id": "pitch_moment_positive", "moment_nm": [0.0, 0.01, 0.0]},
+    {"id": "roll_moment_positive", "moment_nm": [0.005, 0.0, 0.0]},
+    {"id": "force_x_positive", "force_n": [0.1, 0.0, 0.0]}
+  ],
+  "holdout_cases": [
+    {"id": "pitch_moment_negative", "moment_nm": [0.0, -0.01, 0.0]},
+    {"id": "roll_moment_negative", "moment_nm": [-0.005, 0.0, 0.0]},
+    {"id": "yaw_moment_negative", "moment_nm": [0.0, 0.0, -0.005]},
+    {"id": "force_x_negative", "force_n": [-0.1, 0.0, 0.0]},
+    {"id": "force_y_positive", "force_n": [0.0, 0.05, 0.0]},
+    {"id": "force_y_negative", "force_n": [0.0, -0.05, 0.0]},
+    {"id": "combined_positive", "force_n": [0.05, 0.025, 0.0], "moment_nm": [0.0025, 0.005, 0.0025]},
+    {"id": "combined_negative", "force_n": [-0.05, -0.025, 0.0], "moment_nm": [-0.0025, -0.005, -0.0025]}
+  ],
+  "ablation": {
+    "position_error_m": 0.002,
+    "orientation_error_rad": 0.002,
+    "leg_error_rad": 0.002,
+    "minimum_directional_acceleration": 0.001
+  },
+  "gates": {
+    "maximum_abs_x_m": 0.02,
+    "maximum_abs_y_m": 0.02,
+    "maximum_height_error_m": 0.01,
+    "maximum_abs_roll_rad": 0.03,
+    "maximum_abs_pitch_rad": 0.03,
+    "maximum_abs_yaw_rad": 0.05,
+    "maximum_final_linear_speed_m_s": 0.02,
+    "maximum_final_angular_speed_rad_s": 0.10,
+    "minimum_bilateral_contact_fraction": 1.0,
+    "minimum_normal_force_n": 1.0,
+    "maximum_penetration_m": 0.004,
+    "maximum_abs_rolling_slip_m_s": 0.05,
+    "maximum_abs_lateral_slip_m_s": 0.05,
+    "maximum_closure_residual_m": 0.0002,
+    "maximum_hard_residual": 2e-5,
+    "maximum_bound_violation": 2e-5,
+    "maximum_abs_wrench_slack": 2.0,
+    "maximum_solver_failure_count": 0,
+    "maximum_saturation_count": 0
+  }
+}

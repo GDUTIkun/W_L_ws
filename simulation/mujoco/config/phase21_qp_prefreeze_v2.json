@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "profile": "current_nominal_weighted_wbc_qp_prefreeze_v2",
+  "extends": "simulation/mujoco/config/phase21_qp_prefreeze.json",
+  "supersedes": "simulation/mujoco/config/phase21_qp_prefreeze.json",
+  "solver": {
+    "rho": 0.1,
+    "absolute_tolerance": 1e-8,
+    "relative_tolerance": 1e-8,
+    "maximum_iterations": 10000
+  }
+}

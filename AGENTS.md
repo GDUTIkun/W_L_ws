@@ -107,3 +107,4 @@ ROADMAP
 - MuJoCo 与真机最终使用统一 RobotState/TorqueCommand 边界。
 - 树莓派—STM32 正式通信方案、消息精确 schema、关节顺序、坐标与时间语义仍需独立 Phase 冻结。
 - 现有 UART2 实现是实验候选，不是已批准的生产协议。
+- 要进入ros_ws再colcon build

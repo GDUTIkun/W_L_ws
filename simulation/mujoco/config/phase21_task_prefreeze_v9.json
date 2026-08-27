@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "profile": "current_nominal_weighted_wbc_task_prefreeze_v9",
+  "extends": "simulation/mujoco/config/phase21_task_prefreeze_v5.json",
+  "supersedes": "simulation/mujoco/config/phase21_task_prefreeze_v8.json",
+  "task": {
+    "base_x_weight": 500.0,
+    "base_orientation_weight": 500.0,
+    "translation_kp_s2": [20.0, 0.0, 40.0],
+    "translation_kd_s": [30.0, 0.0, 12.0]
+  },
+  "solver": {
+    "rho": 100.0,
+    "sigma": 1e-6,
+    "absolute_tolerance": 1e-7,
+    "relative_tolerance": 1e-7,
+    "maximum_iterations": 4000
+  }
+}

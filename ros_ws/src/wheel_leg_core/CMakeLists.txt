@@ -5,11 +5,14 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-add_library(wheel_leg_core src/controller_core.cpp)
+find_package(Eigen3 3.4 REQUIRED NO_MODULE)
+
+add_library(wheel_leg_core src/controller_core.cpp src/dense_qp_solver.cpp)
 add_library(wheel_leg_core::wheel_leg_core ALIAS wheel_leg_core)
 target_include_directories(wheel_leg_core PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
+target_link_libraries(wheel_leg_core PUBLIC Eigen3::Eigen)
 if(MSVC)
   target_compile_options(wheel_leg_core PRIVATE /W4 /WX)
 else()
@@ -26,6 +29,15 @@ if(BUILD_TESTING)
     target_compile_options(test_contract PRIVATE -Wall -Wextra -Wpedantic -Werror)
   endif()
   add_test(NAME wheel_leg_core_contract COMMAND test_contract)
+
+  add_executable(test_dense_qp_solver test/test_dense_qp_solver.cpp)
+  target_link_libraries(test_dense_qp_solver PRIVATE wheel_leg_core)
+  if(MSVC)
+    target_compile_options(test_dense_qp_solver PRIVATE /W4 /WX)
+  else()
+    target_compile_options(test_dense_qp_solver PRIVATE -Wall -Wextra -Wpedantic -Werror)
+  endif()
+  add_test(NAME wheel_leg_core_dense_qp_solver COMMAND test_dense_qp_solver)
 endif()
 
 install(DIRECTORY include/ DESTINATION include)
@@ -36,6 +48,7 @@ install(TARGETS wheel_leg_core EXPORT export_wheel_leg_core
 
 find_package(ament_cmake QUIET)
 if(ament_cmake_FOUND)
+  ament_export_dependencies(Eigen3)
   ament_export_targets(export_wheel_leg_core HAS_LIBRARY_TARGET)
   ament_export_include_directories(include)
   ament_package()

@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "profile": "current_nominal_weighted_wbc_model_oracle_v6",
+  "extends": "simulation/mujoco/config/phase21_model_oracle_v5.json",
+  "supersedes": "simulation/mujoco/config/phase21_model_oracle_v5.json",
+  "contact_point_semantics": "per-side force-weighted Phase20 equilibrium COP, expressed as a wheel-body material point",
+  "contact_points_local_m": [
+    [0.04860048, -0.01060993, 0.01195553],
+    [0.04861074, -0.01117403, -0.00338943]
+  ],
+  "thresholds": {
+    "maximum_static_equilibrium_residual": 1e-7
+  }
+}

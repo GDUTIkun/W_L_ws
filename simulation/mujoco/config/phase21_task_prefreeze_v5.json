@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "profile": "current_nominal_weighted_wbc_task_prefreeze_v5",
+  "extends": "simulation/mujoco/config/phase21_task_prefreeze_v2.json",
+  "supersedes": "simulation/mujoco/config/phase21_task_prefreeze_v4.json",
+  "qp_profile": "simulation/mujoco/config/phase21_qp_prefreeze_v5.json",
+  "objective": {
+    "wrench_slack_penalty": 1.0
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "profile": "phase21_failure_attribution_v1",
+  "extends": "simulation/mujoco/config/phase21_task_prefreeze_v5.json",
+  "attribution": {
+    "failure_window_ticks": [240, 272],
+    "active_tolerance": 1e-5,
+    "direction_target_threshold": 1e-6,
+    "cases": [
+      {"id": "baseline"},
+      {"id": "disable_wrench", "disable_wrench_fidelity": true},
+      {"id": "disable_contact", "disable_task": "contact"},
+      {"id": "disable_base_x", "disable_task": "base_x"},
+      {"id": "disable_height", "disable_task": "height"},
+      {"id": "disable_orientation", "disable_task": "orientation"},
+      {"id": "disable_leg", "disable_task": "leg"},
+      {"id": "single_contact", "single_task": "contact"},
+      {"id": "single_base_x", "single_task": "base_x"},
+      {"id": "single_height", "single_task": "height"},
+      {"id": "single_orientation", "single_task": "orientation"},
+      {"id": "single_leg", "single_task": "leg"}
+    ]
+  }
+}

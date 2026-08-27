@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "profile": "current_nominal_weighted_wbc_task_prefreeze_v6",
+  "extends": "simulation/mujoco/config/phase21_task_prefreeze_v5.json",
+  "supersedes": "simulation/mujoco/config/phase21_task_prefreeze_v5.json",
+  "task": {
+    "base_x_weight": 100.0,
+    "translation_kp_s2": [40.0, 0.0, 40.0],
+    "translation_kd_s": [12.0, 0.0, 12.0]
+  }
+}

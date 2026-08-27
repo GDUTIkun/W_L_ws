@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "profile": "current_nominal_weighted_wbc_model_oracle_v9",
+  "extends": "simulation/mujoco/config/phase21_model_oracle_v8.json",
+  "supersedes": "simulation/mujoco/config/phase21_model_oracle_v8.json",
+  "contact_point_semantics": "instantaneous rolling contact selector: equilibrium-calibrated world offset from each wheel center, reselected at every configuration",
+  "contact_points_local_m": null,
+  "contact_points_world_offset_m": [
+    [0.000016610774760783542, 0.011955532852086642, -0.049726860447404375],
+    [-0.000002159432049508858, -0.0033894323625758005, -0.049860269072475996]
+  ]
+}

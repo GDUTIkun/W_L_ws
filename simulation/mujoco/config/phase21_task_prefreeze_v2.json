@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "profile": "current_nominal_weighted_wbc_task_prefreeze_v2",
+  "extends": "simulation/mujoco/config/phase21_task_prefreeze.json",
+  "supersedes": "simulation/mujoco/config/phase21_task_prefreeze.json",
+  "solver": {
+    "rho": 10.0,
+    "sigma": 1e-6,
+    "absolute_tolerance": 1e-7,
+    "relative_tolerance": 1e-7,
+    "maximum_iterations": 4000
+  }
+}

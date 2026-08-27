@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "profile": "current_nominal_weighted_wbc_model_oracle_v4",
+  "extends": "simulation/mujoco/config/phase21_model_oracle_v3.json",
+  "supersedes": "simulation/mujoco/config/phase21_model_oracle_v3.json",
+  "solver": {
+    "flow_integration_substeps": 20
+  }
+}

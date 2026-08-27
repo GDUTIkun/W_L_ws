@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "profile": "current_nominal_weighted_wbc_model_oracle_v7",
+  "extends": "simulation/mujoco/config/phase21_model_oracle_v6.json",
+  "supersedes": "simulation/mujoco/config/phase21_model_oracle_v6.json",
+  "contact_points_local_m": [
+    [0.04860047708167135, -0.010609926984755245, 0.01195553285208663],
+    [0.04861073911380578, -0.01117402614503418, -0.0033894323625758118]
+  ]
+}

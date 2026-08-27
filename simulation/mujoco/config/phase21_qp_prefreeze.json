@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "profile": "current_nominal_weighted_wbc_qp_prefreeze_v1",
+  "model_profile": "simulation/mujoco/config/phase21_model_oracle_v8.json",
+  "friction_coefficient": 1.0,
+  "variable_scale": {
+    "acceleration": [10, 10, 10, 20, 20, 20, 50, 50, 50, 50, 50, 50],
+    "torque": [10, 10, 2, 10, 10, 2],
+    "contact_force": [50, 50, 50, 50, 50, 50],
+    "wrench_slack": [50, 50, 50, 10, 10, 10, 50, 50, 50, 10, 10, 10]
+  },
+  "row_scale": {
+    "dynamics": [100, 100, 100, 20, 20, 20, 10, 10, 10, 10, 10, 10],
+    "wrench": [50, 50, 50, 10, 10, 10, 50, 50, 50, 10, 10, 10]
+  },
+  "bounds": {
+    "torque_nm": [10, 10, 2, 10, 10, 2],
+    "acceleration": [10, 10, 10, 20, 20, 20, 50, 50, 50, 50, 50, 50],
+    "maximum_normal_force_n": 100
+  },
+  "objective": {
+    "acceleration_regularization": 1,
+    "torque_regularization": 0.001,
+    "contact_force_regularization": 0.0001,
+    "wrench_slack_penalty": 100
+  },
+  "solver": {
+    "rho": 1,
+    "sigma": 1e-6,
+    "absolute_tolerance": 1e-9,
+    "relative_tolerance": 1e-9,
+    "maximum_iterations": 20000
+  },
+  "gates": {
+    "maximum_equality_residual": 2e-7,
+    "maximum_bound_violation": 2e-7,
+    "maximum_stationarity_residual": 2e-6,
+    "maximum_cross_oracle_difference": 2e-6,
+    "minimum_torque_margin_nm": 1,
+    "minimum_normal_force_n": 1,
+    "minimum_friction_margin_n": 1,
+    "maximum_reference_host_solve_time_ms": 10
+  }
+}
