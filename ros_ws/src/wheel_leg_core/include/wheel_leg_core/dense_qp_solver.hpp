@@ -8,7 +8,7 @@ namespace wheel_leg {
 // Fixed-capacity dense ADMM solver for the Phase 21 bound-form QP.
 class DenseQpSolver {
  public:
-  static constexpr int kVariableCount = 36;
+  static constexpr int kVariableCount = 42;
   static constexpr int kMaxConstraintCount = 128;
 
   using Vector = Eigen::Matrix<double, kVariableCount, 1>;
@@ -34,6 +34,7 @@ class DenseQpSolver {
   };
 
   enum class StartMode { kCold, kWarm };
+  enum class SetupMode { kCold, kWarm };
 
   struct Result {
     Status status{Status::kInvalidInput};
@@ -52,11 +53,13 @@ class DenseQpSolver {
   explicit DenseQpSolver(Settings settings);
 
   // Copies and validates min 0.5*x'H*x + g'x subject to l <= A*x <= u.
+  // kWarm retains x/z/y only when the previous row count matches.
   [[nodiscard]] Status setup(const Eigen::Ref<const Eigen::MatrixXd>& h,
                              const Eigen::Ref<const Eigen::VectorXd>& g,
                              const Eigen::Ref<const Eigen::MatrixXd>& a,
                              const Eigen::Ref<const Eigen::VectorXd>& lower,
-                             const Eigen::Ref<const Eigen::VectorXd>& upper);
+                             const Eigen::Ref<const Eigen::VectorXd>& upper,
+                             SetupMode setup_mode = SetupMode::kCold);
 
   // Cold starts are deterministic. A warm start is only used when requested.
   void reset();

@@ -79,3 +79,11 @@ those classifications do not affect the nominal conclusion.
   tuning tasks/solver, or integrating Core is not authorized.
 - The next allowed work is confined to the reduced base-equilibrium/contact compatibility
   that produces these seven failures.
+
+## Subsequent closing audit
+
+This document preserves the verdict of the bounded-attribution run at the time it was created.
+The later same-configuration plant/static-semantics audit is recorded separately in
+[base_contact_compatibility_closing.md](base_contact_compatibility_closing.md). It classifies all
+seven states as A (static-gate semantics), closes DG21-01 by Route 1 and authorizes the 42D hard-QP
+only as the next candidate. It does not rewrite this historical evidence or claim a QP/Core PASS.

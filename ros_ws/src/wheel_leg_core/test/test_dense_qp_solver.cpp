@@ -49,6 +49,7 @@ int main() {
   Eigen::VectorXd g = zeroG();
   g[0] = -2.0;
   g[5] = 0.5;
+  g[DenseQpSolver::kVariableCount - 1] = -0.75;
   DenseQpSolver unconstrained;
   Eigen::MatrixXd empty_a(0, DenseQpSolver::kVariableCount);
   Eigen::VectorXd empty(0);
@@ -58,6 +59,8 @@ int main() {
   assert(unconstrained_result.converged());
   expectNear(unconstrained_result.x[0], 2.0, 1.0e-9);
   expectNear(unconstrained_result.x[5], -0.5, 1.0e-9);
+  expectNear(unconstrained_result.x[DenseQpSolver::kVariableCount - 1], 0.75,
+             1.0e-9);
   assert(unconstrained_result.stationarity_residual < 1.0e-9);
 
   // Non-diagonal SPD golden case; the 2x2 analytic solution is
@@ -136,6 +139,41 @@ int main() {
   assert(first_cold.converged() && warm.converged() && second_cold.converged());
   assert(first_cold.x.isApprox(second_cold.x, 1.0e-12));
   assert(first_cold.x.isApprox(warm.x, 2.0e-5));
+
+  // setup(kWarm) retains compatible state across a changed QP, then projects
+  // the retained auxiliary state onto the new bounds.
+  Eigen::MatrixXd updated_a =
+      Eigen::MatrixXd::Zero(1, DenseQpSolver::kVariableCount);
+  updated_a(0, 0) = 2.0;
+  Eigen::VectorXd updated_lower(1);
+  Eigen::VectorXd updated_upper(1);
+  updated_lower[0] = -4.0;
+  updated_upper[0] = 1.0;
+  Eigen::VectorXd updated_g = zeroG();
+  updated_g[0] = -4.0;
+  assert(deterministic.setup(identityH(), updated_g, updated_a, updated_lower,
+                             updated_upper,
+                             DenseQpSolver::SetupMode::kWarm) ==
+         Status::kConverged);
+  const auto updated_warm = deterministic.solve(StartMode::kWarm);
+  assert(updated_warm.converged());
+  expectNear(updated_warm.x[0], 0.5);
+
+  // A different row count cannot retain a stale warm state.
+  Eigen::MatrixXd two_rows =
+      Eigen::MatrixXd::Zero(2, DenseQpSolver::kVariableCount);
+  two_rows(0, 0) = 1.0;
+  two_rows(1, 1) = 1.0;
+  Eigen::VectorXd two_lower(2);
+  Eigen::VectorXd two_upper(2);
+  two_lower << -1.0, -1.0;
+  two_upper << 1.0, 1.0;
+  assert(deterministic.setup(identityH(), zeroG(), two_rows, two_lower,
+                             two_upper, DenseQpSolver::SetupMode::kWarm) ==
+         Status::kConverged);
+  const auto changed_rows = deterministic.solve(StartMode::kWarm);
+  assert(changed_rows.converged());
+  assert(changed_rows.x.isZero(2.0e-5));
 
   DenseQpSolver::Settings one_iteration;
   one_iteration.maximum_iterations = 1;

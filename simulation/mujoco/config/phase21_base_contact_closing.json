@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "profile": "phase21_base_contact_closing_v1",
+  "contact_centered_config": "simulation/mujoco/config/phase21_contact_centered_wrench_oracle.json",
+  "authoritative_static": "data/experiments/2026-08-27-phase21-contact-centered-wrench-oracle-v5/static.json",
+  "capture": "data/experiments/2026-08-27-phase21-patch-local-capture-v2/capture.npz",
+  "failure_states": ["random_04", "tick_212", "tick_213", "tick_217", "tick_218", "tick_219", "tick_220"],
+  "control_states": ["equilibrium", "random_03", "tick_210", "tick_211"],
+  "force_scale_n": 0.0,
+  "wheel_radius_m": 0.05,
+  "lp_tolerance": 1e-8,
+  "projection_tolerance": 1e-8,
+  "dynamic_dt_s": 0.01,
+  "dynamic_absolute_limit": 1.5,
+  "dynamic_relative_limit": 0.03,
+  "phase15_workspace_static_admissible": false
+}

@@ -40,10 +40,14 @@ DenseQpSolver::Status DenseQpSolver::setup(
     const Eigen::Ref<const Eigen::VectorXd>& g,
     const Eigen::Ref<const Eigen::MatrixXd>& a,
     const Eigen::Ref<const Eigen::VectorXd>& lower,
-    const Eigen::Ref<const Eigen::VectorXd>& upper) {
+    const Eigen::Ref<const Eigen::VectorXd>& upper, SetupMode setup_mode) {
+  const bool preserve_warm_start =
+      setup_mode == SetupMode::kWarm && ready_ && constraint_count_ == a.rows();
   ready_ = false;
   constraint_count_ = 0;
-  reset();
+  if (!preserve_warm_start) {
+    reset();
+  }
   if (!validSettings() || h.rows() != kVariableCount ||
       h.cols() != kVariableCount || g.size() != kVariableCount ||
       a.cols() != kVariableCount || a.rows() < 0 ||
@@ -84,6 +88,15 @@ DenseQpSolver::Status DenseQpSolver::setup(
       !factorization_.vectorD().allFinite() ||
       (factorization_.vectorD().array() <= 0.0).any()) {
     return Status::kFactorizationFailure;
+  }
+  if (preserve_warm_start && constraint_count_ > 0) {
+    ax_.head(constraint_count_).noalias() =
+        a_.topRows(constraint_count_) * x_;
+    z_.head(constraint_count_) =
+        (ax_.head(constraint_count_) + y_.head(constraint_count_))
+            .cwiseMax(lower_.head(constraint_count_))
+            .cwiseMin(upper_.head(constraint_count_));
+    z_previous_.head(constraint_count_) = z_.head(constraint_count_);
   }
   ready_ = true;
   return Status::kConverged;

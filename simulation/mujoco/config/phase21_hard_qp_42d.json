@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "profile": "phase21_hard_qp_42d_v1",
+  "model_profile": "simulation/mujoco/config/phase21_model_oracle_v8.json",
+  "contact_profile": "simulation/mujoco/config/phase21_contact_centered_wrench_oracle.json",
+  "dynamic_capture": "data/experiments/2026-08-27-phase21-patch-local-capture-v2/capture.npz",
+  "dynamic_ticks": [1, 20, 40, 60, 68, 80, 100, 120, 136, 140, 160, 180, 200, 204, 210, 211, 212, 213, 217, 218, 219, 220, 230, 240, 250, 255, 260, 271],
+  "variable_scale": {
+    "acceleration": [10, 10, 10, 20, 20, 20, 50, 50, 50, 50, 50, 50],
+    "torque": [10, 10, 2, 10, 10, 2],
+    "wrench_per_side": [50, 50, 50, 2.5, 2.5, 2.5],
+    "slack_per_side": [50, 50, 50, 2.5, 2.5, 2.5]
+  },
+  "row_scale": {
+    "dynamics": [100, 100, 100, 20, 20, 20, 10, 10, 10, 10, 10, 10],
+    "cone_rule": "unit_2_norm_after_variable_scaling"
+  },
+  "bounds": {
+    "torque_nm": [10, 10, 2, 10, 10, 2],
+    "acceleration": [10, 10, 10, 20, 20, 20, 50, 50, 50, 50, 50, 50]
+  },
+  "minimum_scaled_norm_regularization": 1.0,
+  "oracle": {
+    "feasibility_tolerance": 1e-8,
+    "qp_ftol": 1e-12,
+    "maximum_iterations": 3000,
+    "active_tolerance": 2e-7
+  },
+  "solver": {
+    "rho": 1.0,
+    "sigma": 1e-6,
+    "absolute_tolerance": 1e-8,
+    "relative_tolerance": 1e-8,
+    "maximum_iterations": 10000
+  },
+  "gates": {
+    "maximum_oracle_bound_violation": 2e-7,
+    "maximum_oracle_stationarity_residual": 2e-6,
+    "maximum_cone_row_norm_error": 1e-12,
+    "maximum_scaling_condition_number": 100000000.0,
+    "required_variable_count": 42,
+    "required_row_count": 104,
+    "required_cone_rows_per_side": 37
+  }
+}

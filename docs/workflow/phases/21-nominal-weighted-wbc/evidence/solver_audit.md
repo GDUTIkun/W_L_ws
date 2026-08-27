@@ -1,7 +1,7 @@
 # Phase 21 Solver Audit
 
 Date: 2026-08-26  
-Status: production path frozen; component evidence PASS
+Status: historical 36D result; superseded for current authority by `solver_audit_42d.md`
 
 ## Required Problem
 
@@ -33,4 +33,4 @@ Use a project-owned, Eigen-only dense ADMM component for Phase 21. This is an im
 - Invalid data, factorization failure, non-finite iterate, inconsistent bounds, maximum iteration or deadline status is rejected and maps to six zero torques plus the Core safety latch.
 - No equality solve, clipped candidate or previous feasible command is an accepted fallback.
 
-The component corpus passes in `test_dense_qp_solver.cpp`. The final v5 hard-QP evidence passes with maximum hard residual `5.80e-8`, stationarity residual `5.52e-8`, and rejected infeasible input. A 1000-run C++ reference-host benchmark records cold p99 `1.80011 ms`, cold maximum `2.888224 ms`, and warm solve `0.00344 ms`. These figures authorize this solver component for Phase 21 simulation work only; they are not target-hardware real-time evidence.
+The historical component corpus passes in `test_dense_qp_solver.cpp`. The final v5 36D hard-QP evidence passed with maximum hard residual `5.80e-8`, stationarity residual `5.52e-8`, and rejected infeasible input. Its 1000-run C++ reference-host benchmark recorded cold p99 `1.80011 ms`, cold maximum `2.888224 ms`, and warm solve `0.00344 ms`. After DG21-01/02 selected the 42D contact-centred-wrench contract, none of these figures remained current authority. The replacement 42D audit is recorded in `solver_audit_42d.md`.
