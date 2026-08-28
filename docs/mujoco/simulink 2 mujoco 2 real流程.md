@@ -988,13 +988,13 @@ ProxQP-backed WBC 现作为后续 NMPC 和 identified-profile 复现所用的 so
 
 # 19. NMPC
 
-[Phase 23](../workflow/phases/23-nominal-nmpc/PLAN.md) 已按用户指令冻结为 `blocked`。
-已关闭的DG23-01把候选修订为current nominal的12-state locked-composite base model；
-OCP/KKT、sparse ProxQP profile、同步更新tick、production Core和formal均未执行。
-解除冻结后从P23-T04继续，且只有这些gate通过后才允许把12D wrench写入
-Phase 21/22已冻结的内部WBC reference。
-Simulink/acados 候选仅作 oracle；production 不迁入 Euler state、生成 S-function 或
-失败时无限保持 last-valid command。
+[Phase 23](../workflow/phases/23-nominal-nmpc/PLAN.md) 已按用户指令解除冻结并改为
+acados NMPC，状态为 `active`。已关闭的DG23-01继续授权current nominal的12-state
+locked-composite base model；P23-T04从`/home/t/opt/acados`关闭可复现code generation、
+generated solver、SQP-RTI+HPIPM、KKT、loader和同步更新tick时限gate。只有这些gate
+通过后，accepted first control才允许写入Phase 21/22已冻结的内部12D WBC reference。
+历史Simulink 16D/Euler acados S-function仍只作拒绝项对照；新路线从current 12D model
+生成受控artifact，runtime不加载Python/CasADi，也不在失败时无限保持last-valid command。
 
 先人工给：
 

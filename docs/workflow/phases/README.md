@@ -4,7 +4,7 @@
 
 ## Active
 
-None.
+- [Phase 23：nominal acados NMPC](23-nominal-nmpc/PLAN.md) — 2026-08-28按用户指令解除冻结并改用`/home/t/opt/acados`；P23-T01～T03与DG23-01保留完成，当前P23-T04关闭codegen/OCP/SQP-RTI+HPIPM、loader与时限gate，尚无NMPC/Core/formal PASS。
 
 ## Planned
 
@@ -16,7 +16,6 @@ None.
 
 ## Blocked
 
-- [Phase 23：nominal NMPC](23-nominal-nmpc/PLAN.md) — 2026-08-28按用户指令冻结；P23-T01～T03与DG23-01完成，OCP/solver/Core/formal未执行，恢复时从P23-T04继续。
 - [Phase 05：执行器力矩辨识与模型校准](05-actuator-torque-identification/PLAN.md) — Phase 14 前置已 PASS；当前按用户决定冻结真机相关执行，解除冻结后从通信/计量/同步/安全 gate 恢复。
 
 ## Complete

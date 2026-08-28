@@ -1,6 +1,7 @@
 #include "wheel_leg_core/controller_core.hpp"
 
 #include <algorithm>
+#include <chrono>
 #include <cmath>
 #include <iterator>
 
@@ -143,7 +144,8 @@ bool isStandingMode(ControllerMode mode) {
 }
 
 bool isSafetyLatchedMode(ControllerMode mode) {
-  return isStandingMode(mode) || mode == ControllerMode::kWeightedWbc;
+  return isStandingMode(mode) || mode == ControllerMode::kWeightedWbc ||
+         mode == ControllerMode::kNominalNmpcWbc;
 }
 
 bool validWeightedWbcConfig(
@@ -178,6 +180,20 @@ bool validWeightedWbcConfig(
          std::all_of(
              torque_limit_nm.begin(), torque_limit_nm.end(),
              [](double value) { return value > 0.0; });
+}
+
+bool validNominalNmpcConfig(const NominalNmpcConfig &config) {
+  return std::isfinite(config.longitudinal_amplitude_m) &&
+         std::isfinite(config.step_start_s) &&
+         std::isfinite(config.return_start_s) &&
+         std::isfinite(config.update_period_s) &&
+         std::isfinite(config.deadline_s) &&
+         config.longitudinal_amplitude_m >= 0.0 &&
+         config.longitudinal_amplitude_m <= 0.01 &&
+         config.step_start_s >= 0.0 &&
+         config.return_start_s > config.step_start_s &&
+         std::abs(config.update_period_s - 0.02) <= 1.0e-12 &&
+         config.deadline_s > 0.0 && config.deadline_s <= 0.01;
 }
 
 bool bothWheelsContact(const RobotState &state) {
@@ -296,7 +312,8 @@ bool ControllerCore::configure(const ControllerConfig &config) {
        config.mode != ControllerMode::kJointPdGravity &&
        config.mode != ControllerMode::kSimpleStanding &&
        config.mode != ControllerMode::kSimpleStanding3d &&
-       config.mode != ControllerMode::kWeightedWbc) ||
+       config.mode != ControllerMode::kWeightedWbc &&
+       config.mode != ControllerMode::kNominalNmpcWbc) ||
       !std::isfinite(config.quaternion_norm_tolerance) ||
       config.quaternion_norm_tolerance < 0.0 ||
       !validReference(config.initial_reference) ||
@@ -308,8 +325,11 @@ bool ControllerCore::configure(const ControllerConfig &config) {
        !validSimpleStandingConfig(config.simple_standing)) ||
       (config.mode == ControllerMode::kSimpleStanding3d &&
        !validSimpleStanding3dConfig(config.simple_standing_3d)) ||
-      (config.mode == ControllerMode::kWeightedWbc &&
-       !validWeightedWbcConfig(config.weighted_wbc, config.torque_limit_nm))) {
+      ((config.mode == ControllerMode::kWeightedWbc ||
+        config.mode == ControllerMode::kNominalNmpcWbc) &&
+       !validWeightedWbcConfig(config.weighted_wbc, config.torque_limit_nm)) ||
+      (config.mode == ControllerMode::kNominalNmpcWbc &&
+       !validNominalNmpcConfig(config.nominal_nmpc))) {
     return false;
   }
   if (config.mode == ControllerMode::kJointPdGravity ||
@@ -323,6 +343,15 @@ bool ControllerCore::configure(const ControllerConfig &config) {
     }
   }
   config_ = config;
+  if (config.mode == ControllerMode::kNominalNmpcWbc) {
+    nominal_nmpc_solver_ = std::make_unique<NominalNmpcSolver>();
+    if (!nominal_nmpc_solver_->ready()) {
+      nominal_nmpc_solver_.reset();
+      return false;
+    }
+  } else {
+    nominal_nmpc_solver_.reset();
+  }
   configured_ = true;
   reset();
   return true;
@@ -350,10 +379,14 @@ void ControllerCore::reset() {
   weighted_wbc_anchor_x_m_.reset();
   weighted_wbc_anchor_y_m_.reset();
   weighted_wbc_anchor_yaw_rad_.reset();
+  nominal_nmpc_last_result_.reset();
+  nominal_nmpc_control_tick_ = 0;
+  if (nominal_nmpc_solver_) nominal_nmpc_solver_->reset();
 }
 
 void ControllerCore::stepWeightedWbc(
-    const RobotState &state, StepResult &result) {
+    const RobotState &state, StepResult &result,
+    const NominalNmpcModel::Input *wrench_override) {
   const auto &wbc = config_.weighted_wbc;
   if (result.dt_s != 0.0 &&
       std::abs(result.dt_s - wbc.period_s) > wbc.period_tolerance_s) {
@@ -398,7 +431,8 @@ void ControllerCore::stepWeightedWbc(
             (wbc.joint_target_rad[joint] - state.joint_position_rad[joint]) -
         wbc.leg_kd * state.joint_velocity_rad_s[joint];
   }
-  reference.interaction_wrench_flu = wbc.interaction_wrench_flu;
+  reference.interaction_wrench_flu =
+      wrench_override == nullptr ? wbc.interaction_wrench_flu : *wrench_override;
   result.weighted_wbc_reference = reference;
   if (safety_violated) {
     standing_safety_latched_ = true;
@@ -443,16 +477,102 @@ void ControllerCore::stepWeightedWbc(
   result.status = StepStatus::kOk;
 }
 
+void ControllerCore::stepNominalNmpcWbc(
+    const RobotState &state, StepResult &result) {
+  using Clock = std::chrono::steady_clock;
+  const auto start = Clock::now();
+  if (!weighted_wbc_anchor_x_m_) {
+    weighted_wbc_anchor_x_m_ = state.base_position_n_m[0];
+    weighted_wbc_anchor_y_m_ = state.base_position_n_m[1];
+    weighted_wbc_anchor_yaw_rad_ = headingFromQuaternion(state.q_n_from_b);
+  }
+  const bool update_tick = nominal_nmpc_control_tick_ % 2 == 0;
+  result.nominal_nmpc_update_tick = update_tick;
+  if (update_tick) {
+    NominalNmpcProblem problem;
+    for (std::size_t axis = 0; axis < 3; ++axis) {
+      problem.state[static_cast<Eigen::Index>(axis)] =
+          state.base_position_n_m[axis];
+      problem.state[static_cast<Eigen::Index>(6 + axis)] =
+          state.base_linear_velocity_n_m_s[axis];
+      problem.state[static_cast<Eigen::Index>(9 + axis)] =
+          state.base_angular_velocity_n_rad_s[axis];
+    }
+    const auto rotation = orientationError(
+        state.q_n_from_b, *weighted_wbc_anchor_yaw_rad_);
+    for (std::size_t axis = 0; axis < 3; ++axis) {
+      problem.state[static_cast<Eigen::Index>(3 + axis)] = rotation[axis];
+    }
+    problem.reference = problem.state;
+    problem.reference.segment<3>(6).setZero();
+    problem.reference.segment<3>(9).setZero();
+    problem.reference.segment<3>(3).setZero();
+    problem.reference[0] = *weighted_wbc_anchor_x_m_;
+    problem.reference[1] = *weighted_wbc_anchor_y_m_;
+    problem.reference[2] = config_.weighted_wbc.nominal_height_m;
+    const double elapsed_s =
+        static_cast<double>(nominal_nmpc_control_tick_) *
+        config_.weighted_wbc.period_s;
+    if (elapsed_s >= config_.nominal_nmpc.step_start_s) {
+      if (config_.nominal_nmpc.reference_profile ==
+          NmpcReferenceProfile::kPositiveStep) {
+        problem.reference[0] += config_.nominal_nmpc.longitudinal_amplitude_m;
+      } else if (config_.nominal_nmpc.reference_profile ==
+                 NmpcReferenceProfile::kNegativeStep) {
+        problem.reference[0] -= config_.nominal_nmpc.longitudinal_amplitude_m;
+      } else if (config_.nominal_nmpc.reference_profile ==
+                     NmpcReferenceProfile::kStepReturn &&
+                 elapsed_s < config_.nominal_nmpc.return_start_s) {
+        problem.reference[0] += config_.nominal_nmpc.longitudinal_amplitude_m;
+      }
+    }
+    const double yaw = *weighted_wbc_anchor_yaw_rad_;
+    problem.reference_rotation_n_from_b <<
+        std::cos(yaw), -std::sin(yaw), 0.0,
+        std::sin(yaw), std::cos(yaw), 0.0,
+        0.0, 0.0, 1.0;
+    result.nominal_nmpc_result = nominal_nmpc_solver_->solve(problem);
+    nominal_nmpc_last_result_ = result.nominal_nmpc_result;
+    result.nominal_nmpc_wrench_age_ticks = 0;
+  } else if (nominal_nmpc_last_result_) {
+    result.nominal_nmpc_result = *nominal_nmpc_last_result_;
+    result.nominal_nmpc_wrench_age_ticks = 1;
+  }
+  ++nominal_nmpc_control_tick_;
+  if (!nominal_nmpc_last_result_ || !nominal_nmpc_last_result_->ok() ||
+      result.nominal_nmpc_wrench_age_ticks > 1) {
+    standing_safety_latched_ = true;
+    result.status = StepStatus::kSafetyLatched;
+    result.safety_latched = true;
+    return;
+  }
+  stepWeightedWbc(
+      state, result, &nominal_nmpc_last_result_->wrench_flu);
+  result.nominal_nmpc_wbc_total_time_s =
+      std::chrono::duration<double>(Clock::now() - start).count();
+  if (result.nominal_nmpc_wbc_total_time_s >
+      config_.nominal_nmpc.deadline_s) {
+    result.command.joint_torque_nm.fill(0.0);
+    result.tau_raw_nm.fill(0.0);
+    standing_safety_latched_ = true;
+    result.status = StepStatus::kSafetyLatched;
+    result.safety_latched = true;
+  }
+}
+
 StepResult ControllerCore::step(const RobotState &state) {
   StepResult result;
   result.command.source_sample_time_ns = state.sample_time_ns;
   if (!configured_) {
     return result;
   }
-  const bool weighted_mode = config_.mode == ControllerMode::kWeightedWbc;
+  const bool nmpc_mode = config_.mode == ControllerMode::kNominalNmpcWbc;
+  const bool weighted_mode =
+      config_.mode == ControllerMode::kWeightedWbc || nmpc_mode;
   if (weighted_mode) {
     result.weighted_wbc_active = true;
   }
+  result.nominal_nmpc_active = nmpc_mode;
   if (isSafetyLatchedMode(config_.mode) && standing_safety_latched_) {
     result.status = StepStatus::kSafetyLatched;
     result.safety_latched = true;
@@ -477,6 +597,10 @@ StepResult ControllerCore::step(const RobotState &state) {
                   1.0e9;
   }
   last_sample_time_ns_ = state.sample_time_ns;
+  if (nmpc_mode) {
+    stepNominalNmpcWbc(state, result);
+    return result;
+  }
   if (weighted_mode) {
     stepWeightedWbc(state, result);
     return result;

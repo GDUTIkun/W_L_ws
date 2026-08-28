@@ -2,6 +2,13 @@
 
 Date: 2026-08-28
 
+> Route update, 2026-08-28: this audit predates the user-directed acados
+> revision. Its live-code, interface and historical-model findings remain
+> valid, but the former prohibition on acados-generated production artifacts
+> is superseded by the current [PLAN](../PLAN.md). The revised route generates
+> a new solver from the approved 12D model; it does not approve or reuse the
+> historical Simulink/Euler S-function.
+
 ## Live-code authority
 
 - CBM project `W_L_ws`, full index generation `2026-08-28T07:49:08Z`,
@@ -40,8 +47,10 @@ Date: 2026-08-28
   require a new oracle rather than direct copying.
 - Historical nominal values use a different wheel radius/model family and
   cannot replace the current nominal Phase 15/21 profile.
-- acados-generated S-functions/C code are reference-only and cannot enter the
-  manually owned production Core.
+- Under the original sparse-ProxQP route, acados-generated S-functions/C code
+  were reference-only. The current PLAN supersedes that route only for a newly
+  generated solver derived from the approved 12D model; the historical
+  Simulink/Euler artifact remains prohibited.
 - `full_base_nmpc_command` holds the last valid output on failure; production
   must instead preserve Phase 22 zero/latch/reset semantics.
 

@@ -50,6 +50,12 @@ wheel_leg::ControllerConfig weightedConfig(double torque_limit_nm = 100.0) {
   return config;
 }
 
+wheel_leg::ControllerConfig nmpcConfig(double torque_limit_nm = 100.0) {
+  auto config = weightedConfig(torque_limit_nm);
+  config.mode = wheel_leg::ControllerMode::kNominalNmpcWbc;
+  return config;
+}
+
 wheel_leg::QuaternionWxyz axisAngleQuaternion(
     std::size_t axis, double angle_rad) {
   wheel_leg::QuaternionWxyz quaternion{std::cos(angle_rad * 0.5), 0.0, 0.0,
@@ -238,6 +244,45 @@ int main() {
     const auto result = zero_core.step(equilibrium);
     assert(result.accepted());
     assertZero(result);
+  }
+  {
+    wheel_leg::ControllerCore nmpc_core;
+    assert(nmpc_core.configure(nmpcConfig()));
+    const auto update = nmpc_core.step(equilibrium);
+    assert(update.accepted());
+    assert(update.nominal_nmpc_active);
+    assert(update.nominal_nmpc_update_tick);
+    assert(update.nominal_nmpc_result.ok());
+    assert(update.nominal_nmpc_wrench_age_ticks == 0);
+    assert(update.nominal_nmpc_wbc_total_time_s <= 0.01);
+    auto zoh_state = equilibrium;
+    zoh_state.sample_time_ns += 10'000'000;
+    const auto zoh = nmpc_core.step(zoh_state);
+    assert(zoh.accepted());
+    assert(!zoh.nominal_nmpc_update_tick);
+    assert(zoh.nominal_nmpc_wrench_age_ticks == 1);
+    assert((update.weighted_wbc_reference.interaction_wrench_flu -
+            zoh.weighted_wbc_reference.interaction_wrench_flu)
+               .cwiseAbs()
+               .maxCoeff() <= 1.0e-12);
+    nmpc_core.reset();
+    const auto repeated = nmpc_core.step(equilibrium);
+    assert(repeated.accepted());
+    assert((update.nominal_nmpc_result.wrench_flu -
+            repeated.nominal_nmpc_result.wrench_flu)
+               .cwiseAbs()
+               .maxCoeff() <= 1.0e-12);
+  }
+  {
+    wheel_leg::ControllerCore nmpc_fault_core;
+    assert(nmpc_fault_core.configure(nmpcConfig()));
+    auto invalid = equilibrium;
+    invalid.q_n_from_b[0] = std::numeric_limits<double>::quiet_NaN();
+    const auto rejected = nmpc_fault_core.step(invalid);
+    assert(rejected.status == wheel_leg::StepStatus::kInvalidState);
+    assert(rejected.nominal_nmpc_active);
+    assert(rejected.safety_latched);
+    assertZero(rejected);
   }
   return 0;
 }

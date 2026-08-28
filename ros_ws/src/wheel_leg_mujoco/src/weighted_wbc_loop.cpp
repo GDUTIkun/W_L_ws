@@ -34,6 +34,8 @@ struct Options {
   std::string control_path;
   std::string plant_path;
   std::string scenario{"hold"};
+  std::string controller_mode{"weighted_wbc"};
+  std::string nmpc_reference{"hold"};
   int episodes{1};
   int ticks{100};
   int fault_tick{100};
@@ -86,6 +88,8 @@ Options parseOptions(int argc, char **argv) {
     else if (argument == "--control-output") options.control_path = value;
     else if (argument == "--plant-output") options.plant_path = value;
     else if (argument == "--scenario") options.scenario = value;
+    else if (argument == "--controller-mode") options.controller_mode = value;
+    else if (argument == "--nmpc-reference") options.nmpc_reference = value;
     else if (argument == "--episodes") options.episodes = std::stoi(value);
     else if (argument == "--ticks") options.ticks = std::stoi(value);
     else if (argument == "--fault-tick") options.fault_tick = std::stoi(value);
@@ -104,7 +108,13 @@ Options parseOptions(int argc, char **argv) {
   if (options.model_path.empty() || options.control_path.empty() || options.plant_path.empty())
     throw std::invalid_argument("--model --control-output --plant-output required");
   if (options.episodes <= 0 || options.ticks <= 0 ||
-      std::find(scenarios.begin(), scenarios.end(), options.scenario) == scenarios.end())
+      std::find(scenarios.begin(), scenarios.end(), options.scenario) == scenarios.end() ||
+      (options.controller_mode != "weighted_wbc" &&
+       options.controller_mode != "nominal_nmpc") ||
+      (options.nmpc_reference != "hold" &&
+       options.nmpc_reference != "positive" &&
+       options.nmpc_reference != "negative" &&
+       options.nmpc_reference != "return"))
     throw std::invalid_argument("invalid run options");
   return options;
 }
@@ -249,7 +259,7 @@ void setInitialState(const mjModel *model, mjData *data, const Options &options)
 }
 
 void writeHeaders(std::ofstream &control, std::ofstream &plant) {
-  control << "scenario,episode,tick,pre_step_plant_time_s,source_ns,command_source_ns,receipt_ns,dt_s,status,latch,accepted,contact_left,contact_right,weighted_status,model_status,solver_status,iterations,primal,dual,stationarity,hard,reconstruction_iterations,closure_residual,core_step_ns,zoh_diff";
+  control << "scenario,episode,tick,pre_step_plant_time_s,source_ns,command_source_ns,receipt_ns,dt_s,status,latch,accepted,contact_left,contact_right,weighted_status,model_status,solver_status,iterations,primal,dual,stationarity,hard,reconstruction_iterations,closure_residual,core_step_ns,zoh_diff,nmpc_active,nmpc_update,nmpc_age,nmpc_status,nmpc_acados_status,nmpc_preparation_s,nmpc_feedback_s,nmpc_stationarity,nmpc_dynamics,nmpc_inequality,nmpc_complementarity,nmpc_first_step_defect,nmpc_wbc_total_s";
   for (int index = 0; index < 3; ++index) control << ",base_p" << index;
   for (int index = 0; index < 4; ++index) control << ",quat" << index;
   for (int index = 0; index < 3; ++index) control << ",base_v" << index;
@@ -316,7 +326,20 @@ void writeControlRow(std::ofstream &control, const Options &options, int episode
           << result.weighted_wbc_hard_violation << ','
           << result.weighted_wbc_model_diagnostics.reconstruction_iterations << ','
           << result.weighted_wbc_model_diagnostics.closure_residual_m << ','
-          << core_step_ns << ',' << zoh_difference;
+          << core_step_ns << ',' << zoh_difference << ','
+          << result.nominal_nmpc_active << ','
+          << result.nominal_nmpc_update_tick << ','
+          << result.nominal_nmpc_wrench_age_ticks << ','
+          << static_cast<int>(result.nominal_nmpc_result.status) << ','
+          << result.nominal_nmpc_result.acados_status << ','
+          << result.nominal_nmpc_result.preparation_time_s << ','
+          << result.nominal_nmpc_result.feedback_time_s << ','
+          << result.nominal_nmpc_result.stationarity_residual << ','
+          << result.nominal_nmpc_result.dynamics_residual << ','
+          << result.nominal_nmpc_result.inequality_residual << ','
+          << result.nominal_nmpc_result.complementarity_residual << ','
+          << result.nominal_nmpc_result.first_step_defect << ','
+          << result.nominal_nmpc_wbc_total_time_s;
   writeValues(control, state.base_position_n_m);
   writeValues(control, state.q_n_from_b);
   writeValues(control, state.base_linear_velocity_n_m_s);
@@ -354,9 +377,21 @@ void run(const Options &options) {
   adapter_config.floating_base = true;
   wheel_leg_mujoco::Adapter adapter(model.get(), adapter_config);
   wheel_leg::ControllerConfig config;
-  config.mode = wheel_leg::ControllerMode::kWeightedWbc;
+  config.mode = options.controller_mode == "nominal_nmpc"
+      ? wheel_leg::ControllerMode::kNominalNmpcWbc
+      : wheel_leg::ControllerMode::kWeightedWbc;
   config.torque_limit_nm = options.torque_limit;
   config.weighted_wbc = wheel_leg::currentNominalWeightedWbcConfig();
+  if (options.nmpc_reference == "positive") {
+    config.nominal_nmpc.reference_profile =
+        wheel_leg::NmpcReferenceProfile::kPositiveStep;
+  } else if (options.nmpc_reference == "negative") {
+    config.nominal_nmpc.reference_profile =
+        wheel_leg::NmpcReferenceProfile::kNegativeStep;
+  } else if (options.nmpc_reference == "return") {
+    config.nominal_nmpc.reference_profile =
+        wheel_leg::NmpcReferenceProfile::kStepReturn;
+  }
   wheel_leg::ControllerCore controller;
   if (!controller.configure(config)) throw std::runtime_error("WBC configuration failed");
   std::ofstream control(options.control_path);

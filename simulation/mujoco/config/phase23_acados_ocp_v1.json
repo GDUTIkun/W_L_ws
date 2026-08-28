@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "profile": "phase23_acados_ocp_v1",
+  "model_name": "phase23_nominal_nmpc",
+  "state_order": [
+    "p_x_m", "p_y_m", "p_z_m",
+    "r_x_rad", "r_y_rad", "r_z_rad",
+    "v_x_m_s", "v_y_m_s", "v_z_m_s",
+    "omega_x_rad_s", "omega_y_rad_s", "omega_z_rad_s"
+  ],
+  "input_order": [
+    "left_Fx_N", "left_Fy_N", "left_Fz_N",
+    "left_Tx_Nm", "left_Ty_Nm", "left_Tz_Nm",
+    "right_Fx_N", "right_Fy_N", "right_Fz_N",
+    "right_Tx_Nm", "right_Ty_Nm", "right_Tz_Nm"
+  ],
+  "parameter_order": [
+    "R_ref_00", "R_ref_01", "R_ref_02",
+    "R_ref_10", "R_ref_11", "R_ref_12",
+    "R_ref_20", "R_ref_21", "R_ref_22"
+  ],
+  "sampling_period_s": 0.02,
+  "horizon_steps": 20,
+  "horizon_s": 0.4,
+  "mass_kg": 6.4344,
+  "gravity_m_s2": 9.81,
+  "com_b_m": [-0.011180287402107112, 0.00009238574064202139, -0.07308450550529051],
+  "inertia_com_b_kg_m2": [
+    [0.2024829571803848, -0.0005268982127304279, -0.005522605148090465],
+    [-0.000526898212730428, 0.10473543935656524, 0.00018285882563471784],
+    [-0.005522605148090467, 0.0001828588256347179, 0.12768847489813864]
+  ],
+  "equilibrium_state": [0.0, 0.0, 0.31543998403249462, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+  "equilibrium_input": [
+    -0.014600183648230658, -0.002144708393769802, 31.572223159792483,
+    6.939287276081028, 0.3072127467744123, 0.00002385752452037761,
+    0.014600183648233424, 0.002144708393775349, 31.549240840207528,
+    -6.93345575287898, 0.39850336198734543, -0.000023857524519898827
+  ],
+  "state_error_scale": [0.02, 0.02, 0.01, 0.03, 0.03, 0.05, 0.2, 0.2, 0.2, 0.5, 0.5, 0.5],
+  "state_weight": [1.0, 1.0, 2.0, 2.0, 2.0, 0.5, 0.5, 0.5, 1.0, 0.25, 0.25, 0.25],
+  "terminal_weight_multiplier": 10.0,
+  "input_error_scale": [10.0, 10.0, 15.0, 2.0, 2.0, 1.0, 10.0, 10.0, 15.0, 2.0, 2.0, 1.0],
+  "input_weight": [0.02, 0.02, 0.02, 0.01, 0.01, 0.01, 0.02, 0.02, 0.02, 0.01, 0.01, 0.01],
+  "input_lower": [-15.0, -15.0, 10.0, 4.0, -2.0, -1.0, -15.0, -15.0, 10.0, -9.0, -2.0, -1.0],
+  "input_upper": [15.0, 15.0, 50.0, 9.0, 2.0, 1.0, 15.0, 15.0, 50.0, -4.0, 2.0, 1.0],
+  "solver": {
+    "nlp_solver_type": "SQP_RTI",
+    "qp_solver": "PARTIAL_CONDENSING_HPIPM",
+    "qp_solver_cond_N": 5,
+    "hessian_approx": "GAUSS_NEWTON",
+    "integrator_type": "DISCRETE",
+    "regularize_method": "NO_REGULARIZE",
+    "qp_solver_iter_max": 50,
+    "qp_tol": 1e-8,
+    "warm_start_first_qp": false,
+    "print_level": 0
+  },
+  "generation": {
+    "acados_source_dir": "/home/t/opt/acados",
+    "acados_commit": "21376cb1af6b7dd45f675367272d3ba8100b26c0",
+    "casadi_version": "3.7.2",
+    "tera_version": "0.2.1",
+    "tera_sha256": "64a0a0f8d85be0b92234231fd1a9ff50c9d8f13d6208063707e56c9354a976d3"
+  }
+}

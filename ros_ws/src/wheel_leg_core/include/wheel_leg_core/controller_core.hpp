@@ -5,6 +5,7 @@
 #include <optional>
 
 #include "wheel_leg_core/types.hpp"
+#include "wheel_leg_core/nominal_nmpc_solver.hpp"
 #include "wheel_leg_core/weighted_wbc_controller.hpp"
 
 namespace wheel_leg {
@@ -15,6 +16,14 @@ enum class ControllerMode {
   kSimpleStanding,
   kSimpleStanding3d,
   kWeightedWbc,
+  kNominalNmpcWbc,
+};
+
+enum class NmpcReferenceProfile {
+  kHold,
+  kPositiveStep,
+  kNegativeStep,
+  kStepReturn,
 };
 
 struct JointReference {
@@ -88,6 +97,15 @@ struct WeightedWbcConfig {
   double maximum_abs_yaw_rad{0.0};
 };
 
+struct NominalNmpcConfig {
+  NmpcReferenceProfile reference_profile{NmpcReferenceProfile::kHold};
+  double longitudinal_amplitude_m{0.005};
+  double step_start_s{0.5};
+  double return_start_s{1.5};
+  double update_period_s{0.02};
+  double deadline_s{0.01};
+};
+
 struct ControllerConfig {
   double quaternion_norm_tolerance{1.0e-6};
   ControllerMode mode{ControllerMode::kZero};
@@ -101,6 +119,7 @@ struct ControllerConfig {
   SimpleStandingConfig simple_standing{};
   SimpleStanding3dConfig simple_standing_3d{};
   WeightedWbcConfig weighted_wbc{};
+  NominalNmpcConfig nominal_nmpc{};
 };
 
 [[nodiscard]] GravityProfile currentNominalGravityProfile();
@@ -129,6 +148,11 @@ struct StepResult {
   std::array<double, 3> virtual_input_3d{};
   bool safety_latched{false};
   bool weighted_wbc_active{false};
+  bool nominal_nmpc_active{false};
+  bool nominal_nmpc_update_tick{false};
+  int nominal_nmpc_wrench_age_ticks{0};
+  NominalNmpcSolver::Result nominal_nmpc_result{};
+  double nominal_nmpc_wbc_total_time_s{0.0};
   WbcReference weighted_wbc_reference{};
   WeightedWbcController::Status weighted_wbc_status{
       WeightedWbcController::Status::kProblemRejected};
@@ -161,7 +185,10 @@ class ControllerCore {
   [[nodiscard]] StepResult step(const RobotState &state);
 
  private:
-  void stepWeightedWbc(const RobotState &state, StepResult &result);
+  void stepWeightedWbc(
+      const RobotState &state, StepResult &result,
+      const NominalNmpcModel::Input *wrench_override = nullptr);
+  void stepNominalNmpcWbc(const RobotState &state, StepResult &result);
 
   ControllerConfig config_{};
   bool configured_{false};
@@ -178,6 +205,9 @@ class ControllerCore {
   std::optional<double> weighted_wbc_anchor_x_m_;
   std::optional<double> weighted_wbc_anchor_y_m_;
   std::optional<double> weighted_wbc_anchor_yaw_rad_;
+  std::unique_ptr<NominalNmpcSolver> nominal_nmpc_solver_;
+  std::optional<NominalNmpcSolver::Result> nominal_nmpc_last_result_;
+  std::uint64_t nominal_nmpc_control_tick_{0};
 };
 
 }  // namespace wheel_leg
