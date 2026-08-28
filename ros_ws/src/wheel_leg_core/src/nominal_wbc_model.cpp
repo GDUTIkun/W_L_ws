@@ -1,0 +1,482 @@
+#include "wheel_leg_core/nominal_wbc_model.hpp"
+
+#include <Eigen/Geometry>
+#include <Eigen/SVD>
+
+#include <algorithm>
+#include <cmath>
+#include <limits>
+
+#include "nominal_wbc_profile_data.hpp"
+
+namespace wheel_leg {
+namespace {
+
+using Matrix3x16 = Eigen::Matrix<double, 3, 16>;
+using Vector16 = Eigen::Matrix<double, 16, 1>;
+using Matrix16 = Eigen::Matrix<double, 16, 16>;
+
+// Solve materially below the 1e-10 acceptance gate so downstream task
+// gradients do not amplify a merely gate-level closure residual.
+constexpr double kClosureTolerance = 1.0e-12;
+constexpr double kMinimumPassiveSingularValue = 0.005;
+constexpr double kMaximumPassiveCondition = 40.0;
+constexpr int kMaximumReconstructionIterations = 30;
+
+struct BodyState {
+  Eigen::Vector3d position{Eigen::Vector3d::Zero()};
+  Eigen::Matrix3d rotation{Eigen::Matrix3d::Identity()};
+  Eigen::Vector3d linear_velocity{Eigen::Vector3d::Zero()};
+  Eigen::Vector3d angular_velocity{Eigen::Vector3d::Zero()};
+  Eigen::Vector3d linear_acceleration{Eigen::Vector3d::Zero()};
+  Eigen::Vector3d angular_acceleration{Eigen::Vector3d::Zero()};
+  Matrix3x16 linear_jacobian{Matrix3x16::Zero()};
+  Matrix3x16 angular_jacobian{Matrix3x16::Zero()};
+};
+
+using Kinematics = std::array<BodyState, 12>;
+
+Eigen::Matrix3d skew(const Eigen::Vector3d &value) {
+  Eigen::Matrix3d result;
+  result << 0.0, -value.z(), value.y(), value.z(), 0.0, -value.x(),
+      -value.y(), value.x(), 0.0;
+  return result;
+}
+
+Eigen::Matrix3d quaternion(const std::array<double, 4> &value) {
+  Eigen::Quaterniond q(value[0], value[1], value[2], value[3]);
+  return q.normalized().toRotationMatrix();
+}
+
+Eigen::Matrix3d quaternion(const double *value) {
+  Eigen::Quaterniond q(value[0], value[1], value[2], value[3]);
+  return q.normalized().toRotationMatrix();
+}
+
+Eigen::Vector3d vector3(const double *value) {
+  return Eigen::Vector3d(value[0], value[1], value[2]);
+}
+
+Eigen::Vector3d pointPosition(
+    const BodyState &body, const Eigen::Vector3d &local) {
+  return body.position + body.rotation * local;
+}
+
+Matrix3x16 pointJacobian(
+    const BodyState &body, const Eigen::Vector3d &local) {
+  const Eigen::Vector3d offset = body.rotation * local;
+  return body.linear_jacobian - skew(offset) * body.angular_jacobian;
+}
+
+Eigen::Vector3d pointAcceleration(
+    const BodyState &body, const Eigen::Vector3d &local) {
+  const Eigen::Vector3d offset = body.rotation * local;
+  return body.linear_acceleration + body.angular_acceleration.cross(offset) +
+         body.angular_velocity.cross(body.angular_velocity.cross(offset));
+}
+
+Kinematics forwardKinematics(
+    const Eigen::Vector3d &base_control_position,
+    const Eigen::Matrix3d &base_rotation,
+    const Eigen::Matrix<double, 10, 1> &joint_position,
+    const Vector16 &velocity,
+    const Vector16 &acceleration = Vector16::Zero()) {
+  Kinematics bodies;
+  const Eigen::Vector3d control_local(
+      phase21_profile::kBaseControlPosition[0],
+      phase21_profile::kBaseControlPosition[1],
+      phase21_profile::kBaseControlPosition[2]);
+  const Eigen::Vector3d control_offset = base_rotation * control_local;
+  BodyState &base = bodies[1];
+  base.rotation = base_rotation;
+  base.position = base_control_position - control_offset;
+  base.linear_velocity = velocity.head<3>() +
+                         control_offset.cross(velocity.segment<3>(3));
+  base.angular_velocity = velocity.segment<3>(3);
+  base.angular_acceleration = acceleration.segment<3>(3);
+  base.linear_acceleration = acceleration.head<3>() +
+      control_offset.cross(base.angular_acceleration) -
+      base.angular_velocity.cross(base.angular_velocity.cross(control_offset));
+  base.linear_jacobian.block<3, 3>(0, 0).setIdentity();
+  base.linear_jacobian.block<3, 3>(0, 3) = skew(control_offset);
+  base.angular_jacobian.block<3, 3>(0, 3).setIdentity();
+
+  for (int body_id = 2; body_id <= 11; ++body_id) {
+    const int body_index = body_id - 1;
+    const auto &raw = phase21_profile::kBody[body_index];
+    const int parent_id = phase21_profile::kBodyParent[body_index];
+    const BodyState &parent = bodies[parent_id];
+    BodyState &body = bodies[body_id];
+    const Eigen::Vector3d fixed_position = vector3(raw.data());
+    const Eigen::Matrix3d fixed_rotation = quaternion(raw.data() + 3);
+    const int joint = body_id - 2;
+    const Eigen::Vector3d offset = parent.rotation * fixed_position;
+    const Eigen::Vector3d axis =
+        parent.rotation * fixed_rotation * Eigen::Vector3d::UnitZ();
+    body.position = parent.position + offset;
+    body.rotation = parent.rotation * fixed_rotation *
+        Eigen::AngleAxisd(joint_position[joint], Eigen::Vector3d::UnitZ())
+            .toRotationMatrix();
+    body.angular_velocity =
+        parent.angular_velocity + axis * velocity[6 + joint];
+    body.linear_velocity =
+        parent.linear_velocity + parent.angular_velocity.cross(offset);
+    body.angular_acceleration = parent.angular_acceleration +
+        parent.angular_velocity.cross(axis * velocity[6 + joint]) +
+        axis * acceleration[6 + joint];
+    body.linear_acceleration = parent.linear_acceleration +
+        parent.angular_acceleration.cross(offset) +
+        parent.angular_velocity.cross(parent.angular_velocity.cross(offset));
+    body.linear_jacobian =
+        parent.linear_jacobian - skew(offset) * parent.angular_jacobian;
+    body.angular_jacobian = parent.angular_jacobian;
+    body.angular_jacobian.col(6 + joint) = axis;
+  }
+  return bodies;
+}
+
+Eigen::Matrix<double, 6, 1> closureResidual(const Kinematics &bodies) {
+  Eigen::Matrix<double, 6, 1> residual;
+  for (int side = 0; side < 2; ++side) {
+    const int first = 2 * side;
+    const int second = first + 1;
+    const auto &first_local = phase21_profile::kClosurePosition[first];
+    const auto &second_local = phase21_profile::kClosurePosition[second];
+    residual.segment<3>(3 * side) =
+        pointPosition(bodies[phase21_profile::kClosureBody[first]],
+                      Eigen::Vector3d(first_local[0], first_local[1], first_local[2])) -
+        pointPosition(bodies[phase21_profile::kClosureBody[second]],
+                      Eigen::Vector3d(second_local[0], second_local[1], second_local[2]));
+  }
+  return residual;
+}
+
+Eigen::Matrix<double, 6, 16> closureJacobian(const Kinematics &bodies) {
+  Eigen::Matrix<double, 6, 16> result;
+  for (int side = 0; side < 2; ++side) {
+    const int first = 2 * side;
+    const int second = first + 1;
+    const auto &first_local = phase21_profile::kClosurePosition[first];
+    const auto &second_local = phase21_profile::kClosurePosition[second];
+    result.block<3, 16>(3 * side, 0) =
+        pointJacobian(bodies[phase21_profile::kClosureBody[first]],
+                      Eigen::Vector3d(first_local[0], first_local[1], first_local[2])) -
+        pointJacobian(bodies[phase21_profile::kClosureBody[second]],
+                      Eigen::Vector3d(second_local[0], second_local[1], second_local[2]));
+  }
+  return result;
+}
+
+Eigen::Matrix<double, 6, 1> closureBias(const Kinematics &bodies) {
+  Eigen::Matrix<double, 6, 1> result;
+  for (int side = 0; side < 2; ++side) {
+    const int first = 2 * side;
+    const int second = first + 1;
+    const auto &first_local = phase21_profile::kClosurePosition[first];
+    const auto &second_local = phase21_profile::kClosurePosition[second];
+    result.segment<3>(3 * side) =
+        pointAcceleration(bodies[phase21_profile::kClosureBody[first]],
+                          Eigen::Vector3d(first_local[0], first_local[1], first_local[2])) -
+        pointAcceleration(bodies[phase21_profile::kClosureBody[second]],
+                          Eigen::Vector3d(second_local[0], second_local[1], second_local[2]));
+  }
+  return result;
+}
+
+struct ContactGeometry {
+  Eigen::Vector3d center;
+  Eigen::Vector3d axis;
+  Eigen::Vector3d radial;
+  Eigen::Matrix3d frame;
+  double projection{0.0};
+  double mid{0.0};
+  int body_id{0};
+  Eigen::Vector3d geom_local;
+};
+
+ContactGeometry contactGeometry(const Kinematics &bodies, int side) {
+  ContactGeometry result;
+  result.body_id = phase21_profile::kWheelBody[side];
+  const auto &raw = phase21_profile::kBody[result.body_id - 1];
+  result.geom_local = vector3(raw.data() + 8);
+  const Eigen::Matrix3d geom_rotation =
+      bodies[result.body_id].rotation * quaternion(raw.data() + 11);
+  const Eigen::Vector3d geom_center =
+      pointPosition(bodies[result.body_id], result.geom_local);
+  result.axis = geom_rotation.col(0);
+  const Eigen::Vector3d normal = Eigen::Vector3d::UnitZ();
+  const double dot = result.axis.dot(normal);
+  result.projection = std::sqrt(std::max(0.0, 1.0 - dot * dot));
+  if (result.projection <= 1.0e-6) return result;
+  const Eigen::Vector3d rolling = result.axis.cross(normal) / result.projection;
+  const Eigen::Vector3d lateral = normal.cross(rolling);
+  result.radial = (normal - dot * result.axis) / result.projection;
+  const auto &bounds = phase21_profile::kWheelAxisBounds[side];
+  result.mid = 0.5 * (bounds[0] + bounds[1]);
+  result.center = geom_center + result.mid * result.axis -
+                  phase21_profile::kWheelRadius * result.radial;
+  result.frame.col(0) = rolling;
+  result.frame.col(1) = lateral;
+  result.frame.col(2) = normal;
+  return result;
+}
+
+Eigen::Vector3d radialVelocity(
+    const ContactGeometry &geometry, const Eigen::Vector3d &axis_velocity) {
+  const Eigen::Vector3d normal = Eigen::Vector3d::UnitZ();
+  const double dot = geometry.axis.dot(normal);
+  const double dot_velocity = axis_velocity.dot(normal);
+  const double projection_velocity =
+      -dot * dot_velocity / geometry.projection;
+  const Eigen::Vector3d numerator = normal - dot * geometry.axis;
+  const Eigen::Vector3d numerator_velocity =
+      -dot_velocity * geometry.axis - dot * axis_velocity;
+  return numerator_velocity / geometry.projection -
+         numerator * projection_velocity /
+             (geometry.projection * geometry.projection);
+}
+
+bool finite(const NominalWbcModel::Result &result) {
+  if (!result.mass.allFinite() || !result.bias.allFinite() ||
+      !result.actuation.allFinite() || !result.reduction.allFinite()) return false;
+  for (int side = 0; side < 2; ++side) {
+    if (!result.wrench_map[side].allFinite() ||
+        !result.wrench_flu_map[side].allFinite() ||
+        !result.contact_jacobian[side].allFinite() ||
+        !result.contact_bias[side].allFinite() ||
+        !result.contact_frame_world[side].allFinite()) return false;
+  }
+  return true;
+}
+
+}  // namespace
+
+NominalWbcModel::Result NominalWbcModel::evaluate(
+    const RobotState &state) const {
+  Result result;
+  if (validateRobotState(state) != ValidationError::kNone) return result;
+
+  Eigen::Matrix<double, 10, 1> q =
+      Eigen::Matrix<double, 10, 1>::Zero();
+  for (int canonical = 0; canonical < 6; ++canonical) {
+    const int native = phase21_profile::kActiveNative[canonical];
+    const double equilibrium = phase21_profile::kCanonicalOffset[canonical] -
+        phase21_profile::kEquilibriumActiveNative[canonical];
+    const double delta = state.joint_position_rad[canonical] - equilibrium;
+    const int coordinate = canonical % 3;
+    if (delta < phase21_profile::kWorkspaceBounds[coordinate][0] ||
+        delta > phase21_profile::kWorkspaceBounds[coordinate][1]) {
+      result.status = Status::kOutsideWorkspace;
+      return result;
+    }
+    q[native] = phase21_profile::kCanonicalOffset[canonical] -
+                state.joint_position_rad[canonical];
+  }
+  for (int passive = 0; passive < 4; ++passive) {
+    q[phase21_profile::kPassiveNative[passive]] =
+        phase21_profile::kEquilibriumPassive[passive];
+  }
+
+  const Eigen::Vector3d base_position(
+      state.base_position_n_m[0], state.base_position_n_m[1],
+      state.base_position_n_m[2]);
+  const Eigen::Matrix3d base_rotation = quaternion(state.q_n_from_b);
+  const Vector16 zero = Vector16::Zero();
+  Eigen::JacobiSVD<Eigen::Matrix<double, 6, 4>> passive_svd;
+  for (int iteration = 0; iteration <= kMaximumReconstructionIterations;
+       ++iteration) {
+    const Kinematics bodies =
+        forwardKinematics(base_position, base_rotation, q, zero);
+    const auto residual = closureResidual(bodies);
+    result.diagnostics.reconstruction_iterations = iteration;
+    result.diagnostics.closure_residual_m = residual.cwiseAbs().maxCoeff();
+    const auto jacobian = closureJacobian(bodies);
+    Eigen::Matrix<double, 6, 4> passive;
+    for (int column = 0; column < 4; ++column) {
+      passive.col(column) =
+          jacobian.col(6 + phase21_profile::kPassiveNative[column]);
+    }
+    passive_svd.compute(passive, Eigen::ComputeFullU | Eigen::ComputeFullV);
+    const auto singular = passive_svd.singularValues();
+    result.diagnostics.passive_minimum_singular_value = singular.minCoeff();
+    result.diagnostics.passive_condition_number =
+        singular.maxCoeff() / singular.minCoeff();
+    if (result.diagnostics.closure_residual_m <= kClosureTolerance) break;
+    if (iteration == kMaximumReconstructionIterations) {
+      result.status = Status::kReconstructionFailure;
+      return result;
+    }
+    Eigen::Vector4d step = passive_svd.solve(-residual);
+    const double norm = step.norm();
+    if (norm > 0.5) step *= 0.5 / norm;
+    for (int index = 0; index < 4; ++index) {
+      q[phase21_profile::kPassiveNative[index]] += step[index];
+    }
+  }
+  if (result.diagnostics.passive_minimum_singular_value <
+          kMinimumPassiveSingularValue ||
+      result.diagnostics.passive_condition_number > kMaximumPassiveCondition) {
+    result.status = Status::kIllConditioned;
+    return result;
+  }
+
+  const Kinematics pose =
+      forwardKinematics(base_position, base_rotation, q, zero);
+  const auto closure_jacobian = closureJacobian(pose);
+  Eigen::Matrix<double, 6, 4> passive;
+  for (int column = 0; column < 4; ++column) {
+    passive.col(column) = closure_jacobian.col(
+        6 + phase21_profile::kPassiveNative[column]);
+  }
+  passive_svd.compute(passive, Eigen::ComputeFullU | Eigen::ComputeFullV);
+  result.reduction.topLeftCorner<6, 6>().setIdentity();
+  for (int canonical = 0; canonical < 6; ++canonical) {
+    result.reduction(6 + phase21_profile::kActiveNative[canonical],
+                     6 + canonical) = -1.0;
+  }
+  const Eigen::Matrix<double, 6, 12> known =
+      closure_jacobian * result.reduction;
+  const Eigen::Matrix<double, 4, 12> passive_reduction =
+      passive_svd.solve(-known);
+  for (int row = 0; row < 4; ++row) {
+    result.reduction.row(6 + phase21_profile::kPassiveNative[row]) =
+        passive_reduction.row(row);
+  }
+
+  Vector12 nu;
+  nu.head<3>() << state.base_linear_velocity_n_m_s[0],
+      state.base_linear_velocity_n_m_s[1],
+      state.base_linear_velocity_n_m_s[2];
+  nu.segment<3>(3) << state.base_angular_velocity_n_rad_s[0],
+      state.base_angular_velocity_n_rad_s[1],
+      state.base_angular_velocity_n_rad_s[2];
+  for (int index = 0; index < 6; ++index) {
+    nu[6 + index] = state.joint_velocity_rad_s[index];
+  }
+  const Vector16 tree_velocity = result.reduction * nu;
+  const Kinematics bodies =
+      forwardKinematics(base_position, base_rotation, q, tree_velocity);
+  const Eigen::Vector4d passive_acceleration =
+      passive_svd.solve(-closureBias(bodies));
+  Vector16 reduction_bias = Vector16::Zero();
+  for (int index = 0; index < 4; ++index) {
+    reduction_bias[6 + phase21_profile::kPassiveNative[index]] =
+        passive_acceleration[index];
+  }
+  const Kinematics reduced_bodies = forwardKinematics(
+      base_position, base_rotation, q, tree_velocity, reduction_bias);
+
+  Matrix16 tree_mass = Matrix16::Zero();
+  Vector16 tree_bias = Vector16::Zero();
+  const Eigen::Vector3d gravity(
+      phase21_profile::kGravity[0], phase21_profile::kGravity[1],
+      phase21_profile::kGravity[2]);
+  for (int body_id = 1; body_id <= 11; ++body_id) {
+    const auto &raw = phase21_profile::kBody[body_id - 1];
+    const BodyState &body = bodies[body_id];
+    const double mass = raw[7];
+    const Eigen::Vector3d com_local = vector3(raw.data() + 8);
+    const Eigen::Vector3d com_offset = body.rotation * com_local;
+    const Matrix3x16 jv =
+        body.linear_jacobian - skew(com_offset) * body.angular_jacobian;
+    const Eigen::Matrix3d inertial_rotation =
+        body.rotation * quaternion(raw.data() + 11);
+    const Eigen::Matrix3d inertia = inertial_rotation *
+        Eigen::Vector3d(raw[15], raw[16], raw[17]).asDiagonal() *
+        inertial_rotation.transpose();
+    tree_mass.noalias() += mass * jv.transpose() * jv +
+                           body.angular_jacobian.transpose() * inertia *
+                               body.angular_jacobian;
+    const Eigen::Vector3d com_acceleration =
+        body.linear_acceleration + body.angular_acceleration.cross(com_offset) +
+        body.angular_velocity.cross(body.angular_velocity.cross(com_offset));
+    tree_bias.noalias() +=
+        jv.transpose() * (mass * (com_acceleration - gravity)) +
+        body.angular_jacobian.transpose() *
+            (inertia * body.angular_acceleration +
+             body.angular_velocity.cross(inertia * body.angular_velocity));
+  }
+  result.mass.noalias() =
+      result.reduction.transpose() * tree_mass * result.reduction;
+  result.bias.noalias() = result.reduction.transpose() *
+      (tree_bias + tree_mass * reduction_bias);
+  for (int canonical = 0; canonical < 6; ++canonical) {
+    const int native = phase21_profile::kActiveNative[canonical];
+    result.actuation.col(canonical) =
+        -result.reduction.row(6 + native).transpose();
+  }
+
+  for (int side = 0; side < 2; ++side) {
+    const ContactGeometry geometry = contactGeometry(bodies, side);
+    if (geometry.projection <= 1.0e-6) {
+      result.status = Status::kIllConditioned;
+      return result;
+    }
+    const BodyState &wheel = bodies[geometry.body_id];
+    const BodyState &reduced_wheel = reduced_bodies[geometry.body_id];
+    const Eigen::Vector3d contact_local =
+        wheel.rotation.transpose() * (geometry.center - wheel.position);
+    const Matrix3x16 material_jacobian =
+        pointJacobian(wheel, contact_local);
+    Matrix3x16 geometric_jacobian;
+    for (int column = 0; column < 16; ++column) {
+      const Eigen::Vector3d axis_velocity =
+          wheel.angular_jacobian.col(column).cross(geometry.axis);
+      geometric_jacobian.col(column) =
+          pointJacobian(wheel, geometry.geom_local).col(column) +
+          geometry.mid * axis_velocity - phase21_profile::kWheelRadius *
+              radialVelocity(geometry, axis_velocity);
+    }
+    result.contact_jacobian[side] =
+        geometry.frame.transpose() * material_jacobian * result.reduction;
+    const Eigen::Vector3d center_velocity =
+        geometric_jacobian * tree_velocity;
+    const Eigen::Vector3d offset = geometry.center - reduced_wheel.position;
+    const Eigen::Vector3d material_velocity =
+        reduced_wheel.linear_velocity + reduced_wheel.angular_velocity.cross(offset);
+    const Eigen::Vector3d material_bias_world =
+        reduced_wheel.linear_acceleration +
+        reduced_wheel.angular_acceleration.cross(offset) +
+        reduced_wheel.angular_velocity.cross(
+            center_velocity - reduced_wheel.linear_velocity);
+    const Eigen::Vector3d normal = Eigen::Vector3d::UnitZ();
+    const Eigen::Vector3d axis_velocity =
+        reduced_wheel.angular_velocity.cross(geometry.axis);
+    const double dot = geometry.axis.dot(normal);
+    const double projection_velocity =
+        -dot * axis_velocity.dot(normal) / geometry.projection;
+    const Eigen::Vector3d rolling_velocity =
+        axis_velocity.cross(normal) / geometry.projection -
+        geometry.frame.col(0) * projection_velocity / geometry.projection;
+    Eigen::Matrix3d frame_velocity = Eigen::Matrix3d::Zero();
+    frame_velocity.col(0) = rolling_velocity;
+    frame_velocity.col(1) = normal.cross(rolling_velocity);
+    result.contact_bias[side] = geometry.frame.transpose() *
+        material_bias_world + frame_velocity.transpose() * material_velocity;
+    result.contact_frame_world[side] = geometry.frame;
+    const Matrix3x16 angular_jacobian = wheel.angular_jacobian;
+    result.wrench_map[side].leftCols<3>() =
+        result.reduction.transpose() * material_jacobian.transpose() *
+        geometry.frame;
+    result.wrench_map[side].rightCols<3>() =
+        result.reduction.transpose() * angular_jacobian.transpose() *
+        geometry.frame;
+    const Eigen::Matrix3d frame_in_base = base_rotation.transpose() * geometry.frame;
+    result.wrench_flu_map[side].setZero();
+    result.wrench_flu_map[side].topLeftCorner<3, 3>() = frame_in_base;
+    result.wrench_flu_map[side].bottomLeftCorner<3, 3>() =
+        base_rotation.transpose() * skew(geometry.center - base_position) *
+        geometry.frame;
+    result.wrench_flu_map[side].bottomRightCorner<3, 3>() = frame_in_base;
+  }
+  result.native_joint_position_rad = q;
+  if (!finite(result)) {
+    result = Result{};
+    result.status = Status::kNonFinite;
+    return result;
+  }
+  result.status = Status::kOk;
+  return result;
+}
+
+}  // namespace wheel_leg

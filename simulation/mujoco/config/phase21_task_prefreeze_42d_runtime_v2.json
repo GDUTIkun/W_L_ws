@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "profile": "phase21_task_prefreeze_42d_runtime_v2",
+  "extends": "simulation/mujoco/config/phase21_task_prefreeze_42d.json",
+  "supersedes": "simulation/mujoco/config/phase21_task_prefreeze_42d.json",
+  "source_hard_profile": "simulation/mujoco/config/phase21_hard_qp_42d_runtime_v2.json"
+}

@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "profile": "phase21_task_prefreeze_42d_local_v1",
+  "source_hard_profile": "simulation/mujoco/config/phase21_hard_qp_42d.json",
+  "equilibrium_reference_generation": "Solve the frozen 104-row hard problem at model.samples[0] with 12 additional nudot=0 equalities and the frozen minimum-scaled-norm objective; transform its contact-centred wrenches to base-control-site body-aligned FLU.",
+  "task": {
+    "weights": {"contact": 1.0, "base_x": 1.0, "height": 1.0, "orientation": 1.0, "leg": 1.0, "wrench_fidelity": 1.0},
+    "scaled_regularization": 1e-6,
+    "slack_penalty": 1.0,
+    "scales": {"contact_linear_m_s2": 10.0, "base_linear_m_s2": 10.0, "base_angular_rad_s2": 20.0, "leg_rad_s2": 50.0, "wrench_per_side_flu": [50.0, 50.0, 50.0, 2.5, 2.5, 2.5]},
+    "leg_canonical_indices": [0, 1, 3, 4],
+    "order": ["left_contact_rolling_lateral_normal", "right_contact_rolling_lateral_normal", "base_x", "base_height", "world_orientation_xyz", "left_hip_knee_right_hip_knee", "left_wrench_flu", "right_wrench_flu"]
+  },
+  "ablations": {"normalized_direction": 0.1},
+  "thresholds": {"hard_violation": 2e-7, "equilibrium_nudot": 1e-3, "equilibrium_slack": 1e-3, "equilibrium_wrench_residual": 1e-6, "hessian_symmetry": 1e-12, "hessian_minimum_eigenvalue": 1e-10, "transform": 1e-10, "directional_response": 1e-5},
+  "oracle": {"feasibility_tolerance": 1e-8, "qp_ftol": 1e-12, "maximum_iterations": 3000, "active_tolerance": 2e-7}
+}

@@ -20,6 +20,8 @@ DenseQpSolver::DenseQpSolver(Settings settings) : settings_(settings) {}
 bool DenseQpSolver::validSettings() const {
   return std::isfinite(settings_.rho) && settings_.rho > 0.0 &&
          std::isfinite(settings_.sigma) && settings_.sigma > 0.0 &&
+         std::isfinite(settings_.relaxation) && settings_.relaxation > 0.0 &&
+         settings_.relaxation < 2.0 &&
          std::isfinite(settings_.absolute_tolerance) &&
          settings_.absolute_tolerance >= 0.0 &&
          std::isfinite(settings_.relative_tolerance) &&
@@ -110,6 +112,7 @@ void DenseQpSolver::reset() {
   y_.setZero();
   ax_.setZero();
   residual_.setZero();
+  relaxed_.setZero();
   dual_work_.setZero();
 }
 
@@ -172,13 +175,17 @@ DenseQpSolver::Result DenseQpSolver::solve(StartMode start_mode) {
     ax_.head(constraint_count_).noalias() =
         a_.topRows(constraint_count_) * x_;
     z_previous_.head(constraint_count_) = z_.head(constraint_count_);
+    relaxed_.head(constraint_count_) =
+        settings_.relaxation * ax_.head(constraint_count_) +
+        (1.0 - settings_.relaxation) * z_previous_.head(constraint_count_);
     z_.head(constraint_count_) =
-        (ax_.head(constraint_count_) + y_.head(constraint_count_))
+        (relaxed_.head(constraint_count_) + y_.head(constraint_count_))
             .cwiseMax(lower_.head(constraint_count_))
             .cwiseMin(upper_.head(constraint_count_));
     residual_.head(constraint_count_) =
         ax_.head(constraint_count_) - z_.head(constraint_count_);
-    y_.head(constraint_count_) += residual_.head(constraint_count_);
+    y_.head(constraint_count_) +=
+        relaxed_.head(constraint_count_) - z_.head(constraint_count_);
     if (!ax_.head(constraint_count_).allFinite() ||
         !z_.head(constraint_count_).allFinite() ||
         !y_.head(constraint_count_).allFinite()) {

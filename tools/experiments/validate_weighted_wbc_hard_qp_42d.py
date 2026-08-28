@@ -224,6 +224,82 @@ def corpus(builder: HardQpBuilder, capture: Any) -> list[tuple[str, np.ndarray, 
     return values
 
 
+def workspace_audit(builder: HardQpBuilder, capture: Any) -> dict[str, Any]:
+    """Classify plant states without consulting QP feasibility or objectives."""
+    gate = builder.config.get("workspace_gate")
+    if gate is None:
+        return {"enabled": False, "nominal_cases_inside": True,
+                "selection_matches_rule": True, "rejection_cases_outside": True}
+    profile_path = (ROOT / gate["runtime_profile"]).resolve()
+    profile = json.loads(profile_path.read_text(encoding="utf-8"))
+    closure = profile["closure"]
+    offsets = np.asarray(closure["canonical_joint_offsets_rad"], dtype=float)
+    workspace = closure["workspace_rad"]
+    bounds = np.asarray([[min(workspace[name]), max(workspace[name])]
+                         for name in ("hip", "knee", "wheel")], dtype=float)
+    joint_bounds = bounds[[0, 1, 2, 0, 1, 2]]
+    equilibrium_q = builder.oracle.sample_qpos(builder.model_config["samples"][0])
+    equilibrium = offsets - equilibrium_q[builder.oracle.active_qpos]
+
+    def classify(qpos: np.ndarray) -> dict[str, Any]:
+        canonical = offsets - qpos[builder.oracle.active_qpos]
+        delta = canonical - equilibrium
+        inside = bool(np.all(delta >= joint_bounds[:, 0]) and
+                      np.all(delta <= joint_bounds[:, 1]))
+        return {"inside": inside, "canonical_active_rad": canonical.tolist(),
+                "delta_from_equilibrium_rad": delta.tolist()}
+
+    samples = {}
+    for sample in builder.model_config["samples"]:
+        samples["workspace_" + sample["id"]] = classify(
+            builder.oracle.sample_qpos(sample))
+    start = int(gate["selection_start_tick"])
+    end = int(gate["selection_end_tick"])
+    if start < 0 or end >= len(capture["qpos"]) or start > end:
+        raise ValueError("workspace selection tick range is outside the capture")
+    capture_states = {
+        tick: classify(builder.canonical_qpos(capture["qpos"][tick]))
+        for tick in range(start, end + 1)
+    }
+    eligible = [tick for tick, state in capture_states.items() if state["inside"]]
+    count = int(gate["required_dynamic_case_count"])
+    if count < 2 or len(eligible) < count:
+        raise ValueError("workspace selection does not have enough eligible capture ticks")
+    denominator = count - 1
+    selected_indices = [
+        (index * (len(eligible) - 1) + denominator // 2) // denominator
+        for index in range(count)
+    ]
+    selected = [eligible[index] for index in selected_indices]
+    configured = [int(tick) for tick in builder.config["dynamic_ticks"]]
+    rejection_ticks = [int(tick) for tick in gate["required_rejection_ticks"]]
+    rejections = {str(tick): capture_states[tick] for tick in rejection_ticks}
+    nominal_dynamic = {str(tick): capture_states[tick] for tick in configured}
+    nominal_inside = (all(value["inside"] for value in samples.values()) and
+                      all(value["inside"] for value in nominal_dynamic.values()))
+    return {
+        "enabled": True,
+        "runtime_profile": str(profile_path.relative_to(ROOT)),
+        "runtime_profile_sha256": sha256(profile_path),
+        "semantics": gate["semantics"],
+        "joint_delta_bounds_rad": joint_bounds.tolist(),
+        "equilibrium_canonical_active_rad": equilibrium.tolist(),
+        "selection_range": [start, end],
+        "selection_rule": gate["selection_rule"],
+        "eligible_tick_count": len(eligible),
+        "eligible_tick_range": [eligible[0], eligible[-1]],
+        "selected_dynamic_ticks": selected,
+        "configured_dynamic_ticks": configured,
+        "selection_matches_rule": configured == selected,
+        "nominal_cases_inside": nominal_inside,
+        "workspace_samples": samples,
+        "nominal_dynamic_cases": nominal_dynamic,
+        "required_rejection_cases": rejections,
+        "rejection_cases_outside": all(not value["inside"]
+                                       for value in rejections.values()),
+    }
+
+
 def write_problem_corpus(path: Path, cases: list[dict[str, Any]], config: dict[str, Any]) -> None:
     # C++ benchmark corpus: each problem carries the independent QP oracle x.
     settings = config["solver"]
@@ -258,6 +334,7 @@ def main() -> int:
     builder = HardQpBuilder(config, model, contact,
                             json.loads(equilibrium_path.read_text(encoding="utf-8")))
     capture_path = ROOT / config["dynamic_capture"]; capture = np.load(capture_path)
+    workspace = workspace_audit(builder, capture)
     cases = []
     for case_id, qpos, velocity in corpus(builder, capture):
         problem = builder.build(qpos, velocity)
@@ -278,6 +355,10 @@ def main() -> int:
         "indefinite_hessian": {"expected_solver_status": "invalid_input"},
         "inconsistent_bounds": {"expected_solver_status": "invalid_input"},
         "iteration_limit": {"expected_solver_status": "maximum_iterations"},
+        "outside_workspace": {
+            "expected_runtime_status": "outside_workspace",
+            "cases": workspace.get("required_rejection_cases", {}),
+        },
     }
     gates_cfg = config["gates"]
     row_count = int(base["A"].shape[0])
@@ -298,6 +379,9 @@ def main() -> int:
         "conditioning": max(case["problem"]["normal_matrix_condition_number"] for case in cases)
                         <= gates_cfg["maximum_scaling_condition_number"],
         "infeasible_rejected": not contradictory["feasible"],
+        "workspace_nominal": workspace["nominal_cases_inside"],
+        "workspace_selection": workspace["selection_matches_rule"],
+        "workspace_rejection": workspace["rejection_cases_outside"],
     }
     serial_cases = []
     for case in cases:
@@ -320,6 +404,7 @@ def main() -> int:
         "contact_cone_H_physical": builder.h_cone.tolist(),
         "contact_cone_inequality": "H_C * w_C <= 0; H_C rows are unit Euclidean norm in mixed physical coordinates before solver scaling",
         "hull": builder.hull, "corpus": serial_cases, "faults": faults,
+        "workspace_audit": workspace,
         "gates": gates, "pass": all(gates.values()),
         "limits": "This result cannot close DG21-03 until the C++ 42D ADMM corpus/benchmark passes, and cannot close DG21-04 or authorize task tuning/Core integration."
     }

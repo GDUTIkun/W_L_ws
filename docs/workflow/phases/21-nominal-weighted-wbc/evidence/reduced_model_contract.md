@@ -1,9 +1,10 @@
 # Phase 21 Reduced Model Contract
 
-State/reconstruction authority: `current_nominal_weighted_wbc_model_oracle_v2`  
-Dynamics/contact authority: **reopened by nonlinear pre-freeze**  
-Latest local oracle: `current_nominal_weighted_wbc_model_oracle_v9`  
-Latest result: `data/experiments/2026-08-26-phase21-model-oracle-v9/summary.json`
+- State/reconstruction authority: `current_nominal_weighted_wbc_model_oracle_v2`
+- Rigid-body dynamics authority: `current_nominal_weighted_wbc_model_oracle_v8` excluding its superseded single-point contact semantics
+- Contact authority: `phase21_continuous_six_point_contact_oracle_v1` plus the contact-centred 37-row H-cone
+- Hard-QP runtime authority: `phase21_hard_qp_42d_runtime_v2`; the original v1 corpus is historical
+Latest closing evidence: `base_contact_compatibility_closing.md`, `runtime_workspace_gate_repair.md`, and `runtime_cpp_parity.md`
 
 ## Coordinates
 

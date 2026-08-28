@@ -83,12 +83,15 @@ ROADMAP
 主 Agent 应根据任务形态自主调用项目级子 Agent，无需等待用户逐次授权；不得为了使用子 Agent 而使用子 Agent。
 
 - `project_scout`：只读侦察。用于非平凡的代码定位、调用链、数据流、影响面、历史设计、实验记录和 Phase 关系查询。当前代码事实走 CBM 与源码，历史关系走现有 Graphify 本地图。
+<!--
 - `phase_worker`：实现执行。仅当当前 Phase 的 Scope、Frozen Decisions、接口约束、文件所有权、验收条件和验证入口都已明确时使用。
+-->
+- 实现工作暂由 Claude 执行；Codex 不派发 `phase_worker`。恢复此代理时，取消上方注释并删除本条临时策略。
 - `graphify_maintainer`：最低成本的 Graphify 提取与增量维护代理。在尚未建图、目标内容未入图或现有图已过期时使用；默认由 `gpt-5.6-luna` 独立完成，不参与技术决策或证据解释。
 - 默认最多启动一个子 Agent；只有两个任务确实独立且足够大时才并行启动两个。
 - 单文件小改、强顺序依赖、仍需持续技术取舍或主 Agent 可直接快速完成的任务不委派。
 - 数学模型、状态/输入定义、坐标系、物理假设、控制架构、协议语义、证据解释和最终验收始终由主 Agent 负责。
-- 派发 `project_scout` 或 `phase_worker` 前，主 Agent 必须完成必要的 CBM 初查并传递当前 project、generation、已知符号/路径、coverage 缺口、Phase 任务 ID、范围边界、禁止修改区域和验证条件。派发 `graphify_maintainer` 不要求 CBM 初查，只需传递 workspace、现有图路径、待提取或已变更输入、允许的操作边界和预期健康检查。
+- 派发 `project_scout` 前，主 Agent 必须完成必要的 CBM 初查并传递当前 project、generation、已知符号/路径、coverage 缺口、Phase 任务 ID、范围边界、禁止修改区域和验证条件。派发 `graphify_maintainer` 不要求 CBM 初查，只需传递 workspace、现有图路径、待提取或已变更输入、允许的操作边界和预期健康检查。
 - 子 Agent 不是独占工作区；派发实现任务时必须明确文件或模块所有权，要求保留并适配用户及其他 Agent 的已有改动，不得回退他人修改。
 - 除 `graphify_maintainer` 外，其他 Agent 只允许执行 Graphify 查询；维护代理也不得再派生子 Agent，避免额度和并发失控。
 - 主 Agent 必须复核子 Agent 返回的关键证据；子 Agent 的完成、构建或测试状态不能直接解释为模型、仿真或实验 PASS。

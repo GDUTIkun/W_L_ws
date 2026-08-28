@@ -1,0 +1,1447 @@
+{
+  "bodies": [
+    {
+      "com_local_m": [
+        -0.07737815204697132,
+        8.094965674265526e-07,
+        -0.03227768029287019
+      ],
+      "id": 1,
+      "inertial_quaternion_wxyz": [
+        0.0006555881926592066,
+        0.7067946884672915,
+        -1.77412545925848e-05,
+        0.7074184322194308
+      ],
+      "mass_kg": 2.5880000000000005,
+      "name": "base_body",
+      "parent_id": 0,
+      "position_parent_m": [
+        0.0,
+        0.0,
+        0.6
+      ],
+      "principal_inertia_kg_m2": [
+        0.014346664069511518,
+        0.010146289510587735,
+        0.00848118484982045
+      ],
+      "quaternion_parent_wxyz": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "com_local_m": [
+        -0.0022996862476442666,
+        -0.010095189409752554,
+        -0.08653831603981041
+      ],
+      "id": 2,
+      "inertial_quaternion_wxyz": [
+        0.45668742358211534,
+        0.8828477339387145,
+        -0.09829351227750519,
+        -0.04852691279444141
+      ],
+      "mass_kg": 0.826,
+      "name": "right_thigh_body",
+      "parent_id": 1,
+      "position_parent_m": [
+        -0.0775,
+        -0.04425,
+        -0.02
+      ],
+      "principal_inertia_kg_m2": [
+        0.002228995566562637,
+        0.0016706327160272202,
+        0.0009757481677805577
+      ],
+      "quaternion_parent_wxyz": [
+        0.5000000000000001,
+        -0.5,
+        -0.4999999999999999,
+        -0.5
+      ]
+    },
+    {
+      "com_local_m": [
+        0.11793516110568367,
+        -0.1433619151391673,
+        0.00526140017915898
+      ],
+      "id": 3,
+      "inertial_quaternion_wxyz": [
+        0.7005248487983055,
+        0.6284647758687255,
+        0.219360861004496,
+        0.2572504117931623
+      ],
+      "mass_kg": 0.5963,
+      "name": "right_calf_body",
+      "parent_id": 2,
+      "position_parent_m": [
+        -0.0435,
+        -0.17467,
+        -0.12525
+      ],
+      "principal_inertia_kg_m2": [
+        0.00359318322161219,
+        0.0034803373688423495,
+        0.0002519941486200563
+      ],
+      "quaternion_parent_wxyz": [
+        6.123233995736766e-17,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "com_local_m": [
+        0.00011422123248387527,
+        3.597071589790871e-05,
+        -0.007415140339568024
+      ],
+      "id": 4,
+      "inertial_quaternion_wxyz": [
+        0.0,
+        0.7071067811865489,
+        0.0,
+        0.7071067811865489
+      ],
+      "mass_kg": 0.3431,
+      "name": "right_wheel_body",
+      "parent_id": 3,
+      "position_parent_m": [
+        0.14297,
+        -0.17368,
+        -0.0428
+      ],
+      "principal_inertia_kg_m2": [
+        0.0004237375893857504,
+        0.0002459000458754841,
+        0.00024588027365249354
+      ],
+      "quaternion_parent_wxyz": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "com_local_m": [
+        -0.011476326327073941,
+        -0.013927440937263011,
+        0.010298750255969914
+      ],
+      "id": 5,
+      "inertial_quaternion_wxyz": [
+        0.6604372635271553,
+        0.29148920069655154,
+        -0.6178909135265345,
+        0.31155655313826414
+      ],
+      "mass_kg": 0.048,
+      "name": "right_connect1_body",
+      "parent_id": 2,
+      "position_parent_m": [
+        0.0,
+        0.0,
+        -0.1235
+      ],
+      "principal_inertia_kg_m2": [
+        3.08728827483004e-05,
+        2.7042448447471435e-05,
+        5.438940577201736e-06
+      ],
+      "quaternion_parent_wxyz": [
+        6.123233995736766e-17,
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "com_local_m": [
+        -0.030114792877772373,
+        -0.08524921423305111,
+        0.000799999960147455
+      ],
+      "id": 6,
+      "inertial_quaternion_wxyz": [
+        0.5571458246064629,
+        0.4354176502205506,
+        -0.5571458246064629,
+        0.4354176502205506
+      ],
+      "mass_kg": 0.10980000000000001,
+      "name": "right_connect2_body",
+      "parent_id": 5,
+      "position_parent_m": [
+        -0.0318,
+        -0.03859,
+        0.01225
+      ],
+      "principal_inertia_kg_m2": [
+        0.0005608272661520303,
+        0.0005546368651196552,
+        1.8376790774625443e-05
+      ],
+      "quaternion_parent_wxyz": [
+        6.123233995736766e-17,
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "com_local_m": [
+        -0.002306765376285603,
+        -0.010047913704284322,
+        0.08643350113345301
+      ],
+      "id": 7,
+      "inertial_quaternion_wxyz": [
+        0.88129024732226,
+        0.4597145785849147,
+        -0.04864569591558103,
+        -0.09809996167203215
+      ],
+      "mass_kg": 0.826,
+      "name": "left_thigh_body",
+      "parent_id": 1,
+      "position_parent_m": [
+        -0.0775,
+        0.04425,
+        -0.02
+      ],
+      "principal_inertia_kg_m2": [
+        0.002222917533134647,
+        0.0016653279098861164,
+        0.0009753470358537608
+      ],
+      "quaternion_parent_wxyz": [
+        0.5000000000000001,
+        -0.5,
+        -0.4999999999999999,
+        -0.5
+      ]
+    },
+    {
+      "com_local_m": [
+        0.11817009224709184,
+        -0.14316832780956693,
+        -0.004261398815806688
+      ],
+      "id": 8,
+      "inertial_quaternion_wxyz": [
+        0.6245135753248002,
+        0.70422088598311,
+        0.2469530365257092,
+        0.23036912929238562
+      ],
+      "mass_kg": 0.5963,
+      "name": "left_calf_body",
+      "parent_id": 7,
+      "position_parent_m": [
+        -0.0435,
+        -0.17467,
+        0.12525
+      ],
+      "principal_inertia_kg_m2": [
+        0.003593183159822323,
+        0.0034803373511283387,
+        0.0002519940989114182
+      ],
+      "quaternion_parent_wxyz": [
+        6.123233995736766e-17,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "com_local_m": [
+        -5.829442826290297e-05,
+        -0.00010619134315086336,
+        0.0074151403411230315
+      ],
+      "id": 9,
+      "inertial_quaternion_wxyz": [
+        0.10310958854528945,
+        0.6995487207836373,
+        -0.10310958854528945,
+        0.6995487207836373
+      ],
+      "mass_kg": 0.3431,
+      "name": "left_wheel_body",
+      "parent_id": 8,
+      "position_parent_m": [
+        0.14297,
+        -0.17368,
+        0.0428
+      ],
+      "principal_inertia_kg_m2": [
+        0.00042373759240507875,
+        0.00024590004741612074,
+        0.0002458802753317054
+      ],
+      "quaternion_parent_wxyz": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "com_local_m": [
+        -0.011476440241484764,
+        0.013927347066523581,
+        0.010298750255969946
+      ],
+      "id": 10,
+      "inertial_quaternion_wxyz": [
+        0.2914878186295934,
+        0.6604349190633393,
+        -0.31156152854034913,
+        0.6178915626596349
+      ],
+      "mass_kg": 0.048,
+      "name": "left_connect1_body",
+      "parent_id": 7,
+      "position_parent_m": [
+        0.0,
+        0.0,
+        0.1235
+      ],
+      "principal_inertia_kg_m2": [
+        3.087288276587297e-05,
+        2.7042445731281775e-05,
+        5.438943286936233e-06
+      ],
+      "quaternion_parent_wxyz": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "com_local_m": [
+        -0.030114792881217326,
+        -0.08524921423219325,
+        -2.8231057395578377e-14
+      ],
+      "id": 11,
+      "inertial_quaternion_wxyz": [
+        0.5571458246064629,
+        0.4354176502205506,
+        -0.5571458246064629,
+        0.4354176502205506
+      ],
+      "mass_kg": 0.10980000000000001,
+      "name": "left_connect2_body",
+      "parent_id": 10,
+      "position_parent_m": [
+        -0.0318,
+        0.03859,
+        0.01225
+      ],
+      "principal_inertia_kg_m2": [
+        0.0005608272661704127,
+        0.0005546368649363861,
+        1.8376790580550672e-05
+      ],
+      "quaternion_parent_wxyz": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  ],
+  "claim": "current nominal MuJoCo simulation only",
+  "closure": {
+    "canonical_joint_offsets_rad": [
+      -1.3267204093873923,
+      2.208800254886723,
+      0.0,
+      -1.3267204093873923,
+      2.208800254886723,
+      0.0
+    ],
+    "equilibrium_active_native_rad": [
+      -0.35472149355205396,
+      0.5694045089964002,
+      0.0,
+      -0.34332947374181766,
+      0.5693992271789607,
+      0.0
+    ],
+    "equilibrium_passive_native_rad": [
+      0.5725979309569537,
+      -0.5730345859812999,
+      -0.572545089643551,
+      -0.5729875480645877
+    ],
+    "site_pairs": [
+      [
+        "left_connect2_site",
+        "left_calf_site"
+      ],
+      [
+        "right_connect2_site",
+        "right_calf_site"
+      ]
+    ],
+    "solver": {
+      "finite_difference_step": 1e-06,
+      "flow_integration_substeps": 4,
+      "flow_integrator": "explicit_midpoint",
+      "maximum_iterations": 30,
+      "maximum_step_rad": 0.5,
+      "position_tolerance_m": 1e-12,
+      "rcond": 1e-12,
+      "second_difference_step": 0.0001,
+      "step_tolerance_rad": 1e-13
+    },
+    "thresholds": {
+      "maximum_closure_residual_m": 1e-10,
+      "maximum_passive_condition_number": 40.0,
+      "minimum_passive_singular_value": 0.005
+    },
+    "workspace_rad": {
+      "hip": [
+        -0.65,
+        -0.325,
+        0.0,
+        0.325,
+        0.65
+      ],
+      "knee": [
+        -0.75,
+        -0.5,
+        -0.25,
+        0.0,
+        0.25,
+        0.5,
+        0.75
+      ],
+      "wheel": [
+        -1.0,
+        0.0,
+        1.0
+      ]
+    }
+  },
+  "compiled_dimensions": {
+    "nbody_including_world": 12,
+    "njnt": 11,
+    "nq": 17,
+    "nu": 6,
+    "nv": 16
+  },
+  "compiled_with": {
+    "mujoco": "3.7.0",
+    "numpy": "2.2.6"
+  },
+  "contact": {
+    "contact_center_offsets_C_m": [
+      [
+        -3.6949609212418e-18,
+        -0.019999999552965338,
+        0.0
+      ],
+      [
+        3.6949609212418e-18,
+        0.019999999552965338,
+        0.0
+      ],
+      [
+        -0.009949874371066291,
+        -0.019999999552965334,
+        0.001
+      ],
+      [
+        -0.009949874371066285,
+        0.019999999552965338,
+        0.001
+      ],
+      [
+        0.009949874371066285,
+        -0.019999999552965338,
+        0.001
+      ],
+      [
+        0.009949874371066291,
+        0.019999999552965334,
+        0.001
+      ]
+    ],
+    "friction_coefficient": 1.0,
+    "ground_normal_world": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "h_cone_37x6": [
+      [
+        0.0009545652818721733,
+        -0.0005226185074555162,
+        -0.020472793056546836,
+        -0.9975087497506153,
+        -0.04772826516041792,
+        -0.0477282651604181
+      ],
+      [
+        0.0009545652818721724,
+        0.0005226185074555163,
+        -0.020472793056546836,
+        0.9975087497506153,
+        -0.04772826516041826,
+        0.04772826516041806
+      ],
+      [
+        -0.0009545652818721733,
+        0.0005226185074555164,
+        -0.020472793056546836,
+        0.9975087497506153,
+        0.04772826516041792,
+        -0.0477282651604181
+      ],
+      [
+        -0.000954565281872173,
+        -0.0005226185074555161,
+        -0.020472793056546833,
+        -0.9975087497506152,
+        0.04772826516041827,
+        0.04772826516041809
+      ],
+      [
+        -0.011544162159347003,
+        -0.006320356409474267,
+        -0.017864518568821274,
+        -0.5772081208689519,
+        -0.5772081208689521,
+        0.577208120868952
+      ],
+      [
+        -0.7071067811865475,
+        0.0,
+        -0.7071067811865475,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        -0.0011077953541585486,
+        0.000472125212363153,
+        -0.020464928638935155,
+        0.9970025855710962,
+        0.05275216084479,
+        -0.05275216084479017
+      ],
+      [
+        -0.010038804382129386,
+        -0.005854310186345796,
+        -0.017201358671939237,
+        -0.5346463336433429,
+        -0.6541220517320304,
+        0.5346463336433429
+      ],
+      [
+        0.0009999500037496866,
+        -1.7346367850798232e-19,
+        -0.009949376914656654,
+        -1.7346367850798173e-16,
+        -0.9999500037496873,
+        -0.0
+      ],
+      [
+        -0.00199955852151602,
+        -0.0009947678265687552,
+        -0.02089012391324815,
+        -0.9947678265687546,
+        1.7343405931971766e-16,
+        0.09997792831048094
+      ],
+      [
+        0.0,
+        0.7071067811865475,
+        -0.7071067811865475,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.011544162159347003,
+        0.006320356409474268,
+        -0.017864518568821274,
+        0.577208120868952,
+        0.577208120868952,
+        0.577208120868952
+      ],
+      [
+        0.011544162159347003,
+        -0.00632035640947427,
+        -0.017864518568821274,
+        -0.577208120868952,
+        0.5772081208689521,
+        -0.577208120868952
+      ],
+      [
+        0.011740891586891648,
+        -0.005589633554985274,
+        -0.0183310555038252,
+        -0.612057852073843,
+        0.5002651809741396,
+        -0.6120578520738431
+      ],
+      [
+        0.00199955852151602,
+        -0.0009947678265687556,
+        -0.020890123913248147,
+        -0.9947678265687546,
+        1.734340593197177e-16,
+        -0.09997792831048097
+      ],
+      [
+        0.7071067811865475,
+        -0.0,
+        -0.7071067811865475,
+        -0.0,
+        -0.0,
+        -0.0
+      ],
+      [
+        0.012121490828744632,
+        0.005165991543651138,
+        -0.017287482372395774,
+        -0.5772138612752018,
+        -0.5772138612752018,
+        -0.5772138612752017
+      ],
+      [
+        0.0011077953541585492,
+        -0.0004721252123631526,
+        -0.020464928638935155,
+        -0.9970025855710962,
+        -0.052752160844790015,
+        -0.052752160844790195
+      ],
+      [
+        -0.0011077953541585497,
+        -0.00047212521236315256,
+        -0.020464928638935155,
+        -0.9970025855710962,
+        0.05275216084479036,
+        0.052752160844790195
+      ],
+      [
+        3.486192411925157e-18,
+        -0.0004998949081467622,
+        -0.020495690787076564,
+        -0.9997898162935254,
+        -3.0237899769563377e-31,
+        -1.7430962449238007e-16
+      ],
+      [
+        -0.0,
+        -0.7071067811865475,
+        -0.7071067811865475,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        -0.001999558521516005,
+        0.0009947678265687487,
+        -0.02089012391324814,
+        0.9947678265687546,
+        5.203021779591493e-16,
+        -0.0999779283104802
+      ],
+      [
+        -3.48619241192514e-18,
+        0.0004998949081467622,
+        -0.020495690787076568,
+        0.9997898162935254,
+        -4.535684965434486e-31,
+        -1.7430962449237923e-16
+      ],
+      [
+        0.001999558521516027,
+        0.0009947678265687593,
+        -0.020890123913248154,
+        0.9947678265687546,
+        2.601510889795775e-16,
+        0.09997792831048133
+      ],
+      [
+        0.010038804382129382,
+        0.005854310186345795,
+        -0.01720135867193924,
+        0.534646333643343,
+        0.6541220517320303,
+        0.5346463336433429
+      ],
+      [
+        -0.011740891586891648,
+        -0.00558963355498527,
+        -0.018331055503825196,
+        -0.6120578520738432,
+        -0.5002651809741392,
+        0.6120578520738431
+      ],
+      [
+        0.010038804382129382,
+        -0.005854310186345796,
+        -0.017201358671939247,
+        -0.5346463336433427,
+        0.6541220517320308,
+        -0.5346463336433428
+      ],
+      [
+        0.011740891586891646,
+        0.005589633554985271,
+        -0.018331055503825196,
+        0.6120578520738432,
+        0.5002651809741393,
+        0.6120578520738432
+      ],
+      [
+        -0.0009999500037496866,
+        1.7346367850798188e-19,
+        -0.009949376914656654,
+        1.7346367850798173e-16,
+        0.9999500037496873,
+        -0.0
+      ],
+      [
+        -0.010038804382129379,
+        0.005854310186345795,
+        -0.01720135867193924,
+        0.5346463336433426,
+        -0.6541220517320308,
+        -0.5346463336433429
+      ],
+      [
+        -0.012121490828744632,
+        0.00516599154365114,
+        -0.017287482372395774,
+        -0.5772138612752017,
+        0.5772138612752018,
+        0.5772138612752018
+      ],
+      [
+        0.0011077953541585497,
+        0.00047212521236315245,
+        -0.020464928638935155,
+        0.9970025855710962,
+        -0.05275216084479037,
+        0.05275216084479021
+      ],
+      [
+        -0.012121490828744632,
+        -0.005165991543651138,
+        -0.017287482372395774,
+        0.5772138612752017,
+        0.5772138612752019,
+        -0.5772138612752017
+      ],
+      [
+        -0.01174089158689165,
+        0.005589633554985278,
+        -0.0183310555038252,
+        0.612057852073843,
+        -0.5002651809741396,
+        -0.6120578520738431
+      ],
+      [
+        0.012121490828744636,
+        -0.005165991543651142,
+        -0.01728748237239578,
+        0.5772138612752018,
+        -0.5772138612752017,
+        0.5772138612752019
+      ],
+      [
+        -0.011544162159347003,
+        0.006320356409474273,
+        -0.017864518568821274,
+        0.577208120868952,
+        -0.5772081208689521,
+        -0.577208120868952
+      ],
+      [
+        0.0,
+        0.0,
+        -1.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    ],
+    "hull": {
+      "facets_including_fn_nonnegative": 37,
+      "normalization": "each inequality row has Euclidean norm one",
+      "qhull_options": "Qx",
+      "raw_simplicial_facets": 182,
+      "section_condition": 122.88484270605842,
+      "section_rank": 5,
+      "slice": "Fn=1; coordinates [Fr,Fl,Mr,Ml,Mn]",
+      "unique_facets_before_fn": 36
+    },
+    "mesh_axis_bounds_m": [
+      [
+        -0.01991513930261135,
+        0.020084859803318977
+      ],
+      [
+        -0.020084859803318977,
+        0.01991513930261135
+      ]
+    ],
+    "radius_m": 0.05,
+    "support_band_m": 0.001,
+    "wheel_bodies": [
+      "left_wheel_body",
+      "right_wheel_body"
+    ]
+  },
+  "cross_checks": {
+    "current_included_model_sha256": "d7d46cd47d92097fb21d0d5923c83dfac07a5f1c48e2be65deb8e98c4a67f0d9",
+    "h_cone_rows": 37,
+    "included_model_hash_matches_phase14": false,
+    "phase14_body_count": 11,
+    "phase14_included_model_sha256": "a4b1f2e243b6715038b24637325db89cbf820f0ea4eccaafbf832dcaeb71893a",
+    "phase14_maximum_compiled_inertial_error": 0.0,
+    "phase15_profile": "nominal"
+  },
+  "gravity_world_m_s2": [
+    0.0,
+    0.0,
+    -9.81
+  ],
+  "joints": [
+    {
+      "axis_body": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "body_id": 2,
+      "dof_address": 6,
+      "id": 1,
+      "name": "right_hip_joint",
+      "position_body_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "qpos_address": 7,
+      "type": 3
+    },
+    {
+      "axis_body": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "body_id": 3,
+      "dof_address": 7,
+      "id": 2,
+      "name": "right_knee_joint",
+      "position_body_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "qpos_address": 8,
+      "type": 3
+    },
+    {
+      "axis_body": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "body_id": 4,
+      "dof_address": 8,
+      "id": 3,
+      "name": "right_wheel_joint",
+      "position_body_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "qpos_address": 9,
+      "type": 3
+    },
+    {
+      "axis_body": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "body_id": 5,
+      "dof_address": 9,
+      "id": 4,
+      "name": "right_connect1_joint",
+      "position_body_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "qpos_address": 10,
+      "type": 3
+    },
+    {
+      "axis_body": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "body_id": 6,
+      "dof_address": 10,
+      "id": 5,
+      "name": "right_connect2_joint",
+      "position_body_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "qpos_address": 11,
+      "type": 3
+    },
+    {
+      "axis_body": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "body_id": 7,
+      "dof_address": 11,
+      "id": 6,
+      "name": "left_hip_joint",
+      "position_body_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "qpos_address": 12,
+      "type": 3
+    },
+    {
+      "axis_body": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "body_id": 8,
+      "dof_address": 12,
+      "id": 7,
+      "name": "left_knee_joint",
+      "position_body_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "qpos_address": 13,
+      "type": 3
+    },
+    {
+      "axis_body": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "body_id": 9,
+      "dof_address": 13,
+      "id": 8,
+      "name": "left_wheel_joint",
+      "position_body_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "qpos_address": 14,
+      "type": 3
+    },
+    {
+      "axis_body": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "body_id": 10,
+      "dof_address": 14,
+      "id": 9,
+      "name": "left_connect1_joint",
+      "position_body_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "qpos_address": 15,
+      "type": 3
+    },
+    {
+      "axis_body": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "body_id": 11,
+      "dof_address": 15,
+      "id": 10,
+      "name": "left_connect2_joint",
+      "position_body_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "qpos_address": 16,
+      "type": 3
+    }
+  ],
+  "orders": {
+    "actuators": [
+      {
+        "canonical_torque_sign": -1.0,
+        "id": 0,
+        "joint": "left_hip_joint",
+        "name": "left_hip_torque",
+        "native_gear": 1.0
+      },
+      {
+        "canonical_torque_sign": -1.0,
+        "id": 1,
+        "joint": "left_knee_joint",
+        "name": "left_knee_torque",
+        "native_gear": 1.0
+      },
+      {
+        "canonical_torque_sign": -1.0,
+        "id": 2,
+        "joint": "left_wheel_joint",
+        "name": "left_wheel_torque",
+        "native_gear": 1.0
+      },
+      {
+        "canonical_torque_sign": -1.0,
+        "id": 3,
+        "joint": "right_hip_joint",
+        "name": "right_hip_torque",
+        "native_gear": 1.0
+      },
+      {
+        "canonical_torque_sign": -1.0,
+        "id": 4,
+        "joint": "right_knee_joint",
+        "name": "right_knee_torque",
+        "native_gear": 1.0
+      },
+      {
+        "canonical_torque_sign": -1.0,
+        "id": 5,
+        "joint": "right_wheel_joint",
+        "name": "right_wheel_torque",
+        "native_gear": 1.0
+      }
+    ],
+    "canonical_active_joints": [
+      "left_hip_joint",
+      "left_knee_joint",
+      "left_wheel_joint",
+      "right_hip_joint",
+      "right_knee_joint",
+      "right_wheel_joint"
+    ],
+    "decision": [
+      "nudot_12",
+      "tau_6",
+      "left_wrench_C_6",
+      "right_wrench_C_6",
+      "left_slack_FLU_6",
+      "right_slack_FLU_6"
+    ],
+    "passive_joints": [
+      "left_connect1_joint",
+      "left_connect2_joint",
+      "right_connect1_joint",
+      "right_connect2_joint"
+    ],
+    "reduced_velocity": [
+      "base_linear_world_x",
+      "base_linear_world_y",
+      "base_linear_world_z",
+      "base_angular_world_x",
+      "base_angular_world_y",
+      "base_angular_world_z",
+      "canonical_left_hip_joint",
+      "canonical_left_knee_joint",
+      "canonical_left_wheel_joint",
+      "canonical_right_hip_joint",
+      "canonical_right_knee_joint",
+      "canonical_right_wheel_joint"
+    ]
+  },
+  "profile": "phase21_runtime_model_profile_v1",
+  "provenance": [
+    {
+      "path": "data/experiments/2026-08-25-mujoco-internal-dynamics/raw/parameter_manifest.json",
+      "sha256": "cdd1949f855dfbde1df072ee59d18d1fce26908a81e8c11d085566d7795194ea"
+    },
+    {
+      "path": "data/experiments/2026-08-26-phase20-equilibrium/equilibrium.json",
+      "sha256": "d7054fda374c2c0d5d6887d9d84b0cf1334ee1dc52f38bec615cadb434d74a12"
+    },
+    {
+      "path": "docs/workflow/phases/15-mujoco-closed-chain-kinematics/evidence/automated/2026-08-25-nominal/geometry_manifest.json",
+      "sha256": "6cee3715672cbdc4e33ad64dc8e68c171443ef9d2d5997ff55e5a00952bd4bcc"
+    },
+    {
+      "path": "simulation/mujoco/config/phase15_nominal.json",
+      "sha256": "48563f5e8be64ec48b2de7e9efe4c0c02c78b73af0ee6b47f3d98a8e21c9e2dc"
+    },
+    {
+      "path": "simulation/mujoco/config/phase21_contact_centered_wrench_oracle.json",
+      "sha256": "d3234270b26b0fe8b9fedac11360cae645e319e0ac9fbf83a3ec911a3f4180c5"
+    },
+    {
+      "path": "simulation/mujoco/config/phase21_continuous_contact_oracle.json",
+      "sha256": "51ac4074c518fce3a6ec105fc207c26c2106a0046a4d6900c6f27e624ee43052"
+    },
+    {
+      "path": "simulation/mujoco/config/phase21_hard_qp_42d.json",
+      "sha256": "165e1a859139878736edc0c2b04708262d720c91c6228375c99f2927f004e2c7"
+    },
+    {
+      "path": "simulation/mujoco/config/phase21_model_oracle_v2.json",
+      "sha256": "3abf59299936bab8cf25c495fd9265bd3883b6383da380a822f50488f3259eed"
+    },
+    {
+      "path": "simulation/mujoco/config/phase21_model_oracle_v3.json",
+      "sha256": "67800fc17a43410573a6764c2fbe04fff5703efd893ce3f4efa90c387a6d48a3"
+    },
+    {
+      "path": "simulation/mujoco/config/phase21_model_oracle_v4.json",
+      "sha256": "c9dd46fbfab6ab7cafd06a2552b0ffd7c051dc14a90cf554601d937b16c1de5e"
+    },
+    {
+      "path": "simulation/mujoco/config/phase21_model_oracle_v5.json",
+      "sha256": "ed4a4fabd38bdc671cd25948d884a701cbd01f8241b19067b39524bbc5c2aa61"
+    },
+    {
+      "path": "simulation/mujoco/config/phase21_model_oracle_v6.json",
+      "sha256": "665e269d66a82526f4a17c16a1a7d1199dfa391f99ba9b509ea6c3810375f767"
+    },
+    {
+      "path": "simulation/mujoco/config/phase21_model_oracle_v7.json",
+      "sha256": "ea3c658724d41cef7b778202e5a5b119a6bc3a23aa04cb9e528aa04114f1188c"
+    },
+    {
+      "path": "simulation/mujoco/config/phase21_model_oracle_v8.json",
+      "sha256": "63ebb4a2fbbe403599cc23be38e83f3f42046f3b3ea0ebdcc1fd6530935cf5fd"
+    },
+    {
+      "path": "simulation/mujoco/config/phase21_task_prefreeze_42d.json",
+      "sha256": "4f24a8585552e811aed447eeed6395fb01f61037da76d3b7a79493fafcbae9ca"
+    },
+    {
+      "path": "simulation/mujoco/config/phase21_task_prefreeze_42d_nonlinear_frozen_v1.json",
+      "sha256": "c75ce6f5276cf4db80862125ed6b423756e2287c2cd5f8f0c525bc84b92ad50f"
+    },
+    {
+      "path": "simulation/mujoco/model/phase18_floating_contact.xml",
+      "sha256": "8728a77c5da33a60dbcd895fd01ad788826b244ed0994190b1294ecf52c651ee"
+    },
+    {
+      "path": "simulation/mujoco/model/wheel_leg.xml",
+      "sha256": "d7d46cd47d92097fb21d0d5923c83dfac07a5f1c48e2be65deb8e98c4a67f0d9"
+    }
+  ],
+  "schema_version": 1,
+  "sites": [
+    {
+      "body_id": 1,
+      "id": 1,
+      "name": "base_control_frame",
+      "position_body_m": [
+        -0.077378152,
+        8.1e-07,
+        -0.03227768
+      ],
+      "quaternion_body_wxyz": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "body_id": 11,
+      "id": 5,
+      "name": "left_connect2_site",
+      "position_body_m": [
+        -0.0435,
+        -0.17467,
+        0.0
+      ],
+      "quaternion_body_wxyz": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "body_id": 8,
+      "id": 4,
+      "name": "left_calf_site",
+      "position_body_m": [
+        0.0318,
+        -0.03859,
+        0.0105
+      ],
+      "quaternion_body_wxyz": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "body_id": 6,
+      "id": 3,
+      "name": "right_connect2_site",
+      "position_body_m": [
+        -0.0435,
+        -0.17467,
+        0.0
+      ],
+      "quaternion_body_wxyz": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "body_id": 3,
+      "id": 2,
+      "name": "right_calf_site",
+      "position_body_m": [
+        0.0318,
+        -0.03859,
+        -0.0105
+      ],
+      "quaternion_body_wxyz": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  ],
+  "wbc": {
+    "hard": {
+      "bounds": {
+        "acceleration": [
+          10,
+          10,
+          10,
+          20,
+          20,
+          20,
+          50,
+          50,
+          50,
+          50,
+          50,
+          50
+        ],
+        "torque_nm": [
+          10,
+          10,
+          2,
+          10,
+          10,
+          2
+        ]
+      },
+      "gates": {
+        "maximum_cone_row_norm_error": 1e-12,
+        "maximum_oracle_bound_violation": 2e-07,
+        "maximum_oracle_stationarity_residual": 2e-06,
+        "maximum_scaling_condition_number": 100000000.0,
+        "required_cone_rows_per_side": 37,
+        "required_row_count": 104,
+        "required_variable_count": 42
+      },
+      "minimum_scaled_norm_regularization": 1.0,
+      "row_scale": {
+        "cone_rule": "unit_2_norm_after_variable_scaling",
+        "dynamics": [
+          100,
+          100,
+          100,
+          20,
+          20,
+          20,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10
+        ]
+      },
+      "solver": {
+        "absolute_tolerance": 1e-08,
+        "maximum_iterations": 10000,
+        "relative_tolerance": 1e-08,
+        "rho": 1.0,
+        "sigma": 1e-06
+      },
+      "variable_scale": {
+        "acceleration": [
+          10,
+          10,
+          10,
+          20,
+          20,
+          20,
+          50,
+          50,
+          50,
+          50,
+          50,
+          50
+        ],
+        "slack_per_side": [
+          50,
+          50,
+          50,
+          2.5,
+          2.5,
+          2.5
+        ],
+        "torque": [
+          10,
+          10,
+          2,
+          10,
+          10,
+          2
+        ],
+        "wrench_per_side": [
+          50,
+          50,
+          50,
+          2.5,
+          2.5,
+          2.5
+        ]
+      }
+    },
+    "nonlinear": {
+      "duration_s": 10.0,
+      "gates": {
+        "maximum_abs_lateral_slip_m_s": 0.05,
+        "maximum_abs_pitch_rad": 0.03,
+        "maximum_abs_roll_rad": 0.03,
+        "maximum_abs_rolling_slip_m_s": 0.05,
+        "maximum_abs_x_m": 0.02,
+        "maximum_abs_y_m": 0.02,
+        "maximum_abs_yaw_rad": 0.05,
+        "maximum_bound_violation": 2e-07,
+        "maximum_closure_residual_m": 0.0002,
+        "maximum_final_angular_speed_rad_s": 0.1,
+        "maximum_final_linear_speed_m_s": 0.02,
+        "maximum_hard_residual": 2e-07,
+        "maximum_height_error_m": 0.01,
+        "maximum_normalized_slack": 0.01,
+        "maximum_penetration_m": 0.004,
+        "maximum_saturation_count": 0,
+        "maximum_solver_failure_count": 0,
+        "maximum_task_cost": 0.001,
+        "maximum_task_residual": 0.02,
+        "minimum_bilateral_contact_fraction": 1.0,
+        "minimum_normal_force_n": 1.0
+      },
+      "nonlinear_gains": {
+        "base_x": [
+          9.0,
+          6.0
+        ],
+        "height": [
+          25.0,
+          10.0
+        ],
+        "leg": [
+          36.0,
+          12.0
+        ],
+        "orientation_kd": [
+          10.0,
+          10.0,
+          6.0
+        ],
+        "orientation_kp": [
+          25.0,
+          25.0,
+          9.0
+        ]
+      },
+      "physics_steps_per_control": 5
+    },
+    "task": {
+      "leg_canonical_indices": [
+        0,
+        1,
+        3,
+        4
+      ],
+      "order": [
+        "left_contact_rolling_lateral_normal",
+        "right_contact_rolling_lateral_normal",
+        "base_x",
+        "base_height",
+        "world_orientation_xyz",
+        "left_hip_knee_right_hip_knee",
+        "left_wrench_flu",
+        "right_wrench_flu"
+      ],
+      "scaled_regularization": 1e-06,
+      "scales": {
+        "base_angular_rad_s2": 20.0,
+        "base_linear_m_s2": 10.0,
+        "contact_linear_m_s2": 10.0,
+        "leg_rad_s2": 50.0,
+        "wrench_per_side_flu": [
+          50.0,
+          50.0,
+          50.0,
+          2.5,
+          2.5,
+          2.5
+        ]
+      },
+      "slack_penalty": 1.0,
+      "weights": {
+        "base_x": 1.0,
+        "contact": 1.0,
+        "height": 1.0,
+        "leg": 1.0,
+        "orientation": 1.0,
+        "wrench_fidelity": 1.0
+      }
+    }
+  }
+}

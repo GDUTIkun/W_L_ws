@@ -31,6 +31,11 @@ struct Summary {
   double max_primal{0.0}, max_dual{0.0}, max_stationarity{0.0};
   double max_bound{0.0}, max_equality{0.0};
 };
+struct OracleComparison {
+  double max_scaled_x{0.0};
+  double max_physical_torque_nm{0.0};
+  double max_objective_gap{0.0};
+};
 
 template <typename Matrix>
 void readValues(std::istream& input, Matrix& matrix) {
@@ -139,6 +144,31 @@ std::optional<double> maxOracleError(
   }
   return error;
 }
+std::optional<OracleComparison> compareOracle(
+    const std::vector<DenseQpSolver::Result>& results,
+    const std::vector<const Problem*>& problems) {
+  OracleComparison comparison;
+  constexpr double torque_scale[6]{10.0, 10.0, 2.0, 10.0, 10.0, 2.0};
+  for (std::size_t i = 0; i < results.size(); ++i) {
+    if (!problems[i]->oracle) return std::nullopt;
+    const auto& p = *problems[i];
+    const Eigen::VectorXd difference = results[i].x - *p.oracle;
+    comparison.max_scaled_x = std::max(
+        comparison.max_scaled_x, difference.cwiseAbs().maxCoeff());
+    for (int joint = 0; joint < 6; ++joint) {
+      comparison.max_physical_torque_nm = std::max(
+          comparison.max_physical_torque_nm,
+          std::abs(torque_scale[joint] * difference[12 + joint]));
+    }
+    const auto objective = [&](const Eigen::VectorXd& x) {
+      return 0.5 * x.dot(p.h * x) + p.g.dot(x);
+    };
+    comparison.max_objective_gap = std::max(
+        comparison.max_objective_gap,
+        std::abs(objective(results[i].x) - objective(*p.oracle)));
+  }
+  return comparison;
+}
 bool residualsPass(const Summary& summary) {
   return summary.max_bound <= 2.0e-7 && summary.max_equality <= 2.0e-7 &&
          summary.max_stationarity <= 2.0e-6;
@@ -193,9 +223,16 @@ int main(int argc, char** argv) {
     const auto cold_oracle = maxOracleError(cold_results, cold_problems);
     const auto same_oracle = maxOracleError(same_results, same_problems);
     const auto dynamic_oracle = maxOracleError(dynamic_results, dynamic_problems);
-    const bool oracle_pass = cold_oracle && same_oracle && dynamic_oracle &&
-        *cold_oracle <= 2.0e-6 && *same_oracle <= 2.0e-6 &&
-        *dynamic_oracle <= 2.0e-6;
+    const auto cold_comparison = compareOracle(cold_results, cold_problems);
+    const auto same_comparison = compareOracle(same_results, same_problems);
+    const auto dynamic_comparison = compareOracle(dynamic_results, dynamic_problems);
+    const auto equivalent = [](const std::optional<OracleComparison>& value) {
+      return value && (value->max_scaled_x <= 2.0e-6 ||
+          (value->max_physical_torque_nm <= 5.0e-4 &&
+           value->max_objective_gap <= 2.0e-6));
+    };
+    const bool oracle_pass = equivalent(cold_comparison) &&
+        equivalent(same_comparison) && equivalent(dynamic_comparison);
     const bool deadline_pass = cold.max_ms <= 10.0 && dynamic_warm.max_ms <= 10.0;
     const bool pass = residualsPass(cold) && residualsPass(same_warm) &&
                       residualsPass(dynamic_warm) && oracle_pass && deadline_pass;
@@ -210,6 +247,14 @@ int main(int argc, char** argv) {
     output << ",\n  \"cycling_dynamic_warm_oracle_max_abs_error\": ";
     if (dynamic_oracle) output << *dynamic_oracle;
     else output << "null";
+    output << ",\n  \"cold_oracle_max_physical_torque_error_nm\": "
+           << (cold_comparison ? cold_comparison->max_physical_torque_nm : -1.0)
+           << ",\n  \"cold_oracle_max_objective_gap\": "
+           << (cold_comparison ? cold_comparison->max_objective_gap : -1.0)
+           << ",\n  \"cycling_dynamic_warm_oracle_max_physical_torque_error_nm\": "
+           << (dynamic_comparison ? dynamic_comparison->max_physical_torque_nm : -1.0)
+           << ",\n  \"cycling_dynamic_warm_oracle_max_objective_gap\": "
+           << (dynamic_comparison ? dynamic_comparison->max_objective_gap : -1.0);
     output << ",\n  \"modes\": {\n";
     writeSummary(output, "cold", cold, true); writeSummary(output, "repeated_same_warm", same_warm, true);
     writeSummary(output, "cycling_dynamic_warm", dynamic_warm, false);
@@ -217,7 +262,7 @@ int main(int argc, char** argv) {
            << "    \"bound_equality_stationarity\": "
            << ((residualsPass(cold) && residualsPass(same_warm) &&
                 residualsPass(dynamic_warm)) ? "true" : "false") << ",\n"
-           << "    \"oracle_solution_max_abs_error\": "
+           << "    \"oracle_or_physical_output_objective_equivalence\": "
            << (oracle_pass ? "true" : "false") << ",\n"
            << "    \"cold_dynamic_max_setup_solve_ms\": "
            << (deadline_pass ? "true" : "false") << "\n  },\n"

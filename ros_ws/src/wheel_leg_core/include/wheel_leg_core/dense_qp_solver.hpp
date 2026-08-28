@@ -20,6 +20,7 @@ class DenseQpSolver {
   struct Settings {
     double rho{1.0};
     double sigma{1.0e-6};
+    double relaxation{1.6};
     double absolute_tolerance{1.0e-7};
     double relative_tolerance{1.0e-7};
     int maximum_iterations{400};
@@ -89,6 +90,7 @@ class DenseQpSolver {
   ConstraintVector y_{ConstraintVector::Zero()};
   ConstraintVector ax_{ConstraintVector::Zero()};
   ConstraintVector residual_{ConstraintVector::Zero()};
+  ConstraintVector relaxed_{ConstraintVector::Zero()};
   Vector dual_work_{Vector::Zero()};
 };
 
