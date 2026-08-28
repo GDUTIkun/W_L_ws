@@ -76,6 +76,19 @@ if(BUILD_TESTING)
     target_compile_options(test_weighted_wbc_controller PRIVATE -Wall -Wextra -Wpedantic -Werror)
   endif()
   add_test(NAME wheel_leg_core_weighted_wbc_controller COMMAND test_weighted_wbc_controller)
+
+  add_executable(test_controller_core_weighted_wbc
+    test/test_controller_core_weighted_wbc.cpp)
+  target_link_libraries(test_controller_core_weighted_wbc PRIVATE wheel_leg_core)
+  target_compile_definitions(test_controller_core_weighted_wbc PRIVATE
+    WBC_PROBLEM_GOLDEN_PATH="${CMAKE_CURRENT_SOURCE_DIR}/test/data/phase21_weighted_wbc_problem_golden_v2.txt")
+  if(MSVC)
+    target_compile_options(test_controller_core_weighted_wbc PRIVATE /W4 /WX)
+  else()
+    target_compile_options(test_controller_core_weighted_wbc PRIVATE -Wall -Wextra -Wpedantic -Werror)
+  endif()
+  add_test(NAME wheel_leg_core_controller_core_weighted_wbc
+    COMMAND test_controller_core_weighted_wbc)
 endif()
 
 install(DIRECTORY include/ DESTINATION include)

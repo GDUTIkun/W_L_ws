@@ -5,6 +5,7 @@
 #include <optional>
 
 #include "wheel_leg_core/types.hpp"
+#include "wheel_leg_core/weighted_wbc_controller.hpp"
 
 namespace wheel_leg {
 
@@ -13,6 +14,7 @@ enum class ControllerMode {
   kJointPdGravity,
   kSimpleStanding,
   kSimpleStanding3d,
+  kWeightedWbc,
 };
 
 struct JointReference {
@@ -64,6 +66,28 @@ struct SimpleStanding3dConfig {
   double maximum_joint_velocity_rad_s{10.0};
 };
 
+struct WeightedWbcConfig {
+  double nominal_height_m{0.0};
+  JointVector joint_target_rad{};
+  double base_x_kp{0.0};
+  double base_x_kd{0.0};
+  double height_kp{0.0};
+  double height_kd{0.0};
+  std::array<double, 3> orientation_kp{};
+  std::array<double, 3> orientation_kd{};
+  double leg_kp{0.0};
+  double leg_kd{0.0};
+  Eigen::Matrix<double, 12, 1> interaction_wrench_flu{
+      Eigen::Matrix<double, 12, 1>::Zero()};
+  double period_s{0.01};
+  double period_tolerance_s{1.0e-6};
+  double maximum_abs_x_m{0.0};
+  double maximum_abs_y_m{0.0};
+  double maximum_abs_z_m{0.0};
+  double maximum_abs_roll_pitch_rad{0.0};
+  double maximum_abs_yaw_rad{0.0};
+};
+
 struct ControllerConfig {
   double quaternion_norm_tolerance{1.0e-6};
   ControllerMode mode{ControllerMode::kZero};
@@ -76,9 +100,12 @@ struct ControllerConfig {
   GravityProfile gravity_profile{};
   SimpleStandingConfig simple_standing{};
   SimpleStanding3dConfig simple_standing_3d{};
+  WeightedWbcConfig weighted_wbc{};
 };
 
 [[nodiscard]] GravityProfile currentNominalGravityProfile();
+
+[[nodiscard]] WeightedWbcConfig currentNominalWeightedWbcConfig();
 
 enum class StepStatus {
   kOk,
@@ -101,6 +128,17 @@ struct StepResult {
   std::array<double, 8> standing_state_3d{};
   std::array<double, 3> virtual_input_3d{};
   bool safety_latched{false};
+  bool weighted_wbc_active{false};
+  WbcReference weighted_wbc_reference{};
+  WeightedWbcController::Status weighted_wbc_status{
+      WeightedWbcController::Status::kProblemRejected};
+  NominalWbcModel::Status weighted_wbc_model_status{
+      NominalWbcModel::Status::kInvalidState};
+  DenseQpSolver::Status weighted_wbc_solver_status{
+      DenseQpSolver::Status::kInvalidInput};
+  int weighted_wbc_iterations{0};
+  double weighted_wbc_hard_violation{0.0};
+  double weighted_wbc_stationarity_residual{0.0};
 
   [[nodiscard]] bool accepted() const { return status == StepStatus::kOk; }
 };
@@ -113,6 +151,8 @@ class ControllerCore {
   [[nodiscard]] StepResult step(const RobotState &state);
 
  private:
+  void stepWeightedWbc(const RobotState &state, StepResult &result);
+
   ControllerConfig config_{};
   bool configured_{false};
   JointReference reference_{};
@@ -124,6 +164,10 @@ class ControllerCore {
   std::optional<double> standing_3d_anchor_height_m_;
   std::optional<double> standing_3d_anchor_heading_rad_;
   bool standing_safety_latched_{false};
+  WeightedWbcController weighted_wbc_controller_{};
+  std::optional<double> weighted_wbc_anchor_x_m_;
+  std::optional<double> weighted_wbc_anchor_y_m_;
+  std::optional<double> weighted_wbc_anchor_yaw_rad_;
 };
 
 }  // namespace wheel_leg
