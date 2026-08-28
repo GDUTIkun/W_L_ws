@@ -1,0 +1,191 @@
+{
+ "schema_version": 1,
+ "profile": "phase21_weighted_wbc_formal_v1",
+ "phase": 21,
+ "evidence_class": "formal current-nominal simulation-only weighted WBC",
+ "scene": "simulation/mujoco/model/phase18_floating_contact.xml",
+ "source_profiles": {
+  "nonlinear_gates": "simulation/mujoco/config/phase21_task_prefreeze_42d_nonlinear_frozen_v2.json",
+  "task_profile": "simulation/mujoco/config/phase21_task_prefreeze_42d_runtime_v2.json",
+  "hard_profile": "simulation/mujoco/config/phase21_hard_qp_42d_runtime_v2.json",
+  "model_profile": "simulation/mujoco/config/phase21_runtime_model_profile_v1.json",
+  "equilibrium": "simulation/mujoco/config/phase20_equilibrium.json",
+  "plant_case_matrix": "simulation/mujoco/config/phase20_formal.json"
+ },
+ "equilibrium": [
+  -0.34332947374181766,
+  0.5693992271789607,
+  -0.35472149355205396,
+  0.5694045089964002,
+  0.34771766403249466,
+  -0.572545089643551,
+  -0.5729875480645877,
+  0.5725979309569537,
+  -0.5730345859812999
+ ],
+ "reference": [
+  -0.9719989158353384,
+  1.6393957458903228,
+  0.0,
+  -0.9833909356455747,
+  1.6394010277077622,
+  0.0
+ ],
+ "torque_limit_nm": [
+  10.0,
+  10.0,
+  2.0,
+  10.0,
+  10.0,
+  2.0
+ ],
+ "timing": {
+  "physics_timestep_s": 0.002,
+  "control_period_s": 0.01,
+  "physics_substeps_per_control": 5
+ },
+ "solver": {
+  "name": "wheel_leg_core Eigen-only fixed dense ADMM",
+  "over_relaxation_alpha": 1.6,
+  "rho": 0.15,
+  "variables": 42,
+  "hard_rows": 104,
+  "decision_order": [
+   "nudot_12",
+   "tau_6",
+   "w_left_C_6",
+   "w_right_C_6",
+   "slack_left_FLU_6",
+   "slack_right_FLU_6"
+  ],
+  "start_mode": "warm within episode, cold after reset"
+ },
+ "normal_ticks": 1000,
+ "fault_ticks": 200,
+ "fault_tick": 100,
+ "disturbance_start_tick": 100,
+ "disturbance_ticks": 10,
+ "cases": [
+  {
+   "id": "nominal_reset_replay",
+   "episodes": 2
+  },
+  {
+   "id": "pitch_positive",
+   "initial_state": [0.0, 0.0, 0.001, 0.0, 0.0, 0.0, 0.0, 0.0]
+  },
+  {
+   "id": "pitch_negative",
+   "initial_state": [0.0, 0.0, -0.001, 0.0, 0.0, 0.0, 0.0, 0.0]
+  },
+  {
+   "id": "velocity_positive",
+   "initial_state": [0.0, 0.001, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+  },
+  {
+   "id": "velocity_negative",
+   "initial_state": [0.0, -0.001, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+  },
+  {
+   "id": "yaw_rate_positive",
+   "initial_state": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.005]
+  },
+  {
+   "id": "yaw_rate_negative",
+   "initial_state": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -0.005]
+  },
+  {
+   "id": "force_x_positive",
+   "force_n": [0.1, 0.0, 0.0]
+  },
+  {
+   "id": "force_x_negative",
+   "force_n": [-0.1, 0.0, 0.0]
+  },
+  {
+   "id": "force_y_positive",
+   "force_n": [0.0, 0.05, 0.0]
+  },
+  {
+   "id": "force_y_negative",
+   "force_n": [0.0, -0.05, 0.0]
+  },
+  {
+   "id": "pitch_moment_positive",
+   "moment_nm": [0.0, 0.01, 0.0]
+  },
+  {
+   "id": "pitch_moment_negative",
+   "moment_nm": [0.0, -0.01, 0.0]
+  },
+  {
+   "id": "roll_moment_positive",
+   "moment_nm": [0.005, 0.0, 0.0]
+  },
+  {
+   "id": "roll_moment_negative",
+   "moment_nm": [-0.005, 0.0, 0.0]
+  },
+  {
+   "id": "yaw_moment_positive",
+   "moment_nm": [0.0, 0.0, 0.005]
+  },
+  {
+   "id": "yaw_moment_negative",
+   "moment_nm": [0.0, 0.0, -0.005]
+  },
+  {
+   "id": "combined_positive",
+   "force_n": [0.05, 0.025, 0.0],
+   "moment_nm": [0.0025, 0.005, 0.0025]
+  },
+  {
+   "id": "combined_negative",
+   "force_n": [-0.05, -0.025, 0.0],
+   "moment_nm": [-0.0025, -0.005, -0.0025]
+  }
+ ],
+ "fault_cases": [
+  "contact_loss_left",
+  "contact_loss_right",
+  "invalid",
+  "nonmonotonic",
+  "timing",
+  "saturation"
+ ],
+ "saturation": {
+  "method": "torque_limit injection",
+  "torque_limit_nm": [0.001, 0.001, 0.001, 0.001, 0.001, 0.001],
+  "expected_first_status": 4
+ },
+ "gates": {
+  "maximum_abs_x_m": 0.02,
+  "maximum_abs_y_m": 0.02,
+  "maximum_height_error_m": 0.01,
+  "maximum_abs_roll_rad": 0.03,
+  "maximum_abs_pitch_rad": 0.03,
+  "maximum_abs_yaw_rad": 0.05,
+  "maximum_leg_error_rad": 0.03,
+  "minimum_bilateral_contact_fraction": 1.0,
+  "maximum_final_linear_speed_m_s": 0.02,
+  "maximum_final_angular_speed_rad_s": 0.1,
+  "maximum_zoh_difference": 0.0,
+  "maximum_adapter_sign_error": 0.0,
+  "minimum_wheel_normal_load_n": 1.0,
+  "maximum_penetration_m": 0.004,
+  "maximum_abs_rolling_slip_m_s": 0.05,
+  "maximum_abs_lateral_slip_m_s": 0.05,
+  "maximum_closure_residual_m": 0.0002,
+  "maximum_hard_violation": 2e-07,
+  "maximum_primal_residual": 2e-07,
+  "maximum_dual_residual": 2e-07,
+  "maximum_stationarity_residual": 2e-07,
+  "maximum_solver_failure_count": 0,
+  "maximum_saturation_count": 0,
+  "maximum_normalized_slack": 0.01,
+  "maximum_task_residual": 0.02,
+  "maximum_task_cost": 0.001,
+  "maximum_core_step_ms": 10.0,
+  "maximum_control_period_error_s": 1e-06
+ }
+}
