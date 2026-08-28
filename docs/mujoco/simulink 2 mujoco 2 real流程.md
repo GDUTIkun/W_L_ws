@@ -24,6 +24,7 @@ Simulink 中已验证的算法使用了简化刚体假设，而 MuJoCo 和真机
 → exact 2D sagittal 简单站立
 → 完整 3D 简单站立
 → WBC
+→ ProxQP solver migration 与同层复验
 → NMPC
 ```
 
@@ -977,9 +978,23 @@ Real PASS
 继续
 ```
 
+current nominal 第一轮的 Weighted WBC 已由 Phase 21 完成。
+[Phase 22](../workflow/phases/22-proxqp-solver-migration/RECORD.md) 已只替换并复验该层的
+QP 后端：保持 42D/104-row 数学、WBC tasks、canonical I/O、plant 和 timing 不变，
+以 ProxQP component/oracle/formal-v2 evidence 重新关闭 solver gate。这不是新的控制层；
+ProxQP-backed WBC 现作为后续 NMPC 和 identified-profile 复现所用的 solver baseline。
+
 ---
 
 # 19. NMPC
+
+[Phase 23](../workflow/phases/23-nominal-nmpc/PLAN.md) 已按用户指令冻结为 `blocked`。
+已关闭的DG23-01把候选修订为current nominal的12-state locked-composite base model；
+OCP/KKT、sparse ProxQP profile、同步更新tick、production Core和formal均未执行。
+解除冻结后从P23-T04继续，且只有这些gate通过后才允许把12D wrench写入
+Phase 21/22已冻结的内部WBC reference。
+Simulink/acados 候选仅作 oracle；production 不迁入 Euler state、生成 S-function 或
+失败时无限保持 last-valid command。
 
 先人工给：
 

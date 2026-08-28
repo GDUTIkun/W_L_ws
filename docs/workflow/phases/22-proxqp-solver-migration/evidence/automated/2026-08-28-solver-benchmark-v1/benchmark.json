@@ -1,0 +1,54 @@
+{
+  "schema_version": 3,
+  "solver": "ProxSuite ProxQP 0.7.3 dense PrimalDualLDLT",
+  "repetitions": 1000,
+  "corpus_problem_count": 32,
+  "cold_oracle_max_abs_error": 3.0933394981107198e-05,
+  "repeated_same_warm_oracle_max_abs_error": 1.1274153172146002e-05,
+  "cycling_dynamic_warm_oracle_max_abs_error": 3.0918316054231836e-05,
+  "cold_oracle_max_physical_torque_error_nm": 2.8314024708708807e-05,
+  "cold_oracle_max_objective_gap": 2.4415758304030533e-09,
+  "cycling_dynamic_warm_oracle_max_physical_torque_error_nm": 2.830740857551195e-05,
+  "cycling_dynamic_warm_oracle_max_objective_gap": 1.1943459554686342e-09,
+  "modes": {
+    "cold": {
+      "p50_solve_time_ms": 0.61940200000000001,
+      "p99_solve_time_ms": 0.84390900000000002,
+      "max_solve_time_ms": 0.92980099999999999,
+      "mean_iterations": 8.3309999999999995,
+      "max_primal_residual": 9.7655861532898718e-09,
+      "max_dual_residual": 5.3783093505740232e-10,
+      "max_stationarity_residual": 5.3782409775715578e-10,
+      "max_bound_violation": 9.7655861478146509e-09,
+      "max_equality_residual": 9.7655861478146509e-09
+    },
+    "repeated_same_warm": {
+      "p50_solve_time_ms": 0.219836,
+      "p99_solve_time_ms": 0.26380199999999998,
+      "max_solve_time_ms": 0.54546700000000004,
+      "mean_iterations": 0,
+      "max_primal_residual": 1.1715457493011172e-09,
+      "max_dual_residual": 4.5489218195490713e-10,
+      "max_stationarity_residual": 4.5488628433802996e-10,
+      "max_bound_violation": 1.1715457493011172e-09,
+      "max_equality_residual": 1.1715457493011172e-09
+    },
+    "cycling_dynamic_warm": {
+      "p50_solve_time_ms": 0.15249599999999999,
+      "p99_solve_time_ms": 0.33568500000000001,
+      "max_solve_time_ms": 0.68905300000000003,
+      "mean_iterations": 2.2799999999999998,
+      "max_primal_residual": 7.516223702952614e-09,
+      "max_dual_residual": 2.9134811652260965e-09,
+      "max_stationarity_residual": 2.913481413047668e-09,
+      "max_bound_violation": 7.5162236989889664e-09,
+      "max_equality_residual": 6.3498996446298649e-09
+    }
+  },
+  "gates": {
+    "bound_equality_stationarity": true,
+    "oracle_or_physical_output_objective_equivalence": true,
+    "cold_dynamic_max_setup_solve_ms": true
+  },
+  "pass": true
+}

@@ -1,0 +1,202 @@
+{
+  "gates": {
+    "base_twist": true,
+    "chart": true,
+    "determinism": true,
+    "equilibrium_speed": false,
+    "finite": true,
+    "position_rate": true,
+    "quaternion_sign": true,
+    "rotation_chart_rate": true,
+    "wheel_relative_rate": true
+  },
+  "maxima": {
+    "base_twist_error": 5.551115123125783e-17,
+    "equilibrium_speed": 0.012740695843911437,
+    "quaternion_sign_invariance_error": 0.0,
+    "repeat_error": 0.0,
+    "rotation_rate_fd_error": 8.002415397001528e-11,
+    "state_position_fd_error": 1.3754585664882413e-10,
+    "wheel_relative_velocity_fd_error": 1.3754585664882413e-10
+  },
+  "orientation": "world-axis shortest-arc rotation vector for R_N_from_B",
+  "pass": false,
+  "phase": 23,
+  "profile": "phase23_nominal_nmpc_state_oracle_v1",
+  "samples": {
+    "equilibrium": {
+      "base_twist_error": 0.0,
+      "quaternion_sign_invariance_error": 0.0,
+      "repeat_error": 0.0,
+      "rotation_rate_fd_error": 0.0,
+      "state": [
+        -0.077378152,
+        8.1e-07,
+        0.3154399840324946,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        -0.009573649495650122,
+        -0.012740695843911437,
+        0.0,
+        0.0
+      ],
+      "state_position_fd_error": 0.0,
+      "wheel_positions_n_m": [
+        [
+          -0.08695180149565013,
+          0.21230000000000007,
+          0.049569469006407185
+        ],
+        [
+          -0.09011884784391144,
+          -0.21229999999999993,
+          0.04969591510377075
+        ]
+      ],
+      "wheel_relative_velocity_fd_error": 0.0
+    },
+    "near_chart_boundary": {
+      "base_twist_error": 5.551115123125783e-17,
+      "quaternion_sign_invariance_error": 0.0,
+      "repeat_error": 0.0,
+      "rotation_rate_fd_error": 8.002415397001528e-11,
+      "state": [
+        -0.0719477345196609,
+        -0.002197053732161852,
+        0.3047301834577972,
+        0.18,
+        -0.13999999999999999,
+        0.11999999999999998,
+        0.04,
+        0.029999999999999995,
+        -0.02,
+        0.25,
+        -0.20999999999999994,
+        0.16999999999999998,
+        0.018045907793557824,
+        -0.02745576597802473,
+        0.019164032872259436,
+        -0.008899368911362851
+      ],
+      "state_position_fd_error": 1.3754585664882413e-10,
+      "wheel_positions_n_m": [
+        [
+          -0.04221263941789766,
+          0.26522730867985983,
+          0.03949215361878666
+        ],
+        [
+          -0.04364791405958146,
+          -0.1724357566719356,
+          0.055347155221548455
+        ]
+      ],
+      "wheel_relative_velocity_fd_error": 1.3754585664882413e-10
+    },
+    "negative_3d": {
+      "base_twist_error": 1.3877787807814457e-17,
+      "quaternion_sign_invariance_error": 0.0,
+      "repeat_error": 0.0,
+      "rotation_rate_fd_error": 7.146006009151051e-12,
+      "state": [
+        -0.07873177879429506,
+        0.00120652657311198,
+        0.31892394361834586,
+        -0.049999999999999996,
+        0.045,
+        -0.035,
+        -0.11,
+        0.07000000000000002,
+        -0.039999999999999994,
+        -0.16,
+        0.1,
+        -0.08000000000000002,
+        -0.011156357808950723,
+        -0.007441638893030256,
+        -0.02707532801112295,
+        0.02967438543831055
+      ],
+      "state_position_fd_error": 5.882491369013643e-11,
+      "wheel_positions_n_m": [
+        [
+          -0.09376537463719462,
+          0.20162726102261874,
+          0.06743550068184809
+        ],
+        [
+          -0.10637313525614572,
+          -0.2244051204095377,
+          0.046427133065587406
+        ]
+      ],
+      "wheel_relative_velocity_fd_error": 5.882491369013643e-11
+    },
+    "positive_3d": {
+      "base_twist_error": 5.551115123125783e-17,
+      "quaternion_sign_invariance_error": 0.0,
+      "repeat_error": 0.0,
+      "rotation_rate_fd_error": 7.651546063414116e-12,
+      "state": [
+        -0.07602074388750403,
+        -0.00027132124905160935,
+        0.3123623261421006,
+        0.06,
+        -0.04,
+        0.03,
+        0.13000000000000003,
+        -0.08,
+        0.05,
+        0.17999999999999994,
+        -0.12,
+        0.09000000000000001,
+        -0.007203899375023846,
+        -0.012362594736299347,
+        0.035312534983565486,
+        -0.02316616100618144
+      ],
+      "state_position_fd_error": 6.915842898358449e-11,
+      "wheel_positions_n_m": [
+        [
+          -0.07846747972986362,
+          0.22895823065080095,
+          0.03445016578072865
+        ],
+        [
+          -0.0721891474175213,
+          -0.19763092209713504,
+          0.05510263705414806
+        ]
+      ],
+      "wheel_relative_velocity_fd_error": 6.915842898358449e-11
+    }
+  },
+  "schema_version": 1,
+  "state_order": [
+    "base_px_n_m",
+    "base_py_n_m",
+    "base_pz_n_m",
+    "base_rx_n_rad",
+    "base_ry_n_rad",
+    "base_rz_n_rad",
+    "base_vx_n_m_s",
+    "base_vy_n_m_s",
+    "base_vz_n_m_s",
+    "base_wx_n_rad_s",
+    "base_wy_n_rad_s",
+    "base_wz_n_rad_s",
+    "left_wheel_x_b_m",
+    "right_wheel_x_b_m",
+    "left_wheel_vx_b_m_s",
+    "right_wheel_vx_b_m_s"
+  ],
+  "state_origin": "base_control_frame site",
+  "twist": "base-control-site spatial linear/angular velocity expressed in N",
+  "wheel_relative": "x component in B of wheel-center minus base-control-site, with rotating-frame derivative"
+}

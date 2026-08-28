@@ -1,28 +1,43 @@
 #include "wheel_leg_core/dense_qp_solver.hpp"
 
 #include <Eigen/Eigenvalues>
+#include <proxsuite/proxqp/dense/dense.hpp>
 
 #include <algorithm>
 #include <cmath>
+#include <exception>
+#include <utility>
 
 namespace wheel_leg {
 namespace {
 
 constexpr double kSymmetryTolerance = 1.0e-10;
 constexpr double kPsdTolerance = 1.0e-10;
+using Qp = proxsuite::proxqp::dense::QP<double>;
 
 }  // namespace
 
-DenseQpSolver::DenseQpSolver() = default;
+class DenseQpSolver::Impl {
+ public:
+  std::unique_ptr<Qp> qp;
+  Eigen::MatrixXd equality_matrix;
+  Eigen::VectorXd equality_target;
+  Eigen::MatrixXd inequality_matrix;
+  Eigen::VectorXd inequality_lower;
+  Eigen::VectorXd inequality_upper;
+};
 
-DenseQpSolver::DenseQpSolver(Settings settings) : settings_(settings) {}
+DenseQpSolver::DenseQpSolver() : impl_(std::make_unique<Impl>()) {}
+
+DenseQpSolver::DenseQpSolver(Settings settings)
+    : settings_(settings), impl_(std::make_unique<Impl>()) {}
+
+DenseQpSolver::~DenseQpSolver() = default;
+DenseQpSolver::DenseQpSolver(DenseQpSolver&&) noexcept = default;
+DenseQpSolver& DenseQpSolver::operator=(DenseQpSolver&&) noexcept = default;
 
 bool DenseQpSolver::validSettings() const {
-  return std::isfinite(settings_.rho) && settings_.rho > 0.0 &&
-         std::isfinite(settings_.sigma) && settings_.sigma > 0.0 &&
-         std::isfinite(settings_.relaxation) && settings_.relaxation > 0.0 &&
-         settings_.relaxation < 2.0 &&
-         std::isfinite(settings_.absolute_tolerance) &&
+  return std::isfinite(settings_.absolute_tolerance) &&
          settings_.absolute_tolerance >= 0.0 &&
          std::isfinite(settings_.relative_tolerance) &&
          settings_.relative_tolerance >= 0.0 && settings_.maximum_iterations > 0;
@@ -43,77 +58,109 @@ DenseQpSolver::Status DenseQpSolver::setup(
     const Eigen::Ref<const Eigen::MatrixXd>& a,
     const Eigen::Ref<const Eigen::VectorXd>& lower,
     const Eigen::Ref<const Eigen::VectorXd>& upper, SetupMode setup_mode) {
-  const bool preserve_warm_start =
-      setup_mode == SetupMode::kWarm && ready_ && constraint_count_ == a.rows();
-  ready_ = false;
-  constraint_count_ = 0;
-  if (!preserve_warm_start) {
-    reset();
-  }
   if (!validSettings() || h.rows() != kVariableCount ||
       h.cols() != kVariableCount || g.size() != kVariableCount ||
       a.cols() != kVariableCount || a.rows() < 0 ||
       a.rows() > kMaxConstraintCount || lower.size() != a.rows() ||
       upper.size() != a.rows() || !h.allFinite() || !g.allFinite() ||
-      !a.allFinite() || !lower.allFinite() || !upper.allFinite()) {
+      !a.allFinite() || !lower.allFinite() || !upper.allFinite() ||
+      (lower.array() > upper.array()).any() ||
+      (h - h.transpose()).cwiseAbs().maxCoeff() >
+          kSymmetryTolerance * std::max(1.0, h.cwiseAbs().maxCoeff())) {
+    reset();
     return Status::kInvalidInput;
   }
-  if ((h - h.transpose()).cwiseAbs().maxCoeff() >
-      kSymmetryTolerance * std::max(1.0, h.cwiseAbs().maxCoeff())) {
-    return Status::kInvalidInput;
+
+  std::array<bool, kMaxConstraintCount> equality_mask{};
+  int equality_count = 0;
+  for (Eigen::Index row = 0; row < a.rows(); ++row) {
+    const bool equality = lower[row] == upper[row];
+    equality_mask[static_cast<std::size_t>(row)] = equality;
+    equality_count += equality ? 1 : 0;
   }
-  if ((lower.array() > upper.array()).any()) {
-    return Status::kInvalidInput;
-  }
+  const bool compatible_warm_start =
+      setup_mode == SetupMode::kWarm && ready_ && previous_solve_succeeded_ &&
+      constraint_count_ == a.rows() && equality_count_ == equality_count &&
+      equality_mask_ == equality_mask;
 
   h_ = h;
   g_ = g;
-  constraint_count_ = a.rows();
-  if (constraint_count_ > 0) {
-    a_.topRows(constraint_count_) = a;
-    lower_.head(constraint_count_) = lower;
-    upper_.head(constraint_count_) = upper;
-  }
   if (!isPositiveSemidefinite()) {
+    reset();
     return Status::kInvalidInput;
   }
-
-  system_ = h_;
-  if (constraint_count_ > 0) {
-    system_.diagonal().array() += settings_.sigma;
-    system_.noalias() += settings_.rho *
-                         a_.topRows(constraint_count_).transpose() *
-                             a_.topRows(constraint_count_);
+  if (!compatible_warm_start) {
+    reset();
+    h_ = h;
+    g_ = g;
   }
-  factorization_.compute(system_);
-  if (factorization_.info() != Eigen::Success ||
-      !factorization_.vectorD().allFinite() ||
-      (factorization_.vectorD().array() <= 0.0).any()) {
+  constraint_count_ = static_cast<int>(a.rows());
+  equality_count_ = equality_count;
+  equality_mask_ = equality_mask;
+  const int inequality_count = constraint_count_ - equality_count_;
+  impl_->equality_matrix.resize(equality_count_, kVariableCount);
+  impl_->equality_target.resize(equality_count_);
+  impl_->inequality_matrix.resize(inequality_count, kVariableCount);
+  impl_->inequality_lower.resize(inequality_count);
+  impl_->inequality_upper.resize(inequality_count);
+  int equality_row = 0;
+  int inequality_row = 0;
+  for (int row = 0; row < constraint_count_; ++row) {
+    if (equality_mask_[static_cast<std::size_t>(row)]) {
+      impl_->equality_matrix.row(equality_row) = a.row(row);
+      impl_->equality_target[equality_row++] = lower[row];
+    } else {
+      impl_->inequality_matrix.row(inequality_row) = a.row(row);
+      impl_->inequality_lower[inequality_row] = lower[row];
+      impl_->inequality_upper[inequality_row++] = upper[row];
+    }
+  }
+
+  try {
+    if (!compatible_warm_start) {
+      impl_->qp = std::make_unique<Qp>(
+          kVariableCount, equality_count_, inequality_count, false,
+          proxsuite::proxqp::DenseBackend::PrimalDualLDLT);
+      impl_->qp->settings.eps_abs = settings_.absolute_tolerance;
+      impl_->qp->settings.eps_rel = settings_.relative_tolerance;
+      impl_->qp->settings.max_iter = settings_.maximum_iterations;
+      impl_->qp->settings.verbose = false;
+      impl_->qp->settings.primal_infeasibility_solving = false;
+      impl_->qp->settings.initial_guess =
+          proxsuite::proxqp::InitialGuessStatus::NO_INITIAL_GUESS;
+      impl_->qp->init(h_, g_, impl_->equality_matrix,
+                      impl_->equality_target, impl_->inequality_matrix,
+                      impl_->inequality_lower, impl_->inequality_upper, true);
+    } else {
+      impl_->qp->settings.initial_guess =
+          proxsuite::proxqp::InitialGuessStatus::WARM_START_WITH_PREVIOUS_RESULT;
+      impl_->qp->update(h_, g_, impl_->equality_matrix,
+                        impl_->equality_target, impl_->inequality_matrix,
+                        impl_->inequality_lower, impl_->inequality_upper, false);
+    }
+  } catch (const std::exception&) {
+    reset();
     return Status::kFactorizationFailure;
   }
-  if (preserve_warm_start && constraint_count_ > 0) {
-    ax_.head(constraint_count_).noalias() =
-        a_.topRows(constraint_count_) * x_;
-    z_.head(constraint_count_) =
-        (ax_.head(constraint_count_) + y_.head(constraint_count_))
-            .cwiseMax(lower_.head(constraint_count_))
-            .cwiseMin(upper_.head(constraint_count_));
-    z_previous_.head(constraint_count_) = z_.head(constraint_count_);
-  }
   ready_ = true;
+  previous_solve_succeeded_ = compatible_warm_start;
   return Status::kConverged;
 }
 
 void DenseQpSolver::reset() {
-  x_.setZero();
-  rhs_.setZero();
-  z_.setZero();
-  z_previous_.setZero();
-  y_.setZero();
-  ax_.setZero();
-  residual_.setZero();
-  relaxed_.setZero();
-  dual_work_.setZero();
+  constraint_count_ = 0;
+  equality_count_ = 0;
+  ready_ = false;
+  previous_solve_succeeded_ = false;
+  equality_mask_.fill(false);
+  if (impl_) {
+    impl_->qp.reset();
+    impl_->equality_matrix.resize(0, kVariableCount);
+    impl_->equality_target.resize(0);
+    impl_->inequality_matrix.resize(0, kVariableCount);
+    impl_->inequality_lower.resize(0);
+    impl_->inequality_upper.resize(0);
+  }
 }
 
 DenseQpSolver::Result DenseQpSolver::rejected(Status status) const {
@@ -123,118 +170,66 @@ DenseQpSolver::Result DenseQpSolver::rejected(Status status) const {
 }
 
 DenseQpSolver::Result DenseQpSolver::solve(StartMode start_mode) {
-  if (!ready_) {
+  if (!ready_ || !impl_ || !impl_->qp) {
     return rejected(Status::kInvalidInput);
   }
-  if (start_mode == StartMode::kCold) {
-    reset();
+  const bool warm_start =
+      start_mode == StartMode::kWarm && previous_solve_succeeded_;
+  impl_->qp->settings.initial_guess =
+      warm_start
+          ? proxsuite::proxqp::InitialGuessStatus::WARM_START_WITH_PREVIOUS_RESULT
+          : proxsuite::proxqp::InitialGuessStatus::NO_INITIAL_GUESS;
+  try {
+    impl_->qp->solve();
+  } catch (const std::exception&) {
+    previous_solve_succeeded_ = false;
+    return rejected(Status::kFactorizationFailure);
   }
 
+  const auto& info = impl_->qp->results.info;
   Result result;
-  if (constraint_count_ == 0) {
-    rhs_ = -g_;
-    x_ = factorization_.solve(rhs_);
-    if (!x_.allFinite()) {
-      return rejected(Status::kNonFinite);
-    }
-    dual_work_.noalias() = h_ * x_ + g_;
-    const double stationarity = dual_work_.norm();
-    const double stationarity_tolerance =
-        std::sqrt(static_cast<double>(kVariableCount)) *
-            settings_.absolute_tolerance +
-        settings_.relative_tolerance *
-            std::max((h_ * x_).norm(), g_.norm());
-    result.iterations = 1;
-    result.stationarity_residual = stationarity;
-    if (!std::isfinite(stationarity) ||
-        !std::isfinite(stationarity_tolerance)) {
-      return rejected(Status::kNonFinite);
-    }
-    if (stationarity > stationarity_tolerance) {
-      result.status = Status::kMaximumIterations;
-      return result;
-    }
-    result.status = Status::kConverged;
-    result.x = x_;
-    return result;
+  result.iterations = static_cast<int>(info.iter);
+  result.primal_residual = info.pri_res;
+  result.dual_residual = info.dua_res;
+  const Eigen::VectorXd& candidate = impl_->qp->results.x;
+  if (candidate.size() != kVariableCount || !candidate.allFinite() ||
+      !std::isfinite(result.primal_residual) ||
+      !std::isfinite(result.dual_residual)) {
+    previous_solve_succeeded_ = false;
+    return rejected(Status::kNonFinite);
   }
-  for (int iteration = 1; iteration <= settings_.maximum_iterations;
-       ++iteration) {
-    rhs_ = -g_ + settings_.sigma * x_;
-    if (constraint_count_ > 0) {
-      rhs_.noalias() += settings_.rho *
-                         a_.topRows(constraint_count_).transpose() *
-                             (z_.head(constraint_count_) -
-                              y_.head(constraint_count_));
-    }
-    x_ = factorization_.solve(rhs_);
-    if (!x_.allFinite()) {
-      return rejected(Status::kNonFinite);
-    }
+  const Eigen::VectorXd stationarity =
+      h_ * candidate + g_ +
+      impl_->equality_matrix.transpose() * impl_->qp->results.y +
+      impl_->inequality_matrix.transpose() * impl_->qp->results.z;
+  if (!stationarity.allFinite()) {
+    previous_solve_succeeded_ = false;
+    return rejected(Status::kNonFinite);
+  }
+  result.stationarity_residual = stationarity.lpNorm<Eigen::Infinity>();
 
-    ax_.head(constraint_count_).noalias() =
-        a_.topRows(constraint_count_) * x_;
-    z_previous_.head(constraint_count_) = z_.head(constraint_count_);
-    relaxed_.head(constraint_count_) =
-        settings_.relaxation * ax_.head(constraint_count_) +
-        (1.0 - settings_.relaxation) * z_previous_.head(constraint_count_);
-    z_.head(constraint_count_) =
-        (relaxed_.head(constraint_count_) + y_.head(constraint_count_))
-            .cwiseMax(lower_.head(constraint_count_))
-            .cwiseMin(upper_.head(constraint_count_));
-    residual_.head(constraint_count_) =
-        ax_.head(constraint_count_) - z_.head(constraint_count_);
-    y_.head(constraint_count_) +=
-        relaxed_.head(constraint_count_) - z_.head(constraint_count_);
-    if (!ax_.head(constraint_count_).allFinite() ||
-        !z_.head(constraint_count_).allFinite() ||
-        !y_.head(constraint_count_).allFinite()) {
-      return rejected(Status::kNonFinite);
-    }
-
-    const double primal = residual_.head(constraint_count_).norm();
-    dual_work_.noalias() = settings_.rho *
-                           a_.topRows(constraint_count_).transpose() *
-                               (z_.head(constraint_count_) -
-                                z_previous_.head(constraint_count_));
-    const double dual = dual_work_.norm();
-    const double primal_tolerance =
-        std::sqrt(static_cast<double>(constraint_count_)) *
-            settings_.absolute_tolerance +
-        settings_.relative_tolerance *
-            std::max(ax_.head(constraint_count_).norm(),
-                     z_.head(constraint_count_).norm());
-    const double dual_tolerance =
-        std::sqrt(static_cast<double>(kVariableCount)) *
-            settings_.absolute_tolerance +
-        settings_.relative_tolerance *
-            (settings_.rho *
-             (a_.topRows(constraint_count_).transpose() *
-             y_.head(constraint_count_)).norm());
-    dual_work_.noalias() = h_ * x_ + g_ + settings_.rho *
-                           a_.topRows(constraint_count_).transpose() *
-                               y_.head(constraint_count_);
-    const double stationarity = dual_work_.norm();
-    if (!std::isfinite(primal) || !std::isfinite(dual) ||
-        !std::isfinite(stationarity) ||
-        !std::isfinite(primal_tolerance) || !std::isfinite(dual_tolerance)) {
-      return rejected(Status::kNonFinite);
-    }
-    if (primal <= primal_tolerance && dual <= dual_tolerance) {
+  switch (info.status) {
+    case proxsuite::proxqp::QPSolverOutput::PROXQP_SOLVED:
       result.status = Status::kConverged;
-      result.iterations = iteration;
-      result.primal_residual = primal;
-      result.dual_residual = dual;
-      result.stationarity_residual = stationarity;
-      result.x = x_;
+      result.x = candidate;
+      previous_solve_succeeded_ = true;
       return result;
-    }
-    result.iterations = iteration;
-    result.primal_residual = primal;
-    result.dual_residual = dual;
-    result.stationarity_residual = stationarity;
+    case proxsuite::proxqp::QPSolverOutput::PROXQP_MAX_ITER_REACHED:
+      result.status = Status::kMaximumIterations;
+      break;
+    case proxsuite::proxqp::QPSolverOutput::PROXQP_PRIMAL_INFEASIBLE:
+    case proxsuite::proxqp::QPSolverOutput::PROXQP_SOLVED_CLOSEST_PRIMAL_FEASIBLE:
+      result.status = Status::kPrimalInfeasible;
+      break;
+    case proxsuite::proxqp::QPSolverOutput::PROXQP_DUAL_INFEASIBLE:
+      result.status = Status::kDualInfeasible;
+      break;
+    case proxsuite::proxqp::QPSolverOutput::PROXQP_NOT_RUN:
+      result.status = Status::kFactorizationFailure;
+      break;
   }
-  result.status = Status::kMaximumIterations;
+  previous_solve_succeeded_ = false;
+  result.x.setZero();
   return result;
 }
 

@@ -1,0 +1,31 @@
+{
+  "base_config": "simulation/mujoco/config/phase21_weighted_wbc_formal_v1.json",
+  "schema_version": 1,
+  "profile": "phase22_proxqp_formal_v1",
+  "phase": 22,
+  "evidence_class": "formal current-nominal simulation-only weighted WBC ProxQP migration",
+  "source_profiles": {
+    "solver_profile": "simulation/mujoco/config/phase22_proxqp_solver_v1.json"
+  },
+  "solver": {
+    "name": "ProxSuite ProxQP dense",
+    "version": "0.7.3",
+    "source_commit": "b93d7778ffc3299d84b5cb0851022a29bf24a596",
+    "backend": "PrimalDualLDLT",
+    "settings_profile": "simulation/mujoco/config/phase22_proxqp_solver_v1.json",
+    "variables": 42,
+    "hard_rows": 104,
+    "equality_rows": 12,
+    "inequality_rows": 92,
+    "decision_order": [
+      "nudot_12",
+      "tau_6",
+      "w_left_C_6",
+      "w_right_C_6",
+      "slack_left_FLU_6",
+      "slack_right_FLU_6"
+    ],
+    "start_mode": "warm within compatible episode, cold after reset",
+    "residual_schema": "phase22-proxqp-kkt-v1"
+  }
+}

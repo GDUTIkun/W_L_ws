@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Run and evaluate the Phase-21 weighted-WBC C++ formal matrix.
+"""Run and evaluate a frozen weighted-WBC C++ formal matrix.
 
-Drives the `weighted_wbc_loop` runner case by case with the frozen
-`phase21_weighted_wbc_formal_v1.json` inputs, evaluates every control tick
+Drives the `weighted_wbc_loop` runner case by case with a frozen config,
+evaluates every control tick
 (Core/Adapter status, solver/model/task diagnostics, deadline) and every
 physics substep (plant truth), and writes summary.json and manifest.json.
 
@@ -43,6 +43,34 @@ def root_relative(path: Path) -> str:
         return str(path.relative_to(ROOT))
     except ValueError:
         return str(path)
+
+
+def merge_config(base: dict[str, Any], override: dict[str, Any]) -> dict[str, Any]:
+    merged = dict(base)
+    for key, value in override.items():
+        if key == "base_config":
+            continue
+        if (key != "solver" and isinstance(value, dict) and
+                isinstance(merged.get(key), dict)):
+            merged[key] = merge_config(merged[key], value)
+        else:
+            merged[key] = value
+    return merged
+
+
+def load_config(path: Path, seen: tuple[Path, ...] = ()) -> tuple[dict[str, Any], list[Path]]:
+    resolved = path.resolve()
+    if resolved in seen:
+        raise RuntimeError(f"Config inheritance cycle: {resolved}")
+    current = json.loads(resolved.read_text(encoding="utf-8"))
+    base_value = current.get("base_config")
+    if base_value is None:
+        return current, [resolved]
+    base_path = Path(base_value)
+    if not base_path.is_absolute():
+        base_path = (ROOT / base_path).resolve()
+    base, chain = load_config(base_path, (*seen, resolved))
+    return merge_config(base, current), [*chain, resolved]
 
 
 def vector(values: list[float]) -> str:
@@ -418,9 +446,11 @@ def run(config: dict[str, Any], runner: Path, output: Path) -> dict[str, Any]:
 
 
 SOURCE_INPUTS = (
+    "ros_ws/src/wheel_leg_core/include/wheel_leg_core/dense_qp_solver.hpp",
     "ros_ws/src/wheel_leg_core/include/wheel_leg_core/controller_core.hpp",
     "ros_ws/src/wheel_leg_core/include/wheel_leg_core/weighted_wbc_controller.hpp",
     "ros_ws/src/wheel_leg_core/src/controller_core.cpp",
+    "ros_ws/src/wheel_leg_core/src/dense_qp_solver.cpp",
     "ros_ws/src/wheel_leg_core/src/weighted_wbc_controller.cpp",
     "ros_ws/src/wheel_leg_mujoco/src/adapter.cpp",
     "ros_ws/src/wheel_leg_mujoco/src/weighted_wbc_loop.cpp",
@@ -447,7 +477,7 @@ def main() -> int:
     output = arguments.output_dir.resolve()
     if output.exists() and any(output.iterdir()):
         raise RuntimeError(f"Refusing non-empty output directory: {output}")
-    config = json.loads(config_path.read_text(encoding="utf-8"))
+    config, config_chain = load_config(config_path)
     if not config["cases"] or not config["fault_cases"]:
         raise RuntimeError("Frozen case matrix must not be empty")
     output.mkdir(parents=True, exist_ok=True)
@@ -455,9 +485,10 @@ def main() -> int:
     (output / "summary.json").write_text(
         json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )
+    dynamic_profiles = tuple(config.get("source_profiles", {}).values())
     source_inputs = {
         str(path): sha256(ROOT / path)
-        for path in (*SOURCE_INPUTS, *PROFILE_INPUTS)
+        for path in dict.fromkeys((*SOURCE_INPUTS, *PROFILE_INPUTS, *dynamic_profiles))
     }
     outputs = {
         path.name: sha256(path) for path in sorted(output.iterdir())
@@ -470,6 +501,9 @@ def main() -> int:
         "hardware_data": False,
         "config_path": root_relative(config_path),
         "config_sha256": sha256(config_path),
+        "config_chain": {
+            root_relative(path): sha256(path) for path in config_chain
+        },
         "runner_path": root_relative(runner),
         "runner_sha256": sha256(runner),
         "wrapper_sha256": sha256(Path(__file__).resolve()),

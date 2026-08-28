@@ -10,8 +10,6 @@ namespace wheel_leg {
 WeightedWbcController::WeightedWbcController()
     : solver_([] {
         DenseQpSolver::Settings settings;
-        settings.rho = 0.15;
-        settings.sigma = 1.0e-6;
         settings.absolute_tolerance = 1.0e-8;
         settings.relative_tolerance = 1.0e-8;
         settings.maximum_iterations = 10000;
@@ -39,6 +37,16 @@ WeightedWbcController::Result WeightedWbcController::step(
     output.status = problem.status == WeightedWbcProblem::Status::kNonFinite
                         ? Status::kNonFinite
                         : Status::kProblemRejected;
+    reset();
+    return output;
+  }
+  int equality_count = 0;
+  for (Eigen::Index row = 0; row < problem.a.rows(); ++row) {
+    equality_count += problem.lower[row] == problem.upper[row] ? 1 : 0;
+  }
+  if (problem.a.rows() != 104 || equality_count != 12) {
+    output.solver_status = DenseQpSolver::Status::kInvalidInput;
+    output.status = Status::kSolverRejected;
     reset();
     return output;
   }

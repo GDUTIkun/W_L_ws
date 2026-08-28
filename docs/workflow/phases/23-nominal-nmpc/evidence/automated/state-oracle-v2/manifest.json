@@ -1,0 +1,28 @@
+{
+  "config": "simulation/mujoco/config/phase23_nmpc_state_oracle_v1.json",
+  "config_sha256": "a36a979855b37ae41d883dd29dd98cc2f7a6440fa3da9029dcc8e7f4057b80ce",
+  "created_at": "2026-08-28T08:40:15.611078+00:00",
+  "equilibrium": "data/experiments/2026-08-26-phase20-equilibrium/equilibrium.json",
+  "equilibrium_sha256": "d7054fda374c2c0d5d6887d9d84b0cf1334ee1dc52f38bec615cadb434d74a12",
+  "hardware_data": false,
+  "model_config_inputs": {
+    "simulation/mujoco/config/phase21_model_oracle_v2.json": "3abf59299936bab8cf25c495fd9265bd3883b6383da380a822f50488f3259eed",
+    "simulation/mujoco/config/phase21_model_oracle_v3.json": "67800fc17a43410573a6764c2fbe04fff5703efd893ce3f4efa90c387a6d48a3",
+    "simulation/mujoco/config/phase21_model_oracle_v4.json": "c9dd46fbfab6ab7cafd06a2552b0ffd7c051dc14a90cf554601d937b16c1de5e",
+    "simulation/mujoco/config/phase21_model_oracle_v5.json": "ed4a4fabd38bdc671cd25948d884a701cbd01f8241b19067b39524bbc5c2aa61",
+    "simulation/mujoco/config/phase21_model_oracle_v6.json": "665e269d66a82526f4a17c16a1a7d1199dfa391f99ba9b509ea6c3810375f767",
+    "simulation/mujoco/config/phase21_model_oracle_v7.json": "ea3c658724d41cef7b778202e5a5b119a6bc3a23aa04cb9e528aa04114f1188c",
+    "simulation/mujoco/config/phase21_model_oracle_v8.json": "63ebb4a2fbbe403599cc23be38e83f3f42046f3b3ea0ebdcc1fd6530935cf5fd",
+    "simulation/mujoco/config/phase21_model_oracle_v9.json": "5803341b69688902a08e2d922aac25d443c77bda828ef387958232f9f36a493e"
+  },
+  "mujoco": "3.7.0",
+  "numpy": "2.2.6",
+  "outputs": {
+    "summary.json": "669010aef76fc131f210070d546cfadc013c860d9de63b5f0b2120a58b3bc70a"
+  },
+  "python": "3.10.20",
+  "schema_version": 1,
+  "scipy": "1.15.3",
+  "validator": "tools/experiments/validate_nominal_nmpc_state.py",
+  "validator_sha256": "27427c9ce0d2c98d4860b16ddd45cc879a44f11c7d23a9bb339cda2d9387ae44"
+}

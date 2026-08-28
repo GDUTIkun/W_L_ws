@@ -8,7 +8,7 @@ None.
 
 ## Planned
 
-- [Phase 21：nominal Weighted WBC](21-nominal-weighted-wbc/PLAN.md) — 执行中；solver与equilibrium hard-QP已通过，10 s nonlinear task pre-freeze暴露rolling-contact model阻塞，禁止Core集成。
+None.
 
 ## Review
 
@@ -16,6 +16,7 @@ None.
 
 ## Blocked
 
+- [Phase 23：nominal NMPC](23-nominal-nmpc/PLAN.md) — 2026-08-28按用户指令冻结；P23-T01～T03与DG23-01完成，OCP/solver/Core/formal未执行，恢复时从P23-T04继续。
 - [Phase 05：执行器力矩辨识与模型校准](05-actuator-torque-identification/PLAN.md) — Phase 14 前置已 PASS；当前按用户决定冻结真机相关执行，解除冻结后从通信/计量/同步/安全 gate 恢复。
 
 ## Complete
@@ -31,6 +32,8 @@ None.
 - [Phase 18：nominal 轮地接触与 floating-base plant 验证](18-mujoco-contact-floating-base-plant-validation/PLAN.md) — 2026-08-25 PASS；完成 wheel-only collision、actual-wheel normal/rolling/lateral/friction、零控制 free-flight/touchdown、base state/reset/replay 和历史回归，未连接真机、未做站立。
 - [Phase 19：exact 2D sagittal 简单站立](19-nominal-planar-simple-standing/PLAN.md) — 2026-08-26 PASS；formal-v4 完成 11 个 10 s normal/perturbation、4 个 fault cases、fresh replay 与历史回归；仅限 current nominal exact-planar simulation。
 - [Phase 20：nominal 完整 3D 简单站立](20-nominal-3d-simple-standing/PLAN.md) — 2026-08-26 PASS；formal-v3完成19个10 s normal/perturbation、6个fault cases、plant/contact/slip/closure、fresh replay与历史回归；仅限current nominal full-3D simulation。
+- [Phase 21：nominal Weighted WBC](21-nominal-weighted-wbc/PLAN.md) — 2026-08-28 PASS；formal-v1完成12-DoF/42-variable Weighted WBC、19个10 s normal/perturbation、6个fault、solver/task/plant、fresh replay与历史回归；仅限current nominal full-3D simulation。
+- [Phase 22：ProxQP solver migration](22-proxqp-solver-migration/PLAN.md) — 2026-08-28 PASS；保持Phase 21冻结的42D/104-row Weighted WBC与canonical接口，完成ProxQP v0.7.3 component/oracle、19+6 formal-v2、fresh replay、历史回归与非覆盖审计；仅限current nominal simulation host。
 
 ## 建立新 Phase
 

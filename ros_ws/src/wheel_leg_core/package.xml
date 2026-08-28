@@ -6,5 +6,6 @@
   <maintainer email="maintainer@example.com">wheel-leg maintainers</maintainer>
   <license>MIT</license>
   <buildtool_depend>ament_cmake</buildtool_depend>
+  <depend>proxsuite</depend>
   <export><build_type>ament_cmake</build_type></export>
 </package>

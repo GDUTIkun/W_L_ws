@@ -1,11 +1,13 @@
 #pragma once
 
+#include <array>
+#include <memory>
+
 #include <Eigen/Core>
-#include <Eigen/Cholesky>
 
 namespace wheel_leg {
 
-// Fixed-capacity dense ADMM solver for the Phase 21 bound-form QP.
+// Fixed-capacity adapter for the Phase 22 ProxQP bound-form QP.
 class DenseQpSolver {
  public:
   static constexpr int kVariableCount = 42;
@@ -18,12 +20,9 @@ class DenseQpSolver {
   using ConstraintVector = Eigen::Matrix<double, kMaxConstraintCount, 1>;
 
   struct Settings {
-    double rho{1.0};
-    double sigma{1.0e-6};
-    double relaxation{1.6};
-    double absolute_tolerance{1.0e-7};
-    double relative_tolerance{1.0e-7};
-    int maximum_iterations{400};
+    double absolute_tolerance{1.0e-8};
+    double relative_tolerance{1.0e-8};
+    int maximum_iterations{10000};
   };
 
   enum class Status {
@@ -32,6 +31,8 @@ class DenseQpSolver {
     kFactorizationFailure,
     kNonFinite,
     kMaximumIterations,
+    kPrimalInfeasible,
+    kDualInfeasible,
   };
 
   enum class StartMode { kCold, kWarm };
@@ -52,9 +53,15 @@ class DenseQpSolver {
 
   DenseQpSolver();
   explicit DenseQpSolver(Settings settings);
+  ~DenseQpSolver();
+  DenseQpSolver(DenseQpSolver&&) noexcept;
+  DenseQpSolver& operator=(DenseQpSolver&&) noexcept;
+  DenseQpSolver(const DenseQpSolver&) = delete;
+  DenseQpSolver& operator=(const DenseQpSolver&) = delete;
 
   // Copies and validates min 0.5*x'H*x + g'x subject to l <= A*x <= u.
-  // kWarm retains x/z/y only when the previous row count matches.
+  // A warm update is retained only after a successful solve with an identical
+  // equality-row mask.
   [[nodiscard]] Status setup(const Eigen::Ref<const Eigen::MatrixXd>& h,
                              const Eigen::Ref<const Eigen::VectorXd>& g,
                              const Eigen::Ref<const Eigen::MatrixXd>& a,
@@ -68,30 +75,21 @@ class DenseQpSolver {
   [[nodiscard]] bool ready() const { return ready_; }
 
  private:
+  class Impl;
+
   [[nodiscard]] bool validSettings() const;
   [[nodiscard]] bool isPositiveSemidefinite() const;
   [[nodiscard]] Result rejected(Status status) const;
 
   Settings settings_;
   int constraint_count_{0};
+  int equality_count_{0};
   bool ready_{false};
+  bool previous_solve_succeeded_{false};
+  std::array<bool, kMaxConstraintCount> equality_mask_{};
   Matrix h_{Matrix::Zero()};
   Vector g_{Vector::Zero()};
-  ConstraintMatrix a_{ConstraintMatrix::Zero()};
-  ConstraintVector lower_{ConstraintVector::Zero()};
-  ConstraintVector upper_{ConstraintVector::Zero()};
-  Matrix system_{Matrix::Zero()};
-  Eigen::LDLT<Matrix> factorization_;
-
-  Vector x_{Vector::Zero()};
-  Vector rhs_{Vector::Zero()};
-  ConstraintVector z_{ConstraintVector::Zero()};
-  ConstraintVector z_previous_{ConstraintVector::Zero()};
-  ConstraintVector y_{ConstraintVector::Zero()};
-  ConstraintVector ax_{ConstraintVector::Zero()};
-  ConstraintVector residual_{ConstraintVector::Zero()};
-  ConstraintVector relaxed_{ConstraintVector::Zero()};
-  Vector dual_work_{Vector::Zero()};
+  std::unique_ptr<Impl> impl_;
 };
 
 }  // namespace wheel_leg

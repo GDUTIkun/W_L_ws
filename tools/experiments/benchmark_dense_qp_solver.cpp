@@ -73,8 +73,10 @@ std::vector<Problem> readCorpus(const std::filesystem::path& path) {
     int count = 0; if (!(input >> count) || count <= 0) throw std::runtime_error("Invalid corpus header");
     std::vector<Problem> corpus; corpus.reserve(static_cast<std::size_t>(count));
     for (int index = 0; index < count; ++index) {
-      int variables = 0, constraints = 0, equality_rows = 0; DenseQpSolver::Settings settings;
-      if (!(input >> variables >> constraints >> equality_rows >> settings.rho >> settings.sigma >>
+      int variables = 0, constraints = 0, equality_rows = 0;
+      double legacy_rho = 0.0, legacy_sigma = 0.0;
+      DenseQpSolver::Settings settings;
+      if (!(input >> variables >> constraints >> equality_rows >> legacy_rho >> legacy_sigma >>
             settings.absolute_tolerance >> settings.relative_tolerance >> settings.maximum_iterations))
         throw std::runtime_error("Truncated corpus header");
       corpus.push_back(readProblem(input, equality_rows, settings, variables, constraints, true));
@@ -83,8 +85,10 @@ std::vector<Problem> readCorpus(const std::filesystem::path& path) {
   }
   int variables = 0; try { variables = std::stoi(first); } catch (const std::exception&) {
     throw std::runtime_error("Invalid QP header"); }
-  int constraints = 0; DenseQpSolver::Settings settings;
-  if (!(input >> constraints >> settings.rho >> settings.sigma >> settings.absolute_tolerance >>
+  int constraints = 0;
+  double legacy_rho = 0.0, legacy_sigma = 0.0;
+  DenseQpSolver::Settings settings;
+  if (!(input >> constraints >> legacy_rho >> legacy_sigma >> settings.absolute_tolerance >>
         settings.relative_tolerance >> settings.maximum_iterations)) throw std::runtime_error("Invalid QP header");
   return {readProblem(input, 0, settings, variables, constraints, false)};
 }
@@ -171,7 +175,7 @@ std::optional<OracleComparison> compareOracle(
 }
 bool residualsPass(const Summary& summary) {
   return summary.max_bound <= 2.0e-7 && summary.max_equality <= 2.0e-7 &&
-         summary.max_stationarity <= 2.0e-6;
+         summary.max_stationarity <= 2.0e-7;
 }
 }  // namespace
 
@@ -188,9 +192,7 @@ int main(int argc, char** argv) {
     const auto corpus = readCorpus(input_path);
     const auto& settings = corpus.front().settings;
     for (const auto& problem : corpus) {
-      if (problem.settings.rho != settings.rho ||
-          problem.settings.sigma != settings.sigma ||
-          problem.settings.absolute_tolerance != settings.absolute_tolerance ||
+      if (problem.settings.absolute_tolerance != settings.absolute_tolerance ||
           problem.settings.relative_tolerance != settings.relative_tolerance ||
           problem.settings.maximum_iterations != settings.maximum_iterations) {
         throw std::runtime_error("All corpus problems must use identical solver settings");
@@ -236,7 +238,10 @@ int main(int argc, char** argv) {
     const bool deadline_pass = cold.max_ms <= 10.0 && dynamic_warm.max_ms <= 10.0;
     const bool pass = residualsPass(cold) && residualsPass(same_warm) &&
                       residualsPass(dynamic_warm) && oracle_pass && deadline_pass;
-    std::ofstream output(output_path); output << std::setprecision(17) << "{\n  \"schema_version\": 2,\n"
+    std::ofstream output(output_path);
+    if (!output) throw std::runtime_error("Unable to create benchmark output");
+    output << std::setprecision(17) << "{\n  \"schema_version\": 3,\n"
+      << "  \"solver\": \"ProxSuite ProxQP 0.7.3 dense PrimalDualLDLT\",\n"
       << "  \"repetitions\": " << repetitions << ",\n  \"corpus_problem_count\": " << corpus.size() << ",\n"
       << "  \"cold_oracle_max_abs_error\": ";
     if (cold_oracle) output << *cold_oracle;

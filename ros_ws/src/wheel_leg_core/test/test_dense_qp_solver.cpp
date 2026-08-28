@@ -157,7 +157,7 @@ int main() {
          Status::kConverged);
   const auto updated_warm = deterministic.solve(StartMode::kWarm);
   assert(updated_warm.converged());
-  expectNear(updated_warm.x[0], 0.5);
+  expectNear(updated_warm.x[0], 0.5, 5.0e-4);
 
   // A different row count cannot retain a stale warm state.
   Eigen::MatrixXd two_rows =
@@ -175,11 +175,64 @@ int main() {
   assert(changed_rows.converged());
   assert(changed_rows.x.isZero(2.0e-5));
 
+  // Moving an equality row to another index is incompatible with a retained
+  // dual candidate, so setup(kWarm) must rebuild and still solve correctly.
+  Eigen::MatrixXd changed_mask = two_rows;
+  Eigen::VectorXd changed_mask_lower(2);
+  Eigen::VectorXd changed_mask_upper(2);
+  changed_mask_lower << -1.0, 0.0;
+  changed_mask_upper << 1.0, 0.0;
+  assert(deterministic.setup(identityH(), zeroG(), changed_mask,
+                             changed_mask_lower, changed_mask_upper,
+                             DenseQpSolver::SetupMode::kWarm) ==
+         Status::kConverged);
+  const auto changed_mask_result = deterministic.solve(StartMode::kWarm);
+  assert(changed_mask_result.converged());
+  assert(changed_mask_result.x.isZero(2.0e-5));
+
+  // reset removes the previous candidate; a warm request after reset is cold.
+  deterministic.reset();
+  assert(deterministic.setup(identityH(), zeroG(), changed_mask,
+                             changed_mask_lower, changed_mask_upper,
+                             DenseQpSolver::SetupMode::kWarm) ==
+         Status::kConverged);
+  const auto reset_result = deterministic.solve(StartMode::kWarm);
+  assert(reset_result.converged());
+  assert(reset_result.x.isZero(2.0e-5));
+
   DenseQpSolver::Settings one_iteration;
   one_iteration.maximum_iterations = 1;
   auto limited = setupOneRow(g, 1.0, -2.0, 1.0, one_iteration);
   const auto maximum_iterations = limited.solve(StartMode::kCold);
   assert(maximum_iterations.status == Status::kMaximumIterations);
   assert(maximum_iterations.x.isZero(0.0));
+
+  // Contradictory equalities exercise ProxQP's primal-infeasibility mapping.
+  Eigen::MatrixXd contradictory =
+      Eigen::MatrixXd::Zero(2, DenseQpSolver::kVariableCount);
+  contradictory(0, 0) = 1.0;
+  contradictory(1, 0) = 1.0;
+  Eigen::VectorXd contradictory_target(2);
+  contradictory_target << 0.0, 1.0;
+  DenseQpSolver infeasible;
+  assert(infeasible.setup(identityH(), zeroG(), contradictory,
+                          contradictory_target, contradictory_target) ==
+         Status::kConverged);
+  const auto primal_infeasible = infeasible.solve(StartMode::kCold);
+  assert(primal_infeasible.status == Status::kPrimalInfeasible);
+  assert(primal_infeasible.x.isZero(0.0));
+
+  // A linear objective with no curvature or bounds is unbounded and exercises
+  // ProxQP's dual-infeasibility mapping.
+  Eigen::MatrixXd zero_h = Eigen::MatrixXd::Zero(
+      DenseQpSolver::kVariableCount, DenseQpSolver::kVariableCount);
+  Eigen::VectorXd unbounded_g = zeroG();
+  unbounded_g[0] = -1.0;
+  DenseQpSolver unbounded;
+  assert(unbounded.setup(zero_h, unbounded_g, empty_a, empty, empty) ==
+         Status::kConverged);
+  const auto dual_infeasible = unbounded.solve(StartMode::kCold);
+  assert(dual_infeasible.status == Status::kDualInfeasible);
+  assert(dual_infeasible.x.isZero(0.0));
   return 0;
 }

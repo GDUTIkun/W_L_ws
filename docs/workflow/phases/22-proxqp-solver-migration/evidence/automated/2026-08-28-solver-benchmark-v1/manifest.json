@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "phase": 22,
+  "evidence_class": "production-adapter exact-corpus component benchmark",
+  "hardware_data": false,
+  "build_type": "Release",
+  "compiler": "GCC 13.3.0",
+  "solver": "ProxSuite ProxQP 0.7.3 dense PrimalDualLDLT",
+  "solver_source_commit": "b93d7778ffc3299d84b5cb0851022a29bf24a596",
+  "solver_profile": "simulation/mujoco/config/phase22_proxqp_solver_v1.json",
+  "solver_profile_sha256": "30ed0be3ad79e07322edcd060a210b9fbbdcbcd8a78dc4634b7dfeb9fc625160",
+  "corpus": "data/experiments/2026-08-28-phase21-weighted-solver-runtime-v3/problem_corpus.txt",
+  "corpus_sha256": "b0e5450ca351f63b52f1f3b0bb0faf879b1380653048453688a2c8c4ad9f132d",
+  "benchmark_source": "tools/experiments/benchmark_dense_qp_solver.cpp",
+  "benchmark_source_sha256": "c89e2b79d965d6840fcfbe8f85d3b51028e7129a558e8d0e2cc831916c5ee972",
+  "benchmark_output": "benchmark.json",
+  "benchmark_output_sha256": "f3e05f1942a0c43e2eb491b071f3eb84a2ef2bc355efe5c615ed1a4cae485004",
+  "repetitions_per_mode": 1000,
+  "modes": [
+    "cold",
+    "repeated_same_warm",
+    "cycling_dynamic_warm"
+  ],
+  "residual_schema": "phase22-proxqp-kkt-v1",
+  "pass": true
+}

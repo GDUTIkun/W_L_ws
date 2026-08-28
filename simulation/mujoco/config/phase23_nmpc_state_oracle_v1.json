@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "profile": "phase23_nominal_nmpc_state_oracle_v1",
+  "source_model_oracle": "simulation/mujoco/config/phase21_model_oracle_v9.json",
+  "phase15_profile": "simulation/mujoco/config/phase15_nominal.json",
+  "state_order": [
+    "base_px_n_m", "base_py_n_m", "base_pz_n_m",
+    "base_rx_n_rad", "base_ry_n_rad", "base_rz_n_rad",
+    "base_vx_n_m_s", "base_vy_n_m_s", "base_vz_n_m_s",
+    "base_wx_n_rad_s", "base_wy_n_rad_s", "base_wz_n_rad_s",
+    "left_wheel_x_b_m", "right_wheel_x_b_m",
+    "left_wheel_vx_b_m_s", "right_wheel_vx_b_m_s"
+  ],
+  "rotation_chart_maximum_norm_rad": 0.35,
+  "finite_difference_step_s": 1e-6,
+  "samples": [
+    {
+      "id": "equilibrium",
+      "base_rotation_vector_rad": [0.0, 0.0, 0.0],
+      "canonical_joint_delta_rad": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+      "reduced_velocity": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    },
+    {
+      "id": "positive_3d",
+      "base_rotation_vector_rad": [0.06, -0.04, 0.03],
+      "canonical_joint_delta_rad": [0.12, -0.18, 0.25, -0.09, 0.14, -0.20],
+      "reduced_velocity": [0.13, -0.08, 0.05, 0.18, -0.12, 0.09, 0.22, -0.17, 0.31, -0.19, 0.15, -0.27]
+    },
+    {
+      "id": "negative_3d",
+      "base_rotation_vector_rad": [-0.05, 0.045, -0.035],
+      "canonical_joint_delta_rad": [-0.11, 0.16, -0.22, 0.10, -0.13, 0.18],
+      "reduced_velocity": [-0.11, 0.07, -0.04, -0.16, 0.10, -0.08, -0.20, 0.14, -0.29, 0.18, -0.13, 0.25]
+    },
+    {
+      "id": "near_chart_boundary",
+      "base_rotation_vector_rad": [0.18, -0.14, 0.12],
+      "canonical_joint_delta_rad": [0.30, -0.35, 0.40, -0.28, 0.32, -0.38],
+      "reduced_velocity": [0.04, 0.03, -0.02, 0.25, -0.21, 0.17, 0.11, -0.09, 0.16, -0.10, 0.08, -0.15]
+    }
+  ],
+  "thresholds": {
+    "maximum_base_twist_error": 1e-12,
+    "maximum_state_position_fd_error": 2e-8,
+    "maximum_rotation_rate_fd_error": 2e-8,
+    "maximum_wheel_relative_velocity_fd_error": 2e-8,
+    "maximum_equilibrium_speed": 1e-12,
+    "maximum_quaternion_sign_invariance_error": 0.0,
+    "maximum_repeat_error": 0.0
+  }
+}
