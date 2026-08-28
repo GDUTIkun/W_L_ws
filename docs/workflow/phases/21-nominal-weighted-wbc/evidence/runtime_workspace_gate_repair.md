@@ -1,6 +1,6 @@
 # P21-T07 Runtime Workspace Gate Repair
 
-Date: 2026-08-28  
+Date: 2026-08-28
 Verdict: **PASS — Phase 15 workspace unchanged; nominal and rejection authority are now consistent**
 
 ## Repair decision
@@ -39,4 +39,3 @@ using solver outcomes to choose states.
 The original v1 corpus and its documents remain historical evidence but no longer authorize
 runtime nominal parity. In particular, the former statement that tick 271 was a nominal
 active-cone case is superseded.
-

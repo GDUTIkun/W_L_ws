@@ -1,6 +1,6 @@
 # P21-T07 Runtime Model and Solver Implementation Handoff
 
-Date: 2026-08-28  
+Date: 2026-08-28
 Status: **superseded — implementation and repaired runtime acceptance completed by Codex;
 see `runtime_workspace_gate_repair.md` and `runtime_cpp_parity.md`**
 

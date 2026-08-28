@@ -1,6 +1,6 @@
 # Phase 21 42D Weighted-Task Local Oracle
 
-Date: 2026-08-27  
+Date: 2026-08-27
 Verdict: **local algebraic task gate PASS; P21-T06 remains doing; DG21-05 remains OPEN**
 
 ## Scope

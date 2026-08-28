@@ -4,7 +4,7 @@ Resolution: **superseded by the PASS repair in
 [runtime_workspace_gate_repair.md](runtime_workspace_gate_repair.md)**. This file preserves
 the original blocking observation and must not be read as the current Phase state.
 
-Date: 2026-08-28  
+Date: 2026-08-28
 Status: **blocking contract conflict; P21-T07 remains blocked**
 
 ## Trigger

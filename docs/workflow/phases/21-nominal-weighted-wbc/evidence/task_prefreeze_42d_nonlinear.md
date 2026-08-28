@@ -1,6 +1,6 @@
 # Phase 21 42D Weighted-Task Nonlinear Pre-Holdout Freeze
 
-Date: 2026-08-27  
+Date: 2026-08-27
 Verdict: **local, tuning and holdout gates PASS; P21-T06 done; DG21-05 CLOSED**
 
 ## Scope and freeze point

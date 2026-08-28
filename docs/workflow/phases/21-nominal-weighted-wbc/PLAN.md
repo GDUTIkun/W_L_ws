@@ -1,6 +1,6 @@
 # Phase 21: nominal Weighted WBC — PLAN
 
-Status: `active`
+Status: `complete`
 
 ## Goal
 
@@ -63,9 +63,9 @@ Status: `active`
 - **DG21-03 / CLOSED / CODEX+EVIDENCE — solver：** project-owned Eigen-only fixed dense ADMM保持42变量/128-row capacity，并新增标准over-relaxation `alpha=1.6`；weighted runtime wrapper冻结`rho=0.15`。workspace-aware hard与weighted 32-case corpus均完成1000次cold、repeated-same warm与cycling-dynamic warm审计；weighted cold/dynamic最大total setup+solve=`8.273542/8.790942 ms`，最大hard/equality/stationarity=`1.128e-7/1.128e-7/4.124e-8`，最大物理力矩差`3.075e-5 N·m`。原hard solver证据保留历史，当前修复证据见`runtime_cpp_parity.md`。
 - **DG21-04 / CLOSED / CODEX+EVIDENCE — equilibrium/hard feasibility：** Phase15 workspace不变；完整capture分类得到tick 1–259 in-workspace、260–271 out-of-workspace。runtime v2由全部259个eligible tick按预声明规则选28个dynamic nominal cases，tick 260/271为必须拒绝的fault cases。4个workspace与28个dynamic problems的四个累积hard layers及116-row equilibrium全部PASS，minimum cone/torque margin=`0.310102/1.99854 N·m`。原tick-271 nominal active attribution已被修复authority取代，证据见`runtime_workspace_gate_repair.md`。
 - **DG21-05 / CLOSED / CODEX+EVIDENCE — task set/weights：** runtime v2重新执行42D local algebra、32-case competition accounting、4个10 s tuning和9个预冻结holdout，全部PASS且逐tick workspace failure/violation均为零。weights、gains、wrench/slack与`0.01/0.02/0.001` envelopes不变；最坏值仍为`0.003535/0.005452/0.0001502`，证据见`runtime_workspace_gate_repair.md`。
-- **DG21-06 / OPEN / CODE+TEST — runtime contract：** additive WBC mode、model/solver/reference边界、diagnostics、fail-closed latch/reset、5-step ZOH、旧mode回归和无MuJoCo runtime依赖全部通过。
-- **DG21-07 / OPEN / EVIDENCE — formal/reuse：** frozen formal正常/扰动/fault、solver/task/plant gates、fresh replay、non-overwrite、历史回归和fresh-namespace revision reuse全部PASS。
-- **DG21-08 / OPEN / REVIEW — claims：** REVIEW确认blocking findings为零，且无NMPC/真机/terrain/real-time越界结论后，Verdict才可为`PASS`。
+- **DG21-06 / CLOSED / CODE+TEST — runtime contract：** additive WBC mode、model/solver/reference边界、diagnostics、fail-closed latch/reset、5-step ZOH、旧mode回归和无MuJoCo runtime依赖全部通过；P21-T12复建与workspace汇总仍为24 tests、0 failures。
+- **DG21-07 / CLOSED / EVIDENCE — formal/reuse：** frozen formal正常/扰动/fault、solver/task/plant gates、fresh replay、non-overwrite、历史回归和fresh-namespace revision reuse全部PASS；primary/replay共134项manifest哈希在P21-T12逐项复核无漂移。
+- **DG21-08 / CLOSED / REVIEW — claims：** `REVIEW.md`确认blocking findings为零并维持simulation-only边界，Verdict=`PASS`；不声明NMPC、真机、terrain或目标硬件实时性。
 
 ## Interfaces and Compatibility
 
@@ -90,7 +90,7 @@ Status: `active`
 | P21-T09 | 实现full-3D WBC loop与日志 | P21-T08、Adapter、Phase20 loop | 独立C++ runner/CMake target、control/plant CSV、disturbance/fault/reset/ZOH入口 | runner只经Core↔Adapter；5-step ZOH、双时钟、plant-truth隔离、replay PASS | done |
 | P21-T10 | 建立正式方法、profiles与evaluator | P21-T06/T09 | `docs/experiments/mujoco_weighted_wbc_validation.md`、versioned configs/wrapper/evaluator/manifest schema | formal前freeze、non-empty拒绝、hash/schema/case/threshold/solver字段完整 | done |
 | P21-T11 | 执行formal、fresh replay与历史回归 | P21-T10 frozen inputs | 新`evidence/automated/<run-id>/`、summary/manifest/replay/reuse audit | DG21-07；normal/perturbation/fault、QP/task/plant、replay、non-overwrite与Phase14/15/18/20回归PASS | done |
-| P21-T12 | REVIEW | 全部任务、源码与真实evidence | `REVIEW.md`；仅PASS后创建`RECORD.md` | DG21-08关闭、blocking findings=0后才更新ROADMAP complete | todo |
+| P21-T12 | REVIEW | 全部任务、源码与真实evidence | `REVIEW.md`；仅PASS后创建`RECORD.md` | DG21-08关闭、blocking findings=0后才更新ROADMAP complete | done |
 
 任务状态只使用 `todo / doing / done / blocked`。
 
@@ -184,7 +184,8 @@ Status: `active`
 - 2026-08-28：P21-T09独立full-3D runner `weighted_wbc_loop`验收通过。验收中发现并修复一个runner bug：重写的`setInitialState`开头多余的`mj_resetData`把场景`base_weld` equality恢复为激活，base被锚回XML qpos0高度导致第一拍后接触丢失、Core按冻结fail-closed语义锁存零；定位证据为tick-0 Core力矩与冻结offline equilibrium QP逐项一致而Phase20真值力矩在同一初态同样弹飞。修复仅删除该次reset（`adapter.reset`→`controller.reset`→`setInitialState`与Phase20 loop一致），Core/Adapter无改动。修复后真实结果：build+CTest `24 tests, 0 errors, 0 failures`；hold 500/500 `kOk`零锁存双轮接触、ZOH逐tick精确为0；replay plant CSV字节一致、control CSV仅`core_step_ns`墙钟列不同；contact_loss_left/right、invalid、nonmonotonic、timing五类fault在故障拍给出对应状态并锁存零；Phase20量级扰动与初态/腿扰动1000-tick全`kOk`；non-overwrite拒绝退出码1；3-episode reset复现。详见`evidence/runtime_wbc_loop_validation.md`。DG21-06此前声明的待补Adapter/ZOH/双时钟/runner证据已由本条补齐，gate关闭与REVIEW结论留给后续任务。
 - 2026-08-28：P21-T10冻结formal方法、profile与evaluator。新增`docs/experiments/mujoco_weighted_wbc_validation.md`（目的/边界、冻结对象、前置门槛、执行命令与判定），versioned输入`simulation/mujoco/config/phase21_weighted_wbc_formal_v1.json`（Phase20的19 normal/perturbation+6 fault case逐项一致、solver字段42变量/104行/`alpha=1.6`/`rho=0.15`、gates=Phase20 plant gates∪T06冻结nonlinear gates∪solver/task/deadline gates，均取自已冻结证据未新设数值），wrapper/evaluator `tools/experiments/run_mujoco_weighted_wbc_formal.py`（逐control tick与逐substep plant判定、summary+manifest schema含config/runner/wrapper/scene/源码/依赖profile hash）。真实冒烟结果：py_compile PASS；非空目录拒绝exit 2；缩短矩阵（4 normal+全部6 fault类型分两批）end-to-end全PASS且manifest 17 outputs/12 source hash完整；期间修复evaluator两处缺陷（episode replay未剔除episode键、fault误加finite检查）后复跑通过。SHA256：config `c86910c7…b793`、wrapper `0cf757a8…6eee`、doc `581d116b…185b`。`git diff --check` PASS。完整1000-tick formal执行留给P21-T11。
 - 2026-08-28：P21-T11以冻结输入执行完整formal。入口build+CTest `24 tests, 0 errors, 0 failures`；`evidence/automated/2026-08-28-formal-v1` 19/19 normal+6/6 fault全PASS，最坏值：core step `9.90157 ms`（门槛10 ms，replay侧7.93 ms，属墙钟调度尖峰、余量薄需REVIEW知悉）、X/Y `2.08/2.01e-3 m`、height `1.68e-4 m`、roll/pitch/yaw `6.38e-3/7.18e-3/1.98e-2 rad`、leg `1.48e-2 rad`、hard/primal/dual/stationarity `1.07e-7/1.27e-7/6.51e-8/4.20e-8`、slack `3.73e-3`、task residual/cost `5.52e-3/4.29e-5`、min normal load `31.27 N`、penetration `5.37e-4 m`、slip `8.27e-3/1.73e-3 m/s`、closure `1.84e-4 m`、双轮接触率1.0、ZOH与Adapter符号精确为0、零饱和。fresh replay `…-v1-replay` 全PASS且审计通过：冻结输入hash一致、25个plant CSV字节一致、control仅`core_step_ns`墙钟列不同、summary除墙钟metric外相等。non-overwrite对已存在formal目录exit 2且52文件清单不变。历史回归全部新目录：coordinate contract PASS、Phase14 internal dynamics PASS、Phase15 closed-chain PASS、Phase18 contact/floating `overall_pass` true、Phase20 3D standing formal `pass` true（旧mode不受影响）。`git diff --check` PASS。审计记录见`evidence/automated/2026-08-28-formal-v1/README.md`；DG21-07/DG21-08结论留给P21-T12 REVIEW。
+- 2026-08-28：P21-T12 REVIEW=`PASS`。直接复核live Core/runner/evaluator与CBM coverage限制；primary/replay各67项、合计134项config/runner/wrapper/scene/source/output SHA-256均匹配manifest，evaluator `py_compile` PASS；从`ros_ws`复建4 packages并重跑Core/ROS/MuJoCo测试，workspace汇总`24 tests, 0 errors, 0 failures`。19/19 normal、6/6 fault、fresh replay、non-overwrite与Phase14/15/18/20回归均无blocking finding。primary的`9.90157 ms < 10 ms`仅保留为simulation-host薄余量限制，不外推目标硬件实时性。DG21-06/07/08关闭，创建`REVIEW.md`与`RECORD.md`并冻结Phase complete。
 
 ## Blockers
 
-**Current blocker：** none。P21-T11 formal/replay/回归已全部真实通过；下一步P21-T12 REVIEW，PASS前不创建`RECORD.md`。
+**Current blocker：** none。P21-T12 REVIEW=`PASS`，Phase已完成并冻结；后续NMPC、identified profile或真机工作必须进入独立Phase。

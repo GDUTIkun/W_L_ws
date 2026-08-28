@@ -40,7 +40,7 @@
 | 09 | nominal 轮地接触与 floating-base plant 验证 | complete | [Phase 18](phases/18-mujoco-contact-floating-base-plant-validation/PLAN.md) | 不接真机；wheel-only contact、normal/rolling/lateral/friction、零控制 touchdown、base state/reset 已通过 REVIEW，不提前做站立 |
 | 10 | exact 2D sagittal 简单站立 | complete | [Phase 19](phases/19-nominal-planar-simple-standing/PLAN.md) | formal-v4 11 个 10 s normal/perturbation + 4 个 fault cases PASS；REVIEW/RECORD 完成，仅限 current nominal exact-planar simulation |
 | 11 | nominal 完整 3D 简单站立 | complete | [Phase 20](phases/20-nominal-3d-simple-standing/PLAN.md) | formal-v3 19个10 s normal/perturbation + 6个fault cases PASS；full-3D state/contact/slip/closure、fresh replay、REVIEW/RECORD完成，仅限current nominal simulation |
-| 12 | nominal Weighted WBC | active | [Phase 21](phases/21-nominal-weighted-wbc/PLAN.md) | 不接真机、不引入NMPC；12-DoF reduced model、36-variable hard constraints、weighted soft contact/tasks、wrench/slack、限幅、solver/fault、10 s formal与非覆盖reuse逐层通过 |
+| 12 | nominal Weighted WBC | complete | [Phase 21](phases/21-nominal-weighted-wbc/PLAN.md) | current nominal simulation-only 12-DoF/42-variable Weighted WBC完成；19个10 s normal/perturbation、6个fault、solver/task/plant、fresh replay、历史回归与REVIEW/RECORD全部PASS |
 | 13 | nominal NMPC | planned | — | 不接真机；NMPC → WBC → torque 全链路在 nominal profile 中通过并保存非覆盖证据 |
 | 14 | 执行器力矩映射、摩擦与附加惯量 | blocked | [Phase 05](phases/05-actuator-torque-identification/PLAN.md) | 当前冻结真机；解冻后仍须关闭 Phase 05 自身 DG01–DG06，才能执行真实辨识与 MuJoCo 对应验证 |
 | 15 | RobotState 与传感器正式验证 | planned | — | 真机解冻后验证时间戳、单位、方向、滤波和延迟，形成 identified/real 可用状态边界 |
@@ -49,7 +49,7 @@
 | 18 | identified profile 分层复现与三方比较 | planned | — | 使用同一 runner/schema/阈值从运动学到 NMPC 追加重跑，保留 nominal ↔ identified ↔ real 对照，不覆盖第一轮 |
 | 19 | Roll/Yaw/Turning 与差分辨识 | planned | — | 在前述两轮证据基础上验证工作范围与鲁棒裕量 |
 
-README 与工作流骨架属于仓库引导建设，不作为产品开发 Phase。Phase 14/15/16/17/18/19/20 已完成；Phase 19最终authority为formal-v4，Phase 20最终authority为formal-v3，既往REWORK与formal演进证据均已非覆盖归档。当前正在执行[Phase 21 Weighted WBC](phases/21-nominal-weighted-wbc/PLAN.md)，且在pre-freeze model/solver/task gates通过前不得集成production Core。Phase 05 因当前真机冻结而blocked。上述PASS都只属于simulation-only；恢复Phase 05时，它们不替代通信、Load Cell、同步和安全放行条件。
+README 与工作流骨架属于仓库引导建设，不作为产品开发 Phase。Phase 14/15/16/17/18/19/20/21 已完成；Phase 19最终authority为formal-v4，Phase 20最终authority为formal-v3，Phase 21最终authority为formal-v1，既往REWORK与formal演进证据均已非覆盖归档。下一控制复杂度为独立Phase 22 nominal NMPC；不得从Phase 21的simulation-only WBC结论推断NMPC、identified profile、真机或目标硬件实时性。Phase 05 因当前真机冻结而blocked；恢复时现有PASS不替代通信、Load Cell、同步和安全放行条件。
 
 详细技术次序以 [MuJoCo → Real 当前更新路线](../mujoco/simulink%202%20mujoco%202%20real流程.md) 为准。建立真实 Phase 后，用 Phase 链接替换表中的“—”。
 
