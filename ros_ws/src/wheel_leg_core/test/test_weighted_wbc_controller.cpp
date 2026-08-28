@@ -52,6 +52,16 @@ int main() {
   const auto cold = controller.step(state, reference);
   assert(cold.ok());
   assert(cold.hard_violation <= 2.0e-7);
+  assert(cold.physical_solution.allFinite());
+  assert(cold.primal_residual >= 0.0 && cold.dual_residual >= 0.0);
+  for (std::size_t task = 0; task < wheel_leg::WeightedWbcController::kTaskCount; ++task) {
+    assert(std::isfinite(cold.task_max_abs_normalized_residual[task]));
+    assert(std::isfinite(cold.task_normalized_squared_cost[task]));
+  }
+  for (std::size_t joint = 0; joint < wheel_leg::kJointCount; ++joint) {
+    assert(std::abs(cold.physical_solution[12 + static_cast<int>(joint)] -
+                    cold.torque_nm[joint]) <= 1.0e-12);
+  }
   const auto warm = controller.step(state, reference);
   assert(warm.ok());
   for (std::size_t joint = 0; joint < wheel_leg::kJointCount; ++joint) {

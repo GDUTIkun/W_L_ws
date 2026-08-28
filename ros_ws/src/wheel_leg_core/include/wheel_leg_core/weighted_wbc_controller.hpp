@@ -7,6 +7,11 @@ namespace wheel_leg {
 
 class WeightedWbcController {
  public:
+  enum class Task : std::size_t {
+    kContact, kBaseX, kHeight, kOrientation, kLeg, kWrenchFidelity,
+    kSlackPenalty, kCount,
+  };
+  static constexpr std::size_t kTaskCount = static_cast<std::size_t>(Task::kCount);
   enum class Status {
     kOk,
     kModelRejected,
@@ -24,6 +29,14 @@ class WeightedWbcController {
     int iterations{0};
     double hard_violation{0.0};
     double stationarity_residual{0.0};
+    double primal_residual{0.0};
+    double dual_residual{0.0};
+    NominalWbcModel::Diagnostics model_diagnostics{};
+    Eigen::Matrix<double, 42, 1> physical_solution{
+        Eigen::Matrix<double, 42, 1>::Zero()};
+    std::array<double, kTaskCount> task_max_abs_normalized_residual{};
+    std::array<double, kTaskCount> task_normalized_squared_cost{};
+    double maximum_normalized_slack{0.0};
 
     [[nodiscard]] bool ok() const { return status == Status::kOk; }
   };

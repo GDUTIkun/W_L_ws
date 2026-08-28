@@ -140,6 +140,25 @@ int main() {
                   expected.hard_violation) <= 1.0e-15);
   assert(std::abs(cold.weighted_wbc_stationarity_residual -
                   expected.stationarity_residual) <= 1.0e-15);
+  assert(std::abs(cold.weighted_wbc_primal_residual -
+                  expected.primal_residual) <= 1.0e-15);
+  assert(std::abs(cold.weighted_wbc_dual_residual -
+                  expected.dual_residual) <= 1.0e-15);
+  assert(cold.weighted_wbc_model_diagnostics.reconstruction_iterations ==
+         expected.model_diagnostics.reconstruction_iterations);
+  assert(std::abs(cold.weighted_wbc_maximum_normalized_slack -
+                  expected.maximum_normalized_slack) <= 1.0e-15);
+  for (std::size_t index = 0; index < 42; ++index) {
+    assert(std::abs(cold.weighted_wbc_physical_solution[index] -
+                    expected.physical_solution[index]) <= 1.0e-15);
+  }
+  for (std::size_t task = 0;
+       task < wheel_leg::WeightedWbcController::kTaskCount; ++task) {
+    assert(std::abs(cold.weighted_wbc_task_max_abs_normalized_residual[task] -
+                    expected.task_max_abs_normalized_residual[task]) <= 1.0e-15);
+    assert(std::abs(cold.weighted_wbc_task_normalized_squared_cost[task] -
+                    expected.task_normalized_squared_cost[task]) <= 1.0e-15);
+  }
   for (std::size_t joint = 0; joint < wheel_leg::kJointCount; ++joint) {
     assert(std::abs(cold.command.joint_torque_nm[joint] -
                     expected.torque_nm[joint]) <= 1.0e-12);

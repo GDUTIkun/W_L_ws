@@ -139,6 +139,16 @@ struct StepResult {
   int weighted_wbc_iterations{0};
   double weighted_wbc_hard_violation{0.0};
   double weighted_wbc_stationarity_residual{0.0};
+  double weighted_wbc_primal_residual{0.0};
+  double weighted_wbc_dual_residual{0.0};
+  NominalWbcModel::Diagnostics weighted_wbc_model_diagnostics{};
+  Eigen::Matrix<double, 42, 1> weighted_wbc_physical_solution{
+      Eigen::Matrix<double, 42, 1>::Zero()};
+  std::array<double, WeightedWbcController::kTaskCount>
+      weighted_wbc_task_max_abs_normalized_residual{};
+  std::array<double, WeightedWbcController::kTaskCount>
+      weighted_wbc_task_normalized_squared_cost{};
+  double weighted_wbc_maximum_normalized_slack{0.0};
 
   [[nodiscard]] bool accepted() const { return status == StepStatus::kOk; }
 };

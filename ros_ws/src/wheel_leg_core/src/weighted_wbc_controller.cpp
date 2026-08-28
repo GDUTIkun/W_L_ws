@@ -28,6 +28,7 @@ WeightedWbcController::Result WeightedWbcController::step(
   Result output;
   const auto model = model_.evaluate(state);
   output.model_status = model.status;
+  output.model_diagnostics = model.diagnostics;
   if (!model.ok()) {
     output.status = Status::kModelRejected;
     reset();
@@ -58,6 +59,8 @@ WeightedWbcController::Result WeightedWbcController::step(
   output.solver_status = solved.status;
   output.iterations = solved.iterations;
   output.stationarity_residual = solved.stationarity_residual;
+  output.primal_residual = solved.primal_residual;
+  output.dual_residual = solved.dual_residual;
   if (!solved.converged() || !solved.x.allFinite()) {
     output.status = solved.x.allFinite() ? Status::kSolverRejected
                                          : Status::kNonFinite;
@@ -80,6 +83,44 @@ WeightedWbcController::Result WeightedWbcController::step(
     output.torque_nm[static_cast<std::size_t>(joint)] =
         phase21_profile::kVariableScale[12 + joint] * solved.x[12 + joint];
   }
+  for (int index = 0; index < 42; ++index) {
+    output.physical_solution[index] =
+        phase21_profile::kVariableScale[index] * solved.x[index];
+  }
+  const auto record_task = [&output](Task task, const auto &residual) {
+    const auto index = static_cast<std::size_t>(task);
+    output.task_max_abs_normalized_residual[index] =
+        residual.cwiseAbs().maxCoeff();
+    output.task_normalized_squared_cost[index] = residual.squaredNorm();
+  };
+  Eigen::Matrix<double, 6, 1> contact;
+  contact << model.contact_jacobian[0] * output.physical_solution.head<12>() +
+                 model.contact_bias[0],
+      model.contact_jacobian[1] * output.physical_solution.head<12>() +
+          model.contact_bias[1];
+  record_task(Task::kContact, contact / 10.0);
+  record_task(Task::kBaseX, (Eigen::Matrix<double, 1, 1>() <<
+      (output.physical_solution[0] - reference.base_x_acceleration_m_s2) / 10.0).finished());
+  record_task(Task::kHeight, (Eigen::Matrix<double, 1, 1>() <<
+      (output.physical_solution[2] - reference.base_height_acceleration_m_s2) / 10.0).finished());
+  record_task(Task::kOrientation,
+      (output.physical_solution.segment<3>(3) - reference.orientation_acceleration_rad_s2) / 20.0);
+  Eigen::Matrix<double, 4, 1> leg;
+  for (int index = 0; index < 4; ++index) leg[index] = output.physical_solution[6 + (index < 2 ? index : index + 1)];
+  record_task(Task::kLeg, (leg - reference.leg_acceleration_rad_s2) / 50.0);
+  Eigen::Matrix<double, 12, 1> wrench;
+  for (int side = 0; side < 2; ++side) {
+    wrench.segment<6>(6 * side) = model.wrench_flu_map[side] *
+        output.physical_solution.segment<6>(18 + 6 * side) -
+        output.physical_solution.segment<6>(30 + 6 * side) -
+        reference.interaction_wrench_flu.segment<6>(6 * side);
+  }
+  Eigen::Matrix<double, 12, 1> wrench_scale;
+  for (int index = 0; index < 12; ++index) wrench_scale[index] = phase21_profile::kVariableScale[30 + index % 6];
+  record_task(Task::kWrenchFidelity, wrench.cwiseQuotient(wrench_scale));
+  const auto slack = output.physical_solution.tail<12>().cwiseQuotient(wrench_scale);
+  record_task(Task::kSlackPenalty, slack);
+  output.maximum_normalized_slack = slack.cwiseAbs().maxCoeff();
   if (validateTorqueCommand(TorqueCommand{state.sample_time_ns,
                                           output.torque_nm}) !=
       ValidationError::kNone) {

@@ -84,9 +84,9 @@ ROADMAP
 
 - `project_scout`：只读侦察。用于非平凡的代码定位、调用链、数据流、影响面、历史设计、实验记录和 Phase 关系查询。当前代码事实走 CBM 与源码，历史关系走现有 Graphify 本地图。
 <!--
-- `phase_worker`：实现执行。仅当当前 Phase 的 Scope、Frozen Decisions、接口约束、文件所有权、验收条件和验证入口都已明确时使用。
--->
 - 实现工作暂由 Claude 执行；Codex 不派发 `phase_worker`。恢复此代理时，取消上方注释并删除本条临时策略。
+-->
+- `phase_worker`：实现执行。仅当当前 Phase 的 Scope、Frozen Decisions、接口约束、文件所有权、验收条件和验证入口都已明确时使用。
 - `graphify_maintainer`：最低成本的 Graphify 提取与增量维护代理。在尚未建图、目标内容未入图或现有图已过期时使用；默认由 `gpt-5.6-luna` 独立完成，不参与技术决策或证据解释。
 - 默认最多启动一个子 Agent；只有两个任务确实独立且足够大时才并行启动两个。
 - 单文件小改、强顺序依赖、仍需持续技术取舍或主 Agent 可直接快速完成的任务不委派。

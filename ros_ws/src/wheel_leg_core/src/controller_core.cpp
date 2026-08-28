@@ -414,6 +414,16 @@ void ControllerCore::stepWeightedWbc(
   result.weighted_wbc_hard_violation = wbc_result.hard_violation;
   result.weighted_wbc_stationarity_residual =
       wbc_result.stationarity_residual;
+  result.weighted_wbc_primal_residual = wbc_result.primal_residual;
+  result.weighted_wbc_dual_residual = wbc_result.dual_residual;
+  result.weighted_wbc_model_diagnostics = wbc_result.model_diagnostics;
+  result.weighted_wbc_physical_solution = wbc_result.physical_solution;
+  result.weighted_wbc_task_max_abs_normalized_residual =
+      wbc_result.task_max_abs_normalized_residual;
+  result.weighted_wbc_task_normalized_squared_cost =
+      wbc_result.task_normalized_squared_cost;
+  result.weighted_wbc_maximum_normalized_slack =
+      wbc_result.maximum_normalized_slack;
   bool over_limit = false;
   for (std::size_t joint = 0; joint < kJointCount; ++joint) {
     if (std::abs(wbc_result.torque_nm[joint]) >

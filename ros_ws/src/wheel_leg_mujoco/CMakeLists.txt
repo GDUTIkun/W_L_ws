@@ -53,6 +53,10 @@ target_link_libraries(standing_3d_loop wheel_leg_mujoco_adapter)
 target_compile_options(
   standing_3d_loop PRIVATE -Wall -Wextra -Wpedantic -Werror)
 
+add_executable(weighted_wbc_loop src/weighted_wbc_loop.cpp)
+target_link_libraries(weighted_wbc_loop wheel_leg_mujoco_adapter)
+target_compile_options(weighted_wbc_loop PRIVATE -Wall -Wextra -Wpedantic -Werror)
+
 if(BUILD_TESTING)
   find_package(ament_cmake_gtest REQUIRED)
   ament_add_gtest(test_adapter test/test_adapter.cpp)
@@ -68,7 +72,7 @@ install(DIRECTORY
   ${CMAKE_CURRENT_SOURCE_DIR}/../../../simulation/mujoco/model
   DESTINATION share/${PROJECT_NAME}/simulation)
 install(TARGETS wheel_leg_mujoco_adapter mujoco_node deterministic_loop
-  planar_standing_loop standing_3d_loop
+  planar_standing_loop standing_3d_loop weighted_wbc_loop
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION lib/${PROJECT_NAME})
