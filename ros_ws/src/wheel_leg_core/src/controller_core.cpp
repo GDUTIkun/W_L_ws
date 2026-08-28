@@ -4,6 +4,7 @@
 #include <chrono>
 #include <cmath>
 #include <iterator>
+#include <limits>
 
 namespace wheel_leg {
 namespace {
@@ -487,8 +488,12 @@ void ControllerCore::stepNominalNmpcWbc(
     weighted_wbc_anchor_yaw_rad_ = headingFromQuaternion(state.q_n_from_b);
   }
   const bool update_tick = nominal_nmpc_control_tick_ % 2 == 0;
+  const bool inject_fault =
+      nominal_nmpc_control_tick_ == config_.nominal_nmpc.fault_control_tick;
+  const auto fault = inject_fault ? config_.nominal_nmpc.fault_injection
+                                  : NmpcFaultInjection::kNone;
   result.nominal_nmpc_update_tick = update_tick;
-  if (update_tick) {
+  if (update_tick && fault != NmpcFaultInjection::kStale) {
     NominalNmpcProblem problem;
     for (std::size_t axis = 0; axis < 3; ++axis) {
       problem.state[static_cast<Eigen::Index>(axis)] =
@@ -532,8 +537,22 @@ void ControllerCore::stepNominalNmpcWbc(
         std::sin(yaw), std::cos(yaw), 0.0,
         0.0, 0.0, 1.0;
     result.nominal_nmpc_result = nominal_nmpc_solver_->solve(problem);
+    if (fault == NmpcFaultInjection::kSolverFailure) {
+      result.nominal_nmpc_result.status =
+          NominalNmpcSolver::Status::kFeedbackFailed;
+      result.nominal_nmpc_result.acados_status = 1;
+    } else if (fault == NmpcFaultInjection::kNonFinite) {
+      result.nominal_nmpc_result.wrench_flu[0] =
+          std::numeric_limits<double>::quiet_NaN();
+      result.nominal_nmpc_result.status =
+          NominalNmpcSolver::Status::kAuditFailed;
+    }
     nominal_nmpc_last_result_ = result.nominal_nmpc_result;
     result.nominal_nmpc_wrench_age_ticks = 0;
+  } else if (update_tick && fault == NmpcFaultInjection::kStale &&
+             nominal_nmpc_last_result_) {
+    result.nominal_nmpc_result = *nominal_nmpc_last_result_;
+    result.nominal_nmpc_wrench_age_ticks = 2;
   } else if (nominal_nmpc_last_result_) {
     result.nominal_nmpc_result = *nominal_nmpc_last_result_;
     result.nominal_nmpc_wrench_age_ticks = 1;
@@ -550,6 +569,10 @@ void ControllerCore::stepNominalNmpcWbc(
       state, result, &nominal_nmpc_last_result_->wrench_flu);
   result.nominal_nmpc_wbc_total_time_s =
       std::chrono::duration<double>(Clock::now() - start).count();
+  if (fault == NmpcFaultInjection::kLate) {
+    result.nominal_nmpc_wbc_total_time_s =
+        config_.nominal_nmpc.deadline_s + 1.0e-6;
+  }
   if (result.nominal_nmpc_wbc_total_time_s >
       config_.nominal_nmpc.deadline_s) {
     result.command.joint_torque_nm.fill(0.0);

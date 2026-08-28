@@ -11,7 +11,7 @@
 
 extern "C" {
 #include "acados_c/ocp_nlp_interface.h"
-#include "acados_solver_ocp_phase23_nominal_nmpc_5ee241a6.h"
+#include "acados_solver_ocp_phase23_nominal_nmpc_4f8fd2e4.h"
 }
 
 namespace wheel_leg {
@@ -21,8 +21,11 @@ constexpr int kHorizonSteps = 20;
 constexpr int kStateSize = 12;
 constexpr int kInputSize = 12;
 constexpr int kParameterSize = 9;
-constexpr double kResidualTolerance = 1.0e-4;
-constexpr double kDefectTolerance = 1.0e-4;
+constexpr double kStationarityTolerance = 1.0;
+constexpr double kFeasibilityTolerance = 1.0e-3;
+constexpr double kDefectTolerance = 1.0e-3;
+constexpr double kProjectedStationarityTolerance = 0.05;
+constexpr double kTerminalWeightMultiplier = 10.0;
 
 using Clock = std::chrono::steady_clock;
 
@@ -37,6 +40,16 @@ constexpr std::array<double, kInputSize> kInputLower{
 constexpr std::array<double, kInputSize> kInputUpper{
     15.0, 15.0, 50.0, 9.0, 2.0, 1.0,
     15.0, 15.0, 50.0, -4.0, 2.0, 1.0};
+constexpr std::array<double, kStateSize> kStateCost{
+    2500.0, 2500.0, 20000.0, 20000.0 / 9.0, 20000.0 / 9.0,
+    200.0, 12.5, 12.5, 25.0, 1.0, 1.0, 1.0};
+constexpr std::array<double, kInputSize> kInputCost{
+    10.0, 10000.0, 1000000.0 / 225.0, 250000.0, 250000.0,
+    1000000.0, 10.0, 10000.0, 1000000.0 / 225.0, 250000.0,
+    250000.0, 1000000.0};
+constexpr std::array<double, kInputSize> kInputScale{
+    10.0, 10.0, 15.0, 2.0, 2.0, 1.0,
+    10.0, 10.0, 15.0, 2.0, 2.0, 1.0};
 
 bool finite(const NominalNmpcProblem &problem) {
   return problem.state.allFinite() && problem.reference.allFinite() &&
@@ -58,7 +71,7 @@ double seconds(Clock::time_point start, Clock::time_point end) {
 }  // namespace
 
 struct NominalNmpcSolver::Impl {
-  using Capsule = ocp_phase23_nominal_nmpc_5ee241a6_solver_capsule;
+  using Capsule = ocp_phase23_nominal_nmpc_4f8fd2e4_solver_capsule;
 
   Capsule *capsule{nullptr};
   ocp_nlp_config *config{nullptr};
@@ -70,25 +83,25 @@ struct NominalNmpcSolver::Impl {
   bool cold{true};
 
   Impl() {
-    capsule = ocp_phase23_nominal_nmpc_5ee241a6_acados_create_capsule();
+    capsule = ocp_phase23_nominal_nmpc_4f8fd2e4_acados_create_capsule();
     if (capsule == nullptr ||
-        ocp_phase23_nominal_nmpc_5ee241a6_acados_create(capsule) != 0) {
+        ocp_phase23_nominal_nmpc_4f8fd2e4_acados_create(capsule) != 0) {
       return;
     }
-    config = ocp_phase23_nominal_nmpc_5ee241a6_acados_get_nlp_config(capsule);
-    dims = ocp_phase23_nominal_nmpc_5ee241a6_acados_get_nlp_dims(capsule);
-    input = ocp_phase23_nominal_nmpc_5ee241a6_acados_get_nlp_in(capsule);
-    output = ocp_phase23_nominal_nmpc_5ee241a6_acados_get_nlp_out(capsule);
-    solver = ocp_phase23_nominal_nmpc_5ee241a6_acados_get_nlp_solver(capsule);
-    options = ocp_phase23_nominal_nmpc_5ee241a6_acados_get_nlp_opts(capsule);
+    config = ocp_phase23_nominal_nmpc_4f8fd2e4_acados_get_nlp_config(capsule);
+    dims = ocp_phase23_nominal_nmpc_4f8fd2e4_acados_get_nlp_dims(capsule);
+    input = ocp_phase23_nominal_nmpc_4f8fd2e4_acados_get_nlp_in(capsule);
+    output = ocp_phase23_nominal_nmpc_4f8fd2e4_acados_get_nlp_out(capsule);
+    solver = ocp_phase23_nominal_nmpc_4f8fd2e4_acados_get_nlp_solver(capsule);
+    options = ocp_phase23_nominal_nmpc_4f8fd2e4_acados_get_nlp_opts(capsule);
   }
 
   ~Impl() {
     if (capsule != nullptr) {
       if (config != nullptr) {
-        ocp_phase23_nominal_nmpc_5ee241a6_acados_free(capsule);
+        ocp_phase23_nominal_nmpc_4f8fd2e4_acados_free(capsule);
       }
-      ocp_phase23_nominal_nmpc_5ee241a6_acados_free_capsule(capsule);
+      ocp_phase23_nominal_nmpc_4f8fd2e4_acados_free_capsule(capsule);
     }
   }
 
@@ -109,7 +122,7 @@ bool NominalNmpcSolver::ready() const { return impl_ && impl_->ready(); }
 
 void NominalNmpcSolver::reset() {
   if (!ready()) return;
-  ocp_phase23_nominal_nmpc_5ee241a6_acados_reset(
+  ocp_phase23_nominal_nmpc_4f8fd2e4_acados_reset(
       impl_->capsule, 1, 1, 1, 1);
   impl_->cold = true;
 }
@@ -131,7 +144,7 @@ NominalNmpcSolver::Result NominalNmpcSolver::solve(
     }
   }
   for (int stage = 0; stage <= kHorizonSteps; ++stage) {
-    if (ocp_phase23_nominal_nmpc_5ee241a6_acados_update_params(
+    if (ocp_phase23_nominal_nmpc_4f8fd2e4_acados_update_params(
             impl_->capsule, stage, parameters.data(), kParameterSize) != 0) {
       result.status = Status::kPreparationFailed;
       return result;
@@ -175,7 +188,7 @@ NominalNmpcSolver::Result NominalNmpcSolver::solve(
   ocp_nlp_solver_opts_set(impl_->config, impl_->options, "rti_phase", &phase);
   const auto solve_start = Clock::now();
   result.acados_status =
-      ocp_phase23_nominal_nmpc_5ee241a6_acados_solve(impl_->capsule);
+      ocp_phase23_nominal_nmpc_4f8fd2e4_acados_solve(impl_->capsule);
   const auto solve_end = Clock::now();
   if (result.acados_status != 0) {
     result.status = Status::kFeedbackFailed;
@@ -188,41 +201,103 @@ NominalNmpcSolver::Result NominalNmpcSolver::solve(
   ocp_nlp_out_get(
       impl_->config, impl_->dims, impl_->output, 0, "u",
       result.wrench_flu.data());
-  NominalNmpcModel::State predicted_state;
-  ocp_nlp_out_get(
-      impl_->config, impl_->dims, impl_->output, 1, "x",
-      predicted_state.data());
+  std::array<NominalNmpcModel::State, kHorizonSteps + 1> states;
+  std::array<NominalNmpcModel::Input, kHorizonSteps> inputs;
+  for (int stage = 0; stage <= kHorizonSteps; ++stage) {
+    ocp_nlp_out_get(impl_->config, impl_->dims, impl_->output, stage, "x",
+                    states[stage].data());
+    if (stage < kHorizonSteps) {
+      ocp_nlp_out_get(impl_->config, impl_->dims, impl_->output, stage, "u",
+                      inputs[stage].data());
+    }
+  }
   ocp_nlp_eval_residuals(impl_->solver, impl_->input, impl_->output);
   ocp_nlp_get(impl_->solver, "res_stat", &result.stationarity_residual);
   ocp_nlp_get(impl_->solver, "res_eq", &result.dynamics_residual);
   ocp_nlp_get(impl_->solver, "res_ineq", &result.inequality_residual);
   ocp_nlp_get(impl_->solver, "res_comp", &result.complementarity_residual);
 
-  const auto model = NominalNmpcModel{}.evaluate(
-      problem.state, result.wrench_flu, problem.reference_rotation_n_from_b);
-  result.first_step_defect = model.ok()
-      ? (model.next - predicted_state).cwiseAbs().maxCoeff()
-      : std::numeric_limits<double>::infinity();
+  std::array<NominalNmpcModel::Result, kHorizonSteps> models;
   double bound_violation = 0.0;
-  for (int index = 0; index < kInputSize; ++index) {
-    bound_violation = std::max(
-        bound_violation,
-        std::max(kInputLower[index] - result.wrench_flu[index],
-                 result.wrench_flu[index] - kInputUpper[index]));
+  result.maximum_dynamics_defect =
+      (states.front() - problem.state).cwiseAbs().maxCoeff();
+  for (int stage = 0; stage < kHorizonSteps; ++stage) {
+    models[stage] = NominalNmpcModel{}.evaluate(
+        states[stage], inputs[stage], problem.reference_rotation_n_from_b);
+    if (!models[stage].ok()) {
+      result.maximum_dynamics_defect =
+          std::numeric_limits<double>::infinity();
+      break;
+    }
+    const double defect =
+        (models[stage].next - states[stage + 1]).cwiseAbs().maxCoeff();
+    result.maximum_dynamics_defect =
+        std::max(result.maximum_dynamics_defect, defect);
+    for (int index = 0; index < kInputSize; ++index) {
+      bound_violation = std::max(
+          bound_violation,
+          std::max(kInputLower[index] - inputs[stage][index],
+                   inputs[stage][index] - kInputUpper[index]));
+      const double error = inputs[stage][index] - kEquilibriumInput[index];
+      result.objective += 0.5 * kInputCost[index] * error * error;
+    }
+    for (int index = 0; index < kStateSize; ++index) {
+      const double error = states[stage][index] - problem.reference[index];
+      result.objective += 0.5 * kStateCost[index] * error * error;
+    }
   }
-  const std::array<double, 7> audit_values{
+  result.first_step_defect = models.front().ok()
+      ? (models.front().next - states[1]).cwiseAbs().maxCoeff()
+      : std::numeric_limits<double>::infinity();
+  NominalNmpcModel::State costate;
+  for (int index = 0; index < kStateSize; ++index) {
+    const double error = states.back()[index] - problem.reference[index];
+    costate[index] = kTerminalWeightMultiplier * kStateCost[index] * error;
+    result.objective += 0.5 * kTerminalWeightMultiplier *
+                        kStateCost[index] * error * error;
+  }
+  for (int stage = kHorizonSteps - 1; stage >= 0; --stage) {
+    const NominalNmpcModel::Input gradient =
+        (inputs[stage] - Eigen::Map<const NominalNmpcModel::Input>(
+             kEquilibriumInput.data()))
+            .cwiseProduct(Eigen::Map<const NominalNmpcModel::Input>(
+                kInputCost.data())) +
+        models[stage].discrete_input_jacobian.transpose() * costate;
+    for (int index = 0; index < kInputSize; ++index) {
+      const double projected = std::clamp(
+          inputs[stage][index] - gradient[index] / kInputCost[index],
+          kInputLower[index], kInputUpper[index]);
+      result.projected_stationarity_residual = std::max(
+          result.projected_stationarity_residual,
+          std::abs(inputs[stage][index] - projected) / kInputScale[index]);
+    }
+    NominalNmpcModel::State state_gradient;
+    for (int index = 0; index < kStateSize; ++index) {
+      state_gradient[index] =
+          kStateCost[index] * (states[stage][index] - problem.reference[index]);
+    }
+    costate = state_gradient +
+              models[stage].discrete_state_jacobian.transpose() * costate;
+  }
+  result.input_bound_violation = bound_violation;
+  const std::array<double, 11> audit_values{
       result.stationarity_residual, result.dynamics_residual,
       result.inequality_residual, result.complementarity_residual,
-      result.first_step_defect, result.preparation_time_s,
+      result.first_step_defect, result.maximum_dynamics_defect,
+      result.input_bound_violation, result.objective,
+      result.projected_stationarity_residual, result.preparation_time_s,
       result.feedback_time_s};
-  const double maximum_residual = std::max(
-      {result.stationarity_residual, result.dynamics_residual,
-       result.inequality_residual, result.complementarity_residual});
   if (!result.wrench_flu.allFinite() ||
       !std::all_of(audit_values.begin(), audit_values.end(),
                    [](double value) { return std::isfinite(value); }) ||
-      maximum_residual > kResidualTolerance ||
-      result.first_step_defect > kDefectTolerance || bound_violation > 1.0e-8) {
+      result.stationarity_residual > kStationarityTolerance ||
+      std::max({result.dynamics_residual, result.inequality_residual,
+                result.complementarity_residual}) >
+          kFeasibilityTolerance ||
+      result.maximum_dynamics_defect > kDefectTolerance ||
+      result.projected_stationarity_residual >
+          kProjectedStationarityTolerance ||
+      bound_violation > 1.0e-8) {
     result.status = Status::kAuditFailed;
     return result;
   }

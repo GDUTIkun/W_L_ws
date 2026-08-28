@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "profile": "phase23_acados_t05_profile_v1",
+  "parent_ocp": "simulation/mujoco/config/phase23_acados_ocp_v1.json",
+  "scope": "P23-T05 pre-freeze candidate; current nominal simulation only",
+  "cost_decision": {
+    "state_error_scale": [0.02, 0.02, 0.01, 0.03, 0.03, 0.05, 0.2, 0.2, 0.2, 0.5, 0.5, 0.5],
+    "state_weight": [1.0, 1.0, 2.0, 2.0, 2.0, 0.5, 0.5, 0.5, 1.0, 0.25, 0.25, 0.25],
+    "terminal_weight_multiplier": 10.0,
+    "input_error_scale": [10.0, 10.0, 15.0, 2.0, 2.0, 1.0, 10.0, 10.0, 15.0, 2.0, 2.0, 1.0],
+    "input_weight": [1000.0, 1000000.0, 1000000.0, 1000000.0, 1000000.0, 1000000.0, 1000.0, 1000000.0, 1000000.0, 1000000.0, 1000000.0, 1000000.0]
+  },
+  "constraint_decision": {
+    "input_lower": [-15.0, -15.0, 10.0, 4.0, -2.0, -1.0, -15.0, -15.0, 10.0, -9.0, -2.0, -1.0],
+    "input_upper": [15.0, 15.0, 50.0, 9.0, 2.0, 1.0, 15.0, 15.0, 50.0, -4.0, 2.0, 1.0],
+    "relative_state_envelope": [0.02, 0.02, 0.01, 0.03, 0.03, 0.05, 0.2, 0.2, 0.2, 0.5, 0.5, 0.5],
+    "state_envelope_semantics": "absolute deviation from reset anchor/equilibrium; T06 must transcribe stages 1..N without changing the public 12D state",
+    "delta_wrench_augmentation": "none",
+    "delta_wrench_decision": "no optimizer-only memory; accept only if the pre-freeze baseline maximum componentwise delta divided by input_error_scale is <= 0.05"
+  },
+  "reference_decision": {
+    "axis": "reset-anchor longitudinal world x only",
+    "amplitude_m": 0.005,
+    "step_start_s": 0.5,
+    "return_start_s": 1.5,
+    "update_period_s": 0.02,
+    "profiles": ["hold", "positive", "negative", "return"]
+  },
+  "ablation_variants": {
+    "baseline": {},
+    "no_longitudinal_state_cost": {"state_weight_index": 0, "value": 0.0},
+    "no_terminal_cost": {"terminal_weight_multiplier": 0.0},
+    "unselective_wrench_cost": {"input_weight_all": 1000.0}
+  },
+  "tuning_cases": [
+    {"id": "t05_tuning_hold", "nmpc_reference": "hold"},
+    {"id": "t05_tuning_positive", "nmpc_reference": "positive"},
+    {"id": "t05_tuning_negative", "nmpc_reference": "negative"},
+    {"id": "t05_tuning_return", "nmpc_reference": "return"}
+  ],
+  "holdout_cases": [
+    {"id": "t05_holdout_positive_pitch_negative", "nmpc_reference": "positive", "initial_state": [0.0, 0.0, -0.0015, 0.0, 0.0, 0.0, 0.0, 0.0]},
+    {"id": "t05_holdout_negative_velocity_positive", "nmpc_reference": "negative", "initial_state": [0.0, 0.0015, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]},
+    {"id": "t05_holdout_return_yaw_rate_negative", "nmpc_reference": "return", "initial_state": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -0.0075]},
+    {"id": "t05_holdout_positive_combined_negative", "nmpc_reference": "positive", "force_n": [-0.075, -0.0375, 0.0], "moment_nm": [-0.00375, -0.0075, -0.00375]},
+    {"id": "t05_holdout_negative_combined_positive", "nmpc_reference": "negative", "force_n": [0.075, 0.0375, 0.0], "moment_nm": [0.00375, 0.0075, 0.00375]},
+    {"id": "t05_holdout_return_pitch_positive_force_negative", "nmpc_reference": "return", "initial_state": [0.0, 0.0, 0.0015, 0.0, 0.0, 0.0, 0.0, 0.0], "force_n": [-0.075, 0.0, 0.0]}
+  ],
+  "prefreeze_gates": {
+    "maximum_model_hold_error_m": 1e-6,
+    "minimum_model_step_tracking_m": 0.004,
+    "minimum_model_return_excursion_m": 0.004,
+    "maximum_model_return_error_m": 0.0005,
+    "maximum_normalized_delta_wrench": 0.05,
+    "maximum_input_bound_violation": 1e-9,
+    "maximum_relative_state_envelope_violation": 1e-9,
+    "minimum_longitudinal_ablation_loss_m": 0.0035,
+    "minimum_terminal_return_error_ratio": 2.0,
+    "minimum_unselective_protected_wrench_ratio": 2.0
+  }
+}

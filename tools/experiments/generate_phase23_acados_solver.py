@@ -192,6 +192,9 @@ def main() -> int:
     output.mkdir(parents=True, exist_ok=True)
     ocp = create_ocp(config, output)
     AcadosOcpSolver.generate(ocp)
+    generated_files = sorted(
+        path for path in output.rglob("*") if path.is_file()
+    )
     manifest = {
         "schema_version": 1,
         "profile": config["profile"],
@@ -201,11 +204,13 @@ def main() -> int:
         "casadi_version": ca.__version__,
         "tera_version": generation["tera_version"],
         "tera_sha256": sha256(tera),
-        "generated_files": sorted(
-            str(path.relative_to(output))
-            for path in output.rglob("*")
-            if path.is_file()
-        ),
+        "generated_files": [
+            str(path.relative_to(output)) for path in generated_files
+        ],
+        "generated_sha256": {
+            str(path.relative_to(output)): sha256(path)
+            for path in generated_files
+        },
     }
     (output / "phase23_generation_manifest.json").write_text(
         json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8"

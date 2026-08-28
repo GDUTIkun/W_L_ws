@@ -46,11 +46,11 @@ OCP_SRC=
 
 
 
-OCP_SRC+= acados_solver_ocp_phase23_nominal_nmpc_5ee241a6.c
+OCP_SRC+= acados_solver_ocp_phase23_nominal_nmpc_4f8fd2e4.c
 
 OCP_OBJ := $(OCP_SRC:.c=.o)
 # for target example
-EX_SRC= main_ocp_phase23_nominal_nmpc_5ee241a6.c
+EX_SRC= main_ocp_phase23_nominal_nmpc_4f8fd2e4.c
 EX_OBJ := $(EX_SRC:.c=.o)
 EX_EXE := $(EX_SRC:.c=)
 
@@ -91,8 +91,8 @@ LDLIBS+= -lm
 LDLIBS+= 
 
 # libraries
-LIBACADOS_SOLVER=libacados_solver_ocp_phase23_nominal_nmpc_5ee241a6.so
-LIBACADOS_OCP_SOLVER=libacados_ocp_solver_ocp_phase23_nominal_nmpc_5ee241a6.so
+LIBACADOS_SOLVER=libacados_solver_ocp_phase23_nominal_nmpc_4f8fd2e4.so
+LIBACADOS_OCP_SOLVER=libacados_ocp_solver_ocp_phase23_nominal_nmpc_4f8fd2e4.so
 
 # virtual targets
 .PHONY : all clean
@@ -137,7 +137,7 @@ ocp_cython: ocp_cython_o
 	-o acados_ocp_solver_pyx.so \
 	-Wl,-rpath=$(LIB_PATH) \
 	acados_ocp_solver_pyx.o \
-	$(abspath .)/libacados_ocp_solver_ocp_phase23_nominal_nmpc_5ee241a6.so \
+	$(abspath .)/libacados_ocp_solver_ocp_phase23_nominal_nmpc_4f8fd2e4.so \
 	$(LDFLAGS) $(LDLIBS)
 
 
@@ -152,8 +152,8 @@ clean_ocp_shared_lib:
 	$(RM) $(OCP_OBJ)
 
 clean_ocp_cython:
-	$(RM) libacados_ocp_solver_ocp_phase23_nominal_nmpc_5ee241a6.so
-	$(RM) acados_solver_ocp_phase23_nominal_nmpc_5ee241a6.o
+	$(RM) libacados_ocp_solver_ocp_phase23_nominal_nmpc_4f8fd2e4.so
+	$(RM) acados_solver_ocp_phase23_nominal_nmpc_4f8fd2e4.o
 	$(RM) acados_ocp_solver_pyx.so
 	$(RM) acados_ocp_solver_pyx.o
 

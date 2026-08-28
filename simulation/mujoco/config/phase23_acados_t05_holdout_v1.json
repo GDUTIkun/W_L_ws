@@ -1,0 +1,19 @@
+{
+  "base_config": "simulation/mujoco/config/phase23_acados_formal_v1.json",
+  "schema_version": 1,
+  "profile": "phase23_acados_t05_holdout_v1",
+  "evidence_class": "P23-T05 frozen unseen nonlinear holdout; not integrated formal authority",
+  "source_profiles": {
+    "nmpc_ocp": "simulation/mujoco/config/phase23_acados_ocp_v1.json",
+    "t05_profile": "simulation/mujoco/config/phase23_acados_t05_profile_v1.json"
+  },
+  "cases": [
+    {"id": "t05_holdout_positive_pitch_negative", "nmpc_reference": "positive", "initial_state": [0.0, 0.0, -0.0015, 0.0, 0.0, 0.0, 0.0, 0.0]},
+    {"id": "t05_holdout_negative_velocity_positive", "nmpc_reference": "negative", "initial_state": [0.0, 0.0015, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]},
+    {"id": "t05_holdout_return_yaw_rate_negative", "nmpc_reference": "return", "initial_state": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -0.0075]},
+    {"id": "t05_holdout_positive_combined_negative", "nmpc_reference": "positive", "force_n": [-0.075, -0.0375, 0.0], "moment_nm": [-0.00375, -0.0075, -0.00375]},
+    {"id": "t05_holdout_negative_combined_positive", "nmpc_reference": "negative", "force_n": [0.075, 0.0375, 0.0], "moment_nm": [0.00375, 0.0075, 0.00375]},
+    {"id": "t05_holdout_return_pitch_positive_force_negative", "nmpc_reference": "return", "initial_state": [0.0, 0.0, 0.0015, 0.0, 0.0, 0.0, 0.0, 0.0], "force_n": [-0.075, 0.0, 0.0]}
+  ],
+  "fault_cases": ["nmpc_solver_failure"]
+}

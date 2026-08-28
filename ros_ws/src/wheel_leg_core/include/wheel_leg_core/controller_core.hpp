@@ -26,6 +26,14 @@ enum class NmpcReferenceProfile {
   kStepReturn,
 };
 
+enum class NmpcFaultInjection {
+  kNone,
+  kSolverFailure,
+  kLate,
+  kStale,
+  kNonFinite,
+};
+
 struct JointReference {
   JointVector position_rad{};
   JointVector velocity_rad_s{};
@@ -104,6 +112,8 @@ struct NominalNmpcConfig {
   double return_start_s{1.5};
   double update_period_s{0.02};
   double deadline_s{0.01};
+  NmpcFaultInjection fault_injection{NmpcFaultInjection::kNone};
+  std::uint64_t fault_control_tick{100};
 };
 
 struct ControllerConfig {

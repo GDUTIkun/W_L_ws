@@ -42,7 +42,7 @@
 | 11 | nominal 完整 3D 简单站立 | complete | [Phase 20](phases/20-nominal-3d-simple-standing/PLAN.md) | formal-v3 19个10 s normal/perturbation + 6个fault cases PASS；full-3D state/contact/slip/closure、fresh replay、REVIEW/RECORD完成，仅限current nominal simulation |
 | 12 | nominal Weighted WBC | complete | [Phase 21](phases/21-nominal-weighted-wbc/PLAN.md) | current nominal simulation-only 12-DoF/42-variable Weighted WBC完成；19个10 s normal/perturbation、6个fault、solver/task/plant、fresh replay、历史回归与REVIEW/RECORD全部PASS |
 | 13 | Weighted WBC ProxQP solver migration | complete | [Phase 22](phases/22-proxqp-solver-migration/PLAN.md) | 不改变Phase21 QP/WBC数学；ProxQP v0.7.3 component、oracle、deadline、19+6 formal、replay、历史回归与REVIEW/RECORD全部PASS |
-| 14 | nominal acados NMPC | active | [Phase 23](phases/23-nominal-nmpc/PLAN.md) | 用户于2026-08-28解除冻结并指定acados；12-state model与DG23-01保留PASS，当前从P23-T04关闭codegen/OCP/SQP-RTI+HPIPM、loader和时限gate，Core/formal未执行 |
+| 14 | nominal acados NMPC | active | [Phase 23](phases/23-nominal-nmpc/PLAN.md) | 12-state model与DG23-01保留PASS；P23-T04/DG23-02的acados toolchain、独立full-horizon audit、3×1000-run与deadline已PASS，当前执行P23-T05 cost/reference/constraint与tuning-holdout；现有Core/formal仅为pre-freeze prototype |
 | 15 | 执行器力矩映射、摩擦与附加惯量 | blocked | [Phase 05](phases/05-actuator-torque-identification/PLAN.md) | 当前冻结真机；解冻后仍须关闭 Phase 05 自身 DG01–DG06，才能执行真实辨识与 MuJoCo 对应验证 |
 | 16 | RobotState 与传感器正式验证 | planned | — | 真机解冻后验证时间戳、单位、方向、滤波和延迟，形成 identified/real 可用状态边界 |
 | 17 | MuJoCo–真机运动学、重力、质量与 COM 辨识 | planned | — | 复用 Phase 14/15 基线，FK/Jacobian/重力矩及 mass/COM 得到模型与实验支持 |
@@ -50,7 +50,7 @@
 | 19 | identified profile 分层复现与三方比较 | planned | — | 使用同一 runner/schema/阈值从运动学到 NMPC 追加重跑，保留 nominal ↔ identified ↔ real 对照，不覆盖第一轮 |
 | 20 | Roll/Yaw/Turning 与差分辨识 | planned | — | 在前述两轮证据基础上验证工作范围与鲁棒裕量 |
 
-README 与工作流骨架属于仓库引导建设，不作为产品开发 Phase。Phase 14/15/16/17/18/19/20/21/22 已完成；Phase 19最终authority为formal-v4，Phase 20最终authority为formal-v3，Phase 21最终authority为formal-v1，Phase 22最终authority为formal-v2，既往REWORK与formal演进证据均已非覆盖归档。[Phase 23](phases/23-nominal-nmpc/PLAN.md) 已按用户指令解除冻结并改为acados路线：12-state locked-composite model与DG23-01的既有PASS保留，P23-T04正在关闭generation toolchain、generated artifact、OCP/SQP-RTI+HPIPM、loader、KKT和组合时限gate；production Core、formal与NMPC claims仍未获批准。Phase 05 因当前真机冻结而blocked；恢复时现有PASS不替代通信、Load Cell、同步和安全放行条件。
+README 与工作流骨架属于仓库引导建设，不作为产品开发 Phase。Phase 14/15/16/17/18/19/20/21/22 已完成；Phase 19最终authority为formal-v4，Phase 20最终authority为formal-v3，Phase 21最终authority为formal-v1，Phase 22最终authority为formal-v2，既往REWORK与formal演进证据均已非覆盖归档。[Phase 23](phases/23-nominal-nmpc/PLAN.md) 已按用户指令解除冻结并改为acados路线：12-state locked-composite model与DG23-01的既有PASS保留，P23-T04/DG23-02的依赖/loader/clean generation/model parity/独立full-horizon audit/3×1000-run/组合时限已通过，当前进入P23-T05冻结cost/reference/constraint与tuning-holdout；现有generated solver/Core/formal仍只作pre-freeze prototype，production authority与NMPC claims未获批准。Phase 05 因当前真机冻结而blocked；恢复时现有PASS不替代通信、Load Cell、同步和安全放行条件。
 
 详细技术次序以 [MuJoCo → Real 当前更新路线](../mujoco/simulink%202%20mujoco%202%20real流程.md) 为准。建立真实 Phase 后，用 Phase 链接替换表中的“—”。
 

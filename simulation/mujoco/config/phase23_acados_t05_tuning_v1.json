@@ -1,0 +1,17 @@
+{
+  "base_config": "simulation/mujoco/config/phase23_acados_formal_v1.json",
+  "schema_version": 1,
+  "profile": "phase23_acados_t05_tuning_v1",
+  "evidence_class": "P23-T05 pre-freeze tuning; not formal authority",
+  "source_profiles": {
+    "nmpc_ocp": "simulation/mujoco/config/phase23_acados_ocp_v1.json",
+    "t05_profile": "simulation/mujoco/config/phase23_acados_t05_profile_v1.json"
+  },
+  "cases": [
+    {"id": "t05_tuning_hold", "nmpc_reference": "hold"},
+    {"id": "t05_tuning_positive", "nmpc_reference": "positive"},
+    {"id": "t05_tuning_negative", "nmpc_reference": "negative"},
+    {"id": "t05_tuning_return", "nmpc_reference": "return"}
+  ],
+  "fault_cases": ["nmpc_solver_failure"]
+}

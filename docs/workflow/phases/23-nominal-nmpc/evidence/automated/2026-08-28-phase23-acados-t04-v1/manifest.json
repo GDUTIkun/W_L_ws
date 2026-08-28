@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "phase": 23,
+  "task": "P23-T04",
+  "hardware_data": false,
+  "workspace": "/home/t/W_L_ws",
+  "python": {
+    "executable": "/home/t/W_L_ws/.venv/bin/python",
+    "mujoco": "3.7.0",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3",
+    "casadi": "3.7.2",
+    "acados_template": "/home/t/opt/acados/interfaces/acados_template/acados_template/__init__.py"
+  },
+  "acados": {
+    "source_dir": "/home/t/opt/acados",
+    "commit": "21376cb1af6b7dd45f675367272d3ba8100b26c0",
+    "tera_path": "/home/t/W_L_ws/.cache/acados/t_renderer",
+    "tera_sha256": "64a0a0f8d85be0b92234231fd1a9ff50c9d8f13d6208063707e56c9354a976d3",
+    "libacados_sha256": "babffd2966d582aca7a26294c0e4a2ed1c402e906a8da68115cf1d372146fc11",
+    "libhpipm_sha256": "d81b5f1d2bbbbed9fc3d93cf689ee62cc282a31619ab9415b7f21b141d62ce44",
+    "libblasfeo_sha256": "6c72737fb3697b470a20b93de10efd6aa914ec43cc643d7823c5607785501f91"
+  },
+  "inputs": {
+    "simulation/mujoco/config/phase23_acados_ocp_v1.json": "81084f97affbceecd03e99075302897298461559625cb2a53e026bcf26867648",
+    "tools/experiments/generate_phase23_acados_solver.py": "3f82b53e36f79767ddcc5c1b2db1a609dd5877c15218cb62e5548655c4fb164b",
+    "ros_ws/build/wheel_leg_core/test_nominal_nmpc_solver": "c8d2938adc49239e2e608faf253e57183479f74a9e5889bd4f0d52070a0e5876",
+    "ros_ws/build/wheel_leg_mujoco/weighted_wbc_loop": "878be888db9dd54d878c3eb0c761b87ed721fbfbcd5ec200097f3195b89d3b34",
+    "ros_ws/src/wheel_leg_core/include/wheel_leg_core/nominal_nmpc_solver.hpp": "4187e6fdd93ba646c224b1db68f22a84023ee00fb3c08a7af3c11be1f55bd6a0",
+    "ros_ws/src/wheel_leg_core/src/nominal_nmpc_solver.cpp": "0e35b14ac6723ccebfb80b9a253ee5ac78378d094a1e20fda0079c150a4fccdd",
+    "ros_ws/src/wheel_leg_core/test/test_nominal_nmpc_solver.cpp": "383a443cf4fe5487d013794515908fdae37f44bb6ab4edf52ee90fde6f4105a4",
+    "ros_ws/src/wheel_leg_mujoco/src/weighted_wbc_loop.cpp": "6fd2240550c3e839018d46312a84e4b4b7b7f92b9c78a4b198957dbd5d1b70c6",
+    "tools/experiments/run_mujoco_weighted_wbc_formal.py": "9d1dc300a0c8f827c873fc91e615132d61259c252ca3dd83ba0d30fd703b4e36",
+    "simulation/mujoco/config/phase23_acados_formal_v1.json": "20af6620a166040e70b3712aa73596c50fc8f744b912e30b0b9a5fcacc4d780e"
+  },
+  "generation_runs": [
+    "/tmp/phase23-clean-generation.60MyFc/run-a",
+    "/tmp/phase23-clean-generation.60MyFc/run-b"
+  ],
+  "formal_primary": "docs/workflow/phases/23-nominal-nmpc/evidence/automated/2026-08-28-phase23-acados-formal-v7",
+  "formal_replay": "docs/workflow/phases/23-nominal-nmpc/evidence/automated/2026-08-28-phase23-acados-formal-v8-replay",
+  "commands": [
+    "dependency imports and py_compile with ./.venv/bin/python",
+    "ldd and readelf -d ros_ws/build/wheel_leg_mujoco/weighted_wbc_loop",
+    "validate_phase23_acados_model.py",
+    "two clean generate_phase23_acados_solver.py runs with fixed ACADOS_SOURCE_DIR and TERA_PATH",
+    "normalized diff of the two clean runs and checked-in artifact",
+    "ros_ws/build/wheel_leg_core/test_nominal_nmpc_solver",
+    "normalized v7/v8 control comparison and byte-exact plant comparison",
+    "project-owned 20-stage objective, RK4 defect, bound and projected-gradient KKT audit",
+    "temporary nmpc_hold evaluator smoke in /tmp/phase23-kkt-smoke.GTPcL6"
+  ]
+}

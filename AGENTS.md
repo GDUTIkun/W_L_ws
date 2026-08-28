@@ -47,6 +47,7 @@ ROADMAP
 - Graphify 只用于历史设计理由、实验结论、Phase RECORD 和工程脚本关系。
 - 当前源码与历史图冲突时，以当前源码为准，并在 PLAN 记录冲突。
 - 需要新仿真或实验才能回答的问题，转成验证任务或放行门槛。
+- 连续执行相邻 Phase 时优先继承上一 Phase 已确认的 grounding；除非相关代码已变化、覆盖不足或下一 Phase 引入新的影响面，否则不得重复做相同的 CBM 查询和源码搜索。
 
 ## Implementation and Verification
 
@@ -70,22 +71,24 @@ ROADMAP
 
 ### Graphify
 
-- 用于设计文档、实验记录、Phase 历史和工程脚本关系。
-- 不替代 CBM 或源码读取。
-- 日常查询只使用本 workspace 的现有本地图和 `graphify query`、`graphify path`、`graphify explain`。
-- 当本地尚无可用图、目标内容从未入图，或现有图缺少已变更的代码、文档、Phase、实验记录时，主 Agent 直接委派 `graphify_maintainer` 执行提取或更新，无需逐次询问用户；主 Agent 与 `project_scout` 不直接修改 `graphify-out/`。
-- 提取或更新按输入类型选择最低成本路径：纯代码变化优先使用无需 LLM 的 `graphify update`；首次建图、文档、Phase、实验记录或其他语义内容按 Graphify skill 的提取流程、增量清单与缓存处理，不得把 code-only update 当成语义内容已提取或更新。
-- 已有可用图时默认只处理新增或变更输入；仅首次建图或用户明确要求时才允许全量 `extract`。默认禁止 `--force`、无必要的全量重建、`cluster-only`、`reflect` 和无关的重新标注。
-- `graphify_maintainer` 只能修改 `graphify-out/` 中的 Graphify 生成内容，不得修改产品源码、Phase 文档或证据；完成后必须报告实际输入、增量/跳过项、失败项、图健康检查和未解决缺口。
+* 用于历史设计理由、实验结论、Phase RECORD 和工程脚本关系，不替代 CBM 或源码读取。
+* 日常查询直接使用本 workspace 的现有本地图和 `graphify query`、`graphify path`、`graphify explain`；图不要求与当前源码实时同步。
+* 只有当前任务确实依赖 Graphify，且所需内容缺失、明显过期或现有图不足以支持判断时，才委派 `graphify_maintainer` 做最小范围增量维护。
+* Phase RECORD、重要设计冻结、重要实验结论或大规模结构重构完成后，可按需执行一次增量维护；普通代码修改、bug 修复和中间实验默认不触发维护。
+* 纯代码关系需要同步时优先使用无需 LLM 的 `graphify update`；设计文档、Phase、实验记录等语义内容按 Graphify skill 的提取流程处理。
+* 已有可用图时默认只处理当前任务需要的新增或变更输入；仅首次建图、图不可用或用户明确要求时允许全量 `extract`。默认禁止 `--force`、无必要的全量重建、`cluster-only`、`reflect` 和无关重新标注。
+* `graphify_maintainer` 只能修改 `graphify-out/` 中的 Graphify 生成内容，不得修改产品源码、Phase 文档或证据；完成后报告实际输入、增量/跳过项、失败项、图健康检查和未解决缺口。
 
 ## Automatic Subagent Delegation
 
 主 Agent 应根据任务形态自主调用项目级子 Agent，无需等待用户逐次授权；不得为了使用子 Agent 而使用子 Agent。
 
 - `project_scout`：只读侦察。用于非平凡的代码定位、调用链、数据流、影响面、历史设计、实验记录和 Phase 关系查询。当前代码事实走 CBM 与源码，历史关系走现有 Graphify 本地图。
+
 <!--
 - 实现工作暂由 Claude 执行；Codex 不派发 `phase_worker`。恢复此代理时，取消上方注释并删除本条临时策略。
 -->
+
 - `phase_worker`：实现执行。仅当当前 Phase 的 Scope、Frozen Decisions、接口约束、文件所有权、验收条件和验证入口都已明确时使用。
 - `graphify_maintainer`：最低成本的 Graphify 提取与增量维护代理。在尚未建图、目标内容未入图或现有图已过期时使用；默认由 `gpt-5.6-luna` 独立完成，不参与技术决策或证据解释。
 - 默认最多启动一个子 Agent；只有两个任务确实独立且足够大时才并行启动两个。
@@ -95,6 +98,14 @@ ROADMAP
 - 子 Agent 不是独占工作区；派发实现任务时必须明确文件或模块所有权，要求保留并适配用户及其他 Agent 的已有改动，不得回退他人修改。
 - 除 `graphify_maintainer` 外，其他 Agent 只允许执行 Graphify 查询；维护代理也不得再派生子 Agent，避免额度和并发失控。
 - 主 Agent 必须复核子 Agent 返回的关键证据；子 Agent 的完成、构建或测试状态不能直接解释为模型、仿真或实验 PASS。
+
+## Continuous Execution
+
+* 当前 Phase 完成后，只要 ROADMAP 中下一个 Phase 已存在、依赖已满足且不需要新的用户决策，主 Agent 应直接继续下一个 Phase，不因单个 PLAN、REVIEW 或 RECORD 完成而停止。
+* 连续 Phase 默认复用上一 Phase 已确认的代码定位、CBM project/generation、关键符号、调用链、接口和架构事实；只对下一 Phase 新涉及、已变更或存在疑点的部分补充 grounding，不重复全量侦察。
+* 前一 Phase 的实现导致相关源码或结构发生变化时，只刷新受影响范围；未变化的已确认事实继续沿用。
+* 只有遇到新的开放技术决策、阻塞项、用户输入需求、验证失败或 ROADMAP 无后续可执行 Phase 时才停止。
+* 连续执行仍按每个 Phase 独立维护 PLAN、REVIEW 和 RECORD，不把多个 Phase 合并成一个状态。
 
 ## Directory Boundaries
 

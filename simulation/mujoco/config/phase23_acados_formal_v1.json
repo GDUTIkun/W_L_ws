@@ -1,0 +1,62 @@
+{
+  "base_config": "simulation/mujoco/config/phase22_proxqp_formal_v1.json",
+  "schema_version": 1,
+  "profile": "phase23_acados_formal_v1",
+  "phase": 23,
+  "evidence_class": "formal current-nominal simulation-only acados NMPC plus ProxQP WBC",
+  "controller_mode": "nominal_nmpc",
+  "fault_cases": [
+    "contact_loss_left", "contact_loss_right", "invalid", "nonmonotonic",
+    "timing", "saturation", "nmpc_solver_failure", "nmpc_late",
+    "nmpc_stale", "nmpc_nonfinite"
+  ],
+  "source_profiles": {
+    "nmpc_ocp": "simulation/mujoco/config/phase23_acados_ocp_v1.json"
+  },
+  "cases": [
+    {"id": "nominal_reset_replay", "episodes": 2},
+    {"id": "pitch_positive", "initial_state": [0.0, 0.0, 0.001, 0.0, 0.0, 0.0, 0.0, 0.0]},
+    {"id": "pitch_negative", "initial_state": [0.0, 0.0, -0.001, 0.0, 0.0, 0.0, 0.0, 0.0]},
+    {"id": "velocity_positive", "initial_state": [0.0, 0.001, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]},
+    {"id": "velocity_negative", "initial_state": [0.0, -0.001, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]},
+    {"id": "yaw_rate_positive", "initial_state": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.005]},
+    {"id": "yaw_rate_negative", "initial_state": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -0.005]},
+    {"id": "force_x_positive", "force_n": [0.1, 0.0, 0.0]},
+    {"id": "force_x_negative", "force_n": [-0.1, 0.0, 0.0]},
+    {"id": "force_y_positive", "force_n": [0.0, 0.05, 0.0]},
+    {"id": "force_y_negative", "force_n": [0.0, -0.05, 0.0]},
+    {"id": "pitch_moment_positive", "moment_nm": [0.0, 0.01, 0.0]},
+    {"id": "pitch_moment_negative", "moment_nm": [0.0, -0.01, 0.0]},
+    {"id": "roll_moment_positive", "moment_nm": [0.005, 0.0, 0.0]},
+    {"id": "roll_moment_negative", "moment_nm": [-0.005, 0.0, 0.0]},
+    {"id": "yaw_moment_positive", "moment_nm": [0.0, 0.0, 0.005]},
+    {"id": "yaw_moment_negative", "moment_nm": [0.0, 0.0, -0.005]},
+    {"id": "combined_positive", "force_n": [0.05, 0.025, 0.0], "moment_nm": [0.0025, 0.005, 0.0025]},
+    {"id": "combined_negative", "force_n": [-0.05, -0.025, 0.0], "moment_nm": [-0.0025, -0.005, -0.0025]},
+    {"id": "nmpc_hold", "nmpc_reference": "hold"},
+    {"id": "nmpc_positive_step", "nmpc_reference": "positive"},
+    {"id": "nmpc_negative_step", "nmpc_reference": "negative"},
+    {"id": "nmpc_step_return", "nmpc_reference": "return"}
+  ],
+  "nmpc_gates": {
+    "maximum_combined_time_s": 0.01,
+    "maximum_feasibility_residual": 0.001,
+    "maximum_stationarity_residual": 1.0,
+    "maximum_independent_dynamics_defect": 0.001,
+    "maximum_projected_stationarity": 0.05,
+    "minimum_step_tracking_m": 0.0015,
+    "minimum_return_excursion_m": 0.0008,
+    "maximum_return_error_m": 0.0005
+  },
+  "solver": {
+    "name": "acados SQP_RTI plus partial-condensing HPIPM; downstream WBC ProxSuite ProxQP dense",
+    "acados_commit": "21376cb1af6b7dd45f675367272d3ba8100b26c0",
+    "nlp_solver": "SQP_RTI",
+    "qp_solver": "PARTIAL_CONDENSING_HPIPM",
+    "condensing_horizon": 5,
+    "integrator": "DISCRETE frozen RK4 20 ms",
+    "horizon_steps": 20,
+    "horizon_s": 0.4,
+    "wbc_solver": "ProxSuite ProxQP dense 0.7.3"
+  }
+}

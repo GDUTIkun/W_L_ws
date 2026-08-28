@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "phase": 23,
+  "task": "P23-T04",
+  "profile": "phase23_acados_t04_v1",
+  "pass": true,
+  "completed_checks": {
+    "dependency_probe": true,
+    "py_compile": true,
+    "loader_resolution": true,
+    "generated_model_parity": true,
+    "double_clean_generation_normalized_parity": true,
+    "checked_in_artifact_normalized_parity": true,
+    "cold_1000_deterministic": true,
+    "repeated_warm_1000": true,
+    "dynamic_warm_1000": true,
+    "normal_combined_deadline": true,
+    "fresh_replay_normalized_exact": true,
+    "independent_full_horizon_objective_and_kkt_audit": true,
+    "independent_evaluator_smoke": true
+  },
+  "metrics": {
+    "maximum_generated_next_error": 4.85722573273506e-17,
+    "maximum_generated_state_jacobian_error": 4.129097064264897e-11,
+    "maximum_generated_input_jacobian_error": 3.111941260236506e-11,
+    "cold_p99_ms": 0.706479,
+    "cold_max_ms": 1.20667,
+    "repeated_warm_p99_ms": 0.549506,
+    "repeated_warm_max_ms": 0.61085,
+    "dynamic_warm_max_ms_before_independent_audit": 0.642405,
+    "cold_p99_ms_with_independent_audit": 2.24746,
+    "cold_max_ms_with_independent_audit": 2.90029,
+    "repeated_warm_p99_ms_with_independent_audit": 1.42994,
+    "repeated_warm_max_ms_with_independent_audit": 2.48002,
+    "dynamic_warm_max_ms_with_independent_audit": 2.71915,
+    "maximum_independent_full_horizon_defect": 3.37732e-06,
+    "maximum_independent_projected_stationarity": 0.0428125,
+    "independent_projected_stationarity_gate": 0.05,
+    "normal_combined_max_ms": 1.920186,
+    "combined_deadline_ms": 10.0
+  },
+  "normalization": {
+    "generation_ignored_fields": [
+      "Makefile absolute output include path",
+      "acados_ocp.json code_gen_options.code_export_directory",
+      "acados_ocp.json code_gen_options.json_file",
+      "acados_ocp.json hash derived from the absolute output path",
+      "phase23_generation_manifest.json hashes of Makefile and acados_ocp.json"
+    ],
+    "replay_ignored_fields": [
+      "core_step_ns",
+      "nmpc_preparation_s",
+      "nmpc_feedback_s",
+      "nmpc_wbc_total_s"
+    ]
+  },
+  "remaining_phase_gates": {
+    "dg23_03_ocp_cost_constraint_reference_profile_frozen": false,
+    "dg23_03_tuning_holdout_and_ablation_complete": false
+  },
+  "authority": "closes DG23-02 toolchain, generated-model, loader, independent OCP audit, solver lifecycle, determinism and timing gates only; does not close DG23-03 or authorize integrated formal claims"
+}

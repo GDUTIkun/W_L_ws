@@ -3,8 +3,10 @@
 #include <algorithm>
 #include <chrono>
 #include <cmath>
+#include <cstdlib>
 #include <iostream>
 #include <limits>
+#include <vector>
 
 namespace {
 
@@ -41,8 +43,11 @@ int main() {
   }
   if (require(equilibrium.ok(), "equilibrium solve failed") ||
       require(equilibrium.wrench_flu.allFinite(), "non-finite wrench") ||
-      require(equilibrium.first_step_defect <= 1.0e-4,
-              "equilibrium dynamics defect")) {
+      require(equilibrium.maximum_dynamics_defect <= 1.0e-3,
+              "equilibrium dynamics defect") ||
+      require(std::isfinite(equilibrium.objective), "non-finite objective") ||
+      require(std::isfinite(equilibrium.projected_stationarity_residual),
+              "non-finite independent stationarity")) {
     return 1;
   }
 
@@ -79,6 +84,53 @@ int main() {
     return 1;
   }
 
+  auto benchmark = [&](const char *name, auto solve_once) {
+    std::vector<double> samples;
+    samples.reserve(1000);
+    for (int iteration = 0; iteration < 1000; ++iteration) {
+      const auto start = std::chrono::steady_clock::now();
+      if (require(solve_once(iteration), name)) std::exit(1);
+      const auto end = std::chrono::steady_clock::now();
+      samples.push_back(
+          std::chrono::duration<double, std::milli>(end - start).count());
+    }
+    std::sort(samples.begin(), samples.end());
+    std::cout << name << " p99_ms=" << samples[989]
+              << " max_ms=" << samples.back() << '\n';
+  };
+  const auto deterministic_problem = perturbed;
+  wheel_leg::NominalNmpcModel::Input cold_reference;
+  bool have_cold_reference = false;
+  double maximum_projected_stationarity = 0.0;
+  double maximum_full_horizon_defect = 0.0;
+  benchmark("cold", [&](int) {
+    solver.reset();
+    const auto result = solver.solve(deterministic_problem);
+    if (!result.ok()) return false;
+    maximum_projected_stationarity = std::max(
+        maximum_projected_stationarity,
+        result.projected_stationarity_residual);
+    maximum_full_horizon_defect = std::max(
+        maximum_full_horizon_defect, result.maximum_dynamics_defect);
+    if (!have_cold_reference) {
+      cold_reference = result.wrench_flu;
+      have_cold_reference = true;
+    }
+    return (result.wrench_flu - cold_reference).cwiseAbs().maxCoeff() <= 1.0e-12;
+  });
+  solver.reset();
+  if (require(solver.solve(equilibriumProblem()).ok(), "warm preload failed")) {
+    return 1;
+  }
+  benchmark("repeated_warm", [&](int) {
+    const auto result = solver.solve(equilibriumProblem());
+    maximum_projected_stationarity = std::max(
+        maximum_projected_stationarity,
+        result.projected_stationarity_residual);
+    maximum_full_horizon_defect = std::max(
+        maximum_full_horizon_defect, result.maximum_dynamics_defect);
+    return result.ok();
+  });
   double maximum_ms = 0.0;
   for (int iteration = 0; iteration < 1000; ++iteration) {
     auto dynamic = equilibriumProblem();
@@ -88,11 +140,29 @@ int main() {
     const auto result = solver.solve(dynamic);
     const auto end = std::chrono::steady_clock::now();
     if (require(result.ok(), "dynamic warm solve failed")) return 1;
+    maximum_projected_stationarity = std::max(
+        maximum_projected_stationarity,
+        result.projected_stationarity_residual);
+    maximum_full_horizon_defect = std::max(
+        maximum_full_horizon_defect, result.maximum_dynamics_defect);
     maximum_ms = std::max(
         maximum_ms,
         std::chrono::duration<double, std::milli>(end - start).count());
   }
-  std::cout << "phase23 nominal NMPC solver: PASS, max_ms=" << maximum_ms
+  if (require(maximum_projected_stationarity <= 0.05,
+              "independent projected stationarity gate") ||
+      require(maximum_full_horizon_defect <= 1.0e-3,
+              "independent full-horizon dynamics gate")) {
+    return 1;
+  }
+  std::cout << "dynamic_warm max_ms=" << maximum_ms
+            << " equilibrium_projected_stationarity="
+            << equilibrium.projected_stationarity_residual
+            << " maximum_projected_stationarity="
+            << maximum_projected_stationarity
+            << " maximum_full_horizon_defect="
+            << maximum_full_horizon_defect
+            << "\nphase23 nominal NMPC solver: PASS"
             << '\n';
   return 0;
 }

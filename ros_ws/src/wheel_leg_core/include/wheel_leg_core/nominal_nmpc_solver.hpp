@@ -36,6 +36,10 @@ class NominalNmpcSolver {
     double inequality_residual{0.0};
     double complementarity_residual{0.0};
     double first_step_defect{0.0};
+    double maximum_dynamics_defect{0.0};
+    double input_bound_violation{0.0};
+    double objective{0.0};
+    double projected_stationarity_residual{0.0};
 
     [[nodiscard]] bool ok() const { return status == Status::kOk; }
   };

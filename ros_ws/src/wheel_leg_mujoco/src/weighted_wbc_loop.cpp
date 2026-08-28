@@ -103,8 +103,10 @@ Options parseOptions(int argc, char **argv) {
     else if (argument == "--torque-limit") options.torque_limit = parseVector<6>(value);
     else throw std::invalid_argument("unknown option: " + argument);
   }
-  const std::array<std::string, 6> scenarios{
-      "hold", "contact_loss_left", "contact_loss_right", "invalid", "nonmonotonic", "timing"};
+  const std::array<std::string, 10> scenarios{
+      "hold", "contact_loss_left", "contact_loss_right", "invalid",
+      "nonmonotonic", "timing", "nmpc_solver_failure", "nmpc_late",
+      "nmpc_stale", "nmpc_nonfinite"};
   if (options.model_path.empty() || options.control_path.empty() || options.plant_path.empty())
     throw std::invalid_argument("--model --control-output --plant-output required");
   if (options.episodes <= 0 || options.ticks <= 0 ||
@@ -259,7 +261,7 @@ void setInitialState(const mjModel *model, mjData *data, const Options &options)
 }
 
 void writeHeaders(std::ofstream &control, std::ofstream &plant) {
-  control << "scenario,episode,tick,pre_step_plant_time_s,source_ns,command_source_ns,receipt_ns,dt_s,status,latch,accepted,contact_left,contact_right,weighted_status,model_status,solver_status,iterations,primal,dual,stationarity,hard,reconstruction_iterations,closure_residual,core_step_ns,zoh_diff,nmpc_active,nmpc_update,nmpc_age,nmpc_status,nmpc_acados_status,nmpc_preparation_s,nmpc_feedback_s,nmpc_stationarity,nmpc_dynamics,nmpc_inequality,nmpc_complementarity,nmpc_first_step_defect,nmpc_wbc_total_s";
+  control << "scenario,episode,tick,pre_step_plant_time_s,source_ns,command_source_ns,receipt_ns,dt_s,status,latch,accepted,contact_left,contact_right,weighted_status,model_status,solver_status,iterations,primal,dual,stationarity,hard,reconstruction_iterations,closure_residual,core_step_ns,zoh_diff,nmpc_active,nmpc_update,nmpc_age,nmpc_status,nmpc_acados_status,nmpc_preparation_s,nmpc_feedback_s,nmpc_stationarity,nmpc_dynamics,nmpc_inequality,nmpc_complementarity,nmpc_first_step_defect,nmpc_maximum_dynamics_defect,nmpc_input_bound_violation,nmpc_objective,nmpc_projected_stationarity,nmpc_wbc_total_s";
   for (int index = 0; index < 3; ++index) control << ",base_p" << index;
   for (int index = 0; index < 4; ++index) control << ",quat" << index;
   for (int index = 0; index < 3; ++index) control << ",base_v" << index;
@@ -339,6 +341,10 @@ void writeControlRow(std::ofstream &control, const Options &options, int episode
           << result.nominal_nmpc_result.inequality_residual << ','
           << result.nominal_nmpc_result.complementarity_residual << ','
           << result.nominal_nmpc_result.first_step_defect << ','
+          << result.nominal_nmpc_result.maximum_dynamics_defect << ','
+          << result.nominal_nmpc_result.input_bound_violation << ','
+          << result.nominal_nmpc_result.objective << ','
+          << result.nominal_nmpc_result.projected_stationarity_residual << ','
           << result.nominal_nmpc_wbc_total_time_s;
   writeValues(control, state.base_position_n_m);
   writeValues(control, state.q_n_from_b);
@@ -391,6 +397,21 @@ void run(const Options &options) {
   } else if (options.nmpc_reference == "return") {
     config.nominal_nmpc.reference_profile =
         wheel_leg::NmpcReferenceProfile::kStepReturn;
+  }
+  config.nominal_nmpc.fault_control_tick =
+      static_cast<std::uint64_t>(options.fault_tick);
+  if (options.scenario == "nmpc_solver_failure") {
+    config.nominal_nmpc.fault_injection =
+        wheel_leg::NmpcFaultInjection::kSolverFailure;
+  } else if (options.scenario == "nmpc_late") {
+    config.nominal_nmpc.fault_injection =
+        wheel_leg::NmpcFaultInjection::kLate;
+  } else if (options.scenario == "nmpc_stale") {
+    config.nominal_nmpc.fault_injection =
+        wheel_leg::NmpcFaultInjection::kStale;
+  } else if (options.scenario == "nmpc_nonfinite") {
+    config.nominal_nmpc.fault_injection =
+        wheel_leg::NmpcFaultInjection::kNonFinite;
   }
   wheel_leg::ControllerCore controller;
   if (!controller.configure(config)) throw std::runtime_error("WBC configuration failed");

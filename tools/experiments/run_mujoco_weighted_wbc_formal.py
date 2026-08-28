@@ -15,6 +15,7 @@ from __future__ import annotations
 import argparse
 import csv
 import hashlib
+import importlib.metadata
 import json
 import math
 import platform
@@ -31,7 +32,12 @@ DEFAULT_RUNNER = (
 )
 
 LEG_JOINTS = (0, 1, 3, 4)
-CONTROL_EXACT_IGNORE = ("core_step_ns",)  # wall-clock only
+CONTROL_EXACT_IGNORE = (
+    "core_step_ns",
+    "nmpc_preparation_s",
+    "nmpc_feedback_s",
+    "nmpc_wbc_total_s",
+)  # wall-clock only
 
 
 def sha256(path: Path) -> str:
@@ -332,6 +338,10 @@ FAULT_STATUS = {
     "contact_loss_right": "4",
     "timing": "4",
     "saturation": "4",
+    "nmpc_solver_failure": "4",
+    "nmpc_late": "4",
+    "nmpc_stale": "4",
+    "nmpc_nonfinite": "4",
 }
 
 
@@ -394,6 +404,8 @@ def run(config: dict[str, Any], runner: Path, output: Path) -> dict[str, Any]:
         episodes = int(case.get("episodes", 1))
         command = base_command(runner, scene, control_path, plant_path, config) + [
             "--scenario", "hold",
+            "--controller-mode", config.get("controller_mode", "weighted_wbc"),
+            "--nmpc-reference", case.get("nmpc_reference", "hold"),
             "--episodes", str(episodes),
             "--ticks", str(config["normal_ticks"]),
             "--initial-state", vector(case.get("initial_state", [0.0] * 8)),
@@ -407,6 +419,56 @@ def run(config: dict[str, Any], runner: Path, output: Path) -> dict[str, Any]:
         metrics, checks = normal_checks(
             read_rows(control_path), read_rows(plant_path), config, episodes
         )
+        if config.get("controller_mode") == "nominal_nmpc":
+            rows = read_rows(control_path)
+            checks.update({
+                "nmpc_status": all(row["nmpc_status"] == "0" for row in rows),
+                "nmpc_schedule": all(
+                    (row["nmpc_update"] == "1") == (int(row["tick"]) % 2 == 0)
+                    and int(row["nmpc_age"]) == int(row["tick"]) % 2
+                    for row in rows
+                ),
+                "nmpc_deadline": max(
+                    float(row["nmpc_wbc_total_s"]) for row in rows
+                ) <= config["nmpc_gates"]["maximum_combined_time_s"],
+                "nmpc_feasibility": max(
+                    max(float(row[name]) for name in (
+                        "nmpc_dynamics", "nmpc_inequality",
+                        "nmpc_complementarity", "nmpc_first_step_defect"))
+                    for row in rows
+                ) <= config["nmpc_gates"]["maximum_feasibility_residual"],
+                "nmpc_stationarity": max(
+                    float(row["nmpc_stationarity"]) for row in rows
+                ) <= config["nmpc_gates"]["maximum_stationarity_residual"],
+                "nmpc_independent_dynamics": max(
+                    float(row["nmpc_maximum_dynamics_defect"]) for row in rows
+                ) <= config["nmpc_gates"]["maximum_independent_dynamics_defect"],
+                "nmpc_independent_stationarity": max(
+                    float(row["nmpc_projected_stationarity"]) for row in rows
+                ) <= config["nmpc_gates"]["maximum_projected_stationarity"],
+                "nmpc_independent_objective": all(
+                    math.isfinite(float(row["nmpc_objective"])) for row in rows
+                ),
+            })
+            reference = case.get("nmpc_reference", "hold")
+            positions = [float(row["base_p0"]) for row in rows]
+            origin = positions[0]
+            final_delta = sum(positions[-100:]) / min(100, len(positions)) - origin
+            if reference == "positive":
+                checks["nmpc_tracking"] = (
+                    final_delta >= config["nmpc_gates"]["minimum_step_tracking_m"]
+                )
+            elif reference == "negative":
+                checks["nmpc_tracking"] = (
+                    final_delta <= -config["nmpc_gates"]["minimum_step_tracking_m"]
+                )
+            elif reference == "return":
+                checks["nmpc_tracking"] = (
+                    max(positions) - origin >=
+                    config["nmpc_gates"]["minimum_return_excursion_m"]
+                    and abs(final_delta) <=
+                    config["nmpc_gates"]["maximum_return_error_m"]
+                )
         cases.append({"id": case["id"], "pass": all(checks.values()),
                       "checks": checks, "metrics": metrics})
     faults = []
@@ -424,6 +486,8 @@ def run(config: dict[str, Any], runner: Path, output: Path) -> dict[str, Any]:
             "--equilibrium", vector(config["equilibrium"]),
             "--torque-limit", vector(torque_limit),
             "--scenario", scenario if scenario != "saturation" else "hold",
+            "--controller-mode", config.get("controller_mode", "weighted_wbc"),
+            "--nmpc-reference", "hold",
             "--episodes", "2",
             "--ticks", str(config["fault_ticks"]),
             "--fault-tick", str(config["fault_tick"]),
@@ -436,7 +500,7 @@ def run(config: dict[str, Any], runner: Path, output: Path) -> dict[str, Any]:
                        "checks": checks})
     return {
         "schema_version": 1,
-        "phase": 21,
+        "phase": config.get("phase", 21),
         "profile": config["profile"],
         "evidence_class": config["evidence_class"],
         "pass": all(case["pass"] for case in cases + faults),
@@ -448,8 +512,12 @@ def run(config: dict[str, Any], runner: Path, output: Path) -> dict[str, Any]:
 SOURCE_INPUTS = (
     "ros_ws/src/wheel_leg_core/include/wheel_leg_core/dense_qp_solver.hpp",
     "ros_ws/src/wheel_leg_core/include/wheel_leg_core/controller_core.hpp",
+    "ros_ws/src/wheel_leg_core/include/wheel_leg_core/nominal_nmpc_model.hpp",
+    "ros_ws/src/wheel_leg_core/include/wheel_leg_core/nominal_nmpc_solver.hpp",
     "ros_ws/src/wheel_leg_core/include/wheel_leg_core/weighted_wbc_controller.hpp",
     "ros_ws/src/wheel_leg_core/src/controller_core.cpp",
+    "ros_ws/src/wheel_leg_core/src/nominal_nmpc_model.cpp",
+    "ros_ws/src/wheel_leg_core/src/nominal_nmpc_solver.cpp",
     "ros_ws/src/wheel_leg_core/src/dense_qp_solver.cpp",
     "ros_ws/src/wheel_leg_core/src/weighted_wbc_controller.cpp",
     "ros_ws/src/wheel_leg_mujoco/src/adapter.cpp",
@@ -494,6 +562,46 @@ def main() -> int:
         path.name: sha256(path) for path in sorted(output.iterdir())
         if path.is_file()
     }
+    acados_provenance: dict[str, Any] | None = None
+    generated_inputs: dict[str, str] = {}
+    if config.get("controller_mode") == "nominal_nmpc":
+        acados_root = Path("/home/t/opt/acados")
+        generated_root = (
+            ROOT / "ros_ws/src/wheel_leg_core/acados_generated/"
+            "phase23_nominal_nmpc_v1"
+        )
+        generated_inputs = {
+            root_relative(path): sha256(path)
+            for path in sorted(generated_root.rglob("*")) if path.is_file()
+        }
+        libraries = {
+            name: acados_root / "lib" / name for name in (
+                "libacados.so", "libhpipm.so", "libblasfeo.so.0.1.4.2"
+            )
+        }
+        renderer = ROOT / ".cache/acados/t_renderer"
+        acados_provenance = {
+            "root": str(acados_root),
+            "commit": subprocess.check_output(
+                ["git", "-C", str(acados_root), "rev-parse", "HEAD"],
+                text=True,
+            ).strip(),
+            "libraries": {
+                name: sha256(path) for name, path in libraries.items()
+            },
+            "renderer_path": str(renderer),
+            "renderer_sha256": sha256(renderer),
+            "casadi_version": importlib.metadata.version("casadi"),
+            "acados_template_path": str(
+                acados_root / "interfaces/acados_template/acados_template"
+            ),
+            "runner_ldd": [
+                line.rsplit(" (0x", 1)[0].strip()
+                for line in subprocess.check_output(
+                    ["ldd", str(runner)], text=True
+                ).splitlines()
+            ],
+        }
     manifest = {
         "schema_version": 1,
         "created_at": datetime.now(timezone.utc).isoformat(),
@@ -511,6 +619,8 @@ def main() -> int:
         "scene_sha256": sha256((ROOT / config["scene"]).resolve()),
         "solver": config["solver"],
         "source_inputs": source_inputs,
+        "generated_inputs": generated_inputs,
+        "acados_provenance": acados_provenance,
         "outputs": outputs,
     }
     (output / "manifest.json").write_text(

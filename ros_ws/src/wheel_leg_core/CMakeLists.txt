@@ -22,7 +22,7 @@ find_library(BLASFEO_LIBRARY NAMES blasfeo libblasfeo.so.0
 set(PHASE23_GENERATED_DIR
   "${CMAKE_CURRENT_SOURCE_DIR}/acados_generated/phase23_nominal_nmpc_v1")
 add_library(phase23_acados_generated OBJECT
-  ${PHASE23_GENERATED_DIR}/acados_solver_ocp_phase23_nominal_nmpc_5ee241a6.c
+  ${PHASE23_GENERATED_DIR}/acados_solver_ocp_phase23_nominal_nmpc_4f8fd2e4.c
   ${PHASE23_GENERATED_DIR}/phase23_nominal_nmpc_model/phase23_nominal_nmpc_dyn_disc_phi_fun.c
   ${PHASE23_GENERATED_DIR}/phase23_nominal_nmpc_model/phase23_nominal_nmpc_dyn_disc_phi_fun_jac.c)
 target_include_directories(phase23_acados_generated PRIVATE
