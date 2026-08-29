@@ -1,0 +1,35 @@
+{
+  "acados_commit": "21376cb1af6b7dd45f675367272d3ba8100b26c0",
+  "acados_source_dir": "/home/t/opt/acados",
+  "casadi_version": "3.7.2",
+  "config": "simulation/mujoco/config/phase23_acados_ocp_v2.json",
+  "config_sha256": "540717744dfd75496e23ce5cd883d6a60458a2dcfded2ae14eedd1e725665205",
+  "generated_files": [
+    "Makefile",
+    "acados_ocp.json",
+    "acados_solver.pxd",
+    "acados_solver_ocp_phase23_nominal_nmpc_v2_4b1a6a0b.c",
+    "acados_solver_ocp_phase23_nominal_nmpc_v2_4b1a6a0b.h",
+    "main_ocp_phase23_nominal_nmpc_v2_4b1a6a0b.c",
+    "phase23_nominal_nmpc_v2_model/phase23_nominal_nmpc_v2_dyn_disc_phi_fun.c",
+    "phase23_nominal_nmpc_v2_model/phase23_nominal_nmpc_v2_dyn_disc_phi_fun_jac.c",
+    "phase23_nominal_nmpc_v2_model/phase23_nominal_nmpc_v2_model.h"
+  ],
+  "generated_sha256": {
+    "Makefile": "d95c4421cb197996706fa986850b05863986b434ba0f4280024c5f0301c5c93f",
+    "acados_ocp.json": "01c5f45795626524d6e358c582e94a6f0ec2b4c914dd8a9c1ef180c9e2664da4",
+    "acados_solver.pxd": "f4c7b6cfa67c957800d4690b6605548c4be6b2be6ad6385112cc0cb167489deb",
+    "acados_solver_ocp_phase23_nominal_nmpc_v2_4b1a6a0b.c": "ed88dcbf0291e622b38d4a2c8d7b85f23e83d8b3fa6503a0fb67f3ab37e16f7b",
+    "acados_solver_ocp_phase23_nominal_nmpc_v2_4b1a6a0b.h": "ab88db27edff8bb93048e4e4cdab72fc4c3de6ee6d5b38ebe767981dd6e0ecb3",
+    "main_ocp_phase23_nominal_nmpc_v2_4b1a6a0b.c": "225e6f2829dfc9a61433db0f317ba49ccf4ee4290f0deabbcfe678c088bca387",
+    "phase23_nominal_nmpc_v2_model/phase23_nominal_nmpc_v2_dyn_disc_phi_fun.c": "9093fdc88c81250691c57b5396dffcb60aef384c9bafdee1685321f7564e369a",
+    "phase23_nominal_nmpc_v2_model/phase23_nominal_nmpc_v2_dyn_disc_phi_fun_jac.c": "288b9df1bbeca4d5c5d18b448f04a3842fae9520984fe0b93ac7cfec04a8f75c",
+    "phase23_nominal_nmpc_v2_model/phase23_nominal_nmpc_v2_model.h": "ed6d516438595147e310d90511194d78a6d99d2af58edebd261bd24aef324c47"
+  },
+  "generator": "tools/experiments/generate_phase23_acados_solver.py",
+  "generator_sha256": "e5f2b1f8a60b617c795342b4a44813d718ce56bdd3acb9d5b46371ab4e03ee65",
+  "profile": "phase23_acados_ocp_v2",
+  "schema_version": 1,
+  "tera_sha256": "64a0a0f8d85be0b92234231fd1a9ff50c9d8f13d6208063707e56c9354a976d3",
+  "tera_version": "0.2.1"
+}

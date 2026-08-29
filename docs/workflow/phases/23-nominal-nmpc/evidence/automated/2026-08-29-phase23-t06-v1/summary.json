@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "phase": 23,
+  "task": "P23-T06",
+  "profile": "phase23_acados_ocp_v2",
+  "pass": true,
+  "checks": {
+    "dependency_probe_and_py_compile": true,
+    "generated_model_golden_parity": true,
+    "double_clean_regeneration_normalized_equal": true,
+    "checked_in_solver_model_abi_equal": true,
+    "state_bounds_stages_1_through_n": true,
+    "stage_0_exact_state": true,
+    "ordinary_build_has_no_python_codegen": true,
+    "loader_contract": true,
+    "component_and_failure_tests": true,
+    "cold_warm_reset_and_three_by_1000": true
+  },
+  "model_parity": {
+    "samples": 5,
+    "maximum_next_error": 4.85722573273506e-17,
+    "maximum_state_jacobian_error": 4.129097064264897e-11,
+    "maximum_input_jacobian_error": 3.111941260236506e-11
+  },
+  "component": {
+    "cold_p99_ms": 1.65379,
+    "cold_max_ms": 1.9666,
+    "repeated_warm_p99_ms": 3.09104,
+    "repeated_warm_max_ms": 3.25973,
+    "dynamic_warm_max_ms": 1.68743,
+    "maximum_dynamics_defect": 3.37732e-6,
+    "maximum_projected_stationarity": 0.0428125,
+    "maximum_state_bound_violation": 0.0
+  },
+  "build_test": "26 tests, 0 errors, 0 failures, 0 skipped",
+  "generator_sha256": "e5f2b1f8a60b617c795342b4a44813d718ce56bdd3acb9d5b46371ab4e03ee65",
+  "config_sha256": "540717744dfd75496e23ce5cd883d6a60458a2dcfded2ae14eedd1e725665205",
+  "generation_manifest_sha256": "aae2da64b515403d06cd9d3651e8126afd883403d55ef4a32b23664e6cb4ea14"
+}

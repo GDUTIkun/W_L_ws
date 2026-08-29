@@ -443,6 +443,13 @@ def run(config: dict[str, Any], runner: Path, output: Path) -> dict[str, Any]:
                 "nmpc_independent_dynamics": max(
                     float(row["nmpc_maximum_dynamics_defect"]) for row in rows
                 ) <= config["nmpc_gates"]["maximum_independent_dynamics_defect"],
+                "nmpc_bounds": max(
+                    max(
+                        float(row["nmpc_input_bound_violation"]),
+                        float(row.get("nmpc_state_bound_violation", 0.0)),
+                    )
+                    for row in rows
+                ) <= config["nmpc_gates"].get("maximum_bound_violation", 1.0e-8),
                 "nmpc_independent_stationarity": max(
                     float(row["nmpc_projected_stationarity"]) for row in rows
                 ) <= config["nmpc_gates"]["maximum_projected_stationarity"],
@@ -566,9 +573,9 @@ def main() -> int:
     generated_inputs: dict[str, str] = {}
     if config.get("controller_mode") == "nominal_nmpc":
         acados_root = Path("/home/t/opt/acados")
-        generated_root = (
-            ROOT / "ros_ws/src/wheel_leg_core/acados_generated/"
-            "phase23_nominal_nmpc_v1"
+        generated_root = ROOT / config.get(
+            "generated_artifact",
+            "ros_ws/src/wheel_leg_core/acados_generated/phase23_nominal_nmpc_v1",
         )
         generated_inputs = {
             root_relative(path): sha256(path)
@@ -592,6 +599,9 @@ def main() -> int:
             "renderer_path": str(renderer),
             "renderer_sha256": sha256(renderer),
             "casadi_version": importlib.metadata.version("casadi"),
+            "mujoco_version": importlib.metadata.version("mujoco"),
+            "numpy_version": importlib.metadata.version("numpy"),
+            "scipy_version": importlib.metadata.version("scipy"),
             "acados_template_path": str(
                 acados_root / "interfaces/acados_template/acados_template"
             ),
@@ -621,6 +631,8 @@ def main() -> int:
         "source_inputs": source_inputs,
         "generated_inputs": generated_inputs,
         "acados_provenance": acados_provenance,
+        "supersedes": config.get("supersedes", []),
+        "replay_of": config.get("replay_of"),
         "outputs": outputs,
     }
     (output / "manifest.json").write_text(

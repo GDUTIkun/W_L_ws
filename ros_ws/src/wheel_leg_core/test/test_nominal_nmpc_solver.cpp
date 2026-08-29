@@ -16,6 +16,7 @@ wheel_leg::NominalNmpcProblem equilibriumProblem() {
   wheel_leg::NominalNmpcProblem problem;
   problem.state[2] = kHeightM;
   problem.reference = problem.state;
+  problem.state_envelope_center = problem.state;
   return problem;
 }
 
@@ -63,6 +64,14 @@ int main() {
               << " defect=" << first.first_step_defect << '\n';
   }
   if (require(first.ok(), "perturbed solve failed")) return 1;
+  if (require(first.state_bound_violation <= 1.0e-8,
+              "predicted state envelope violation")) {
+    return 1;
+  }
+  auto outside_envelope = equilibriumProblem();
+  outside_envelope.state_envelope_center[0] = 1.0;
+  const auto rejected = solver.solve(outside_envelope);
+  if (require(!rejected.ok(), "infeasible envelope was accepted")) return 1;
   solver.reset();
   const auto reset_first = solver.solve(perturbed);
   solver.reset();

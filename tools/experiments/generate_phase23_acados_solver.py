@@ -147,6 +147,17 @@ def create_ocp(config: dict, output: Path) -> AcadosOcp:
     ocp.constraints.idxbu = np.arange(12)
     ocp.constraints.lbu = np.asarray(config["input_lower"], dtype=float)
     ocp.constraints.ubu = np.asarray(config["input_upper"], dtype=float)
+    if "state_envelope_half_width" in config:
+        envelope = np.asarray(config["state_envelope_half_width"], dtype=float)
+        if envelope.shape != (12,) or not np.all(np.isfinite(envelope)) or np.any(envelope <= 0.0):
+            raise ValueError("state_envelope_half_width must contain 12 positive finite values")
+        center = np.asarray(config["equilibrium_state"], dtype=float)
+        ocp.constraints.idxbx = np.arange(12)
+        ocp.constraints.lbx = center - envelope
+        ocp.constraints.ubx = center + envelope
+        ocp.constraints.idxbx_e = np.arange(12)
+        ocp.constraints.lbx_e = center - envelope
+        ocp.constraints.ubx_e = center + envelope
 
     solver = config["solver"]
     ocp.solver_options.nlp_solver_type = solver["nlp_solver_type"]
@@ -198,8 +209,11 @@ def main() -> int:
     manifest = {
         "schema_version": 1,
         "profile": config["profile"],
+        "generator": str(Path(__file__).resolve().relative_to(ROOT)),
+        "generator_sha256": sha256(Path(__file__).resolve()),
         "config": str(args.config.resolve().relative_to(ROOT)),
         "config_sha256": sha256(args.config),
+        "acados_source_dir": str(acados_source),
         "acados_commit": commit,
         "casadi_version": ca.__version__,
         "tera_version": generation["tera_version"],

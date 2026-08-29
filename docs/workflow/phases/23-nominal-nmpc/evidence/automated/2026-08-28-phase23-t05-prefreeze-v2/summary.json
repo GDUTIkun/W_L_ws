@@ -1,0 +1,269 @@
+{
+  "evaluation": {
+    "checks": {
+      "all_input_bounds": true,
+      "all_variants_solve": true,
+      "baseline_delta_wrench": true,
+      "baseline_hold": true,
+      "baseline_negative_tracking": true,
+      "baseline_positive_tracking": true,
+      "baseline_return_excursion": true,
+      "baseline_return_recovery": true,
+      "baseline_state_envelope": true,
+      "longitudinal_cost_attribution": true,
+      "selective_wrench_attribution": true,
+      "terminal_cost_attribution": true
+    },
+    "comparison": {
+      "baseline_protected_wrench": 0.00011808188493622751,
+      "baseline_return_error_m": 3.3656234577134915e-07,
+      "no_terminal_return_error_m": 0.005125199141069458,
+      "terminal_return_error_ratio": 15228.082420578836,
+      "unselective_protected_wrench": 0.0088746327032736,
+      "unselective_protected_wrench_ratio": 75.15659754302298
+    },
+    "pass": true
+  },
+  "evidence_class": "reduced-model pre-freeze tuning and true solver ablation",
+  "pass": true,
+  "phase": 23,
+  "schema_version": 1,
+  "task": "P23-T05",
+  "variants": {
+    "baseline": {
+      "cases": {
+        "hold": {
+          "final_mean_x_m": -1.0235592327231022e-15,
+          "maximum_input_bound_violation": 0.0,
+          "maximum_normalized_delta_wrench": 2.6645352591003757e-15,
+          "maximum_normalized_protected_wrench_deviation": 8.297893622222219e-14,
+          "maximum_relative_state_envelope_violation": 0.0,
+          "maximum_x_m": 5.348656304758449e-15,
+          "minimum_x_m": -3.0436577985541346e-15,
+          "statuses": [
+            0
+          ],
+          "ticks_completed": 500
+        },
+        "negative": {
+          "final_mean_x_m": -0.004997607283683269,
+          "maximum_input_bound_violation": 0.0,
+          "maximum_normalized_delta_wrench": 0.02335495558996456,
+          "maximum_normalized_protected_wrench_deviation": 0.00011285881922917795,
+          "maximum_relative_state_envelope_violation": 0.0,
+          "maximum_x_m": -1.4399560103323106e-19,
+          "minimum_x_m": -0.005553386428612998,
+          "statuses": [
+            0
+          ],
+          "ticks_completed": 500
+        },
+        "positive": {
+          "final_mean_x_m": 0.004997436019615905,
+          "maximum_input_bound_violation": 0.0,
+          "maximum_normalized_delta_wrench": 0.02335495558996455,
+          "maximum_normalized_protected_wrench_deviation": 0.00011808188493622751,
+          "maximum_relative_state_envelope_violation": 0.0,
+          "maximum_x_m": 0.00555363852723107,
+          "minimum_x_m": -8.808653937043562e-18,
+          "statuses": [
+            0
+          ],
+          "ticks_completed": 500
+        },
+        "return": {
+          "final_mean_x_m": -3.3656234577134915e-07,
+          "maximum_input_bound_violation": 0.0,
+          "maximum_normalized_delta_wrench": 0.023842209170878963,
+          "maximum_normalized_protected_wrench_deviation": 0.00010992891327634459,
+          "maximum_relative_state_envelope_violation": 0.0,
+          "maximum_x_m": 0.0054779972583171785,
+          "minimum_x_m": -0.0005785458667527452,
+          "statuses": [
+            0
+          ],
+          "ticks_completed": 500
+        }
+      },
+      "change": {}
+    },
+    "no_longitudinal_state_cost": {
+      "cases": {
+        "hold": {
+          "final_mean_x_m": -1.1512641126280337e-14,
+          "maximum_input_bound_violation": 0.0,
+          "maximum_normalized_delta_wrench": 2.6645352591003757e-15,
+          "maximum_normalized_protected_wrench_deviation": 8.446238500270375e-14,
+          "maximum_relative_state_envelope_violation": 0.0,
+          "maximum_x_m": 3.832289557322222e-14,
+          "minimum_x_m": -5.484569315373346e-14,
+          "statuses": [
+            0
+          ],
+          "ticks_completed": 500
+        },
+        "negative": {
+          "final_mean_x_m": -1.1512641126280337e-14,
+          "maximum_input_bound_violation": 0.0,
+          "maximum_normalized_delta_wrench": 2.6645352591003757e-15,
+          "maximum_normalized_protected_wrench_deviation": 8.446238500270375e-14,
+          "maximum_relative_state_envelope_violation": 0.0,
+          "maximum_x_m": 3.832289557322222e-14,
+          "minimum_x_m": -5.484569315373346e-14,
+          "statuses": [
+            0
+          ],
+          "ticks_completed": 500
+        },
+        "positive": {
+          "final_mean_x_m": -1.1512641126280337e-14,
+          "maximum_input_bound_violation": 0.0,
+          "maximum_normalized_delta_wrench": 2.6645352591003757e-15,
+          "maximum_normalized_protected_wrench_deviation": 8.446238500270375e-14,
+          "maximum_relative_state_envelope_violation": 0.0,
+          "maximum_x_m": 3.832289557322222e-14,
+          "minimum_x_m": -5.484569315373346e-14,
+          "statuses": [
+            0
+          ],
+          "ticks_completed": 500
+        },
+        "return": {
+          "final_mean_x_m": -1.1512641126280337e-14,
+          "maximum_input_bound_violation": 0.0,
+          "maximum_normalized_delta_wrench": 2.6645352591003757e-15,
+          "maximum_normalized_protected_wrench_deviation": 8.446238500270375e-14,
+          "maximum_relative_state_envelope_violation": 0.0,
+          "maximum_x_m": 3.832289557322222e-14,
+          "minimum_x_m": -5.484569315373346e-14,
+          "statuses": [
+            0
+          ],
+          "ticks_completed": 500
+        }
+      },
+      "change": {
+        "state_weight_index": 0,
+        "value": 0.0
+      }
+    },
+    "no_terminal_cost": {
+      "cases": {
+        "hold": {
+          "final_mean_x_m": 2.3991639122576756e-14,
+          "maximum_input_bound_violation": 0.0,
+          "maximum_normalized_delta_wrench": 2.6645352591003757e-15,
+          "maximum_normalized_protected_wrench_deviation": 3.718596611190783e-15,
+          "maximum_relative_state_envelope_violation": 0.0,
+          "maximum_x_m": 2.5833751166151602e-14,
+          "minimum_x_m": 8.639736061993863e-20,
+          "statuses": [
+            0
+          ],
+          "ticks_completed": 500
+        },
+        "negative": {
+          "final_mean_x_m": -0.0034589199026846817,
+          "maximum_input_bound_violation": 0.0,
+          "maximum_normalized_delta_wrench": 0.0018663312415818675,
+          "maximum_normalized_protected_wrench_deviation": 1.1057708258377374e-05,
+          "maximum_relative_state_envelope_violation": 0.0,
+          "maximum_x_m": 0.004355202880222581,
+          "minimum_x_m": -0.013529986235075007,
+          "statuses": [
+            0
+          ],
+          "ticks_completed": 500
+        },
+        "positive": {
+          "final_mean_x_m": 0.0032023328959690637,
+          "maximum_input_bound_violation": 0.0,
+          "maximum_normalized_delta_wrench": 0.0018663312415818742,
+          "maximum_normalized_protected_wrench_deviation": 1.1293742430140696e-05,
+          "maximum_relative_state_envelope_violation": 0.0,
+          "maximum_x_m": 0.013341391253529549,
+          "minimum_x_m": -0.004656124662339708,
+          "statuses": [
+            0
+          ],
+          "ticks_completed": 500
+        },
+        "return": {
+          "final_mean_x_m": -0.005125199141069458,
+          "maximum_input_bound_violation": 0.0,
+          "maximum_normalized_delta_wrench": 0.0018663312415818742,
+          "maximum_normalized_protected_wrench_deviation": 1.881232326939042e-05,
+          "maximum_relative_state_envelope_violation": 0.0,
+          "maximum_x_m": 0.013835934749158665,
+          "minimum_x_m": -0.016178952510656545,
+          "statuses": [
+            0
+          ],
+          "ticks_completed": 500
+        }
+      },
+      "change": {
+        "terminal_weight_multiplier": 0.0
+      }
+    },
+    "unselective_wrench_cost": {
+      "cases": {
+        "hold": {
+          "final_mean_x_m": -5.7481774828437646e-18,
+          "maximum_input_bound_violation": 0.0,
+          "maximum_normalized_delta_wrench": 2.220446049250313e-15,
+          "maximum_normalized_protected_wrench_deviation": 2.220446049250313e-15,
+          "maximum_relative_state_envelope_violation": 0.0,
+          "maximum_x_m": -2.0328790734103208e-20,
+          "minimum_x_m": -6.0454478440605e-18,
+          "statuses": [
+            0
+          ],
+          "ticks_completed": 500
+        },
+        "negative": {
+          "final_mean_x_m": -0.005000000000000045,
+          "maximum_input_bound_violation": 0.0,
+          "maximum_normalized_delta_wrench": 0.019692444204521074,
+          "maximum_normalized_protected_wrench_deviation": 0.008289943274771255,
+          "maximum_relative_state_envelope_violation": 0.0,
+          "maximum_x_m": -2.0328790734103208e-20,
+          "minimum_x_m": -0.0050936328905463665,
+          "statuses": [
+            0
+          ],
+          "ticks_completed": 500
+        },
+        "positive": {
+          "final_mean_x_m": 0.005000000000000033,
+          "maximum_input_bound_violation": 0.0,
+          "maximum_normalized_delta_wrench": 0.019692444204749922,
+          "maximum_normalized_protected_wrench_deviation": 0.008289943274531836,
+          "maximum_relative_state_envelope_violation": 0.0,
+          "maximum_x_m": 0.00509368781689145,
+          "minimum_x_m": -2.3200904249575816e-18,
+          "statuses": [
+            0
+          ],
+          "ticks_completed": 500
+        },
+        "return": {
+          "final_mean_x_m": -1.8306327946921835e-16,
+          "maximum_input_bound_violation": 0.0,
+          "maximum_normalized_delta_wrench": 0.019711506050699584,
+          "maximum_normalized_protected_wrench_deviation": 0.0088746327032736,
+          "maximum_relative_state_envelope_violation": 0.0,
+          "maximum_x_m": 0.005090561569469742,
+          "minimum_x_m": -9.270584456917553e-05,
+          "statuses": [
+            0
+          ],
+          "ticks_completed": 500
+        }
+      },
+      "change": {
+        "input_weight_all": 1000.0
+      }
+    }
+  }
+}

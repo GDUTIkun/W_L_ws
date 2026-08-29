@@ -11,7 +11,7 @@
 
 extern "C" {
 #include "acados_c/ocp_nlp_interface.h"
-#include "acados_solver_ocp_phase23_nominal_nmpc_4f8fd2e4.h"
+#include "acados_solver_ocp_phase23_nominal_nmpc_v2_4b1a6a0b.h"
 }
 
 namespace wheel_leg {
@@ -40,6 +40,9 @@ constexpr std::array<double, kInputSize> kInputLower{
 constexpr std::array<double, kInputSize> kInputUpper{
     15.0, 15.0, 50.0, 9.0, 2.0, 1.0,
     15.0, 15.0, 50.0, -4.0, 2.0, 1.0};
+constexpr std::array<double, kStateSize> kStateEnvelopeHalfWidth{
+    0.02, 0.02, 0.01, 0.03, 0.03, 0.05,
+    0.2, 0.2, 0.2, 0.5, 0.5, 0.5};
 constexpr std::array<double, kStateSize> kStateCost{
     2500.0, 2500.0, 20000.0, 20000.0 / 9.0, 20000.0 / 9.0,
     200.0, 12.5, 12.5, 25.0, 1.0, 1.0, 1.0};
@@ -53,6 +56,7 @@ constexpr std::array<double, kInputSize> kInputScale{
 
 bool finite(const NominalNmpcProblem &problem) {
   return problem.state.allFinite() && problem.reference.allFinite() &&
+         problem.state_envelope_center.allFinite() &&
          problem.reference_rotation_n_from_b.allFinite() &&
          (problem.reference_rotation_n_from_b.transpose() *
               problem.reference_rotation_n_from_b -
@@ -71,7 +75,7 @@ double seconds(Clock::time_point start, Clock::time_point end) {
 }  // namespace
 
 struct NominalNmpcSolver::Impl {
-  using Capsule = ocp_phase23_nominal_nmpc_4f8fd2e4_solver_capsule;
+  using Capsule = ocp_phase23_nominal_nmpc_v2_4b1a6a0b_solver_capsule;
 
   Capsule *capsule{nullptr};
   ocp_nlp_config *config{nullptr};
@@ -83,25 +87,25 @@ struct NominalNmpcSolver::Impl {
   bool cold{true};
 
   Impl() {
-    capsule = ocp_phase23_nominal_nmpc_4f8fd2e4_acados_create_capsule();
+    capsule = ocp_phase23_nominal_nmpc_v2_4b1a6a0b_acados_create_capsule();
     if (capsule == nullptr ||
-        ocp_phase23_nominal_nmpc_4f8fd2e4_acados_create(capsule) != 0) {
+        ocp_phase23_nominal_nmpc_v2_4b1a6a0b_acados_create(capsule) != 0) {
       return;
     }
-    config = ocp_phase23_nominal_nmpc_4f8fd2e4_acados_get_nlp_config(capsule);
-    dims = ocp_phase23_nominal_nmpc_4f8fd2e4_acados_get_nlp_dims(capsule);
-    input = ocp_phase23_nominal_nmpc_4f8fd2e4_acados_get_nlp_in(capsule);
-    output = ocp_phase23_nominal_nmpc_4f8fd2e4_acados_get_nlp_out(capsule);
-    solver = ocp_phase23_nominal_nmpc_4f8fd2e4_acados_get_nlp_solver(capsule);
-    options = ocp_phase23_nominal_nmpc_4f8fd2e4_acados_get_nlp_opts(capsule);
+    config = ocp_phase23_nominal_nmpc_v2_4b1a6a0b_acados_get_nlp_config(capsule);
+    dims = ocp_phase23_nominal_nmpc_v2_4b1a6a0b_acados_get_nlp_dims(capsule);
+    input = ocp_phase23_nominal_nmpc_v2_4b1a6a0b_acados_get_nlp_in(capsule);
+    output = ocp_phase23_nominal_nmpc_v2_4b1a6a0b_acados_get_nlp_out(capsule);
+    solver = ocp_phase23_nominal_nmpc_v2_4b1a6a0b_acados_get_nlp_solver(capsule);
+    options = ocp_phase23_nominal_nmpc_v2_4b1a6a0b_acados_get_nlp_opts(capsule);
   }
 
   ~Impl() {
     if (capsule != nullptr) {
       if (config != nullptr) {
-        ocp_phase23_nominal_nmpc_4f8fd2e4_acados_free(capsule);
+        ocp_phase23_nominal_nmpc_v2_4b1a6a0b_acados_free(capsule);
       }
-      ocp_phase23_nominal_nmpc_4f8fd2e4_acados_free_capsule(capsule);
+      ocp_phase23_nominal_nmpc_v2_4b1a6a0b_acados_free_capsule(capsule);
     }
   }
 
@@ -122,7 +126,7 @@ bool NominalNmpcSolver::ready() const { return impl_ && impl_->ready(); }
 
 void NominalNmpcSolver::reset() {
   if (!ready()) return;
-  ocp_phase23_nominal_nmpc_4f8fd2e4_acados_reset(
+  ocp_phase23_nominal_nmpc_v2_4b1a6a0b_acados_reset(
       impl_->capsule, 1, 1, 1, 1);
   impl_->cold = true;
 }
@@ -144,7 +148,7 @@ NominalNmpcSolver::Result NominalNmpcSolver::solve(
     }
   }
   for (int stage = 0; stage <= kHorizonSteps; ++stage) {
-    if (ocp_phase23_nominal_nmpc_4f8fd2e4_acados_update_params(
+    if (ocp_phase23_nominal_nmpc_v2_4b1a6a0b_acados_update_params(
             impl_->capsule, stage, parameters.data(), kParameterSize) != 0) {
       result.status = Status::kPreparationFailed;
       return result;
@@ -169,6 +173,22 @@ NominalNmpcSolver::Result NominalNmpcSolver::solve(
   ocp_nlp_constraints_model_set(
       impl_->config, impl_->dims, impl_->input, impl_->output, 0, "ubx",
       const_cast<double *>(problem.state.data()));
+  std::array<double, kStateSize> envelope_lower{};
+  std::array<double, kStateSize> envelope_upper{};
+  for (int index = 0; index < kStateSize; ++index) {
+    envelope_lower[index] = problem.state_envelope_center[index] -
+                            kStateEnvelopeHalfWidth[index];
+    envelope_upper[index] = problem.state_envelope_center[index] +
+                            kStateEnvelopeHalfWidth[index];
+  }
+  for (int stage = 1; stage <= kHorizonSteps; ++stage) {
+    ocp_nlp_constraints_model_set(impl_->config, impl_->dims, impl_->input,
+                                  impl_->output, stage, "lbx",
+                                  envelope_lower.data());
+    ocp_nlp_constraints_model_set(impl_->config, impl_->dims, impl_->input,
+                                  impl_->output, stage, "ubx",
+                                  envelope_upper.data());
+  }
 
   if (impl_->cold) {
     for (int stage = 0; stage < kHorizonSteps; ++stage) {
@@ -188,7 +208,7 @@ NominalNmpcSolver::Result NominalNmpcSolver::solve(
   ocp_nlp_solver_opts_set(impl_->config, impl_->options, "rti_phase", &phase);
   const auto solve_start = Clock::now();
   result.acados_status =
-      ocp_phase23_nominal_nmpc_4f8fd2e4_acados_solve(impl_->capsule);
+      ocp_phase23_nominal_nmpc_v2_4b1a6a0b_acados_solve(impl_->capsule);
   const auto solve_end = Clock::now();
   if (result.acados_status != 0) {
     result.status = Status::kFeedbackFailed;
@@ -242,6 +262,10 @@ NominalNmpcSolver::Result NominalNmpcSolver::solve(
       result.objective += 0.5 * kInputCost[index] * error * error;
     }
     for (int index = 0; index < kStateSize; ++index) {
+      result.state_bound_violation = std::max(
+          result.state_bound_violation,
+          std::max(envelope_lower[index] - states[stage + 1][index],
+                   states[stage + 1][index] - envelope_upper[index]));
       const double error = states[stage][index] - problem.reference[index];
       result.objective += 0.5 * kStateCost[index] * error * error;
     }
@@ -280,11 +304,12 @@ NominalNmpcSolver::Result NominalNmpcSolver::solve(
               models[stage].discrete_state_jacobian.transpose() * costate;
   }
   result.input_bound_violation = bound_violation;
-  const std::array<double, 11> audit_values{
+  const std::array<double, 12> audit_values{
       result.stationarity_residual, result.dynamics_residual,
       result.inequality_residual, result.complementarity_residual,
       result.first_step_defect, result.maximum_dynamics_defect,
-      result.input_bound_violation, result.objective,
+      result.input_bound_violation, result.state_bound_violation,
+      result.objective,
       result.projected_stationarity_residual, result.preparation_time_s,
       result.feedback_time_s};
   if (!result.wrench_flu.allFinite() ||
@@ -297,7 +322,7 @@ NominalNmpcSolver::Result NominalNmpcSolver::solve(
       result.maximum_dynamics_defect > kDefectTolerance ||
       result.projected_stationarity_residual >
           kProjectedStationarityTolerance ||
-      bound_violation > 1.0e-8) {
+      bound_violation > 1.0e-8 || result.state_bound_violation > 1.0e-8) {
     result.status = Status::kAuditFailed;
     return result;
   }

@@ -11,6 +11,8 @@ namespace wheel_leg {
 struct NominalNmpcProblem {
   NominalNmpcModel::State state{NominalNmpcModel::State::Zero()};
   NominalNmpcModel::State reference{NominalNmpcModel::State::Zero()};
+  NominalNmpcModel::State state_envelope_center{
+      NominalNmpcModel::State::Zero()};
   Eigen::Matrix3d reference_rotation_n_from_b{Eigen::Matrix3d::Identity()};
 };
 
@@ -38,6 +40,7 @@ class NominalNmpcSolver {
     double first_step_defect{0.0};
     double maximum_dynamics_defect{0.0};
     double input_bound_violation{0.0};
+    double state_bound_violation{0.0};
     double objective{0.0};
     double projected_stationarity_residual{0.0};
 

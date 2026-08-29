@@ -1,6 +1,6 @@
 # Phase 23: nominal acados NMPC — PLAN
 
-Status: `active`
+Status: `complete`
 
 ## Goal
 
@@ -9,12 +9,12 @@ Status: `active`
 ## Current State
 
 - 已有：[Phase 21](../21-nominal-weighted-wbc/RECORD.md) 已冻结 current nominal 12-DoF、42-variable/104-row Weighted WBC、内部 `WbcReference.interaction_wrench_flu` 12D 接口、10 ms Core 周期、fail-zero/latch/reset 及 19 normal/perturbation + 6 fault formal；[Phase 22](../22-proxqp-solver-migration/RECORD.md) 已在不改变上述数学的前提下把 **WBC** QP backend 迁移为 ProxQP v0.7.3，并完成 component/oracle/deadline/formal-v2/fresh replay。
-- 已有：live `ControllerCore::stepWeightedWbc` 当前从 `RobotState` 内部生成 standing acceleration/reference 和固定 nominal interaction wrench，再调用 `WeightedWbcController`；production C++ 尚无 NMPC mode。最小接入点仍是只替换 12D wrench producer，保留其他 WBC reference、solver、torque extraction 和安全边界。
+- 已完成：live `ControllerCore` 提供 opt-in `kNominalNmpcWbc`，只替换 12D wrench producer，保留其他 WBC reference、solver、torque extraction 和安全边界；2:1 update/ZOH、age、fault、reset 和 diagnostics 已由 component/formal 验证。
 - 已有：P23-T02/T03 与 DG23-01 已冻结并验证 12D locked-composite base state、12D external base-FLU wrench、continuous/RK4 model、analytic sensitivity、equilibrium、canonical mapping 和有效域；这些 PASS 不证明 OCP、acados solver、Core 或 formal。
-- 已有：`NominalNmpcModel` 已进入 `wheel_leg_core` 并通过 golden/oracle tests；当前 `CMakeLists.txt` 尚无 acados/generated solver target、include/link、loader/deployment 或 NMPC Core integration。
+- 已完成：`NominalNmpcModel`、append-only v2 generated solver、private C++ wrapper、explicit acados loader contract 和 Core integration 已进入 `wheel_leg_core`，并通过 golden/component/integrated formal。
 - acados 安装事实：`/home/t/opt/acados` 是 clean git tree，HEAD `21376cb1af6b7dd45f675367272d3ba8100b26c0`（`v0.6.0-2-g21376cb1a`），Release/shared build，包含 `libacados.so`、`libhpipm.so`、`libblasfeo.so`、C headers 和 CMake package；构建配置为 HPIPM/BLASFEO、OpenMP OFF，未启用 QPOASES 等候选 backend。
-- 环境缺口：默认 `ldd /home/t/opt/acados/lib/libacados.so` 尚不能解析 HPIPM/BLASFEO，当前仓库 `./.venv` 不能导入 CasADi，安装树中也尚未发现本地 `t_renderer`。故“acados 已编译”只证明安装树存在，不证明本仓库能生成、clean build、加载、求解或满足时限；这些进入 DG23-02，不记为模型/控制 evidence FAIL。
-- Grounding：CBM project `W_L_ws`、generation `2026-08-28T07:49:08Z`、full index。Core/WBC 关键路径为 `no_recorded_issue + metadata_match`；`wheel_leg_core/CMakeLists.txt` metadata changed，已直接读取；`docs/` 与本次新 NMPC model 路径按 coverage 要求直接读取。coverage 仅为 best-effort。Graphify 只用于历史路线和 Phase 关系，不替代 live source 或批准证据。
+- 环境已关闭：仓库 `.venv` 可导入 CasADi 3.7.2/acados_template，固定 renderer SHA 已记录；最终 binary 通过 RPATH 从 `/home/t/opt/acados/lib` 解析 acados/HPIPM/BLASFEO。普通构建不运行 generator。
+- Grounding：最终复核使用 CBM project `W_L_ws`、generation `2026-08-28T13:13:14Z`（full/ready）；changed metadata 和按策略排除的 `tools/docs` 均直接读取，coverage 仅作 best-effort 信号。
 
 ## Scope
 
@@ -63,10 +63,10 @@ Status: `active`
 - **DG23-00 / CLOSED / CODEX — route revision：** 按用户指令解除冻结，保留12-state locked-composite/12-wrench/WBC接缝，NMPC solver路线从project-owned sparse ProxQP改为acados generated SQP-RTI + HPIPM；不合并trajectory/turning/terrain/real work。
 - **DG23-01 / CLOSED / CODEX+EVIDENCE — state/model：** `state-oracle-v2`与`model-oracle-v5`已关闭canonical mapping、12D model、20 ms RK4、analytic sensitivity、equilibrium和有效域；solver路线变化不重开这些数学结论，但generated model必须重新做parity。
 - **DG23-02 / CLOSED / CODEX+EVIDENCE — acados toolchain/OCP/solver/timing：** `phase23-acados-t04-v1`已冻结`.venv` generation依赖、acados prefix/commit/library hashes、固定renderer、generated ABI/artifact layout、RPATH loader、SQP-RTI/HPIPM profile、warm/reset/status schema、normalized clean regeneration、generated-model parity、project-owned full-horizon objective/dynamics/bound/projected-KKT audit、3×1000-run determinism和更新tick组合`<10 ms`；独立projected-stationarity门槛为`0.05`，corpus最大`0.0428125`。该关闭不替代DG23-03的cost/reference/constraint与holdout批准，也不授权现有formal为production authority。
-- **DG23-03 / OPEN / CODEX+EVIDENCE — reference/cost/constraints：** stage/terminal cost、normalization、wrench/delta-wrench weight、必要的optimizer-only augmentation、input/state constraints、reference amplitude/rate、tuning/holdout split和正式tracking/recovery thresholds必须以独立oracle、ablation、tuning和未见holdout关闭；历史数值只作起点。
-- **DG23-04 / OPEN / CODE+TEST — runtime contract：** generated solver wrapper/memory lifecycle、新opt-in mode、2:1 schedule、RTI顺序、ZOH、timestamp/age、diagnostics、NMPC→WBC order、fault zero/latch/reset、旧mode和WBC component回归必须通过。shared-library loader失败属于启动环境失败并阻止formal，不伪装成control fault case。
-- **DG23-05 / OPEN / EVIDENCE — integrated formal：** frozen 23 normal/reference + 10 fault matrix、generated/binary provenance、solver/model/WBC/plant gates、fresh replay、non-overwrite和Phase14/15/18/20/21/22兼容性必须全部通过。
-- **DG23-06 / OPEN / REVIEW — claims：** blocking findings为零且REVIEW=`PASS`后才可创建RECORD、将ROADMAP标记complete并放行后续roll/yaw/turning。
+- **DG23-03 / CLOSED / CODEX+EVIDENCE — reference/cost/constraints：** `phase23_acados_t05_profile_v1`在holdout前冻结现有normalized Q/R、terminal multiplier `10`、per-side input bounds、相对state envelope、5 mm/0.5 s/1.5 s longitudinal reference与tracking/recovery gates。四个隔离generated solver的真实重求解证明longitudinal/terminal/selective-wrench cost归因；baseline normalized delta-wrench最大`0.0238423 < 0.05`，因此冻结为无optimizer-only augmentation。4个10 s tuning与6个预声明未见nonlinear组合holdout均PASS，holdout最大组合耗时/独立defect/projected-KKT为`3.558 ms / 2.80e-6 / 0.03215`。T06随后已把冻结state envelope转写到stages 1..N并完成generated/C++ parity；pre-freeze formal仍不作为integrated authority。
+- **DG23-04 / CLOSED / CODE+TEST — runtime contract：** v2 wrapper lifecycle、opt-in mode、2:1 schedule、ZOH、timestamp/age、NMPC→WBC order、四类NMPC failure、zero/latch/reset和旧WBC mode均通过component与runner验证；loader失败保持启动环境失败语义。
+- **DG23-05 / CLOSED / EVIDENCE — integrated formal：** authority v2与fresh replay均23/23 normal/reference、10/10 fault PASS；generated/binary provenance、model/OCP/WBC/plant/deadline、non-overwrite、hash和Phase14/15/18/20/21/22兼容性全部通过。
+- **DG23-06 / CLOSED / REVIEW — claims：** REVIEW blocking findings为零且Verdict=`PASS`；随后创建RECORD并将ROADMAP标记complete。结论保持current nominal simulation-host范围。
 
 ## Interfaces and Compatibility
 
@@ -85,13 +85,13 @@ Status: `active`
 | P23-T02 | 冻结12D state/input/reference/time contract并审计16D历史candidate | P23-T01、RobotState、Phase15 xi、WbcReference | exact order/frame/sign/unit/chart、mapping、validity/stale/reset spec、golden vectors与model-closure decision | DG23-01 mapping部分；finite-difference/边界/fault tests PASS，internal/external wrench冲突关闭 | done |
 | P23-T03 | 建立independent model与sensitivity oracle | P23-T02、current nominal profile、历史body dynamics | continuous/RK4 model、analytic Jacobian、equilibrium/energy/virtual-work/sign oracle、versioned corpus | DG23-01关闭；model/sensitivity误差和有效域满足冻结门槛 | done |
 | P23-T04 | 冻结acados toolchain、OCP/codegen与solver profile | P23-T03、`/home/t/opt/acados`、SQP-RTI/HPIPM candidate | dependency/loader audit、exact OCP/RTI/HPIPM spec、generated ABI/layout/provenance、prototype、golden/failure corpus与1000-run benchmark | DG23-02；clean generation/build/run、parity、KKT、warm/reset、determinism、组合deadline PASS | done |
-| P23-T05 | 冻结reference/cost/constraint profile | P23-T04、Phase22 envelope、预声明tuning/holdout cases | versioned weights/bounds/reference、delta-wrench transcription、ablation/attribution、tracking/recovery/fault thresholds | DG23-03；tuning后冻结，未见holdout与nonlinear pre-freeze全部PASS | doing |
-| P23-T06 | 实现受控generation pipeline与acados C++组件 | P23-T04/T05冻结spec | generator+lock/probe、immutable generated artifact+manifest、CMake/link/loader contract、private wrapper、warm/reset/result diagnostics | 与golden逐项一致；双clean regeneration；ordinary build无Python generator依赖；component/failure tests PASS | todo |
-| P23-T07 | 集成additive NMPC+WBC Core mode | P23-T06、现有WbcReference/Core safety | opt-in mode、2:1 update/ZOH、wrench injection、status/age/KKT diagnostics、zero/latch/reset | DG23-04 Core部分；NMPC→WBC顺序、stale/late/failure和旧mode回归PASS | todo |
-| P23-T08 | 建立/扩展full-3D NMPC loop与日志 | P23-T07、Phase22 runner/Adapter | 最小loop target、deterministic references/faults、逐tickacados/NMPC/WBC/control/plant日志 | DG23-04关闭；2/10/20 ms相位、5-step torque ZOH、双时钟、truth隔离和replayPASS | todo |
-| P23-T09 | 建立正式方法、profiles与evaluator | P23-T05/T08、Phase22 formal schema | `docs/experiments/`方法、versioned generation/model/solver/reference/formal config、wrapper/evaluator/manifest schema | formal前freeze；依赖探针/py_compile/non-empty拒绝/hash/schema/case/threshold完整 | todo |
-| P23-T10 | 执行full formal、fresh replay与历史回归 | P23-T09 frozen inputs、current nominal plant | 新`evidence/automated/<run-id>/`、summary/manifest/replay/non-overwrite/regression audit | DG23-05；23 normal/reference、10 fault、generated/model/OCP/WBC/plant/replay/history全部PASS | todo |
-| P23-T11 | REVIEW | 全部任务、live source和真实evidence | `REVIEW.md`；仅PASS后创建`RECORD.md` | DG23-06关闭、blocking findings=0后才更新ROADMAP complete | todo |
+| P23-T05 | 冻结reference/cost/constraint profile | P23-T04、Phase22 envelope、预声明tuning/holdout cases | versioned weights/bounds/reference、delta-wrench transcription、ablation/attribution、tracking/recovery/fault thresholds | DG23-03；tuning后冻结，未见holdout与nonlinear pre-freeze全部PASS | done |
+| P23-T06 | 实现受控generation pipeline与acados C++组件 | P23-T04/T05冻结spec | generator+lock/probe、immutable generated artifact+manifest、CMake/link/loader contract、private wrapper、warm/reset/result diagnostics | 与golden逐项一致；双clean regeneration；ordinary build无Python generator依赖；component/failure tests PASS | done |
+| P23-T07 | 集成additive NMPC+WBC Core mode | P23-T06、现有WbcReference/Core safety | opt-in mode、2:1 update/ZOH、wrench injection、status/age/KKT diagnostics、zero/latch/reset | DG23-04 Core部分；NMPC→WBC顺序、stale/late/failure和旧mode回归PASS | done |
+| P23-T08 | 建立/扩展full-3D NMPC loop与日志 | P23-T07、Phase22 runner/Adapter | 最小loop target、deterministic references/faults、逐tickacados/NMPC/WBC/control/plant日志 | DG23-04关闭；2/10/20 ms相位、5-step torque ZOH、双时钟、truth隔离和replayPASS | done |
+| P23-T09 | 建立正式方法、profiles与evaluator | P23-T05/T08、Phase22 formal schema | `docs/experiments/`方法、versioned generation/model/solver/reference/formal config、wrapper/evaluator/manifest schema | formal前freeze；依赖探针/py_compile/non-empty拒绝/hash/schema/case/threshold完整 | done |
+| P23-T10 | 执行full formal、fresh replay与历史回归 | P23-T09 frozen inputs、current nominal plant | 新`evidence/automated/<run-id>/`、summary/manifest/replay/non-overwrite/regression audit | DG23-05；23 normal/reference、10 fault、generated/model/OCP/WBC/plant/replay/history全部PASS | done |
+| P23-T11 | REVIEW | 全部任务、live source和真实evidence | `REVIEW.md`；仅PASS后创建`RECORD.md` | DG23-06关闭、blocking findings=0后才更新ROADMAP complete | done |
 
 任务状态只使用 `todo / doing / done / blocked`。
 
@@ -147,14 +147,14 @@ ACADOS_SOURCE_DIR=/home/t/opt/acados ./.venv/bin/python -c \
 ## Acceptance Criteria
 
 - [x] DG23-01关闭：12D base state/chart、12D external contact wrench、canonical mapping、locked-composite continuous/RK4 model、analytic sensitivity、equilibrium和有效域通过独立oracle；历史Euler/internal-wrench/16D candidate差异已解释。
-- [ ] DG23-02关闭：指定acados commit/build、generation依赖、generated ABI/artifact、loader、SQP-RTI/HPIPM OCP profile全部冻结；clean regeneration/build/run、model/OCP/KKT、warm/reset、1000-run determinism和更新tick组合`<10 ms`全部PASS，无silent fallback。
-- [ ] DG23-03关闭：cost/scale/constraints/reference、必要的optimizer-only augmentation、tuning-holdout split与正式tracking/recovery thresholds在holdout前冻结，ablation、attribution和未见nonlinear holdout全PASS。
-- [ ] production runtime只依赖受控generated solver、acados/HPIPM/BLASFEO和既有Core库，不依赖MuJoCo/MATLAB/Simulink/Python/CasADi/acados_template；NMPC只写现有12D wrench boundary，WBC/torque/public I/O保持冻结。
-- [ ] generated artifact可由冻结generator/env双clean复现且hash/provenance完整；ordinary clean build不运行generator或联网；final binary loader依赖从显式contract解析。
-- [ ] component/build tests全PASS；2:1 schedule、两拍wrench ZOH、RTI phase、timestamp/age、warm/cold/reset和所有control failure路径保持deterministic fail-zero/latch。
-- [ ] formal完成23 normal/reference + 10 fault，generation/model/OCP/WBC/plant/deadline gates全PASS；fresh replay、non-overwrite/hash和Phase14/15/18/20/21/22兼容性回归全PASS。
-- [ ] Phase21/22 source-of-truth config、manifest和evidence未被覆盖；Phase23所有结论引用新namespace和真实hash。
-- [ ] REVIEW blocking findings为零且Verdict=`PASS`后才创建RECORD、把ROADMAP标记complete并开始roll/yaw/turning后续Phase。
+- [x] DG23-02关闭：指定acados commit/build、generation依赖、generated ABI/artifact、loader、SQP-RTI/HPIPM OCP profile全部冻结；clean regeneration/build/run、model/OCP/KKT、warm/reset、1000-run determinism和更新tick组合`<10 ms`全部PASS，无silent fallback。
+- [x] DG23-03关闭：cost/scale/constraints/reference、必要的optimizer-only augmentation、tuning-holdout split与正式tracking/recovery thresholds在holdout前冻结，ablation、attribution和未见nonlinear holdout全PASS。
+- [x] production runtime只依赖受控generated solver、acados/HPIPM/BLASFEO和既有Core库，不依赖MuJoCo/MATLAB/Simulink/Python/CasADi/acados_template；NMPC只写现有12D wrench boundary，WBC/torque/public I/O保持冻结。
+- [x] generated artifact可由冻结generator/env双clean复现且hash/provenance完整；ordinary clean build不运行generator或联网；final binary loader依赖从显式contract解析。
+- [x] component/build tests全PASS；2:1 schedule、两拍wrench ZOH、RTI phase、timestamp/age、warm/cold/reset和所有control failure路径保持deterministic fail-zero/latch。
+- [x] formal完成23 normal/reference + 10 fault，generation/model/OCP/WBC/plant/deadline gates全PASS；fresh replay、non-overwrite/hash和Phase14/15/18/20/21/22兼容性回归全PASS。
+- [x] Phase21/22 source-of-truth config、manifest和evidence未被覆盖；Phase23所有结论引用新namespace和真实hash。
+- [x] REVIEW blocking findings为零且Verdict=`PASS`后才创建RECORD、把ROADMAP标记complete；后续roll/yaw/turning仍须独立Phase。
 
 ## Execution Notes
 
@@ -167,7 +167,13 @@ ACADOS_SOURCE_DIR=/home/t/opt/acados ./.venv/bin/python -c \
 - 2026-08-28：按用户指令第一次冻结Phase23。未编译验证的sparse-ProxQP OCP prototype及其CMake target已撤回；P23-T01～T03和DG23-01的真实PASS证据保留，未进入REVIEW、未创建RECORD、未宣称NMPC可用。
 - 2026-08-28：用户解除冻结并指定NMPC改用`/home/t/opt/acados`。Codex重新打开route decision，核对live Core/CMake与acados安装：commit `21376cb1...`的Release/shared libraries存在，但默认loader未解析HPIPM/BLASFEO，`./.venv`缺CasADi。原“project-owned sparse ProxQP NMPC/no generated code”路线被本PLAN显式取代；Phase状态改为`active`，P23-T04=`doing`。这些是规划与环境事实，不是acados集成或NMPC PASS。
 - 2026-08-28：P23-T04继续验证后，冻结解释器依赖探针、`py_compile`、clean Release build和loader/RPATH均通过；显式固定`ACADOS_SOURCE_DIR=/home/t/opt/acados`与`TERA_PATH=/home/t/W_L_ws/.cache/acados/t_renderer`后，双clean generation及checked-in artifact在仅忽略绝对输出路径及其派生hash时一致。generated model parity PASS；加入不读取acados KKT/multiplier的project-owned full-horizon objective、20段RK4 defect、全段bound与costate projected-gradient KKT audit后，cold/repeated-warm/dynamic-warm各1000次仍PASS，多次运行的保守p99/max为`2.247/2.900 ms`、`1.430/2.480 ms`、dynamic max `2.719 ms`；independent defect/KKT最大`3.38e-6/0.0428125`，门槛`1e-3/0.05`，wrapper已按两门fail-closed，单case evaluator smoke全门PASS。v7 normal integrated max `1.920 ms < 10 ms`，v7/v8 replay在四个声明wall-clock字段外逐字段一致且plant CSV字节一致。详见[`phase23-acados-t04-v1`](evidence/automated/2026-08-28-phase23-acados-t04-v1/summary.json)，DG23-02关闭、P23-T04=`done`、P23-T05=`doing`。v1～v8 formal仍不得倒推production authority，且其manifest缺少显式`supersedes/replay_of`关系，后续authority run必须补齐。
+- 2026-08-28：P23-T05先写入hash固定的profile与4 tuning/6 holdout split，再执行真实重求解ablation和integrated tuning，最后在不改profile/gate下运行未见holdout。四solver×四case reduced corpus全解成功、input/state envelope violation为0；去掉longitudinal cost使step tracking消失，去掉terminal cost使return error放大`15228x`，uniform wrench cost使受保护轴变化放大`75.16x`。baseline normalized delta-wrench最大`0.0238423 < 0.05`，故冻结无optimizer-only memory。4 tuning和6 nonlinear组合holdout全PASS；holdout最坏组合耗时`3.558 ms`、独立defect`2.80e-6`、projected stationarity `0.03215`，所有tracking/recovery、WBC与plant gate通过。prefreeze v2显式supersede缺validator hash的v1且结果相同。详见[`t05-prefreeze.md`](evidence/t05-prefreeze.md)、[`phase23-t05-prefreeze-v2`](evidence/automated/2026-08-28-phase23-t05-prefreeze-v2/summary.json)、[`phase23-t05-tuning-v1`](evidence/automated/2026-08-28-phase23-t05-tuning-v1/summary.json)和[`phase23-t05-holdout-v1`](evidence/automated/2026-08-28-phase23-t05-holdout-v1/summary.json)。DG23-03关闭、P23-T05=`done`、P23-T06=`doing`。
+- 2026-08-29：P23-T06将冻结相对state envelope转写到v2 generated artifact的stages 1..N，stage 0保持exact measured state；依赖探针、golden parity、双clean normalized generation、ordinary build无codegen、RPATH/loader、cold/warm/reset及3×1000 component均PASS。ROS汇总`26 tests, 0 errors, 0 failures`。详见[`phase23-t06-v1`](evidence/automated/2026-08-29-phase23-t06-v1/summary.json)。
+- 2026-08-29：P23-T07/T08完成opt-in Core与runner闭环；component直接覆盖NMPC→WBC、2:1/ZOH、reset、solver-failure/late/stale-age=2/non-finite strict zero+latch。逐tick日志新增state-bound audit，5-step torque ZOH和双时钟由formal逐case验证；DG23-04关闭。
+- 2026-08-29：P23-T09冻结[实验方法](../../../experiments/phase23_nominal_acados_nmpc.md)、append-only formal v2/replay config和generated provenance选择；manifest新增完整依赖、v2 generated hashes、`supersedes/replay_of`，非空目录拒绝保持exit 2。
+- 2026-08-29：P23-T10 authority [`formal-v2`](evidence/automated/2026-08-29-phase23-acados-formal-v2/README.md)与[fresh replay](evidence/automated/2026-08-29-phase23-acados-formal-v2-replay/README.md)均23/23 normal/reference、10/10 fault PASS。normal NMPC+WBC最大`3.641244 ms`、defect`2.26e-6`、projected-KKT`0.02507`、input/state bound violation均0；33 plant CSV字节一致，control仅四个声明wall-clock字段不同，双run各99项hash无漂移。coordinate和fresh Phase14/15/18/20回归PASS，Phase21/22 component/formal契约与旧source-of-truth未修改；DG23-05关闭。
+- 2026-08-29：P23-T11 REVIEW=`PASS`、blocking findings=0，DG23-06关闭；随后创建RECORD并将ROADMAP Phase23标记complete。结论仅限current nominal MuJoCo simulation host。
 
 ## Blockers
 
-None at PLAN level. 当前执行入口是P23-T05：DG23-02与P23-T04已关闭，但仍须冻结cost/constraint/reference、声明tuning/holdout split并完成ablation、attribution和未见nonlinear holdout。DG23-03关闭前，当前generated solver/Core/formal改动仍只能视为pre-freeze prototype，不得作为production authority。
+None. Phase 23已完成；真机仍冻结，后续roll/yaw/turning必须建立独立Phase并重新冻结其模型、reference和验证门槛。

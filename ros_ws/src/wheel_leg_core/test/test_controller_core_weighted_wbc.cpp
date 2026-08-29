@@ -255,6 +255,10 @@ int main() {
     assert(update.nominal_nmpc_result.ok());
     assert(update.nominal_nmpc_wrench_age_ticks == 0);
     assert(update.nominal_nmpc_wbc_total_time_s <= 0.01);
+    assert((update.weighted_wbc_reference.interaction_wrench_flu -
+            update.nominal_nmpc_result.wrench_flu)
+               .cwiseAbs()
+               .maxCoeff() <= 1.0e-12);
     auto zoh_state = equilibrium;
     zoh_state.sample_time_ns += 10'000'000;
     const auto zoh = nmpc_core.step(zoh_state);
@@ -281,6 +285,37 @@ int main() {
     const auto rejected = nmpc_fault_core.step(invalid);
     assert(rejected.status == wheel_leg::StepStatus::kInvalidState);
     assert(rejected.nominal_nmpc_active);
+    assert(rejected.safety_latched);
+    assertZero(rejected);
+  }
+  for (const auto fault : {wheel_leg::NmpcFaultInjection::kSolverFailure,
+                           wheel_leg::NmpcFaultInjection::kLate,
+                           wheel_leg::NmpcFaultInjection::kNonFinite}) {
+    wheel_leg::ControllerCore fault_core;
+    auto config = nmpcConfig();
+    config.nominal_nmpc.fault_injection = fault;
+    config.nominal_nmpc.fault_control_tick = 0;
+    assert(fault_core.configure(config));
+    const auto rejected = fault_core.step(equilibrium);
+    assert(rejected.status == wheel_leg::StepStatus::kSafetyLatched);
+    assert(rejected.safety_latched);
+    assertZero(rejected);
+  }
+  {
+    wheel_leg::ControllerCore stale_core;
+    auto config = nmpcConfig();
+    config.nominal_nmpc.fault_injection = wheel_leg::NmpcFaultInjection::kStale;
+    config.nominal_nmpc.fault_control_tick = 2;
+    assert(stale_core.configure(config));
+    assert(stale_core.step(equilibrium).accepted());
+    auto tick = equilibrium;
+    tick.sample_time_ns += 10'000'000;
+    assert(stale_core.step(tick).accepted());
+    tick.sample_time_ns += 10'000'000;
+    const auto rejected = stale_core.step(tick);
+    assert(rejected.nominal_nmpc_update_tick);
+    assert(rejected.nominal_nmpc_wrench_age_ticks == 2);
+    assert(rejected.status == wheel_leg::StepStatus::kSafetyLatched);
     assert(rejected.safety_latched);
     assertZero(rejected);
   }

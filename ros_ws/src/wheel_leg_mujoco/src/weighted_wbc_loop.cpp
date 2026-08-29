@@ -261,7 +261,7 @@ void setInitialState(const mjModel *model, mjData *data, const Options &options)
 }
 
 void writeHeaders(std::ofstream &control, std::ofstream &plant) {
-  control << "scenario,episode,tick,pre_step_plant_time_s,source_ns,command_source_ns,receipt_ns,dt_s,status,latch,accepted,contact_left,contact_right,weighted_status,model_status,solver_status,iterations,primal,dual,stationarity,hard,reconstruction_iterations,closure_residual,core_step_ns,zoh_diff,nmpc_active,nmpc_update,nmpc_age,nmpc_status,nmpc_acados_status,nmpc_preparation_s,nmpc_feedback_s,nmpc_stationarity,nmpc_dynamics,nmpc_inequality,nmpc_complementarity,nmpc_first_step_defect,nmpc_maximum_dynamics_defect,nmpc_input_bound_violation,nmpc_objective,nmpc_projected_stationarity,nmpc_wbc_total_s";
+  control << "scenario,episode,tick,pre_step_plant_time_s,source_ns,command_source_ns,receipt_ns,dt_s,status,latch,accepted,contact_left,contact_right,weighted_status,model_status,solver_status,iterations,primal,dual,stationarity,hard,reconstruction_iterations,closure_residual,core_step_ns,zoh_diff,nmpc_active,nmpc_update,nmpc_age,nmpc_status,nmpc_acados_status,nmpc_preparation_s,nmpc_feedback_s,nmpc_stationarity,nmpc_dynamics,nmpc_inequality,nmpc_complementarity,nmpc_first_step_defect,nmpc_maximum_dynamics_defect,nmpc_input_bound_violation,nmpc_state_bound_violation,nmpc_objective,nmpc_projected_stationarity,nmpc_wbc_total_s";
   for (int index = 0; index < 3; ++index) control << ",base_p" << index;
   for (int index = 0; index < 4; ++index) control << ",quat" << index;
   for (int index = 0; index < 3; ++index) control << ",base_v" << index;
@@ -343,6 +343,7 @@ void writeControlRow(std::ofstream &control, const Options &options, int episode
           << result.nominal_nmpc_result.first_step_defect << ','
           << result.nominal_nmpc_result.maximum_dynamics_defect << ','
           << result.nominal_nmpc_result.input_bound_violation << ','
+          << result.nominal_nmpc_result.state_bound_violation << ','
           << result.nominal_nmpc_result.objective << ','
           << result.nominal_nmpc_result.projected_stationarity_residual << ','
           << result.nominal_nmpc_wbc_total_time_s;

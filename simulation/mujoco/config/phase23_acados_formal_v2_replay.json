@@ -1,0 +1,6 @@
+{
+  "base_config": "simulation/mujoco/config/phase23_acados_formal_v2.json",
+  "schema_version": 1,
+  "profile": "phase23_acados_formal_v2_replay",
+  "replay_of": "2026-08-29-phase23-acados-formal-v2"
+}

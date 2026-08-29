@@ -3,6 +3,8 @@
   "schema_version": 1,
   "profile": "phase23_acados_t05_tuning_v1",
   "evidence_class": "P23-T05 pre-freeze tuning; not formal authority",
+  "supersedes": [],
+  "replay_of": null,
   "source_profiles": {
     "nmpc_ocp": "simulation/mujoco/config/phase23_acados_ocp_v1.json",
     "t05_profile": "simulation/mujoco/config/phase23_acados_t05_profile_v1.json"

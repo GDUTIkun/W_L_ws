@@ -8,10 +8,8 @@ import copy
 import hashlib
 import importlib.util
 import json
-import math
 import os
 import platform
-import shutil
 import subprocess
 import sys
 import tempfile
@@ -190,6 +188,7 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--profile", type=Path, default=DEFAULT_PROFILE)
     parser.add_argument("--output-dir", type=Path, required=True)
+    parser.add_argument("--supersedes", action="append", default=[])
     args = parser.parse_args()
     output = args.output_dir.resolve()
     if output.exists() and any(output.iterdir()):
@@ -236,6 +235,8 @@ def main() -> int:
         "ocp_sha256": sha256(ocp_path),
         "generator": root_relative(generator_path),
         "generator_sha256": sha256(generator_path),
+        "validator": root_relative(Path(__file__)),
+        "validator_sha256": sha256(Path(__file__)),
         "summary_sha256": sha256(summary_path),
         "python": sys.executable,
         "python_version": platform.python_version(),
@@ -249,7 +250,7 @@ def main() -> int:
         "acados_commit": subprocess.check_output(
             ["git", "-C", os.environ["ACADOS_SOURCE_DIR"], "rev-parse", "HEAD"], text=True
         ).strip(),
-        "supersedes": [],
+        "supersedes": args.supersedes,
         "replay_of": None,
     }
     (output / "manifest.json").write_text(

@@ -515,6 +515,10 @@ void ControllerCore::stepNominalNmpcWbc(
     problem.reference[0] = *weighted_wbc_anchor_x_m_;
     problem.reference[1] = *weighted_wbc_anchor_y_m_;
     problem.reference[2] = config_.weighted_wbc.nominal_height_m;
+    problem.state_envelope_center.setZero();
+    problem.state_envelope_center[0] = *weighted_wbc_anchor_x_m_;
+    problem.state_envelope_center[1] = *weighted_wbc_anchor_y_m_;
+    problem.state_envelope_center[2] = config_.weighted_wbc.nominal_height_m;
     const double elapsed_s =
         static_cast<double>(nominal_nmpc_control_tick_) *
         config_.weighted_wbc.period_s;

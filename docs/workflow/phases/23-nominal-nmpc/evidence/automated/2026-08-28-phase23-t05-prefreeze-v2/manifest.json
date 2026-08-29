@@ -1,0 +1,28 @@
+{
+  "acados_commit": "21376cb1af6b7dd45f675367272d3ba8100b26c0",
+  "acados_source_dir": "/home/t/opt/acados",
+  "dependencies": {
+    "acados_template": "/home/t/opt/acados/interfaces/acados_template/acados_template/__init__.py",
+    "casadi": "3.7.2",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3"
+  },
+  "generator": "tools/experiments/generate_phase23_acados_solver.py",
+  "generator_sha256": "3f82b53e36f79767ddcc5c1b2db1a609dd5877c15218cb62e5548655c4fb164b",
+  "ocp": "simulation/mujoco/config/phase23_acados_ocp_v1.json",
+  "ocp_sha256": "81084f97affbceecd03e99075302897298461559625cb2a53e026bcf26867648",
+  "phase": 23,
+  "profile": "simulation/mujoco/config/phase23_acados_t05_profile_v1.json",
+  "profile_sha256": "4f11075cb8a112a516caad06d7d34fce4cb0a76bbe9b94cebbabfe96bbc96d15",
+  "python": "/home/t/W_L_ws/.venv/bin/python",
+  "python_version": "3.10.20",
+  "replay_of": null,
+  "schema_version": 1,
+  "summary_sha256": "e968370ca9eebd1bae0f48c9494994b22d498250be4e1eafffd99851a312b7ba",
+  "supersedes": [
+    "docs/workflow/phases/23-nominal-nmpc/evidence/automated/2026-08-28-phase23-t05-prefreeze-v1"
+  ],
+  "task": "P23-T05",
+  "validator": "tools/experiments/validate_phase23_acados_t05_prefreeze.py",
+  "validator_sha256": "86106c827a59bbf61c946d4d04d1223c534fa152615dd587c772323ace774e62"
+}
