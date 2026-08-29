@@ -244,7 +244,12 @@ bool finite(const NominalWbcModel::Result &result) {
         !result.wrench_flu_map[side].allFinite() ||
         !result.contact_jacobian[side].allFinite() ||
         !result.contact_bias[side].allFinite() ||
-        !result.contact_frame_world[side].allFinite()) return false;
+        !result.contact_frame_world[side].allFinite() ||
+        !std::isfinite(result.wheel_position_b_x_m[side]) ||
+        !std::isfinite(result.wheel_velocity_b_x_m_s[side]) ||
+        !result.interaction_acceleration_map[side].allFinite() ||
+        !result.interaction_contact_map[side].allFinite() ||
+        !result.interaction_bias[side].allFinite()) return false;
   }
   return true;
 }
@@ -414,6 +419,19 @@ NominalWbcModel::Result NominalWbcModel::evaluate(
     }
     const BodyState &wheel = bodies[geometry.body_id];
     const BodyState &reduced_wheel = reduced_bodies[geometry.body_id];
+    const Eigen::Vector3d wheel_relative_b =
+        base_rotation.transpose() * (wheel.position - base_position);
+    const Eigen::Vector3d base_velocity(
+        state.base_linear_velocity_n_m_s[0],
+        state.base_linear_velocity_n_m_s[1],
+        state.base_linear_velocity_n_m_s[2]);
+    const Eigen::Vector3d omega_b =
+        base_rotation.transpose() * nu.segment<3>(3);
+    const Eigen::Vector3d wheel_relative_velocity_b =
+        base_rotation.transpose() * (wheel.linear_velocity - base_velocity) -
+        omega_b.cross(wheel_relative_b);
+    result.wheel_position_b_x_m[side] = wheel_relative_b.x();
+    result.wheel_velocity_b_x_m_s[side] = wheel_relative_velocity_b.x();
     const Eigen::Vector3d contact_local =
         wheel.rotation.transpose() * (geometry.center - wheel.position);
     const Matrix3x16 material_jacobian =
@@ -468,6 +486,56 @@ NominalWbcModel::Result NominalWbcModel::evaluate(
         base_rotation.transpose() * skew(geometry.center - base_position) *
         geometry.frame;
     result.wrench_flu_map[side].bottomRightCorner<3, 3>() = frame_in_base;
+
+    // The contact wrench acts on the wheel. Transport it once from the
+    // contact point to the wheel-body origin, then express it in body/FLU.
+    result.interaction_contact_map[side].setZero();
+    result.interaction_contact_map[side].topLeftCorner<3, 3>() = frame_in_base;
+    result.interaction_contact_map[side].bottomLeftCorner<3, 3>() =
+        base_rotation.transpose() * skew(geometry.center - wheel.position) *
+        geometry.frame;
+    result.interaction_contact_map[side].bottomRightCorner<3, 3>() =
+        frame_in_base;
+
+    // Wheel free-body balance about the wheel-body origin O:
+    // W_wheel_on_parent^O = W_contact_on_wheel^O - W_inertial,non-gravity^O.
+    // At fixed q,nu the latter is affine in reduced acceleration nudot.
+    const auto &raw = phase21_profile::kBody[geometry.body_id - 1];
+    const double wheel_mass = raw[7];
+    const Eigen::Vector3d wheel_com_local = vector3(raw.data() + 8);
+    const Eigen::Vector3d wheel_com_offset =
+        wheel.rotation * wheel_com_local;
+    const Eigen::Matrix3d wheel_inertial_rotation =
+        wheel.rotation * quaternion(raw.data() + 11);
+    const Eigen::Matrix3d wheel_inertia_world =
+        wheel_inertial_rotation *
+        Eigen::Vector3d(raw[15], raw[16], raw[17]).asDiagonal() *
+        wheel_inertial_rotation.transpose();
+    const Matrix3x16 wheel_com_jacobian =
+        pointJacobian(wheel, wheel_com_local);
+    const Eigen::Matrix<double, 3, 12> force_acceleration_world =
+        wheel_mass * wheel_com_jacobian * result.reduction;
+    const Eigen::Matrix<double, 3, 12> moment_acceleration_world =
+        wheel_inertia_world * wheel.angular_jacobian * result.reduction +
+        skew(wheel_com_offset) * force_acceleration_world;
+    result.interaction_acceleration_map[side].topRows<3>() =
+        -base_rotation.transpose() * force_acceleration_world;
+    result.interaction_acceleration_map[side].bottomRows<3>() =
+        -base_rotation.transpose() * moment_acceleration_world;
+
+    const Eigen::Vector3d wheel_com_acceleration =
+        pointAcceleration(reduced_wheel, wheel_com_local);
+    const Eigen::Vector3d inertial_force_world =
+        wheel_mass * (wheel_com_acceleration - gravity);
+    const Eigen::Vector3d inertial_moment_world =
+        wheel_inertia_world * reduced_wheel.angular_acceleration +
+        reduced_wheel.angular_velocity.cross(
+            wheel_inertia_world * reduced_wheel.angular_velocity) +
+        wheel_com_offset.cross(inertial_force_world);
+    result.interaction_bias[side].head<3>() =
+        -base_rotation.transpose() * inertial_force_world;
+    result.interaction_bias[side].tail<3>() =
+        -base_rotation.transpose() * inertial_moment_world;
   }
   result.native_joint_position_rad = q;
   if (!finite(result)) {

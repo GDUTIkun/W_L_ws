@@ -42,7 +42,7 @@ bool finite(const WeightedWbcProblem::Result &result) {
 
 WeightedWbcProblem::Result WeightedWbcProblem::assemble(
     const NominalWbcModel::Result &model,
-    const WbcReference &reference) const {
+    const WbcReference &reference, WeightedWbcProfile profile) const {
   Result result;
   result.model_status = model.status;
   if (!model.ok()) return result;
@@ -104,6 +104,9 @@ WeightedWbcProblem::Result WeightedWbcProblem::assemble(
 
   result.h.setIdentity();
   result.h *= kRegularization;
+  if (profile == WeightedWbcProfile::kPhase27Minimal) {
+    result.h.bottomRightCorner<12, 12>().setZero();
+  }
   result.g.setZero();
   const Eigen::DiagonalMatrix<double, 42> transform(variable_scale);
 
@@ -117,7 +120,8 @@ WeightedWbcProblem::Result WeightedWbcProblem::assemble(
   addTask<6>(result.h, result.g, contact, contact_target,
              Eigen::Matrix<double, 6, 1>::Constant(kContactScale));
 
-  Eigen::Matrix<double, 1, 42> base_x =
+  if (profile == WeightedWbcProfile::kNominal) {
+    Eigen::Matrix<double, 1, 42> base_x =
       Eigen::Matrix<double, 1, 42>::Zero();
   base_x(0, 0) = variable_scale[0];
   addTask<1>(result.h, result.g, base_x,
@@ -148,12 +152,23 @@ WeightedWbcProblem::Result WeightedWbcProblem::assemble(
   }
   addTask<4>(result.h, result.g, leg, reference.leg_acceleration_rad_s2,
              Eigen::Vector4d::Constant(kLegScale));
+  }
 
   Eigen::Matrix<double, 12, 42> wrench =
       Eigen::Matrix<double, 12, 42>::Zero();
+  Eigen::Matrix<double, 12, 1> wrench_target =
+      reference.interaction_wrench_flu;
   for (int side = 0; side < 2; ++side) {
-    wrench.block<6, 6>(6 * side, 18 + 6 * side) =
-        model.wrench_flu_map[side];
+    if (profile == WeightedWbcProfile::kPhase27Minimal) {
+      wrench.block<6, 12>(6 * side, 0) =
+          model.interaction_acceleration_map[side];
+      wrench.block<6, 6>(6 * side, 18 + 6 * side) =
+          model.interaction_contact_map[side];
+      wrench_target.segment<6>(6 * side) -= model.interaction_bias[side];
+    } else {
+      wrench.block<6, 6>(6 * side, 18 + 6 * side) =
+          model.wrench_flu_map[side];
+    }
   }
   wrench.block<12, 12>(0, 30) =
       -Eigen::Matrix<double, 12, 12>::Identity();
@@ -166,7 +181,7 @@ WeightedWbcProblem::Result WeightedWbcProblem::assemble(
     }
   }
   addTask<12>(result.h, result.g, wrench,
-              reference.interaction_wrench_flu, wrench_scale);
+              wrench_target, wrench_scale);
   Eigen::Matrix<double, 12, 42> slack =
       Eigen::Matrix<double, 12, 42>::Zero();
   slack.block<12, 12>(0, 30) =

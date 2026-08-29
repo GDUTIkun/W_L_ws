@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "phase": 27,
+  "task": "T06",
+  "profile": "wheel-aware-acados-ocp-v2",
+  "dependencies": {
+    "mujoco": "3.7.0",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3",
+    "casadi": "3.7.2",
+    "acados_commit": "21376cb1af6b7dd45f675367272d3ba8100b26c0",
+    "tera_sha256": "64a0a0f8d85be0b92234231fd1a9ff50c9d8f13d6208063707e56c9354a976d3"
+  },
+  "inputs_sha256": {
+    "simulation/mujoco/config/phase27_acados_ocp_v2.json": "c24159aebbd7b38380044319e9cfdb619d880b86f9050aedc086ab07aba5eadf",
+    "tools/experiments/generate_phase27_acados_solver.py": "e821ed857499aefcdda82c7e781bf40dadb9ec0324cf8c53c4b95d233e3f6045",
+    "tools/experiments/validate_phase27_acados_model.py": "57ea07266818772e00682a5ff2d5068fe4b38b7f522a6d7114da31824ee372c1",
+    "ros_ws/src/wheel_leg_core/acados_generated/phase27_wheel_aware_nmpc_v2/phase27_generation_manifest.json": "142e85e155bf8654caaa456ef111a5e215fa5b7a734e64f1d156f3e753dce848",
+    "ros_ws/src/wheel_leg_core/src/wheel_aware_nmpc_solver.cpp": "95bdc389f7f69a7a23a55520c1f68cb905b25171211eea2f5bd315fcba354248",
+    "ros_ws/src/wheel_leg_core/test/test_wheel_aware_nmpc_solver.cpp": "c20b76ea7ab1a9ac6aa2d9ff098fdb80434dc2ff451039cce9252d0bf4adc588"
+  },
+  "commands": [
+    "./.venv/bin/python -m py_compile tools/experiments/generate_phase27_acados_solver.py tools/experiments/validate_phase27_acados_model.py",
+    "two clean generate_phase27_acados_solver.py runs using phase27_acados_ocp_v2.json, ACADOS_SOURCE_DIR=/home/t/opt/acados and the frozen TERA_PATH",
+    "normalized comparison of both clean generations and the checked-in v2 artifact",
+    "./.venv/bin/python tools/experiments/validate_phase27_acados_model.py --config simulation/mujoco/config/phase27_acados_ocp_v2.json",
+    "cd ros_ws && colcon build --symlink-install --packages-up-to wheel_leg_mujoco --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=ON -DACADOS_ROOT=/home/t/opt/acados",
+    "cd ros_ws && colcon test --packages-select wheel_leg_core wheel_leg_ros wheel_leg_mujoco && colcon test-result --verbose"
+  ],
+  "normalization": {
+    "replaced": ["absolute output directory in Makefile", "code_export_directory and json_file in acados_ocp.json"],
+    "ignored": ["acados_ocp.json hash derived from its absolute output path", "manifest hashes of path-dependent Makefile and acados_ocp.json"],
+    "all_generated_c_h_pxd_files_exact": true
+  }
+}

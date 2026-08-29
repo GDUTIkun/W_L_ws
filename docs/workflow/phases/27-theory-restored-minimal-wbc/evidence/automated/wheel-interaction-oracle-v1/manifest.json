@@ -1,0 +1,27 @@
+{
+  "config": "simulation/mujoco/config/phase27_wheel_interaction_oracle_v1.json",
+  "config_sha256": "603b3dee32daca266b0d0877006b0a05eaf00d9180dae9d4cfb9ef7c4b14d27e",
+  "created_at": "2026-08-29T03:32:12.051001+00:00",
+  "generator": "tools/experiments/generate_phase27_wheel_interaction_oracle.py",
+  "generator_sha256": "cf706553eed90c0576363c2ac663c055fa866fc4fd199569d40ae45e1491b723",
+  "model_inputs": {
+    "simulation/mujoco/config/phase21_model_oracle_v2.json": "3abf59299936bab8cf25c495fd9265bd3883b6383da380a822f50488f3259eed",
+    "simulation/mujoco/config/phase21_model_oracle_v3.json": "67800fc17a43410573a6764c2fbe04fff5703efd893ce3f4efa90c387a6d48a3",
+    "simulation/mujoco/config/phase21_model_oracle_v4.json": "c9dd46fbfab6ab7cafd06a2552b0ffd7c051dc14a90cf554601d937b16c1de5e",
+    "simulation/mujoco/config/phase21_model_oracle_v5.json": "ed4a4fabd38bdc671cd25948d884a701cbd01f8241b19067b39524bbc5c2aa61",
+    "simulation/mujoco/config/phase21_model_oracle_v6.json": "665e269d66a82526f4a17c16a1a7d1199dfa391f99ba9b509ea6c3810375f767",
+    "simulation/mujoco/config/phase21_model_oracle_v7.json": "ea3c658724d41cef7b778202e5a5b119a6bc3a23aa04cb9e528aa04114f1188c",
+    "simulation/mujoco/config/phase21_model_oracle_v8.json": "63ebb4a2fbbe403599cc23be38e83f3f42046f3b3ea0ebdcc1fd6530935cf5fd",
+    "simulation/mujoco/config/phase21_model_oracle_v9.json": "5803341b69688902a08e2d922aac25d443c77bda828ef387958232f9f36a493e"
+  },
+  "mujoco": "3.7.0",
+  "numpy": "2.2.6",
+  "outputs": {
+    "golden.txt": "9d293f76054e9d4dd34c5648f87165218280effd2ab136ab4b24ad839d2dc17f",
+    "summary.json": "573c613698c7cbe543f65e66dd9ba3246a6b9bbd10d4497b2d787966658b4ecc"
+  },
+  "python": "3.10.20",
+  "schema_version": 1,
+  "scipy": "1.15.3",
+  "state_config_sha256": "a36a979855b37ae41d883dd29dd98cc2f7a6440fa3da9029dcc8e7f4057b80ce"
+}

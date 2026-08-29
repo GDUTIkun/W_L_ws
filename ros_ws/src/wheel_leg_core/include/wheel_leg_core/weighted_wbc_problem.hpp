@@ -6,6 +6,8 @@
 
 namespace wheel_leg {
 
+enum class WeightedWbcProfile { kNominal, kPhase27Minimal };
+
 struct WbcReference {
   double base_x_acceleration_m_s2{0.0};
   double base_height_acceleration_m_s2{0.0};
@@ -42,7 +44,8 @@ class WeightedWbcProblem {
 
   [[nodiscard]] Result assemble(
       const NominalWbcModel::Result &model,
-      const WbcReference &reference) const;
+      const WbcReference &reference,
+      WeightedWbcProfile profile = WeightedWbcProfile::kNominal) const;
 };
 
 }  // namespace wheel_leg

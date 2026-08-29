@@ -39,6 +39,11 @@ struct Options {
   std::string scenario{"hold"};
   std::string controller_mode{"weighted_wbc"};
   std::string nmpc_reference{"hold"};
+  std::string timing_profile{"baseline_2_10_20"};
+  double phase27_wheel_target_offset_m{0.0};
+  double phase27_velocity_m_s{0.0};
+  double phase27_yaw_rate_rad_s{0.0};
+  std::string phase27_reference_profile{"manual"};
   bool viewer{false};
   int episodes{1};
   int ticks{100};
@@ -94,6 +99,15 @@ Options parseOptions(int argc, char **argv) {
     else if (argument == "--scenario") options.scenario = value;
     else if (argument == "--controller-mode") options.controller_mode = value;
     else if (argument == "--nmpc-reference") options.nmpc_reference = value;
+    else if (argument == "--timing-profile") options.timing_profile = value;
+    else if (argument == "--phase27-wheel-target-offset")
+      options.phase27_wheel_target_offset_m = std::stod(value);
+    else if (argument == "--phase27-velocity")
+      options.phase27_velocity_m_s = std::stod(value);
+    else if (argument == "--phase27-yaw-rate")
+      options.phase27_yaw_rate_rad_s = std::stod(value);
+    else if (argument == "--phase27-reference-profile")
+      options.phase27_reference_profile = value;
     else if (argument == "--viewer") {
       if (value == "true") options.viewer = true;
       else if (value != "false") throw std::invalid_argument("--viewer must be true or false");
@@ -121,13 +135,43 @@ Options parseOptions(int argc, char **argv) {
   if (options.episodes <= 0 || options.ticks <= 0 ||
       std::find(scenarios.begin(), scenarios.end(), options.scenario) == scenarios.end() ||
       (options.controller_mode != "weighted_wbc" &&
-       options.controller_mode != "nominal_nmpc") ||
+       options.controller_mode != "nominal_nmpc" &&
+       options.controller_mode != "phase27_minimal_nmpc") ||
+      (options.timing_profile != "baseline_2_10_20" &&
+       options.timing_profile != "candidate_1_5_20") ||
+      (options.timing_profile == "candidate_1_5_20" &&
+      options.controller_mode != "weighted_wbc") ||
+      !std::isfinite(options.phase27_wheel_target_offset_m) ||
+      !std::isfinite(options.phase27_velocity_m_s) ||
+      !std::isfinite(options.phase27_yaw_rate_rad_s) ||
+      (options.phase27_reference_profile != "manual" &&
+       options.phase27_reference_profile != "static" &&
+       options.phase27_reference_profile != "straight_start_cruise_brake" &&
+       options.phase27_reference_profile != "turn_left" &&
+       options.phase27_reference_profile != "turn_right") ||
       (options.nmpc_reference != "hold" &&
        options.nmpc_reference != "positive" &&
        options.nmpc_reference != "negative" &&
        options.nmpc_reference != "return"))
     throw std::invalid_argument("invalid run options");
   return options;
+}
+
+std::array<double, 2> phase27MotionReference(
+    const std::string &profile, double time_s,
+    double manual_velocity_m_s, double manual_yaw_rate_rad_s) {
+  if (profile == "manual") return {manual_velocity_m_s, manual_yaw_rate_rad_s};
+  if (profile == "static") return {0.0, 0.0};
+  if (profile == "straight_start_cruise_brake") {
+    double scale = 0.0;
+    if (time_s < 1.0) scale = time_s;
+    else if (time_s < 3.0) scale = 1.0;
+    else if (time_s < 4.0) scale = 4.0 - time_s;
+    return {0.20 * scale, 0.0};
+  }
+  const double scale = std::min(time_s, 1.0);
+  if (profile == "turn_left") return {0.20 * scale, 0.08 * scale};
+  return {0.20 * scale, -0.08 * scale};
 }
 
 class Viewer {
@@ -448,6 +492,12 @@ void writeHeaders(std::ofstream &control, std::ofstream &plant) {
   for (int index = 0; index < 6; ++index) control << ",raw_tau" << index;
   for (int index = 0; index < 6; ++index) control << ",command_tau" << index;
   for (int index = 0; index < 6; ++index) control << ",held_ctrl" << index;
+  control << ",phase27_active,phase27_update,phase27_age,phase27_status,phase27_acados_status,phase27_solve_s,phase27_stationarity,phase27_dynamics,phase27_inequality,phase27_complementarity,phase27_first_step_defect,phase27_maximum_dynamics_defect,phase27_input_bound_violation,phase27_state_bound_violation,phase27_objective,phase27_projected_stationarity,phase27_wbc_total_s,planner_xi_c,planner_dxi_c,planner_ddxi_c";
+  control << ",phase27_xi_left,phase27_xi_right,phase27_dxi_left,phase27_dxi_right,phase27_v_ref,phase27_yaw_rate_ref";
+  for (int index = 0; index < 12; ++index) control << ",phase27_requested_wrench" << index;
+  for (int index = 0; index < 12; ++index) control << ",phase27_realized_wrench" << index;
+  for (int index = 0; index < 12; ++index) control << ",phase27_wrench_residual" << index;
+  for (int index = 0; index < 12; ++index) control << ",phase27_signed_slack" << index;
   control << '\n';
   plant << "scenario,episode,control_tick,physics_substep,time_s,disturbance,force_x,force_y,force_z,moment_x,moment_y,moment_z,left_normal_load_n,right_normal_load_n,penetration_m,rolling_slip_m_s,lateral_slip_m_s,closure_residual_m";
   for (int index = 0; index < 17; ++index) plant << ",qpos" << index;
@@ -538,6 +588,34 @@ void writeControlRow(std::ofstream &control, const Options &options, int episode
   writeValues(control, result.tau_raw_nm);
   writeValues(control, result.command.joint_torque_nm);
   writeValues(control, held_control);
+  control << ',' << result.phase27_nmpc_active
+          << ',' << result.phase27_nmpc_update_tick
+          << ',' << result.phase27_nmpc_wrench_age_ticks
+          << ',' << static_cast<int>(result.phase27_nmpc_result.status)
+          << ',' << result.phase27_nmpc_result.acados_status
+          << ',' << result.phase27_nmpc_result.solve_time_s
+          << ',' << result.phase27_nmpc_result.stationarity_residual
+          << ',' << result.phase27_nmpc_result.dynamics_residual
+          << ',' << result.phase27_nmpc_result.inequality_residual
+          << ',' << result.phase27_nmpc_result.complementarity_residual
+          << ',' << result.phase27_nmpc_result.first_step_defect
+          << ',' << result.phase27_nmpc_result.maximum_dynamics_defect
+          << ',' << result.phase27_nmpc_result.input_bound_violation
+          << ',' << result.phase27_nmpc_result.state_bound_violation
+          << ',' << result.phase27_nmpc_result.objective
+          << ',' << result.phase27_nmpc_result.projected_stationarity_residual
+          << ',' << result.phase27_nmpc_wbc_total_time_s
+          << ',' << result.phase27_wheel_reference.common_position_m
+          << ',' << result.phase27_wheel_reference.common_velocity_m_s
+          << ',' << result.phase27_wheel_reference.common_acceleration_m_s2;
+  writeValues(control, result.phase27_wheel_position_b_x_m);
+  writeValues(control, result.phase27_wheel_velocity_b_x_m_s);
+  control << ',' << result.phase27_longitudinal_velocity_reference_m_s
+          << ',' << result.phase27_yaw_rate_reference_rad_s;
+  writeValues(control, result.weighted_wbc_reference.interaction_wrench_flu);
+  writeValues(control, result.weighted_wbc_realized_interaction_wrench_flu);
+  writeValues(control, result.weighted_wbc_interaction_residual_flu);
+  writeValues(control, result.weighted_wbc_signed_interaction_slack_flu);
   control << '\n';
 }
 
@@ -551,17 +629,23 @@ void run(const Options &options) {
   if (model->nq != 17 || model->nv != 16 || model->nu != 6 ||
       std::abs(model->opt.timestep - 0.002) > 1e-12)
     throw std::runtime_error("Full-3D invariant failed");
+  const bool candidate_timing =
+      options.timing_profile == "candidate_1_5_20";
   DataPtr data(mj_makeData(model.get()));
   wheel_leg_mujoco::AdapterConfig adapter_config;
   adapter_config.command_enabled = true;
   adapter_config.floating_base = true;
   wheel_leg_mujoco::Adapter adapter(model.get(), adapter_config);
+  model->opt.timestep = candidate_timing ? 0.001 : 0.002;
   wheel_leg::ControllerConfig config;
   config.mode = options.controller_mode == "nominal_nmpc"
       ? wheel_leg::ControllerMode::kNominalNmpcWbc
-      : wheel_leg::ControllerMode::kWeightedWbc;
+      : options.controller_mode == "phase27_minimal_nmpc"
+          ? wheel_leg::ControllerMode::kPhase27MinimalNmpcWbc
+          : wheel_leg::ControllerMode::kWeightedWbc;
   config.torque_limit_nm = options.torque_limit;
   config.weighted_wbc = wheel_leg::currentNominalWeightedWbcConfig();
+  config.weighted_wbc.period_s = candidate_timing ? 0.005 : 0.01;
   if (options.nmpc_reference == "positive") {
     config.nominal_nmpc.reference_profile =
         wheel_leg::NmpcReferenceProfile::kPositiveStep;
@@ -573,6 +657,13 @@ void run(const Options &options) {
         wheel_leg::NmpcReferenceProfile::kStepReturn;
   }
   config.nominal_nmpc.fault_control_tick =
+      static_cast<std::uint64_t>(options.fault_tick);
+  config.phase27_nmpc.target_common_position_offset_m =
+      options.phase27_wheel_target_offset_m;
+  config.phase27_nmpc.longitudinal_velocity_m_s =
+      options.phase27_velocity_m_s;
+  config.phase27_nmpc.yaw_rate_rad_s = options.phase27_yaw_rate_rad_s;
+  config.phase27_nmpc.fault_control_tick =
       static_cast<std::uint64_t>(options.fault_tick);
   if (options.scenario == "nmpc_solver_failure") {
     config.nominal_nmpc.fault_injection =
@@ -587,6 +678,8 @@ void run(const Options &options) {
     config.nominal_nmpc.fault_injection =
         wheel_leg::NmpcFaultInjection::kNonFinite;
   }
+  config.phase27_nmpc.fault_injection =
+      config.nominal_nmpc.fault_injection;
   wheel_leg::ControllerCore controller;
   if (!controller.configure(config)) throw std::runtime_error("WBC configuration failed");
   std::ofstream control;
@@ -602,7 +695,8 @@ void run(const Options &options) {
   std::unique_ptr<Viewer> viewer;
   if (options.viewer) viewer = std::make_unique<Viewer>(model.get());
   const int base_body = requiredId(model.get(), mjOBJ_BODY, "base_body");
-  constexpr std::uint64_t kControlPeriodNs = 10'000'000U;
+  const std::uint64_t control_period_ns =
+      candidate_timing ? 5'000'000U : 10'000'000U;
   constexpr int kPhysicsSubstepsPerControl = 5;
   const auto wall_start = std::chrono::steady_clock::now();
   for (int episode = 0; episode < options.episodes && (!viewer || !viewer->shouldClose()); ++episode) {
@@ -625,11 +719,20 @@ void run(const Options &options) {
         else if (options.scenario == "timing")
           state.sample_time_ns += 1'000'000U;
       }
+      if (config.mode == wheel_leg::ControllerMode::kPhase27MinimalNmpcWbc) {
+        const auto motion = phase27MotionReference(
+            options.phase27_reference_profile,
+            static_cast<double>(tick) * config.weighted_wbc.period_s,
+            options.phase27_velocity_m_s, options.phase27_yaw_rate_rad_s);
+        if (!controller.setPhase27MotionReference(motion[0], motion[1]))
+          throw std::runtime_error("Phase 27 motion reference rejected");
+      }
       const auto start = std::chrono::steady_clock::now();
       const auto result = controller.step(state);
       const auto core_step_ns = std::chrono::duration_cast<std::chrono::nanoseconds>(
           std::chrono::steady_clock::now() - start).count();
-      const std::uint64_t receipt_time_ns = static_cast<std::uint64_t>(tick) * kControlPeriodNs;
+      const std::uint64_t receipt_time_ns =
+          static_cast<std::uint64_t>(tick) * control_period_ns;
       const bool accepted = adapter.acceptCommand(
           result.command, receipt_time_ns,
           wheel_leg_mujoco::Adapter::simulationTimeNs(data->time));

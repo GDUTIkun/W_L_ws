@@ -7,6 +7,8 @@
 #include "wheel_leg_core/types.hpp"
 #include "wheel_leg_core/nominal_nmpc_solver.hpp"
 #include "wheel_leg_core/weighted_wbc_controller.hpp"
+#include "wheel_leg_core/wheel_aware_nmpc_solver.hpp"
+#include "wheel_leg_core/wheel_position_planner.hpp"
 
 namespace wheel_leg {
 
@@ -17,6 +19,7 @@ enum class ControllerMode {
   kSimpleStanding3d,
   kWeightedWbc,
   kNominalNmpcWbc,
+  kPhase27MinimalNmpcWbc,
 };
 
 enum class NmpcReferenceProfile {
@@ -116,6 +119,16 @@ struct NominalNmpcConfig {
   std::uint64_t fault_control_tick{100};
 };
 
+struct Phase27NmpcConfig {
+  double target_common_position_offset_m{0.0};
+  double longitudinal_velocity_m_s{0.0};
+  double yaw_rate_rad_s{0.0};
+  double update_period_s{0.02};
+  double deadline_s{0.01};
+  NmpcFaultInjection fault_injection{NmpcFaultInjection::kNone};
+  std::uint64_t fault_control_tick{100};
+};
+
 struct ControllerConfig {
   double quaternion_norm_tolerance{1.0e-6};
   ControllerMode mode{ControllerMode::kZero};
@@ -130,6 +143,7 @@ struct ControllerConfig {
   SimpleStanding3dConfig simple_standing_3d{};
   WeightedWbcConfig weighted_wbc{};
   NominalNmpcConfig nominal_nmpc{};
+  Phase27NmpcConfig phase27_nmpc{};
 };
 
 [[nodiscard]] GravityProfile currentNominalGravityProfile();
@@ -183,6 +197,22 @@ struct StepResult {
   std::array<double, WeightedWbcController::kTaskCount>
       weighted_wbc_task_normalized_squared_cost{};
   double weighted_wbc_maximum_normalized_slack{0.0};
+  Eigen::Matrix<double, 12, 1> weighted_wbc_realized_interaction_wrench_flu{
+      Eigen::Matrix<double, 12, 1>::Zero()};
+  Eigen::Matrix<double, 12, 1> weighted_wbc_interaction_residual_flu{
+      Eigen::Matrix<double, 12, 1>::Zero()};
+  Eigen::Matrix<double, 12, 1> weighted_wbc_signed_interaction_slack_flu{
+      Eigen::Matrix<double, 12, 1>::Zero()};
+  bool phase27_nmpc_active{false};
+  bool phase27_nmpc_update_tick{false};
+  int phase27_nmpc_wrench_age_ticks{0};
+  WheelAwareNmpcSolver::Result phase27_nmpc_result{};
+  WheelPositionPlanner::Output phase27_wheel_reference{};
+  std::array<double, 2> phase27_wheel_position_b_x_m{};
+  std::array<double, 2> phase27_wheel_velocity_b_x_m_s{};
+  double phase27_longitudinal_velocity_reference_m_s{0.0};
+  double phase27_yaw_rate_reference_rad_s{0.0};
+  double phase27_nmpc_wbc_total_time_s{0.0};
 
   [[nodiscard]] bool accepted() const { return status == StepStatus::kOk; }
 };
@@ -191,14 +221,19 @@ class ControllerCore {
  public:
   [[nodiscard]] bool configure(const ControllerConfig &config);
   [[nodiscard]] bool setReference(const JointReference &reference);
+  [[nodiscard]] bool setPhase27MotionReference(
+      double longitudinal_velocity_m_s, double yaw_rate_rad_s);
   void reset();
   [[nodiscard]] StepResult step(const RobotState &state);
 
  private:
   void stepWeightedWbc(
       const RobotState &state, StepResult &result,
-      const NominalNmpcModel::Input *wrench_override = nullptr);
+      const NominalNmpcModel::Input *wrench_override = nullptr,
+      bool minimal_profile = false);
   void stepNominalNmpcWbc(const RobotState &state, StepResult &result);
+  void stepPhase27MinimalNmpcWbc(
+      const RobotState &state, StepResult &result);
 
   ControllerConfig config_{};
   bool configured_{false};
@@ -212,12 +247,23 @@ class ControllerCore {
   std::optional<double> standing_3d_anchor_heading_rad_;
   bool standing_safety_latched_{false};
   WeightedWbcController weighted_wbc_controller_{};
+  WeightedWbcController phase27_minimal_wbc_controller_{
+      WeightedWbcProfile::kPhase27Minimal};
   std::optional<double> weighted_wbc_anchor_x_m_;
   std::optional<double> weighted_wbc_anchor_y_m_;
   std::optional<double> weighted_wbc_anchor_yaw_rad_;
   std::unique_ptr<NominalNmpcSolver> nominal_nmpc_solver_;
   std::optional<NominalNmpcSolver::Result> nominal_nmpc_last_result_;
   std::uint64_t nominal_nmpc_control_tick_{0};
+  std::unique_ptr<WheelAwareNmpcSolver> phase27_nmpc_solver_;
+  std::optional<WheelAwareNmpcSolver::Result> phase27_nmpc_last_result_;
+  std::uint64_t phase27_nmpc_control_tick_{0};
+  NominalWbcModel phase27_state_model_{};
+  WheelPositionPlanner phase27_wheel_planner_{};
+  std::optional<double> phase27_wheel_target_common_m_;
+  std::optional<double> phase27_reference_x_m_;
+  std::optional<double> phase27_reference_y_m_;
+  std::optional<double> phase27_reference_yaw_rad_;
 };
 
 }  // namespace wheel_leg

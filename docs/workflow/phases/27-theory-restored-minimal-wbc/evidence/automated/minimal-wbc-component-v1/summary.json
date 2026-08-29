@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "phase": 27,
+  "task": "T07",
+  "profile": "minimal-wbc-component-v1",
+  "pass": true,
+  "completed_checks": {
+    "variable_order_42_unchanged": true,
+    "hard_rows_104_unchanged": true,
+    "hard_matrix_and_bounds_exact_nominal_parity": true,
+    "independent_hessian_gradient_parity": true,
+    "corrective_reference_invariance": true,
+    "interaction_affine_map_and_bias": true,
+    "signed_slack_identity": true,
+    "contact_task_present": true,
+    "weak_regularization_only_on_nudot_tau_contact_wrench": true,
+    "torque_extraction": true,
+    "equilibrium_and_four_dynamic_states": true,
+    "cold_reset_determinism": true,
+    "dynamic_request_timing": true,
+    "legacy_default_regression": true
+  },
+  "metrics": {
+    "dynamic_model_states": 4,
+    "dynamic_request_samples": 300,
+    "dynamic_request_p99_ms": 0.748591,
+    "dynamic_request_max_ms": 0.938905,
+    "deadline_ms": 10.0,
+    "equilibrium_hard_violation": 2.57856e-12,
+    "equilibrium_maximum_wrench_residual_flu": 4.49152e-05,
+    "equilibrium_maximum_normalized_slack": 8.98305e-07,
+    "full_suite_tests": 31,
+    "test_errors": 0,
+    "test_failures": 0
+  },
+  "authority": "closes Minimal WBC algebra, component solver, diagnostics, hard-contract parity and deadline only; it does not claim runtime or closed-loop performance"
+}

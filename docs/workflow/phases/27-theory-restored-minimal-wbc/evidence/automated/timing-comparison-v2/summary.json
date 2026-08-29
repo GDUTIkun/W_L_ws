@@ -1,0 +1,93 @@
+{
+  "decision": "baseline_2_10_20",
+  "decision_reason": "Both profiles pass identical plant/control gates; 1/5/20 doubles physics and WBC load without a demonstrated gate improvement. Retain the approved 2/10/20 schedule and audit the new 16-state NMPC against its 20 ms update and 10 ms combined deadline in T06.",
+  "pass": true,
+  "phase": 27,
+  "profile": "phase27_timing_comparison_v2",
+  "profiles": {
+    "baseline_2_10_20": {
+      "disturbance": {
+        "all_control_ok": true,
+        "control_rows": 200,
+        "deadline_miss_ratio": 0.0,
+        "finite": true,
+        "maximum_abs_base_x_m": 0.0009137215001481153,
+        "maximum_abs_lateral_slip_m_s": 0.0015439464119757747,
+        "maximum_abs_rolling_slip_m_s": 0.007429697292800311,
+        "maximum_closure_residual_m": 0.00018331476355451412,
+        "maximum_core_step_ms": 0.955857,
+        "maximum_penetration_m": 0.0005146821609719882,
+        "maximum_period_error_s": 0.0,
+        "minimum_wheel_normal_load_n": 31.36757204654502,
+        "p99_core_step_ms": 0.41399446999999984,
+        "pass": true,
+        "plant_rows": 1000,
+        "zoh_exact": true
+      },
+      "hold": {
+        "all_control_ok": true,
+        "control_rows": 200,
+        "deadline_miss_ratio": 0.0,
+        "finite": true,
+        "maximum_abs_base_x_m": 0.00048509426045475806,
+        "maximum_abs_lateral_slip_m_s": 0.0015439464119757747,
+        "maximum_abs_rolling_slip_m_s": 0.007429697292800311,
+        "maximum_closure_residual_m": 0.00018331476355451412,
+        "maximum_core_step_ms": 0.956062,
+        "maximum_penetration_m": 0.0005146821609719882,
+        "maximum_period_error_s": 0.0,
+        "minimum_wheel_normal_load_n": 31.36757204654502,
+        "p99_core_step_ms": 0.4242265999999998,
+        "pass": true,
+        "plant_rows": 1000,
+        "zoh_exact": true
+      },
+      "pass": true,
+      "replay_control_exact_except_wall_clock": true,
+      "replay_plant_exact": true
+    },
+    "candidate_1_5_20": {
+      "disturbance": {
+        "all_control_ok": true,
+        "control_rows": 400,
+        "deadline_miss_ratio": 0.0,
+        "finite": true,
+        "maximum_abs_base_x_m": 0.0009078392797695462,
+        "maximum_abs_lateral_slip_m_s": 0.0015375311473422044,
+        "maximum_abs_rolling_slip_m_s": 0.005165473861571488,
+        "maximum_closure_residual_m": 0.0001832438840663259,
+        "maximum_core_step_ms": 0.9619399999999999,
+        "maximum_penetration_m": 0.0005142462170978773,
+        "maximum_period_error_s": 0.0,
+        "minimum_wheel_normal_load_n": 31.37666709000389,
+        "p99_core_step_ms": 0.42238810999999976,
+        "pass": true,
+        "plant_rows": 2000,
+        "zoh_exact": true
+      },
+      "hold": {
+        "all_control_ok": true,
+        "control_rows": 400,
+        "deadline_miss_ratio": 0.0,
+        "finite": true,
+        "maximum_abs_base_x_m": 0.0004966747333815507,
+        "maximum_abs_lateral_slip_m_s": 0.0015375311473422044,
+        "maximum_abs_rolling_slip_m_s": 0.005165473861571488,
+        "maximum_closure_residual_m": 0.0001832438840663259,
+        "maximum_core_step_ms": 0.963097,
+        "maximum_penetration_m": 0.0005142462170978773,
+        "maximum_period_error_s": 0.0,
+        "minimum_wheel_normal_load_n": 31.37666709000389,
+        "p99_core_step_ms": 0.46446942999999985,
+        "pass": true,
+        "plant_rows": 2000,
+        "zoh_exact": true
+      },
+      "pass": true,
+      "replay_control_exact_except_wall_clock": true,
+      "replay_plant_exact": true
+    }
+  },
+  "schema_version": 1,
+  "supersedes": "timing-comparison-v1"
+}

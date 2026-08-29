@@ -1,0 +1,30 @@
+{
+  "component_order": [
+    "Fx",
+    "Fy",
+    "Fz",
+    "Tx",
+    "Ty",
+    "Tz"
+  ],
+  "phase": 27,
+  "profile": "phase27_wheel_interaction_oracle_v1",
+  "quantity": "wheel follower on leg/base at wheel-body origin in body FLU",
+  "sample_ids": [
+    "equilibrium",
+    "positive_3d",
+    "negative_3d",
+    "near_chart_boundary"
+  ],
+  "schema_version": 1,
+  "side_order": [
+    "left",
+    "right"
+  ],
+  "thresholds": {
+    "maximum_acceleration_map_error": 2e-08,
+    "maximum_bias_error": 2e-05,
+    "maximum_contact_map_error": 2e-10,
+    "maximum_wheel_state_error": 2e-09
+  }
+}

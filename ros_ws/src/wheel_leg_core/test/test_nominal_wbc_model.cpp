@@ -3,6 +3,7 @@
 #endif
 
 #include <Eigen/Core>
+#include <Eigen/LU>
 
 #include <algorithm>
 #include <cassert>
@@ -69,6 +70,36 @@ int main() {
                 << std::endl;
     }
     assert(result.ok());
+    if (case_id == "workspace_equilibrium") {
+      // Independent Phase-23 MuJoCo state-oracle-v2 wheel-body positions.
+      assert(std::abs(result.wheel_position_b_x_m[0] -
+                      (-0.009573649495650122)) <= 2.0e-10);
+      assert(std::abs(result.wheel_position_b_x_m[1] -
+                      (-0.012740695843911437)) <= 2.0e-10);
+      assert(std::abs(result.wheel_velocity_b_x_m_s[0]) <= 1.0e-12);
+      assert(std::abs(result.wheel_velocity_b_x_m_s[1]) <= 1.0e-12);
+      const double common = 0.5 *
+          (result.wheel_position_b_x_m[0] +
+           result.wheel_position_b_x_m[1]);
+      const double differential = 0.5 *
+          (result.wheel_position_b_x_m[1] -
+           result.wheel_position_b_x_m[0]);
+      assert(std::abs(common - (-0.01115717266978078)) <= 2.0e-10);
+      assert(std::abs(differential - (-0.0015835231741306575)) <=
+             2.0e-10);
+      for (int side = 0; side < 2; ++side) {
+        const auto rotation = result.interaction_contact_map[side]
+                                  .topLeftCorner<3, 3>();
+        assert((rotation.transpose() * rotation - Eigen::Matrix3d::Identity())
+                   .cwiseAbs().maxCoeff() <= 1.0e-12);
+        assert(std::abs(rotation.determinant() - 1.0) <= 1.0e-12);
+        // A stationary wheel with no ground wrench pulls downward on its
+        // parent, matching the historical follower-on-base sign.
+        assert(result.interaction_bias[side][2] < 0.0);
+      }
+      assert(std::abs(result.interaction_bias[0][2] -
+                      result.interaction_bias[1][2]) <= 1.0e-10);
+    }
     double reconstruction_error = maximumError(
         result.native_joint_position_rad, input);
     double reduction_error = maximumError(result.reduction, input);

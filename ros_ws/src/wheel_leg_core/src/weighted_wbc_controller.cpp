@@ -7,14 +7,15 @@
 
 namespace wheel_leg {
 
-WeightedWbcController::WeightedWbcController()
+WeightedWbcController::WeightedWbcController(WeightedWbcProfile profile)
     : solver_([] {
         DenseQpSolver::Settings settings;
         settings.absolute_tolerance = 1.0e-8;
         settings.relative_tolerance = 1.0e-8;
         settings.maximum_iterations = 10000;
         return settings;
-      }()) {}
+      }()),
+      profile_(profile) {}
 
 void WeightedWbcController::reset() {
   solver_.reset();
@@ -32,7 +33,7 @@ WeightedWbcController::Result WeightedWbcController::step(
     reset();
     return output;
   }
-  const auto problem = problem_.assemble(model, reference);
+  const auto problem = problem_.assemble(model, reference, profile_);
   if (!problem.ok()) {
     output.status = problem.status == WeightedWbcProblem::Status::kNonFinite
                         ? Status::kNonFinite
@@ -107,22 +108,43 @@ WeightedWbcController::Result WeightedWbcController::step(
       model.contact_jacobian[1] * output.physical_solution.head<12>() +
           model.contact_bias[1];
   record_task(Task::kContact, contact / 10.0);
-  record_task(Task::kBaseX, (Eigen::Matrix<double, 1, 1>() <<
-      (output.physical_solution[0] - reference.base_x_acceleration_m_s2) / 10.0).finished());
-  record_task(Task::kHeight, (Eigen::Matrix<double, 1, 1>() <<
-      (output.physical_solution[2] - reference.base_height_acceleration_m_s2) / 10.0).finished());
-  record_task(Task::kOrientation,
-      (output.physical_solution.segment<3>(3) - reference.orientation_acceleration_rad_s2) / 20.0);
-  Eigen::Matrix<double, 4, 1> leg;
-  for (int index = 0; index < 4; ++index) leg[index] = output.physical_solution[6 + (index < 2 ? index : index + 1)];
-  record_task(Task::kLeg, (leg - reference.leg_acceleration_rad_s2) / 50.0);
+  if (profile_ == WeightedWbcProfile::kNominal) {
+    record_task(Task::kBaseX, (Eigen::Matrix<double, 1, 1>() <<
+        (output.physical_solution[0] - reference.base_x_acceleration_m_s2) /
+            10.0).finished());
+    record_task(Task::kHeight, (Eigen::Matrix<double, 1, 1>() <<
+        (output.physical_solution[2] -
+         reference.base_height_acceleration_m_s2) / 10.0).finished());
+    record_task(Task::kOrientation,
+        (output.physical_solution.segment<3>(3) -
+         reference.orientation_acceleration_rad_s2) / 20.0);
+    Eigen::Matrix<double, 4, 1> leg;
+    for (int index = 0; index < 4; ++index) {
+      leg[index] = output.physical_solution[6 + (index < 2 ? index : index + 1)];
+    }
+    record_task(Task::kLeg, (leg - reference.leg_acceleration_rad_s2) / 50.0);
+  }
   Eigen::Matrix<double, 12, 1> wrench;
   for (int side = 0; side < 2; ++side) {
-    wrench.segment<6>(6 * side) = model.wrench_flu_map[side] *
-        output.physical_solution.segment<6>(18 + 6 * side) -
-        output.physical_solution.segment<6>(30 + 6 * side) -
-        reference.interaction_wrench_flu.segment<6>(6 * side);
+    if (profile_ == WeightedWbcProfile::kPhase27Minimal) {
+      output.realized_interaction_wrench_flu.segment<6>(6 * side) =
+          model.interaction_acceleration_map[side] *
+              output.physical_solution.head<12>() +
+          model.interaction_contact_map[side] *
+              output.physical_solution.segment<6>(18 + 6 * side) +
+          model.interaction_bias[side];
+    } else {
+      output.realized_interaction_wrench_flu.segment<6>(6 * side) =
+          model.wrench_flu_map[side] *
+          output.physical_solution.segment<6>(18 + 6 * side);
+    }
   }
+  output.signed_interaction_slack_flu = output.physical_solution.tail<12>();
+  output.interaction_wrench_residual_flu =
+      output.realized_interaction_wrench_flu -
+      reference.interaction_wrench_flu -
+      output.signed_interaction_slack_flu;
+  wrench = output.interaction_wrench_residual_flu;
   Eigen::Matrix<double, 12, 1> wrench_scale;
   for (int index = 0; index < 12; ++index) wrench_scale[index] = phase21_profile::kVariableScale[30 + index % 6];
   record_task(Task::kWrenchFidelity, wrench.cwiseQuotient(wrench_scale));

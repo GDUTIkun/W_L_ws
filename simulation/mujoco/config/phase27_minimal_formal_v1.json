@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "phase": 27,
+  "profile": "phase27_minimal_formal_v1",
+  "evidence_class": "formal current-nominal MuJoCo simulation-only theory-restored 16-state NMPC plus Minimal WBC",
+  "scene": "simulation/mujoco/model/phase19_standing.xml",
+  "controller_mode": "phase27_minimal_nmpc",
+  "seed": 2701,
+  "schedule": {
+    "physics_period_s": 0.002,
+    "control_period_s": 0.01,
+    "nmpc_period_s": 0.02,
+    "physics_substeps_per_control": 5
+  },
+  "equilibrium": [
+    -0.34332947374181766, 0.5693992271789607,
+    -0.35472149355205396, 0.5694045089964002,
+    0.34771766403249466, -0.572545089643551,
+    -0.5729875480645877, 0.5725979309569537,
+    -0.5730345859812999
+  ],
+  "torque_limit_nm": [10.0, 10.0, 2.0, 10.0, 10.0, 2.0],
+  "cases": [
+    {"id": "T0_static", "ticks": 600, "reference_profile": "static"},
+    {"id": "T1_straight_start_cruise_brake", "ticks": 600, "reference_profile": "straight_start_cruise_brake"},
+    {"id": "T2_turn_left", "ticks": 600, "reference_profile": "turn_left"},
+    {"id": "T2_turn_right", "ticks": 600, "reference_profile": "turn_right"},
+    {
+      "id": "T3_xi_delta_positive_10mm", "ticks": 400,
+      "reference_profile": "static", "target_initial_xi_delta_m": 0.01,
+      "equilibrium": [-0.38375332095003506, 0.56744152780907386, -0.31590443809744551, 0.57377473243902044, 0.34771766403249466, -0.56744152778545265, -0.56744152778587575, 0.57377473243895916, -0.57377473243894772]
+    },
+    {
+      "id": "T3_xi_delta_negative_10mm", "ticks": 400,
+      "reference_profile": "static", "target_initial_xi_delta_m": -0.01,
+      "equilibrium": [-0.31533331346298327, 0.57290455220776204, -0.38429271829726275, 0.56831202896391841, 0.34771766403249466, -0.5729045522077657, -0.57290455220774883, 0.56831202895218402, -0.56831202895239985]
+    }
+  ],
+  "hard_gates": {
+    "maximum_combined_time_s": 0.01,
+    "maximum_hard_violation": 1e-7,
+    "maximum_nmpc_feasibility_residual": 0.001,
+    "maximum_nmpc_independent_dynamics_defect": 0.001,
+    "maximum_nmpc_bound_violation": 1e-8,
+    "maximum_nmpc_projected_stationarity": 0.05,
+    "minimum_bilateral_contact_fraction": 1.0,
+    "minimum_wheel_normal_load_n": 0.0,
+    "maximum_abs_x_tracking_error_m": 0.02,
+    "maximum_abs_y_tracking_error_m": 0.02,
+    "maximum_height_error_m": 0.01,
+    "maximum_abs_roll_pitch_rad": 0.03,
+    "maximum_abs_yaw_tracking_error_rad": 0.05,
+    "maximum_torque_limit_violation_nm": 1e-10,
+    "maximum_zoh_difference": 0.0
+  },
+  "performance_gates": {
+    "maximum_static_linear_speed_m_s": 0.05,
+    "maximum_static_angular_speed_rad_s": 0.05,
+    "maximum_velocity_rmse_m_s": 0.08,
+    "maximum_final_velocity_error_m_s": 0.05,
+    "maximum_yaw_rate_rmse_rad_s": 0.04,
+    "maximum_force_wrench_residual_n": 2.0,
+    "maximum_moment_wrench_residual_nm": 0.2,
+    "maximum_force_wrench_rate_n_s": 1000.0,
+    "maximum_moment_wrench_rate_nm_s": 100.0,
+    "maximum_normalized_slack": 0.05,
+    "initial_xi_delta_tolerance_m": 1e-6,
+    "maximum_t3_tail_abs_xi_delta_m": 0.003,
+    "t3_tail_window_ticks": 100
+  },
+  "solver": {
+    "nmpc": "acados SQP_RTI with partial-condensing HPIPM, N=20, 0.4 s",
+    "wbc": "ProxSuite ProxQP dense, 42 variables, 104 hard rows",
+    "integrator": "two fixed 10 ms RK4 substeps per 20 ms ZOH"
+  },
+  "source_profiles": {
+    "wheel_model_ocp": "simulation/mujoco/config/phase27_acados_ocp_v2.json",
+    "runtime_model": "simulation/mujoco/config/phase21_runtime_model_profile_v1.json"
+  },
+  "failure_layers": [
+    "none", "planner", "nmpc", "interface", "wbc",
+    "contact_or_plant", "safety_envelope", "deadline", "nonfinite"
+  ]
+}

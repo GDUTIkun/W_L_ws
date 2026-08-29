@@ -1,0 +1,28 @@
+{
+  "created_at": "2026-08-29T03:54:11.908699+00:00",
+  "hardware_data": false,
+  "numpy": "2.2.6",
+  "outputs": {
+    "baseline_disturbance_control.csv": "f04cc29802a22d28efc53081e2608392bdd0c1b64d8bf3a801d57a40d236dd69",
+    "baseline_disturbance_plant.csv": "f51aeda25483f5b314b745123d855f40201575a6f6bca4fd190b61dbd78b49d0",
+    "baseline_hold_control.csv": "300fe4048b30a8b2cf593b3232af3321e97b847bfb73813e3fc6b88bc318b65b",
+    "baseline_hold_plant.csv": "0280bf9c4a495de2af0077b67e06ccbd0b4c2212907fc8e48943aa2924942b5c",
+    "baseline_hold_replay_control.csv": "6050c413190baea49ff65da243f532e44d10860173d318661024dee3a356c30b",
+    "baseline_hold_replay_plant.csv": "0280bf9c4a495de2af0077b67e06ccbd0b4c2212907fc8e48943aa2924942b5c",
+    "candidate_disturbance_control.csv": "e77ea7b45ffcabc55e448d45942f7be0f53512c372ac15da7229c91b38f8703a",
+    "candidate_disturbance_plant.csv": "2c314a2a63ed6b8e19da213429480b8d955b4a44c1a116811d967d982d047236",
+    "candidate_hold_control.csv": "7c12101e89ee0cb4c1f4a84aeb583c6fc08f632265e1700d53f92b7b3d403ca4",
+    "candidate_hold_plant.csv": "57b601cbaaabdf9a58b1021b52326bd5741d210f589b25e53d4d32bb8406ee5c",
+    "candidate_hold_replay_control.csv": "72d94e7add80ac2281dd52e0aae38afa16e94a809e0c8e5e1a699c8e65da0983",
+    "candidate_hold_replay_plant.csv": "57b601cbaaabdf9a58b1021b52326bd5741d210f589b25e53d4d32bb8406ee5c",
+    "summary.json": "22faae038649b53b7c843f4961f6d8f63c20a4fe203e35186b1cd716d5d48884"
+  },
+  "python": "3.10.20",
+  "schema_version": 1,
+  "sources": {
+    "ros_ws/src/wheel_leg_mujoco/src/weighted_wbc_loop.cpp": "bd2b36adc889568efd711b55f70255f69ea9a6d0877f195d57dec3ca1dfc2c6a",
+    "simulation/mujoco/config/phase21_weighted_wbc_formal_v1.json": "c86910c7719ace4cc1a2a0eb45038ec6aa634d34665ab06b3242cdbb3ba6b793",
+    "simulation/mujoco/model/phase18_floating_contact.xml": "8728a77c5da33a60dbcd895fd01ad788826b244ed0994190b1294ecf52c651ee",
+    "tools/experiments/evaluate_phase27_timing_comparison.py": "787196b4ee5bc1630b8c0a6145d41d24aa807b9dbf05784a1c19e864831afea6"
+  }
+}

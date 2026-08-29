@@ -1,0 +1,7 @@
+{
+  "schema_version": 2,
+  "profile": "phase27_wheel_aware_model_oracle_v2",
+  "extends": "simulation/mujoco/config/phase27_wheel_aware_model_oracle_v1.json",
+  "supersedes": "docs/workflow/phases/27-theory-restored-minimal-wbc/evidence/automated/wheel-aware-model-oracle-v1",
+  "rk4_substeps": 2
+}

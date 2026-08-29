@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "phase": 27,
+  "task": "T07",
+  "profile": "minimal-wbc-component-v1",
+  "inputs_sha256": {
+    "ros_ws/src/wheel_leg_core/include/wheel_leg_core/weighted_wbc_problem.hpp": "4876dc123f0d7a37d513c900975676a8cfb86b793ea8f995b3a217206cb01406",
+    "ros_ws/src/wheel_leg_core/src/weighted_wbc_problem.cpp": "50e94b01e963954a19fb8a7885bed74006f685dfc6b3f2ee7a1e1650507c1324",
+    "ros_ws/src/wheel_leg_core/include/wheel_leg_core/weighted_wbc_controller.hpp": "0017f178037388dc2c6751ff43216b9403d02390019d4efe6b85e3391ae20161",
+    "ros_ws/src/wheel_leg_core/src/weighted_wbc_controller.cpp": "e16397876753e9acacae7c69b20360edb2161d55c5ea2fbcdff2cbd9019413f0",
+    "ros_ws/src/wheel_leg_core/test/test_phase27_minimal_wbc.cpp": "2a3ce2014d2053e5f873c255540ed0dadeea36997af0ee83ffee9a21ed2a8db0"
+  },
+  "commands": [
+    "cd ros_ws && colcon build --symlink-install --packages-up-to wheel_leg_mujoco --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=ON -DACADOS_ROOT=/home/t/opt/acados",
+    "cd ros_ws && ./build/wheel_leg_core/test_phase27_minimal_wbc",
+    "cd ros_ws && colcon test --packages-select wheel_leg_core wheel_leg_ros wheel_leg_mujoco && colcon test-result --verbose"
+  ],
+  "oracle_inputs": [
+    "phase21_weighted_wbc_problem_golden_v2.txt equilibrium state",
+    "wheel-interaction-oracle-v1 four-state corpus",
+    "independently assembled Minimal Hessian and gradient"
+  ]
+}

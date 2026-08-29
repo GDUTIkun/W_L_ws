@@ -32,6 +32,19 @@ target_include_directories(phase23_acados_generated PRIVATE
   ${ACADOS_INCLUDE_DIR}/hpipm/include
   ${PHASE23_GENERATED_DIR})
 
+set(PHASE27_GENERATED_DIR
+  "${CMAKE_CURRENT_SOURCE_DIR}/acados_generated/phase27_wheel_aware_nmpc_v2")
+add_library(phase27_acados_generated OBJECT
+  ${PHASE27_GENERATED_DIR}/acados_solver_ocp_phase27_wheel_aware_nmpc_v2_ece6e123.c
+  ${PHASE27_GENERATED_DIR}/phase27_wheel_aware_nmpc_v2_model/phase27_wheel_aware_nmpc_v2_dyn_disc_phi_fun.c
+  ${PHASE27_GENERATED_DIR}/phase27_wheel_aware_nmpc_v2_model/phase27_wheel_aware_nmpc_v2_dyn_disc_phi_fun_jac.c)
+target_include_directories(phase27_acados_generated PRIVATE
+  ${ACADOS_INCLUDE_DIR}
+  ${ACADOS_INCLUDE_DIR}/acados
+  ${ACADOS_INCLUDE_DIR}/blasfeo/include
+  ${ACADOS_INCLUDE_DIR}/hpipm/include
+  ${PHASE27_GENERATED_DIR})
+
 add_library(wheel_leg_core
   src/controller_core.cpp
   src/dense_qp_solver.cpp
@@ -40,7 +53,11 @@ add_library(wheel_leg_core
   src/nominal_wbc_model.cpp
   src/weighted_wbc_problem.cpp
   src/weighted_wbc_controller.cpp
-  $<TARGET_OBJECTS:phase23_acados_generated>)
+  src/wheel_aware_nmpc_model.cpp
+  src/wheel_aware_nmpc_solver.cpp
+  src/wheel_position_planner.cpp
+  $<TARGET_OBJECTS:phase23_acados_generated>
+  $<TARGET_OBJECTS:phase27_acados_generated>)
 add_library(wheel_leg_core::wheel_leg_core ALIAS wheel_leg_core)
 target_include_directories(wheel_leg_core PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -50,7 +67,8 @@ target_include_directories(wheel_leg_core PRIVATE
   ${ACADOS_INCLUDE_DIR}/acados
   ${ACADOS_INCLUDE_DIR}/blasfeo/include
   ${ACADOS_INCLUDE_DIR}/hpipm/include
-  ${PHASE23_GENERATED_DIR})
+  ${PHASE23_GENERATED_DIR}
+  ${PHASE27_GENERATED_DIR})
 target_link_libraries(wheel_leg_core PUBLIC Eigen3::Eigen PRIVATE
   proxsuite::proxsuite
   ${ACADOS_LIBRARY}
@@ -120,6 +138,32 @@ if(BUILD_TESTING)
   endif()
   add_test(NAME wheel_leg_core_nominal_wbc_model COMMAND test_nominal_wbc_model)
 
+  add_executable(test_wheel_position_planner
+    test/test_wheel_position_planner.cpp)
+  target_link_libraries(test_wheel_position_planner PRIVATE wheel_leg_core)
+  if(MSVC)
+    target_compile_options(test_wheel_position_planner PRIVATE /W4 /WX)
+  else()
+    target_compile_options(test_wheel_position_planner PRIVATE
+      -Wall -Wextra -Wpedantic -Werror)
+  endif()
+  add_test(NAME wheel_leg_core_wheel_position_planner
+    COMMAND test_wheel_position_planner)
+
+  add_executable(test_phase27_wheel_contract
+    test/test_phase27_wheel_contract.cpp)
+  target_link_libraries(test_phase27_wheel_contract PRIVATE wheel_leg_core)
+  target_compile_definitions(test_phase27_wheel_contract PRIVATE
+    PHASE27_WHEEL_GOLDEN_PATH="${CMAKE_CURRENT_SOURCE_DIR}/../../../docs/workflow/phases/27-theory-restored-minimal-wbc/evidence/automated/wheel-interaction-oracle-v1/golden.txt")
+  if(MSVC)
+    target_compile_options(test_phase27_wheel_contract PRIVATE /W4 /WX)
+  else()
+    target_compile_options(test_phase27_wheel_contract PRIVATE
+      -Wall -Wextra -Wpedantic -Werror)
+  endif()
+  add_test(NAME wheel_leg_core_phase27_wheel_contract
+    COMMAND test_phase27_wheel_contract)
+
   add_executable(test_nominal_nmpc_model test/test_nominal_nmpc_model.cpp)
   target_link_libraries(test_nominal_nmpc_model PRIVATE wheel_leg_core)
   target_compile_definitions(test_nominal_nmpc_model PRIVATE
@@ -132,6 +176,20 @@ if(BUILD_TESTING)
   endif()
   add_test(NAME wheel_leg_core_nominal_nmpc_model COMMAND test_nominal_nmpc_model)
 
+  add_executable(test_wheel_aware_nmpc_model
+    test/test_wheel_aware_nmpc_model.cpp)
+  target_link_libraries(test_wheel_aware_nmpc_model PRIVATE wheel_leg_core)
+  target_compile_definitions(test_wheel_aware_nmpc_model PRIVATE
+    PHASE27_MODEL_GOLDEN_PATH="${CMAKE_CURRENT_SOURCE_DIR}/../../../docs/workflow/phases/27-theory-restored-minimal-wbc/evidence/automated/wheel-aware-model-oracle-v2/golden.txt")
+  if(MSVC)
+    target_compile_options(test_wheel_aware_nmpc_model PRIVATE /W4 /WX)
+  else()
+    target_compile_options(test_wheel_aware_nmpc_model PRIVATE
+      -Wall -Wextra -Wpedantic -Werror)
+  endif()
+  add_test(NAME wheel_leg_core_wheel_aware_nmpc_model
+    COMMAND test_wheel_aware_nmpc_model)
+
   add_executable(test_nominal_nmpc_solver test/test_nominal_nmpc_solver.cpp)
   target_link_libraries(test_nominal_nmpc_solver PRIVATE wheel_leg_core)
   if(MSVC)
@@ -142,6 +200,18 @@ if(BUILD_TESTING)
   endif()
   add_test(NAME wheel_leg_core_nominal_nmpc_solver
     COMMAND test_nominal_nmpc_solver)
+
+  add_executable(test_wheel_aware_nmpc_solver
+    test/test_wheel_aware_nmpc_solver.cpp)
+  target_link_libraries(test_wheel_aware_nmpc_solver PRIVATE wheel_leg_core)
+  if(MSVC)
+    target_compile_options(test_wheel_aware_nmpc_solver PRIVATE /W4 /WX)
+  else()
+    target_compile_options(test_wheel_aware_nmpc_solver PRIVATE
+      -Wall -Wextra -Wpedantic -Werror)
+  endif()
+  add_test(NAME wheel_leg_core_wheel_aware_nmpc_solver
+    COMMAND test_wheel_aware_nmpc_solver)
 
   add_executable(test_weighted_wbc_problem test/test_weighted_wbc_problem.cpp)
   target_link_libraries(test_weighted_wbc_problem PRIVATE wheel_leg_core)
@@ -165,6 +235,22 @@ if(BUILD_TESTING)
   endif()
   add_test(NAME wheel_leg_core_weighted_wbc_controller COMMAND test_weighted_wbc_controller)
 
+  add_executable(test_phase27_minimal_wbc test/test_phase27_minimal_wbc.cpp)
+  target_link_libraries(test_phase27_minimal_wbc PRIVATE wheel_leg_core)
+  target_include_directories(test_phase27_minimal_wbc PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/src)
+  target_compile_definitions(test_phase27_minimal_wbc PRIVATE
+    WBC_PROBLEM_GOLDEN_PATH="${CMAKE_CURRENT_SOURCE_DIR}/test/data/phase21_weighted_wbc_problem_golden_v2.txt"
+    PHASE27_WHEEL_GOLDEN_PATH="${CMAKE_CURRENT_SOURCE_DIR}/../../../docs/workflow/phases/27-theory-restored-minimal-wbc/evidence/automated/wheel-interaction-oracle-v1/golden.txt")
+  if(MSVC)
+    target_compile_options(test_phase27_minimal_wbc PRIVATE /W4 /WX)
+  else()
+    target_compile_options(test_phase27_minimal_wbc PRIVATE
+      -Wall -Wextra -Wpedantic -Werror)
+  endif()
+  add_test(NAME wheel_leg_core_phase27_minimal_wbc
+    COMMAND test_phase27_minimal_wbc)
+
   add_executable(test_controller_core_weighted_wbc
     test/test_controller_core_weighted_wbc.cpp)
   target_link_libraries(test_controller_core_weighted_wbc PRIVATE wheel_leg_core)
@@ -177,6 +263,20 @@ if(BUILD_TESTING)
   endif()
   add_test(NAME wheel_leg_core_controller_core_weighted_wbc
     COMMAND test_controller_core_weighted_wbc)
+
+  add_executable(test_controller_core_phase27
+    test/test_controller_core_phase27.cpp)
+  target_link_libraries(test_controller_core_phase27 PRIVATE wheel_leg_core)
+  target_compile_definitions(test_controller_core_phase27 PRIVATE
+    WBC_PROBLEM_GOLDEN_PATH="${CMAKE_CURRENT_SOURCE_DIR}/test/data/phase21_weighted_wbc_problem_golden_v2.txt")
+  if(MSVC)
+    target_compile_options(test_controller_core_phase27 PRIVATE /W4 /WX)
+  else()
+    target_compile_options(test_controller_core_phase27 PRIVATE
+      -Wall -Wextra -Wpedantic -Werror)
+  endif()
+  add_test(NAME wheel_leg_core_controller_core_phase27
+    COMMAND test_controller_core_phase27)
 endif()
 
 install(DIRECTORY include/ DESTINATION include)

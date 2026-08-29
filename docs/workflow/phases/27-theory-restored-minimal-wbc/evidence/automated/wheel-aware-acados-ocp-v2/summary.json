@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "phase": 27,
+  "task": "T06",
+  "profile": "wheel-aware-acados-ocp-v2",
+  "supersedes": "phase27_wheel_aware_acados_ocp_v1",
+  "pass": true,
+  "completed_checks": {
+    "dependency_probe": true,
+    "py_compile": true,
+    "generated_model_next_a_b_parity": true,
+    "double_clean_generation_normalized_parity": true,
+    "checked_in_artifact_normalized_parity": true,
+    "equilibrium": true,
+    "positive_and_negative_reference": true,
+    "brake_and_return": true,
+    "wheel_common_and_differential": true,
+    "input_and_state_bounds": true,
+    "full_horizon_defect": true,
+    "independent_projected_stationarity": true,
+    "cold_reset_determinism": true,
+    "dynamic_warm_timing": true,
+    "ordinary_build_does_not_generate": true,
+    "full_package_regression": true
+  },
+  "metrics": {
+    "oracle_samples": 6,
+    "maximum_generated_next_error": 1.1102230246251565e-16,
+    "maximum_generated_state_jacobian_error": 1.037674182691184e-10,
+    "maximum_generated_input_jacobian_error": 1.0384487714176771e-10,
+    "dynamic_warm_samples": 300,
+    "dynamic_warm_p99_ms": 3.83292,
+    "dynamic_warm_max_ms": 3.95768,
+    "combined_deadline_ms": 10.0,
+    "maximum_full_horizon_defect": 0.000163282,
+    "defect_gate": 0.001,
+    "maximum_independent_projected_stationarity": 0.00059534,
+    "projected_stationarity_gate": 0.05,
+    "normalized_makefile_sha256": "705245a7fb35dacb094198715b996dcbae25f54bdb950235a59e1a1d13842309",
+    "normalized_acados_json_sha256": "7bf91c8bbf80906d93628ff61a83651e06c65117e8690298d23d12e998e24f",
+    "core_tests": 30,
+    "test_errors": 0,
+    "test_failures": 0
+  },
+  "v1_disposition": {
+    "status": "withdrawn_inconclusive",
+    "reason": "the first projected-stationarity calculation omitted acados EULER running-cost time scaling; its reported failure is not valid evidence",
+    "artifact_retained": true,
+    "thresholds_relaxed": false
+  },
+  "authority": "closes the Phase 27 generated-model, OCP component, solver lifecycle, deterministic-generation, bounds, independent audit and 10 ms combined-deadline gates only; it does not close DG27-05 formal-case thresholds or controller-level behavior"
+}

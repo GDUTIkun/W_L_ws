@@ -1,0 +1,109 @@
+{
+  "faults": [
+    {
+      "checks": {
+        "control_reset_replay": true,
+        "exact_zero_after_fault": true,
+        "fault_latched": true,
+        "plant_reset_replay": true,
+        "pre_fault_ok": true,
+        "row_count": true
+      },
+      "id": "nmpc_solver_failure",
+      "pass": true
+    },
+    {
+      "checks": {
+        "control_reset_replay": true,
+        "exact_zero_after_fault": true,
+        "fault_latched": true,
+        "plant_reset_replay": true,
+        "pre_fault_ok": true,
+        "row_count": true
+      },
+      "id": "nmpc_late",
+      "pass": true
+    },
+    {
+      "checks": {
+        "control_reset_replay": true,
+        "exact_zero_after_fault": true,
+        "fault_latched": true,
+        "plant_reset_replay": true,
+        "pre_fault_ok": true,
+        "row_count": true
+      },
+      "id": "nmpc_stale",
+      "pass": true
+    },
+    {
+      "checks": {
+        "control_reset_replay": true,
+        "exact_zero_after_fault": true,
+        "fault_latched": true,
+        "plant_reset_replay": true,
+        "pre_fault_ok": true,
+        "row_count": true
+      },
+      "id": "nmpc_nonfinite",
+      "pass": true
+    }
+  ],
+  "fresh_replay": [
+    {
+      "file": "T0_static_control.csv",
+      "pass": true
+    },
+    {
+      "file": "T1_straight_start_cruise_brake_control.csv",
+      "pass": true
+    },
+    {
+      "file": "T2_turn_left_control.csv",
+      "pass": true
+    },
+    {
+      "file": "T2_turn_right_control.csv",
+      "pass": true
+    },
+    {
+      "file": "T3_xi_delta_negative_10mm_control.csv",
+      "pass": true
+    },
+    {
+      "file": "T3_xi_delta_positive_10mm_control.csv",
+      "pass": true
+    },
+    {
+      "file": "T0_static_plant.csv",
+      "pass": true
+    },
+    {
+      "file": "T1_straight_start_cruise_brake_plant.csv",
+      "pass": true
+    },
+    {
+      "file": "T2_turn_left_plant.csv",
+      "pass": true
+    },
+    {
+      "file": "T2_turn_right_plant.csv",
+      "pass": true
+    },
+    {
+      "file": "T3_xi_delta_negative_10mm_plant.csv",
+      "pass": true
+    },
+    {
+      "file": "T3_xi_delta_positive_10mm_plant.csv",
+      "pass": true
+    }
+  ],
+  "nonoverwrite": {
+    "pass": true,
+    "return_code": 1,
+    "stderr": "ERROR: Refusing to overwrite output"
+  },
+  "pass": true,
+  "schema_version": 1
+}

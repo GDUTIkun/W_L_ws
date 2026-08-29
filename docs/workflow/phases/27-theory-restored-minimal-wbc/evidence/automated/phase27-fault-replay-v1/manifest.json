@@ -1,0 +1,24 @@
+{
+  "config": "simulation/mujoco/config/phase27_minimal_formal_v1.json",
+  "config_sha256": "70b961f7ede235d7e32a0d588051f5f9555d4a80ab4c817b073c6e3ffddae508",
+  "created_at": "2026-08-29T06:43:52.574358+00:00",
+  "hardware_data": false,
+  "outputs": {
+    "fault_nmpc_late_control.csv": "69e156c0b29a9823e7e16ba5ea7199eb96f1c8dbc5959240b223af7ac8331ea3",
+    "fault_nmpc_late_plant.csv": "1bb1680548a7e336e95949849f87639fbedc8823f0dc48ebbc978489ecff4871",
+    "fault_nmpc_nonfinite_control.csv": "84ae8ba9fef4f4af9a29c4f70b5913c2e41f13f48cdae9f65aafd44d7a795ed5",
+    "fault_nmpc_nonfinite_plant.csv": "27daf1a96eec368c65d3ccae44eb8c67bb9983574cc03beb8cd4fdd45dc84a6a",
+    "fault_nmpc_solver_failure_control.csv": "a2e1339454fe65e19d544409dff9c5963bb112d1bb6c8f75a85257174e5e69cd",
+    "fault_nmpc_solver_failure_plant.csv": "8adaffabc682c4923a59c4a7906d39a090974158375c9f39ce770a8a4a2027ab",
+    "fault_nmpc_stale_control.csv": "ee00333ad099b96efa2b55703b90c30f107f415060c65c8548d4016f5aaca405",
+    "fault_nmpc_stale_plant.csv": "4b1adee10a54e63820a1e99fa0590871cabb4501c1277c956a5731e6cdd3c64f",
+    "summary.json": "2c98decd3d84cc59a19f565e120f7b6745f4556cecd308036f330f10e1e71893"
+  },
+  "primary_manifest_sha256": "8861694f9bca4f50c026fcae8f6dc8989ca0fdc44ca261bf7d587261010b8abd",
+  "replay_manifest_sha256": "4de002b9043e117d22ced7ed74745943c0303a7ce4c4d043d315949ab68bf35e",
+  "runner": "ros_ws/build/wheel_leg_mujoco/weighted_wbc_loop",
+  "runner_sha256": "aad3986c902cabdc6f778ed1c7b2f0f0b0a11015267ff1a0170b0a7cace1ed8f",
+  "schema_version": 1,
+  "wrapper": "tools/experiments/verify_phase27_fault_replay.py",
+  "wrapper_sha256": "eacc56e0a46ad240a577bf32ee03e449dd804851e5b245966be8f1915c62fa98"
+}

@@ -45,14 +45,16 @@
 | 14 | nominal acados NMPC | complete | [Phase 23](phases/23-nominal-nmpc/PLAN.md) | append-only acados v2、component、23+10 formal、fresh replay、历史回归、REVIEW/RECORD全部PASS；仅限current nominal simulation host |
 | 15 | MuJoCo interactive NMPC viewer | complete | [Phase 24](phases/24-mujoco-interactive-viewer/PLAN.md) | opt-in C++ viewer复用Phase23 controller/adapter；GLFW render/headless regression/26-test suite PASS，不改变headless formal或性能口径 |
 | 16 | MuJoCo mouse interaction | complete | [Phase 25](phases/25-mujoco-mouse-interaction/PLAN.md) | native camera/temporary perturb controls；build/headless/GUI smoke与26-test suite PASS，不影响formal/性能口径 |
-| 17 | 执行器力矩映射、摩擦与附加惯量 | blocked | [Phase 05](phases/05-actuator-torque-identification/PLAN.md) | 当前冻结真机；解冻后仍须关闭 Phase 05 自身 DG01–DG06，才能执行真实辨识与 MuJoCo 对应验证 |
-| 18 | RobotState 与传感器正式验证 | planned | — | 真机解冻后验证时间戳、单位、方向、滤波和延迟，形成 identified/real 可用状态边界 |
-| 19 | MuJoCo–真机运动学、重力、质量与 COM 辨识 | planned | — | 复用 Phase 14/15 基线，FK/Jacobian/重力矩及 mass/COM 得到模型与实验支持 |
-| 20 | MuJoCo–真机完整惯量、动力学耦合与接触辨识 | planned | — | 复用 Phase 14/15 激励与分析，关键动力学和接触趋势在预定误差内一致 |
-| 21 | identified profile 分层复现与三方比较 | planned | — | 使用同一 runner/schema/阈值从运动学到 NMPC 追加重跑，保留 nominal ↔ identified ↔ real 对照，不覆盖第一轮 |
-| 22 | Roll/Yaw/Turning 与差分辨识 | planned | — | 在前述两轮证据基础上验证工作范围与鲁棒裕量 |
+| 17 | current-nominal Minimal WBC task audit | blocked | [Phase 26](phases/26-minimal-wbc-task-audit/PLAN.md) | 用户选择先执行Phase27；本Phase仅有PLAN且P26-T01～T10均todo，按DG26-01等待新的physical state/OCP/interface terminal contract后再修订恢复，不继承Phase27 task结论或阈值 |
+| 18 | theory-restored wheel-aware NMPC + Minimal WBC | complete | [Phase 27](phases/27-theory-restored-minimal-wbc/RECORD.md) | 上游wheel/planner、internal interaction-wrench、16-state/acados、timing与Minimal-WBC component gates均PASS；T0～T3 formal结论为diagnosed Minimal FAIL：T0/T1/T2首失效为safety envelope，T3 `±10 mm`首失效为native NMPC stationarity audit；fault/replay/regression PASS，本Phase未add-back/retune |
+| 19 | 执行器力矩映射、摩擦与附加惯量 | blocked | [Phase 05](phases/05-actuator-torque-identification/PLAN.md) | 当前冻结真机；解冻后仍须关闭 Phase 05 自身 DG01–DG06，才能执行真实辨识与 MuJoCo 对应验证 |
+| 20 | RobotState 与传感器正式验证 | planned | — | 真机解冻后验证时间戳、单位、方向、滤波和延迟，形成 identified/real 可用状态边界 |
+| 21 | MuJoCo–真机运动学、重力、质量与 COM 辨识 | planned | — | 复用 Phase 14/15 基线，FK/Jacobian/重力矩及 mass/COM 得到模型与实验支持 |
+| 22 | MuJoCo–真机完整惯量、动力学耦合与接触辨识 | planned | — | 复用 Phase 14/15 激励与分析，关键动力学和接触趋势在预定误差内一致 |
+| 23 | identified profile 分层复现与三方比较 | planned | — | 使用同一 runner/schema/阈值从运动学到 NMPC 追加重跑，保留 nominal ↔ identified ↔ real 对照，不覆盖第一轮 |
+| 24 | Roll/Yaw/Turning 与差分辨识 | planned | — | 在前述两轮证据基础上验证工作范围与鲁棒裕量 |
 
-README 与工作流骨架属于仓库引导建设，不作为产品开发 Phase。Phase 14/15/16/17/18/19/20/21/22/23 已完成；Phase 19最终authority为formal-v4，Phase 20最终authority为formal-v3，Phase 21最终authority为formal-v1，Phase 22最终authority为formal-v2，Phase 23最终authority为append-only acados formal-v2，既往REWORK与formal演进证据均已非覆盖归档。[Phase 23](phases/23-nominal-nmpc/RECORD.md) 完成12-state locked-composite/12-wrench acados SQP-RTI+HPIPM NMPC、state-bounded v2 generated artifact、2:1 NMPC→ProxQP WBC runtime、23+10 formal、fresh replay和历史回归；结论仅限current nominal simulation host。Phase 05 因当前真机冻结而blocked；恢复时现有PASS不替代通信、Load Cell、同步和安全放行条件。Roll/yaw/turning尚无独立Phase，不从Phase23自动继承放行。
+README 与工作流骨架属于仓库引导建设，不作为产品开发 Phase。Phase 14/15/16/17/18/19/20/21/22/23/27 已完成；Phase 19最终authority为formal-v4，Phase 20最终authority为formal-v3，Phase 21最终authority为formal-v1，Phase 22最终authority为formal-v2，Phase 23最终authority为append-only acados formal-v2，既往REWORK与formal演进证据均已非覆盖归档。[Phase 23](phases/23-nominal-nmpc/RECORD.md) 完成12-state locked-composite/12-wrench acados SQP-RTI+HPIPM NMPC、state-bounded v2 generated artifact、2:1 NMPC→ProxQP WBC runtime、23+10 formal、fresh replay和历史回归；结论仅限current nominal simulation host。2026-08-29用户选择先执行[Phase 27](phases/27-theory-restored-minimal-wbc/RECORD.md)：[Phase 26](phases/26-minimal-wbc-task-audit/PLAN.md)当时仅有PLAN、全部任务todo，按DG26-01转blocked且不迁移current-12D task结论/阈值；Phase27从Phase21～23 baseline重新关闭wheel-state、internal interaction-wrench、16-state chart/model、timing与T0～T3 gates，最终得到可复现的Minimal FAIL：T0～T2为base/reference safety-envelope首失效，T3为NMPC native stationarity首失效，未在同Phase增加补偿task或放宽阈值。Phase 05 因当前真机冻结而blocked；恢复时现有PASS不替代通信、Load Cell、同步和安全放行条件。identified-profile Roll/yaw/turning仍无独立Phase，不从Phase26/27的current-nominal测试自动继承放行。
 
 详细技术次序以 [MuJoCo → Real 当前更新路线](../mujoco/simulink%202%20mujoco%202%20real流程.md) 为准。建立真实 Phase 后，用 Phase 链接替换表中的“—”。
 

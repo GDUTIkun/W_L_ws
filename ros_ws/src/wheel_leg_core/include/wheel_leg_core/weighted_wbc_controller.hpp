@@ -37,11 +37,18 @@ class WeightedWbcController {
     std::array<double, kTaskCount> task_max_abs_normalized_residual{};
     std::array<double, kTaskCount> task_normalized_squared_cost{};
     double maximum_normalized_slack{0.0};
+    Eigen::Matrix<double, 12, 1> realized_interaction_wrench_flu{
+        Eigen::Matrix<double, 12, 1>::Zero()};
+    Eigen::Matrix<double, 12, 1> interaction_wrench_residual_flu{
+        Eigen::Matrix<double, 12, 1>::Zero()};
+    Eigen::Matrix<double, 12, 1> signed_interaction_slack_flu{
+        Eigen::Matrix<double, 12, 1>::Zero()};
 
     [[nodiscard]] bool ok() const { return status == Status::kOk; }
   };
 
-  WeightedWbcController();
+  explicit WeightedWbcController(
+      WeightedWbcProfile profile = WeightedWbcProfile::kNominal);
   void reset();
   [[nodiscard]] Result step(const RobotState &state,
                             const WbcReference &reference);
@@ -50,6 +57,7 @@ class WeightedWbcController {
   NominalWbcModel model_{};
   WeightedWbcProblem problem_{};
   DenseQpSolver solver_;
+  WeightedWbcProfile profile_{WeightedWbcProfile::kNominal};
   bool warm_start_available_{false};
 };
 

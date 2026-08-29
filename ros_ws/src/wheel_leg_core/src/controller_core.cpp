@@ -146,7 +146,8 @@ bool isStandingMode(ControllerMode mode) {
 
 bool isSafetyLatchedMode(ControllerMode mode) {
   return isStandingMode(mode) || mode == ControllerMode::kWeightedWbc ||
-         mode == ControllerMode::kNominalNmpcWbc;
+         mode == ControllerMode::kNominalNmpcWbc ||
+         mode == ControllerMode::kPhase27MinimalNmpcWbc;
 }
 
 bool validWeightedWbcConfig(
@@ -193,6 +194,19 @@ bool validNominalNmpcConfig(const NominalNmpcConfig &config) {
          config.longitudinal_amplitude_m <= 0.01 &&
          config.step_start_s >= 0.0 &&
          config.return_start_s > config.step_start_s &&
+         std::abs(config.update_period_s - 0.02) <= 1.0e-12 &&
+         config.deadline_s > 0.0 && config.deadline_s <= 0.01;
+}
+
+bool validPhase27NmpcConfig(const Phase27NmpcConfig &config) {
+  return std::isfinite(config.target_common_position_offset_m) &&
+         std::isfinite(config.longitudinal_velocity_m_s) &&
+         std::isfinite(config.yaw_rate_rad_s) &&
+         std::isfinite(config.update_period_s) &&
+         std::isfinite(config.deadline_s) &&
+         std::abs(config.target_common_position_offset_m) <= 0.05 &&
+         std::abs(config.longitudinal_velocity_m_s) <= 0.20 &&
+         std::abs(config.yaw_rate_rad_s) <= 0.08 &&
          std::abs(config.update_period_s - 0.02) <= 1.0e-12 &&
          config.deadline_s > 0.0 && config.deadline_s <= 0.01;
 }
@@ -314,7 +328,8 @@ bool ControllerCore::configure(const ControllerConfig &config) {
        config.mode != ControllerMode::kSimpleStanding &&
        config.mode != ControllerMode::kSimpleStanding3d &&
        config.mode != ControllerMode::kWeightedWbc &&
-       config.mode != ControllerMode::kNominalNmpcWbc) ||
+       config.mode != ControllerMode::kNominalNmpcWbc &&
+       config.mode != ControllerMode::kPhase27MinimalNmpcWbc) ||
       !std::isfinite(config.quaternion_norm_tolerance) ||
       config.quaternion_norm_tolerance < 0.0 ||
       !validReference(config.initial_reference) ||
@@ -327,10 +342,13 @@ bool ControllerCore::configure(const ControllerConfig &config) {
       (config.mode == ControllerMode::kSimpleStanding3d &&
        !validSimpleStanding3dConfig(config.simple_standing_3d)) ||
       ((config.mode == ControllerMode::kWeightedWbc ||
-        config.mode == ControllerMode::kNominalNmpcWbc) &&
+        config.mode == ControllerMode::kNominalNmpcWbc ||
+        config.mode == ControllerMode::kPhase27MinimalNmpcWbc) &&
        !validWeightedWbcConfig(config.weighted_wbc, config.torque_limit_nm)) ||
       (config.mode == ControllerMode::kNominalNmpcWbc &&
-       !validNominalNmpcConfig(config.nominal_nmpc))) {
+       !validNominalNmpcConfig(config.nominal_nmpc)) ||
+      (config.mode == ControllerMode::kPhase27MinimalNmpcWbc &&
+       !validPhase27NmpcConfig(config.phase27_nmpc))) {
     return false;
   }
   if (config.mode == ControllerMode::kJointPdGravity ||
@@ -353,6 +371,15 @@ bool ControllerCore::configure(const ControllerConfig &config) {
   } else {
     nominal_nmpc_solver_.reset();
   }
+  if (config.mode == ControllerMode::kPhase27MinimalNmpcWbc) {
+    phase27_nmpc_solver_ = std::make_unique<WheelAwareNmpcSolver>();
+    if (!phase27_nmpc_solver_->ready()) {
+      phase27_nmpc_solver_.reset();
+      return false;
+    }
+  } else {
+    phase27_nmpc_solver_.reset();
+  }
   configured_ = true;
   reset();
   return true;
@@ -363,6 +390,22 @@ bool ControllerCore::setReference(const JointReference &reference) {
     return false;
   }
   reference_ = reference;
+  return true;
+}
+
+bool ControllerCore::setPhase27MotionReference(
+    double longitudinal_velocity_m_s, double yaw_rate_rad_s) {
+  if (!configured_ ||
+      config_.mode != ControllerMode::kPhase27MinimalNmpcWbc ||
+      !std::isfinite(longitudinal_velocity_m_s) ||
+      !std::isfinite(yaw_rate_rad_s) ||
+      std::abs(longitudinal_velocity_m_s) > 0.20 ||
+      std::abs(yaw_rate_rad_s) > 0.08) {
+    return false;
+  }
+  config_.phase27_nmpc.longitudinal_velocity_m_s =
+      longitudinal_velocity_m_s;
+  config_.phase27_nmpc.yaw_rate_rad_s = yaw_rate_rad_s;
   return true;
 }
 
@@ -377,17 +420,27 @@ void ControllerCore::reset() {
   standing_3d_anchor_heading_rad_.reset();
   standing_safety_latched_ = false;
   weighted_wbc_controller_.reset();
+  phase27_minimal_wbc_controller_.reset();
   weighted_wbc_anchor_x_m_.reset();
   weighted_wbc_anchor_y_m_.reset();
   weighted_wbc_anchor_yaw_rad_.reset();
   nominal_nmpc_last_result_.reset();
   nominal_nmpc_control_tick_ = 0;
   if (nominal_nmpc_solver_) nominal_nmpc_solver_->reset();
+  phase27_nmpc_last_result_.reset();
+  phase27_nmpc_control_tick_ = 0;
+  phase27_wheel_target_common_m_.reset();
+  phase27_reference_x_m_.reset();
+  phase27_reference_y_m_.reset();
+  phase27_reference_yaw_rad_.reset();
+  if (phase27_nmpc_solver_) phase27_nmpc_solver_->reset();
+  phase27_wheel_planner_ = WheelPositionPlanner{};
 }
 
 void ControllerCore::stepWeightedWbc(
     const RobotState &state, StepResult &result,
-    const NominalNmpcModel::Input *wrench_override) {
+    const NominalNmpcModel::Input *wrench_override,
+    bool minimal_profile) {
   const auto &wbc = config_.weighted_wbc;
   if (result.dt_s != 0.0 &&
       std::abs(result.dt_s - wbc.period_s) > wbc.period_tolerance_s) {
@@ -441,7 +494,9 @@ void ControllerCore::stepWeightedWbc(
     result.safety_latched = true;
     return;
   }
-  const auto wbc_result = weighted_wbc_controller_.step(state, reference);
+  auto &controller = minimal_profile ? phase27_minimal_wbc_controller_
+                                     : weighted_wbc_controller_;
+  const auto wbc_result = controller.step(state, reference);
   result.weighted_wbc_status = wbc_result.status;
   result.weighted_wbc_model_status = wbc_result.model_status;
   result.weighted_wbc_solver_status = wbc_result.solver_status;
@@ -459,6 +514,12 @@ void ControllerCore::stepWeightedWbc(
       wbc_result.task_normalized_squared_cost;
   result.weighted_wbc_maximum_normalized_slack =
       wbc_result.maximum_normalized_slack;
+  result.weighted_wbc_realized_interaction_wrench_flu =
+      wbc_result.realized_interaction_wrench_flu;
+  result.weighted_wbc_interaction_residual_flu =
+      wbc_result.interaction_wrench_residual_flu;
+  result.weighted_wbc_signed_interaction_slack_flu =
+      wbc_result.signed_interaction_slack_flu;
   bool over_limit = false;
   for (std::size_t joint = 0; joint < kJointCount; ++joint) {
     if (std::abs(wbc_result.torque_nm[joint]) >
@@ -587,6 +648,158 @@ void ControllerCore::stepNominalNmpcWbc(
   }
 }
 
+void ControllerCore::stepPhase27MinimalNmpcWbc(
+    const RobotState &state, StepResult &result) {
+  using Clock = std::chrono::steady_clock;
+  const auto start = Clock::now();
+  result.phase27_longitudinal_velocity_reference_m_s =
+      config_.phase27_nmpc.longitudinal_velocity_m_s;
+  result.phase27_yaw_rate_reference_rad_s =
+      config_.phase27_nmpc.yaw_rate_rad_s;
+  const auto model = phase27_state_model_.evaluate(state);
+  if (!model.ok()) {
+    result.weighted_wbc_model_status = model.status;
+    standing_safety_latched_ = true;
+    result.status = StepStatus::kSafetyLatched;
+    result.safety_latched = true;
+    return;
+  }
+  const double common_position =
+      0.5 * (model.wheel_position_b_x_m[0] +
+             model.wheel_position_b_x_m[1]);
+  const double common_velocity =
+      0.5 * (model.wheel_velocity_b_x_m_s[0] +
+             model.wheel_velocity_b_x_m_s[1]);
+  result.phase27_wheel_position_b_x_m = model.wheel_position_b_x_m;
+  result.phase27_wheel_velocity_b_x_m_s = model.wheel_velocity_b_x_m_s;
+  if (!phase27_wheel_planner_.initialized()) {
+    result.phase27_wheel_reference =
+        phase27_wheel_planner_.reset(common_position, common_velocity);
+    if (!phase27_wheel_planner_.initialized()) {
+      standing_safety_latched_ = true;
+      result.status = StepStatus::kSafetyLatched;
+      result.safety_latched = true;
+      return;
+    }
+    phase27_wheel_target_common_m_ =
+        common_position +
+        config_.phase27_nmpc.target_common_position_offset_m;
+    phase27_reference_x_m_ = state.base_position_n_m[0];
+    phase27_reference_y_m_ = state.base_position_n_m[1];
+    phase27_reference_yaw_rad_ = headingFromQuaternion(state.q_n_from_b);
+  } else {
+    result.phase27_wheel_reference = phase27_wheel_planner_.step(
+        *phase27_wheel_target_common_m_, config_.weighted_wbc.period_s);
+    const double yaw = *phase27_reference_yaw_rad_;
+    *phase27_reference_x_m_ += config_.weighted_wbc.period_s *
+        config_.phase27_nmpc.longitudinal_velocity_m_s * std::cos(yaw);
+    *phase27_reference_y_m_ += config_.weighted_wbc.period_s *
+        config_.phase27_nmpc.longitudinal_velocity_m_s * std::sin(yaw);
+    *phase27_reference_yaw_rad_ += config_.weighted_wbc.period_s *
+        config_.phase27_nmpc.yaw_rate_rad_s;
+  }
+  weighted_wbc_anchor_x_m_ = *phase27_reference_x_m_;
+  weighted_wbc_anchor_y_m_ = *phase27_reference_y_m_;
+  weighted_wbc_anchor_yaw_rad_ = *phase27_reference_yaw_rad_;
+
+  const bool update_tick = phase27_nmpc_control_tick_ % 2 == 0;
+  const bool inject_fault =
+      phase27_nmpc_control_tick_ == config_.phase27_nmpc.fault_control_tick;
+  const auto fault = inject_fault ? config_.phase27_nmpc.fault_injection
+                                  : NmpcFaultInjection::kNone;
+  result.phase27_nmpc_update_tick = update_tick;
+  if (update_tick && fault != NmpcFaultInjection::kStale) {
+    WheelAwareNmpcProblem problem;
+    for (std::size_t axis = 0; axis < 3; ++axis) {
+      problem.state[static_cast<Eigen::Index>(axis)] =
+          state.base_position_n_m[axis];
+      problem.state[static_cast<Eigen::Index>(6 + axis)] =
+          state.base_linear_velocity_n_m_s[axis];
+      problem.state[static_cast<Eigen::Index>(9 + axis)] =
+          state.base_angular_velocity_n_rad_s[axis];
+    }
+    const auto rotation = orientationError(
+        state.q_n_from_b, *phase27_reference_yaw_rad_);
+    for (std::size_t axis = 0; axis < 3; ++axis) {
+      problem.state[static_cast<Eigen::Index>(3 + axis)] = rotation[axis];
+    }
+    problem.state[12] = model.wheel_position_b_x_m[0];
+    problem.state[13] = model.wheel_position_b_x_m[1];
+    problem.state[14] = model.wheel_velocity_b_x_m_s[0];
+    problem.state[15] = model.wheel_velocity_b_x_m_s[1];
+    problem.reference.setZero();
+    problem.reference[0] = *phase27_reference_x_m_;
+    problem.reference[1] = *phase27_reference_y_m_;
+    problem.reference[2] = config_.weighted_wbc.nominal_height_m;
+    problem.reference[6] =
+        config_.phase27_nmpc.longitudinal_velocity_m_s *
+        std::cos(*phase27_reference_yaw_rad_);
+    problem.reference[7] =
+        config_.phase27_nmpc.longitudinal_velocity_m_s *
+        std::sin(*phase27_reference_yaw_rad_);
+    problem.reference[11] = config_.phase27_nmpc.yaw_rate_rad_s;
+    problem.reference[12] =
+        result.phase27_wheel_reference.common_position_m;
+    problem.reference[13] =
+        result.phase27_wheel_reference.common_position_m;
+    problem.reference[14] =
+        result.phase27_wheel_reference.common_velocity_m_s;
+    problem.reference[15] =
+        result.phase27_wheel_reference.common_velocity_m_s;
+    problem.state_envelope_center = problem.reference;
+    const double yaw = *phase27_reference_yaw_rad_;
+    problem.reference_rotation_n_from_b <<
+        std::cos(yaw), -std::sin(yaw), 0.0,
+        std::sin(yaw), std::cos(yaw), 0.0,
+        0.0, 0.0, 1.0;
+    result.phase27_nmpc_result = phase27_nmpc_solver_->solve(problem);
+    if (fault == NmpcFaultInjection::kSolverFailure) {
+      result.phase27_nmpc_result.status =
+          WheelAwareNmpcSolver::Status::kSolveFailed;
+      result.phase27_nmpc_result.acados_status = 1;
+    } else if (fault == NmpcFaultInjection::kNonFinite) {
+      result.phase27_nmpc_result.interaction_wrench_flu[0] =
+          std::numeric_limits<double>::quiet_NaN();
+      result.phase27_nmpc_result.status =
+          WheelAwareNmpcSolver::Status::kAuditFailed;
+    }
+    phase27_nmpc_last_result_ = result.phase27_nmpc_result;
+    result.phase27_nmpc_wrench_age_ticks = 0;
+  } else if (update_tick && fault == NmpcFaultInjection::kStale &&
+             phase27_nmpc_last_result_) {
+    result.phase27_nmpc_result = *phase27_nmpc_last_result_;
+    result.phase27_nmpc_wrench_age_ticks = 2;
+  } else if (phase27_nmpc_last_result_) {
+    result.phase27_nmpc_result = *phase27_nmpc_last_result_;
+    result.phase27_nmpc_wrench_age_ticks = 1;
+  }
+  ++phase27_nmpc_control_tick_;
+  if (!phase27_nmpc_last_result_ || !phase27_nmpc_last_result_->ok() ||
+      result.phase27_nmpc_wrench_age_ticks > 1) {
+    standing_safety_latched_ = true;
+    result.status = StepStatus::kSafetyLatched;
+    result.safety_latched = true;
+    return;
+  }
+  stepWeightedWbc(
+      state, result, &phase27_nmpc_last_result_->interaction_wrench_flu,
+      true);
+  result.phase27_nmpc_wbc_total_time_s =
+      std::chrono::duration<double>(Clock::now() - start).count();
+  if (fault == NmpcFaultInjection::kLate) {
+    result.phase27_nmpc_wbc_total_time_s =
+        config_.phase27_nmpc.deadline_s + 1.0e-6;
+  }
+  if (result.phase27_nmpc_wbc_total_time_s >
+      config_.phase27_nmpc.deadline_s) {
+    result.command.joint_torque_nm.fill(0.0);
+    result.tau_raw_nm.fill(0.0);
+    standing_safety_latched_ = true;
+    result.status = StepStatus::kSafetyLatched;
+    result.safety_latched = true;
+  }
+}
+
 StepResult ControllerCore::step(const RobotState &state) {
   StepResult result;
   result.command.source_sample_time_ns = state.sample_time_ns;
@@ -594,12 +807,16 @@ StepResult ControllerCore::step(const RobotState &state) {
     return result;
   }
   const bool nmpc_mode = config_.mode == ControllerMode::kNominalNmpcWbc;
+  const bool phase27_mode =
+      config_.mode == ControllerMode::kPhase27MinimalNmpcWbc;
   const bool weighted_mode =
-      config_.mode == ControllerMode::kWeightedWbc || nmpc_mode;
+      config_.mode == ControllerMode::kWeightedWbc || nmpc_mode ||
+      phase27_mode;
   if (weighted_mode) {
     result.weighted_wbc_active = true;
   }
   result.nominal_nmpc_active = nmpc_mode;
+  result.phase27_nmpc_active = phase27_mode;
   if (isSafetyLatchedMode(config_.mode) && standing_safety_latched_) {
     result.status = StepStatus::kSafetyLatched;
     result.safety_latched = true;
@@ -624,6 +841,10 @@ StepResult ControllerCore::step(const RobotState &state) {
                   1.0e9;
   }
   last_sample_time_ns_ = state.sample_time_ns;
+  if (phase27_mode) {
+    stepPhase27MinimalNmpcWbc(state, result);
+    return result;
+  }
   if (nmpc_mode) {
     stepNominalNmpcWbc(state, result);
     return result;

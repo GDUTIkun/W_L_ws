@@ -1,0 +1,35 @@
+{
+  "acados_commit": "21376cb1af6b7dd45f675367272d3ba8100b26c0",
+  "acados_source_dir": "/home/t/opt/acados",
+  "casadi_version": "3.7.2",
+  "config": "simulation/mujoco/config/phase27_acados_ocp_v2.json",
+  "config_sha256": "c24159aebbd7b38380044319e9cfdb619d880b86f9050aedc086ab07aba5eadf",
+  "generated_files": [
+    "Makefile",
+    "acados_ocp.json",
+    "acados_solver.pxd",
+    "acados_solver_ocp_phase27_wheel_aware_nmpc_v2_ece6e123.c",
+    "acados_solver_ocp_phase27_wheel_aware_nmpc_v2_ece6e123.h",
+    "main_ocp_phase27_wheel_aware_nmpc_v2_ece6e123.c",
+    "phase27_wheel_aware_nmpc_v2_model/phase27_wheel_aware_nmpc_v2_dyn_disc_phi_fun.c",
+    "phase27_wheel_aware_nmpc_v2_model/phase27_wheel_aware_nmpc_v2_dyn_disc_phi_fun_jac.c",
+    "phase27_wheel_aware_nmpc_v2_model/phase27_wheel_aware_nmpc_v2_model.h"
+  ],
+  "generated_sha256": {
+    "Makefile": "c29c0daa3e1c261118fa190c6261e32471f917aef3c96f1be308db7aa99f96a1",
+    "acados_ocp.json": "6af7fdeeaa4793186b33cc4319faaf54aa633445af2a434c78f9a719d8ce94fa",
+    "acados_solver.pxd": "c2f8c10e17a07f5db3685304b9009fa677bb7c39ed0e29f81d873e1fc72807ac",
+    "acados_solver_ocp_phase27_wheel_aware_nmpc_v2_ece6e123.c": "25a948e8737264f80f5310522e509ed3e468d3b40289716fda7a6cf82a0efba6",
+    "acados_solver_ocp_phase27_wheel_aware_nmpc_v2_ece6e123.h": "68290aa2d874151a83a996bc4d749ad5e81dc31775e0368288460789d1187ccb",
+    "main_ocp_phase27_wheel_aware_nmpc_v2_ece6e123.c": "fe4603c8c0e2c80308d8668dc68b984c267bc88a797786c6a7ab4193663faa19",
+    "phase27_wheel_aware_nmpc_v2_model/phase27_wheel_aware_nmpc_v2_dyn_disc_phi_fun.c": "f97d287e3eb8f744797bd61d784b82cd2d8d6b9d58791b76c489a635384a3632",
+    "phase27_wheel_aware_nmpc_v2_model/phase27_wheel_aware_nmpc_v2_dyn_disc_phi_fun_jac.c": "06872b641ff2a8c20c1bc52ead77f98fe3078bec4e488a91724204f47ada137b",
+    "phase27_wheel_aware_nmpc_v2_model/phase27_wheel_aware_nmpc_v2_model.h": "0eb0844f22db33562462dbd3b4ed34c21eba44016eab7c43436ca0c68841e8d4"
+  },
+  "generator": "tools/experiments/generate_phase27_acados_solver.py",
+  "generator_sha256": "e821ed857499aefcdda82c7e781bf40dadb9ec0324cf8c53c4b95d233e3f6045",
+  "profile": "phase27_wheel_aware_acados_ocp_v2",
+  "schema_version": 1,
+  "tera_sha256": "64a0a0f8d85be0b92234231fd1a9ff50c9d8f13d6208063707e56c9354a976d3",
+  "tera_version": "0.2.1"
+}

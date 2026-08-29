@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "profile": "phase27_wheel_interaction_oracle_v1",
+  "source_state_oracle": "simulation/mujoco/config/phase23_nmpc_state_oracle_v1.json",
+  "wheel_geoms": ["left_wheel_collision", "right_wheel_collision"],
+  "wheel_axis_midpoint_m": [0.000084860250353813, -0.000084860250353813],
+  "wheel_radius_m": 0.05,
+  "second_difference_step_s": 0.0001,
+  "thresholds": {
+    "maximum_wheel_state_error": 2e-9,
+    "maximum_acceleration_map_error": 2e-8,
+    "maximum_contact_map_error": 2e-10,
+    "maximum_bias_error": 2e-5
+  }
+}

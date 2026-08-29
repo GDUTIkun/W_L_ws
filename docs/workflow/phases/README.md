@@ -4,7 +4,7 @@
 
 ## Active
 
-None.
+- [Phase 27：theory-restored wheel-aware NMPC + Minimal WBC](27-theory-restored-minimal-wbc/RECORD.md) — 已完成；上游物理/component gate与fault/replay/regression PASS，T0～T2首失效为safety envelope、T3 `±10 mm`首失效为native NMPC stationarity，结论为diagnosed Minimal FAIL且未在本Phase add-back/retune。
 
 ## Planned
 
@@ -16,6 +16,7 @@ None.
 
 ## Blocked
 
+- [Phase 26：current-nominal Minimal WBC task audit](26-minimal-wbc-task-audit/PLAN.md) — 用户选择先执行Phase27；本Phase没有实现/evidence，按DG26-01等待新的physical state/OCP/interface terminal contract后再修订恢复。
 - [Phase 05：执行器力矩辨识与模型校准](05-actuator-torque-identification/PLAN.md) — Phase 14 前置已 PASS；当前按用户决定冻结真机相关执行，解除冻结后从通信/计量/同步/安全 gate 恢复。
 
 ## Complete
