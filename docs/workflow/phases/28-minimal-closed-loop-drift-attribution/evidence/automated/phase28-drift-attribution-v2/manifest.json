@@ -1,0 +1,40 @@
+{
+  "config": "simulation/mujoco/config/phase28_drift_attribution_v1.json",
+  "config_sha256": "2faad7ac57bc9a06ead9e6c1a45f747fba1f0b51dcbadf369d52a9ba76b4d551",
+  "created_at": "2026-08-29T07:50:49.681930+00:00",
+  "dependencies": {
+    "mujoco": "3.7.0",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3"
+  },
+  "hardware_data": false,
+  "inputs": {
+    "ros_ws/src/wheel_leg_core/src/wheel_aware_nmpc_model.cpp": "b00fa370a6e1b699752c9623a7892e85bd4c4eca0a312c029da867db2a771a55",
+    "ros_ws/src/wheel_leg_mujoco/src/weighted_wbc_loop.cpp": "a7e24a82c29cba596680bbb219162e0aff5b72e48868a08727125b870b567bc6",
+    "simulation/mujoco/config/phase27_minimal_formal_v1.json": "70b961f7ede235d7e32a0d588051f5f9555d4a80ab4c817b073c6e3ffddae508",
+    "simulation/mujoco/config/phase28_drift_attribution_v1.json": "2faad7ac57bc9a06ead9e6c1a45f747fba1f0b51dcbadf369d52a9ba76b4d551",
+    "simulation/mujoco/model/phase19_standing.xml": "5334205529e9625a9e508b2eb8d61f5401b3518deff8c4daef6caac1d3f52664",
+    "tools/experiments/run_phase28_drift_attribution.py": "22656221d5e8e88d94c1073bc258574c642d4733f66a6455a32e9424546bbc92"
+  },
+  "outputs": {
+    "T0_static_attribution.json": "54595b8025f4461fbc791ba295912d781ea6c1193f90c821834bf6c7c74845c9",
+    "T0_static_control.csv": "f569381b2e64bcf817580802fe2aa90252818ab60090cd7efc7426d1178ad101",
+    "T0_static_plant.csv": "2330188f8e9cfe7b2f24f6a28ebe0730d15e59891b920cab522c890b2556caac",
+    "T1_straight_start_cruise_brake_attribution.json": "e2519bb7bb51a99fda4f6aeef5a622b325c92e7f9345adf4107bf8ec5ee93aaa",
+    "T1_straight_start_cruise_brake_control.csv": "897313da609ec0e8b86fb54dd7b46e42ac214f1d18b2df4d02def6a7deeabd88",
+    "T1_straight_start_cruise_brake_plant.csv": "9567fae6bb3bcab9830756afa4e15dae29a5aad0287ebe5744537f43a0bf011f",
+    "T2_turn_left_attribution.json": "0cdd34598f9febd89c35fcd545af13c1a1252f56d85db2a281b17a89fd22f63d",
+    "T2_turn_left_control.csv": "6d5143348333896ebf33a8ad28b01dde43e8be1ea3e29fb9cbfc9d9c43cafd58",
+    "T2_turn_left_plant.csv": "139fa0bd9c83dd6e798d8505c89dc1972875e37115f44fc95b9f3f7a5b67e1e1",
+    "T2_turn_right_attribution.json": "0794dc27b85663a934bcd19954f7e917588e3b27a714ff7e5141243a42eeb96f",
+    "T2_turn_right_control.csv": "48984baf1a7827b432185cb4a087ad41158106c9f9ce771883e7ab89256efc8f",
+    "T2_turn_right_plant.csv": "310c6432f1acf2564f430b23df001c28a8a8fd0c68c2c4aaf01d408957681be4",
+    "summary.json": "c946e316ef2260da3a7ae7e6177b7d8c05165695c14c7834c4c87e8c27207968"
+  },
+  "python": "3.10.20",
+  "runner": "ros_ws/build/wheel_leg_mujoco/weighted_wbc_loop",
+  "runner_sha256": "a98f62e225d83fb8d3456c8ba1203ee69bae0196b31750709a093182870dbe98",
+  "schema_version": 1,
+  "source_phase27_formal": "docs/workflow/phases/27-theory-restored-minimal-wbc/evidence/automated/phase27-minimal-formal-v2",
+  "source_run": "phase27-minimal-formal-v2"
+}

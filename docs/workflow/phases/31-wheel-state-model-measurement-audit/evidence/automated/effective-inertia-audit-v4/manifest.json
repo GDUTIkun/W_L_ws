@@ -1,0 +1,20 @@
+{
+  "command": "tools/experiments/run_phase31_effective_inertia_audit.py --input-response docs/workflow/phases/31-wheel-state-model-measurement-audit/evidence/automated/wheel-input-response-v9/wheel_input_response.json --acceleration docs/workflow/phases/31-wheel-state-model-measurement-audit/evidence/automated/wheel-acceleration-v4/wheel_acceleration_audit.json --output docs/workflow/phases/31-wheel-state-model-measurement-audit/evidence/automated/effective-inertia-audit-v4 --replay-of effective-inertia-audit-v3",
+  "created_utc": "2026-08-29T14:11:57.020961+00:00",
+  "dependencies": {
+    "numpy": "2.2.6"
+  },
+  "inputs": {
+    "docs/workflow/phases/28-minimal-closed-loop-drift-attribution/evidence/automated/phase28-drift-attribution-v5/T0_static_control.csv": "97764748b0948713cb13aadff60cc44a11ae5940d8fa1e30577314f86451c611",
+    "docs/workflow/phases/28-minimal-closed-loop-drift-attribution/evidence/automated/phase28-drift-attribution-v5/T0_static_plant.csv": "2330188f8e9cfe7b2f24f6a28ebe0730d15e59891b920cab522c890b2556caac",
+    "docs/workflow/phases/28-minimal-closed-loop-drift-attribution/evidence/automated/phase28-drift-attribution-v5/T1_straight_start_cruise_brake_control.csv": "bc79c789a7394f3b7c226322b9f5eba936ae1a28b929e566ca18c2aab64de03e",
+    "docs/workflow/phases/28-minimal-closed-loop-drift-attribution/evidence/automated/phase28-drift-attribution-v5/T1_straight_start_cruise_brake_plant.csv": "9567fae6bb3bcab9830756afa4e15dae29a5aad0287ebe5744537f43a0bf011f",
+    "docs/workflow/phases/31-wheel-state-model-measurement-audit/evidence/automated/wheel-acceleration-v4/wheel_acceleration_audit.json": "ddb7799c9e7aea859e4de1174774cb997f9cbbdc28b1467a3420406f9dea16ff",
+    "docs/workflow/phases/31-wheel-state-model-measurement-audit/evidence/automated/wheel-input-response-v9/wheel_input_response.json": "0cdb0f440aa5756da34f7479333a92e3b3cbadb3da15b865d3cb3e8ece9738b6",
+    "simulation/mujoco/config/phase27_acados_ocp_v2.json": "c24159aebbd7b38380044319e9cfdb619d880b86f9050aedc086ab07aba5eadf",
+    "simulation/mujoco/config/phase31_wheel_state_contract_v1.json": "277c8a0cf6dcad82d70dd1987d241f3f210790e6fd1e900421e7295037ffb63e",
+    "tools/experiments/run_phase31_effective_inertia_audit.py": "f37fe15a9f2c53c978f91f9c991fca687000ae518684b7096922be9184aae58c"
+  },
+  "python": "3.10.20",
+  "replay_of": "effective-inertia-audit-v3"
+}

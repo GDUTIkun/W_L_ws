@@ -1,0 +1,12 @@
+{
+  "acceleration_oracle_pass": false,
+  "classification": "acceleration_oracle_inconclusive",
+  "maxima": {
+    "plant_minus_realized_eq12_m_s2": 3.678378654947564,
+    "plant_minus_requested_eq12_m_s2": 3.6800496577244832,
+    "position_vs_velocity_fd_m_s2": 5.783019844317561,
+    "requested_vs_realized_eq12_m_s2": 0.0018483459339539987
+  },
+  "production_modified": false,
+  "significant_eq12_residual": true
+}

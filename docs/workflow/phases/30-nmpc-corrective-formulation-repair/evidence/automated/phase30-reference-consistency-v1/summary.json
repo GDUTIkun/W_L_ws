@@ -1,0 +1,16 @@
+{
+  "classifications": {
+    "T0_static": [
+      "P31-C_current_reference_already_consistent"
+    ],
+    "T1_straight_start_cruise_brake": [
+      "P31-C_current_reference_already_consistent"
+    ]
+  },
+  "gate0_baseline_authority_pass": true,
+  "gate1_current_defect_export_pass": true,
+  "gate2_optimizer_pass": true,
+  "pass_for_branch_selection": true,
+  "production_modified": false,
+  "single_classification_per_case": true
+}

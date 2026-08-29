@@ -1,0 +1,3086 @@
+{
+  "eq12": {
+    "common_fx": {
+      "common": -2.2987927571243545,
+      "differential": 0.0
+    },
+    "common_ty": {
+      "common": -39.01715502766854,
+      "differential": 0.0
+    },
+    "differential_fx": {
+      "common": 0.0,
+      "differential": -1.950857751383427
+    },
+    "differential_ty": {
+      "common": 0.0,
+      "differential": -39.01715502766854
+    }
+  },
+  "results": {
+    "T0_static": [
+      {
+        "baseline_torque_max_abs_error_nm": 0.0,
+        "channels": {
+          "common_fx": {
+            "cross_to_primary_ratio": 0.014651599518813977,
+            "eq12": {
+              "common": -2.2987927571243545,
+              "differential": 0.0
+            },
+            "finite_difference_step_relative_error": 1.1456124340534528e-10,
+            "half_step": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": 0.01987799123419134,
+                    "differential": -0.0008122391111933004,
+                    "left": 0.02069023034538464,
+                    "right": 0.01906575212299804
+                  },
+                  "individual": [
+                    0.02069023034538464,
+                    0.01906575212299804
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": -0.043690879387595735,
+                    "differential": 0.0,
+                    "left": -0.043690879387595735,
+                    "right": -0.043690879387595735
+                  },
+                  "individual": [
+                    -0.043690879387595735,
+                    -0.043690879387595735
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": -0.12783324777791744,
+                    "differential": -0.001409619308340701,
+                    "left": -0.12642362846957675,
+                    "right": -0.12924286708625815
+                  },
+                  "individual": [
+                    -0.12642362846957675,
+                    -0.12924286708625815
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 1.5498713423767185e-11,
+              "grouped": {
+                "common": -0.15164613592631326,
+                "differential": -0.0022218584090438753,
+                "left": -0.1494242775172694,
+                "right": -0.15386799433535714
+              },
+              "individual": [
+                -0.1494242775172694,
+                -0.15386799433535714
+              ],
+              "realized_wrench_grouped": {
+                "common": 0.9970792483438379,
+                "differential": -1.6706734953797486e-05,
+                "left": 0.9970959550787917,
+                "right": 0.9970625416088841
+              }
+            },
+            "measured": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": 0.019877991232906504,
+                    "differential": -0.0008122391102872179,
+                    "left": 0.020690230343193724,
+                    "right": 0.019065752122619288
+                  },
+                  "individual": [
+                    0.020690230343193724,
+                    0.019065752122619288
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": -0.04369087938517759,
+                    "differential": 0.0,
+                    "left": -0.04369087938517759,
+                    "right": -0.04369087938517759
+                  },
+                  "individual": [
+                    -0.04369087938517759,
+                    -0.04369087938517759
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": -0.12783324775564042,
+                    "differential": -0.00140961931161461,
+                    "left": -0.1264236284440258,
+                    "right": -0.12924286706725502
+                  },
+                  "individual": [
+                    -0.1264236284440258,
+                    -0.12924286706725502
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 6.629521931422744e-11,
+              "grouped": {
+                "common": -0.15164613594368603,
+                "differential": -0.0022218584524225093,
+                "left": -0.14942427749126352,
+                "right": -0.15386799439610854
+              },
+              "individual": [
+                -0.14942427749126352,
+                -0.15386799439610854
+              ],
+              "realized_wrench_grouped": {
+                "common": 0.9970792483241997,
+                "differential": -1.6706734902172116e-05,
+                "left": 0.9970959550591019,
+                "right": 0.9970625415892975
+              }
+            },
+            "primary_relative_error": 0.9340322717331919,
+            "realization_cross_to_primary_ratio": 1.675567406527744e-05,
+            "realization_primary_gain_error": 0.002920751675800304,
+            "sign_pass": true
+          },
+          "common_ty": {
+            "cross_to_primary_ratio": 0.01540401731699858,
+            "eq12": {
+              "common": -39.01715502766854,
+              "differential": 0.0
+            },
+            "finite_difference_step_relative_error": 3.17571654808677e-11,
+            "half_step": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": 0.6927076943275874,
+                    "differential": -0.3184914103549908,
+                    "left": 1.0111991046825781,
+                    "right": 0.37421628397259654
+                  },
+                  "individual": [
+                    1.0111991046825781,
+                    0.37421628397259654
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": -1.481843063618893,
+                    "differential": 0.0,
+                    "left": -1.481843063618893,
+                    "right": -1.481843063618893
+                  },
+                  "individual": [
+                    -1.481843063618893,
+                    -1.481843063618893
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": -19.700083376707784,
+                    "differential": 0.0028751300190528184,
+                    "left": -19.702958506726837,
+                    "right": -19.69720824668873
+                  },
+                  "individual": [
+                    -19.702958506726837,
+                    -19.69720824668873
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 9.190586069962592e-10,
+              "grouped": {
+                "common": -20.489218745429838,
+                "differential": -0.3156162799861306,
+                "left": -20.173602465443707,
+                "right": -20.80483502541597
+              },
+              "individual": [
+                -20.173602465443707,
+                -20.80483502541597
+              ],
+              "realized_wrench_grouped": {
+                "common": 0.9998868859287553,
+                "differential": 3.708510720734637e-10,
+                "left": 0.9998868855579043,
+                "right": 0.9998868862996064
+              }
+            },
+            "measured": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": 0.6927076943740682,
+                    "differential": -0.31849141042044765,
+                    "left": 1.011199104794516,
+                    "right": 0.3742162839536206
+                  },
+                  "individual": [
+                    1.011199104794516,
+                    0.3742162839536206
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": -1.4818430637251518,
+                    "differential": 0.0,
+                    "left": -1.4818430637251518,
+                    "right": -1.4818430637251518
+                  },
+                  "individual": [
+                    -1.4818430637251518,
+                    -1.4818430637251518
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": -19.700083377012014,
+                    "differential": 0.0028751299332014923,
+                    "left": -19.702958506945215,
+                    "right": -19.697208247078812
+                  },
+                  "individual": [
+                    -19.702958506945215,
+                    -19.697208247078812
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 3.9342751279036747e-10,
+              "grouped": {
+                "common": -20.489218746080518,
+                "differential": -0.3156162803763962,
+                "left": -20.17360246570412,
+                "right": -20.804835026456914
+              },
+              "individual": [
+                -20.17360246570412,
+                -20.804835026456914
+              ],
+              "realized_wrench_grouped": {
+                "common": 0.9998868859242203,
+                "differential": 3.708519602518834e-10,
+                "left": 0.9998868855533682,
+                "right": 0.9998868862950722
+              }
+            },
+            "primary_relative_error": 0.4748664085951208,
+            "realization_cross_to_primary_ratio": 3.7089391357412965e-10,
+            "realization_primary_gain_error": 0.00011311407577974109,
+            "sign_pass": true
+          },
+          "differential_fx": {
+            "cross_to_primary_ratio": 0.008253085068887223,
+            "eq12": {
+              "common": 0.0,
+              "differential": -1.950857751383427
+            },
+            "finite_difference_step_relative_error": 2.5340685797973126e-09,
+            "half_step": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": 0.0002833463101990924,
+                    "differential": -0.14084047874689265,
+                    "left": 0.14112382505709173,
+                    "right": -0.14055713243669354
+                  },
+                  "individual": [
+                    0.14112382505709173,
+                    -0.14055713243669354
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": -0.000610016507753371,
+                    "differential": 0.0,
+                    "left": -0.000610016507753371,
+                    "right": -0.000610016507753371
+                  },
+                  "individual": [
+                    -0.000610016507753371,
+                    -0.000610016507753371
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": -0.0034586714405880903,
+                    "differential": -0.31781730548343873,
+                    "left": 0.31435863404285064,
+                    "right": -0.3212759769240268
+                  },
+                  "individual": [
+                    0.31435863404285064,
+                    -0.3212759769240268
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 5.950223647133157e-11,
+              "grouped": {
+                "common": -0.003785341649482632,
+                "differential": -0.45865778427849335,
+                "left": 0.4548724426290107,
+                "right": -0.462443125927976
+              },
+              "individual": [
+                0.4548724426290107,
+                -0.462443125927976
+              ],
+              "realized_wrench_grouped": {
+                "common": -1.6706933588239714e-05,
+                "differential": 0.9961493554931061,
+                "left": -0.9961660624266944,
+                "right": 0.9961326485595179
+              }
+            },
+            "measured": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": 0.00028334632161264306,
+                    "differential": -0.14084047844093178,
+                    "left": 0.14112382476254443,
+                    "right": -0.14055713211931914
+                  },
+                  "individual": [
+                    0.14112382476254443,
+                    -0.14055713211931914
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": -0.0006100165337013046,
+                    "differential": 0.0,
+                    "left": -0.0006100165337013046,
+                    "right": -0.0006100165337013046
+                  },
+                  "individual": [
+                    -0.0006100165337013046,
+                    -0.0006100165337013046
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": -0.003458671514439543,
+                    "differential": -0.3178173046784316,
+                    "left": 0.3143586331639921,
+                    "right": -0.3212759761928712
+                  },
+                  "individual": [
+                    0.3143586331639921,
+                    -0.3212759761928712
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 2.810313093348782e-11,
+              "grouped": {
+                "common": -0.0037853417015654145,
+                "differential": -0.4586577831162231,
+                "left": 0.45487244141465766,
+                "right": -0.4624431248177885
+              },
+              "individual": [
+                0.45487244141465766,
+                -0.4624431248177885
+              ],
+              "realized_wrench_grouped": {
+                "common": -1.67068604683962e-05,
+                "differential": 0.9961493555228584,
+                "left": -0.9961660623833268,
+                "right": 0.99613264866239
+              }
+            },
+            "primary_relative_error": 0.7648942969875833,
+            "realization_cross_to_primary_ratio": 1.6771441326313072e-05,
+            "realization_primary_gain_error": 0.0038506444771415627,
+            "sign_pass": true
+          },
+          "differential_ty": {
+            "cross_to_primary_ratio": 0.0004978224892502519,
+            "eq12": {
+              "common": 0.0,
+              "differential": -39.01715502766854
+            },
+            "finite_difference_step_relative_error": 2.6662164561801134e-12,
+            "half_step": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": 0.0010217536886854006,
+                    "differential": 0.739946639140805,
+                    "left": -0.7389248854521197,
+                    "right": 0.7409683928294905
+                  },
+                  "individual": [
+                    -0.7389248854521197,
+                    0.7409683928294905
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": -0.002191012685940685,
+                    "differential": 0.0,
+                    "left": -0.002191012685940685,
+                    "right": -0.002191012685940685
+                  },
+                  "individual": [
+                    -0.002191012685940685,
+                    -0.002191012685940685
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": -0.006956713845950091,
+                    "differential": -17.06298090162823,
+                    "left": 17.05602418778228,
+                    "right": -17.06993761547418
+                  },
+                  "individual": [
+                    17.05602418778228,
+                    -17.06993761547418
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 2.539515264743386e-10,
+              "grouped": {
+                "common": -0.008125972637884615,
+                "differential": -16.323034262438796,
+                "left": 16.31490828980091,
+                "right": -16.33116023507668
+              },
+              "individual": [
+                16.31490828980091,
+                -16.33116023507668
+              ],
+              "realized_wrench_grouped": {
+                "common": 3.7130870600421417e-10,
+                "differential": 0.9999946250568987,
+                "left": -0.99999462468559,
+                "right": 0.9999946254282074
+              }
+            },
+            "measured": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": 0.0010217537234517016,
+                    "differential": 0.739946639177571,
+                    "left": -0.7389248854541193,
+                    "right": 0.7409683929010227
+                  },
+                  "individual": [
+                    -0.7389248854541193,
+                    0.7409683929010227
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": -0.0021910127657311603,
+                    "differential": 0.0,
+                    "left": -0.0021910127657311603,
+                    "right": -0.0021910127657311603
+                  },
+                  "individual": [
+                    -0.0021910127657311603,
+                    -0.0021910127657311603
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": -0.006956714220450522,
+                    "differential": -17.062980901732168,
+                    "left": 17.056024187511717,
+                    "right": -17.069937615952618
+                  },
+                  "individual": [
+                    17.056024187511717,
+                    -17.069937615952618
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 4.452154200862424e-10,
+              "grouped": {
+                "common": -0.008125973548622767,
+                "differential": -16.323034262395275,
+                "left": 16.314908288846652,
+                "right": -16.331160235943898
+              },
+              "individual": [
+                16.314908288846652,
+                -16.331160235943898
+              ],
+              "realized_wrench_grouped": {
+                "common": 3.7079700421216444e-10,
+                "differential": 0.9999946250568965,
+                "left": -0.9999946246860996,
+                "right": 0.9999946254276936
+              }
+            },
+            "primary_relative_error": 0.5816446829395943,
+            "realization_cross_to_primary_ratio": 3.707989972356774e-10,
+            "realization_primary_gain_error": 5.374943103486629e-06,
+            "sign_pass": true
+          }
+        },
+        "tick": 54
+      },
+      {
+        "baseline_torque_max_abs_error_nm": 0.0,
+        "channels": {
+          "common_fx": {
+            "cross_to_primary_ratio": 0.014819515163783067,
+            "eq12": {
+              "common": -2.2987927571243545,
+              "differential": 0.0
+            },
+            "finite_difference_step_relative_error": 7.3000013270702925e-09,
+            "half_step": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": 0.020108975919925044,
+                    "differential": -0.0007544546440307887,
+                    "left": 0.020863430563955832,
+                    "right": 0.019354521275894255
+                  },
+                  "individual": [
+                    0.020863430563955832,
+                    0.019354521275894255
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": -0.04417477146344439,
+                    "differential": 0.0,
+                    "left": -0.04417477146344439,
+                    "right": -0.04417477146344439
+                  },
+                  "individual": [
+                    -0.04417477146344439,
+                    -0.04417477146344439
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": -0.15060115074919278,
+                    "differential": -0.0018340344784385232,
+                    "left": -0.14876711627075426,
+                    "right": -0.1524351852276313
+                  },
+                  "individual": [
+                    -0.14876711627075426,
+                    -0.1524351852276313
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 6.167408250767892e-11,
+              "grouped": {
+                "common": -0.17466694623646362,
+                "differential": -0.0025884891278948885,
+                "left": -0.17207845710856873,
+                "right": -0.1772554353643585
+              },
+              "individual": [
+                -0.17207845710856873,
+                -0.1772554353643585
+              ],
+              "realized_wrench_grouped": {
+                "common": 0.9970837465225818,
+                "differential": -1.7454265326954932e-05,
+                "left": 0.9971012007879088,
+                "right": 0.9970662922572548
+              }
+            },
+            "measured": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": 0.020108975807013166,
+                    "differential": -0.000754451984021241,
+                    "left": 0.02086342779103441,
+                    "right": 0.019354523822991927
+                  },
+                  "individual": [
+                    0.02086342779103441,
+                    0.019354523822991927
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": -0.04417477120734192,
+                    "differential": 0.0,
+                    "left": -0.04417477120734192,
+                    "right": -0.04417477120734192
+                  },
+                  "individual": [
+                    -0.04417477120734192,
+                    -0.04417477120734192
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": -0.1506011495443143,
+                    "differential": -0.001834027449399575,
+                    "left": -0.14876712209491472,
+                    "right": -0.15243517699371387
+                  },
+                  "individual": [
+                    -0.14876712209491472,
+                    -0.15243517699371387
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 2.2797874699165277e-11,
+              "grouped": {
+                "common": -0.17466694496139468,
+                "differential": -0.0025884794394670507,
+                "left": -0.17207846552192763,
+                "right": -0.17725542440086173
+              },
+              "individual": [
+                -0.17207846552192763,
+                -0.17725542440086173
+              ],
+              "realized_wrench_grouped": {
+                "common": 0.9970837468038993,
+                "differential": -1.7454012143758302e-05,
+                "left": 0.9971012008160431,
+                "right": 0.9970662927917556
+              }
+            },
+            "primary_relative_error": 0.92401796794423,
+            "realization_cross_to_primary_ratio": 1.750506133482392e-05,
+            "realization_primary_gain_error": 0.002916253196100671,
+            "sign_pass": true
+          },
+          "common_ty": {
+            "cross_to_primary_ratio": 0.0010510100536183366,
+            "eq12": {
+              "common": -39.01715502766854,
+              "differential": 0.0
+            },
+            "finite_difference_step_relative_error": 1.5531373317585073e-11,
+            "half_step": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": 0.7070307369978184,
+                    "differential": 0.012855900483266736,
+                    "left": 0.6941748365145516,
+                    "right": 0.7198866374810851
+                  },
+                  "individual": [
+                    0.6941748365145516,
+                    0.7198866374810851
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": -1.5123418329893235,
+                    "differential": 0.0,
+                    "left": -1.5123418329893235,
+                    "right": -1.5123418329893235
+                  },
+                  "individual": [
+                    -1.5123418329893235,
+                    -1.5123418329893235
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": -21.53157332841065,
+                    "differential": -0.03633219222397521,
+                    "left": -21.495241136186674,
+                    "right": -21.567905520634625
+                  },
+                  "individual": [
+                    -21.495241136186674,
+                    -21.567905520634625
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 8.738965107113472e-10,
+              "grouped": {
+                "common": -22.33688442361199,
+                "differential": -0.0234762916569764,
+                "left": -22.313408131955015,
+                "right": -22.360360715268968
+              },
+              "individual": [
+                -22.313408131955015,
+                -22.360360715268968
+              ],
+              "realized_wrench_grouped": {
+                "common": 0.999887053855224,
+                "differential": 4.4298836820999554e-10,
+                "left": 0.9998870534122357,
+                "right": 0.9998870542982125
+              }
+            },
+            "measured": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": 0.7070307370125588,
+                    "differential": 0.012855900913542995,
+                    "left": 0.6941748360990159,
+                    "right": 0.7198866379261019
+                  },
+                  "individual": [
+                    0.6941748360990159,
+                    0.7198866379261019
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": -1.512341833023864,
+                    "differential": 0.0,
+                    "left": -1.512341833023864,
+                    "right": -1.512341833023864
+                  },
+                  "individual": [
+                    -1.512341833023864,
+                    -1.512341833023864
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": -21.5315733282863,
+                    "differential": -0.0363321910794685,
+                    "left": -21.49524113720683,
+                    "right": -21.567905519365766
+                  },
+                  "individual": [
+                    -21.49524113720683,
+                    -21.567905519365766
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 4.085229932115908e-10,
+              "grouped": {
+                "common": -22.336884423958914,
+                "differential": -0.023476290096091645,
+                "left": -22.313408133862822,
+                "right": -22.360360714055005
+              },
+              "individual": [
+                -22.313408133862822,
+                -22.360360714055005
+              ],
+              "realized_wrench_grouped": {
+                "common": 0.9998870538543047,
+                "differential": 4.429984157283684e-10,
+                "left": 0.9998870534113062,
+                "right": 0.9998870542973031
+              }
+            },
+            "primary_relative_error": 0.42751119582863006,
+            "realization_cross_to_primary_ratio": 4.430484563438687e-10,
+            "realization_primary_gain_error": 0.00011294614569534733,
+            "sign_pass": true
+          },
+          "differential_fx": {
+            "cross_to_primary_ratio": 0.004778625518417081,
+            "eq12": {
+              "common": 0.0,
+              "differential": -1.950857751383427
+            },
+            "finite_difference_step_relative_error": 1.9762656297334016e-10,
+            "half_step": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": 0.0002865444596701766,
+                    "differential": -0.14867789672311232,
+                    "left": 0.1489644411827825,
+                    "right": -0.14839135226344213
+                  },
+                  "individual": [
+                    0.1489644411827825,
+                    -0.14839135226344213
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": -0.0006170240793806634,
+                    "differential": 0.0,
+                    "left": -0.0006170240793806634,
+                    "right": -0.0006170240793806634
+                  },
+                  "individual": [
+                    -0.0006170240793806634,
+                    -0.0006170240793806634
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": -0.002081300313112683,
+                    "differential": -0.35602367288400993,
+                    "left": 0.3539423725708973,
+                    "right": -0.35810497319712264
+                  },
+                  "individual": [
+                    0.3539423725708973,
+                    -0.35810497319712264
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 5.21054310809177e-11,
+              "grouped": {
+                "common": -0.002411779899027522,
+                "differential": -0.504701569625432,
+                "left": 0.5022897897264045,
+                "right": -0.5071133495244595
+              },
+              "individual": [
+                0.5022897897264045,
+                -0.5071133495244595
+              ],
+              "realized_wrench_grouped": {
+                "common": -1.745462181623747e-05,
+                "differential": 0.9960572173826626,
+                "left": -0.9960746720044789,
+                "right": 0.9960397627608464
+              }
+            },
+            "measured": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": 0.00028654445808301565,
+                    "differential": -0.1486778967026918,
+                    "left": 0.1489644411607748,
+                    "right": -0.14839135224460878
+                  },
+                  "individual": [
+                    0.1489644411607748,
+                    -0.14839135224460878
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": -0.0006170240754336998,
+                    "differential": 0.0,
+                    "left": -0.0006170240754336998,
+                    "right": -0.0006170240754336998
+                  },
+                  "individual": [
+                    -0.0006170240754336998,
+                    -0.0006170240754336998
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": -0.00208130018520733,
+                    "differential": -0.35602367283275205,
+                    "left": 0.3539423726475447,
+                    "right": -0.35810497301795935
+                  },
+                  "individual": [
+                    0.3539423726475447,
+                    -0.35810497301795935
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 1.2991607789558657e-11,
+              "grouped": {
+                "common": -0.0024117797993206125,
+                "differential": -0.5047015695256896,
+                "left": 0.502289789726369,
+                "right": -0.5071133493250102
+              },
+              "individual": [
+                0.502289789726369,
+                -0.5071133493250102
+              ],
+              "realized_wrench_grouped": {
+                "common": -1.745395956914697e-05,
+                "differential": 0.9960572173951292,
+                "left": -0.9960746713546983,
+                "right": 0.99603976343556
+              }
+            },
+            "primary_relative_error": 0.7412924806189551,
+            "realization_cross_to_primary_ratio": 1.7523049142490277e-05,
+            "realization_primary_gain_error": 0.003942782604870798,
+            "sign_pass": true
+          },
+          "differential_ty": {
+            "cross_to_primary_ratio": 0.00187709501470078,
+            "eq12": {
+              "common": 0.0,
+              "differential": -39.01715502766854
+            },
+            "finite_difference_step_relative_error": 1.4598368820044188e-11,
+            "half_step": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": 0.0013205069209011877,
+                    "differential": 0.8717992744036542,
+                    "left": -0.8704787674827531,
+                    "right": 0.8731197813245555
+                  },
+                  "individual": [
+                    -0.8704787674827531,
+                    0.8731197813245555
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": -0.0028297961716210983,
+                    "differential": 0.0,
+                    "left": -0.0028297961716210983,
+                    "right": -0.0028297961716210983
+                  },
+                  "individual": [
+                    -0.0028297961716210983,
+                    -0.0028297961716210983
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": -0.0319525459623371,
+                    "differential": -18.69819345470592,
+                    "left": 18.666240908743582,
+                    "right": -18.730146000668256
+                  },
+                  "individual": [
+                    18.666240908743582,
+                    -18.730146000668256
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 1.273516403443864e-09,
+              "grouped": {
+                "common": -0.03346183625332344,
+                "differential": -17.826394180069016,
+                "left": 17.792932343815693,
+                "right": -17.85985601632234
+              },
+              "individual": [
+                17.792932343815693,
+                -17.85985601632234
+              ],
+              "realized_wrench_grouped": {
+                "common": 4.4313858138522733e-10,
+                "differential": 0.9999946250540899,
+                "left": -0.9999946246109513,
+                "right": 0.9999946254972285
+              }
+            },
+            "measured": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": 0.0013205069484894527,
+                    "differential": 0.871799274441192,
+                    "left": -0.8704787674927025,
+                    "right": 0.8731197813896814
+                  },
+                  "individual": [
+                    -0.8704787674927025,
+                    0.8731197813896814
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": -0.002829796219385864,
+                    "differential": 0.0,
+                    "left": -0.002829796219385864,
+                    "right": -0.002829796219385864
+                  },
+                  "individual": [
+                    -0.002829796219385864,
+                    -0.002829796219385864
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": -0.03195254615586762,
+                    "differential": -18.698193454663546,
+                    "left": 18.666240908507678,
+                    "right": -18.730146000819413
+                  },
+                  "individual": [
+                    18.666240908507678,
+                    -18.730146000819413
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 3.26121352145492e-10,
+              "grouped": {
+                "common": -0.03346183564598704,
+                "differential": -17.826394180329252,
+                "left": 17.792932344683265,
+                "right": -17.85985601597524
+              },
+              "individual": [
+                17.792932344683265,
+                -17.85985601597524
+              ],
+              "realized_wrench_grouped": {
+                "common": 4.4299619528231915e-10,
+                "differential": 0.9999946250540922,
+                "left": -0.999994624611096,
+                "right": 0.9999946254970884
+              }
+            },
+            "primary_relative_error": 0.5431139413499553,
+            "realization_cross_to_primary_ratio": 4.4299857637570443e-10,
+            "realization_primary_gain_error": 5.374945907798967e-06,
+            "sign_pass": true
+          }
+        },
+        "tick": 56
+      },
+      {
+        "baseline_torque_max_abs_error_nm": 0.0,
+        "channels": {
+          "common_fx": {
+            "cross_to_primary_ratio": 0.05462685647096574,
+            "eq12": {
+              "common": -2.2987927571243545,
+              "differential": 0.0
+            },
+            "finite_difference_step_relative_error": 4.753052283411978e-09,
+            "half_step": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": 0.020150849510069756,
+                    "differential": -0.0012863920118281347,
+                    "left": 0.021437241521897892,
+                    "right": 0.018864457498241623
+                  },
+                  "individual": [
+                    0.021437241521897892,
+                    0.018864457498241623
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": -0.04425038786405078,
+                    "differential": 0.0,
+                    "left": -0.04425038786405078,
+                    "right": -0.04425038786405078
+                  },
+                  "individual": [
+                    -0.04425038786405078,
+                    -0.04425038786405078
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": -0.13832339240437258,
+                    "differential": 0.010159048495016476,
+                    "left": -0.14848244089938906,
+                    "right": -0.1281643439093561
+                  },
+                  "individual": [
+                    -0.14848244089938906,
+                    -0.1281643439093561
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 1.2996898002270996e-10,
+              "grouped": {
+                "common": -0.1624229308601599,
+                "differential": 0.008872656455025663,
+                "left": -0.17129558731518557,
+                "right": -0.15355027440513425
+              },
+              "individual": [
+                -0.17129558731518557,
+                -0.15355027440513425
+              ],
+              "realized_wrench_grouped": {
+                "common": 0.9970881497616885,
+                "differential": -1.777111415746102e-05,
+                "left": 0.9971059208758459,
+                "right": 0.997070378647531
+              }
+            },
+            "measured": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": 0.020150849602707917,
+                    "differential": -0.0012863926499024573,
+                    "left": 0.021437242252610376,
+                    "right": 0.01886445695280546
+                  },
+                  "individual": [
+                    0.021437242252610376,
+                    0.01886445695280546
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": -0.04425038807384979,
+                    "differential": 0.0,
+                    "left": -0.04425038807384979,
+                    "right": -0.04425038807384979
+                  },
+                  "individual": [
+                    -0.04425038807384979,
+                    -0.04425038807384979
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": -0.13832339317402467,
+                    "differential": 0.010159046851097447,
+                    "left": -0.14848244002512212,
+                    "right": -0.12816434632292723
+                  },
+                  "individual": [
+                    -0.14848244002512212,
+                    -0.12816434632292723
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 4.0333208994880465e-11,
+              "grouped": {
+                "common": -0.1624229316321646,
+                "differential": 0.008872654173863737,
+                "left": -0.17129558580602833,
+                "right": -0.15355027745830085
+              },
+              "individual": [
+                -0.17129558580602833,
+                -0.15355027745830085
+              ],
+              "realized_wrench_grouped": {
+                "common": 0.997088150312017,
+                "differential": -1.7771170167824035e-05,
+                "left": 0.9971059214821848,
+                "right": 0.9970703791418492
+              }
+            },
+            "primary_relative_error": 0.9293442477018479,
+            "realization_cross_to_primary_ratio": 1.782306826358626e-05,
+            "realization_primary_gain_error": 0.0029118496879829703,
+            "sign_pass": true
+          },
+          "common_ty": {
+            "cross_to_primary_ratio": 0.03397450255053585,
+            "eq12": {
+              "common": -39.01715502766854,
+              "differential": 0.0
+            },
+            "finite_difference_step_relative_error": 4.462871926595186e-11,
+            "half_step": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": 0.6989910016587468,
+                    "differential": -0.19883756522407864,
+                    "left": 0.8978285668828254,
+                    "right": 0.5001534364346681
+                  },
+                  "individual": [
+                    0.8978285668828254,
+                    0.5001534364346681
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": -1.4950050093230438,
+                    "differential": 0.0,
+                    "left": -1.4950050093230438,
+                    "right": -1.4950050093230438
+                  },
+                  "individual": [
+                    -1.4950050093230438,
+                    -1.4950050093230438
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": -20.590137007870624,
+                    "differential": 0.9254214071206963,
+                    "left": -21.515558414991318,
+                    "right": -19.664715600749926
+                  },
+                  "individual": [
+                    -21.515558414991318,
+                    -19.664715600749926
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 1.5633823124971968e-09,
+              "grouped": {
+                "common": -21.386151014598198,
+                "differential": 0.7265838412699566,
+                "left": -22.112734855868155,
+                "right": -20.65956717332824
+              },
+              "individual": [
+                -22.112734855868155,
+                -20.65956717332824
+              ],
+              "realized_wrench_grouped": {
+                "common": 0.9998872268226092,
+                "differential": 4.3297598839586726e-10,
+                "left": 0.9998872263896332,
+                "right": 0.9998872272555852
+              }
+            },
+            "measured": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": 0.6989910016517549,
+                    "differential": -0.1988375651345617,
+                    "left": 0.8978285667863165,
+                    "right": 0.5001534365171931
+                  },
+                  "individual": [
+                    0.8978285667863165,
+                    0.5001534365171931
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": -1.4950050093037568,
+                    "differential": 0.0,
+                    "left": -1.4950050093037568,
+                    "right": -1.4950050093037568
+                  },
+                  "individual": [
+                    -1.4950050093037568,
+                    -1.4950050093037568
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": -20.590137007876194,
+                    "differential": 0.9254214073368825,
+                    "left": -21.51555841521308,
+                    "right": -19.664715600539314
+                  },
+                  "individual": [
+                    -21.51555841521308,
+                    -19.664715600539314
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 4.615330340129731e-11,
+              "grouped": {
+                "common": -21.386151015552635,
+                "differential": 0.7265838422240378,
+                "left": -22.112734857776672,
+                "right": -20.659567173328597
+              },
+              "individual": [
+                -22.112734857776672,
+                -20.659567173328597
+              ],
+              "realized_wrench_grouped": {
+                "common": 0.9998872268229027,
+                "differential": 4.329781533307653e-10,
+                "left": 0.9998872263899244,
+                "right": 0.9998872272558808
+              }
+            },
+            "primary_relative_error": 0.45187825713107715,
+            "realization_cross_to_primary_ratio": 4.330269871598762e-10,
+            "realization_primary_gain_error": 0.00011277317709734724,
+            "sign_pass": true
+          },
+          "differential_fx": {
+            "cross_to_primary_ratio": 0.03302940403590882,
+            "eq12": {
+              "common": 0.0,
+              "differential": -1.950857751383427
+            },
+            "finite_difference_step_relative_error": 4.116302165376796e-09,
+            "half_step": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": 0.0001513442580087232,
+                    "differential": -0.14641814273293768,
+                    "left": 0.1465694869909464,
+                    "right": -0.14626679847492896
+                  },
+                  "individual": [
+                    0.1465694869909464,
+                    -0.14626679847492896
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": -0.00032854065169757963,
+                    "differential": 0.0,
+                    "left": -0.00032854065169757963,
+                    "right": -0.00032854065169757963
+                  },
+                  "individual": [
+                    -0.00032854065169757963,
+                    -0.00032854065169757963
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": 0.016358704180800265,
+                    "differential": -0.34349410974557687,
+                    "left": 0.35985281392637714,
+                    "right": -0.3271354055647766
+                  },
+                  "individual": [
+                    0.35985281392637714,
+                    -0.3271354055647766
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 5.909733813425078e-11,
+              "grouped": {
+                "common": 0.016181507791692695,
+                "differential": -0.4899122524239985,
+                "left": 0.5060937602156912,
+                "right": -0.4737307446323058
+              },
+              "individual": [
+                0.5060937602156912,
+                -0.4737307446323058
+              ],
+              "realized_wrench_grouped": {
+                "common": -1.7770337617517562e-05,
+                "differential": 0.9960175997037485,
+                "left": -0.996035370041366,
+                "right": 0.995999829366131
+              }
+            },
+            "measured": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": 0.00015134407191716437,
+                    "differential": -0.14641814213505322,
+                    "left": 0.14656948620697038,
+                    "right": -0.14626679806313606
+                  },
+                  "individual": [
+                    0.14656948620697038,
+                    -0.14626679806313606
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": -0.00032854022910996954,
+                    "differential": 0.0,
+                    "left": -0.00032854022910996954,
+                    "right": -0.00032854022910996954
+                  },
+                  "individual": [
+                    -0.00032854022910996954,
+                    -0.00032854022910996954
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": 0.016358705818718677,
+                    "differential": -0.34349410825164967,
+                    "left": 0.35985281407036834,
+                    "right": -0.327135402432931
+                  },
+                  "individual": [
+                    0.35985281407036834,
+                    -0.327135402432931
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 2.1348145473609748e-11,
+              "grouped": {
+                "common": 0.016181509660846416,
+                "differential": -0.48991225040737163,
+                "left": 0.506093760068218,
+                "right": -0.4737307407465252
+              },
+              "individual": [
+                0.506093760068218,
+                -0.4737307407465252
+              ],
+              "realized_wrench_grouped": {
+                "common": -1.7771360069085418e-05,
+                "differential": 0.9960175997457982,
+                "left": -0.9960353711058673,
+                "right": 0.9959998283857291
+              }
+            },
+            "primary_relative_error": 0.7488734121901218,
+            "realization_cross_to_primary_ratio": 1.7842415709944275e-05,
+            "realization_primary_gain_error": 0.003982400254201823,
+            "sign_pass": true
+          },
+          "differential_ty": {
+            "cross_to_primary_ratio": 0.04746005380115843,
+            "eq12": {
+              "common": 0.0,
+              "differential": -39.01715502766854
+            },
+            "finite_difference_step_relative_error": 1.0072672807212951e-11,
+            "half_step": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": -0.005369647036712999,
+                    "differential": 0.6306309891124275,
+                    "left": -0.6360006361491405,
+                    "right": 0.6252613420757145
+                  },
+                  "individual": [
+                    -0.6360006361491405,
+                    0.6252613420757145
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": 0.011449360595248533,
+                    "differential": 0.0,
+                    "left": 0.011449360595248533,
+                    "right": 0.011449360595248533
+                  },
+                  "individual": [
+                    0.011449360595248533,
+                    0.011449360595248533
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": 0.810810191976028,
+                    "differential": -17.842788163536884,
+                    "left": 18.653598355512912,
+                    "right": -17.031977971560856
+                  },
+                  "individual": [
+                    18.653598355512912,
+                    -17.031977971560856
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 3.006128679317044e-10,
+              "grouped": {
+                "common": 0.81688990571962,
+                "differential": -17.21215717454001,
+                "left": 18.02904708025963,
+                "right": -16.39526726882039
+              },
+              "individual": [
+                18.02904708025963,
+                -16.39526726882039
+              ],
+              "realized_wrench_grouped": {
+                "common": 4.331535130575048e-10,
+                "differential": 0.9999946250537683,
+                "left": -0.9999946246206148,
+                "right": 0.9999946254869219
+              }
+            },
+            "measured": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": -0.00536964704616244,
+                    "differential": 0.6306309890499571,
+                    "left": -0.6360006360961196,
+                    "right": 0.6252613420037947
+                  },
+                  "individual": [
+                    -0.6360006360961196,
+                    0.6252613420037947
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": 0.011449360615385788,
+                    "differential": 0.0,
+                    "left": 0.011449360615385788,
+                    "right": 0.011449360615385788
+                  },
+                  "individual": [
+                    0.011449360615385788,
+                    0.011449360615385788
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": 0.8108101920567812,
+                    "differential": -17.842788163703386,
+                    "left": 18.653598355760167,
+                    "right": -17.031977971646604
+                  },
+                  "individual": [
+                    18.653598355760167,
+                    -17.031977971646604
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 1.4006928950038855e-10,
+              "grouped": {
+                "common": 0.8168899055458922,
+                "differential": -17.212157174713383,
+                "left": 18.029047080259275,
+                "right": -16.39526726916749
+              },
+              "individual": [
+                18.029047080259275,
+                -16.39526726916749
+              ],
+              "realized_wrench_grouped": {
+                "common": 4.329113734158341e-10,
+                "differential": 0.9999946250537678,
+                "left": -0.9999946246208564,
+                "right": 0.9999946254866792
+              }
+            },
+            "primary_relative_error": 0.5588566833612653,
+            "realization_cross_to_primary_ratio": 4.329137003036964e-10,
+            "realization_primary_gain_error": 5.374946232206135e-06,
+            "sign_pass": true
+          }
+        },
+        "tick": 58
+      }
+    ],
+    "T1_straight_start_cruise_brake": [
+      {
+        "baseline_torque_max_abs_error_nm": 0.0,
+        "channels": {
+          "common_fx": {
+            "cross_to_primary_ratio": 0.008265588429330539,
+            "eq12": {
+              "common": -2.2987927571243545,
+              "differential": 0.0
+            },
+            "finite_difference_step_relative_error": 4.151025882790082e-09,
+            "half_step": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": 0.0196709240699999,
+                    "differential": -0.0010156172606270632,
+                    "left": 0.020686541330626966,
+                    "right": 0.01865530680937284
+                  },
+                  "individual": [
+                    0.020686541330626966,
+                    0.01865530680937284
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": -0.04330048965797755,
+                    "differential": 0.0,
+                    "left": -0.04330048965797755,
+                    "right": -0.04330048965797755
+                  },
+                  "individual": [
+                    -0.04330048965797755,
+                    -0.04330048965797755
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": -0.13230029932675236,
+                    "differential": -0.0002732346324965246,
+                    "left": -0.13202706469425585,
+                    "right": -0.1325735339592489
+                  },
+                  "individual": [
+                    -0.13202706469425585,
+                    -0.1325735339592489
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 2.128011655777584e-11,
+              "grouped": {
+                "common": -0.15592986490982952,
+                "differential": -0.0012888518767439905,
+                "left": -0.15464101303308553,
+                "right": -0.1572187167865735
+              },
+              "individual": [
+                -0.15464101303308553,
+                -0.1572187167865735
+              ],
+              "realized_wrench_grouped": {
+                "common": 0.9970550360466368,
+                "differential": -1.0567364389091338e-05,
+                "left": 0.9970656034110259,
+                "right": 0.9970444686822477
+              }
+            },
+            "measured": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": 0.019670924130584175,
+                    "differential": -0.0010156173202476425,
+                    "left": 0.020686541450831816,
+                    "right": 0.01865530681033653
+                  },
+                  "individual": [
+                    0.020686541450831816,
+                    0.01865530681033653
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": -0.043300489795002686,
+                    "differential": 0.0,
+                    "left": -0.043300489795002686,
+                    "right": -0.043300489795002686
+                  },
+                  "individual": [
+                    -0.043300489795002686,
+                    -0.043300489795002686
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": -0.13230029989325504,
+                    "differential": -0.0002732347798231338,
+                    "left": -0.1320270651134319,
+                    "right": -0.13257353467307817
+                  },
+                  "individual": [
+                    -0.1320270651134319,
+                    -0.13257353467307817
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 8.110095928159922e-12,
+              "grouped": {
+                "common": -0.15592986555709842,
+                "differential": -0.0012888520925358193,
+                "left": -0.1546410134645626,
+                "right": -0.15721871764963424
+              },
+              "individual": [
+                -0.1546410134645626,
+                -0.15721871764963424
+              ],
+              "realized_wrench_grouped": {
+                "common": 0.9970550360508248,
+                "differential": -1.0567351858281615e-05,
+                "left": 0.9970656034026831,
+                "right": 0.9970444686989666
+              }
+            },
+            "primary_relative_error": 0.9321688024838929,
+            "realization_cross_to_primary_ratio": 1.0598564247904711e-05,
+            "realization_primary_gain_error": 0.0029449639491752055,
+            "sign_pass": true
+          },
+          "common_ty": {
+            "cross_to_primary_ratio": 0.011805439893987846,
+            "eq12": {
+              "common": -39.01715502766854,
+              "differential": 0.0
+            },
+            "finite_difference_step_relative_error": 4.216940372681311e-12,
+            "half_step": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": 0.695681573685734,
+                    "differential": -0.30108885253942524,
+                    "left": 0.9967704262251593,
+                    "right": 0.39459272114630883
+                  },
+                  "individual": [
+                    0.9967704262251593,
+                    0.39459272114630883
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": -1.4887992944262975,
+                    "differential": 0.0,
+                    "left": -1.4887992944262975,
+                    "right": -1.4887992944262975
+                  },
+                  "individual": [
+                    -1.4887992944262975,
+                    -1.4887992944262975
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": -19.847791905228025,
+                    "differential": 0.05741383436687997,
+                    "left": -19.905205739594905,
+                    "right": -19.790378070861145
+                  },
+                  "individual": [
+                    -19.905205739594905,
+                    -19.790378070861145
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 7.666045576115721e-11,
+              "grouped": {
+                "common": -20.640909625968362,
+                "differential": -0.24367501824897886,
+                "left": -20.397234607719383,
+                "right": -20.88458464421734
+              },
+              "individual": [
+                -20.397234607719383,
+                -20.88458464421734
+              ],
+              "realized_wrench_grouped": {
+                "common": 0.999885933172269,
+                "differential": -1.4134915460317643e-10,
+                "left": 0.9998859333136182,
+                "right": 0.9998859330309199
+              }
+            },
+            "measured": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": 0.6956815736906442,
+                    "differential": -0.3010888524833014,
+                    "left": 0.9967704261739456,
+                    "right": 0.39459272120734284
+                  },
+                  "individual": [
+                    0.9967704261739456,
+                    0.39459272120734284
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": -1.4887992944338055,
+                    "differential": 0.0,
+                    "left": -1.4887992944338055,
+                    "right": -1.4887992944338055
+                  },
+                  "individual": [
+                    -1.4887992944338055,
+                    -1.4887992944338055
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": -19.847791905126115,
+                    "differential": 0.0574138344503492,
+                    "left": -19.905205739576466,
+                    "right": -19.790378070675768
+                  },
+                  "individual": [
+                    -19.905205739576466,
+                    -19.790378070675768
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 9.941913958755322e-11,
+              "grouped": {
+                "common": -20.64090962588132,
+                "differential": -0.2436750179455771,
+                "left": -20.397234607935744,
+                "right": -20.884584643826898
+              },
+              "individual": [
+                -20.397234607935744,
+                -20.884584643826898
+              ],
+              "realized_wrench_grouped": {
+                "common": 0.99988593317129,
+                "differential": -1.4135026482620106e-10,
+                "left": 0.9998859333126403,
+                "right": 0.9998859330299398
+              }
+            },
+            "primary_relative_error": 0.47097860899278604,
+            "realization_cross_to_primary_ratio": 1.4136639004199932e-10,
+            "realization_primary_gain_error": 0.00011406682870995777,
+            "sign_pass": true
+          },
+          "differential_fx": {
+            "cross_to_primary_ratio": 0.0039780478078326785,
+            "eq12": {
+              "common": 0.0,
+              "differential": -1.950857751383427
+            },
+            "finite_difference_step_relative_error": 2.285767652736931e-08,
+            "half_step": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": 0.0002434288885394542,
+                    "differential": -0.14283351656944593,
+                    "left": 0.14307694545798538,
+                    "right": -0.14259008768090647
+                  },
+                  "individual": [
+                    0.14307694545798538,
+                    -0.14259008768090647
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": -0.0005230228895595943,
+                    "differential": 0.0,
+                    "left": -0.0005230228895595943,
+                    "right": -0.0005230228895595943
+                  },
+                  "individual": [
+                    -0.0005230228895595943,
+                    -0.0005230228895595943
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": -0.0015905141384354449,
+                    "differential": -0.3272735629435757,
+                    "left": 0.32568304880514026,
+                    "right": -0.32886407708201115
+                  },
+                  "individual": [
+                    0.32568304880514026,
+                    -0.32886407708201115
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 1.592304066377892e-11,
+              "grouped": {
+                "common": -0.0018701081351935045,
+                "differential": -0.47010707950136066,
+                "left": 0.46823697136616715,
+                "right": -0.47197718763655416
+              },
+              "individual": [
+                0.46823697136616715,
+                -0.47197718763655416
+              ],
+              "realized_wrench_grouped": {
+                "common": -1.0567504863390198e-05,
+                "differential": 0.9968020633667529,
+                "left": -0.9968126308716163,
+                "right": 0.9967914958618895
+              }
+            },
+            "measured": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": 0.00024342891729456362,
+                    "differential": -0.1428335135657529,
+                    "left": 0.14307694248304748,
+                    "right": -0.14259008464845835
+                  },
+                  "individual": [
+                    0.14307694248304748,
+                    -0.14259008464845835
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": -0.0005230229549750571,
+                    "differential": 0.0,
+                    "left": -0.0005230229549750571,
+                    "right": -0.0005230229549750571
+                  },
+                  "individual": [
+                    -0.0005230229549750571,
+                    -0.0005230229549750571
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": -0.0015905143668664967,
+                    "differential": -0.3272735551932161,
+                    "left": 0.3256830408263496,
+                    "right": -0.3288640695600826
+                  },
+                  "individual": [
+                    0.3256830408263496,
+                    -0.3288640695600826
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 1.3400225373771946e-11,
+              "grouped": {
+                "common": -0.0018701083943106767,
+                "differential": -0.4701070687558051,
+                "left": 0.4682369603614944,
+                "right": -0.4719771771501158
+              },
+              "individual": [
+                0.4682369603614944,
+                -0.4719771771501158
+              ],
+              "realized_wrench_grouped": {
+                "common": -1.056739448890287e-05,
+                "differential": 0.9968020636273689,
+                "left": -0.9968126310218578,
+                "right": 0.99679149623288
+              }
+            },
+            "primary_relative_error": 0.7590254499988867,
+            "realization_cross_to_primary_ratio": 1.060129676141325e-05,
+            "realization_primary_gain_error": 0.003197936372631105,
+            "sign_pass": true
+          },
+          "differential_ty": {
+            "cross_to_primary_ratio": 0.0025596932457519826,
+            "eq12": {
+              "common": 0.0,
+              "differential": -39.01715502766854
+            },
+            "finite_difference_step_relative_error": 1.1854427326833086e-11,
+            "half_step": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": -0.00010645849502000093,
+                    "differential": 0.7452171848469257,
+                    "left": -0.7453236433419457,
+                    "right": 0.7451107263519057
+                  },
+                  "individual": [
+                    -0.7453236433419457,
+                    0.7451107263519057
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": 0.00021626730521961648,
+                    "differential": 0.0,
+                    "left": 0.00021626730521961648,
+                    "right": 0.00021626730521961648
+                  },
+                  "individual": [
+                    0.00021626730521961648,
+                    0.00021626730521961648
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": 0.04200549087136274,
+                    "differential": -17.19847769151915,
+                    "left": 17.240483182390516,
+                    "right": -17.15647220064779
+                  },
+                  "individual": [
+                    17.240483182390516,
+                    -17.15647220064779
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 2.0196466721245088e-10,
+              "grouped": {
+                "common": 0.04211529985411744,
+                "differential": -16.45326050670164,
+                "left": 16.495375806555757,
+                "right": -16.41114520684752
+              },
+              "individual": [
+                16.495375806555757,
+                -16.41114520684752
+              ],
+              "realized_wrench_grouped": {
+                "common": -1.424856899134852e-10,
+                "differential": 0.9999946250641916,
+                "left": -0.9999946252066773,
+                "right": 0.9999946249217059
+              }
+            },
+            "measured": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": -0.00010645849313128952,
+                    "differential": 0.7452171848888213,
+                    "left": -0.7453236433819526,
+                    "right": 0.74511072639569
+                  },
+                  "individual": [
+                    -0.7453236433819526,
+                    0.74511072639569
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": 0.0002162673068074298,
+                    "differential": 0.0,
+                    "left": 0.0002162673068074298,
+                    "right": 0.0002162673068074298
+                  },
+                  "individual": [
+                    0.0002162673068074298,
+                    0.0002162673068074298
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": 0.04200549101063089,
+                    "differential": -17.19847769145427,
+                    "left": 17.2404831824649,
+                    "right": -17.156472200443638
+                  },
+                  "individual": [
+                    17.2404831824649,
+                    -17.156472200443638
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 9.405809464624326e-11,
+              "grouped": {
+                "common": 0.04211529978910278,
+                "differential": -16.453260506506595,
+                "left": 16.495375806295698,
+                "right": -16.411145206717492
+              },
+              "individual": [
+                16.495375806295698,
+                -16.411145206717492
+              ],
+              "realized_wrench_grouped": {
+                "common": -1.414455219617139e-10,
+                "differential": 0.9999946250642027,
+                "left": -0.9999946252056482,
+                "right": 0.9999946249227571
+              }
+            },
+            "primary_relative_error": 0.5783070166228428,
+            "realization_cross_to_primary_ratio": 1.4144628222639964e-10,
+            "realization_primary_gain_error": 5.374935797330949e-06,
+            "sign_pass": true
+          }
+        },
+        "tick": 42
+      },
+      {
+        "baseline_torque_max_abs_error_nm": 0.0,
+        "channels": {
+          "common_fx": {
+            "cross_to_primary_ratio": 0.07364587240437014,
+            "eq12": {
+              "common": -2.2987927571243545,
+              "differential": 0.0
+            },
+            "finite_difference_step_relative_error": 2.9897848797472735e-10,
+            "half_step": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": 0.019781229051087527,
+                    "differential": -0.0004639334235239361,
+                    "left": 0.020245162474611465,
+                    "right": 0.019317295627563593
+                  },
+                  "individual": [
+                    0.020245162474611465,
+                    0.019317295627563593
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": -0.0435308345948379,
+                    "differential": 0.0,
+                    "left": -0.0435308345948379,
+                    "right": -0.0435308345948379
+                  },
+                  "individual": [
+                    -0.0435308345948379,
+                    -0.0435308345948379
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": -0.14308547469893068,
+                    "differential": -0.011822781595881154,
+                    "left": -0.13126269310304953,
+                    "right": -0.15490825629481184
+                  },
+                  "individual": [
+                    -0.13126269310304953,
+                    -0.15490825629481184
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 1.0604297995264744e-10,
+              "grouped": {
+                "common": -0.1668350803037555,
+                "differential": -0.012286714974436563,
+                "left": -0.15454836532931893,
+                "right": -0.17912179527819205
+              },
+              "individual": [
+                -0.15454836532931893,
+                -0.17912179527819205
+              ],
+              "realized_wrench_grouped": {
+                "common": 0.9970565575587711,
+                "differential": -1.1851866270895517e-05,
+                "left": 0.997068409425042,
+                "right": 0.9970447056925003
+              }
+            },
+            "measured": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": 0.019781229050407592,
+                    "differential": -0.0004639334256623436,
+                    "left": 0.020245162476069938,
+                    "right": 0.01931729562474525
+                  },
+                  "individual": [
+                    0.020245162476069938,
+                    0.01931729562474525
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": -0.043530834593563314,
+                    "differential": 0.0,
+                    "left": -0.043530834593563314,
+                    "right": -0.043530834593563314
+                  },
+                  "individual": [
+                    -0.043530834593563314,
+                    -0.043530834593563314
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": -0.1430854747047755,
+                    "differential": -0.011822781595396167,
+                    "left": -0.13126269310937935,
+                    "right": -0.1549082563001717
+                  },
+                  "individual": [
+                    -0.13126269310937935,
+                    -0.1549082563001717
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 1.7835372068120137e-11,
+              "grouped": {
+                "common": -0.1668350802538754,
+                "differential": -0.012286715032949758,
+                "left": -0.15454836522092563,
+                "right": -0.17912179528682515
+              },
+              "individual": [
+                -0.15454836522092563,
+                -0.17912179528682515
+              ],
+              "realized_wrench_grouped": {
+                "common": 0.9970565575586134,
+                "differential": -1.1851866306533676e-05,
+                "left": 0.9970684094249199,
+                "right": 0.9970447056923069
+              }
+            },
+            "primary_relative_error": 0.9274249147789313,
+            "realization_cross_to_primary_ratio": 1.1886854578795493e-05,
+            "realization_primary_gain_error": 0.0029434424413865568,
+            "sign_pass": true
+          },
+          "common_ty": {
+            "cross_to_primary_ratio": 0.04469247154523722,
+            "eq12": {
+              "common": -39.01715502766854,
+              "differential": 0.0
+            },
+            "finite_difference_step_relative_error": 2.317662699471423e-11,
+            "half_step": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": 0.7026902725439502,
+                    "differential": -0.10106754837843956,
+                    "left": 0.8037578209223898,
+                    "right": 0.6016227241655107
+                  },
+                  "individual": [
+                    0.8037578209223898,
+                    0.6016227241655107
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": -1.5036784292929604,
+                    "differential": 0.0,
+                    "left": -1.5036784292929604,
+                    "right": -1.5036784292929604
+                  },
+                  "individual": [
+                    -1.5036784292929604,
+                    -1.5036784292929604
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": -20.728401615521484,
+                    "differential": -0.8611340912651873,
+                    "left": -19.8672675242563,
+                    "right": -21.589535706786673
+                  },
+                  "individual": [
+                    -19.8672675242563,
+                    -21.589535706786673
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 6.940972241409327e-10,
+              "grouped": {
+                "common": -21.529389772779695,
+                "differential": -0.9622016394587263,
+                "left": -20.56718813332097,
+                "right": -22.49159141223842
+              },
+              "individual": [
+                -20.56718813332097,
+                -22.49159141223842
+              ],
+              "realized_wrench_grouped": {
+                "common": 0.9998859974987959,
+                "differential": -6.015710152240672e-11,
+                "left": 0.999885997558953,
+                "right": 0.9998859974386388
+              }
+            },
+            "measured": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": 0.7026902725254413,
+                    "differential": -0.10106754837899734,
+                    "left": 0.8037578209044386,
+                    "right": 0.6016227241464439
+                  },
+                  "individual": [
+                    0.8037578209044386,
+                    0.6016227241464439
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": -1.5036784292440615,
+                    "differential": 0.0,
+                    "left": -1.5036784292440615,
+                    "right": -1.5036784292440615
+                  },
+                  "individual": [
+                    -1.5036784292440615,
+                    -1.5036784292440615
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": -20.728401615430876,
+                    "differential": -0.8611340912849048,
+                    "left": -19.86726752414597,
+                    "right": -21.58953570671578
+                  },
+                  "individual": [
+                    -19.86726752414597,
+                    -21.58953570671578
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 2.5129764935627463e-10,
+              "grouped": {
+                "common": -21.529389772280716,
+                "differential": -0.9622016397839772,
+                "left": -20.56718813249674,
+                "right": -22.491591412064693
+              },
+              "individual": [
+                -20.56718813249674,
+                -22.491591412064693
+              ],
+              "realized_wrench_grouped": {
+                "common": 0.999885997498855,
+                "differential": -6.015704601125549e-11,
+                "left": 0.9998859975590121,
+                "right": 0.999885997438698
+              }
+            },
+            "primary_relative_error": 0.44820708334543063,
+            "realization_cross_to_primary_ratio": 6.016390484688669e-11,
+            "realization_primary_gain_error": 0.00011400250114501631,
+            "sign_pass": true
+          },
+          "differential_fx": {
+            "cross_to_primary_ratio": 0.040401095967781464,
+            "eq12": {
+              "common": 0.0,
+              "differential": -1.950857751383427
+            },
+            "finite_difference_step_relative_error": 5.451635657184914e-09,
+            "half_step": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": 0.000389565429007907,
+                    "differential": -0.14443199989700928,
+                    "left": 0.1448215653260172,
+                    "right": -0.14404243446800138
+                  },
+                  "individual": [
+                    0.1448215653260172,
+                    -0.14404243446800138
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": -0.0008355784132991235,
+                    "differential": 0.0,
+                    "left": -0.0008355784132991235,
+                    "right": -0.0008355784132991235
+                  },
+                  "individual": [
+                    -0.0008355784132991235,
+                    -0.0008355784132991235
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": -0.019158863448146685,
+                    "differential": -0.34082409375490175,
+                    "left": 0.32166523030675503,
+                    "right": -0.3599829572030484
+                  },
+                  "individual": [
+                    0.32166523030675503,
+                    -0.3599829572030484
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 1.1399547972246182e-11,
+              "grouped": {
+                "common": -0.019604876433234608,
+                "differential": -0.4852560936625139,
+                "left": 0.46565121722927927,
+                "right": -0.5048609700957485
+              },
+              "individual": [
+                0.46565121722927927,
+                -0.5048609700957485
+              ],
+              "realized_wrench_grouped": {
+                "common": -1.1853039000309096e-05,
+                "differential": 0.9966704476414467,
+                "left": -0.996682300680447,
+                "right": 0.9966585946024464
+              }
+            },
+            "measured": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": 0.0003895655902975137,
+                    "differential": -0.14443200061041975,
+                    "left": 0.14482156620071726,
+                    "right": -0.14404243502012223
+                  },
+                  "individual": [
+                    0.14482156620071726,
+                    -0.14404243502012223
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": -0.0008355787805872849,
+                    "differential": 0.0,
+                    "left": -0.0008355787805872849,
+                    "right": -0.0008355787805872849
+                  },
+                  "individual": [
+                    -0.0008355787805872849,
+                    -0.0008355787805872849
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": -0.01915886493810906,
+                    "differential": -0.3408240956951265,
+                    "left": 0.3216652307570175,
+                    "right": -0.3599829606332356
+                  },
+                  "individual": [
+                    0.3216652307570175,
+                    -0.3599829606332356
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 1.4917178603468528e-11,
+              "grouped": {
+                "common": -0.019604878115888624,
+                "differential": -0.4852560963079533,
+                "left": 0.4656512181920647,
+                "right": -0.5048609744238419
+              },
+              "individual": [
+                0.4656512181920647,
+                -0.5048609744238419
+              ],
+              "realized_wrench_grouped": {
+                "common": -1.1851825519437753e-05,
+                "differential": 0.996670447595892,
+                "left": -0.9966822994214114,
+                "right": 0.9966585957703725
+              }
+            },
+            "primary_relative_error": 0.7512601336700024,
+            "realization_cross_to_primary_ratio": 1.189141862089521e-05,
+            "realization_primary_gain_error": 0.003329552404108038,
+            "sign_pass": true
+          },
+          "differential_ty": {
+            "cross_to_primary_ratio": 0.045381018052938434,
+            "eq12": {
+              "common": 0.0,
+              "differential": -39.01715502766854
+            },
+            "finite_difference_step_relative_error": 1.0165196511789437e-11,
+            "half_step": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": 0.006623695711393651,
+                    "differential": 0.9655054162360583,
+                    "left": -0.9588817205246647,
+                    "right": 0.972129111947452
+                  },
+                  "individual": [
+                    -0.9588817205246647,
+                    0.972129111947452
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": -0.014155647865554203,
+                    "differential": 0.0,
+                    "left": -0.014155647865554203,
+                    "right": -0.014155647865554203
+                  },
+                  "individual": [
+                    -0.014155647865554203,
+                    -0.014155647865554203
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": -0.7656706090514387,
+                    "differential": -18.003522501373297,
+                    "left": 17.23785189232186,
+                    "right": -18.769193110424737
+                  },
+                  "individual": [
+                    17.23785189232186,
+                    -18.769193110424737
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 7.175771088441252e-11,
+              "grouped": {
+                "common": -0.773202561265407,
+                "differential": -17.03801708512529,
+                "left": 16.264814523859883,
+                "right": -17.811219646390697
+              },
+              "individual": [
+                16.264814523859883,
+                -17.811219646390697
+              ],
+              "realized_wrench_grouped": {
+                "common": -6.009326369849077e-11,
+                "differential": 0.9999946250658402,
+                "left": -0.9999946251259335,
+                "right": 0.999994625005747
+              }
+            },
+            "measured": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": 0.006623695736324209,
+                    "differential": 0.9655054162605747,
+                    "left": -0.9588817205242505,
+                    "right": 0.9721291119968989
+                  },
+                  "individual": [
+                    -0.9588817205242505,
+                    0.9721291119968989
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": -0.014155647916806634,
+                    "differential": 0.0,
+                    "left": -0.014155647916806634,
+                    "right": -0.014155647916806634
+                  },
+                  "individual": [
+                    -0.014155647916806634,
+                    -0.014155647916806634
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": -0.7656706089301721,
+                    "differential": -18.003522501307426,
+                    "left": 17.237851892377254,
+                    "right": -18.769193110237598
+                  },
+                  "individual": [
+                    17.237851892377254,
+                    -18.769193110237598
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 2.8692426212728606e-10,
+              "grouped": {
+                "common": -0.7732025609184845,
+                "differential": -17.038017084952095,
+                "left": 16.26481452403361,
+                "right": -17.81121964587058
+              },
+              "individual": [
+                16.26481452403361,
+                -17.81121964587058
+              ],
+              "realized_wrench_grouped": {
+                "common": -6.02172756103414e-11,
+                "differential": 0.9999946250658405,
+                "left": -0.9999946251260577,
+                "right": 0.9999946250056232
+              }
+            },
+            "primary_relative_error": 0.5633198506433953,
+            "realization_cross_to_primary_ratio": 6.021759927597276e-11,
+            "realization_primary_gain_error": 5.374934159529943e-06,
+            "sign_pass": true
+          }
+        },
+        "tick": 44
+      },
+      {
+        "baseline_torque_max_abs_error_nm": 0.0,
+        "channels": {
+          "common_fx": {
+            "cross_to_primary_ratio": 0.0109802497247525,
+            "eq12": {
+              "common": -2.2987927571243545,
+              "differential": 0.0
+            },
+            "finite_difference_step_relative_error": 0.01282927254441229,
+            "half_step": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": 0.019601613266093783,
+                    "differential": -0.0017557759716109057,
+                    "left": 0.021357389237704687,
+                    "right": 0.017845837294482875
+                  },
+                  "individual": [
+                    0.021357389237704687,
+                    0.017845837294482875
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": -0.04311923249150737,
+                    "differential": 0.0,
+                    "left": -0.04311923249150737,
+                    "right": -0.04311923249150737
+                  },
+                  "individual": [
+                    -0.04311923249150737,
+                    -0.04311923249150737
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": -0.12951128838722797,
+                    "differential": -0.0028466790257949404,
+                    "left": -0.12666460936143303,
+                    "right": -0.13235796741302291
+                  },
+                  "individual": [
+                    -0.12666460936143303,
+                    -0.13235796741302291
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 1.1766809748792184e-11,
+              "grouped": {
+                "common": -0.1530289076099578,
+                "differential": -0.0046024549883227905,
+                "left": -0.148426452621635,
+                "right": -0.1576313625982806
+              },
+              "individual": [
+                -0.148426452621635,
+                -0.1576313625982806
+              ],
+              "realized_wrench_grouped": {
+                "common": 0.9976185881428126,
+                "differential": -5.0362569241901856e-05,
+                "left": 0.9976689507120545,
+                "right": 0.9975682255735707
+              }
+            },
+            "measured": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": 0.01977465945940563,
+                    "differential": -0.0009560901780108454,
+                    "left": 0.020730749637416477,
+                    "right": 0.018818569281394786
+                  },
+                  "individual": [
+                    0.020730749637416477,
+                    0.018818569281394786
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": -0.043512005841791004,
+                    "differential": 0.0,
+                    "left": -0.043512005841791004,
+                    "right": -0.043512005841791004
+                  },
+                  "individual": [
+                    -0.043512005841791004,
+                    -0.043512005841791004
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": -0.13125481079082832,
+                    "differential": -0.0007457624083506142,
+                    "left": -0.1305090483824777,
+                    "right": -0.13200057319917893
+                  },
+                  "individual": [
+                    -0.1305090483824777,
+                    -0.13200057319917893
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 5.128703017831526e-12,
+              "grouped": {
+                "common": -0.15499215717285963,
+                "differential": -0.0017018525911360882,
+                "left": -0.15329030458172355,
+                "right": -0.15669400976399572
+              },
+              "individual": [
+                -0.15329030458172355,
+                -0.15669400976399572
+              ],
+              "realized_wrench_grouped": {
+                "common": 0.9970578411718927,
+                "differential": -1.599691701309469e-05,
+                "left": 0.9970738380889057,
+                "right": 0.9970418442548795
+              }
+            },
+            "primary_relative_error": 0.9325767158903245,
+            "realization_cross_to_primary_ratio": 1.6044121366412106e-05,
+            "realization_primary_gain_error": 0.002942158828107333,
+            "sign_pass": true
+          },
+          "common_ty": {
+            "cross_to_primary_ratio": 0.012233578649964418,
+            "eq12": {
+              "common": -39.01715502766854,
+              "differential": 0.0
+            },
+            "finite_difference_step_relative_error": 2.843272719285037e-10,
+            "half_step": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": 0.6947666778489959,
+                    "differential": -0.30657393942728917,
+                    "left": 1.001340617276285,
+                    "right": 0.3881927384217067
+                  },
+                  "individual": [
+                    1.001340617276285,
+                    0.3881927384217067
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": -1.4867157255452041,
+                    "differential": 0.0,
+                    "left": -1.4867157255452041,
+                    "right": -1.4867157255452041
+                  },
+                  "individual": [
+                    -1.4867157255452041,
+                    -1.4867157255452041
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": -19.799443635781316,
+                    "differential": 0.05466750943543808,
+                    "left": -19.854111145216752,
+                    "right": -19.744776126345876
+                  },
+                  "individual": [
+                    -19.854111145216752,
+                    -19.744776126345876
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 6.082707670884702e-10,
+              "grouped": {
+                "common": -20.591392683750342,
+                "differential": -0.2519064296564011,
+                "left": -20.33948625409394,
+                "right": -20.843299113406744
+              },
+              "individual": [
+                -20.33948625409394,
+                -20.843299113406744
+              ],
+              "realized_wrench_grouped": {
+                "common": 0.9998860419609976,
+                "differential": 2.0816753876218286e-10,
+                "left": 0.9998860417528301,
+                "right": 0.9998860421691652
+              }
+            },
+            "measured": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": 0.6947666783997605,
+                    "differential": -0.3065739371983035,
+                    "left": 1.001340615598064,
+                    "right": 0.388192741201457
+                  },
+                  "individual": [
+                    1.001340615598064,
+                    0.388192741201457
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": -1.4867157267923465,
+                    "differential": 0.0,
+                    "left": -1.4867157267923465,
+                    "right": -1.4867157267923465
+                  },
+                  "individual": [
+                    -1.4867157267923465,
+                    -1.4867157267923465
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": -19.79944364101054,
+                    "differential": 0.054667515237829534,
+                    "left": -19.854111156248372,
+                    "right": -19.744776125772713
+                  },
+                  "individual": [
+                    -19.854111156248372,
+                    -19.744776125772713
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 2.220197359292797e-10,
+              "grouped": {
+                "common": -20.591392689605037,
+                "differential": -0.25190642198058555,
+                "left": -20.33948626762445,
+                "right": -20.843299111585623
+              },
+              "individual": [
+                -20.33948626762445,
+                -20.843299111585623
+              ],
+              "realized_wrench_grouped": {
+                "common": 0.9998860419582573,
+                "differential": 2.081509409279647e-10,
+                "left": 0.9998860417501063,
+                "right": 0.9998860421664082
+              }
+            },
+            "primary_relative_error": 0.47224771578033037,
+            "realization_cross_to_primary_ratio": 2.0817466410502657e-10,
+            "realization_primary_gain_error": 0.00011395804174274549,
+            "sign_pass": true
+          },
+          "differential_fx": {
+            "cross_to_primary_ratio": 0.0057101129559681005,
+            "eq12": {
+              "common": 0.0,
+              "differential": -1.950857751383427
+            },
+            "finite_difference_step_relative_error": 2.3314689120768532e-08,
+            "half_step": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": 0.0002846587221505964,
+                    "differential": -0.13567613299792963,
+                    "left": 0.13596079172008022,
+                    "right": -0.13539147427577902
+                  },
+                  "individual": [
+                    0.13596079172008022,
+                    -0.13539147427577902
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": -0.0006129943676737951,
+                    "differential": 0.0,
+                    "left": -0.0006129943676737951,
+                    "right": -0.0006129943676737951
+                  },
+                  "individual": [
+                    -0.0006129943676737951,
+                    -0.0006129943676737951
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": -0.0022133796074354506,
+                    "differential": -0.3094490933695745,
+                    "left": 0.30723571376213904,
+                    "right": -0.31166247297700994
+                  },
+                  "individual": [
+                    0.30723571376213904,
+                    -0.31166247297700994
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 3.10875214459827e-11,
+              "grouped": {
+                "common": -0.002541715241051179,
+                "differential": -0.4451252263483241,
+                "left": 0.4425835111072729,
+                "right": -0.44766694158937526
+              },
+              "individual": [
+                0.4425835111072729,
+                -0.44766694158937526
+              ],
+              "realized_wrench_grouped": {
+                "common": -1.5997050094584964e-05,
+                "differential": 0.9962185550394809,
+                "left": -0.9962345520895755,
+                "right": 0.9962025579893863
+              }
+            },
+            "measured": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": 0.00028465872892334543,
+                    "differential": -0.13567613010183083,
+                    "left": 0.13596078883075416,
+                    "right": -0.13539147137290747
+                  },
+                  "individual": [
+                    0.13596078883075416,
+                    -0.13539147137290747
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": -0.0006129943825205126,
+                    "differential": 0.0,
+                    "left": -0.0006129943825205126,
+                    "right": -0.0006129943825205126
+                  },
+                  "individual": [
+                    -0.0006129943825205126,
+                    -0.0006129943825205126
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": -0.0022133796059284894,
+                    "differential": -0.3094490858634911,
+                    "left": 0.30723570625756264,
+                    "right": -0.3116624654694196
+                  },
+                  "individual": [
+                    0.30723570625756264,
+                    -0.3116624654694196
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 8.26072543702594e-12,
+              "grouped": {
+                "common": -0.002541715262740496,
+                "differential": -0.4451252159703678,
+                "left": 0.4425835007076273,
+                "right": -0.4476669312331083
+              },
+              "individual": [
+                0.4425835007076273,
+                -0.4476669312331083
+              ],
+              "realized_wrench_grouped": {
+                "common": -1.5996944596918805e-05,
+                "differential": 0.9962185553078367,
+                "left": -0.9962345522524335,
+                "right": 0.9962025583632397
+              }
+            },
+            "primary_relative_error": 0.7718310237357323,
+            "realization_cross_to_primary_ratio": 1.6057665771920567e-05,
+            "realization_primary_gain_error": 0.0037814446921633493,
+            "sign_pass": true
+          },
+          "differential_ty": {
+            "cross_to_primary_ratio": 0.0022740278239951482,
+            "eq12": {
+              "common": 0.0,
+              "differential": -39.01715502766854
+            },
+            "finite_difference_step_relative_error": 2.1132255598671757e-11,
+            "half_step": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": 0.0004022189588354652,
+                    "differential": 0.7376813506939761,
+                    "left": -0.7372791317351407,
+                    "right": 0.7380835696528116
+                  },
+                  "individual": [
+                    -0.7372791317351407,
+                    0.7380835696528116
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": -0.0008693652833169298,
+                    "differential": 0.0,
+                    "left": -0.0008693652833169298,
+                    "right": -0.0008693652833169298
+                  },
+                  "individual": [
+                    -0.0008693652833169298,
+                    -0.0008693652833169298
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": 0.03779924217329089,
+                    "differential": -17.15440928215319,
+                    "left": 17.192208524326478,
+                    "right": -17.116610039979896
+                  },
+                  "individual": [
+                    17.192208524326478,
+                    -17.116610039979896
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 6.723901435634616e-10,
+              "grouped": {
+                "common": 0.03733209548784089,
+                "differential": -16.41672793114779,
+                "left": 16.45406002663563,
+                "right": -16.37939583565995
+              },
+              "individual": [
+                16.45406002663563,
+                -16.37939583565995
+              ],
+              "realized_wrench_grouped": {
+                "common": 2.0648116549892848e-10,
+                "differential": 0.9999946250597883,
+                "left": -0.9999946248533071,
+                "right": 0.9999946252662695
+              }
+            },
+            "measured": {
+              "acceleration_sensitivity_components": {
+                "base_angular": {
+                  "grouped": {
+                    "common": 0.00040221896034658977,
+                    "differential": 0.737681350736231,
+                    "left": -0.7372791317758843,
+                    "right": 0.7380835696965775
+                  },
+                  "individual": [
+                    -0.7372791317758843,
+                    0.7380835696965775
+                  ]
+                },
+                "base_translation": {
+                  "grouped": {
+                    "common": -0.0008693652838735997,
+                    "differential": 0.0,
+                    "left": -0.0008693652838735997,
+                    "right": -0.0008693652838735997
+                  },
+                  "individual": [
+                    -0.0008693652838735997,
+                    -0.0008693652838735997
+                  ]
+                },
+                "wheel_translation": {
+                  "grouped": {
+                    "common": 0.03779924225294451,
+                    "differential": -17.15440928210728,
+                    "left": 17.192208524360225,
+                    "right": -17.116610039854336
+                  },
+                  "individual": [
+                    17.192208524360225,
+                    -17.116610039854336
+                  ]
+                }
+              },
+              "component_sum_max_abs_error": 2.894218198434828e-10,
+              "grouped": {
+                "common": 0.03733209609517729,
+                "differential": -16.416727931494712,
+                "left": 16.45406002758989,
+                "right": -16.379395835399535
+              },
+              "individual": [
+                16.45406002758989,
+                -16.379395835399535
+              ],
+              "realized_wrench_grouped": {
+                "common": 2.0645396503482516e-10,
+                "differential": 0.9999946250597882,
+                "left": -0.9999946248533342,
+                "right": 0.9999946252662422
+              }
+            },
+            "primary_relative_error": 0.5792433374536664,
+            "realization_cross_to_primary_ratio": 2.064550747185082e-10,
+            "realization_primary_gain_error": 5.374940211799739e-06,
+            "sign_pass": true
+          }
+        },
+        "tick": 46
+      }
+    ]
+  }
+}

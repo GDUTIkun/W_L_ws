@@ -1,0 +1,13 @@
+{
+  "classification": "eq12_gain_or_coupling_mismatch",
+  "cross_coupling_pass": true,
+  "finite_difference_step_pass": true,
+  "gain_pass": false,
+  "internal_wrench_balance_pass": true,
+  "max_cross_to_primary_gain_ratio": 0.04825689851476581,
+  "max_finite_difference_step_relative_error": 5.0467325505974485e-11,
+  "max_net_applied_wrench_norm": 7.152653555406064e-18,
+  "max_primary_relative_gain_error": 1.0,
+  "production_modified": false,
+  "sign_pass": true
+}

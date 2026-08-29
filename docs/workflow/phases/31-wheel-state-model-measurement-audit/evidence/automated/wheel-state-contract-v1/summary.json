@@ -1,0 +1,15 @@
+{
+  "alignment_pass": true,
+  "classification": "measurement_contract_pass_proceed_to_dynamics",
+  "gate0_phase30_baseline_pass": true,
+  "maxima": {
+    "adapter_vs_kin_velocity_error_m_s": 1.97758476261356e-16,
+    "alignment": 5.421010862427522e-20,
+    "fd_vs_kin_velocity_error_m_s": 0.0015245785079935682,
+    "position_error_m": 1.5265566588595902e-16
+  },
+  "position_contract_pass": true,
+  "production_modified": false,
+  "velocity_adapter_vs_kin_pass": true,
+  "velocity_fd_vs_kin_pass": true
+}

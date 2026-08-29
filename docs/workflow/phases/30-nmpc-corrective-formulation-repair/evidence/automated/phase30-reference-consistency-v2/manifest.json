@@ -1,0 +1,21 @@
+{
+  "command": "tools/experiments/run_phase30_reference_consistency.py --output docs/workflow/phases/30-nmpc-corrective-formulation-repair/evidence/automated/phase30-reference-consistency-v2 --replay-of phase30-reference-consistency-v1",
+  "created_utc": "2026-08-29T13:27:28.733376+00:00",
+  "dependencies": {
+    "acados_template": "0.5.1",
+    "casadi": "3.7.2",
+    "mujoco": "3.7.0",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3"
+  },
+  "inputs": {
+    "simulation/mujoco/config/phase27_acados_ocp_v2.json": "c24159aebbd7b38380044319e9cfdb619d880b86f9050aedc086ab07aba5eadf",
+    "simulation/mujoco/config/phase29_nmpc_root_cause_v1.json": "557d8fa63ec39bca53cee5eadfc58f6c6feb156dab1ae95be7541da32788dcfa",
+    "simulation/mujoco/config/phase30_reference_consistency_v3.json": "b41fadcf16c3271615709eba9f1e77c3da871dc2f34d511aa24dec61ad3580f9",
+    "tools/experiments/generate_phase27_acados_solver.py": "e821ed857499aefcdda82c7e781bf40dadb9ec0324cf8c53c4b95d233e3f6045",
+    "tools/experiments/run_phase29_nmpc_root_cause.py": "b495f91435c77da2eb146a497997ce7489e511e41111ca22981ab18b9795982c",
+    "tools/experiments/run_phase30_reference_consistency.py": "edd50a9a4c6cece64f88c72ad5225baf193b09e6805a7af63c972645b156d291"
+  },
+  "python": "3.10.20",
+  "replay_of": "phase30-reference-consistency-v1"
+}

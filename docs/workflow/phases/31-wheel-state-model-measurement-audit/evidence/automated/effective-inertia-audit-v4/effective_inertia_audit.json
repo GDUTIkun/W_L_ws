@@ -1,0 +1,517 @@
+{
+  "closed_loop_samples": [
+    {
+      "base_ax": -0.20060037226894467,
+      "base_pitch_acceleration": 1.8437986336782324,
+      "base_vx": -0.025858701208485307,
+      "case": "T0_static",
+      "leg_dq_norm": 0.03159597892764381,
+      "leg_q_norm": 2.7026663505156407,
+      "normal_load_common": 31.4252893979671,
+      "normal_load_differential": 0.49590088706906954,
+      "pitch": -0.025272462923580867,
+      "pitch_rate": -0.10899840314537992,
+      "residual_common": 0.7252073660318861,
+      "residual_differential": -0.7717394441266308,
+      "tick": 54,
+      "wheel_rate_common": -0.25839465913181914
+    },
+    {
+      "base_ax": -0.15807880084460896,
+      "base_pitch_acceleration": -2.109594735110467,
+      "base_vx": -0.028818450440559047,
+      "case": "T0_static",
+      "leg_dq_norm": 0.053404179590522204,
+      "leg_q_norm": 2.702563147544213,
+      "normal_load_common": 31.57410039674823,
+      "normal_load_differential": 0.5963219592022497,
+      "pitch": -0.027911735870116874,
+      "pitch_rate": -0.15088782432726666,
+      "residual_common": 0.9205582324364333,
+      "residual_differential": 0.825381700036223,
+      "tick": 56,
+      "wheel_rate_common": -0.15829063179775532
+    },
+    {
+      "base_ax": -0.19046735232498824,
+      "base_pitch_acceleration": -1.5020827337298777,
+      "base_vx": -0.032390154958339315,
+      "case": "T0_static",
+      "leg_dq_norm": 0.08958616325251104,
+      "leg_q_norm": 2.702767162483275,
+      "normal_load_common": 31.603257762756865,
+      "normal_load_differential": 0.45445223382870736,
+      "pitch": -0.0312815532261941,
+      "pitch_rate": -0.18234069808355927,
+      "residual_common": 1.5220327173929078,
+      "residual_differential": -0.38112725107415524,
+      "tick": 58,
+      "wheel_rate_common": -0.049106047109869974
+    },
+    {
+      "base_ax": -0.01913920123591571,
+      "base_pitch_acceleration": -1.0388124632634443,
+      "base_vx": -0.002567414667227433,
+      "case": "T1_straight_start_cruise_brake",
+      "leg_dq_norm": 0.030500128662258565,
+      "leg_q_norm": 2.7054300523123924,
+      "normal_load_common": 31.537631544118412,
+      "normal_load_differential": 0.48115051187601665,
+      "pitch": -0.013738888417062882,
+      "pitch_rate": -0.025974131396915682,
+      "residual_common": 0.6858897213360134,
+      "residual_differential": -0.30024987118243696,
+      "tick": 42,
+      "wheel_rate_common": -0.256109060275605
+    },
+    {
+      "base_ax": 0.00258206454051276,
+      "base_pitch_acceleration": -2.360325373608448,
+      "base_vx": -0.002511834075725704,
+      "case": "T1_straight_start_cruise_brake",
+      "leg_dq_norm": 0.07845291175296606,
+      "leg_q_norm": 2.7053748710709122,
+      "normal_load_common": 31.63754033411476,
+      "normal_load_differential": 0.541844768157004,
+      "pitch": -0.014775826359038275,
+      "pitch_rate": -0.073055830359161,
+      "residual_common": 1.433531020219812,
+      "residual_differential": 0.22182877062439077,
+      "tick": 44,
+      "wheel_rate_common": -0.03859519226333953
+    },
+    {
+      "base_ax": -0.04259495196824872,
+      "base_pitch_acceleration": -0.28196437676573605,
+      "base_vx": -0.0032645286208687293,
+      "case": "T1_straight_start_cruise_brake",
+      "leg_dq_norm": 0.07959486066690004,
+      "leg_q_norm": 2.705882987399374,
+      "normal_load_common": 31.569883571813534,
+      "normal_load_differential": 0.5438867144430137,
+      "pitch": -0.01632512195217318,
+      "pitch_rate": -0.08038779571268524,
+      "residual_common": 1.4098059156490435,
+      "residual_differential": 0.04678028106225596,
+      "tick": 46,
+      "wheel_rate_common": -0.15059463974100282
+    }
+  ],
+  "common_fx_positive_scalar_feasible": false,
+  "component_fractions": [
+    {
+      "base_angular": -0.13108142261065076,
+      "base_translation": 0.2881107330120317,
+      "case": "T0_static",
+      "channel": "common_fx",
+      "tick": 54,
+      "wheel_translation": 0.8429706893627111
+    },
+    {
+      "base_angular": -0.03380839957631765,
+      "base_translation": 0.07232306326997562,
+      "case": "T0_static",
+      "channel": "common_ty",
+      "tick": 54,
+      "wheel_translation": 0.9614853363201337
+    },
+    {
+      "base_angular": 0.30707094401414103,
+      "base_translation": -0.0,
+      "case": "T0_static",
+      "channel": "differential_fx",
+      "tick": 54,
+      "wheel_translation": 0.6929290559927057
+    },
+    {
+      "base_angular": -0.04533143944212917,
+      "base_translation": -0.0,
+      "case": "T0_static",
+      "channel": "differential_ty",
+      "tick": 54,
+      "wheel_translation": 1.0453314394518898
+    },
+    {
+      "base_angular": -0.11512754065434477,
+      "base_translation": 0.2529085925050418,
+      "case": "T0_static",
+      "channel": "common_fx",
+      "tick": 56,
+      "wheel_translation": 0.8622189480533969
+    },
+    {
+      "base_angular": -0.03165305973711293,
+      "base_translation": 0.06770603295962355,
+      "case": "T0_static",
+      "channel": "common_ty",
+      "tick": 56,
+      "wheel_translation": 0.9639470267926522
+    },
+    {
+      "base_angular": 0.2945857625178715,
+      "base_translation": -0.0,
+      "case": "T0_static",
+      "channel": "differential_fx",
+      "tick": 56,
+      "wheel_translation": 0.7054142375014554
+    },
+    {
+      "base_angular": -0.048904970103442975,
+      "base_translation": -0.0,
+      "case": "T0_static",
+      "channel": "differential_ty",
+      "tick": 56,
+      "wheel_translation": 1.0489049700974464
+    },
+    {
+      "base_angular": -0.1240640678025876,
+      "base_translation": 0.2724392893859508,
+      "case": "T0_static",
+      "channel": "common_fx",
+      "tick": 58,
+      "wheel_translation": 0.8516247784966868
+    },
+    {
+      "base_angular": -0.03268428251270779,
+      "base_translation": 0.06990528628627682,
+      "case": "T0_static",
+      "channel": "common_ty",
+      "tick": 58,
+      "wheel_translation": 0.9627789962252883
+    },
+    {
+      "base_angular": 0.29886605614230644,
+      "base_translation": -0.0,
+      "case": "T0_static",
+      "channel": "differential_fx",
+      "tick": 58,
+      "wheel_translation": 0.7011339438155049
+    },
+    {
+      "base_angular": -0.036638695699132105,
+      "base_translation": -0.0,
+      "case": "T0_static",
+      "channel": "differential_ty",
+      "tick": 58,
+      "wheel_translation": 1.0366386956956488
+    },
+    {
+      "base_angular": -0.12615238306212143,
+      "base_translation": 0.2776920870181018,
+      "case": "T1_straight_start_cruise_brake",
+      "channel": "common_fx",
+      "tick": 42,
+      "wheel_translation": 0.848460296047708
+    },
+    {
+      "base_angular": -0.03370401723082687,
+      "base_translation": 0.07212856998157789,
+      "case": "T1_straight_start_cruise_brake",
+      "channel": "common_ty",
+      "tick": 42,
+      "wheel_translation": 0.9615754472486655
+    },
+    {
+      "base_angular": 0.3038318780097882,
+      "base_translation": -0.0,
+      "case": "T1_straight_start_cruise_brake",
+      "channel": "differential_fx",
+      "tick": 42,
+      "wheel_translation": 0.696168121996942
+    },
+    {
+      "base_angular": -0.045292979138944416,
+      "base_translation": -0.0,
+      "case": "T1_straight_start_cruise_brake",
+      "channel": "differential_ty",
+      "tick": 42,
+      "wheel_translation": 1.0452929791425214
+    },
+    {
+      "base_angular": -0.11856756396979704,
+      "base_translation": 0.26092135135681177,
+      "case": "T1_straight_start_cruise_brake",
+      "channel": "common_fx",
+      "tick": 44,
+      "wheel_translation": 0.8576462125773563
+    },
+    {
+      "base_angular": -0.032638652556244825,
+      "base_translation": 0.06984305849578984,
+      "case": "T1_straight_start_cruise_brake",
+      "channel": "common_ty",
+      "tick": 44,
+      "wheel_translation": 0.9627955940543601
+    },
+    {
+      "base_angular": 0.297640775065627,
+      "base_translation": -0.0,
+      "case": "T1_straight_start_cruise_brake",
+      "channel": "differential_fx",
+      "tick": 44,
+      "wheel_translation": 0.7023592249294127
+    },
+    {
+      "base_angular": -0.056667710300238226,
+      "base_translation": -0.0,
+      "case": "T1_straight_start_cruise_brake",
+      "channel": "differential_ty",
+      "tick": 44,
+      "wheel_translation": 1.0566677103057998
+    },
+    {
+      "base_angular": -0.12758490377904316,
+      "base_translation": 0.28073682330431043,
+      "case": "T1_straight_start_cruise_brake",
+      "channel": "common_fx",
+      "tick": 46,
+      "wheel_translation": 0.8468480804770171
+    },
+    {
+      "base_angular": -0.03374063565649414,
+      "base_translation": 0.07220083406708433,
+      "case": "T1_straight_start_cruise_brake",
+      "channel": "common_ty",
+      "tick": 46,
+      "wheel_translation": 0.9615398015796043
+    },
+    {
+      "base_angular": 0.304804412857309,
+      "base_translation": -0.0,
+      "case": "T1_straight_start_cruise_brake",
+      "channel": "differential_fx",
+      "tick": 46,
+      "wheel_translation": 0.6951955871313552
+    },
+    {
+      "base_angular": -0.044934736922881226,
+      "base_translation": -0.0,
+      "case": "T1_straight_start_cruise_brake",
+      "channel": "differential_ty",
+      "tick": 46,
+      "wheel_translation": 1.0449347369153485
+    }
+  ],
+  "correlation_interpretation": "descriptive_only_n=6; controlled input response and exact acceleration decomposition, not correlation, carry the causal decision",
+  "correlations": {
+    "residual_common": {
+      "base_ax": 0.16348565478089125,
+      "base_pitch_acceleration": -0.4428578923488719,
+      "base_vx": 0.07038216512904419,
+      "leg_dq_norm": 0.9909640952242413,
+      "leg_q_norm": 0.22176710451610848,
+      "normal_load_common": 0.748867751505061,
+      "normal_load_differential": -0.014744430139086603,
+      "pitch": -0.06454607954658687,
+      "pitch_rate": -0.34777801452886004,
+      "wheel_rate_common": 0.9094895385501794
+    },
+    "residual_differential": {
+      "base_ax": 0.25472554327940505,
+      "base_pitch_acceleration": -0.7339972157826415,
+      "base_vx": 0.07103897991537284,
+      "leg_dq_norm": 0.2691555049979454,
+      "leg_q_norm": 0.07162968653400115,
+      "normal_load_common": 0.6038013621475509,
+      "normal_load_differential": 0.8661039573406888,
+      "pitch": 0.03504296447459122,
+      "pitch_rate": -0.12939897214540197,
+      "wheel_rate_common": 0.35517846358359656
+    }
+  },
+  "current_denominator": 0.02562975181790836,
+  "effective_denominator_by_channel": {
+    "common_ty": {
+      "coefficient_of_variation": 0.030646210760804187,
+      "maximum": 0.04880615568572105,
+      "mean": 0.047298996961586265,
+      "minimum": 0.04476900095016758,
+      "relative_to_current_mean": 1.8454722971034345
+    },
+    "differential_fx": {
+      "coefficient_of_variation": 0.04224505719080522,
+      "maximum": 0.1123279432530026,
+      "mean": 0.1053110577826859,
+      "minimum": 0.09906844563013585,
+      "relative_to_current_mean": 4.108937867634816
+    },
+    "differential_ty": {
+      "coefficient_of_variation": 0.03133139757152974,
+      "maximum": 0.061263119584560495,
+      "mean": 0.05930702749896577,
+      "minimum": 0.05609659417850537,
+      "relative_to_current_mean": 2.3139914861573487
+    }
+  },
+  "effective_denominator_cross_channel_ratio": 2.2264966394152914,
+  "effective_denominator_estimates": [
+    {
+      "case": "T0_static",
+      "channel": "common_fx",
+      "effective_denominator": null,
+      "plant_gain": -0.15164613594368603,
+      "tick": 54
+    },
+    {
+      "case": "T0_static",
+      "channel": "common_ty",
+      "effective_denominator": 0.04880615568572105,
+      "plant_gain": -20.489218746080518,
+      "tick": 54
+    },
+    {
+      "case": "T0_static",
+      "channel": "differential_fx",
+      "effective_denominator": 0.10901373930752657,
+      "plant_gain": -0.4586577831162231,
+      "tick": 54
+    },
+    {
+      "case": "T0_static",
+      "channel": "differential_ty",
+      "effective_denominator": 0.061263119584560495,
+      "plant_gain": -16.323034262395275,
+      "tick": 54
+    },
+    {
+      "case": "T0_static",
+      "channel": "common_fx",
+      "effective_denominator": null,
+      "plant_gain": -0.17466694496139468,
+      "tick": 56
+    },
+    {
+      "case": "T0_static",
+      "channel": "common_ty",
+      "effective_denominator": 0.04476900095016758,
+      "plant_gain": -22.336884423958914,
+      "tick": 56
+    },
+    {
+      "case": "T0_static",
+      "channel": "differential_fx",
+      "effective_denominator": 0.09906844563013585,
+      "plant_gain": -0.5047015695256896,
+      "tick": 56
+    },
+    {
+      "case": "T0_static",
+      "channel": "differential_ty",
+      "effective_denominator": 0.05609659417850537,
+      "plant_gain": -17.826394180329252,
+      "tick": 56
+    },
+    {
+      "case": "T0_static",
+      "channel": "common_fx",
+      "effective_denominator": null,
+      "plant_gain": -0.1624229316321646,
+      "tick": 58
+    },
+    {
+      "case": "T0_static",
+      "channel": "common_ty",
+      "effective_denominator": 0.046759232143865945,
+      "plant_gain": -21.386151015552635,
+      "tick": 58
+    },
+    {
+      "case": "T0_static",
+      "channel": "differential_fx",
+      "effective_denominator": 0.1020590931507102,
+      "plant_gain": -0.48991225040737163,
+      "tick": 58
+    },
+    {
+      "case": "T0_static",
+      "channel": "differential_ty",
+      "effective_denominator": 0.05809847015974928,
+      "plant_gain": -17.212157174713383,
+      "tick": 58
+    },
+    {
+      "case": "T1_straight_start_cruise_brake",
+      "channel": "common_fx",
+      "effective_denominator": null,
+      "plant_gain": -0.15592986555709842,
+      "tick": 42
+    },
+    {
+      "case": "T1_straight_start_cruise_brake",
+      "channel": "common_ty",
+      "effective_denominator": 0.048447477273293967,
+      "plant_gain": -20.64090962588132,
+      "tick": 42
+    },
+    {
+      "case": "T1_straight_start_cruise_brake",
+      "channel": "differential_fx",
+      "effective_denominator": 0.10635874957662521,
+      "plant_gain": -0.4701070687558051,
+      "tick": 42
+    },
+    {
+      "case": "T1_straight_start_cruise_brake",
+      "channel": "differential_ty",
+      "effective_denominator": 0.060778226881203316,
+      "plant_gain": -16.453260506506595,
+      "tick": 42
+    },
+    {
+      "case": "T1_straight_start_cruise_brake",
+      "channel": "common_fx",
+      "effective_denominator": null,
+      "plant_gain": -0.1668350802538754,
+      "tick": 44
+    },
+    {
+      "case": "T1_straight_start_cruise_brake",
+      "channel": "common_ty",
+      "effective_denominator": 0.046448134878746494,
+      "plant_gain": -21.529389772280716,
+      "tick": 44
+    },
+    {
+      "case": "T1_straight_start_cruise_brake",
+      "channel": "differential_fx",
+      "effective_denominator": 0.1030383757781149,
+      "plant_gain": -0.4852560963079533,
+      "tick": 44
+    },
+    {
+      "case": "T1_straight_start_cruise_brake",
+      "channel": "differential_ty",
+      "effective_denominator": 0.058692275927061714,
+      "plant_gain": -17.038017084952095,
+      "tick": 44
+    },
+    {
+      "case": "T1_straight_start_cruise_brake",
+      "channel": "common_fx",
+      "effective_denominator": null,
+      "plant_gain": -0.15499215717285963,
+      "tick": 46
+    },
+    {
+      "case": "T1_straight_start_cruise_brake",
+      "channel": "common_ty",
+      "effective_denominator": 0.048563980837722585,
+      "plant_gain": -20.591392689605037,
+      "tick": 46
+    },
+    {
+      "case": "T1_straight_start_cruise_brake",
+      "channel": "differential_fx",
+      "effective_denominator": 0.1123279432530026,
+      "plant_gain": -0.4451252159703678,
+      "tick": 46
+    },
+    {
+      "case": "T1_straight_start_cruise_brake",
+      "channel": "differential_ty",
+      "effective_denominator": 0.060913478262714434,
+      "plant_gain": -16.416727931494712,
+      "tick": 46
+    }
+  ]
+}

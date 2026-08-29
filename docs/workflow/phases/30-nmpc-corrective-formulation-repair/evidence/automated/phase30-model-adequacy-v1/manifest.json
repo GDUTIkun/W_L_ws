@@ -1,0 +1,23 @@
+{
+  "command": "tools/experiments/run_phase30_model_adequacy.py --output docs/workflow/phases/30-nmpc-corrective-formulation-repair/evidence/automated/phase30-model-adequacy-v1",
+  "created_utc": "2026-08-29T13:26:45.473912+00:00",
+  "dependencies": {
+    "acados_template": "0.5.1",
+    "casadi": "3.7.2",
+    "mujoco": "3.7.0",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3"
+  },
+  "inputs": {
+    "docs/workflow/phases/28-minimal-closed-loop-drift-attribution/evidence/automated/phase28-drift-attribution-v5/T0_static_control.csv": "97764748b0948713cb13aadff60cc44a11ae5940d8fa1e30577314f86451c611",
+    "docs/workflow/phases/28-minimal-closed-loop-drift-attribution/evidence/automated/phase28-drift-attribution-v5/T1_straight_start_cruise_brake_control.csv": "bc79c789a7394f3b7c226322b9f5eba936ae1a28b929e566ca18c2aab64de03e",
+    "simulation/mujoco/config/phase27_acados_ocp_v2.json": "c24159aebbd7b38380044319e9cfdb619d880b86f9050aedc086ab07aba5eadf",
+    "simulation/mujoco/config/phase29_nmpc_root_cause_v1.json": "557d8fa63ec39bca53cee5eadfc58f6c6feb156dab1ae95be7541da32788dcfa",
+    "simulation/mujoco/config/phase30_reference_consistency_v3.json": "b41fadcf16c3271615709eba9f1e77c3da871dc2f34d511aa24dec61ad3580f9",
+    "tools/experiments/generate_phase27_acados_solver.py": "e821ed857499aefcdda82c7e781bf40dadb9ec0324cf8c53c4b95d233e3f6045",
+    "tools/experiments/run_phase30_model_adequacy.py": "66c1d28945f4a2694841f598dd31cc1873eece937cdecd26de6c68a4fadcf136",
+    "tools/experiments/run_phase30_reference_consistency.py": "edd50a9a4c6cece64f88c72ad5225baf193b09e6805a7af63c972645b156d291"
+  },
+  "python": "3.10.20",
+  "replay_of": null
+}

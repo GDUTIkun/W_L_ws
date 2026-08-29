@@ -1,0 +1,23 @@
+{
+  "command": "../tools/experiments/run_phase31_wheel_input_response.py --output ../docs/workflow/phases/31-wheel-state-model-measurement-audit/evidence/automated/wheel-input-response-v3",
+  "created_utc": "2026-08-29T13:58:16.946256+00:00",
+  "dependencies": {
+    "mujoco": "3.7.0",
+    "numpy": "2.2.6"
+  },
+  "inputs": {
+    "docs/workflow/phases/28-minimal-closed-loop-drift-attribution/evidence/automated/phase28-drift-attribution-v5/T0_static_control.csv": "97764748b0948713cb13aadff60cc44a11ae5940d8fa1e30577314f86451c611",
+    "docs/workflow/phases/28-minimal-closed-loop-drift-attribution/evidence/automated/phase28-drift-attribution-v5/T0_static_plant.csv": "2330188f8e9cfe7b2f24f6a28ebe0730d15e59891b920cab522c890b2556caac",
+    "docs/workflow/phases/28-minimal-closed-loop-drift-attribution/evidence/automated/phase28-drift-attribution-v5/T1_straight_start_cruise_brake_control.csv": "bc79c789a7394f3b7c226322b9f5eba936ae1a28b929e566ca18c2aab64de03e",
+    "docs/workflow/phases/28-minimal-closed-loop-drift-attribution/evidence/automated/phase28-drift-attribution-v5/T1_straight_start_cruise_brake_plant.csv": "9567fae6bb3bcab9830756afa4e15dae29a5aad0287ebe5744537f43a0bf011f",
+    "ros_ws/build/wheel_leg_core/phase31_wbc_wrench_sweep": "f93031f75f170fab8942f8eed4450a7b1b2a9f6abd0fe9edb3ce579053fa2334",
+    "simulation/mujoco/config/phase27_acados_ocp_v2.json": "c24159aebbd7b38380044319e9cfdb619d880b86f9050aedc086ab07aba5eadf",
+    "simulation/mujoco/config/phase31_wheel_state_contract_v1.json": "d628ddae0fd9736a710d47b3cd9aef51b5b99ba119262a97f9dc7c3c0e07ac97",
+    "simulation/mujoco/model/phase19_standing.xml": "5334205529e9625a9e508b2eb8d61f5401b3518deff8c4daef6caac1d3f52664",
+    "tools/experiments/phase31_wbc_wrench_sweep.cpp": "d3726400a1f95168b7a8b5a4d09b539af02dd6225b70cc1700eddb76a61096f0",
+    "tools/experiments/run_phase31_wheel_input_response.py": "681391fd08b0b642b3445be8d1f1a63d368922dfad79a5e73f930691df60b0ae",
+    "tools/experiments/run_phase31_wheel_state_contract.py": "29bb1f8e57be158cd148dcd38f723271ec3e86050d05958bfa20fcb0a48f3909"
+  },
+  "python": "3.10.20",
+  "replay_of": null
+}

@@ -1,0 +1,12 @@
+{
+  "C1_C2_fixed_contact_null_direction_present": false,
+  "C1_C2_free_height_null_direction_present": true,
+  "C1_C2_pair_decision": "infeasible_under_fixed_bilateral_normal_contact_geometry",
+  "C3_wheel_spin_changes_contact_constraint_velocity": true,
+  "C3_wheel_spin_is_exact_projection_null_direction": true,
+  "classification": "projection_rank_pass",
+  "max_wheel_spin_projection_norm": 0.0,
+  "min_wheel_spin_contact_constraint_jacobian_norm": 0.09969156872171187,
+  "production_modified": false,
+  "rank_tolerance": 1e-09
+}

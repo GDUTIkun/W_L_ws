@@ -1,0 +1,49 @@
+{
+  "acados_commit": "21376cb1af6b7dd45f675367272d3ba8100b26c0",
+  "acados_source_dir": "/home/t/opt/acados",
+  "allowed_differences": {
+    "globalization": "MERIT_BACKTRACKING",
+    "model_name": "phase29_wheel_aware_nmpc_sqp_v2",
+    "nlp_solver_max_iter": 100,
+    "nlp_solver_type": "SQP",
+    "tol_comp": 1e-09,
+    "tol_eq": 1e-09,
+    "tol_ineq": 1e-09,
+    "tol_stat": 1e-09
+  },
+  "base_generator": "tools/experiments/generate_phase27_acados_solver.py",
+  "base_generator_sha256": "e821ed857499aefcdda82c7e781bf40dadb9ec0324cf8c53c4b95d233e3f6045",
+  "casadi_version": "3.7.2",
+  "generated_files": [
+    "Makefile",
+    "acados_ocp.json",
+    "acados_solver.pxd",
+    "acados_solver_ocp_phase29_wheel_aware_nmpc_sqp_v2_bcbf380f.c",
+    "acados_solver_ocp_phase29_wheel_aware_nmpc_sqp_v2_bcbf380f.h",
+    "main_ocp_phase29_wheel_aware_nmpc_sqp_v2_bcbf380f.c",
+    "phase29_wheel_aware_nmpc_sqp_v2_model/phase29_wheel_aware_nmpc_sqp_v2_dyn_disc_phi_fun.c",
+    "phase29_wheel_aware_nmpc_sqp_v2_model/phase29_wheel_aware_nmpc_sqp_v2_dyn_disc_phi_fun_jac.c",
+    "phase29_wheel_aware_nmpc_sqp_v2_model/phase29_wheel_aware_nmpc_sqp_v2_model.h"
+  ],
+  "generated_sha256": {
+    "Makefile": "96f0ca6d1b2e34d03cd3248aca1c69b14672ce4d85a78dea051874b1e7ddcc5f",
+    "acados_ocp.json": "a075ad0f528e98090d528f050c2d91ef32202407c9e71b4312cc1622be822069",
+    "acados_solver.pxd": "4aefb32c7f5028717322ae4117e6d43db6cf7ef0e57cc8c48f41e93852ee0796",
+    "acados_solver_ocp_phase29_wheel_aware_nmpc_sqp_v2_bcbf380f.c": "7ccd8aa3a4f589bf022e19dabad168c1054c797dadf9bb15d03ee98e1d25f89b",
+    "acados_solver_ocp_phase29_wheel_aware_nmpc_sqp_v2_bcbf380f.h": "cc4b29ef1fa1d25eb0630f3e55b05c6f2ca2222e74bcbc97b850ae778f4aa9f3",
+    "main_ocp_phase29_wheel_aware_nmpc_sqp_v2_bcbf380f.c": "20f80a8b13f485ed757d2f9fca321b940ab86d03d3bab279c416c6a645aaa454",
+    "phase29_wheel_aware_nmpc_sqp_v2_model/phase29_wheel_aware_nmpc_sqp_v2_dyn_disc_phi_fun.c": "14da20a9809cfaafb32f486b074a55fcd6821910614f917e7acb0bb208a04480",
+    "phase29_wheel_aware_nmpc_sqp_v2_model/phase29_wheel_aware_nmpc_sqp_v2_dyn_disc_phi_fun_jac.c": "2e282ecde404bf168db5240818b36d524bbfbeba14d2bc7f48cb4c2688b7b026",
+    "phase29_wheel_aware_nmpc_sqp_v2_model/phase29_wheel_aware_nmpc_sqp_v2_model.h": "2aa779a6b5323c2b13ae5badd7ed7c191effd6434f31c4602a30d6785cf7504c"
+  },
+  "generator": "tools/experiments/generate_phase29_acados_oracle.py",
+  "generator_sha256": "8473cedc578b8151f22a130b3fbfbc4d8dc47a8a65e7799e38b8f7537d954c2e",
+  "method": "simulation/mujoco/config/phase29_nmpc_root_cause_v1.json",
+  "method_sha256": "557d8fa63ec39bca53cee5eadfc58f6c6feb156dab1ae95be7541da32788dcfa",
+  "profile": "phase29_nmpc_root_cause_v1_offline_sqp",
+  "purpose": "offline-only converged SQP oracle; never linked by production",
+  "schema_version": 1,
+  "source_config": "simulation/mujoco/config/phase27_acados_ocp_v2.json",
+  "source_config_sha256": "c24159aebbd7b38380044319e9cfdb619d880b86f9050aedc086ab07aba5eadf",
+  "tera_sha256": "64a0a0f8d85be0b92234231fd1a9ff50c9d8f13d6208063707e56c9354a976d3"
+}

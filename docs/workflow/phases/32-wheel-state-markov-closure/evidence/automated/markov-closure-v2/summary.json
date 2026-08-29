@@ -1,0 +1,38 @@
+{
+  "authority": {
+    "controlled_dynamics_authority_valid": false,
+    "controlled_dynamics_limitation": "Phase31 input-response replay left XML base_weld active; Phase32 uses floating-base eq_active=0",
+    "facts": {
+      "acceleration_oracle_pass": true,
+      "eq12_gain_failure_reproduced": true,
+      "eq12_residual_reproduced": true,
+      "measurement_contract_pass": true,
+      "scalar_inertia_rejected": true,
+      "wbc_realization_pass": true
+    },
+    "semantic_reproduction_pass": true
+  },
+  "base_weld_active": false,
+  "bilateral_contact_pass": true,
+  "classification": "P32-C_16state_markov_closure_failure",
+  "closure_failure": true,
+  "finite_pass": true,
+  "floating_base_oracle": true,
+  "full_ddxi_oracle_pass": true,
+  "hidden_family": "P32-F_contact_regime_hidden_state",
+  "maxima": {
+    "ddxi_oracle_error_m_s2": 1.30104371720563e-10,
+    "direct_reduced_component_error": 0.0,
+    "full_half_sensitivity_relative_error": 8.181751515017918e-07,
+    "normalized_symmetric_ddxi_difference": 3.3507198550324078,
+    "realized_wrench_relative_difference": 2.1770789713355097e-07,
+    "requested_wrench_error": 0.0,
+    "symmetric_ddxi_difference_m_s2": 1.6753599275162039,
+    "xi_dxi_error": 0.0
+  },
+  "perturbation_consistency_pass": true,
+  "physical_wrench_parity_pass": true,
+  "production_modified": false,
+  "projection_pass": true,
+  "root_cause_model_class": "M5"
+}

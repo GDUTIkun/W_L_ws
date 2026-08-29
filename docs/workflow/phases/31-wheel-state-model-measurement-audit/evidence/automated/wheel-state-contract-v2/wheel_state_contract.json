@@ -1,0 +1,416 @@
+{
+  "baseline": {
+    "expected": [
+      0.20255077278239703,
+      0.20647133198381057,
+      0.22577229364498672,
+      0.1296009020123884,
+      0.15977243812722228,
+      0.1959647572307204
+    ],
+    "max_abs_error": 0.0,
+    "observed": {
+      "T0_static": [
+        0.20255077278239703,
+        0.20647133198381057,
+        0.22577229364498672
+      ],
+      "T1_straight_start_cruise_brake": [
+        0.1296009020123884,
+        0.15977243812722228,
+        0.1959647572307204
+      ]
+    }
+  },
+  "ids": {
+    "base_site": 1,
+    "wheel_bodies": [
+      9,
+      4
+    ]
+  },
+  "results": {
+    "T0_static": [
+      {
+        "adapter_minus_kinematic_velocity": {
+          "common": -2.42861286636753e-17,
+          "differential": 3.122502256758253e-17,
+          "left": -5.551115123125783e-17,
+          "right": 6.938893903907228e-18
+        },
+        "adapter_position": {
+          "common": -0.013291511001886252,
+          "differential": -0.0017849085993786023,
+          "left": -0.01150660240250765,
+          "right": -0.015076419601264855
+        },
+        "adapter_velocity": {
+          "common": 0.0034935805704855525,
+          "differential": 0.005504712668960509,
+          "left": -0.002011132098474956,
+          "right": 0.008998293239446061
+        },
+        "adapter_velocity_max_abs_error_m_s": 5.551115123125783e-17,
+        "alignment_max_abs_error": 5.421010862427522e-20,
+        "fd_dt_s": 0.0040000000000000036,
+        "fd_minus_kinematic_velocity": {
+          "common": 0.00023691372752120815,
+          "differential": 1.5586668761622302e-05,
+          "left": 0.00022132705875958585,
+          "right": 0.00025250039628283046
+        },
+        "fd_velocity": {
+          "common": 0.003730494298006785,
+          "differential": 0.0055202993377221,
+          "left": -0.0017898050397153148,
+          "right": 0.009250793635728885
+        },
+        "fd_velocity_max_abs_error_m_s": 0.00025250039628283046,
+        "geometry_position": {
+          "common": -0.013291511001886214,
+          "differential": -0.001784908599378644,
+          "left": -0.01150660240250757,
+          "right": -0.015076419601264858
+        },
+        "kinematic_velocity": {
+          "common": 0.003493580570485577,
+          "differential": 0.0055047126689604774,
+          "left": -0.0020111320984749007,
+          "right": 0.008998293239446054
+        },
+        "position_error": {
+          "common": -3.8163916471489756e-17,
+          "differential": 4.163336342344337e-17,
+          "left": -7.979727989493313e-17,
+          "right": 3.469446951953614e-18
+        },
+        "position_max_abs_error_m": 7.979727989493313e-17,
+        "position_sign_parity": true,
+        "safety": {
+          "dt_s": 0.01,
+          "latch": 0
+        },
+        "tick": 54,
+        "time_s": 0.5400000000000004,
+        "velocity_sign_parity": true
+      },
+      {
+        "adapter_minus_kinematic_velocity": {
+          "common": -5.724587470723463e-17,
+          "differential": -2.2551405187698492e-17,
+          "left": -3.469446951953614e-17,
+          "right": -7.979727989493313e-17
+        },
+        "adapter_position": {
+          "common": -0.013340806686466509,
+          "differential": -0.0018181745110794683,
+          "left": -0.011522632175387041,
+          "right": -0.015158981197545978
+        },
+        "adapter_velocity": {
+          "common": -0.0088019239679026,
+          "differential": -0.008861372160002668,
+          "left": 5.944819210006863e-05,
+          "right": -0.017663296127905268
+        },
+        "adapter_velocity_max_abs_error_m_s": 7.979727989493313e-17,
+        "alignment_max_abs_error": 5.421010862427522e-20,
+        "fd_dt_s": 0.0040000000000000036,
+        "fd_minus_kinematic_velocity": {
+          "common": -0.0014759841572336782,
+          "differential": 4.8594350759889994e-05,
+          "left": -0.0015245785079935682,
+          "right": -0.0014273898064737882
+        },
+        "fd_velocity": {
+          "common": -0.010277908125136221,
+          "differential": -0.008812777809242755,
+          "left": -0.0014651303158934648,
+          "right": -0.019090685934378977
+        },
+        "fd_velocity_max_abs_error_m_s": 0.0015245785079935682,
+        "geometry_position": {
+          "common": -0.01334080668646645,
+          "differential": -0.0018181745110794527,
+          "left": -0.011522632175386996,
+          "right": -0.015158981197545902
+        },
+        "kinematic_velocity": {
+          "common": -0.008801923967902543,
+          "differential": -0.008861372160002646,
+          "left": 5.9448192100103325e-05,
+          "right": -0.01766329612790519
+        },
+        "position_error": {
+          "common": -6.071532165918825e-17,
+          "differential": -1.5612511283791264e-17,
+          "left": -4.5102810375396984e-17,
+          "right": -7.632783294297951e-17
+        },
+        "position_max_abs_error_m": 7.632783294297951e-17,
+        "position_sign_parity": true,
+        "safety": {
+          "dt_s": 0.01,
+          "latch": 0
+        },
+        "tick": 56,
+        "time_s": 0.5600000000000004,
+        "velocity_sign_parity": true
+      },
+      {
+        "adapter_minus_kinematic_velocity": {
+          "common": -7.979727989493313e-17,
+          "differential": 1.0408340855860843e-17,
+          "left": -9.020562075079397e-17,
+          "right": -6.938893903907228e-17
+        },
+        "adapter_position": {
+          "common": -0.013645631864341062,
+          "differential": -0.0018243978697823418,
+          "left": -0.01182123399455872,
+          "right": -0.015470029734123404
+        },
+        "adapter_velocity": {
+          "common": -0.018667353597495148,
+          "differential": 0.008012635604281337,
+          "left": -0.026679989201776486,
+          "right": -0.01065471799321381
+        },
+        "adapter_velocity_max_abs_error_m_s": 9.020562075079397e-17,
+        "alignment_max_abs_error": 0.0,
+        "fd_dt_s": 0.0040000000000000036,
+        "fd_minus_kinematic_velocity": {
+          "common": -0.00014445645434896497,
+          "differential": 0.0008633632705591305,
+          "left": -0.0010078197249080954,
+          "right": 0.0007189068162101655
+        },
+        "fd_velocity": {
+          "common": -0.018811810051844034,
+          "differential": 0.008875998874840457,
+          "left": -0.02768780892668449,
+          "right": -0.009935811177003576
+        },
+        "fd_velocity_max_abs_error_m_s": 0.0010078197249080954,
+        "geometry_position": {
+          "common": -0.01364563186434116,
+          "differential": -0.0018243978697823982,
+          "left": -0.01182123399455876,
+          "right": -0.015470029734123557
+        },
+        "kinematic_velocity": {
+          "common": -0.01866735359749507,
+          "differential": 0.008012635604281327,
+          "left": -0.026679989201776395,
+          "right": -0.010654717993213741
+        },
+        "position_error": {
+          "common": 9.627715291671279e-17,
+          "differential": 5.637851296924623e-17,
+          "left": 3.9898639947466563e-17,
+          "right": 1.5265566588595902e-16
+        },
+        "position_max_abs_error_m": 1.5265566588595902e-16,
+        "position_sign_parity": true,
+        "safety": {
+          "dt_s": 0.01,
+          "latch": 0
+        },
+        "tick": 58,
+        "time_s": 0.5800000000000004,
+        "velocity_sign_parity": true
+      }
+    ],
+    "T1_straight_start_cruise_brake": [
+      {
+        "adapter_minus_kinematic_velocity": {
+          "common": 1.474514954580286e-17,
+          "differential": 2.6020852139652106e-18,
+          "left": 1.214306433183765e-17,
+          "right": 1.734723475976807e-17
+        },
+        "adapter_position": {
+          "common": -0.013893970060180167,
+          "differential": -0.001488172941151793,
+          "left": -0.012405797119028374,
+          "right": -0.01538214300133196
+        },
+        "adapter_velocity": {
+          "common": 0.0059807663718592875,
+          "differential": 0.0003701485647146013,
+          "left": 0.005610617807144686,
+          "right": 0.006350914936573889
+        },
+        "adapter_velocity_max_abs_error_m_s": 1.734723475976807e-17,
+        "alignment_max_abs_error": 0.0,
+        "fd_dt_s": 0.0040000000000000036,
+        "fd_minus_kinematic_velocity": {
+          "common": -0.00038955162135425247,
+          "differential": 0.00010177662639699247,
+          "left": -0.0004913282477512449,
+          "right": -0.00028777499495726
+        },
+        "fd_velocity": {
+          "common": 0.00559121475050502,
+          "differential": 0.00047192519111159117,
+          "left": 0.005119289559393429,
+          "right": 0.0060631399416166114
+        },
+        "fd_velocity_max_abs_error_m_s": 0.0004913282477512449,
+        "geometry_position": {
+          "common": -0.013893970060180127,
+          "differential": -0.0014881729411517775,
+          "left": -0.01240579711902835,
+          "right": -0.015382143001331904
+        },
+        "kinematic_velocity": {
+          "common": 0.005980766371859273,
+          "differential": 0.0003701485647145987,
+          "left": 0.005610617807144674,
+          "right": 0.0063509149365738714
+        },
+        "position_error": {
+          "common": -3.9898639947466563e-17,
+          "differential": -1.5612511283791264e-17,
+          "left": -2.42861286636753e-17,
+          "right": -5.551115123125783e-17
+        },
+        "position_max_abs_error_m": 5.551115123125783e-17,
+        "position_sign_parity": true,
+        "safety": {
+          "dt_s": 0.01,
+          "latch": 0
+        },
+        "tick": 42,
+        "time_s": 0.4200000000000003,
+        "velocity_sign_parity": true
+      },
+      {
+        "adapter_minus_kinematic_velocity": {
+          "common": -1.2750217548429532e-16,
+          "differential": -7.025630077706069e-17,
+          "left": -5.724587470723463e-17,
+          "right": -1.97758476261356e-16
+        },
+        "adapter_position": {
+          "common": -0.013967565391048424,
+          "differential": -0.001554151255553967,
+          "left": -0.012413414135494457,
+          "right": -0.015521716646602391
+        },
+        "adapter_velocity": {
+          "common": -0.01523400056177767,
+          "differential": -0.009618899157024127,
+          "left": -0.005615101404753544,
+          "right": -0.024852899718801797
+        },
+        "adapter_velocity_max_abs_error_m_s": 1.97758476261356e-16,
+        "alignment_max_abs_error": 0.0,
+        "fd_dt_s": 0.0040000000000000036,
+        "fd_minus_kinematic_velocity": {
+          "common": -0.0007587300877327837,
+          "differential": -0.0006972965775626904,
+          "left": -6.14335101700933e-05,
+          "right": -0.0014560266652954741
+        },
+        "fd_velocity": {
+          "common": -0.015992730649510328,
+          "differential": -0.010316195734586746,
+          "left": -0.00567653491492358,
+          "right": -0.026308926384097073
+        },
+        "fd_velocity_max_abs_error_m_s": 0.0014560266652954741,
+        "geometry_position": {
+          "common": -0.013967565391048369,
+          "differential": -0.0015541512555539904,
+          "left": -0.012413414135494377,
+          "right": -0.015521716646602358
+        },
+        "kinematic_velocity": {
+          "common": -0.015234000561777542,
+          "differential": -0.009618899157024057,
+          "left": -0.005615101404753487,
+          "right": -0.0248528997188016
+        },
+        "position_error": {
+          "common": -5.637851296924623e-17,
+          "differential": 2.3418766925686896e-17,
+          "left": -7.979727989493313e-17,
+          "right": -3.2959746043559335e-17
+        },
+        "position_max_abs_error_m": 7.979727989493313e-17,
+        "position_sign_parity": true,
+        "safety": {
+          "dt_s": 0.01,
+          "latch": 0
+        },
+        "tick": 44,
+        "time_s": 0.44000000000000034,
+        "velocity_sign_parity": true
+      },
+      {
+        "adapter_minus_kinematic_velocity": {
+          "common": 5.724587470723463e-17,
+          "differential": 2.2551405187698492e-17,
+          "left": 3.469446951953614e-17,
+          "right": 7.979727989493313e-17
+        },
+        "adapter_position": {
+          "common": -0.014277657123930403,
+          "differential": -0.0017687638067833342,
+          "left": -0.012508893317147069,
+          "right": -0.016046420930713737
+        },
+        "adapter_velocity": {
+          "common": -0.012396437542999208,
+          "differential": -0.00915850156607459,
+          "left": -0.0032379359769246184,
+          "right": -0.021554939109073797
+        },
+        "adapter_velocity_max_abs_error_m_s": 7.979727989493313e-17,
+        "alignment_max_abs_error": 0.0,
+        "fd_dt_s": 0.0040000000000000036,
+        "fd_minus_kinematic_velocity": {
+          "common": 0.00021239323240703433,
+          "differential": 0.00015630588018641076,
+          "left": 5.6087352220623565e-05,
+          "right": 0.0003686991125934451
+        },
+        "fd_velocity": {
+          "common": -0.01218404431059223,
+          "differential": -0.009002195685888201,
+          "left": -0.0031818486247040295,
+          "right": -0.021186239996480432
+        },
+        "fd_velocity_max_abs_error_m_s": 0.0003686991125934451,
+        "geometry_position": {
+          "common": -0.014277657123930487,
+          "differential": -0.0017687638067833203,
+          "left": -0.012508893317147166,
+          "right": -0.016046420930713807
+        },
+        "kinematic_velocity": {
+          "common": -0.012396437542999265,
+          "differential": -0.009158501566074612,
+          "left": -0.003237935976924653,
+          "right": -0.021554939109073877
+        },
+        "position_error": {
+          "common": 8.326672684688674e-17,
+          "differential": -1.3877787807814457e-17,
+          "left": 9.71445146547012e-17,
+          "right": 6.938893903907228e-17
+        },
+        "position_max_abs_error_m": 9.71445146547012e-17,
+        "position_sign_parity": true,
+        "safety": {
+          "dt_s": 0.01,
+          "latch": 0
+        },
+        "tick": 46,
+        "time_s": 0.46000000000000035,
+        "velocity_sign_parity": true
+      }
+    ]
+  }
+}

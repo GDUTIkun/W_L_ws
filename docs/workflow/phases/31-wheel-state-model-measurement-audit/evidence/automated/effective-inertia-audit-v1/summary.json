@@ -1,0 +1,8 @@
+{
+  "candidate_authorized": true,
+  "classification": "P31-E_missing_wheel_kinematic_dynamic_coupling",
+  "configuration_dependence_supported": false,
+  "production_modified": false,
+  "root_cause_model_class": "M4",
+  "scalar_effective_inertia_rejected": true
+}

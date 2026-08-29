@@ -1,0 +1,16 @@
+{
+  "classification": "invalid_input_response_oracle",
+  "cross_coupling_pass": false,
+  "finite_difference_step_pass": false,
+  "gain_pass": false,
+  "max_cross_to_primary_gain_ratio": 0.10216635627451236,
+  "max_finite_difference_step_relative_error": 1.2267140251495283,
+  "max_primary_relative_gain_error": 1.7267556835174431,
+  "max_wbc_baseline_torque_error_nm": 0.1038926153630566,
+  "max_wbc_realization_cross_gain_ratio": 0.00013772732790299857,
+  "max_wbc_realization_primary_gain_error": 0.011154756829955925,
+  "production_modified": false,
+  "sign_pass": false,
+  "wbc_baseline_reproduction_pass": false,
+  "wbc_realization_sensitivity_pass": true
+}

@@ -1,0 +1,23 @@
+{
+  "bilateral_contact_pass": true,
+  "classification": "P32-F_discrete_contact_patch_hidden_state_candidate",
+  "discrete_contact_patch_closure_failure_candidate": true,
+  "finite_pass": true,
+  "fresh_replay_required_for_decision": true,
+  "full_ddxi_oracle_pass": true,
+  "maxima": {
+    "ddxi_oracle_error_m_s2": 1.1796119636642288e-10,
+    "maximum_symmetric_ddxi_difference_m_s2": 1.326879844301427,
+    "minimum_symmetric_ddxi_difference_m_s2": 1.1414980604015912,
+    "realized_wrench_relative_difference": 6.536833158389957e-08,
+    "smooth_full_half_relative_error_diagnostic_only": 0.6390416880949358,
+    "xi_dxi_projection_error": 2.0816681711721685e-17
+  },
+  "physical_interaction_wrench_parity_established": false,
+  "production_modified": false,
+  "projection_pass": true,
+  "smooth_full_half_gate_applicable": false,
+  "smooth_full_half_limitation": "faceted mesh contact changes the discrete contact patch; derivative linearity is not a valid hybrid-mode gate",
+  "valid": true,
+  "wbc_realized_wrench_parity_pass": true
+}

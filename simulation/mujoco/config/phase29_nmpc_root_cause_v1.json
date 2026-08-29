@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "phase": 29,
+  "profile": "phase29_nmpc_root_cause_v1",
+  "source_ocp_config": "simulation/mujoco/config/phase27_acados_ocp_v2.json",
+  "source_generated_dir": "ros_ws/src/wheel_leg_core/acados_generated/phase27_wheel_aware_nmpc_v2",
+  "source_phase28_run": "docs/workflow/phases/28-minimal-closed-loop-drift-attribution/evidence/automated/phase28-drift-attribution-v5",
+  "offline_sqp_generated_dir": "ros_ws/src/wheel_leg_core/acados_generated/phase29_wheel_aware_nmpc_sqp_v2",
+  "offline_sqp": {
+    "model_name": "phase29_wheel_aware_nmpc_sqp_v2",
+    "nlp_solver_max_iter": 100,
+    "tol_stat": 1e-9,
+    "tol_eq": 1e-9,
+    "tol_ineq": 1e-9,
+    "tol_comp": 1e-9,
+    "globalization": "MERIT_BACKTRACKING"
+  },
+  "cases": [
+    {
+      "id": "T0_static",
+      "snapshot_tick": 57,
+      "expected_action_tick": 56,
+      "axis": "pitch",
+      "acceleration_index": 10,
+      "error_indices": [4, 10],
+      "expected_snapshot_state": [-0.08137991453493629, -0.00011190059041843812, 0.31580743802191885, 0.00038873244454307675, -0.02951816333819236, 0.0015446074596317289, -0.030529760336522896, 0.0010080879707239712, 0.0024630327685851282, -0.003327420856825322, -0.16723794223552133, -0.006724764964382332, -0.011606401798016974, -0.015341841720186718, -0.013714675018040308, -0.016120504422255863],
+      "expected_snapshot_reference": [-0.077378152, 8.1e-7, 0.31543998403249462, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -0.011157172669780779, -0.011157172669780779, 0.0, 0.0]
+    },
+    {
+      "id": "T1_straight_start_cruise_brake",
+      "snapshot_tick": 44,
+      "expected_action_tick": 44,
+      "axis": "longitudinal",
+      "acceleration_index": 6,
+      "error_indices": [0, 6],
+      "expected_snapshot_state": [-0.07740655644992855, -0.000340679440526264, 0.31558716104828854, 0.0011746174923848117, -0.014774471915189885, 0.0023346153514229883, -0.002511834075725704, 0.0001010595778700446, 0.0010320407867718082, -0.00037541994684579523, -0.073055830359161, 0.002222554151408328, -0.012413414135494457, -0.015521716646602391, -0.005615101404753544, -0.024852899718801797],
+      "expected_snapshot_reference": [-0.05757815199999999, 8.1e-7, 0.31543998403249462, 0.0, 0.0, 0.0, 0.08800000000000001, 0.0, 0.0, 0.0, 0.0, 0.0, -0.011157172669780779, -0.011157172669780779, 0.0, 0.0]
+    }
+  ],
+  "holdouts": [
+    {
+      "id": "T2_turn_left",
+      "snapshot_tick": 44,
+      "expected_action_tick": 44,
+      "source_mechanism": "T1_straight_start_cruise_brake",
+      "acceleration_index": 6,
+      "error_index": 6,
+      "required_group": "attitude",
+      "diagnostic_groups": ["attitude", "wheel_rate"]
+    },
+    {
+      "id": "T2_turn_right",
+      "snapshot_tick": 44,
+      "expected_action_tick": 44,
+      "source_mechanism": "T1_straight_start_cruise_brake",
+      "acceleration_index": 6,
+      "error_index": 6,
+      "required_group": "attitude",
+      "diagnostic_groups": ["attitude", "wheel_rate"]
+    }
+  ],
+  "state_groups": {
+    "base_longitudinal": [0, 6],
+    "attitude": [3, 4, 5, 9, 10, 11],
+    "wheel_position": [12, 13],
+    "wheel_rate": [14, 15]
+  },
+  "perturbation": {
+    "position_m": 0.002,
+    "rotation_rad": 0.002,
+    "linear_velocity_m_s": 0.01,
+    "angular_velocity_rad_s": 0.01,
+    "wheel_position_m": 0.002,
+    "wheel_velocity_m_s": 0.01
+  },
+  "repeated_rti_iterations": 30,
+  "shadow_bound_scale": 100.0,
+  "gates": {
+    "snapshot_semantics_max_abs_error": 1e-12,
+    "production_request_max_abs_error": 1e-8,
+    "objective_recompute_max_abs_error": 1e-7,
+    "converged_stationarity_max": 1e-7,
+    "converged_feasibility_max": 1e-7,
+    "corrective_score_deadband": 1e-7,
+    "significant_action_change": 1e-5,
+    "active_bound_distance": 1e-6,
+    "repeat_max_abs_error": 1e-9
+  }
+}

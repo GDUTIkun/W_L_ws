@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "phase": 32,
+  "profile": "phase32_wheel_angle_hybrid_v1",
+  "base_method": "simulation/mujoco/config/phase32_markov_closure_v2.json",
+  "wheel_angle_delta_rad": 0.02,
+  "half_scale": 0.5,
+  "hybrid_gate": {
+    "pair_min_ddxi_difference_m_s2": 0.05,
+    "projection_max_abs_error": 1e-7,
+    "oracle_max_abs_error_m_s2": 0.05,
+    "requires_byte_identical_fresh_replay": true,
+    "smooth_full_half_gate_applicable": false,
+    "reason": "faceted mesh contact changes the discrete contact patch; derivative linearity is not a valid hybrid-mode gate"
+  }
+}

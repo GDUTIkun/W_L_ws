@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "phase": 31,
+  "profile": "phase31_wheel_state_contract_v1",
+  "scene": "simulation/mujoco/model/phase19_standing.xml",
+  "source_phase30_method": "simulation/mujoco/config/phase30_reference_consistency_v3.json",
+  "source_phase30_reference_run": "docs/workflow/phases/30-nmpc-corrective-formulation-repair/evidence/automated/phase30-reference-consistency-v1",
+  "source_phase30_model_run": "docs/workflow/phases/30-nmpc-corrective-formulation-repair/evidence/automated/phase30-model-adequacy-v1",
+  "source_ocp_config": "simulation/mujoco/config/phase27_acados_ocp_v2.json",
+  "source_phase28_run": "docs/workflow/phases/28-minimal-closed-loop-drift-attribution/evidence/automated/phase28-drift-attribution-v5",
+  "cases": [
+    {"id": "T0_static", "authority_ticks": [54, 56, 58]},
+    {"id": "T1_straight_start_cruise_brake", "authority_ticks": [42, 44, 46]}
+  ],
+  "body_site_contract": {
+    "base_site": "base_control_frame",
+    "wheel_bodies": ["left_wheel_body", "right_wheel_body"],
+    "coordinate": "R_b_from_n * (wheel_body_origin_n - base_control_site_n), x component",
+    "velocity": "R_b_from_n * (v_wheel_origin_n - v_base_site_n) - omega_b cross r_b, x component",
+    "positive_axis": "base_FLU_positive_x"
+  },
+  "input_response": {
+    "wbc_sweep_executable": "ros_ws/build/wheel_leg_core/phase31_wbc_wrench_sweep",
+    "force_delta_n": 0.1,
+    "moment_delta_nm": 0.01,
+    "primary_relative_gain_error_max": 0.2,
+    "cross_to_primary_gain_ratio_max": 0.1,
+    "sensitivity_sign_deadband": 1e-3,
+    "finite_difference_step_relative_error_max": 0.02,
+    "wbc_baseline_torque_max_abs_error_nm": 1e-5,
+    "wbc_realization_primary_gain_error_max": 0.2,
+    "wbc_realization_cross_gain_ratio_max": 0.1,
+    "acceleration_decomposition_max_abs_error": 1e-5
+  },
+  "effective_inertia_audit": {
+    "effective_denominator_cross_channel_ratio_max": 1.2,
+    "within_channel_coefficient_of_variation_max": 0.15
+  },
+  "gates": {
+    "phase30_metric_max_abs_error": 1e-15,
+    "control_vs_plant_state_max_abs_error": 1e-10,
+    "position_contract_max_abs_error_m": 5e-5,
+    "velocity_adapter_vs_kin_max_abs_error_m_s": 2e-3,
+    "velocity_fd_vs_kin_max_abs_error_m_s": 2e-3,
+    "acceleration_position_vs_velocity_fd_max_abs_error_m_s2": 0.5,
+    "significant_eq12_residual_m_s2": 1.0,
+    "sign_deadband": 1e-6,
+    "finite_difference_half_width_s": 0.002,
+    "replay_max_abs_error": 0.0
+  }
+}

@@ -2,12 +2,13 @@
 
 Status: `complete`
 
-Handoff: [Phase 26](../26-minimal-wbc-task-audit/PLAN.md) is retained as a
-blocked current-12D audit. At the user-directed 2026-08-29 handoff it contained
-only its PLAN; all P26 tasks were `todo`, so no implementation/evidence is
-inherited. Its task-necessity conclusions and thresholds do not transfer to
-this Phase because the upper model, wrench semantics and candidate timing are
-different.
+Handoff: the retired current-12D audit draft contained only its PLAN at the
+user-directed 2026-08-29 handoff; all proposed tasks were `todo`, so no
+implementation/evidence was inherited. Its task-necessity conclusions and
+thresholds did not transfer to this Phase because the upper model, wrench
+semantics and candidate timing are different. The empty draft was later
+deleted by user direction; this historical statement is retained without a
+dead link.
 
 Design source: [原理论模型恢复与 Minimal WBC 验证方案 v2](../../../mujoco/minimal_wbc_theory_restore_phase_plan_v2.md).
 This PLAN is the workflow authority and converts that design draft into
@@ -99,7 +100,7 @@ acceleration 与弱正则项的 Minimal WBC 能否完成平地 T0～T3 闭环；
   common/wheel differential task、自适应权重、HQP、slack feedback、observer、terrain、
   learning/RL 或新的 low-level controller。
 - 用放宽 torque/contact/friction/normal-load/solver/workspace/fault gate、缩小预声明
-  工况或覆盖 Phase 21～26 evidence 的方式获得 PASS。
+  工况或覆盖 Phase 21～25 evidence 的方式获得 PASS。
 
 ## Frozen Decisions
 
@@ -138,10 +139,11 @@ acceleration 与弱正则项的 Minimal WBC 能否完成平地 T0～T3 闭环；
 
 ## Open Questions / Decision Gates
 
-- **DG27-00 / CLOSED / CODEX — Phase 26 handoff：** 2026-08-29 用户明确选择先执行
-  Phase 27；Phase 26 仅有 PLAN，P26-T01～T10 全部 `todo`，没有 task profile、日志、
-  evaluator、case、源码或 evidence 可继承。可复用面因此仅限 Phase 21～23 已批准的
-  live Core/WBC/runner 基线；current-12D task necessity/threshold claims 不迁移。
+- **DG27-00 / CLOSED / CODEX — retired audit handoff：** 2026-08-29 用户明确选择先执行
+  Phase 27；此前的 current-12D audit 草案仅有 PLAN、全部 proposed tasks 为 `todo`，
+  没有 task profile、日志、evaluator、case、源码或 evidence 可继承。可复用面因此仅限
+  Phase 21～23 已批准的 live Core/WBC/runner 基线；current-12D task necessity/threshold
+  claims 不迁移。该空草案后来按用户要求删除并退役。
 - **DG27-01 / CLOSED PASS / CODEX+EVIDENCE — wheel state/planner：** 以 current reconstructed
   geometry 关闭 `xi/dxi` 左右顺序、base-control origin、body/world表达、旋转 frame
   速度项、common/differential 定义、governor limits、continuity、finite difference、
@@ -190,17 +192,17 @@ acceleration 与弱正则项的 Minimal WBC 能否完成平地 T0～T3 闭环；
 
 | ID | Task | Input | Deliverable | Validation | Status |
 | --- | --- | --- | --- | --- | --- |
-| T01 | 关闭 grounding 与 Phase 26 handoff | design v2、Phase21～26、live Core/WBC/runner | impact map、reuse/non-reuse清单、DG27-00 evidence、version/ownership清单 | CBM+coverage+source/Graphify交叉核对；无覆盖旧artifact/evidence | done |
+| T01 | 关闭 grounding 与 retired audit handoff | design v2、Phase21～25与retired draft、live Core/WBC/runner | impact map、reuse/non-reuse清单、DG27-00 evidence、version/ownership清单 | CBM+coverage+source/Graphify交叉核对；无覆盖旧artifact/evidence | done |
 | T02 | 冻结 wheel-state 与 planner contract | current reconstruction、Phase23 xi oracle、Simulink planner | `xi_L/R,c/delta` spec、planner/governor、golden vectors、reset/workspace oracle | DG27-01；sign/order/frame/finite-difference/continuity/limits/replay全部PASS | done |
 | T03 | 推导 interaction-wrench contract 与仿射重建 | historical contract、current reduced model、42D decision | actor/receiver/point/frame/sign spec、`A_I,b_I`推导、implementation-independent oracle corpus | DG27-02；±Fx/±Fz/±Ty、symmetry、action-reaction、transport round-trip、virtual-work、slack sign、affine parity PASS | done |
 | T04 | 冻结 16-state continuous/RK4 model | T02/T03、current nominal parameters、Eq.(12) | state/input/chart/reference/bounds/model spec、analytic Jacobian/RK4 implementation与oracle | DG27-03；equilibrium、one-step、FD sensitivity、common/differential、left/right、model-validity PASS | done |
 | T05 | 冻结 schedule 与 deadline | current 2/10/20 baseline、1/5/20 candidate、T04 cost | timing decision record、phase/ZOH/age/reset/deadline contract、numerical comparison | DG27-04；plant/contact stability、integer schedule、WBC/NMPC/combined timing与replay PASS | done |
 | T06 | 生成并验证 16-state acados OCP | T04/T05、frozen OCP/reference profile | generator、checked-in namespaced artifact、C++ wrapper、model/OCP component evidence | clean双生成hash审计；generated next/A/B parity；equilibrium/±reference/brake/return/wheel/differential/bounds/defect/stationarity/timing/reset PASS | done |
-| T07 | 实现 Minimal 42D WBC profile | T03、current model/QP/ProxQP、Phase26 profile infra | affine realized-wrench task、signed slack、contact+regularization-only profile、diagnostics/golden problems | hard matrix/order unchanged；independent algebra/solver parity、equilibrium/dynamic corpus、torque extraction/deadline PASS | done |
+| T07 | 实现 Minimal 42D WBC profile | T03、current model/QP/ProxQP与既有profile infra | affine realized-wrench task、signed slack、contact+regularization-only profile、diagnostics/golden problems | hard matrix/order unchanged；independent algebra/solver parity、equilibrium/dynamic corpus、torque extraction/deadline PASS | done |
 | T08 | 集成 opt-in runtime 与日志 | T02/T05～T07、Core/Adapter/runner | planner→16D NMPC→Minimal WBC mode、schedule、fail-zero、additive control/plant logs、manifest | production default parity；phase/ZOH/age/fault/reset/non-overwrite component tests PASS | done |
 | T09 | 冻结 formal 方法与门槛 | DG27-01～05 evidence、T0～T3 candidate | versioned method/config/schema、tuning/holdout、hard/performance/NMPC/WBC/resource metrics、failure enum | DG27-05；synthetic evaluator oracle；threshold冻结早于holdout；`py_compile` PASS | done |
 | T10 | 执行 T0～T3 formal 与归因 | T08/T09、fresh output roots | primary runs、per-tick/summary/manifest/hash、first-failure packages、candidate conclusion | hard gate先行；planner/NMPC/interface/WBC/contact指标齐全；DG27-06可判定 | done |
-| T11 | 执行 fault/replay/regression 与审查包 | T10 outcome、Phase21～26 regressions | fault/reset/fresh replay/non-overwrite、default-mode regressions、REVIEW输入与后续问题 | exact zero/latch/reset；replay差异仅预声明wall-clock；历史authority不变；blocking finding=0 | done |
+| T11 | 执行 fault/replay/regression 与审查包 | T10 outcome、Phase21～25 regressions | fault/reset/fresh replay/non-overwrite、default-mode regressions、REVIEW输入与后续问题 | exact zero/latch/reset；replay差异仅预声明wall-clock；历史authority不变；blocking finding=0 | done |
 
 任务状态只使用 `todo / doing / done / blocked`。
 
@@ -244,7 +246,7 @@ acceleration 与弱正则项的 Minimal WBC 能否完成平地 T0～T3 闭环；
 - Minimal FAIL 时保存 first failure time/state、planner、NMPC、requested/realized
   wrench、slack、active constraints、contact truth 与唯一 first-failure layer；不得在
   同一 Phase 运行 add-back task。
-- final outcome 执行 fresh-process replay、fault/reset、non-overwrite 与 Phase 21～26
+- final outcome 执行 fresh-process replay、fault/reset、non-overwrite 与 Phase 21～25
   default-mode regression；任何失败 run 保留并以新 run `supersedes`。
 
 ## Acceptance Criteria
@@ -259,7 +261,7 @@ acceleration 与弱正则项的 Minimal WBC 能否完成平地 T0～T3 闭环；
 - [x] Minimal WBC 保持42D/104-row/ProxQP及全部hard/fault合同，只含批准的 wrench
   realization+slack、soft contact acceleration与弱regularization；无隐藏 state task。
 - [x] current Phase21～23 default mode、public I/O、plant、solver与历史 evidence 未被
-  覆盖，Phase26 infrastructure 的复用边界可审计。
+  覆盖，既有 profile infrastructure 的复用边界可审计。
 - [x] T0～T3 primary、fault、fresh replay、non-overwrite、历史回归具有 immutable
   config、time series、summary、manifest/hash 与真实命令/结果。
 - [x] 若 controller-level Minimal PASS，全部预冻结 hard/performance/timing/replay gate
@@ -275,9 +277,10 @@ acceleration 与弱正则项的 Minimal WBC 能否完成平地 T0～T3 闭环；
 public I/O、plant、hard constraints、solver family 或已冻结 T0～T3 合同的发现都先将
 Phase 置为 REWORK/blocked 并修订 PLAN，不能靠调权或补偿 task 继续。
 
-- 2026-08-29：用户明确要求执行 Phase 27。按 Phase 26 DG26-01 的前置 Phase 条件，
-  Phase 26 转 `blocked`、本 Phase 转 `active`；DG27-00 关闭。Phase 26 没有实现或
-  evidence 可交接，本 Phase 从 Phase 21～23 approved baseline 重新 grounding。
+- 2026-08-29：用户明确要求执行 Phase 27；此前 current-12D audit 草案的前置条件因此
+  不成立，本 Phase 转 `active` 并关闭 DG27-00。该草案没有实现或 evidence 可交接，
+  本 Phase 从 Phase 21～23 approved baseline 重新 grounding；空草案后来按用户要求
+  删除并退役。
 - 2026-08-29：DG27-03 关闭。current nominal 上体复合参数明确剔除两轮，姿态复用
   Phase23 relative rotation-vector chart，Eq.(12) 使用已关闭的 internal wrench；单个
   20 ms RK4 的 v1 one-step gate FAIL 被保留，未放宽阈值，改为同一 ZOH 内两个固定

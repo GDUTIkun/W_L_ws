@@ -1,0 +1,21 @@
+{
+  "command": "tools/experiments/run_phase31_wheel_acceleration_audit.py --output docs/workflow/phases/31-wheel-state-model-measurement-audit/evidence/automated/wheel-acceleration-v4 --replay-of wheel-acceleration-v3",
+  "created_utc": "2026-08-29T13:48:47.237749+00:00",
+  "dependencies": {
+    "mujoco": "3.7.0",
+    "numpy": "2.2.6"
+  },
+  "inputs": {
+    "docs/workflow/phases/28-minimal-closed-loop-drift-attribution/evidence/automated/phase28-drift-attribution-v5/T0_static_control.csv": "97764748b0948713cb13aadff60cc44a11ae5940d8fa1e30577314f86451c611",
+    "docs/workflow/phases/28-minimal-closed-loop-drift-attribution/evidence/automated/phase28-drift-attribution-v5/T0_static_plant.csv": "2330188f8e9cfe7b2f24f6a28ebe0730d15e59891b920cab522c890b2556caac",
+    "docs/workflow/phases/28-minimal-closed-loop-drift-attribution/evidence/automated/phase28-drift-attribution-v5/T1_straight_start_cruise_brake_control.csv": "bc79c789a7394f3b7c226322b9f5eba936ae1a28b929e566ca18c2aab64de03e",
+    "docs/workflow/phases/28-minimal-closed-loop-drift-attribution/evidence/automated/phase28-drift-attribution-v5/T1_straight_start_cruise_brake_plant.csv": "9567fae6bb3bcab9830756afa4e15dae29a5aad0287ebe5744537f43a0bf011f",
+    "simulation/mujoco/config/phase27_acados_ocp_v2.json": "c24159aebbd7b38380044319e9cfdb619d880b86f9050aedc086ab07aba5eadf",
+    "simulation/mujoco/config/phase31_wheel_state_contract_v1.json": "6e97b1538d528e9d3daf0f4e89e3025121f460f0d2c0e2ae44249d52fda9276e",
+    "simulation/mujoco/model/phase19_standing.xml": "5334205529e9625a9e508b2eb8d61f5401b3518deff8c4daef6caac1d3f52664",
+    "tools/experiments/run_phase31_wheel_acceleration_audit.py": "d3714bd33eaef7c2419d6a5abdf92a7fff3f9b5e19534b88943a4735269f425a",
+    "tools/experiments/run_phase31_wheel_state_contract.py": "29bb1f8e57be158cd148dcd38f723271ec3e86050d05958bfa20fcb0a48f3909"
+  },
+  "python": "3.10.20",
+  "replay_of": "wheel-acceleration-v3"
+}

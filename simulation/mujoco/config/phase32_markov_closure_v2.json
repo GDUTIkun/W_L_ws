@@ -1,0 +1,46 @@
+{
+  "schema_version": 2,
+  "phase": 32,
+  "profile": "phase32_markov_closure_v2",
+  "scene": "simulation/mujoco/model/phase19_standing.xml",
+  "source_phase31_method": "simulation/mujoco/config/phase31_wheel_state_contract_v1.json",
+  "source_phase28_run": "docs/workflow/phases/28-minimal-closed-loop-drift-attribution/evidence/automated/phase28-drift-attribution-v5",
+  "wbc_sweep_executable": "ros_ws/build/wheel_leg_core/phase31_wbc_wrench_sweep",
+  "phase31_authority": {
+    "wheel_state_contract": "docs/workflow/phases/31-wheel-state-model-measurement-audit/evidence/automated/wheel-state-contract-v2/summary.json",
+    "wheel_acceleration": "docs/workflow/phases/31-wheel-state-model-measurement-audit/evidence/automated/wheel-acceleration-v4/summary.json",
+    "wheel_input_response": "docs/workflow/phases/31-wheel-state-model-measurement-audit/evidence/automated/wheel-input-response-v10/summary.json",
+    "effective_inertia": "docs/workflow/phases/31-wheel-state-model-measurement-audit/evidence/automated/effective-inertia-audit-v4/summary.json"
+  },
+  "cases": [
+    {"id": "T0_static", "authority_ticks": [54, 56, 58]},
+    {"id": "T1_straight_start_cruise_brake", "authority_ticks": [42, 44, 46]}
+  ],
+  "body_site_contract": {
+    "base_site": "base_control_frame",
+    "wheel_bodies": ["left_wheel_body", "right_wheel_body"],
+    "wheel_geoms": ["left_wheel_collision", "right_wheel_collision"],
+    "floor_geom": "floor"
+  },
+  "wheel_rate_pairs": {
+    "delta_rad_s": 1.0,
+    "modes": {"common": [1.0, 1.0], "differential": [-1.0, 1.0]},
+    "step_scales": [1.0, 0.5]
+  },
+  "leg_pairs": {
+    "configuration_hip_delta_rad": 0.00035,
+    "velocity_active_max_delta_rad_s": 0.5,
+    "construction": "preserve_connect_equality_xz_and_xi_dxi; allow_contact_penetration_to_vary_within_bilateral_regime"
+  },
+  "gates": {
+    "direct_reduced_component_max_abs_error": 1e-9,
+    "reconstructed_wheel_state_max_abs_error": 1e-7,
+    "requested_wrench_max_abs_error": 1e-12,
+    "full_ddxi_oracle_max_abs_error_m_s2": 0.05,
+    "closure_difference_max_abs_m_s2": 0.05,
+    "closure_normalization_m_s2": 0.5,
+    "closure_normalized_max": 0.1,
+    "full_half_sensitivity_relative_error_max": 0.1,
+    "physical_realized_wrench_relative_error_max": 0.02
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "all_one_parity_pass": true,
+  "branches": {
+    "T0": {
+      "failure": "R30-A_terminal_scalar_insufficient",
+      "selected_scale": null,
+      "zero_screen_pass": false
+    },
+    "T1": {
+      "failure": "R30-B_attitude_scalar_insufficient",
+      "selected_scale": null,
+      "zero_screen_pass": false
+    }
+  },
+  "pass": false
+}

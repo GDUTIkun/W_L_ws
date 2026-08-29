@@ -109,6 +109,16 @@ if(BUILD_TESTING)
       -Wall -Wextra -Wpedantic -Werror)
   endif()
 
+  add_executable(phase31_wbc_wrench_sweep
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../../tools/experiments/phase31_wbc_wrench_sweep.cpp)
+  target_link_libraries(phase31_wbc_wrench_sweep PRIVATE wheel_leg_core)
+  if(MSVC)
+    target_compile_options(phase31_wbc_wrench_sweep PRIVATE /W4 /WX)
+  else()
+    target_compile_options(phase31_wbc_wrench_sweep PRIVATE
+      -Wall -Wextra -Wpedantic -Werror)
+  endif()
+
   add_executable(test_contract test/test_contract.cpp)
   target_link_libraries(test_contract PRIVATE wheel_leg_core)
   if(MSVC)
@@ -212,6 +222,18 @@ if(BUILD_TESTING)
   endif()
   add_test(NAME wheel_leg_core_wheel_aware_nmpc_solver
     COMMAND test_wheel_aware_nmpc_solver)
+
+  add_executable(test_phase28_nmpc_corrective
+    test/test_phase28_nmpc_corrective.cpp)
+  target_link_libraries(test_phase28_nmpc_corrective PRIVATE wheel_leg_core)
+  if(MSVC)
+    target_compile_options(test_phase28_nmpc_corrective PRIVATE /W4 /WX)
+  else()
+    target_compile_options(test_phase28_nmpc_corrective PRIVATE
+      -Wall -Wextra -Wpedantic -Werror)
+  endif()
+  add_test(NAME wheel_leg_core_phase28_nmpc_corrective
+    COMMAND test_phase28_nmpc_corrective)
 
   add_executable(test_weighted_wbc_problem test/test_weighted_wbc_problem.cpp)
   target_link_libraries(test_weighted_wbc_problem PRIVATE wheel_leg_core)

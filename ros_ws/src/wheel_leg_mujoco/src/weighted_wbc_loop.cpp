@@ -44,6 +44,7 @@ struct Options {
   double phase27_velocity_m_s{0.0};
   double phase27_yaw_rate_rad_s{0.0};
   std::string phase27_reference_profile{"manual"};
+  bool phase28_diagnostic_continuation{false};
   bool viewer{false};
   int episodes{1};
   int ticks{100};
@@ -108,6 +109,12 @@ Options parseOptions(int argc, char **argv) {
       options.phase27_yaw_rate_rad_s = std::stod(value);
     else if (argument == "--phase27-reference-profile")
       options.phase27_reference_profile = value;
+    else if (argument == "--phase28-diagnostic-continuation") {
+      if (value == "true") options.phase28_diagnostic_continuation = true;
+      else if (value != "false")
+        throw std::invalid_argument(
+            "--phase28-diagnostic-continuation must be true or false");
+    }
     else if (argument == "--viewer") {
       if (value == "true") options.viewer = true;
       else if (value != "false") throw std::invalid_argument("--viewer must be true or false");
@@ -141,6 +148,8 @@ Options parseOptions(int argc, char **argv) {
        options.timing_profile != "candidate_1_5_20") ||
       (options.timing_profile == "candidate_1_5_20" &&
       options.controller_mode != "weighted_wbc") ||
+      (options.phase28_diagnostic_continuation &&
+       options.controller_mode != "phase27_minimal_nmpc") ||
       !std::isfinite(options.phase27_wheel_target_offset_m) ||
       !std::isfinite(options.phase27_velocity_m_s) ||
       !std::isfinite(options.phase27_yaw_rate_rad_s) ||
@@ -344,6 +353,8 @@ void writeValues(std::ostream &output, const Range &values) {
 
 struct PlantMetrics {
   std::array<double, 2> normal_load_n{};
+  std::array<double, 3> base_control_linear_acceleration_n_m_s2{};
+  std::array<double, 3> base_control_angular_acceleration_n_rad_s2{};
   double maximum_penetration_m{0.0};
   double maximum_abs_rolling_slip_m_s{0.0};
   double maximum_abs_lateral_slip_m_s{0.0};
@@ -352,6 +363,18 @@ struct PlantMetrics {
 
 PlantMetrics plantMetrics(const mjModel *model, const mjData *data) {
   PlantMetrics result;
+  const int base_control =
+      requiredId(model, mjOBJ_SITE, "base_control_frame");
+  std::array<mjtNum, 6> spatial_acceleration{};
+  mj_objectAcceleration(
+      model, data, mjOBJ_SITE, base_control,
+      spatial_acceleration.data(), 0);
+  for (int axis = 0; axis < 3; ++axis) {
+    result.base_control_angular_acceleration_n_rad_s2[axis] =
+        spatial_acceleration[axis];
+    result.base_control_linear_acceleration_n_m_s2[axis] =
+        spatial_acceleration[3 + axis] + model->opt.gravity[axis];
+  }
   const int floor = requiredId(model, mjOBJ_GEOM, "floor");
   const std::array<int, 2> wheel_geom{
       requiredId(model, mjOBJ_GEOM, "left_wheel_collision"),
@@ -500,6 +523,10 @@ void writeHeaders(std::ofstream &control, std::ofstream &plant) {
   for (int index = 0; index < 12; ++index) control << ",phase27_signed_slack" << index;
   control << '\n';
   plant << "scenario,episode,control_tick,physics_substep,time_s,disturbance,force_x,force_y,force_z,moment_x,moment_y,moment_z,left_normal_load_n,right_normal_load_n,penetration_m,rolling_slip_m_s,lateral_slip_m_s,closure_residual_m";
+  for (int index = 0; index < 3; ++index)
+    plant << ",base_control_linear_acceleration_n" << index;
+  for (int index = 0; index < 3; ++index)
+    plant << ",base_control_angular_acceleration_n" << index;
   for (int index = 0; index < 17; ++index) plant << ",qpos" << index;
   for (int index = 0; index < 16; ++index) plant << ",qvel" << index;
   for (int index = 0; index < 6; ++index) plant << ",ctrl" << index;
@@ -523,6 +550,8 @@ void writePlantRow(std::ofstream &plant, const Options &options, int episode, in
         << ',' << metrics.maximum_abs_rolling_slip_m_s
         << ',' << metrics.maximum_abs_lateral_slip_m_s
         << ',' << metrics.closure_residual_m;
+  writeValues(plant, metrics.base_control_linear_acceleration_n_m_s2);
+  writeValues(plant, metrics.base_control_angular_acceleration_n_rad_s2);
   for (int index = 0; index < 17; ++index) plant << ',' << data->qpos[index];
   for (int index = 0; index < 16; ++index) plant << ',' << data->qvel[index];
   for (int actuator = 0; actuator < 6; ++actuator) plant << ',' << data->ctrl[actuator];
@@ -646,6 +675,13 @@ void run(const Options &options) {
   config.torque_limit_nm = options.torque_limit;
   config.weighted_wbc = wheel_leg::currentNominalWeightedWbcConfig();
   config.weighted_wbc.period_s = candidate_timing ? 0.005 : 0.01;
+  if (options.phase28_diagnostic_continuation) {
+    config.weighted_wbc.maximum_abs_x_m = 0.10;
+    config.weighted_wbc.maximum_abs_y_m = 0.08;
+    config.weighted_wbc.maximum_abs_z_m = 0.05;
+    config.weighted_wbc.maximum_abs_roll_pitch_rad = 0.20;
+    config.weighted_wbc.maximum_abs_yaw_rad = 0.25;
+  }
   if (options.nmpc_reference == "positive") {
     config.nominal_nmpc.reference_profile =
         wheel_leg::NmpcReferenceProfile::kPositiveStep;

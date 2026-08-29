@@ -1,4 +1,4 @@
-# Phase 27 grounding and Phase 26 handoff
+# Phase 27 grounding and retired-audit handoff
 
 Date: 2026-08-29
 
@@ -17,13 +17,14 @@ Decision: `DG27-00 PASS`
 - `docs/` and `tools/` are intentionally outside the CBM source index and
   were read directly.
 
-## Phase 26 handoff
+## Retired audit handoff
 
-At the user-directed handoff Phase 26 contained only its PLAN. `P26-T01`--
-`P26-T10` were all `todo`; there was no source, config, log, evaluator, formal
-run, REVIEW or RECORD to inherit. Phase 26 remains a blocked current-12D
-audit. Its task-necessity conclusions and thresholds are not evidence for the
-new physical state, OCP, wrench interface or candidate schedule.
+At the user-directed handoff the current-12D audit draft contained only its
+PLAN. All proposed tasks were `todo`; there was no source, config, log,
+evaluator, formal run, REVIEW or RECORD to inherit. The draft's task-necessity
+conclusions and thresholds are not evidence for the new physical state, OCP,
+wrench interface or candidate schedule. The empty draft was later deleted by
+user direction and its number retired.
 
 ## Reuse boundary
 

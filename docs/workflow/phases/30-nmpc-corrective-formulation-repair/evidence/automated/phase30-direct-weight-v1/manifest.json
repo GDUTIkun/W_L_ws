@@ -1,0 +1,19 @@
+{
+  "command": "tools/experiments/run_phase30_nmpc_formulation_repair.py --output docs/workflow/phases/30-nmpc-corrective-formulation-repair/evidence/automated/phase30-direct-weight-v1",
+  "created_utc": "2026-08-29T12:16:47.539025+00:00",
+  "dependencies": {
+    "casadi": "3.7.2",
+    "mujoco": "3.7.0",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3"
+  },
+  "inputs": {
+    "simulation/mujoco/config/phase27_acados_ocp_v2.json": "c24159aebbd7b38380044319e9cfdb619d880b86f9050aedc086ab07aba5eadf",
+    "simulation/mujoco/config/phase29_nmpc_root_cause_v1.json": "557d8fa63ec39bca53cee5eadfc58f6c6feb156dab1ae95be7541da32788dcfa",
+    "simulation/mujoco/config/phase30_nmpc_formulation_repair_v1.json": "21c44896bc120f6a6d86e843330789d4d00605a76fd1d66bea7e0e6b43713fe8",
+    "tools/experiments/run_phase29_nmpc_root_cause.py": "b495f91435c77da2eb146a497997ce7489e511e41111ca22981ab18b9795982c"
+  },
+  "python": "3.10.20",
+  "replay_of": null,
+  "supersedes": null
+}

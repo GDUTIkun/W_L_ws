@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "phase": 30,
+  "profile": "phase30_nmpc_formulation_repair_v1",
+  "source_phase29_method": "simulation/mujoco/config/phase29_nmpc_root_cause_v1.json",
+  "source_phase29_authority": "docs/workflow/phases/29-nmpc-corrective-root-cause-audit/evidence/automated/phase29-root-cause-v1",
+  "source_ocp_config": "simulation/mujoco/config/phase27_acados_ocp_v2.json",
+  "source_generated_dir": "ros_ws/src/wheel_leg_core/acados_generated/phase27_wheel_aware_nmpc_v2",
+  "offline_sqp_generated_dir": "ros_ws/src/wheel_leg_core/acados_generated/phase29_wheel_aware_nmpc_sqp_v2",
+  "source_phase28_run": "docs/workflow/phases/28-minimal-closed-loop-drift-attribution/evidence/automated/phase28-drift-attribution-v5",
+  "grid": [0.0, 0.125, 0.25, 0.5, 0.75, 1.0],
+  "running_attitude_indices": [3, 4, 5, 9, 10, 11],
+  "terminal_x_index": 0,
+  "neighbor_update_count": 1,
+  "gates": {
+    "baseline_u0_max_abs_error": 1e-8,
+    "baseline_objective_max_abs_error": 1e-7,
+    "converged_stationarity_max": 1e-7,
+    "converged_feasibility_max": 1e-7,
+    "cost_recompute_max_abs_error": 1e-7,
+    "corrective_product_abs_floor": 1e-6,
+    "corrective_derivative_abs_floor_s2": 1e-3,
+    "relative_zero_scale_margin": 0.10,
+    "active_bound_distance": 1e-6,
+    "production_direction_deadband": 1e-7
+  },
+  "perturbation": {
+    "rotation_rad": 0.002,
+    "angular_velocity_rad_s": 0.01,
+    "position_m": 0.002,
+    "linear_velocity_m_s": 0.01
+  }
+}

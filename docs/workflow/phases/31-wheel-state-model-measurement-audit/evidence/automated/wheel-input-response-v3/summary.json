@@ -1,0 +1,16 @@
+{
+  "classification": "eq12_gain_or_coupling_mismatch",
+  "cross_coupling_pass": true,
+  "finite_difference_step_pass": true,
+  "gain_pass": false,
+  "max_cross_to_primary_gain_ratio": 0.07364587240437014,
+  "max_finite_difference_step_relative_error": 0.01282927254441229,
+  "max_primary_relative_gain_error": 0.9340322717331919,
+  "max_wbc_baseline_torque_error_nm": 0.0,
+  "max_wbc_realization_cross_gain_ratio": 1.7842415709944275e-05,
+  "max_wbc_realization_primary_gain_error": 0.003982400254201823,
+  "production_modified": false,
+  "sign_pass": true,
+  "wbc_baseline_reproduction_pass": true,
+  "wbc_realization_sensitivity_pass": true
+}

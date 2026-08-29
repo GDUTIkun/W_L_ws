@@ -1,0 +1,83 @@
+{
+  "acceleration": {
+    "direct_vs_fd_angular_rms_rad_s2": 1.504844633735342e-07,
+    "direct_vs_fd_linear_rms_m_s2": 1.9563151388920404e-05,
+    "oracle_pass": true,
+    "plant_angular_rms_rad_s2": 0.3042804281255917,
+    "plant_linear_rms_m_s2": 0.03590266475132978,
+    "plant_match": true,
+    "tail_nmpc_mean": [
+      -0.044444573252129575,
+      -0.013450900968554105,
+      0.0012480422984522917,
+      0.002669716637448138,
+      0.09075232067786212,
+      -0.2708929299986503
+    ],
+    "tail_plant_mean": [
+      -0.08083731329662412,
+      -0.0017590826096563067,
+      0.011050266035213488,
+      0.00785929967094638,
+      -0.5457226605986176,
+      0.07188311819470236
+    ],
+    "tail_wbc_mean": [
+      -0.07969481618481825,
+      -0.01371541320828332,
+      0.010342171150027871,
+      0.04100239375958929,
+      -0.5564416877045487,
+      -0.10186077689131272
+    ],
+    "upper_angular_rms_rad_s2": 0.394240877443547,
+    "upper_linear_rms_m_s2": 0.018734498748404476,
+    "upper_match": true
+  },
+  "baseline_prefix_maximum_error": 0.0,
+  "baseline_prefix_mismatched_columns": [],
+  "corrective": {
+    "median_score": -0.0026171478477980594,
+    "pass": false,
+    "restorative_fraction": 0.0
+  },
+  "diagnostic_stop": {
+    "model_status": 1,
+    "nmpc_projected_stationarity": 0.06749078715173658,
+    "nmpc_status": 4,
+    "solver_status": 1,
+    "status": 4,
+    "weighted_status": 2
+  },
+  "diagnostic_stop_tick": 62,
+  "diagnostic_stop_time_s": 0.62,
+  "id": "T2_turn_right",
+  "maximum_excursion": {
+    "angular_speed_rad_s": 7.425726924844536,
+    "linear_speed_m_s": 3.2714676301112173,
+    "pitch_rad": 0.854886398859545,
+    "x_tracking_error_m": 0.12197264376782362
+  },
+  "nominal_failure_tick": 45,
+  "nominal_failure_time_s": 0.45,
+  "pass": true,
+  "phase27_expected_first_failure_tick": 45,
+  "primary_attribution": "B_nmpc_corrective_failure",
+  "trajectory_class": "divergence",
+  "wbc_realization": {
+    "maximum_abs_torque_nm": 3.262551205411879,
+    "maximum_closure_residual_m": 0.00018406074922112944,
+    "maximum_force_residual_n": 0.0011004622917716268,
+    "maximum_hard_violation": 7.233303678244596e-10,
+    "maximum_moment_residual_nm": 9.97795292963335e-06,
+    "maximum_normalized_slack": 2.2009243783269774e-05,
+    "maximum_penetration_m": 0.0004721038819655646,
+    "minimum_torque_margin_nm": 1.9924605848790822,
+    "minimum_wheel_normal_load_n": 30.820263700380465,
+    "pass": true
+  },
+  "window": {
+    "first_tick": 35,
+    "last_tick_exclusive": 62
+  }
+}

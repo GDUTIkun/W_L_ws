@@ -1,0 +1,22 @@
+{
+  "command": "tools/experiments/run_phase32_leg_nullspace.py --method simulation/mujoco/config/phase32_markov_closure_v2.json --output docs/workflow/phases/32-wheel-state-markov-closure/evidence/automated/leg-nullspace-v5 --replay-of leg-nullspace-v4",
+  "created_utc": "2026-08-29T15:14:06.437683+00:00",
+  "dependencies": {
+    "mujoco": "3.7.0",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3"
+  },
+  "inputs": {
+    "docs/workflow/phases/28-minimal-closed-loop-drift-attribution/evidence/automated/phase28-drift-attribution-v5/T0_static_control.csv": "97764748b0948713cb13aadff60cc44a11ae5940d8fa1e30577314f86451c611",
+    "docs/workflow/phases/28-minimal-closed-loop-drift-attribution/evidence/automated/phase28-drift-attribution-v5/T0_static_plant.csv": "2330188f8e9cfe7b2f24f6a28ebe0730d15e59891b920cab522c890b2556caac",
+    "docs/workflow/phases/28-minimal-closed-loop-drift-attribution/evidence/automated/phase28-drift-attribution-v5/T1_straight_start_cruise_brake_control.csv": "bc79c789a7394f3b7c226322b9f5eba936ae1a28b929e566ca18c2aab64de03e",
+    "docs/workflow/phases/28-minimal-closed-loop-drift-attribution/evidence/automated/phase28-drift-attribution-v5/T1_straight_start_cruise_brake_plant.csv": "9567fae6bb3bcab9830756afa4e15dae29a5aad0287ebe5744537f43a0bf011f",
+    "ros_ws/build/wheel_leg_core/phase31_wbc_wrench_sweep": "f93031f75f170fab8942f8eed4450a7b1b2a9f6abd0fe9edb3ce579053fa2334",
+    "simulation/mujoco/config/phase32_markov_closure_v2.json": "32d84b81faa603c193d34dfa643f5d8d13fff9dde88c7dbf210792b0a73f202c",
+    "simulation/mujoco/model/phase19_standing.xml": "5334205529e9625a9e508b2eb8d61f5401b3518deff8c4daef6caac1d3f52664",
+    "tools/experiments/run_phase32_leg_nullspace.py": "1a4464dbee9daa75c2f40fb797510767074ded043d7376c1d782e866d57fd8a1",
+    "tools/experiments/run_phase32_markov_closure.py": "4af4f93c9455a971f53639d79ec233354429aefbf63bb0c5fc2006b670f1d754"
+  },
+  "python": "3.10.20",
+  "replay_of": "leg-nullspace-v4"
+}

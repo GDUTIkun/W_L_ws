@@ -1,0 +1,69 @@
+{
+  "command": [
+    "tools/experiments/run_phase27_minimal_formal.py",
+    "--config",
+    "simulation/mujoco/config/phase27_minimal_formal_v1.json",
+    "--runner",
+    "ros_ws/install/wheel_leg_mujoco/lib/wheel_leg_mujoco/weighted_wbc_loop",
+    "--output-dir",
+    "docs/workflow/phases/28-minimal-closed-loop-drift-attribution/evidence/automated/phase28-phase27-normal-regression-v1"
+  ],
+  "config": "simulation/mujoco/config/phase27_minimal_formal_v1.json",
+  "config_sha256": "70b961f7ede235d7e32a0d588051f5f9555d4a80ab4c817b073c6e3ffddae508",
+  "created_at": "2026-08-29T07:57:51.042951+00:00",
+  "dependencies": {
+    "casadi": "3.7.2",
+    "mujoco": "3.7.0",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3"
+  },
+  "generated_inputs": {
+    "ros_ws/src/wheel_leg_core/acados_generated/phase27_wheel_aware_nmpc_v2/Makefile": "c29c0daa3e1c261118fa190c6261e32471f917aef3c96f1be308db7aa99f96a1",
+    "ros_ws/src/wheel_leg_core/acados_generated/phase27_wheel_aware_nmpc_v2/acados_ocp.json": "6af7fdeeaa4793186b33cc4319faaf54aa633445af2a434c78f9a719d8ce94fa",
+    "ros_ws/src/wheel_leg_core/acados_generated/phase27_wheel_aware_nmpc_v2/acados_solver.pxd": "c2f8c10e17a07f5db3685304b9009fa677bb7c39ed0e29f81d873e1fc72807ac",
+    "ros_ws/src/wheel_leg_core/acados_generated/phase27_wheel_aware_nmpc_v2/acados_solver_ocp_phase27_wheel_aware_nmpc_v2_ece6e123.c": "25a948e8737264f80f5310522e509ed3e468d3b40289716fda7a6cf82a0efba6",
+    "ros_ws/src/wheel_leg_core/acados_generated/phase27_wheel_aware_nmpc_v2/acados_solver_ocp_phase27_wheel_aware_nmpc_v2_ece6e123.h": "68290aa2d874151a83a996bc4d749ad5e81dc31775e0368288460789d1187ccb",
+    "ros_ws/src/wheel_leg_core/acados_generated/phase27_wheel_aware_nmpc_v2/main_ocp_phase27_wheel_aware_nmpc_v2_ece6e123.c": "fe4603c8c0e2c80308d8668dc68b984c267bc88a797786c6a7ab4193663faa19",
+    "ros_ws/src/wheel_leg_core/acados_generated/phase27_wheel_aware_nmpc_v2/phase27_generation_manifest.json": "142e85e155bf8654caaa456ef111a5e215fa5b7a734e64f1d156f3e753dce848",
+    "ros_ws/src/wheel_leg_core/acados_generated/phase27_wheel_aware_nmpc_v2/phase27_wheel_aware_nmpc_v2_model/phase27_wheel_aware_nmpc_v2_dyn_disc_phi_fun.c": "f97d287e3eb8f744797bd61d784b82cd2d8d6b9d58791b76c489a635384a3632",
+    "ros_ws/src/wheel_leg_core/acados_generated/phase27_wheel_aware_nmpc_v2/phase27_wheel_aware_nmpc_v2_model/phase27_wheel_aware_nmpc_v2_dyn_disc_phi_fun_jac.c": "06872b641ff2a8c20c1bc52ead77f98fe3078bec4e488a91724204f47ada137b",
+    "ros_ws/src/wheel_leg_core/acados_generated/phase27_wheel_aware_nmpc_v2/phase27_wheel_aware_nmpc_v2_model/phase27_wheel_aware_nmpc_v2_model.h": "0eb0844f22db33562462dbd3b4ed34c21eba44016eab7c43436ca0c68841e8d4"
+  },
+  "hardware_data": false,
+  "inputs": {
+    "ros_ws/src/wheel_leg_core/src/controller_core.cpp": "e6f9de963813250f490273c222453a16fa724a25e13d0386c0017711b610622e",
+    "ros_ws/src/wheel_leg_core/src/weighted_wbc_problem.cpp": "50e94b01e963954a19fb8a7885bed74006f685dfc6b3f2ee7a1e1650507c1324",
+    "ros_ws/src/wheel_leg_mujoco/src/weighted_wbc_loop.cpp": "a7e24a82c29cba596680bbb219162e0aff5b72e48868a08727125b870b567bc6",
+    "simulation/mujoco/config/phase21_runtime_model_profile_v1.json": "280e84918438922d55b515f94cfe31bd89ec4e401626db6489e8baccde17c78c",
+    "simulation/mujoco/config/phase27_acados_ocp_v2.json": "c24159aebbd7b38380044319e9cfdb619d880b86f9050aedc086ab07aba5eadf",
+    "simulation/mujoco/config/phase27_minimal_formal_v1.json": "70b961f7ede235d7e32a0d588051f5f9555d4a80ab4c817b073c6e3ffddae508",
+    "simulation/mujoco/model/phase19_standing.xml": "5334205529e9625a9e508b2eb8d61f5401b3518deff8c4daef6caac1d3f52664",
+    "tools/experiments/run_phase27_minimal_formal.py": "13e97b3a5b17e07c5ba9428265420e8f62e2110283a76e21ce0857ee3800f95b"
+  },
+  "outputs": {
+    "T0_static_control.csv": "fcf7cdf166b7ee2063cad4857bb1f7a7e4c25724a60bd5fbe655a358f514fe14",
+    "T0_static_first_failure.json": "fde76214968cd76584c2f8c61c013b9989784b58ed83a765ff2b49efedfa4ebc",
+    "T0_static_plant.csv": "52d8fcaa97751f7c508ece492242e01e1e7a309160833dee900ca6efdc0c1b50",
+    "T1_straight_start_cruise_brake_control.csv": "90a8f2cc207926f4c8b9db9bab6a37f48f34ce47697f5049aeb44f4239ca5a2e",
+    "T1_straight_start_cruise_brake_first_failure.json": "ffda1ae0896ef9111d5e05c23ff855c3c5fcb0510c97b46579ee6e7d3b3042f9",
+    "T1_straight_start_cruise_brake_plant.csv": "79c35e51576f3cf3fef713cdce2b3f0cafe69ccbb849b7d4b3d9f8800b6778e5",
+    "T2_turn_left_control.csv": "e2ce02f9c2030fb1ac90e6fa3d5e975944aa667cff317fe87e3ed4f0b9c6e335",
+    "T2_turn_left_first_failure.json": "815c046cf40f9177648cf92148038ee90cc0c4976aefb6088d51e782f24cd627",
+    "T2_turn_left_plant.csv": "9fc60df2cc0caf6d3cdcc0b87557058126888900e462ea0bb1565a0d0878a774",
+    "T2_turn_right_control.csv": "a85fcdb819063e59146e16f230b420aa47fe628c8fe02c8e95b0eef8ee65c39e",
+    "T2_turn_right_first_failure.json": "72ccca0e680020049b7a57c585bb68d9094f5fe5bb97feac99d5761de47d5c18",
+    "T2_turn_right_plant.csv": "60cf065ef5cdd4bad0d56363f0048f8e755776dfda9a424c2c8f5b60d09e8716",
+    "T3_xi_delta_negative_10mm_control.csv": "770b4920b7c5832747a44ebb69fee6616f633d2265b3596317c340364a7b05ee",
+    "T3_xi_delta_negative_10mm_first_failure.json": "4be48db5cffe56d56ae9f9acee87f819e8997a0925dfc7f742206264e930da7a",
+    "T3_xi_delta_negative_10mm_plant.csv": "d1e2be3e534f06548acb599ee4f6bbadf329d37d6f2a984898529d312ab6dd9b",
+    "T3_xi_delta_positive_10mm_control.csv": "12972d463cd4c27d27d7e5f59bbb416cd6886dea16377141953122333ac0a47c",
+    "T3_xi_delta_positive_10mm_first_failure.json": "220a427ad05103af89439a340364797267952b0c30398146cc8c0e35947470ce",
+    "T3_xi_delta_positive_10mm_plant.csv": "1f2ccd68e5049b061c7315f99a0c6f80864880d58c5ec858dad03d050b32ba4c",
+    "summary.json": "a12e935c491b167de6d30c50c74c7ca5e25fd6aecfc767d392688d66f83ceeb2"
+  },
+  "python": "3.10.20",
+  "runner": "ros_ws/build/wheel_leg_mujoco/weighted_wbc_loop",
+  "runner_sha256": "a98f62e225d83fb8d3456c8ba1203ee69bae0196b31750709a093182870dbe98",
+  "schema_version": 1,
+  "seed": 2701
+}

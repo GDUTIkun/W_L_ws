@@ -4,7 +4,7 @@
 
 ## Active
 
-- [Phase 27：theory-restored wheel-aware NMPC + Minimal WBC](27-theory-restored-minimal-wbc/RECORD.md) — 已完成；上游物理/component gate与fault/replay/regression PASS，T0～T2首失效为safety envelope、T3 `±10 mm`首失效为native NMPC stationarity，结论为diagnosed Minimal FAIL且未在本Phase add-back/retune。
+None.
 
 ## Planned
 
@@ -12,11 +12,12 @@ None.
 
 ## Review
 
-None.
+- [Phase 30：NMPC reference-consistency audit v3](30-nmpc-corrective-formulation-repair/REVIEW.md) — **REWORK**；reference本身已一致，20 ms误差定位到wheel-rate model/state contract（P31-F）；production未修改。
+- [Phase 31：wheel-state model and measurement contract audit](31-wheel-state-model-measurement-audit/REVIEW.md) — **REWORK / SUPERSEDED DYNAMICS ATTRIBUTION**；measurement PASS；原M4-only结论被Phase32的floating-base M5证据取代。
+- [Phase 32：wheel-state Markov closure and constrained dynamics](32-wheel-state-markov-closure/REVIEW.md) — **REWORK**；同x16证据证明`P32-C/M5`及D/E/F；x24仅是必要增广，先关闭mesh-vs-analytic contact authority。
 
 ## Blocked
 
-- [Phase 26：current-nominal Minimal WBC task audit](26-minimal-wbc-task-audit/PLAN.md) — 用户选择先执行Phase27；本Phase没有实现/evidence，按DG26-01等待新的physical state/OCP/interface terminal contract后再修订恢复。
 - [Phase 05：执行器力矩辨识与模型校准](05-actuator-torque-identification/PLAN.md) — Phase 14 前置已 PASS；当前按用户决定冻结真机相关执行，解除冻结后从通信/计量/同步/安全 gate 恢复。
 
 ## Complete
@@ -37,6 +38,9 @@ None.
 - [Phase 23：nominal acados NMPC](23-nominal-nmpc/PLAN.md) — 2026-08-29 PASS；append-only acados v2、23+10 formal、fresh replay和兼容性回归完成；仅限current nominal simulation host。
 - [Phase 24：MuJoCo interactive NMPC viewer](24-mujoco-interactive-viewer/PLAN.md) — 2026-08-29 PASS；opt-in GLFW viewer复用Phase23 C++ controller/adapter，headless formal和性能口径不变。
 - [Phase 25：MuJoCo mouse interaction](25-mujoco-mouse-interaction/PLAN.md) — 2026-08-29 PASS；native camera与temporary force/torque dragging，仅限viewer。
+- [Phase 27：theory-restored wheel-aware NMPC + Minimal WBC](27-theory-restored-minimal-wbc/RECORD.md) — 2026-08-29 PASS；上游物理/component gate与fault/replay/regression PASS，T0～T2首失效为safety envelope、T3 `±10 mm`首失效为native NMPC stationarity，结论为diagnosed Minimal FAIL且未add-back/retune。
+- [Phase 28：Minimal closed-loop drift / divergence attribution](28-minimal-closed-loop-drift-attribution/RECORD.md) — 2026-08-29 PASS；T0/T1唯一归为B类NMPC净动作非恢复，WBC realization/resource与model-to-plant gates排除；T2左右不一致且不作primary attribution，未批准task或调参。
+- [Phase 29：NMPC corrective-action root-cause audit](29-nmpc-corrective-root-cause-audit/RECORD.md) — 2026-08-29 PASS；T0唯一归为terminal base-longitudinal有限域传播P29-E，T1唯一归为attitude主导、wheel-rate次级的cross-state coupling P29-D；offline-only诊断未改变production控制律或调参。
 
 ## 建立新 Phase
 

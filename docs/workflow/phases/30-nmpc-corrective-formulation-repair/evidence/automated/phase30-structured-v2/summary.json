@@ -1,0 +1,27 @@
+{
+  "all_one_parity_pass": true,
+  "branches": {
+    "T0": {
+      "candidates": {
+        "A0_baseline": false,
+        "A1_no_terminal_longitudinal": false,
+        "A2_velocity_only_terminal": false
+      },
+      "failure": "R31-A_terminal_structural_candidates_fail"
+    },
+    "T1": {
+      "candidates": {
+        "B0_baseline": false,
+        "B2_neg_longitudinal_pitch": false,
+        "B2_pos_longitudinal_pitch": false,
+        "B4_no_common_wheel_rate": false
+      },
+      "failure": "R31-B_cross_state_structural_candidates_fail"
+    }
+  },
+  "pass": false,
+  "selected": {
+    "T0": null,
+    "T1": null
+  }
+}

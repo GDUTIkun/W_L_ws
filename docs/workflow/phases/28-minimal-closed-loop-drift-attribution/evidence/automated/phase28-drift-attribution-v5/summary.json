@@ -1,0 +1,351 @@
+{
+  "cases": [
+    {
+      "acceleration": {
+        "direct_vs_fd_angular_rms_rad_s2": 4.669274169508723e-07,
+        "direct_vs_fd_linear_rms_m_s2": 7.186820820316248e-05,
+        "oracle_pass": true,
+        "plant_angular_rms_rad_s2": 0.3000452886430268,
+        "plant_linear_rms_m_s2": 0.05491556157889558,
+        "plant_match": true,
+        "tail_nmpc_mean": [
+          -0.26517326061374336,
+          -0.0010897252680627384,
+          0.009201418920205179,
+          0.006419125111785061,
+          -1.3012031589296102,
+          0.07090480849631015
+        ],
+        "tail_plant_mean": [
+          -0.3043147214077761,
+          0.038616344173668264,
+          0.02407786298528723,
+          -0.1290206910198119,
+          -1.5894270918630184,
+          -0.007244973851549574
+        ],
+        "tail_wbc_mean": [
+          -0.29661371699340666,
+          -0.0014343007375677368,
+          0.023850100465129476,
+          0.006038073954791271,
+          -1.5994500842313868,
+          0.03503518024764842
+        ],
+        "upper_angular_rms_rad_s2": 0.21659776347557377,
+        "upper_linear_rms_m_s2": 0.01631318160806776,
+        "upper_match": true
+      },
+      "attribution_path_result": "B_nmpc_corrective_failure",
+      "baseline_prefix_maximum_error": 0.0,
+      "baseline_prefix_mismatched_columns": [],
+      "corrective": {
+        "median_score": -0.027068343580020682,
+        "pass": false,
+        "restorative_fraction": 0.09090909090909091
+      },
+      "diagnostic_stop": {
+        "model_status": 1,
+        "nmpc_projected_stationarity": 0.19693371492169268,
+        "nmpc_status": 4,
+        "solver_status": 1,
+        "status": 4,
+        "weighted_status": 2
+      },
+      "diagnostic_stop_tick": 70,
+      "diagnostic_stop_time_s": 0.7000000000000001,
+      "id": "T0_static",
+      "maximum_excursion": {
+        "angular_speed_rad_s": 2.745713868698346,
+        "linear_speed_m_s": 3.5112870627239583,
+        "pitch_rad": 0.18441372066533157,
+        "x_tracking_error_m": 0.033206676244162125
+      },
+      "nominal_failure_tick": 58,
+      "nominal_failure_time_s": 0.58,
+      "pass": true,
+      "phase27_expected_first_failure_tick": 58,
+      "primary_attribution": "B_nmpc_corrective_failure",
+      "trajectory_class": "divergence",
+      "wbc_realization": {
+        "maximum_abs_torque_nm": 3.265539296689835,
+        "maximum_closure_residual_m": 0.0001841617326331015,
+        "maximum_force_residual_n": 0.000673051668317884,
+        "maximum_hard_violation": 7.332839196960705e-10,
+        "maximum_moment_residual_nm": 5.7943284103500195e-06,
+        "maximum_normalized_slack": 1.3461055437711197e-05,
+        "maximum_penetration_m": 0.000438227985220363,
+        "minimum_torque_margin_nm": 1.9946284346209293,
+        "minimum_wheel_normal_load_n": 30.582209469183127,
+        "pass": true
+      },
+      "window": {
+        "first_tick": 48,
+        "last_tick_exclusive": 70
+      }
+    },
+    {
+      "acceleration": {
+        "direct_vs_fd_angular_rms_rad_s2": 1.942595828321628e-07,
+        "direct_vs_fd_linear_rms_m_s2": 2.6649621945829427e-05,
+        "oracle_pass": true,
+        "plant_angular_rms_rad_s2": 0.25307730487965585,
+        "plant_linear_rms_m_s2": 0.04341236097906036,
+        "plant_match": true,
+        "tail_nmpc_mean": [
+          -0.03359002155586992,
+          -0.011328401895793452,
+          -6.160712941950808e-06,
+          -0.0035119187296674117,
+          0.24968865957797579,
+          0.019813169382659646
+        ],
+        "tail_plant_mean": [
+          -0.07269460599260749,
+          -0.0012000603868011395,
+          0.009104802375654194,
+          0.0038611833961091496,
+          -0.33579158352299643,
+          -0.08372786936194307
+        ],
+        "tail_wbc_mean": [
+          -0.07095085871698988,
+          -0.01138033302044242,
+          0.009038163314049021,
+          0.04171617044339283,
+          -0.33959430794380113,
+          0.17502215610857702
+        ],
+        "upper_angular_rms_rad_s2": 0.4233766162436407,
+        "upper_linear_rms_m_s2": 0.01806152598406329,
+        "upper_match": true
+      },
+      "attribution_path_result": "B_nmpc_corrective_failure",
+      "baseline_prefix_maximum_error": 0.0,
+      "baseline_prefix_mismatched_columns": [],
+      "corrective": {
+        "median_score": -0.0018469680138932987,
+        "pass": false,
+        "restorative_fraction": 0.14814814814814814
+      },
+      "diagnostic_stop": {
+        "model_status": 1,
+        "nmpc_projected_stationarity": 0.052706986006658685,
+        "nmpc_status": 4,
+        "solver_status": 1,
+        "status": 4,
+        "weighted_status": 2
+      },
+      "diagnostic_stop_tick": 62,
+      "diagnostic_stop_time_s": 0.62,
+      "id": "T1_straight_start_cruise_brake",
+      "maximum_excursion": {
+        "angular_speed_rad_s": 7.514953324555039,
+        "linear_speed_m_s": 3.2406838904745014,
+        "pitch_rad": 0.8258841631907843,
+        "x_tracking_error_m": 0.12534565156010963
+      },
+      "nominal_failure_tick": 45,
+      "nominal_failure_time_s": 0.45,
+      "pass": true,
+      "phase27_expected_first_failure_tick": 45,
+      "primary_attribution": "B_nmpc_corrective_failure",
+      "trajectory_class": "divergence",
+      "wbc_realization": {
+        "maximum_abs_torque_nm": 3.26501518232003,
+        "maximum_closure_residual_m": 0.00018395555001502655,
+        "maximum_force_residual_n": 0.0014027888153068976,
+        "maximum_hard_violation": 7.125458903467496e-10,
+        "maximum_moment_residual_nm": 1.2600554186436875e-05,
+        "maximum_normalized_slack": 2.805577291551085e-05,
+        "maximum_penetration_m": 0.00046460168345614783,
+        "minimum_torque_margin_nm": 1.994133136687958,
+        "minimum_wheel_normal_load_n": 30.90483114348286,
+        "pass": true
+      },
+      "window": {
+        "first_tick": 35,
+        "last_tick_exclusive": 62
+      }
+    },
+    {
+      "acceleration": {
+        "direct_vs_fd_angular_rms_rad_s2": 1.6262217632499176e-07,
+        "direct_vs_fd_linear_rms_m_s2": 2.0115659640042333e-05,
+        "oracle_pass": true,
+        "plant_angular_rms_rad_s2": 0.27446468575479466,
+        "plant_linear_rms_m_s2": 0.05828161024604967,
+        "plant_match": true,
+        "tail_nmpc_mean": [
+          0.030591565318816388,
+          0.0030415158720361914,
+          -0.01724712040816333,
+          0.05772927407420856,
+          1.627139518737856,
+          0.42657700171568613
+        ],
+        "tail_plant_mean": [
+          0.0007883741403292913,
+          0.09439146449390391,
+          -0.01273579084876168,
+          -0.31449253055271614,
+          1.5936168881034256,
+          -0.16213264339704328
+        ],
+        "tail_wbc_mean": [
+          0.0006760016139678512,
+          0.0017742908476838007,
+          -0.011774169027322364,
+          -0.009184927098611264,
+          1.599402644720451,
+          0.06134814084316494
+        ],
+        "upper_angular_rms_rad_s2": 0.2858115383903646,
+        "upper_linear_rms_m_s2": 0.01619580771032018,
+        "upper_match": true
+      },
+      "attribution_path_result": "E_fast_stabilization_or_bandwidth_gap",
+      "baseline_prefix_maximum_error": 0.0,
+      "baseline_prefix_mismatched_columns": [],
+      "corrective": {
+        "median_score": 0.00176432356458344,
+        "pass": true,
+        "restorative_fraction": 0.8421052631578947
+      },
+      "diagnostic_stop": {
+        "model_status": 1,
+        "nmpc_projected_stationarity": 0.026092425009155096,
+        "nmpc_status": 4,
+        "solver_status": 1,
+        "status": 4,
+        "weighted_status": 2
+      },
+      "diagnostic_stop_tick": 54,
+      "diagnostic_stop_time_s": 0.54,
+      "id": "T2_turn_left",
+      "maximum_excursion": {
+        "angular_speed_rad_s": 6.803485636840244,
+        "linear_speed_m_s": 2.962789154121917,
+        "pitch_rad": 0.7603817585908774,
+        "x_tracking_error_m": 0.1615094791713398
+      },
+      "nominal_failure_tick": 45,
+      "nominal_failure_time_s": 0.45,
+      "pass": true,
+      "phase27_expected_first_failure_tick": 45,
+      "primary_attribution": null,
+      "trajectory_class": "divergence",
+      "wbc_realization": {
+        "maximum_abs_torque_nm": 3.266907247671338,
+        "maximum_closure_residual_m": 0.00018246297295111802,
+        "maximum_force_residual_n": 0.0020798365091864034,
+        "maximum_hard_violation": 5.528274713006986e-10,
+        "maximum_moment_residual_nm": 1.9157048869300096e-05,
+        "maximum_normalized_slack": 4.159671805154984e-05,
+        "maximum_penetration_m": 0.0004831905269417,
+        "minimum_torque_margin_nm": 1.996268478659336,
+        "minimum_wheel_normal_load_n": 30.88958571884494,
+        "pass": true
+      },
+      "window": {
+        "first_tick": 35,
+        "last_tick_exclusive": 54
+      }
+    },
+    {
+      "acceleration": {
+        "direct_vs_fd_angular_rms_rad_s2": 1.504844633735342e-07,
+        "direct_vs_fd_linear_rms_m_s2": 1.9563151388920404e-05,
+        "oracle_pass": true,
+        "plant_angular_rms_rad_s2": 0.3042804281255917,
+        "plant_linear_rms_m_s2": 0.03590266475132978,
+        "plant_match": true,
+        "tail_nmpc_mean": [
+          -0.044444573252129575,
+          -0.013450900968554105,
+          0.0012480422984522917,
+          0.002669716637448138,
+          0.09075232067786212,
+          -0.2708929299986503
+        ],
+        "tail_plant_mean": [
+          -0.08083731329662412,
+          -0.0017590826096563067,
+          0.011050266035213488,
+          0.00785929967094638,
+          -0.5457226605986176,
+          0.07188311819470236
+        ],
+        "tail_wbc_mean": [
+          -0.07969481618481825,
+          -0.01371541320828332,
+          0.010342171150027871,
+          0.04100239375958929,
+          -0.5564416877045487,
+          -0.10186077689131272
+        ],
+        "upper_angular_rms_rad_s2": 0.394240877443547,
+        "upper_linear_rms_m_s2": 0.018734498748404476,
+        "upper_match": true
+      },
+      "attribution_path_result": "B_nmpc_corrective_failure",
+      "baseline_prefix_maximum_error": 0.0,
+      "baseline_prefix_mismatched_columns": [],
+      "corrective": {
+        "median_score": -0.0026171478477980594,
+        "pass": false,
+        "restorative_fraction": 0.0
+      },
+      "diagnostic_stop": {
+        "model_status": 1,
+        "nmpc_projected_stationarity": 0.06749078715173658,
+        "nmpc_status": 4,
+        "solver_status": 1,
+        "status": 4,
+        "weighted_status": 2
+      },
+      "diagnostic_stop_tick": 62,
+      "diagnostic_stop_time_s": 0.62,
+      "id": "T2_turn_right",
+      "maximum_excursion": {
+        "angular_speed_rad_s": 7.425726924844536,
+        "linear_speed_m_s": 3.2714676301112173,
+        "pitch_rad": 0.854886398859545,
+        "x_tracking_error_m": 0.12197264376782362
+      },
+      "nominal_failure_tick": 45,
+      "nominal_failure_time_s": 0.45,
+      "pass": true,
+      "phase27_expected_first_failure_tick": 45,
+      "primary_attribution": null,
+      "trajectory_class": "divergence",
+      "wbc_realization": {
+        "maximum_abs_torque_nm": 3.262551205411879,
+        "maximum_closure_residual_m": 0.00018406074922112944,
+        "maximum_force_residual_n": 0.0011004622917716268,
+        "maximum_hard_violation": 7.233303678244596e-10,
+        "maximum_moment_residual_nm": 9.97795292963335e-06,
+        "maximum_normalized_slack": 2.2009243783269774e-05,
+        "maximum_penetration_m": 0.0004721038819655646,
+        "minimum_torque_margin_nm": 1.9924605848790822,
+        "minimum_wheel_normal_load_n": 30.820263700380465,
+        "pass": true
+      },
+      "window": {
+        "first_tick": 35,
+        "last_tick_exclusive": 62
+      }
+    }
+  ],
+  "pass": true,
+  "phase": 28,
+  "profile": "phase28_drift_attribution_v1",
+  "schema_version": 1,
+  "t0_primary_attribution": "B_nmpc_corrective_failure",
+  "t1_primary_attribution": "B_nmpc_corrective_failure",
+  "t2_mechanism_consistency_with_t1": {
+    "T2_turn_left": false,
+    "T2_turn_right": true
+  },
+  "t2_symmetry": "not_consistent"
+}

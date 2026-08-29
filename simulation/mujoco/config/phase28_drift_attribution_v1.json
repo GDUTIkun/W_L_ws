@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "phase": 28,
+  "profile": "phase28_drift_attribution_v1",
+  "source_phase27_config": "simulation/mujoco/config/phase27_minimal_formal_v1.json",
+  "source_phase27_config_sha256": "70b961f7ede235d7e32a0d588051f5f9555d4a80ab4c817b073c6e3ffddae508",
+  "source_phase27_formal": "docs/workflow/phases/27-theory-restored-minimal-wbc/evidence/automated/phase27-minimal-formal-v2",
+  "scene": "simulation/mujoco/model/phase19_standing.xml",
+  "controller_mode": "phase27_minimal_nmpc",
+  "seed": 2701,
+  "schedule": {
+    "physics_period_s": 0.002,
+    "control_period_s": 0.01,
+    "nmpc_period_s": 0.02,
+    "physics_substeps_per_control": 5
+  },
+  "equilibrium": [
+    -0.34332947374181766, 0.5693992271789607,
+    -0.35472149355205396, 0.5694045089964002,
+    0.34771766403249466, -0.572545089643551,
+    -0.5729875480645877, 0.5725979309569537,
+    -0.5730345859812999
+  ],
+  "torque_limit_nm": [10.0, 10.0, 2.0, 10.0, 10.0, 2.0],
+  "cases": [
+    {"id": "T0_static", "ticks": 120, "reference_profile": "static", "phase27_first_failure_tick": 58},
+    {"id": "T1_straight_start_cruise_brake", "ticks": 120, "reference_profile": "straight_start_cruise_brake", "phase27_first_failure_tick": 45},
+    {"id": "T2_turn_left", "ticks": 120, "reference_profile": "turn_left", "phase27_first_failure_tick": 45},
+    {"id": "T2_turn_right", "ticks": 120, "reference_profile": "turn_right", "phase27_first_failure_tick": 45}
+  ],
+  "nominal_envelope": {
+    "maximum_abs_x_tracking_error_m": 0.02,
+    "maximum_abs_y_tracking_error_m": 0.02,
+    "maximum_height_error_m": 0.01,
+    "maximum_abs_roll_pitch_rad": 0.03,
+    "maximum_abs_yaw_tracking_error_rad": 0.05
+  },
+  "diagnostic_termination_envelope": {
+    "maximum_abs_x_tracking_error_m": 0.10,
+    "maximum_abs_y_tracking_error_m": 0.08,
+    "maximum_height_error_m": 0.05,
+    "maximum_abs_roll_pitch_rad": 0.20,
+    "maximum_abs_yaw_tracking_error_rad": 0.25,
+    "maximum_duration_s": 1.20,
+    "maximum_attitude_chart_norm_rad": 0.35
+  },
+  "gates": {
+    "maximum_nmpc_projected_stationarity": 0.05,
+    "maximum_force_wrench_residual_n": 2.0,
+    "maximum_moment_wrench_residual_nm": 0.2,
+    "maximum_upper_linear_acceleration_rms_m_s2": 0.25,
+    "maximum_upper_angular_acceleration_rms_rad_s2": 1.0,
+    "maximum_plant_linear_acceleration_rms_m_s2": 0.25,
+    "maximum_plant_angular_acceleration_rms_rad_s2": 0.5,
+    "maximum_direct_vs_fd_linear_acceleration_rms_m_s2": 0.25,
+    "maximum_direct_vs_fd_angular_acceleration_rms_rad_s2": 0.5,
+    "minimum_corrective_score": 1e-6,
+    "recovery_hold_ticks": 20,
+    "analysis_tail_ticks": 10
+  },
+  "attribution_order": [
+    "A_threshold_only",
+    "B_nmpc_corrective_failure",
+    "C_wbc_realization_or_resource",
+    "D_model_to_plant_mismatch",
+    "E_fast_stabilization_or_bandwidth_gap",
+    "unresolved"
+  ]
+}

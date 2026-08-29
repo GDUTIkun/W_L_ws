@@ -59,5 +59,5 @@ Controller outcome: `Minimal FAIL` with bounded per-case attribution.
 A later Phase may separately test the smallest approved stabilization
 architecture for T0--T2 and the OCP lifecycle needed for T3. Those questions
 must start from this Phase's physical contracts and frozen failure evidence;
-they must not infer task necessity from the Phase 26 empty handoff or claim
+they must not infer task necessity from the retired empty audit handoff or claim
 that either observed gap already proves a specific solution.

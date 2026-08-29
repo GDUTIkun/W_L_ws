@@ -1,0 +1,92 @@
+{
+  "cases": [
+    {
+      "action_tick": 56,
+      "classification": "P29-E_horizon_reference_propagation",
+      "id": "T0_static",
+      "pass": true,
+      "production_prefix_max_request_error": 7.771561172376096e-16,
+      "scores": {
+        "cold": 0.1974697787611238,
+        "converged": 0.19666467706978885,
+        "production": 0.1968656353902987,
+        "repeated_rti": 0.19666467706956647
+      },
+      "shadow_scores": {
+        "held_reference": 0.19666467706978885,
+        "relax_input": 0.19666467703206425,
+        "relax_state": 0.1966646776898384,
+        "terminal_without_attitude": 0.09455118688832213,
+        "terminal_without_base_longitudinal": -0.29515090996833726,
+        "terminal_without_wheel_position": 0.20439783325789887,
+        "terminal_without_wheel_rate": 0.18638517315153677,
+        "zero_terminal": -0.3037047533985799
+      },
+      "single_removal_scores": {
+        "attitude": -0.702430603236375,
+        "base_longitudinal": -0.03202934795870969,
+        "wheel_position": 0.988878146467748,
+        "wheel_rate": 0.35862446902676737
+      },
+      "snapshot_tick": 57
+    },
+    {
+      "action_tick": 44,
+      "classification": "P29-D_cross_state_coupling",
+      "id": "T1_straight_start_cruise_brake",
+      "pass": true,
+      "production_prefix_max_request_error": 7.216449660063518e-16,
+      "scores": {
+        "cold": 0.0010723143076627978,
+        "converged": 0.0011476206524999408,
+        "production": 0.001136464928606161,
+        "repeated_rti": 0.0011476206524724572
+      },
+      "shadow_scores": {
+        "held_reference": 0.00417610986981939,
+        "relax_input": 0.001147620652499941,
+        "relax_state": 0.0011476206524999317,
+        "terminal_without_attitude": 0.0016683294195731521,
+        "terminal_without_base_longitudinal": 0.006778026961680987,
+        "terminal_without_wheel_position": 0.0009018175404431196,
+        "terminal_without_wheel_rate": 0.0011330846819651596,
+        "zero_terminal": 0.0064096762028308715
+      },
+      "single_removal_scores": {
+        "attitude": -0.008818187251266856,
+        "base_longitudinal": 0.006843004881973087,
+        "wheel_position": 0.006118353490171927,
+        "wheel_rate": -0.0007198058898157763
+      },
+      "snapshot_tick": 44
+    }
+  ],
+  "holdouts": [
+    {
+      "converged_score": -0.0002665444406572296,
+      "id": "T2_turn_left",
+      "mechanism_consistency": "not_same",
+      "production_score": -0.0002820971668027558,
+      "removal_scores": {
+        "attitude": -0.00811302004737313,
+        "wheel_rate": -0.0024605874517018957
+      },
+      "valid": true
+    },
+    {
+      "converged_score": 0.002988178401562587,
+      "id": "T2_turn_right",
+      "mechanism_consistency": "same",
+      "production_score": 0.0029742089220509316,
+      "removal_scores": {
+        "attitude": -0.00971967383377477,
+        "wheel_rate": 0.0009626108818903482
+      },
+      "valid": true
+    }
+  ],
+  "pass": true,
+  "phase": 29,
+  "profile": "phase29_nmpc_root_cause_v1",
+  "schema_version": 1
+}

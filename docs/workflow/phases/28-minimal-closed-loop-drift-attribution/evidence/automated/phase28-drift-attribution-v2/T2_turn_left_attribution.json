@@ -1,0 +1,78 @@
+{
+  "acceleration": {
+    "direct_vs_fd_angular_rms_rad_s2": 1.6262217632499176e-07,
+    "direct_vs_fd_linear_rms_m_s2": 2.0115659640042333e-05,
+    "oracle_pass": true,
+    "plant_angular_rms_rad_s2": 0.27446468575479466,
+    "plant_linear_rms_m_s2": 0.05828161024604967,
+    "plant_match": true,
+    "tail_nmpc_mean": [
+      0.030591565318816388,
+      0.0030415158720361914,
+      -0.01724712040816333,
+      0.05772927407420856,
+      1.627139518737856,
+      0.42657700171568613
+    ],
+    "tail_plant_mean": [
+      0.0007883741403292913,
+      0.09439146449390391,
+      -0.01273579084876168,
+      -0.31449253055271614,
+      1.5936168881034256,
+      -0.16213264339704328
+    ],
+    "tail_wbc_mean": [
+      0.0006760016139678512,
+      0.0017742908476838007,
+      -0.011774169027322364,
+      -0.009184927098611264,
+      1.599402644720451,
+      0.06134814084316494
+    ],
+    "upper_angular_rms_rad_s2": 0.2858115383903646,
+    "upper_linear_rms_m_s2": 0.01619580771032018,
+    "upper_match": true
+  },
+  "baseline_prefix_maximum_error": 0.0,
+  "baseline_prefix_mismatched_columns": [],
+  "corrective": {
+    "median_score": 0.00176432356458344,
+    "pass": true,
+    "restorative_fraction": 0.8421052631578947
+  },
+  "diagnostic_stop": {
+    "model_status": 1,
+    "nmpc_projected_stationarity": 0.026092425009155096,
+    "nmpc_status": 4,
+    "solver_status": 1,
+    "status": 4,
+    "weighted_status": 2
+  },
+  "diagnostic_stop_tick": 54,
+  "diagnostic_stop_time_s": 0.54,
+  "id": "T2_turn_left",
+  "maximum_excursion": {
+    "angular_speed_rad_s": 6.803485636840244,
+    "linear_speed_m_s": 2.962789154121917,
+    "pitch_rad": 0.7603817585908774,
+    "x_tracking_error_m": 0.1615094791713398
+  },
+  "nominal_failure_tick": 45,
+  "nominal_failure_time_s": 0.45,
+  "pass": true,
+  "phase27_expected_first_failure_tick": 45,
+  "primary_attribution": "E_fast_stabilization_or_bandwidth_gap",
+  "trajectory_class": "divergence",
+  "wbc_realization": {
+    "maximum_abs_torque_nm": 3.266907247671338,
+    "maximum_force_residual_n": 0.0020798365091864034,
+    "maximum_hard_violation": 5.528274713006986e-10,
+    "maximum_moment_residual_nm": 1.9157048869300096e-05,
+    "pass": true
+  },
+  "window": {
+    "first_tick": 35,
+    "last_tick_exclusive": 54
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "schema_version": 3,
+  "phase": 30,
+  "profile": "phase30_reference_consistency_v3",
+  "source_phase29_method": "simulation/mujoco/config/phase29_nmpc_root_cause_v1.json",
+  "source_phase29_authority": "docs/workflow/phases/29-nmpc-corrective-root-cause-audit/evidence/automated/phase29-root-cause-v1",
+  "source_phase28_run": "docs/workflow/phases/28-minimal-closed-loop-drift-attribution/evidence/automated/phase28-drift-attribution-v5",
+  "source_ocp_config": "simulation/mujoco/config/phase27_acados_ocp_v2.json",
+  "source_generator": "tools/experiments/generate_phase27_acados_solver.py",
+  "source_generated_dir": "ros_ws/src/wheel_leg_core/acados_generated/phase27_wheel_aware_nmpc_v2",
+  "offline_sqp_generated_dir": "ros_ws/src/wheel_leg_core/acados_generated/phase29_wheel_aware_nmpc_sqp_v2",
+  "case_ids": ["T0_static", "T1_straight_start_cruise_brake"],
+  "neighbor_update_offsets": [-1, 0, 1],
+  "state_groups": {
+    "base_position": [0, 1, 2],
+    "attitude": [3, 4, 5],
+    "linear_velocity": [6, 7, 8],
+    "angular_velocity": [9, 10, 11]
+  },
+  "wheel_groups": [
+    "wheel_common_position",
+    "wheel_differential_position",
+    "wheel_common_rate",
+    "wheel_differential_rate"
+  ],
+  "best_input_solver": {
+    "method": "scipy.optimize.least_squares_trf",
+    "xtol": 1e-12,
+    "ftol": 1e-12,
+    "gtol": 1e-12,
+    "max_nfev": 500,
+    "input_regularization": 0.0
+  },
+  "gates": {
+    "baseline_semantics_max_abs_error": 1e-12,
+    "baseline_request_max_abs_error": 1e-8,
+    "current_large_normalized_max": 1e-2,
+    "defect_small_normalized_max": 1e-3,
+    "case_a_best_to_current_ratio_max": 0.1,
+    "active_bound_distance": 1e-7,
+    "replay_max_abs_error": 0.0
+  }
+}
