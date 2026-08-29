@@ -11,6 +11,8 @@ find_package(std_srvs REQUIRED)
 find_package(wheel_leg_core REQUIRED)
 find_package(wheel_leg_msgs REQUIRED)
 find_package(wheel_leg_ros REQUIRED)
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(GLFW REQUIRED IMPORTED_TARGET glfw3)
 
 find_path(MUJOCO_INCLUDE_DIR mujoco/mujoco.h
   HINTS "$ENV{MUJOCO_DIR}/include" /opt/mujoco-3.7.0/include REQUIRED)
@@ -54,7 +56,7 @@ target_compile_options(
   standing_3d_loop PRIVATE -Wall -Wextra -Wpedantic -Werror)
 
 add_executable(weighted_wbc_loop src/weighted_wbc_loop.cpp)
-target_link_libraries(weighted_wbc_loop wheel_leg_mujoco_adapter)
+target_link_libraries(weighted_wbc_loop wheel_leg_mujoco_adapter PkgConfig::GLFW)
 target_compile_options(weighted_wbc_loop PRIVATE -Wall -Wextra -Wpedantic -Werror)
 
 if(BUILD_TESTING)

@@ -4,7 +4,7 @@
 
 ## Active
 
-- [Phase 23：nominal acados NMPC](23-nominal-nmpc/PLAN.md) — 2026-08-28按用户指令解除冻结并改用`/home/t/opt/acados`；P23-T01～T03与DG23-01保留完成，当前P23-T04关闭codegen/OCP/SQP-RTI+HPIPM、loader与时限gate，尚无NMPC/Core/formal PASS。
+None.
 
 ## Planned
 
@@ -33,6 +33,9 @@ None.
 - [Phase 20：nominal 完整 3D 简单站立](20-nominal-3d-simple-standing/PLAN.md) — 2026-08-26 PASS；formal-v3完成19个10 s normal/perturbation、6个fault cases、plant/contact/slip/closure、fresh replay与历史回归；仅限current nominal full-3D simulation。
 - [Phase 21：nominal Weighted WBC](21-nominal-weighted-wbc/PLAN.md) — 2026-08-28 PASS；formal-v1完成12-DoF/42-variable Weighted WBC、19个10 s normal/perturbation、6个fault、solver/task/plant、fresh replay与历史回归；仅限current nominal full-3D simulation。
 - [Phase 22：ProxQP solver migration](22-proxqp-solver-migration/PLAN.md) — 2026-08-28 PASS；保持Phase 21冻结的42D/104-row Weighted WBC与canonical接口，完成ProxQP v0.7.3 component/oracle、19+6 formal-v2、fresh replay、历史回归与非覆盖审计；仅限current nominal simulation host。
+- [Phase 23：nominal acados NMPC](23-nominal-nmpc/PLAN.md) — 2026-08-29 PASS；append-only acados v2、23+10 formal、fresh replay和兼容性回归完成；仅限current nominal simulation host。
+- [Phase 24：MuJoCo interactive NMPC viewer](24-mujoco-interactive-viewer/PLAN.md) — 2026-08-29 PASS；opt-in GLFW viewer复用Phase23 C++ controller/adapter，headless formal和性能口径不变。
+- [Phase 25：MuJoCo mouse interaction](25-mujoco-mouse-interaction/PLAN.md) — 2026-08-29 PASS；native camera与temporary force/torque dragging，仅限viewer。
 
 ## 建立新 Phase
 

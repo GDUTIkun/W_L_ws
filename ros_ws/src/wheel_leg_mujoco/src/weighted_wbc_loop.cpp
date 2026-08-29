@@ -2,6 +2,7 @@
 #include <array>
 #include <chrono>
 #include <cmath>
+#include <cstdio>
 #include <cstdint>
 #include <filesystem>
 #include <fstream>
@@ -12,8 +13,10 @@
 #include <sstream>
 #include <stdexcept>
 #include <string>
+#include <thread>
 #include <vector>
 
+#include <GLFW/glfw3.h>
 #include "mujoco/mujoco.h"
 #include "wheel_leg_core/controller_core.hpp"
 #include "wheel_leg_mujoco/adapter.hpp"
@@ -36,6 +39,7 @@ struct Options {
   std::string scenario{"hold"};
   std::string controller_mode{"weighted_wbc"};
   std::string nmpc_reference{"hold"};
+  bool viewer{false};
   int episodes{1};
   int ticks{100};
   int fault_tick{100};
@@ -90,6 +94,10 @@ Options parseOptions(int argc, char **argv) {
     else if (argument == "--scenario") options.scenario = value;
     else if (argument == "--controller-mode") options.controller_mode = value;
     else if (argument == "--nmpc-reference") options.nmpc_reference = value;
+    else if (argument == "--viewer") {
+      if (value == "true") options.viewer = true;
+      else if (value != "false") throw std::invalid_argument("--viewer must be true or false");
+    }
     else if (argument == "--episodes") options.episodes = std::stoi(value);
     else if (argument == "--ticks") options.ticks = std::stoi(value);
     else if (argument == "--fault-tick") options.fault_tick = std::stoi(value);
@@ -107,7 +115,8 @@ Options parseOptions(int argc, char **argv) {
       "hold", "contact_loss_left", "contact_loss_right", "invalid",
       "nonmonotonic", "timing", "nmpc_solver_failure", "nmpc_late",
       "nmpc_stale", "nmpc_nonfinite"};
-  if (options.model_path.empty() || options.control_path.empty() || options.plant_path.empty())
+  if (options.model_path.empty() || (!options.viewer &&
+      (options.control_path.empty() || options.plant_path.empty())))
     throw std::invalid_argument("--model --control-output --plant-output required");
   if (options.episodes <= 0 || options.ticks <= 0 ||
       std::find(scenarios.begin(), scenarios.end(), options.scenario) == scenarios.end() ||
@@ -120,6 +129,169 @@ Options parseOptions(int argc, char **argv) {
     throw std::invalid_argument("invalid run options");
   return options;
 }
+
+class Viewer {
+ public:
+  explicit Viewer(const mjModel *model) {
+    model_ = model;
+    if (!glfwInit()) throw std::runtime_error("GLFW initialization failed");
+    initialized_ = true;
+    glfwWindowHint(GLFW_SAMPLES, 4);
+    window_ = glfwCreateWindow(1280, 900, "Wheel-leg MuJoCo NMPC viewer", nullptr, nullptr);
+    if (!window_) throw std::runtime_error("GLFW window creation failed");
+    glfwMakeContextCurrent(window_);
+    glfwSwapInterval(1);
+    mjv_defaultCamera(&camera_);
+    mjv_defaultPerturb(&perturb_);
+    camera_.distance = 2.5;
+    camera_.azimuth = 90.0;
+    camera_.elevation = -20.0;
+    mjv_defaultOption(&option_);
+    mjv_defaultScene(&scene_);
+    mjv_makeScene(model, &scene_, 2000);
+    mjr_defaultContext(&context_);
+    mjr_makeContext(model, &context_, mjFONTSCALE_150);
+    glfwSetWindowUserPointer(window_, this);
+    glfwSetMouseButtonCallback(window_, mouseButtonCallback);
+    glfwSetCursorPosCallback(window_, mouseMoveCallback);
+    glfwSetScrollCallback(window_, scrollCallback);
+  }
+
+  ~Viewer() {
+    mjr_freeContext(&context_);
+    mjv_freeScene(&scene_);
+    if (window_) glfwDestroyWindow(window_);
+    if (initialized_) glfwTerminate();
+  }
+
+  bool shouldClose() const { return glfwWindowShouldClose(window_); }
+
+  void applyPerturb(mjData *data) {
+    if (perturb_.active) mjv_applyPerturbForce(model_, data, &perturb_);
+  }
+
+  void render(const mjModel *model, mjData *data, const wheel_leg::StepResult &result,
+              std::int64_t core_step_ns) {
+    int width = 0;
+    int height = 0;
+    glfwGetFramebufferSize(window_, &width, &height);
+    const mjrRect viewport{0, 0, width, height};
+    data_ = data;
+    mjv_updateScene(model, data, &option_, &perturb_, &camera_, mjCAT_ALL, &scene_);
+    mjr_render(viewport, &scene_, &context_);
+    char left[256]{};
+    char right[256]{};
+    std::snprintf(left, sizeof(left),
+                  "sim %.3f s\nmode %s\ncore %.3f ms\nNMPC+WBC %.3f ms",
+                  data->time, result.nominal_nmpc_active ? "nominal_nmpc" : "weighted_wbc",
+                  static_cast<double>(core_step_ns) / 1.0e6,
+                  result.nominal_nmpc_wbc_total_time_s * 1.0e3);
+    std::snprintf(right, sizeof(right),
+                  "status %d  latch %d\nNMPC %d  acados %d\nage %u\nmouse: camera | Ctrl+L torque | Ctrl+R force",
+                  static_cast<int>(result.status), result.safety_latched,
+                  static_cast<int>(result.nominal_nmpc_result.status),
+                  result.nominal_nmpc_result.acados_status,
+                  result.nominal_nmpc_wrench_age_ticks);
+    mjr_overlay(mjFONT_NORMAL, mjGRID_TOPLEFT, viewport, left, right, &context_);
+    glfwSwapBuffers(window_);
+    glfwPollEvents();
+    if (glfwGetKey(window_, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+      glfwSetWindowShouldClose(window_, GLFW_TRUE);
+  }
+
+ private:
+  static Viewer *from(GLFWwindow *window) {
+    return static_cast<Viewer *>(glfwGetWindowUserPointer(window));
+  }
+
+  static void mouseButtonCallback(GLFWwindow *window, int, int, int) {
+    auto *viewer = from(window);
+    if (!viewer) return;
+    viewer->left_ = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS;
+    viewer->middle_ = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_MIDDLE) == GLFW_PRESS;
+    viewer->right_ = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS;
+    glfwGetCursorPos(window, &viewer->last_x_, &viewer->last_y_);
+    const bool control = glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS ||
+        glfwGetKey(window, GLFW_KEY_RIGHT_CONTROL) == GLFW_PRESS;
+    if (!viewer->left_ && !viewer->right_) {
+      viewer->perturb_.active = 0;
+    } else if (control && viewer->data_) {
+      viewer->selectAtCursor();
+      if (viewer->perturb_.select > 0) {
+        mjv_initPerturb(viewer->model_, viewer->data_, &viewer->scene_, &viewer->perturb_);
+        viewer->perturb_.active = viewer->right_ ? mjPERT_TRANSLATE : mjPERT_ROTATE;
+      }
+    }
+  }
+
+  static void mouseMoveCallback(GLFWwindow *window, double x, double y) {
+    auto *viewer = from(window);
+    if (!viewer || (!viewer->left_ && !viewer->middle_ && !viewer->right_)) return;
+    const double dx = x - viewer->last_x_;
+    const double dy = y - viewer->last_y_;
+    viewer->last_x_ = x;
+    viewer->last_y_ = y;
+    int width = 0;
+    int height = 0;
+    glfwGetWindowSize(window, &width, &height);
+    if (height <= 0) return;
+    const bool shift = glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS ||
+        glfwGetKey(window, GLFW_KEY_RIGHT_SHIFT) == GLFW_PRESS;
+    const mjtMouse action = viewer->right_ ? (shift ? mjMOUSE_MOVE_H : mjMOUSE_MOVE_V)
+        : viewer->left_ ? (shift ? mjMOUSE_ROTATE_H : mjMOUSE_ROTATE_V) : mjMOUSE_ZOOM;
+    if (viewer->perturb_.active && viewer->data_)
+      mjv_movePerturb(viewer->model_, viewer->data_, action, dx / height, -dy / height,
+                      &viewer->scene_, &viewer->perturb_);
+    else
+      mjv_moveCamera(viewer->model_, action, dx / height, -dy / height,
+                     &viewer->scene_, &viewer->camera_);
+  }
+
+  static void scrollCallback(GLFWwindow *window, double, double y) {
+    auto *viewer = from(window);
+    if (viewer) mjv_moveCamera(viewer->model_, mjMOUSE_ZOOM, 0, -0.05 * y,
+                               &viewer->scene_, &viewer->camera_);
+  }
+
+  void selectAtCursor() {
+    int width = 0;
+    int height = 0;
+    glfwGetFramebufferSize(window_, &width, &height);
+    if (width <= 0 || height <= 0) return;
+    double x = 0.0;
+    double y = 0.0;
+    glfwGetCursorPos(window_, &x, &y);
+    mjtNum point[3]{};
+    int geom = -1;
+    int flex = -1;
+    int skin = -1;
+    const int body = mjv_select(model_, data_, &option_, static_cast<mjtNum>(width) / height,
+                                x / width, (height - y) / height, &scene_, point, &geom, &flex, &skin);
+    perturb_.select = body;
+    perturb_.flexselect = flex;
+    perturb_.skinselect = skin;
+    if (body > 0) {
+      mjtNum offset[3]{};
+      mju_sub3(offset, point, data_->xpos + 3 * body);
+      mju_mulMatTVec(perturb_.localpos, data_->xmat + 9 * body, offset, 3, 3);
+    }
+  }
+
+  const mjModel *model_{nullptr};
+  mjData *data_{nullptr};
+  GLFWwindow *window_{nullptr};
+  bool initialized_{false};
+  mjvCamera camera_{};
+  mjvOption option_{};
+  mjvPerturb perturb_{};
+  mjvScene scene_{};
+  mjrContext context_{};
+  bool left_{false};
+  bool middle_{false};
+  bool right_{false};
+  double last_x_{0.0};
+  double last_y_{0.0};
+};
 
 template <typename Range>
 void writeValues(std::ostream &output, const Range &values) {
@@ -370,7 +542,8 @@ void writeControlRow(std::ofstream &control, const Options &options, int episode
 }
 
 void run(const Options &options) {
-  if (std::filesystem::exists(options.control_path) || std::filesystem::exists(options.plant_path))
+  if (!options.viewer &&
+      (std::filesystem::exists(options.control_path) || std::filesystem::exists(options.plant_path)))
     throw std::runtime_error("Refusing to overwrite output");
   char error[1024]{};
   ModelPtr model(mj_loadXML(options.model_path.c_str(), nullptr, error, sizeof(error)));
@@ -416,21 +589,28 @@ void run(const Options &options) {
   }
   wheel_leg::ControllerCore controller;
   if (!controller.configure(config)) throw std::runtime_error("WBC configuration failed");
-  std::ofstream control(options.control_path);
-  std::ofstream plant(options.plant_path);
-  if (!control || !plant) throw std::runtime_error("output open failed");
-  control << std::setprecision(17);
-  plant << std::setprecision(17);
-  writeHeaders(control, plant);
+  std::ofstream control;
+  std::ofstream plant;
+  if (!options.viewer) {
+    control.open(options.control_path);
+    plant.open(options.plant_path);
+    if (!control || !plant) throw std::runtime_error("output open failed");
+    control << std::setprecision(17);
+    plant << std::setprecision(17);
+    writeHeaders(control, plant);
+  }
+  std::unique_ptr<Viewer> viewer;
+  if (options.viewer) viewer = std::make_unique<Viewer>(model.get());
   const int base_body = requiredId(model.get(), mjOBJ_BODY, "base_body");
   constexpr std::uint64_t kControlPeriodNs = 10'000'000U;
   constexpr int kPhysicsSubstepsPerControl = 5;
-  for (int episode = 0; episode < options.episodes; ++episode) {
+  const auto wall_start = std::chrono::steady_clock::now();
+  for (int episode = 0; episode < options.episodes && (!viewer || !viewer->shouldClose()); ++episode) {
     adapter.reset(data.get());
     controller.reset();
     setInitialState(model.get(), data.get(), options);
     std::uint64_t previous_source_time_ns = 0;
-    for (int tick = 0; tick < options.ticks; ++tick) {
+    for (int tick = 0; tick < options.ticks && (!viewer || !viewer->shouldClose()); ++tick) {
       const double pre_step_plant_time_s = data->time;
       auto state = adapter.extractState(data.get());
       if (tick == options.fault_tick) {
@@ -469,17 +649,25 @@ void run(const Options &options) {
             data->xfrc_applied[6 * base_body + 3 + axis] = options.moment[axis];
           }
         }
+        if (viewer) viewer->applyPerturb(data.get());
         mj_step(model.get(), data.get());
         for (int actuator = 0; actuator < 6; ++actuator)
           zoh_difference = std::max(
               zoh_difference, std::abs(data->ctrl[actuator] - held_control[actuator]));
         const auto metrics = plantMetrics(model.get(), data.get());
-        writePlantRow(
-            plant, options, episode, tick, substep, data.get(), disturbed, metrics);
+        if (!options.viewer)
+          writePlantRow(plant, options, episode, tick, substep, data.get(), disturbed, metrics);
       }
-      writeControlRow(control, options, episode, tick, pre_step_plant_time_s, state,
-                      result, receipt_time_ns, core_step_ns, zoh_difference,
-                      held_control, accepted);
+      if (!options.viewer)
+        writeControlRow(control, options, episode, tick, pre_step_plant_time_s, state,
+                        result, receipt_time_ns, core_step_ns, zoh_difference,
+                        held_control, accepted);
+      if (viewer) {
+        viewer->render(model.get(), data.get(), result, core_step_ns);
+        std::this_thread::sleep_until(
+            wall_start + std::chrono::duration_cast<std::chrono::steady_clock::duration>(
+                std::chrono::duration<double>(data->time)));
+      }
       previous_source_time_ns = state.sample_time_ns;
     }
   }

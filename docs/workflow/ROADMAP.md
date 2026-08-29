@@ -43,12 +43,14 @@
 | 12 | nominal Weighted WBC | complete | [Phase 21](phases/21-nominal-weighted-wbc/PLAN.md) | current nominal simulation-only 12-DoF/42-variable Weighted WBC完成；19个10 s normal/perturbation、6个fault、solver/task/plant、fresh replay、历史回归与REVIEW/RECORD全部PASS |
 | 13 | Weighted WBC ProxQP solver migration | complete | [Phase 22](phases/22-proxqp-solver-migration/PLAN.md) | 不改变Phase21 QP/WBC数学；ProxQP v0.7.3 component、oracle、deadline、19+6 formal、replay、历史回归与REVIEW/RECORD全部PASS |
 | 14 | nominal acados NMPC | complete | [Phase 23](phases/23-nominal-nmpc/PLAN.md) | append-only acados v2、component、23+10 formal、fresh replay、历史回归、REVIEW/RECORD全部PASS；仅限current nominal simulation host |
-| 15 | 执行器力矩映射、摩擦与附加惯量 | blocked | [Phase 05](phases/05-actuator-torque-identification/PLAN.md) | 当前冻结真机；解冻后仍须关闭 Phase 05 自身 DG01–DG06，才能执行真实辨识与 MuJoCo 对应验证 |
-| 16 | RobotState 与传感器正式验证 | planned | — | 真机解冻后验证时间戳、单位、方向、滤波和延迟，形成 identified/real 可用状态边界 |
-| 17 | MuJoCo–真机运动学、重力、质量与 COM 辨识 | planned | — | 复用 Phase 14/15 基线，FK/Jacobian/重力矩及 mass/COM 得到模型与实验支持 |
-| 18 | MuJoCo–真机完整惯量、动力学耦合与接触辨识 | planned | — | 复用 Phase 14/15 激励与分析，关键动力学和接触趋势在预定误差内一致 |
-| 19 | identified profile 分层复现与三方比较 | planned | — | 使用同一 runner/schema/阈值从运动学到 NMPC 追加重跑，保留 nominal ↔ identified ↔ real 对照，不覆盖第一轮 |
-| 20 | Roll/Yaw/Turning 与差分辨识 | planned | — | 在前述两轮证据基础上验证工作范围与鲁棒裕量 |
+| 15 | MuJoCo interactive NMPC viewer | complete | [Phase 24](phases/24-mujoco-interactive-viewer/PLAN.md) | opt-in C++ viewer复用Phase23 controller/adapter；GLFW render/headless regression/26-test suite PASS，不改变headless formal或性能口径 |
+| 16 | MuJoCo mouse interaction | complete | [Phase 25](phases/25-mujoco-mouse-interaction/PLAN.md) | native camera/temporary perturb controls；build/headless/GUI smoke与26-test suite PASS，不影响formal/性能口径 |
+| 17 | 执行器力矩映射、摩擦与附加惯量 | blocked | [Phase 05](phases/05-actuator-torque-identification/PLAN.md) | 当前冻结真机；解冻后仍须关闭 Phase 05 自身 DG01–DG06，才能执行真实辨识与 MuJoCo 对应验证 |
+| 18 | RobotState 与传感器正式验证 | planned | — | 真机解冻后验证时间戳、单位、方向、滤波和延迟，形成 identified/real 可用状态边界 |
+| 19 | MuJoCo–真机运动学、重力、质量与 COM 辨识 | planned | — | 复用 Phase 14/15 基线，FK/Jacobian/重力矩及 mass/COM 得到模型与实验支持 |
+| 20 | MuJoCo–真机完整惯量、动力学耦合与接触辨识 | planned | — | 复用 Phase 14/15 激励与分析，关键动力学和接触趋势在预定误差内一致 |
+| 21 | identified profile 分层复现与三方比较 | planned | — | 使用同一 runner/schema/阈值从运动学到 NMPC 追加重跑，保留 nominal ↔ identified ↔ real 对照，不覆盖第一轮 |
+| 22 | Roll/Yaw/Turning 与差分辨识 | planned | — | 在前述两轮证据基础上验证工作范围与鲁棒裕量 |
 
 README 与工作流骨架属于仓库引导建设，不作为产品开发 Phase。Phase 14/15/16/17/18/19/20/21/22/23 已完成；Phase 19最终authority为formal-v4，Phase 20最终authority为formal-v3，Phase 21最终authority为formal-v1，Phase 22最终authority为formal-v2，Phase 23最终authority为append-only acados formal-v2，既往REWORK与formal演进证据均已非覆盖归档。[Phase 23](phases/23-nominal-nmpc/RECORD.md) 完成12-state locked-composite/12-wrench acados SQP-RTI+HPIPM NMPC、state-bounded v2 generated artifact、2:1 NMPC→ProxQP WBC runtime、23+10 formal、fresh replay和历史回归；结论仅限current nominal simulation host。Phase 05 因当前真机冻结而blocked；恢复时现有PASS不替代通信、Load Cell、同步和安全放行条件。Roll/yaw/turning尚无独立Phase，不从Phase23自动继承放行。
 
