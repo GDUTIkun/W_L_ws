@@ -404,6 +404,7 @@ NominalWbcModel::Result NominalWbcModel::evaluate(
   }
   const Kinematics reduced_bodies = forwardKinematics(
       base_position, base_rotation, q, tree_velocity, reduction_bias);
+  result.reduction_bias = reduction_bias;
 
   Matrix16 tree_mass = Matrix16::Zero();
   Vector16 tree_bias = Vector16::Zero();

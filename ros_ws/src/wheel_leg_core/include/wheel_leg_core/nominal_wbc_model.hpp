@@ -21,6 +21,7 @@ class NominalWbcModel {
   using Matrix3x12 = Eigen::Matrix<double, 3, kReducedDoF>;
   using Matrix1x12 = Eigen::Matrix<double, 1, kReducedDoF>;
   using Matrix16x12 = Eigen::Matrix<double, kTreeDoF, kReducedDoF>;
+  using Vector16 = Eigen::Matrix<double, kTreeDoF, 1>;
 
   enum class Status {
     kOk,
@@ -92,6 +93,9 @@ class NominalWbcModel {
     std::array<Matrix6, 2> interaction_contact_map{};
     std::array<Eigen::Matrix<double, 6, 1>, 2> interaction_bias{};
     Matrix16x12 reduction{Matrix16x12::Zero()};
+    // At the evaluated state, native tree acceleration is affine in the
+    // reduced acceleration: qdd_tree = reduction * nudot + reduction_bias.
+    Vector16 reduction_bias{Vector16::Zero()};
     Eigen::Matrix<double, 10, 1> native_joint_position_rad{
         Eigen::Matrix<double, 10, 1>::Zero()};
 

@@ -51,6 +51,19 @@ class WeightedWbcController {
     Eigen::Vector2d wheel_position_b_x_m{Eigen::Vector2d::Zero()};
     Eigen::Vector2d wheel_velocity_b_x_m_s{Eigen::Vector2d::Zero()};
     Eigen::Vector2d wheel_longitudinal_acceleration_m_s2{Eigen::Vector2d::Zero()};
+    NominalWbcModel::Matrix16x12 reduction{
+        NominalWbcModel::Matrix16x12::Zero()};
+    NominalWbcModel::Vector16 reduction_bias{
+        NominalWbcModel::Vector16::Zero()};
+    std::array<NominalWbcModel::Matrix12x6, 2> contact_wrench_map{};
+    std::array<NominalWbcModel::Matrix1x12, 2>
+        wheel_longitudinal_acceleration_map{};
+    Eigen::Vector2d wheel_longitudinal_acceleration_bias_m_s2{
+        Eigen::Vector2d::Zero()};
+    Eigen::Matrix<double, 6, 1> contact_task_residual{
+        Eigen::Matrix<double, 6, 1>::Zero()};
+    std::array<int, 3> active_inequality_count{};
+    std::array<double, 3> minimum_inequality_margin{};
 
     [[nodiscard]] bool ok() const { return status == Status::kOk; }
   };

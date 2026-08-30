@@ -1,0 +1,38 @@
+{
+  "command": "tools/experiments/run_phase44_realization_audit.py --output docs/workflow/phases/44-wbc-to-plant-constrained-rolling-realization-audit/evidence/automated/realization-audit-replay-v1 --replay-of docs/workflow/phases/44-wbc-to-plant-constrained-rolling-realization-audit/evidence/automated/realization-audit-formal-v1",
+  "contact_modification": false,
+  "created_utc": "2026-08-30T11:02:49.729405+00:00",
+  "dependencies": {
+    "mujoco": "3.7.0",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3"
+  },
+  "gain_tuning": false,
+  "inputs": {
+    "docs/workflow/phases/42-wheel-spin-contact-loss-causal-attribution/evidence/automated/causal-attribution-formal-v1/control-a.csv": "ae577ef563e3c622b69b1facfd5b91e1c14b5946d17a01ee63d9a3e201927466",
+    "docs/workflow/phases/42-wheel-spin-contact-loss-causal-attribution/evidence/automated/causal-attribution-formal-v1/control-a_native.csv": "44d35d53e8335c2ed569dc971d268205385011f3bce5b6438ffaff3db482572f",
+    "docs/workflow/phases/42-wheel-spin-contact-loss-causal-attribution/evidence/automated/causal-attribution-formal-v1/summary.json": "b1a545791cd992945ad8fc42c54fcdbb3a98cb4b2a2fa7049de6f043f69ffce2",
+    "docs/workflow/phases/43-minimal-rolling-stabilization-repair-selection/evidence/automated/rolling-repair-formal-v3/manifest.json": "0074415ac73d34e3d2da65b90aed62d6b021355e0119831fa8a2d8e86eb26298",
+    "docs/workflow/phases/43-minimal-rolling-stabilization-repair-selection/evidence/automated/rolling-repair-formal-v3/summary.json": "e6ebe3ff5d34acec7ded735d8b9a6c8ed4c1b9e798a6ff2122df46f56f630e3c",
+    "ros_ws/build/wheel_leg_mujoco/phase43_rolling_repair_loop": "8946b8322924dfee1959738e013a489c33f8d6dbc93f5b650e5d98b5b68482c6",
+    "ros_ws/src/wheel_leg_core/src/nominal_wbc_model.cpp": "51a730a7284368021023234dc75da66ab7c20db4099adac54c8214d5ab44af1a",
+    "ros_ws/src/wheel_leg_core/src/weighted_wbc_controller.cpp": "43063e03b645cf0665a664df12b57a1507b28904d36d091b93045fc7272fb3bb",
+    "ros_ws/src/wheel_leg_mujoco/src/phase35_workspace_attribution_loop.cpp": "41ad7e603049019d468d2cf46b495adf6559bff67579a73cfaaf90dd7cb065f2",
+    "simulation/mujoco/config/phase42_causal_attribution_v1.json": "7bedb3d3a46cbb3433e94d6aa4208f44c7d756546b427e66633f8b772503ec6a",
+    "simulation/mujoco/config/phase43_rolling_repair_v1.json": "52093d694aa55670e08a6281bda2661f3b675bfb960ef5132fe7c12afc799a33",
+    "simulation/mujoco/config/phase44_realization_audit_v1.json": "46288e2568a3bce6f251e9924b03ad636116666f030f7b468fd32d32a233ba6e",
+    "simulation/mujoco/model/scene_axisymmetric_centered_com_v1.xml": "1bf6a0c85f3fabf3c7447b913085ca6b79eff97d5baf824b44faf4e48343e419",
+    "tools/experiments/run_phase42_causal_attribution.py": "fe96e4025aa01d5f704ba07782f45ed3203be3c3c218c843d574d4dc7b454bcf",
+    "tools/experiments/run_phase44_realization_audit.py": "61b88b433a0811746f760b4aa5d0e633e8879d7163113e60914607950160ca8c"
+  },
+  "new_repair_candidate": false,
+  "new_task": false,
+  "nmpc_12d_run": false,
+  "phase34_run": false,
+  "plant_modification": false,
+  "platform": "Linux-7.0.0-30-generic-x86_64-with-glibc2.39",
+  "python": "3.10.20 (main, Jun 11 2026, 04:03:45) [Clang 22.1.3 ]",
+  "repair_16d": false,
+  "replay_of": "docs/workflow/phases/44-wbc-to-plant-constrained-rolling-realization-audit/evidence/automated/realization-audit-formal-v1",
+  "weight_tuning": false
+}

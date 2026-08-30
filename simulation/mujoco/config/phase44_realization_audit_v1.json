@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "phase": 44,
+  "profile": "phase44_realization_audit_v1",
+  "scene": "simulation/mujoco/model/scene_axisymmetric_centered_com_v1.xml",
+  "executable": "ros_ws/build/wheel_leg_mujoco/phase43_rolling_repair_loop",
+  "phase42_config": "simulation/mujoco/config/phase42_causal_attribution_v1.json",
+  "phase42_control_authority": "docs/workflow/phases/42-wheel-spin-contact-loss-causal-attribution/evidence/automated/causal-attribution-formal-v1/control-a.csv",
+  "phase42_native_authority": "docs/workflow/phases/42-wheel-spin-contact-loss-causal-attribution/evidence/automated/causal-attribution-formal-v1/control-a_native.csv",
+  "phase42_summary": "docs/workflow/phases/42-wheel-spin-contact-loss-causal-attribution/evidence/automated/causal-attribution-formal-v1/summary.json",
+  "phase43_config": "simulation/mujoco/config/phase43_rolling_repair_v1.json",
+  "phase43_formal": "docs/workflow/phases/43-minimal-rolling-stabilization-repair-selection/evidence/automated/rolling-repair-formal-v3",
+  "phase43_manifest": "docs/workflow/phases/43-minimal-rolling-stabilization-repair-selection/evidence/automated/rolling-repair-formal-v3/manifest.json",
+  "phase43_summary": "docs/workflow/phases/43-minimal-rolling-stabilization-repair-selection/evidence/automated/rolling-repair-formal-v3/summary.json",
+  "representative_gain": "3.5Hz",
+  "representative_bandwidth_hz": 3.5,
+  "common_snapshot_ticks": [0, 46, 74, 101, 110],
+  "wheel_radius_m": 0.05,
+  "finite_difference_epsilon_s": 1e-6,
+  "task_delta": {
+    "xi_acceleration_m_s2": 0.01,
+    "native_acceleration_rad_s2": 0.2,
+    "half_scale": 0.5
+  },
+  "event_thresholds": {
+    "persistent_window_ticks": 5,
+    "native_common_rim_rate_m_s": 0.1,
+    "native_differential_rim_rate_m_s": 0.05,
+    "task_residual_xi_m_s2": 0.05,
+    "task_residual_native_rad_s2": 1.0,
+    "xi_deviation_m": 0.005,
+    "base_rotation_rad": 0.1,
+    "normalized_slack": 0.02,
+    "normal_load_fraction": 0.8
+  },
+  "tolerances": {
+    "snapshot_qpos_max_abs": 1e-12,
+    "snapshot_qvel_max_abs": 1e-11,
+    "full_dynamics_max_abs": 1e-8,
+    "contact_reconstruction_max_abs": 1e-8,
+    "affine_mapping_base_active_max_abs": 1e-12,
+    "xi_decomposition_max_abs": 1e-10,
+    "probe_odd_symmetry_relative": 0.05,
+    "probe_half_delta_relative": 0.05,
+    "semantic_replay_max_abs": 1e-11,
+    "near_null_singular_value": 1e-5
+  },
+  "classification_thresholds": {
+    "task_max_normalized_residual": 0.05,
+    "native_wheel_acceleration_error_rad_s2": 0.5,
+    "xi_acceleration_error_m_s2": 0.05,
+    "contact_generalized_force_relative": 0.1,
+    "authority_mismatch_relative": 0.2
+  },
+  "no_repair_contract": {
+    "gain_tuning": false,
+    "weight_tuning": false,
+    "new_task": false,
+    "new_repair_candidate": false,
+    "phase34_run": false,
+    "nmpc_12d_run": false,
+    "repair_16d": false,
+    "plant_modification": false,
+    "contact_modification": false
+  }
+}

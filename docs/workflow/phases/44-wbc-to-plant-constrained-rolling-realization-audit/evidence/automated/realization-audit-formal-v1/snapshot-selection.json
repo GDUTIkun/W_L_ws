@@ -1,0 +1,74 @@
+{
+  "B": {
+    "events": {
+      "contact_or_load_deterioration": null,
+      "failure_minus_1": 119,
+      "failure_minus_5": 115,
+      "material_base_rotation": 101,
+      "material_slack": 115,
+      "material_task_residual": 98,
+      "material_xi_deviation": 93,
+      "persistent_common_rate": 97,
+      "persistent_differential_rate": null,
+      "tick0": 0
+    },
+    "source": "docs/workflow/phases/43-minimal-rolling-stabilization-repair-selection/evidence/automated/rolling-repair-formal-v3/nominal-B-3.5Hz.csv",
+    "ticks": [
+      0,
+      93,
+      97,
+      98,
+      101,
+      115,
+      119
+    ]
+  },
+  "C": {
+    "events": {
+      "contact_or_load_deterioration": null,
+      "failure_minus_1": 106,
+      "failure_minus_5": 102,
+      "material_base_rotation": 94,
+      "material_slack": 103,
+      "material_task_residual": null,
+      "material_xi_deviation": 98,
+      "persistent_common_rate": 84,
+      "persistent_differential_rate": null,
+      "tick0": 0
+    },
+    "source": "docs/workflow/phases/43-minimal-rolling-stabilization-repair-selection/evidence/automated/rolling-repair-formal-v3/nominal-C-3.5Hz.csv",
+    "ticks": [
+      0,
+      84,
+      94,
+      98,
+      102,
+      103,
+      106
+    ]
+  },
+  "D": {
+    "events": {
+      "contact_or_load_deterioration": null,
+      "failure_minus_1": 124,
+      "failure_minus_5": 120,
+      "material_base_rotation": 113,
+      "material_slack": 121,
+      "material_task_residual": null,
+      "material_xi_deviation": 110,
+      "persistent_common_rate": 103,
+      "persistent_differential_rate": null,
+      "tick0": 0
+    },
+    "source": "docs/workflow/phases/43-minimal-rolling-stabilization-repair-selection/evidence/automated/rolling-repair-formal-v3/nominal-D-3.5Hz.csv",
+    "ticks": [
+      0,
+      103,
+      110,
+      113,
+      120,
+      121,
+      124
+    ]
+  }
+}

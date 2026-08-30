@@ -145,6 +145,29 @@ void writeHeader(std::ostream &output) {
 #ifdef WHEEL_LEG_PHASE43_ROLLING_REPAIR
   output << ",desired_qdd_wheel_left,desired_qdd_wheel_right"
          << ",realized_qdd_wheel_left,realized_qdd_wheel_right";
+  for (int index = 0; index < 42; ++index)
+    output << ",physical_solution" << index;
+  for (int row = 0; row < 16; ++row)
+    for (int column = 0; column < 12; ++column)
+      output << ",reduction_" << row << '_' << column;
+  for (int index = 0; index < 16; ++index)
+    output << ",reduction_bias" << index;
+  for (int side = 0; side < 2; ++side)
+    for (int row = 0; row < 12; ++row)
+      for (int column = 0; column < 6; ++column)
+        output << ",contact_map_" << side << '_' << row << '_' << column;
+  for (int side = 0; side < 2; ++side)
+    for (int column = 0; column < 12; ++column)
+      output << ",xi_map_" << side << '_' << column;
+  for (int side = 0; side < 2; ++side)
+    output << ",xi_bias" << side;
+  for (int index = 0; index < 6; ++index)
+    output << ",contact_task_residual" << index;
+  for (std::size_t index = 0; index < wheel_leg::WeightedWbcController::kTaskCount;
+       ++index)
+    output << ",task_max_residual" << index << ",task_cost" << index;
+  for (int index = 0; index < 3; ++index)
+    output << ",active_count" << index << ",minimum_inequality_margin" << index;
 #endif
   output << '\n';
 }
@@ -182,7 +205,8 @@ void run(const std::string &model_path, const std::string &output_path,
          double kp, double kd, [[maybe_unused]] double rate_gain = 0.0,
          [[maybe_unused]] const std::array<double, 4> &wrench_trim = {},
          [[maybe_unused]] const std::string &snapshot_path = {},
-         [[maybe_unused]] int snapshot_tick = -1) {
+         [[maybe_unused]] int snapshot_tick = -1,
+         [[maybe_unused]] const std::array<double, 4> &task_delta = {}) {
 #ifdef WHEEL_LEG_PHASE43_ROLLING_REPAIR
   const bool phase43_case = case_id.rfind("R43-0", 0) == 0 ||
       case_id.rfind("R43-A", 0) == 0 || case_id.rfind("R43-B", 0) == 0 ||
@@ -382,6 +406,10 @@ void run(const std::string &model_path, const std::string &output_path,
     reference.wheel_joint_acceleration_rad_s2 <<
         -rate_gain * state.joint_velocity_rad_s[2],
         -rate_gain * state.joint_velocity_rad_s[5];
+    reference.wheel_longitudinal_acceleration_m_s2[0] += task_delta[0];
+    reference.wheel_longitudinal_acceleration_m_s2[1] += task_delta[1];
+    reference.wheel_joint_acceleration_rad_s2[0] += task_delta[2];
+    reference.wheel_joint_acceleration_rad_s2[1] += task_delta[3];
 #endif
 
     wheel_leg::WeightedWbcController::Result result;
@@ -505,6 +533,37 @@ void run(const std::string &model_path, const std::string &output_path,
            << ',' << reference.wheel_joint_acceleration_rad_s2[1]
            << ',' << (result.ok() ? result.physical_solution[8] : nan)
            << ',' << (result.ok() ? result.physical_solution[11] : nan);
+    for (int index = 0; index < 42; ++index)
+      output << ',' << (result.ok() ? result.physical_solution[index] : nan);
+    for (int row = 0; row < 16; ++row)
+      for (int column = 0; column < 12; ++column)
+        output << ',' << (result.ok() ? result.reduction(row, column) : nan);
+    for (int index = 0; index < 16; ++index)
+      output << ',' << (result.ok() ? result.reduction_bias[index] : nan);
+    for (int side = 0; side < 2; ++side)
+      for (int row = 0; row < 12; ++row)
+        for (int column = 0; column < 6; ++column)
+          output << ',' << (result.ok()
+              ? result.contact_wrench_map[side](row, column) : nan);
+    for (int side = 0; side < 2; ++side)
+      for (int column = 0; column < 12; ++column)
+        output << ',' << (result.ok()
+            ? result.wheel_longitudinal_acceleration_map[side](0, column) : nan);
+    for (int side = 0; side < 2; ++side)
+      output << ',' << (result.ok()
+          ? result.wheel_longitudinal_acceleration_bias_m_s2[side] : nan);
+    for (int index = 0; index < 6; ++index)
+      output << ',' << (result.ok() ? result.contact_task_residual[index] : nan);
+    for (std::size_t index = 0; index < wheel_leg::WeightedWbcController::kTaskCount;
+         ++index) {
+      output << ',' << (result.ok()
+          ? result.task_max_abs_normalized_residual[index] : nan)
+             << ',' << (result.ok()
+          ? result.task_normalized_squared_cost[index] : nan);
+    }
+    for (int index = 0; index < 3; ++index)
+      output << ',' << (result.ok() ? result.active_inequality_count[index] : -1)
+             << ',' << (result.ok() ? result.minimum_inequality_margin[index] : nan);
 #endif
     output << '\n';
 
@@ -590,8 +649,8 @@ void run(const std::string &model_path, const std::string &output_path,
 
 int main(int argc, char **argv) {
 #ifdef WHEEL_LEG_PHASE43_ROLLING_REPAIR
-  if (argc != 12 && argc != 14) {
-    std::cerr << "usage: phase43_rolling_repair_loop MODEL OUTPUT CASE GAIN KP KD RATE_GAIN DFX_L DFX_R DTY_L DTY_R [NATIVE_CSV TICK]\n";
+  if (argc != 12 && argc != 14 && argc != 18) {
+    std::cerr << "usage: phase43_rolling_repair_loop MODEL OUTPUT CASE GAIN KP KD RATE_GAIN DFX_L DFX_R DTY_L DTY_R [NATIVE_CSV TICK [DDXI_L DDXI_R QDD_L QDD_R]]\n";
     return 1;
   }
 #else
@@ -613,8 +672,12 @@ int main(int argc, char **argv) {
     run(argv[1], argv[2], argv[3], argv[4], std::stod(argv[5]),
         std::stod(argv[6]), std::stod(argv[7]),
         {std::stod(argv[8]), std::stod(argv[9]), std::stod(argv[10]),
-         std::stod(argv[11])}, argc == 14 ? argv[12] : "",
-        argc == 14 ? std::stoi(argv[13]) : -1);
+         std::stod(argv[11])}, argc >= 14 ? argv[12] : "",
+        argc >= 14 ? std::stoi(argv[13]) : -1,
+        argc == 18 ? std::array<double, 4>{
+            std::stod(argv[14]), std::stod(argv[15]),
+            std::stod(argv[16]), std::stod(argv[17])}
+                   : std::array<double, 4>{});
 #else
     run(argv[1], argv[2], argv[3], argv[4], std::stod(argv[5]), std::stod(argv[6]));
 #endif

@@ -1,0 +1,53 @@
+{
+  "authority_mismatch_ratio_max": 28.89901959494568,
+  "c_dominant_contribution": "leg",
+  "c_mean_absolute_contributions": {
+    "base": 3.725574961896785e-10,
+    "jdot_v": 0.03854019100498745,
+    "leg": 2.1130866364538408,
+    "wheel": 0.0
+  },
+  "classification": "P44-U",
+  "contact_relative_error_max": 0.3332239695062527,
+  "gates": {
+    "DG44-00": true,
+    "DG44-01": true,
+    "DG44-02": true,
+    "DG44-03": true,
+    "DG44-04": true,
+    "DG44-05": true,
+    "DG44-06": false,
+    "DG44-07": true,
+    "DG44-08": false,
+    "DG44-09": true
+  },
+  "material_layers": [
+    "optimization",
+    "plant",
+    "coordinate"
+  ],
+  "mechanism": "B-contact",
+  "native_wheel_acceleration_error_max": 376.5847161164867,
+  "no_repair_contract": {
+    "contact_modification": false,
+    "gain_tuning": false,
+    "new_repair_candidate": false,
+    "new_task": false,
+    "nmpc_12d_run": false,
+    "phase34_run": false,
+    "plant_modification": false,
+    "repair_16d": false,
+    "weight_tuning": false
+  },
+  "pass": false,
+  "probe_half_delta_relative_max": 0.5133672918616167,
+  "probe_symmetry_relative_max": 0.616337601515505,
+  "provisional_classification_if_oracles_pass": "P44-E",
+  "replay_max_abs_error": null,
+  "snapshot_reconstruction": {
+    "qpos_max_abs": 2.220446049250313e-16,
+    "qvel_max_abs": 4.440892098500626e-16
+  },
+  "task_max_normalized_residual": 18.7863111479,
+  "xi_acceleration_error_max": 7.41952159702133
+}

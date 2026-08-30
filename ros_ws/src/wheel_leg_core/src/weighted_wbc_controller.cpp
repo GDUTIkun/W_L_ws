@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include <limits>
 
 #include "nominal_wbc_profile_data.hpp"
 
@@ -44,6 +45,15 @@ WeightedWbcController::Result WeightedWbcController::step(
     output.status = Status::kModelRejected;
     reset();
     return output;
+  }
+  output.reduction = model.reduction;
+  output.reduction_bias = model.reduction_bias;
+  output.contact_wrench_map = model.wrench_map;
+  output.wheel_longitudinal_acceleration_map =
+      model.wheel_longitudinal_acceleration_map;
+  for (int side = 0; side < 2; ++side) {
+    output.wheel_longitudinal_acceleration_bias_m_s2[side] =
+        model.wheel_longitudinal_acceleration_bias_m_s2[side];
   }
   const auto problem = problem_.assemble(model, reference, profile_);
   if (!problem.ok()) {
@@ -100,6 +110,20 @@ WeightedWbcController::Result WeightedWbcController::step(
     reset();
     return output;
   }
+  constexpr std::array<std::pair<int, int>, 3> inequality_ranges{{
+      {12, 18}, {18, 92}, {92, 104}}};
+  for (std::size_t group = 0; group < inequality_ranges.size(); ++group) {
+    output.minimum_inequality_margin[group] =
+        std::numeric_limits<double>::infinity();
+    for (int row = inequality_ranges[group].first;
+         row < inequality_ranges[group].second; ++row) {
+      const double margin = std::min(ax[row] - problem.lower[row],
+                                     problem.upper[row] - ax[row]);
+      output.minimum_inequality_margin[group] =
+          std::min(output.minimum_inequality_margin[group], margin);
+      output.active_inequality_count[group] += margin <= 1.0e-7 ? 1 : 0;
+    }
+  }
   for (int joint = 0; joint < 6; ++joint) {
     output.torque_nm[static_cast<std::size_t>(joint)] =
         phase21_profile::kVariableScale[12 + joint] * solved.x[12 + joint];
@@ -119,6 +143,7 @@ WeightedWbcController::Result WeightedWbcController::step(
                  model.contact_bias[0],
       model.contact_jacobian[1] * output.physical_solution.head<12>() +
           model.contact_bias[1];
+  output.contact_task_residual = contact;
   record_task(Task::kContact, contact / 10.0);
   for (int side = 0; side < 2; ++side) {
     output.wheel_position_b_x_m[side] = model.wheel_position_b_x_m[side];
