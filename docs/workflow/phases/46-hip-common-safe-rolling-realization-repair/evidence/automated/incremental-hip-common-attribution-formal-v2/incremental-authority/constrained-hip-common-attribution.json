@@ -1,0 +1,24 @@
+{
+  "branch_and_scale_pass": true,
+  "branch_split_relative": 3.522613481297405e-05,
+  "central_gain_rad_s2_per_m_s2": {
+    "actual_hip_common": 14.481315409646886,
+    "actual_sum": 14.52991198694152,
+    "actuator": 14.481315409646506,
+    "contact": 0.046345433092291444,
+    "contact_realization_difference": 5.058444964552393,
+    "contribution_closure": 0.04859657729463418,
+    "force_balance_max_abs": 2.7755575615628914e-15,
+    "lhs_mapping_closure": 0.04859657729482603,
+    "qp_contact_full": -5.012099531460102,
+    "qp_hip_common": 0.2450239756922376,
+    "remaining": 0.002251144202723765
+  },
+  "channel": "slip_common_only",
+  "closure_pass": false,
+  "contribution_closure_abs": 0.04859657729482603,
+  "fixed_state": true,
+  "mapping": "MuJoCo frozen-state constrained dynamics; qfrc_applied response with base_weld inactive",
+  "scale_convergence_relative": 5.2840133162807355e-05,
+  "whole_dynamics_contact_closure_max_abs": 3.552713678800501e-14
+}

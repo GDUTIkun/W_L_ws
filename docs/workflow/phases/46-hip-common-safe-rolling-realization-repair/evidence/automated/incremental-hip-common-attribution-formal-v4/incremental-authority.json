@@ -1,0 +1,77 @@
+{
+  "actual_cross_gain": -4.295056893962364,
+  "actual_slip_self_gain": 0.030853291955438775,
+  "attribution_exit_code": 2,
+  "checks": {
+    "branch_and_scale": true,
+    "cross_reduced": false,
+    "decomposition_closure": true,
+    "dynamics_contact_closure": true,
+    "no_harmful_migration": false,
+    "plant_hip_increment_limited": false,
+    "qp_hip_increment_limited": true,
+    "slip_self_positive_retained": true
+  },
+  "cross_reduction_fraction": 8.451192484382197e-06,
+  "decomposition_closure": 8.881784197001252e-16,
+  "g_mj": [
+    [
+      0.5085215473313017,
+      -4.295056893962364
+    ],
+    [
+      0.003930630768999958,
+      0.030853291955438775
+    ]
+  ],
+  "g_qp": [
+    [
+      0.9999689499488948,
+      -0.00025488919992823836
+    ],
+    [
+      -0.00030294959873387525,
+      0.9970381122152512
+    ]
+  ],
+  "hip_common": {
+    "mujoco": {
+      "common_mode_ddxi_contribution": -4.027036189887627,
+      "common_qacc_gain_rad_s2_per_m_s2": 14.481315409646887,
+      "differential_mode_ddxi_contribution": 0.0003100102473220703,
+      "differential_qacc_gain_rad_s2_per_m_s2": 4.903437176561356,
+      "joint_family": "hip"
+    },
+    "qp": {
+      "common_mode_ddxi_contribution": -8.25034574203755e-12,
+      "common_qacc_gain_rad_s2_per_m_s2": 2.966843437590683e-11,
+      "differential_mode_ddxi_contribution": 1.2156123088457546e-05,
+      "differential_qacc_gain_rad_s2_per_m_s2": 0.19227359866228216,
+      "joint_family": "hip"
+    }
+  },
+  "knee_common": {
+    "mujoco": {
+      "common_mode_ddxi_contribution": -0.2679659715608631,
+      "common_qacc_gain_rad_s2_per_m_s2": 1.5098771964588007,
+      "differential_mode_ddxi_contribution": -0.00036474276120025917,
+      "differential_qacc_gain_rad_s2_per_m_s2": 0.46347623941217186,
+      "joint_family": "knee"
+    },
+    "qp": {
+      "common_mode_ddxi_contribution": -0.0005036185285531453,
+      "common_qacc_gain_rad_s2_per_m_s2": 0.002837681693490024,
+      "differential_mode_ddxi_contribution": 0.00023657321378764849,
+      "differential_qacc_gain_rad_s2_per_m_s2": -0.30061203438592926,
+      "joint_family": "knee"
+    }
+  },
+  "maximum_abs_alternative_contribution": 0.2679659715608631,
+  "other_actual_contributions": {
+    "base": 5.1832699168087285e-17,
+    "hip_differential": 0.0003100102473220703,
+    "jdot_v": 4.5102810375396984e-15,
+    "native_wheel": 0.0
+  },
+  "pass": false
+}

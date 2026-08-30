@@ -64,6 +64,29 @@ def force_terms(actual: dict[str, Any], reduction: np.ndarray) -> dict[str, np.n
             (("contact", contact), ("actuator", actuator), ("remaining", remaining), ("lhs", lhs))}
 
 
+def full_force_terms(actual: dict[str, Any], reduction: np.ndarray) -> dict[str, np.ndarray]:
+    q = lambda name: P44.vec(actual["dynamics"], name, reduction.shape[0])
+    contact = q("qfrc_contact_left") + q("qfrc_contact_right")
+    actuator = q("qfrc_actuator")
+    remaining = q("qfrc_passive") + q("qfrc_applied") + q("qfrc_other_constraint")
+    mass = P44.vec(actual["dynamics"], "mass", reduction.shape[0] ** 2).reshape(
+        reduction.shape[0], reduction.shape[0])
+    lhs = mass @ q("qacc") + q("qfrc_bias")
+    return {"contact": contact, "actuator": actuator, "remaining": remaining, "lhs": lhs}
+
+
+def hip_dofs(model: mujoco.MjModel) -> tuple[int, int]:
+    ids = [mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, name)
+           for name in ("left_hip_joint", "right_hip_joint")]
+    if min(ids) < 0:
+        raise RuntimeError("missing bilateral hip joints")
+    return tuple(int(model.jnt_dofadr[index]) for index in ids)
+
+
+def constrained_hip_map(mass: np.ndarray, dofs: tuple[int, int], force: np.ndarray) -> float:
+    return common(np.linalg.solve(mass, force)[list(dofs)])
+
+
 def leg_dofs(model: mujoco.MjModel, wheel_dofs: list[int]) -> list[tuple[int, str]]:
     excluded = {*range(6), *wheel_dofs}
     result: list[tuple[int, str]] = []
@@ -159,7 +182,8 @@ def sample(base: dict[str, Any], authority: Path, trim: np.ndarray, native: dict
     return {
         "control": control, "actual": actual, "qp_y": np.asarray([common(qp[:2]), common(qp[2:])]),
         "mj_y": np.asarray([common(mj[:2]), common(mj[2:])]),
-        "forces": {"qp_contact": qp_contact, **force_terms(actual, reduction0)},
+        "forces": {"qp_contact": qp_contact, "qp_contact_full": reduction0 @ qp_contact,
+                   **force_terms(actual, reduction0), **full_force_terms(actual, reduction0)},
         "qacc_qp": qacc_qp, "qacc_mj": qacc, "xi_map": xi_map,
         "xi_qp": qp_parts, "xi_mj": mj_parts,
         "reduction_delta_max_abs": float(np.max(np.abs(reduction - reduction0))),
@@ -173,20 +197,40 @@ def sample(base: dict[str, Any], authority: Path, trim: np.ndarray, native: dict
 
 
 def branch_gain(probe: dict[str, Any], baseline: dict[str, Any], denominator: float,
-                dofs: list[tuple[int, str]]) -> dict[str, Any]:
+                dofs: list[tuple[int, str]], mass: np.ndarray,
+                hip: tuple[int, int]) -> dict[str, Any]:
     gains = {"qp_y": (probe["qp_y"] - baseline["qp_y"]) / denominator,
              "mj_y": (probe["mj_y"] - baseline["mj_y"]) / denominator}
     for name in ("qp_contact", "contact", "actuator", "remaining", "lhs"):
         gains[name] = (probe["forces"][name] - baseline["forces"][name]) / denominator
     gains["native_wheel_qacc_qp"] = (probe["native_wheel_qacc_qp"] - baseline["native_wheel_qacc_qp"]) / denominator
     gains["native_wheel_qacc_mj"] = (probe["native_wheel_qacc_mj"] - baseline["native_wheel_qacc_mj"]) / denominator
-    for model in ("qp", "mj"):
+    for model_name in ("qp", "mj"):
         for part in ("base", "leg_nonwheel", "wheel", "jdot_v"):
-            gains[f"xi_{model}_{part}"] = common(np.asarray([
-                probe[f"xi_{model}"][side][part] - baseline[f"xi_{model}"][side][part]
+            gains[f"xi_{model_name}_{part}"] = common(np.asarray([
+                probe[f"xi_{model_name}"][side][part] - baseline[f"xi_{model_name}"][side][part]
                 for side in range(2)])) / denominator
     gains["xi_qp_leg_dof"] = leg_dof_gain(probe, baseline, denominator, dofs, "qacc_qp")
     gains["xi_mj_leg_dof"] = leg_dof_gain(probe, baseline, denominator, dofs, "qacc_mj")
+    full = {name: (probe["forces"][name] - baseline["forces"][name]) / denominator
+            for name in ("qp_contact_full", "contact", "actuator", "remaining", "lhs")}
+    contributions = {name: constrained_hip_map(mass, hip, values)
+                     for name, values in full.items()}
+    contributions["contact_realization_difference"] = (
+        contributions["contact"] - contributions["qp_contact_full"])
+    contributions["actual_sum"] = (contributions["actuator"] + contributions["contact"] +
+                                   contributions["remaining"])
+    contributions["actual_hip_common"] = common(probe["qacc_mj"][list(hip)] -
+                                                 baseline["qacc_mj"][list(hip)]) / denominator
+    contributions["qp_hip_common"] = common(probe["qacc_qp"][list(hip)] -
+                                             baseline["qacc_qp"][list(hip)]) / denominator
+    contributions["force_balance_max_abs"] = float(np.max(np.abs(
+        full["lhs"] - full["actuator"] - full["contact"] - full["remaining"])))
+    contributions["contribution_closure"] = (
+        contributions["actual_sum"] - contributions["actual_hip_common"])
+    contributions["lhs_mapping_closure"] = (
+        contributions["lhs"] - contributions["actual_hip_common"])
+    gains["constrained_hip"] = contributions
     return gains
 
 
@@ -228,6 +272,8 @@ def main() -> int:
     baseline = sample(base, authority, trim, native, model, oracle, reduction0,
                       np.zeros(4), probes / "baseline-detail.csv", case_id)
     model_leg_dofs = leg_dofs(model, oracle.wheel_dadr)
+    model_hip_dofs = hip_dofs(model)
+    frozen_mass = P44.vec(baseline["actual"]["dynamics"], "mass", model.nv ** 2).reshape(model.nv, model.nv)
     delta = float(config["delta_m_s2"])
     data: dict[tuple[str, float, int], dict[str, Any]] = {}
     probe_rows: list[dict[str, Any]] = []
@@ -271,7 +317,8 @@ def main() -> int:
         branches: dict[int, dict[float, dict[str, Any]]] = {sign: {} for sign in (-1, 1)}
         for sign in (-1, 1):
             for scale in map(float, config["delta_scales"]):
-                gain = branch_gain(data[(channel, scale, sign)], baseline, sign * scale * delta, model_leg_dofs)
+                gain = branch_gain(data[(channel, scale, sign)], baseline, sign * scale * delta,
+                                   model_leg_dofs, frozen_mass, model_hip_dofs)
                 branches[sign][scale] = gain
                 reference = branches[sign][1.0] if scale != 1.0 else gain
                 conv = max(relative(reference["qp_y"], gain["qp_y"]), relative(reference["mj_y"], gain["mj_y"]))
@@ -291,6 +338,8 @@ def main() -> int:
                     **flatten("g_mj_remaining_", gain["remaining"]), **flatten("g_mj_lhs_", gain["lhs"]),
                     "g_native_wheel_qacc_qp_common": common(gain["native_wheel_qacc_qp"]),
                     "g_native_wheel_qacc_mj_common": common(gain["native_wheel_qacc_mj"]),
+                    **{f"g_hip_common_{name}": float(value)
+                       for name, value in gain["constrained_hip"].items()},
                     **{f"g_{name}": gain[name] for name in gain
                        if name.startswith("xi_") and name not in {"xi_qp_leg_dof", "xi_mj_leg_dof"}}})
                 for dof, name in model_leg_dofs:
@@ -355,6 +404,48 @@ def main() -> int:
         }
     hip_mode_classification = classify_qp_plant_hip_modes(mode_summaries)
 
+    contribution_names = ("actuator", "qp_contact_full", "contact",
+                          "contact_realization_difference", "remaining", "actual_sum",
+                          "actual_hip_common", "qp_hip_common", "force_balance_max_abs",
+                          "contribution_closure", "lhs_mapping_closure")
+    directional_names = contribution_names[:7]
+    hip_rows = [row for row in directional if row["channel"] == "slip_common_only"]
+    reference_rows = {(row["branch"], float(row["scale"])): row for row in hip_rows}
+    scale_errors = []
+    for branch in ("+", "-"):
+        reference = reference_rows[(branch, 1.0)]
+        for scale in (0.5, 0.25):
+            candidate = reference_rows[(branch, scale)]
+            scale_errors.append(max(abs(candidate[f"g_hip_common_{name}"] -
+                                        reference[f"g_hip_common_{name}"]) /
+                                    max(abs(reference[f"g_hip_common_{name}"]), 1e-12)
+                                    for name in directional_names))
+    plus, minus = reference_rows[("+", 1.0)], reference_rows[("-", 1.0)]
+    split = max(abs(plus[f"g_hip_common_{name}"] - minus[f"g_hip_common_{name}"]) /
+                max(abs(0.5 * (plus[f"g_hip_common_{name}"] + minus[f"g_hip_common_{name}"])), 1e-12)
+                for name in directional_names)
+    central = {name: 0.5 * (plus[f"g_hip_common_{name}"] + minus[f"g_hip_common_{name}"])
+               for name in contribution_names}
+    closure = max(abs(central[name]) for name in
+                  ("force_balance_max_abs", "contribution_closure", "lhs_mapping_closure"))
+    attribution = {
+        "channel": "slip_common_only", "fixed_state": True,
+        "mapping": "frozen-state realized constrained-dynamics balance: bilateral hip-common selector times M^-1, with contact and other constraint forces explicit",
+        "branch_split_relative": split,
+        "scale_convergence_relative": max(scale_errors),
+        "contribution_closure_abs": closure,
+        "maximum_abs_qp_hip_common_gain": max(abs(row["g_hip_common_qp_hip_common"])
+                                               for row in hip_rows),
+        "branch_and_scale_pass": (split <= float(config["maximum_directional_split_relative"]) and
+                                   max(scale_errors) <= float(config["maximum_directional_convergence_relative"]) and
+                                   max(abs(row["g_hip_common_qp_hip_common"]) for row in hip_rows) <= 1.0e-8),
+        "closure_pass": closure <= 1.0e-8,
+        "central_gain_rad_s2_per_m_s2": central,
+        "whole_dynamics_contact_closure_max_abs": max(
+            max(abs(float(row["dynamics_closure"])), abs(float(row["contact_closure"])))
+            for row in probe_rows),
+    }
+
     P45.write_csv(output / "probe-observables.csv", probe_rows)
     P45.write_csv(output / "directional-transfer.csv", directional)
     P45.write_csv(output / "leg-dof-transfer.csv", leg_dof_rows)
@@ -363,28 +454,31 @@ def main() -> int:
         **mode_summaries,
     })
     P45.write_json(output / "qp-plant-hip-mode-classification.json", hip_mode_classification)
+    P45.write_json(output / "constrained-hip-common-attribution.json", attribution)
     P45.write_json(output / "common-transfer-matrices.json", matrices)
     P45.write_json(output / "classification.json", {"classification": classification,
         "flags": flags, "central_averages_allowed": all(value["central_average_allowed"] for value in matrices.values() if isinstance(value, dict) and "central_average_allowed" in value),
         "scope_contract": config["scope_contract"]})
     compared = ["probe-observables.csv", "directional-transfer.csv", "leg-dof-transfer.csv", "leg-mode-summary.json",
-                "qp-plant-hip-mode-classification.json", "common-transfer-matrices.json", "classification.json"]
+                "qp-plant-hip-mode-classification.json", "common-transfer-matrices.json", "classification.json",
+                "constrained-hip-common-attribution.json"]
     replay_error = max(P45.semantic_error(args.replay_of / name, output / name) for name in compared) if args.replay_of else None
     replay_pass = replay_error is None or replay_error <= float(base["gates"]["semantic_replay_max_abs"])
-    P45.write_json(output / "summary.json", {"pass": all_trusted and replay_pass, "classification": classification,
+    P45.write_json(output / "summary.json", {"pass": all_trusted and attribution["branch_and_scale_pass"] and
+        attribution["closure_pass"] and replay_pass, "classification": classification,
         "all_directional_scales_trusted": all_trusted, "replay_max_abs_error": replay_error,
         "qp_plant_hip_mode_classification": hip_mode_classification["classification"],
         "slip_qp_leg_dof_closure": mode_summaries["qp"]["dof_closure"],
         "slip_qp_leg_mode_closure": mode_summaries["qp"]["mode_closure"],
         "slip_mj_leg_dof_closure": mode_summaries["mujoco"]["dof_closure"],
         "slip_mj_leg_mode_closure": mode_summaries["mujoco"]["mode_closure"],
-        "scope_contract": config["scope_contract"]})
+        "constrained_hip_attribution": attribution, "scope_contract": config["scope_contract"]})
     sources = [config_path, continuation_path, ROOT / base["scene"], ROOT / base["executable"], authority, wrench_source, Path(__file__).resolve()]
     P45.write_json(output / "manifest.json", {"created_utc": datetime.now(timezone.utc).isoformat(),
         "command": " ".join(sys.argv), "replay_of": str(args.replay_of) if args.replay_of else None,
         "python": sys.version, "platform": platform.platform(), "dependencies": {"mujoco": mujoco.__version__, "numpy": np.__version__, "scipy": scipy.__version__},
         "sources": {str(path.relative_to(ROOT)): hashlib.sha256(path.read_bytes()).hexdigest() for path in sources}})
-    return 0 if all_trusted and replay_pass else 2
+    return 0 if all_trusted and attribution["branch_and_scale_pass"] and attribution["closure_pass"] and replay_pass else 2
 
 
 if __name__ == "__main__":

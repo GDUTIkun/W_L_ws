@@ -1,0 +1,53 @@
+{
+  "all_directional_scales_trusted": true,
+  "classification": "C-CROSS_COUPLING_REVERSAL",
+  "constrained_hip_attribution": {
+    "branch_and_scale_pass": true,
+    "branch_split_relative": 3.522613481297405e-05,
+    "central_gain_rad_s2_per_m_s2": {
+      "actual_hip_common": 14.481315409646886,
+      "actual_sum": 14.52991198694152,
+      "actuator": 14.481315409646506,
+      "contact": 0.046345433092291444,
+      "contact_realization_difference": 5.058444964552393,
+      "contribution_closure": 0.04859657729463418,
+      "force_balance_max_abs": 2.7755575615628914e-15,
+      "lhs_mapping_closure": 0.04859657729482603,
+      "qp_contact_full": -5.012099531460102,
+      "qp_hip_common": 0.2450239756922376,
+      "remaining": 0.002251144202723765
+    },
+    "channel": "slip_common_only",
+    "closure_pass": false,
+    "contribution_closure_abs": 0.04859657729482603,
+    "fixed_state": true,
+    "mapping": "MuJoCo frozen-state constrained dynamics; qfrc_applied response with base_weld inactive",
+    "scale_convergence_relative": 5.2840133162807355e-05,
+    "whole_dynamics_contact_closure_max_abs": 3.552713678800501e-14
+  },
+  "pass": false,
+  "qp_plant_hip_mode_classification": "C-HIP_MODE_CREATED_BY_PLANT_REALIZATION",
+  "replay_max_abs_error": null,
+  "scope_contract": {
+    "compatible_wrench_frozen": true,
+    "cross_gain_precompensation": false,
+    "gain_tuning": false,
+    "model_b_frozen": true,
+    "new_candidate": false,
+    "new_task": false,
+    "nmpc_12d_run": false,
+    "planner_run": false,
+    "state_contact_friction_torque_solver_frozen": true,
+    "state_dependent_projection": false,
+    "static_hip_common_deletion": false,
+    "tracking_run": false,
+    "trajectory_run": false,
+    "weight_tuning": false,
+    "wrench_tuning": false,
+    "xi_slip_observable_frozen": true
+  },
+  "slip_mj_leg_dof_closure": 0.0,
+  "slip_mj_leg_mode_closure": 8.881784197001252e-16,
+  "slip_qp_leg_dof_closure": -3.0357660829594124e-18,
+  "slip_qp_leg_mode_closure": -1.0842021724855044e-19
+}

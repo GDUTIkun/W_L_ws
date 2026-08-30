@@ -84,3 +84,29 @@ increment**；failure 仍是 QP-to-MuJoCo realization，而不是 authority loss
 Machine-readable evidence：
 [incremental formal-v1](evidence/automated/incremental-hip-common-formal-v1/summary.json) 与
 [fresh replay-v1](evidence/automated/incremental-hip-common-replay-v1/summary.json)。
+
+## REWORK — Frozen-state directional realization attribution
+
+结论：`B-CONTACT_REALIZATION_DOMINANT`。本节只扩展既有 P46-R03 的 compatible-H0、tick0、
+fixed-state `slip-common only` probes；不改变 gain、weight、wrench、state、Model B、WBC、contact、
+friction 或 solver，且不运行 trajectory。
+
+在同一个 frozen-state realized constrained-dynamics balance 中，以 bilateral hip-common selector
+乘 `M^-1` 映射每个 generalized-force channel，并把 MuJoCo realized contact 与
+`other_constraint` 显式保留在 RHS。central directional gain 为：QP hip-common acceleration
+`+2.97e-11`、MuJoCo actual hip-common acceleration `+14.4813154` rad/s2/(m/s2)；actuator
+contribution `+14.5417603`，QP-predicted contact `+34.2295966`，MuJoCo actual contact
+`-0.1303392`，contact-realization difference `-34.3599358`，remaining/passive
+`+0.0698943`。因此 QP contact prediction 与 MuJoCo realized contact 的 mapping difference
+远大于 actuator 与 remaining，并是 QP hip-common cancellation 没有在 plant 中实现的主 gap。
+
+`actuator + actual contact + remaining = +14.4813154096434`，对 actual hip-common
+`+14.4813154096469` 的 contribution closure 为 `3.44e-12`；force-balance closure
+`1.07e-12`，whole-dynamics/contact closure `3.55e-14`。`+/-` split 为 `2.67e-5`，
+`1/0.5/0.25` scale convergence 为 `4.00e-5`，最大 QP hip-common residual
+`7.31e-10`。fresh replay semantic error 为 `0`。故当前 evidence 已否定把单纯 QP-space
+projection 或 penalty 当作主要 repair 方向；该层只说明 gap 位于 contact realization，未授权修复。
+
+Machine-readable evidence：
+[attribution formal-v5](evidence/automated/incremental-hip-common-attribution-formal-v5/incremental-authority/constrained-hip-common-attribution.json) 与
+[fresh replay-v5](evidence/automated/incremental-hip-common-attribution-replay-v5/incremental-authority/constrained-hip-common-attribution.json)。

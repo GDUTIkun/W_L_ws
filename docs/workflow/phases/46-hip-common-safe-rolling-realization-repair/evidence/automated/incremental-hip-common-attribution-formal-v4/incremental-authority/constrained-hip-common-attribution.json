@@ -1,0 +1,24 @@
+{
+  "branch_and_scale_pass": false,
+  "branch_split_relative": 11.817666216445357,
+  "central_gain_rad_s2_per_m_s2": {
+    "actual_hip_common": 14.481315409646886,
+    "actual_sum": 14.481315409643448,
+    "actuator": 14.541760348976817,
+    "contact": -0.13033919610165384,
+    "contact_realization_difference": -34.359935802918855,
+    "contribution_closure": -3.4381386626591848e-12,
+    "force_balance_max_abs": 1.0658141036401503e-12,
+    "lhs_mapping_closure": -1.899813639738568e-12,
+    "qp_contact_full": 34.229596606817196,
+    "qp_hip_common": 2.966845519258854e-11,
+    "remaining": 0.06989425676828478
+  },
+  "channel": "slip_common_only",
+  "closure_pass": true,
+  "contribution_closure_abs": 3.4381386626591848e-12,
+  "fixed_state": true,
+  "mapping": "frozen-state realized constrained-dynamics balance: bilateral hip-common selector times M^-1, with contact and other constraint forces explicit",
+  "scale_convergence_relative": 3.6111420141672315,
+  "whole_dynamics_contact_closure_max_abs": 3.552713678800501e-14
+}

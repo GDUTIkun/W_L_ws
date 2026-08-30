@@ -1,0 +1,24 @@
+{
+  "contact_reconstruction_residual": 0.0,
+  "ddxi": [
+    4.061787679880387e-14,
+    2.8693241088239424e-14
+  ],
+  "full_dynamics_residual": 2.1316282072803006e-14,
+  "hard": 4.6762593797211593e-11,
+  "material_tangent_acceleration": [
+    1.0408340855860843e-16,
+    -6.938893903907228e-17
+  ],
+  "minimum_torque_margin": 1.998249790457789,
+  "normal_load": [
+    30.96984193815947,
+    31.498985133048688
+  ],
+  "pass": true,
+  "rolling_active": [
+    1,
+    1
+  ],
+  "slack": 0.0013444515744080498
+}
