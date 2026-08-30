@@ -1,0 +1,27 @@
+{
+  "all_directional_scales_trusted": true,
+  "classification": "C-CROSS_COUPLING_REVERSAL",
+  "pass": true,
+  "replay_max_abs_error": null,
+  "scope_contract": {
+    "attribution_only": true,
+    "compatible_wrench_frozen": true,
+    "contact_model_modification": false,
+    "exact_tick0_state_frozen": true,
+    "friction_modification": false,
+    "gain_tuning": false,
+    "model_b_frozen": true,
+    "new_candidate": false,
+    "new_repair": false,
+    "new_task": false,
+    "nmpc_12d_run": false,
+    "phase46_tracking": false,
+    "planner_run": false,
+    "plant_modification": false,
+    "real_short_nominal_reaudit_run": false,
+    "solver_change": false,
+    "trajectory_run": false,
+    "unified_rolling_task_frozen": true,
+    "weight_tuning": false
+  }
+}

@@ -63,3 +63,15 @@ Phase。formal-v1/fresh replay-v1 semantic error=0；两包共64 CSV + 10 JSON�
 `.venv` dependency probe、`py_compile`、targeted build、core 17/17、adapter 6/6、workspace
 aggregate 35 tests/0 failure 与 `git diff --check` 均 PASS。完整审查见
 [CONTINUATION.md](CONTINUATION.md)。
+
+## REWORK Attribution Addendum — Common Channel
+
+compatible-H0 tick0 common input 已仅为归因拆成 xi-only 与 slip-only。两个 plant self authority 都是
+正值，分别为 `+0.508522` 与 `+0.0308423`，因此没有 A/B self reversal；但 slip-to-ddxi cross gain 为
+`-4.295093`，重建出原统一投影 `+0.998203 -> -1.875899`。classification 为
+`C-CROSS_COUPLING_REVERSAL`。
+
+contact generalized force 虽占 directional force norm 约77.2%，却未相对 actuator 显示足够反向的
+cancellation（cosine `-0.0250/-0.1764`，冻结门为`<=-0.5`），故不采纳 D。formal/replay 的最大 semantic
+error=0，directional balance residual=`1.43e-11`；Phase45 仍为 `REWORK`，DG45-AUTH 定义、FAIL 状态、
+mandatory stop 与无 RECORD/Phase46 状态不变。详见 [AUTHORITY_ATTRIBUTION.md](AUTHORITY_ATTRIBUTION.md)。

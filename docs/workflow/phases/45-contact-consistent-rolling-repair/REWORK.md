@@ -70,3 +70,15 @@ rejected evidence，不参与 authority。
 后续按用户授权把本审计解冻结为 H0 reference。DG45-EQ PASS，但 DG45-AUTH 的 common projected
 gain 为 `G_QP=+0.998203`、`G_MJ=-1.875899`，且三档 scale 收敛，因此在 AUTH mandatory stop。
 详见 [CONTINUATION.md](CONTINUATION.md)。
+
+## Compatible-H0 DG45-AUTH attribution addendum
+
+针对 common `G_QP=+0.998203`、`G_MJ=-1.875899` 的 fixed-state split 已完成。xi-only self 为
+`+0.999969 -> +0.508522`，slip-only self 为 `+0.997042 -> +0.0308423`，均未翻号；MuJoCo 的
+`slip_common_only -> ddxi_common=-4.295093` cross term 使重新组合的 unified projection 反号。
+
+广义力 contact share 约0.772、contact/actuator norm ratio约3.39，但 contact--actuator cosine 为
+`-0.0250/-0.1764`，不满足冻结的 directional cancellation 门。因此分类为
+`C-CROSS_COUPLING_REVERSAL`，不是 `D-CONTACT_REDIRECTION_DOMINANT`。详细输入、矩阵、closure 与
+scope contract 见 [AUTHORITY_ATTRIBUTION.md](AUTHORITY_ATTRIBUTION.md)。这只解释 DG45-AUTH，既不
+改变该 gate 的 FAIL，也不授权 REAL/trajectory/Phase46。
