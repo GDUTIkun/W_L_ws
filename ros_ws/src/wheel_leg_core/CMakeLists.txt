@@ -119,6 +119,26 @@ if(BUILD_TESTING)
       -Wall -Wextra -Wpedantic -Werror)
   endif()
 
+  add_executable(phase33_wbc_zeta_sweep
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../../tools/experiments/phase33_wbc_zeta_sweep.cpp)
+  target_link_libraries(phase33_wbc_zeta_sweep PRIVATE wheel_leg_core)
+  if(MSVC)
+    target_compile_options(phase33_wbc_zeta_sweep PRIVATE /W4 /WX)
+  else()
+    target_compile_options(phase33_wbc_zeta_sweep PRIVATE
+      -Wall -Wextra -Wpedantic -Werror)
+  endif()
+
+  add_executable(phase34_wbc_xi_sweep
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../../tools/experiments/phase34_wbc_xi_sweep.cpp)
+  target_link_libraries(phase34_wbc_xi_sweep PRIVATE wheel_leg_core)
+  if(MSVC)
+    target_compile_options(phase34_wbc_xi_sweep PRIVATE /W4 /WX)
+  else()
+    target_compile_options(phase34_wbc_xi_sweep PRIVATE
+      -Wall -Wextra -Wpedantic -Werror)
+  endif()
+
   add_executable(test_contract test/test_contract.cpp)
   target_link_libraries(test_contract PRIVATE wheel_leg_core)
   if(MSVC)
@@ -272,6 +292,38 @@ if(BUILD_TESTING)
   endif()
   add_test(NAME wheel_leg_core_phase27_minimal_wbc
     COMMAND test_phase27_minimal_wbc)
+
+  add_executable(test_phase33_zeta_manifold
+    test/test_phase33_zeta_manifold.cpp)
+  target_link_libraries(test_phase33_zeta_manifold PRIVATE wheel_leg_core)
+  target_include_directories(test_phase33_zeta_manifold PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/src)
+  target_compile_definitions(test_phase33_zeta_manifold PRIVATE
+    WBC_PROBLEM_GOLDEN_PATH="${CMAKE_CURRENT_SOURCE_DIR}/test/data/phase21_weighted_wbc_problem_golden_v2.txt")
+  if(MSVC)
+    target_compile_options(test_phase33_zeta_manifold PRIVATE /W4 /WX)
+  else()
+    target_compile_options(test_phase33_zeta_manifold PRIVATE
+      -Wall -Wextra -Wpedantic -Werror)
+  endif()
+  add_test(NAME wheel_leg_core_phase33_zeta_manifold
+    COMMAND test_phase33_zeta_manifold)
+
+  add_executable(test_phase34_xi_tracking
+    test/test_phase34_xi_tracking.cpp)
+  target_link_libraries(test_phase34_xi_tracking PRIVATE wheel_leg_core)
+  target_include_directories(test_phase34_xi_tracking PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/src)
+  target_compile_definitions(test_phase34_xi_tracking PRIVATE
+    WBC_PROBLEM_GOLDEN_PATH="${CMAKE_CURRENT_SOURCE_DIR}/test/data/phase21_weighted_wbc_problem_golden_v2.txt")
+  if(MSVC)
+    target_compile_options(test_phase34_xi_tracking PRIVATE /W4 /WX)
+  else()
+    target_compile_options(test_phase34_xi_tracking PRIVATE
+      -Wall -Wextra -Wpedantic -Werror)
+  endif()
+  add_test(NAME wheel_leg_core_phase34_xi_tracking
+    COMMAND test_phase34_xi_tracking)
 
   add_executable(test_controller_core_weighted_wbc
     test/test_controller_core_weighted_wbc.cpp)

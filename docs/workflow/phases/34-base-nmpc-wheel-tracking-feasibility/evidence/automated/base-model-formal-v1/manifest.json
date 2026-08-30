@@ -1,0 +1,16 @@
+{
+  "command": "tools/experiments/validate_phase34_base_model.py --config simulation/mujoco/config/phase34_base_acados_ocp_v1.json --method simulation/mujoco/config/phase34_feasibility_v1.json --output docs/workflow/phases/34-base-nmpc-wheel-tracking-feasibility/evidence/automated/base-model-formal-v1",
+  "config": "simulation/mujoco/config/phase34_base_acados_ocp_v1.json",
+  "config_sha256": "ce46051da820c07e5b75d4d379c2eee25d1d1258e3544b66d0d86ca9fee4b110",
+  "method": "simulation/mujoco/config/phase34_feasibility_v1.json",
+  "method_sha256": "167b4ad4e4cb888e3909698a03fb84bf1ff27704ff8e6a6c0ba74d4df75f908f",
+  "outputs": {
+    "details.json": "a676739dfe79c30312a2a4a945b558e5b9f6e7e1d260fac786f8d32a9df779f2",
+    "summary.json": "e3ad79e23c745c398775adee4b49a8c8e07c67f40f11beea9999788a1b9017f5"
+  },
+  "profile": "phase34_feasibility_v1_base_model",
+  "replay_of": null,
+  "runner": "tools/experiments/validate_phase34_base_model.py",
+  "runner_sha256": "142044e7997f5de9a00894ed12aa3531ee6534bf162d312ed1c030801ec459aa",
+  "schema_version": 1
+}

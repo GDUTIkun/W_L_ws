@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "phase": 33,
+  "profile": "phase33_zeta_manifold_v1",
+  "phase32_method": "simulation/mujoco/config/phase32_markov_closure_v2.json",
+  "phase32_leg_authority": "docs/workflow/phases/33-low-dimensional-closure-recovery/evidence/automated/authority-leg-nullspace-v1/leg_nullspace.json",
+  "source_phase28_run": "docs/workflow/phases/28-minimal-closed-loop-drift-attribution/evidence/automated/phase28-drift-attribution-v5",
+  "zeta_sweep_executable": "ros_ws/build/wheel_leg_core/phase33_wbc_zeta_sweep",
+  "coordinate": {
+    "frame": "controller body/FLU",
+    "point": "wheel-body origin relative to canonical base-control point",
+    "axis": "+z up",
+    "side_order": ["left", "right"],
+    "zeta_ref_m": [-0.26587051502608749, -0.26574406892872393],
+    "zeta_ref_source": "phase21_weighted_wbc_problem_golden_v2 workspace_equilibrium",
+    "dzeta_ref_m_s": [0.0, 0.0]
+  },
+  "task": {
+    "residual_scale_m_s2": 1.0,
+    "authority_delta_m_s2": 0.1,
+    "authority_step_scales": [1.0, 0.5],
+    "channels": ["left", "right", "common", "differential"]
+  },
+  "gates": {
+    "controller_ok_status": 0,
+    "hard_violation_max": 2e-7,
+    "self_authority_gain_min": 0.2,
+    "cross_side_to_self_max": 0.5,
+    "realized_wrench_relative_change_max": 0.02,
+    "full_half_authority_relative_error_max": 0.1,
+    "closure_difference_max_abs_m_s2": 0.05,
+    "settling_time_max_s": 0.08
+  }
+}

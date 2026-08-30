@@ -6,13 +6,20 @@
 
 namespace wheel_leg {
 
-enum class WeightedWbcProfile { kNominal, kPhase27Minimal };
+enum class WeightedWbcProfile {
+  kNominal,
+  kPhase27Minimal,
+  kPhase33ZetaManifold,
+  kPhase34XiTracking,
+};
 
 struct WbcReference {
   double base_x_acceleration_m_s2{0.0};
   double base_height_acceleration_m_s2{0.0};
   Eigen::Vector3d orientation_acceleration_rad_s2{Eigen::Vector3d::Zero()};
   Eigen::Vector4d leg_acceleration_rad_s2{Eigen::Vector4d::Zero()};
+  Eigen::Vector2d wheel_vertical_acceleration_m_s2{Eigen::Vector2d::Zero()};
+  Eigen::Vector2d wheel_longitudinal_acceleration_m_s2{Eigen::Vector2d::Zero()};
   Eigen::Matrix<double, 12, 1> interaction_wrench_flu{
       Eigen::Matrix<double, 12, 1>::Zero()};
 };

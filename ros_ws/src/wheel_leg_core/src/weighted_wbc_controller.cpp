@@ -7,6 +7,16 @@
 
 namespace wheel_leg {
 
+namespace {
+
+bool usesMinimalInteractionWrench(WeightedWbcProfile profile) {
+  return profile == WeightedWbcProfile::kPhase27Minimal ||
+         profile == WeightedWbcProfile::kPhase33ZetaManifold ||
+         profile == WeightedWbcProfile::kPhase34XiTracking;
+}
+
+}  // namespace
+
 WeightedWbcController::WeightedWbcController(WeightedWbcProfile profile)
     : solver_([] {
         DenseQpSolver::Settings settings;
@@ -108,6 +118,32 @@ WeightedWbcController::Result WeightedWbcController::step(
       model.contact_jacobian[1] * output.physical_solution.head<12>() +
           model.contact_bias[1];
   record_task(Task::kContact, contact / 10.0);
+  for (int side = 0; side < 2; ++side) {
+    output.wheel_position_b_x_m[side] = model.wheel_position_b_x_m[side];
+    output.wheel_velocity_b_x_m_s[side] =
+        model.wheel_velocity_b_x_m_s[side];
+    output.wheel_longitudinal_acceleration_m_s2[side] =
+        (model.wheel_longitudinal_acceleration_map[side] *
+         output.physical_solution.head<12>())(0) +
+        model.wheel_longitudinal_acceleration_bias_m_s2[side];
+    output.wheel_position_b_z_m[side] = model.wheel_position_b_z_m[side];
+    output.wheel_velocity_b_z_m_s[side] =
+        model.wheel_velocity_b_z_m_s[side];
+    output.wheel_vertical_acceleration_m_s2[side] =
+        (model.wheel_vertical_acceleration_map[side] *
+         output.physical_solution.head<12>())(0) +
+        model.wheel_vertical_acceleration_bias_m_s2[side];
+  }
+  if (profile_ == WeightedWbcProfile::kPhase33ZetaManifold) {
+    record_task(Task::kWheelVerticalManifold,
+                output.wheel_vertical_acceleration_m_s2 -
+                    reference.wheel_vertical_acceleration_m_s2);
+  }
+  if (profile_ == WeightedWbcProfile::kPhase34XiTracking) {
+    record_task(Task::kWheelLongitudinalTracking,
+                output.wheel_longitudinal_acceleration_m_s2 -
+                    reference.wheel_longitudinal_acceleration_m_s2);
+  }
   if (profile_ == WeightedWbcProfile::kNominal) {
     record_task(Task::kBaseX, (Eigen::Matrix<double, 1, 1>() <<
         (output.physical_solution[0] - reference.base_x_acceleration_m_s2) /
@@ -126,7 +162,7 @@ WeightedWbcController::Result WeightedWbcController::step(
   }
   Eigen::Matrix<double, 12, 1> wrench;
   for (int side = 0; side < 2; ++side) {
-    if (profile_ == WeightedWbcProfile::kPhase27Minimal) {
+    if (usesMinimalInteractionWrench(profile_)) {
       output.realized_interaction_wrench_flu.segment<6>(6 * side) =
           model.interaction_acceleration_map[side] *
               output.physical_solution.head<12>() +

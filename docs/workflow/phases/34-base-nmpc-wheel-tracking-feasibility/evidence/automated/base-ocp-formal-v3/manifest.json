@@ -1,0 +1,15 @@
+{
+  "command": "tools/experiments/validate_phase34_base_ocp.py --config simulation/mujoco/config/phase34_base_acados_ocp_v1.json --method simulation/mujoco/config/phase34_feasibility_v1.json --rti ros_ws/src/wheel_leg_core/acados_generated/phase34_base_nmpc_v1 --sqp ros_ws/src/wheel_leg_core/acados_generated/phase34_base_nmpc_sqp_v1 --output docs/workflow/phases/34-base-nmpc-wheel-tracking-feasibility/evidence/automated/base-ocp-formal-v3",
+  "config_sha256": "ce46051da820c07e5b75d4d379c2eee25d1d1258e3544b66d0d86ca9fee4b110",
+  "method_sha256": "167b4ad4e4cb888e3909698a03fb84bf1ff27704ff8e6a6c0ba74d4df75f908f",
+  "outputs": {
+    "details.json": "3fdc7d8dc8e1a4abd59c424dc07f96c666e703bd567e7a6bfb676e1446fb213e",
+    "summary.json": "041b83a7fd64e09bf3c7044860ee4c7701be955917700c3fe10bfaa5b4e00e33"
+  },
+  "profile": "phase34_feasibility_v1_base_ocp",
+  "rti_manifest_sha256": "f22880b1b65947993c3a3113dce6ea74ca93aae342996258ba0ecb7bc4f9eb86",
+  "runner": "tools/experiments/validate_phase34_base_ocp.py",
+  "runner_sha256": "cf0732cae80ff678b9b9fdb66f7674a763ce15a42a726706d56f9d428653d3ef",
+  "schema_version": 1,
+  "sqp_manifest_sha256": "a2db165b885f43080d1f25625d54d1177240ce171c5811eda6b34535999cadfe"
+}

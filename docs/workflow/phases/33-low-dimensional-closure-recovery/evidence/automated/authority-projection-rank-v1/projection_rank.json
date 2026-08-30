@@ -1,0 +1,592 @@
+{
+  "samples": [
+    {
+      "case": "T0_static",
+      "sides": {
+        "left": {
+          "closure": {
+            "columns": 4,
+            "nullity": 2,
+            "rank": 2,
+            "rows": 3,
+            "singular_values": [
+              0.25486719850773737,
+              0.06106171380436271,
+              1.481193563935048e-18
+            ]
+          },
+          "closure_plus_xi": {
+            "columns": 4,
+            "nullity": 1,
+            "rank": 3,
+            "rows": 4,
+            "singular_values": [
+              0.33144207311131607,
+              0.2548492000438361,
+              0.054693791894397624,
+              9.734653666183608e-18
+            ]
+          },
+          "closure_plus_xi_plus_wheel_height": {
+            "columns": 4,
+            "nullity": 0,
+            "rank": 4,
+            "rows": 5,
+            "singular_values": [
+              0.340848895148813,
+              0.2548505453065066,
+              0.12583693657455847,
+              0.03319579771348266
+            ]
+          },
+          "contact_constraint_rows": 12,
+          "interpretation": {
+            "C1_configuration_pair_with_fixed_contact_geometry": false,
+            "C1_configuration_pair_with_free_height": true,
+            "C2_velocity_pair_with_fixed_normal_contact_rate": false,
+            "C2_velocity_pair_with_free_height_rate": true
+          },
+          "wheel_spin_contact_constraint_jacobian_norm": 0.12206638388050838,
+          "wheel_spin_projection_norm": 0.0
+        },
+        "right": {
+          "closure": {
+            "columns": 4,
+            "nullity": 2,
+            "rank": 2,
+            "rows": 3,
+            "singular_values": [
+              0.2548053963447507,
+              0.06106965091224944,
+              1.64421187898559e-16
+            ]
+          },
+          "closure_plus_xi": {
+            "columns": 4,
+            "nullity": 1,
+            "rank": 3,
+            "rows": 4,
+            "singular_values": [
+              0.3320156770787965,
+              0.25478802870421036,
+              0.054597490882724455,
+              1.5280738005097892e-16
+            ]
+          },
+          "closure_plus_xi_plus_wheel_height": {
+            "columns": 4,
+            "nullity": 0,
+            "rank": 4,
+            "rows": 5,
+            "singular_values": [
+              0.34053496327400423,
+              0.25478944763014644,
+              0.12592470634161862,
+              0.033203925720889864
+            ]
+          },
+          "contact_constraint_rows": 12,
+          "interpretation": {
+            "C1_configuration_pair_with_fixed_contact_geometry": false,
+            "C1_configuration_pair_with_free_height": true,
+            "C2_velocity_pair_with_fixed_normal_contact_rate": false,
+            "C2_velocity_pair_with_free_height_rate": true
+          },
+          "wheel_spin_contact_constraint_jacobian_norm": 0.12241319807407189,
+          "wheel_spin_projection_norm": 0.0
+        }
+      },
+      "tick": 54
+    },
+    {
+      "case": "T0_static",
+      "sides": {
+        "left": {
+          "closure": {
+            "columns": 4,
+            "nullity": 2,
+            "rank": 2,
+            "rows": 3,
+            "singular_values": [
+              0.25486701705831744,
+              0.061061876609217865,
+              8.025658916894997e-18
+            ]
+          },
+          "closure_plus_xi": {
+            "columns": 4,
+            "nullity": 1,
+            "rank": 3,
+            "rows": 4,
+            "singular_values": [
+              0.3314404503194066,
+              0.25484907291111364,
+              0.05469236816247182,
+              0.0
+            ]
+          },
+          "closure_plus_xi_plus_wheel_height": {
+            "columns": 4,
+            "nullity": 0,
+            "rank": 4,
+            "rows": 5,
+            "singular_values": [
+              0.3410593455146005,
+              0.2548503839327466,
+              0.12575071832438878,
+              0.03319566030801952
+            ]
+          },
+          "contact_constraint_rows": 8,
+          "interpretation": {
+            "C1_configuration_pair_with_fixed_contact_geometry": false,
+            "C1_configuration_pair_with_free_height": true,
+            "C2_velocity_pair_with_fixed_normal_contact_rate": false,
+            "C2_velocity_pair_with_free_height_rate": true
+          },
+          "wheel_spin_contact_constraint_jacobian_norm": 0.09972544614977288,
+          "wheel_spin_projection_norm": 0.0
+        },
+        "right": {
+          "closure": {
+            "columns": 4,
+            "nullity": 2,
+            "rank": 2,
+            "rows": 3,
+            "singular_values": [
+              0.25481584713628613,
+              0.06106821080095906,
+              1.4270189976106378e-16
+            ]
+          },
+          "closure_plus_xi": {
+            "columns": 4,
+            "nullity": 1,
+            "rank": 3,
+            "rows": 4,
+            "singular_values": [
+              0.3320802612551977,
+              0.25479829920041686,
+              0.05459509266434916,
+              1.150397993769096e-16
+            ]
+          },
+          "closure_plus_xi_plus_wheel_height": {
+            "columns": 4,
+            "nullity": 0,
+            "rank": 4,
+            "rows": 5,
+            "singular_values": [
+              0.3407794695108931,
+              0.25479969241105427,
+              0.1258306956043174,
+              0.033202540929661024
+            ]
+          },
+          "contact_constraint_rows": 8,
+          "interpretation": {
+            "C1_configuration_pair_with_fixed_contact_geometry": false,
+            "C1_configuration_pair_with_free_height": true,
+            "C2_velocity_pair_with_fixed_normal_contact_rate": false,
+            "C2_velocity_pair_with_free_height_rate": true
+          },
+          "wheel_spin_contact_constraint_jacobian_norm": 0.09990824426827116,
+          "wheel_spin_projection_norm": 0.0
+        }
+      },
+      "tick": 56
+    },
+    {
+      "case": "T0_static",
+      "sides": {
+        "left": {
+          "closure": {
+            "columns": 4,
+            "nullity": 2,
+            "rank": 2,
+            "rows": 3,
+            "singular_values": [
+              0.2548804210321861,
+              0.06105996332479148,
+              3.2723096792487546e-18
+            ]
+          },
+          "closure_plus_xi": {
+            "columns": 4,
+            "nullity": 1,
+            "rank": 3,
+            "rows": 4,
+            "singular_values": [
+              0.3315708851314507,
+              0.25486222493229144,
+              0.05468414715286338,
+              1.9547618586031734e-17
+            ]
+          },
+          "closure_plus_xi_plus_wheel_height": {
+            "columns": 4,
+            "nullity": 0,
+            "rank": 4,
+            "rows": 5,
+            "singular_values": [
+              0.34138075772613025,
+              0.2548635099117654,
+              0.12562713012856266,
+              0.03319366327542563
+            ]
+          },
+          "contact_constraint_rows": 8,
+          "interpretation": {
+            "C1_configuration_pair_with_fixed_contact_geometry": false,
+            "C1_configuration_pair_with_free_height": true,
+            "C2_velocity_pair_with_fixed_normal_contact_rate": false,
+            "C2_velocity_pair_with_free_height_rate": true
+          },
+          "wheel_spin_contact_constraint_jacobian_norm": 0.09969156872171187,
+          "wheel_spin_projection_norm": 0.0
+        },
+        "right": {
+          "closure": {
+            "columns": 4,
+            "nullity": 2,
+            "rank": 2,
+            "rows": 3,
+            "singular_values": [
+              0.25482776063740303,
+              0.061066750849951605,
+              8.098870536330213e-17
+            ]
+          },
+          "closure_plus_xi": {
+            "columns": 4,
+            "nullity": 1,
+            "rank": 3,
+            "rows": 4,
+            "singular_values": [
+              0.3321939089706161,
+              0.25481007136157363,
+              0.054585779682564214,
+              5.77035082398411e-17
+            ]
+          },
+          "closure_plus_xi_plus_wheel_height": {
+            "columns": 4,
+            "nullity": 0,
+            "rank": 4,
+            "rows": 5,
+            "singular_values": [
+              0.34107434952001797,
+              0.25481144234303355,
+              0.12571421822210735,
+              0.03320109890840484
+            ]
+          },
+          "contact_constraint_rows": 12,
+          "interpretation": {
+            "C1_configuration_pair_with_fixed_contact_geometry": false,
+            "C1_configuration_pair_with_free_height": true,
+            "C2_velocity_pair_with_fixed_normal_contact_rate": false,
+            "C2_velocity_pair_with_free_height_rate": true
+          },
+          "wheel_spin_contact_constraint_jacobian_norm": 0.12239049765898606,
+          "wheel_spin_projection_norm": 0.0
+        }
+      },
+      "tick": 58
+    },
+    {
+      "case": "T1_straight_start_cruise_brake",
+      "sides": {
+        "left": {
+          "closure": {
+            "columns": 4,
+            "nullity": 2,
+            "rank": 2,
+            "rows": 3,
+            "singular_values": [
+              0.2548723811934171,
+              0.06106099431857887,
+              9.588353735036832e-18
+            ]
+          },
+          "closure_plus_xi": {
+            "columns": 4,
+            "nullity": 1,
+            "rank": 3,
+            "rows": 4,
+            "singular_values": [
+              0.3316753967027185,
+              0.254854257276979,
+              0.05466870205052646,
+              1.9501148110373116e-17
+            ]
+          },
+          "closure_plus_xi_plus_wheel_height": {
+            "columns": 4,
+            "nullity": 0,
+            "rank": 4,
+            "rows": 5,
+            "singular_values": [
+              0.33993859930431475,
+              0.2548558147301075,
+              0.12620080636596753,
+              0.03319611746232252
+            ]
+          },
+          "contact_constraint_rows": 12,
+          "interpretation": {
+            "C1_configuration_pair_with_fixed_contact_geometry": false,
+            "C1_configuration_pair_with_free_height": true,
+            "C2_velocity_pair_with_fixed_normal_contact_rate": false,
+            "C2_velocity_pair_with_free_height_rate": true
+          },
+          "wheel_spin_contact_constraint_jacobian_norm": 0.12213126997170576,
+          "wheel_spin_projection_norm": 0.0
+        },
+        "right": {
+          "closure": {
+            "columns": 4,
+            "nullity": 2,
+            "rank": 2,
+            "rows": 3,
+            "singular_values": [
+              0.25474846043786786,
+              0.06107689557358439,
+              2.0899618161377684e-16
+            ]
+          },
+          "closure_plus_xi": {
+            "columns": 4,
+            "nullity": 1,
+            "rank": 3,
+            "rows": 4,
+            "singular_values": [
+              0.33185329709420747,
+              0.2547318317632807,
+              0.054591439619001106,
+              1.781881841905829e-16
+            ]
+          },
+          "closure_plus_xi_plus_wheel_height": {
+            "columns": 4,
+            "nullity": 0,
+            "rank": 4,
+            "rows": 5,
+            "singular_values": [
+              0.3394499012299812,
+              0.2547333680466127,
+              0.12633245892948028,
+              0.03321036929738557
+            ]
+          },
+          "contact_constraint_rows": 12,
+          "interpretation": {
+            "C1_configuration_pair_with_fixed_contact_geometry": false,
+            "C1_configuration_pair_with_free_height": true,
+            "C2_velocity_pair_with_fixed_normal_contact_rate": false,
+            "C2_velocity_pair_with_free_height_rate": true
+          },
+          "wheel_spin_contact_constraint_jacobian_norm": 0.12244918257102899,
+          "wheel_spin_projection_norm": 0.0
+        }
+      },
+      "tick": 42
+    },
+    {
+      "case": "T1_straight_start_cruise_brake",
+      "sides": {
+        "left": {
+          "closure": {
+            "columns": 4,
+            "nullity": 2,
+            "rank": 2,
+            "rows": 3,
+            "singular_values": [
+              0.25487649361968,
+              0.06106048398699795,
+              1.2843088780711028e-17
+            ]
+          },
+          "closure_plus_xi": {
+            "columns": 4,
+            "nullity": 1,
+            "rank": 3,
+            "rows": 4,
+            "singular_values": [
+              0.33169260010473817,
+              0.2548583259778722,
+              0.05466817453381319,
+              9.761044804780316e-18
+            ]
+          },
+          "closure_plus_xi_plus_wheel_height": {
+            "columns": 4,
+            "nullity": 0,
+            "rank": 4,
+            "rows": 5,
+            "singular_values": [
+              0.34003192961537704,
+              0.25485987299877355,
+              0.12616572825263084,
+              0.033195674370070094
+            ]
+          },
+          "contact_constraint_rows": 12,
+          "interpretation": {
+            "C1_configuration_pair_with_fixed_contact_geometry": false,
+            "C1_configuration_pair_with_free_height": true,
+            "C2_velocity_pair_with_fixed_normal_contact_rate": false,
+            "C2_velocity_pair_with_free_height_rate": true
+          },
+          "wheel_spin_contact_constraint_jacobian_norm": 0.12212872887121194,
+          "wheel_spin_projection_norm": 0.0
+        },
+        "right": {
+          "closure": {
+            "columns": 4,
+            "nullity": 2,
+            "rank": 2,
+            "rows": 3,
+            "singular_values": [
+              0.2547546276223739,
+              0.06107602942513223,
+              2.559999404285174e-16
+            ]
+          },
+          "closure_plus_xi": {
+            "columns": 4,
+            "nullity": 1,
+            "rank": 3,
+            "rows": 4,
+            "singular_values": [
+              0.331912664923667,
+              0.2547378779169527,
+              0.05458782172889891,
+              2.444439707872918e-16
+            ]
+          },
+          "closure_plus_xi_plus_wheel_height": {
+            "columns": 4,
+            "nullity": 0,
+            "rank": 4,
+            "rows": 5,
+            "singular_values": [
+              0.3395495895498954,
+              0.2547394099068472,
+              0.12629625216411136,
+              0.03320966981190056
+            ]
+          },
+          "contact_constraint_rows": 8,
+          "interpretation": {
+            "C1_configuration_pair_with_fixed_contact_geometry": false,
+            "C1_configuration_pair_with_free_height": true,
+            "C2_velocity_pair_with_fixed_normal_contact_rate": false,
+            "C2_velocity_pair_with_free_height_rate": true
+          },
+          "wheel_spin_contact_constraint_jacobian_norm": 0.09992549664070718,
+          "wheel_spin_projection_norm": 0.0
+        }
+      },
+      "tick": 44
+    },
+    {
+      "case": "T1_straight_start_cruise_brake",
+      "sides": {
+        "left": {
+          "closure": {
+            "columns": 4,
+            "nullity": 2,
+            "rank": 2,
+            "rows": 3,
+            "singular_values": [
+              0.25487958342089356,
+              0.061060101378581186,
+              2.1647954987622757e-17
+            ]
+          },
+          "closure_plus_xi": {
+            "columns": 4,
+            "nullity": 1,
+            "rank": 3,
+            "rows": 4,
+            "singular_values": [
+              0.3317264445923043,
+              0.2548613790850872,
+              0.05466522676697756,
+              2.930616938894078e-17
+            ]
+          },
+          "closure_plus_xi_plus_wheel_height": {
+            "columns": 4,
+            "nullity": 0,
+            "rank": 4,
+            "rows": 5,
+            "singular_values": [
+              0.34016038251819963,
+              0.2548629101726702,
+              0.12611611237881692,
+              0.03319534600662949
+            ]
+          },
+          "contact_constraint_rows": 12,
+          "interpretation": {
+            "C1_configuration_pair_with_fixed_contact_geometry": false,
+            "C1_configuration_pair_with_free_height": true,
+            "C2_velocity_pair_with_fixed_normal_contact_rate": false,
+            "C2_velocity_pair_with_free_height_rate": true
+          },
+          "wheel_spin_contact_constraint_jacobian_norm": 0.12212877933706064,
+          "wheel_spin_projection_norm": 0.0
+        },
+        "right": {
+          "closure": {
+            "columns": 4,
+            "nullity": 2,
+            "rank": 2,
+            "rows": 3,
+            "singular_values": [
+              0.25476491458739653,
+              0.06107468194040096,
+              5.180434899068867e-17
+            ]
+          },
+          "closure_plus_xi": {
+            "columns": 4,
+            "nullity": 1,
+            "rank": 3,
+            "rows": 4,
+            "singular_values": [
+              0.3320713253934048,
+              0.25474799019270944,
+              0.05457338667499295,
+              5.660620285786162e-17
+            ]
+          },
+          "closure_plus_xi_plus_wheel_height": {
+            "columns": 4,
+            "nullity": 0,
+            "rank": 4,
+            "rows": 5,
+            "singular_values": [
+              0.3396932466387424,
+              0.2547495313857861,
+              0.12624360647260502,
+              0.033208629581230914
+            ]
+          },
+          "contact_constraint_rows": 12,
+          "interpretation": {
+            "C1_configuration_pair_with_fixed_contact_geometry": false,
+            "C1_configuration_pair_with_free_height": true,
+            "C2_velocity_pair_with_fixed_normal_contact_rate": false,
+            "C2_velocity_pair_with_free_height_rate": true
+          },
+          "wheel_spin_contact_constraint_jacobian_norm": 0.12239323112827014,
+          "wheel_spin_projection_norm": 0.0
+        }
+      },
+      "tick": 46
+    }
+  ]
+}

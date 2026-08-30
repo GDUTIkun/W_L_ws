@@ -1,0 +1,17 @@
+{
+  "classification": "P34-E_wheel_tracking_failure",
+  "tracking_pass": false,
+  "blocking_finding": "P34-E",
+  "expected_run_count": 6,
+  "observed_run_count": 6,
+  "gain_passes": {
+    "g1_2p5hz": false,
+    "g2_3p5hz": false,
+    "g3_5hz": false
+  },
+  "all_runs_rejected_outside_workspace": true,
+  "earliest_rejection_tick": 90,
+  "latest_rejection_tick": 92,
+  "minimum_final_available_common_error_m": 0.004195341186247163,
+  "maximum_final_available_common_error_m": 0.009580385255924875
+}

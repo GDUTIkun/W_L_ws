@@ -1,0 +1,35 @@
+{
+  "acados_commit": "21376cb1af6b7dd45f675367272d3ba8100b26c0",
+  "casadi_version": "3.7.2",
+  "config": "simulation/mujoco/config/phase34_base_acados_ocp_v1.json",
+  "config_sha256": "ce46051da820c07e5b75d4d379c2eee25d1d1258e3544b66d0d86ca9fee4b110",
+  "generated_files": [
+    "Makefile",
+    "acados_ocp.json",
+    "acados_solver.pxd",
+    "acados_solver_ocp_phase34_base_nmpc_v1_sqp_460a009f.c",
+    "acados_solver_ocp_phase34_base_nmpc_v1_sqp_460a009f.h",
+    "main_ocp_phase34_base_nmpc_v1_sqp_460a009f.c",
+    "phase34_base_nmpc_v1_sqp_model/phase34_base_nmpc_v1_sqp_dyn_disc_phi_fun.c",
+    "phase34_base_nmpc_v1_sqp_model/phase34_base_nmpc_v1_sqp_dyn_disc_phi_fun_jac.c",
+    "phase34_base_nmpc_v1_sqp_model/phase34_base_nmpc_v1_sqp_model.h"
+  ],
+  "generated_sha256": {
+    "Makefile": "750b905215d46ac94f92215f621fa69241afc32f211251d9b9dc8e76228c8109",
+    "acados_ocp.json": "25f04015f7b69dde232aaf5e68f4ab50b8cdf07a8cc7fa6cc8f4234884125195",
+    "acados_solver.pxd": "76bf6ac6b5d054ff1fed9cbc741c76b9c0c280a2056a2baaf26d1864729613cf",
+    "acados_solver_ocp_phase34_base_nmpc_v1_sqp_460a009f.c": "7d4b3ff4358a8cb2b98af05b3437fd00a80d88b8ad8345a0726589b97595eebd",
+    "acados_solver_ocp_phase34_base_nmpc_v1_sqp_460a009f.h": "64d6300342cf68f90f8749c9be70e1027fe5de67d9fc433191a188db364c818f",
+    "main_ocp_phase34_base_nmpc_v1_sqp_460a009f.c": "837bb5c2891c5d4ed632efd831354490b2ce51172bb1725cdca05c23950bfa3e",
+    "phase34_base_nmpc_v1_sqp_model/phase34_base_nmpc_v1_sqp_dyn_disc_phi_fun.c": "b5712ab0adc43d4c92d4f823a9bbdeb1a57542e85f791cc1850fa4ac1f718abc",
+    "phase34_base_nmpc_v1_sqp_model/phase34_base_nmpc_v1_sqp_dyn_disc_phi_fun_jac.c": "0cf971f07d0e555ee6dbf3b7c93238e422d27f3d6d089f9592db5c5043f513df",
+    "phase34_base_nmpc_v1_sqp_model/phase34_base_nmpc_v1_sqp_model.h": "bf89a2ab6b0d945f1201be1e52ab0bcf9fcf4deb6f5e04f37e7fb0be866cce23"
+  },
+  "generator": "tools/experiments/generate_phase34_base_acados_solver.py",
+  "generator_sha256": "ccac90c8450d31ec1046302f5d4f47ddb64476200d7ce786e92d08527876945a",
+  "profile": "phase34_base_acados_ocp_v1_sqp",
+  "purpose": "Phase34 opt-in diagnostic; production Phase27 remains unchanged",
+  "schema_version": 1,
+  "solver_difference": "SQP convergence options only",
+  "tera_sha256": "64a0a0f8d85be0b92234231fd1a9ff50c9d8f13d6208063707e56c9354a976d3"
+}

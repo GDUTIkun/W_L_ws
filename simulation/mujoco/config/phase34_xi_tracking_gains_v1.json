@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "phase": 34,
+  "profile": "phase34_xi_tracking_gains_v1",
+  "method": "simulation/mujoco/config/phase34_feasibility_v1.json",
+  "source_runtime_gates": "simulation/mujoco/config/phase27_minimal_formal_v1.json",
+  "candidate_sets": [
+    {"id": "g1_2p5hz", "kp_s2": 246.74011002723395, "kd_s": 31.41592653589793},
+    {"id": "g2_3p5hz", "kp_s2": 483.61061565337855, "kd_s": 43.982297150257104},
+    {"id": "g3_5hz", "kp_s2": 986.9604401089358, "kd_s": 62.83185307179586}
+  ],
+  "screen": {
+    "control_period_s": 0.01,
+    "physics_period_s": 0.002,
+    "pre_target_s": 0.5,
+    "post_target_s": 1.0,
+    "common_step_m": 0.005,
+    "common_ramp_m_s": 0.02,
+    "common_ramp_duration_s": 0.25,
+    "differential_reference": "reset-time measured hold",
+    "maximum_final_common_error_m": 0.001,
+    "maximum_differential_drift_m": 0.002,
+    "maximum_settling_time_s": 0.2,
+    "maximum_wbc_time_s": 0.01,
+    "maximum_hard_violation": 1e-7,
+    "minimum_bilateral_contact_fraction": 1.0,
+    "maximum_normalized_slack": 0.05,
+    "torque_limit_nm": [10.0, 10.0, 2.0, 10.0, 10.0, 2.0]
+  }
+}

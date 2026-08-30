@@ -10,6 +10,8 @@ namespace {
 
 constexpr double kInfinity = 1.0e30;
 constexpr double kContactScale = 10.0;
+constexpr double kWheelVerticalScale = 1.0;
+constexpr double kWheelLongitudinalScale = 1.0;
 constexpr double kBaseLinearScale = 10.0;
 constexpr double kBaseAngularScale = 20.0;
 constexpr double kLegScale = 50.0;
@@ -38,6 +40,12 @@ bool finite(const WeightedWbcProblem::Result &result) {
          result.lower.allFinite() && result.upper.allFinite();
 }
 
+bool usesMinimalInteractionWrench(WeightedWbcProfile profile) {
+  return profile == WeightedWbcProfile::kPhase27Minimal ||
+         profile == WeightedWbcProfile::kPhase33ZetaManifold ||
+         profile == WeightedWbcProfile::kPhase34XiTracking;
+}
+
 }  // namespace
 
 WeightedWbcProblem::Result WeightedWbcProblem::assemble(
@@ -48,6 +56,8 @@ WeightedWbcProblem::Result WeightedWbcProblem::assemble(
   if (!model.ok()) return result;
   if (!reference.orientation_acceleration_rad_s2.allFinite() ||
       !reference.leg_acceleration_rad_s2.allFinite() ||
+      !reference.wheel_vertical_acceleration_m_s2.allFinite() ||
+      !reference.wheel_longitudinal_acceleration_m_s2.allFinite() ||
       !reference.interaction_wrench_flu.allFinite() ||
       !std::isfinite(reference.base_x_acceleration_m_s2) ||
       !std::isfinite(reference.base_height_acceleration_m_s2)) {
@@ -104,7 +114,7 @@ WeightedWbcProblem::Result WeightedWbcProblem::assemble(
 
   result.h.setIdentity();
   result.h *= kRegularization;
-  if (profile == WeightedWbcProfile::kPhase27Minimal) {
+  if (usesMinimalInteractionWrench(profile)) {
     result.h.bottomRightCorner<12, 12>().setZero();
   }
   result.g.setZero();
@@ -119,6 +129,39 @@ WeightedWbcProblem::Result WeightedWbcProblem::assemble(
   contact_target << -model.contact_bias[0], -model.contact_bias[1];
   addTask<6>(result.h, result.g, contact, contact_target,
              Eigen::Matrix<double, 6, 1>::Constant(kContactScale));
+
+  if (profile == WeightedWbcProfile::kPhase33ZetaManifold) {
+    Eigen::Matrix<double, 2, 42> wheel_vertical =
+        Eigen::Matrix<double, 2, 42>::Zero();
+    Eigen::Vector2d wheel_vertical_target =
+        reference.wheel_vertical_acceleration_m_s2;
+    for (int side = 0; side < 2; ++side) {
+      wheel_vertical.block<1, 12>(side, 0) =
+          model.wheel_vertical_acceleration_map[side];
+      wheel_vertical_target[side] -=
+          model.wheel_vertical_acceleration_bias_m_s2[side];
+    }
+    wheel_vertical *= transform;
+    addTask<2>(result.h, result.g, wheel_vertical, wheel_vertical_target,
+               Eigen::Vector2d::Constant(kWheelVerticalScale));
+  }
+
+  if (profile == WeightedWbcProfile::kPhase34XiTracking) {
+    Eigen::Matrix<double, 2, 42> wheel_longitudinal =
+        Eigen::Matrix<double, 2, 42>::Zero();
+    Eigen::Vector2d wheel_longitudinal_target =
+        reference.wheel_longitudinal_acceleration_m_s2;
+    for (int side = 0; side < 2; ++side) {
+      wheel_longitudinal.block<1, 12>(side, 0) =
+          model.wheel_longitudinal_acceleration_map[side];
+      wheel_longitudinal_target[side] -=
+          model.wheel_longitudinal_acceleration_bias_m_s2[side];
+    }
+    wheel_longitudinal *= transform;
+    addTask<2>(result.h, result.g, wheel_longitudinal,
+               wheel_longitudinal_target,
+               Eigen::Vector2d::Constant(kWheelLongitudinalScale));
+  }
 
   if (profile == WeightedWbcProfile::kNominal) {
     Eigen::Matrix<double, 1, 42> base_x =
@@ -159,7 +202,7 @@ WeightedWbcProblem::Result WeightedWbcProblem::assemble(
   Eigen::Matrix<double, 12, 1> wrench_target =
       reference.interaction_wrench_flu;
   for (int side = 0; side < 2; ++side) {
-    if (profile == WeightedWbcProfile::kPhase27Minimal) {
+    if (usesMinimalInteractionWrench(profile)) {
       wrench.block<6, 12>(6 * side, 0) =
           model.interaction_acceleration_map[side];
       wrench.block<6, 6>(6 * side, 18 + 6 * side) =

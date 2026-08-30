@@ -1,0 +1,23 @@
+{
+  "created_utc": "2026-08-30T02:26:08.520025+00:00",
+  "command": "tools/experiments/evaluate_phase34_xi_tracking.py --raw docs/workflow/phases/34-base-nmpc-wheel-tracking-feasibility/evidence/automated/xi-tracking-formal-v3 --output docs/workflow/phases/34-base-nmpc-wheel-tracking-feasibility/evidence/automated/xi-tracking-evaluation-v1",
+  "python": "3.10.20",
+  "numpy": "2.2.6",
+  "inputs": {
+    "docs/workflow/phases/34-base-nmpc-wheel-tracking-feasibility/evidence/automated/xi-tracking-formal-v3/g1_2p5hz-ramp.csv": "0889e855da6c1f5b2e11d6b1dbab503a742521a6025a9fcb80190b5903306746",
+    "docs/workflow/phases/34-base-nmpc-wheel-tracking-feasibility/evidence/automated/xi-tracking-formal-v3/g1_2p5hz-ramp.stderr.txt": "edb649a34fbfb1c2cd34d8937015abb05f2a78fd8fc34d07a7c23071a9091176",
+    "docs/workflow/phases/34-base-nmpc-wheel-tracking-feasibility/evidence/automated/xi-tracking-formal-v3/g1_2p5hz-step.csv": "904978367f21023a6abc63ef66d09c5eb8f6fb5f0e33df5495362a6f7e5c5d2c",
+    "docs/workflow/phases/34-base-nmpc-wheel-tracking-feasibility/evidence/automated/xi-tracking-formal-v3/g1_2p5hz-step.stderr.txt": "edb649a34fbfb1c2cd34d8937015abb05f2a78fd8fc34d07a7c23071a9091176",
+    "docs/workflow/phases/34-base-nmpc-wheel-tracking-feasibility/evidence/automated/xi-tracking-formal-v3/g2_3p5hz-ramp.csv": "5a100ce12cbb385aa580e2004f109cf54e5e6aa556e847ad5bae09fd9e64ee3a",
+    "docs/workflow/phases/34-base-nmpc-wheel-tracking-feasibility/evidence/automated/xi-tracking-formal-v3/g2_3p5hz-ramp.stderr.txt": "edb649a34fbfb1c2cd34d8937015abb05f2a78fd8fc34d07a7c23071a9091176",
+    "docs/workflow/phases/34-base-nmpc-wheel-tracking-feasibility/evidence/automated/xi-tracking-formal-v3/g2_3p5hz-step.csv": "dfce30d96dae803095a223a7fecb0af0c32e74f1167dfc6804f263dc924773da",
+    "docs/workflow/phases/34-base-nmpc-wheel-tracking-feasibility/evidence/automated/xi-tracking-formal-v3/g2_3p5hz-step.stderr.txt": "edb649a34fbfb1c2cd34d8937015abb05f2a78fd8fc34d07a7c23071a9091176",
+    "docs/workflow/phases/34-base-nmpc-wheel-tracking-feasibility/evidence/automated/xi-tracking-formal-v3/g3_5hz-ramp.csv": "8346a1ad9170339ac86af13190eb6c323b24de713fbb63c5f77e2ed9ea813dbd",
+    "docs/workflow/phases/34-base-nmpc-wheel-tracking-feasibility/evidence/automated/xi-tracking-formal-v3/g3_5hz-ramp.stderr.txt": "edb649a34fbfb1c2cd34d8937015abb05f2a78fd8fc34d07a7c23071a9091176",
+    "docs/workflow/phases/34-base-nmpc-wheel-tracking-feasibility/evidence/automated/xi-tracking-formal-v3/g3_5hz-step.csv": "c0ced6150dffe66a6ef8c4c743413a959b005e616ed0a2d23a4779aaf4488fa3",
+    "docs/workflow/phases/34-base-nmpc-wheel-tracking-feasibility/evidence/automated/xi-tracking-formal-v3/g3_5hz-step.stderr.txt": "edb649a34fbfb1c2cd34d8937015abb05f2a78fd8fc34d07a7c23071a9091176",
+    "docs/workflow/phases/34-base-nmpc-wheel-tracking-feasibility/evidence/automated/xi-tracking-formal-v3/run-status.csv": "24648afc9fedc5d34f55c43a8bde044a09bcd264f16bb0aa9a664c5d276bccef",
+    "simulation/mujoco/config/phase34_xi_tracking_gains_v1.json": "12360217051a472b8079b60b8116cc2dcae8b80f44bda4e69ed9fefd58746afb",
+    "tools/experiments/evaluate_phase34_xi_tracking.py": "1db1abe7c4bde50077c57f142abe7eaf786152d9366e7177287c59a9a28bebc7"
+  }
+}

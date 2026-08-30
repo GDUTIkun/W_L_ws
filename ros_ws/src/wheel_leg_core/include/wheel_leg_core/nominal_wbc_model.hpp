@@ -19,6 +19,7 @@ class NominalWbcModel {
   using Matrix6x12 = Eigen::Matrix<double, 6, kReducedDoF>;
   using Matrix6 = Eigen::Matrix<double, 6, 6>;
   using Matrix3x12 = Eigen::Matrix<double, 3, kReducedDoF>;
+  using Matrix1x12 = Eigen::Matrix<double, 1, kReducedDoF>;
   using Matrix16x12 = Eigen::Matrix<double, kTreeDoF, kReducedDoF>;
 
   enum class Status {
@@ -52,6 +53,17 @@ class NominalWbcModel {
     // expressed in controller body/FLU. Side order is left, right.
     std::array<double, 2> wheel_position_b_x_m{};
     std::array<double, 2> wheel_velocity_b_x_m_s{};
+    // Relative wheel-origin longitudinal acceleration in body/FLU:
+    //   ddxi = A_xi * nudot + b_xi.
+    std::array<Matrix1x12, 2> wheel_longitudinal_acceleration_map{};
+    std::array<double, 2> wheel_longitudinal_acceleration_bias_m_s2{};
+    std::array<double, 2> wheel_position_b_z_m{};
+    std::array<double, 2> wheel_velocity_b_z_m_s{};
+    // Relative wheel-origin vertical acceleration in body/FLU is affine in
+    // reduced generalized acceleration:
+    //   ddzeta = A_zeta * nudot + b_zeta.
+    std::array<Matrix1x12, 2> wheel_vertical_acceleration_map{};
+    std::array<double, 2> wheel_vertical_acceleration_bias_m_s2{};
     // Internal wrench exerted by the wheel follower on the leg/base at the
     // wheel-body origin, expressed in body/FLU:
     //   W_I = A_nudot * nudot + A_contact * w_C + b_I.

@@ -1,0 +1,27 @@
+{
+  "gates": {
+    "dimension": true,
+    "input_jacobian": true,
+    "next": true,
+    "projection": true,
+    "state_jacobian": true,
+    "xi_is_material": true,
+    "xi_jacobian": true
+  },
+  "maxima": {
+    "input_jacobian_error": 5.9127571935824186e-09,
+    "next_error": 6.06934134200765e-09,
+    "state_jacobian_error": 5.577684036861541e-09,
+    "xi_jacobian_error": 1.9124423862593165e-07
+  },
+  "pass": true,
+  "projection": {
+    "base_parameters": true,
+    "equilibrium_state": true,
+    "input_contract": true,
+    "state_envelope": true,
+    "state_error_scale": true,
+    "state_order": true,
+    "state_weight": true
+  }
+}

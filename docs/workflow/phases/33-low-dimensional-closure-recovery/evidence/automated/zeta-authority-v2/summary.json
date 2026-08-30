@@ -1,0 +1,10 @@
+{
+  "authority_pass": false,
+  "classification": "P33-A_or_P33-B_gain_free_authority_failure",
+  "maximum_cross_side_to_self_ratio": 0.5125767989496576,
+  "maximum_full_half_response_relative_error": 0.0002001690948163693,
+  "maximum_hard_violation": 1.4999488960024294e-08,
+  "maximum_realized_wrench_relative_change": 0.0034090934179594073,
+  "minimum_physical_self_gain": 0.6186879390323188,
+  "sample_count": 24
+}

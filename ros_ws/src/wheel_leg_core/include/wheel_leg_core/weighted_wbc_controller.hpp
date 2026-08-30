@@ -8,8 +8,9 @@ namespace wheel_leg {
 class WeightedWbcController {
  public:
   enum class Task : std::size_t {
-    kContact, kBaseX, kHeight, kOrientation, kLeg, kWrenchFidelity,
-    kSlackPenalty, kCount,
+    kContact, kBaseX, kHeight, kOrientation, kLeg, kWheelVerticalManifold,
+    kWheelLongitudinalTracking,
+    kWrenchFidelity, kSlackPenalty, kCount,
   };
   static constexpr std::size_t kTaskCount = static_cast<std::size_t>(Task::kCount);
   enum class Status {
@@ -43,6 +44,12 @@ class WeightedWbcController {
         Eigen::Matrix<double, 12, 1>::Zero()};
     Eigen::Matrix<double, 12, 1> signed_interaction_slack_flu{
         Eigen::Matrix<double, 12, 1>::Zero()};
+    Eigen::Vector2d wheel_position_b_z_m{Eigen::Vector2d::Zero()};
+    Eigen::Vector2d wheel_velocity_b_z_m_s{Eigen::Vector2d::Zero()};
+    Eigen::Vector2d wheel_vertical_acceleration_m_s2{Eigen::Vector2d::Zero()};
+    Eigen::Vector2d wheel_position_b_x_m{Eigen::Vector2d::Zero()};
+    Eigen::Vector2d wheel_velocity_b_x_m_s{Eigen::Vector2d::Zero()};
+    Eigen::Vector2d wheel_longitudinal_acceleration_m_s2{Eigen::Vector2d::Zero()};
 
     [[nodiscard]] bool ok() const { return status == Status::kOk; }
   };

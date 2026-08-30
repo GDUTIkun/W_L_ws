@@ -247,6 +247,14 @@ bool finite(const NominalWbcModel::Result &result) {
         !result.contact_frame_world[side].allFinite() ||
         !std::isfinite(result.wheel_position_b_x_m[side]) ||
         !std::isfinite(result.wheel_velocity_b_x_m_s[side]) ||
+        !std::isfinite(result.wheel_position_b_z_m[side]) ||
+        !std::isfinite(result.wheel_velocity_b_z_m_s[side]) ||
+        !result.wheel_longitudinal_acceleration_map[side].allFinite() ||
+        !std::isfinite(
+            result.wheel_longitudinal_acceleration_bias_m_s2[side]) ||
+        !result.wheel_vertical_acceleration_map[side].allFinite() ||
+        !std::isfinite(
+            result.wheel_vertical_acceleration_bias_m_s2[side]) ||
         !result.interaction_acceleration_map[side].allFinite() ||
         !result.interaction_contact_map[side].allFinite() ||
         !result.interaction_bias[side].allFinite()) return false;
@@ -432,6 +440,26 @@ NominalWbcModel::Result NominalWbcModel::evaluate(
         omega_b.cross(wheel_relative_b);
     result.wheel_position_b_x_m[side] = wheel_relative_b.x();
     result.wheel_velocity_b_x_m_s[side] = wheel_relative_velocity_b.x();
+    result.wheel_position_b_z_m[side] = wheel_relative_b.z();
+    result.wheel_velocity_b_z_m_s[side] = wheel_relative_velocity_b.z();
+
+    Eigen::Matrix<double, 3, 12> relative_acceleration_map =
+        base_rotation.transpose() * wheel.linear_jacobian * result.reduction;
+    relative_acceleration_map.leftCols<3>() -= base_rotation.transpose();
+    relative_acceleration_map.middleCols<3>(3) +=
+        skew(wheel_relative_b) * base_rotation.transpose();
+    result.wheel_longitudinal_acceleration_map[side] =
+        relative_acceleration_map.row(0);
+    result.wheel_vertical_acceleration_map[side] =
+        relative_acceleration_map.row(2);
+    const Eigen::Vector3d relative_acceleration_bias_b =
+        base_rotation.transpose() * reduced_wheel.linear_acceleration -
+        2.0 * omega_b.cross(wheel_relative_velocity_b) -
+        omega_b.cross(omega_b.cross(wheel_relative_b));
+    result.wheel_vertical_acceleration_bias_m_s2[side] =
+        relative_acceleration_bias_b.z();
+    result.wheel_longitudinal_acceleration_bias_m_s2[side] =
+        relative_acceleration_bias_b.x();
     const Eigen::Vector3d contact_local =
         wheel.rotation.transpose() * (geometry.center - wheel.position);
     const Matrix3x16 material_jacobian =

@@ -8,13 +8,16 @@ None.
 
 ## Planned
 
-None.
+- [Phase 35：wheel-position servo workspace failure attribution](35-wheel-servo-workspace-attribution/PLAN.md) — 仅做`kOutsideWorkspace` first-mover/activation/precedence归因；禁止在同Phase修复。
 
 ## Review
+
+- [Phase 34：12D base NMPC + full-body WBC wheel tracking feasibility](34-base-nmpc-wheel-tracking-feasibility/PLAN.md) — REWORK；DG34-04 wheel tracking失败，未进入corrective与integrated closed loop。
 
 - [Phase 30：NMPC reference-consistency audit v3](30-nmpc-corrective-formulation-repair/REVIEW.md) — **REWORK**；reference本身已一致，20 ms误差定位到wheel-rate model/state contract（P31-F）；production未修改。
 - [Phase 31：wheel-state model and measurement contract audit](31-wheel-state-model-measurement-audit/REVIEW.md) — **REWORK / SUPERSEDED DYNAMICS ATTRIBUTION**；measurement PASS；原M4-only结论被Phase32的floating-base M5证据取代。
 - [Phase 32：wheel-state Markov closure and constrained dynamics](32-wheel-state-markov-closure/REVIEW.md) — **REWORK**；同x16证据证明`P32-C/M5`及D/E/F；x24仅是必要增广，先关闭mesh-vs-analytic contact authority。
+- [Phase 33：low-dimensional closure recovery via WBC manifold regulation](33-low-dimensional-closure-recovery/REVIEW.md) — **REWORK**；坐标/代数/self-authority/wrench门PASS，但预冻结cross-side隔离门FAIL；未进入gain、closure、bandwidth或contact revision。
 
 ## Blocked
 

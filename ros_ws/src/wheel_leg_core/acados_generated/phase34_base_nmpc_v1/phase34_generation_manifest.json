@@ -1,0 +1,35 @@
+{
+  "acados_commit": "21376cb1af6b7dd45f675367272d3ba8100b26c0",
+  "casadi_version": "3.7.2",
+  "config": "simulation/mujoco/config/phase34_base_acados_ocp_v1.json",
+  "config_sha256": "ce46051da820c07e5b75d4d379c2eee25d1d1258e3544b66d0d86ca9fee4b110",
+  "generated_files": [
+    "Makefile",
+    "acados_ocp.json",
+    "acados_solver.pxd",
+    "acados_solver_ocp_phase34_base_nmpc_v1_9ddda898.c",
+    "acados_solver_ocp_phase34_base_nmpc_v1_9ddda898.h",
+    "main_ocp_phase34_base_nmpc_v1_9ddda898.c",
+    "phase34_base_nmpc_v1_model/phase34_base_nmpc_v1_dyn_disc_phi_fun.c",
+    "phase34_base_nmpc_v1_model/phase34_base_nmpc_v1_dyn_disc_phi_fun_jac.c",
+    "phase34_base_nmpc_v1_model/phase34_base_nmpc_v1_model.h"
+  ],
+  "generated_sha256": {
+    "Makefile": "05c063482c0900d7628945753de6a0a9870724dd0cb4b5ba8816fa1ae7427725",
+    "acados_ocp.json": "0b89215c84f728703ccdf64f14b3d7cee376089b6043f2ceffdb7f9a5b170440",
+    "acados_solver.pxd": "da48292dace69f1dcf0bd7d0f2fd0eff91cbc655ab7cc7a7d172b0d7db71dc2a",
+    "acados_solver_ocp_phase34_base_nmpc_v1_9ddda898.c": "20a81412f481670295434b468f26008a9858781171d33c77f515e73636a9b961",
+    "acados_solver_ocp_phase34_base_nmpc_v1_9ddda898.h": "a8d7ce8a86d9a7e5a454b2fa21b596f0e362552018260ab9d90762381f3e7db7",
+    "main_ocp_phase34_base_nmpc_v1_9ddda898.c": "b1b03f571bcf26ecb56ea89c8b37c5ff67d04d9098690c5d1451d9449cdb5a0f",
+    "phase34_base_nmpc_v1_model/phase34_base_nmpc_v1_dyn_disc_phi_fun.c": "ff3a0d0ba1f7c990dde8684d0cae40ba1891316d5eecf30d3823cd509716b10c",
+    "phase34_base_nmpc_v1_model/phase34_base_nmpc_v1_dyn_disc_phi_fun_jac.c": "2bb79337756e20da7e89442f822036ba04f729a9b77370d84317444e6f6afe94",
+    "phase34_base_nmpc_v1_model/phase34_base_nmpc_v1_model.h": "5742f1f165281b99456d8a7af2175a576cb873153c429eb2ac8db9cb57d86a8d"
+  },
+  "generator": "tools/experiments/generate_phase34_base_acados_solver.py",
+  "generator_sha256": "ccac90c8450d31ec1046302f5d4f47ddb64476200d7ce786e92d08527876945a",
+  "profile": "phase34_base_acados_ocp_v1_rti",
+  "purpose": "Phase34 opt-in diagnostic; production Phase27 remains unchanged",
+  "schema_version": 1,
+  "solver_difference": "none",
+  "tera_sha256": "64a0a0f8d85be0b92234231fd1a9ff50c9d8f13d6208063707e56c9354a976d3"
+}

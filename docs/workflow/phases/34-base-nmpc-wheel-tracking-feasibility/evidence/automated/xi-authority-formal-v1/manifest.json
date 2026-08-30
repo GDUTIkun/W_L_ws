@@ -1,0 +1,24 @@
+{
+  "command": "tools/experiments/run_phase34_xi_authority.py --output docs/workflow/phases/34-base-nmpc-wheel-tracking-feasibility/evidence/automated/xi-authority-formal-v1",
+  "created_utc": "2026-08-30T02:19:49.669385+00:00",
+  "dependencies": {
+    "mujoco": "3.7.0",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3"
+  },
+  "inputs": {
+    "docs/workflow/phases/28-minimal-closed-loop-drift-attribution/evidence/automated/phase28-drift-attribution-v5/T0_static_control.csv": "97764748b0948713cb13aadff60cc44a11ae5940d8fa1e30577314f86451c611",
+    "docs/workflow/phases/28-minimal-closed-loop-drift-attribution/evidence/automated/phase28-drift-attribution-v5/T0_static_plant.csv": "2330188f8e9cfe7b2f24f6a28ebe0730d15e59891b920cab522c890b2556caac",
+    "docs/workflow/phases/28-minimal-closed-loop-drift-attribution/evidence/automated/phase28-drift-attribution-v5/T1_straight_start_cruise_brake_control.csv": "bc79c789a7394f3b7c226322b9f5eba936ae1a28b929e566ca18c2aab64de03e",
+    "docs/workflow/phases/28-minimal-closed-loop-drift-attribution/evidence/automated/phase28-drift-attribution-v5/T1_straight_start_cruise_brake_plant.csv": "9567fae6bb3bcab9830756afa4e15dae29a5aad0287ebe5744537f43a0bf011f",
+    "ros_ws/build/wheel_leg_core/phase34_wbc_xi_sweep": "e105c5248c0706ddbc47811f5623d80e707e82707a6bff11410756649d49c756",
+    "simulation/mujoco/config/phase29_nmpc_root_cause_v1.json": "557d8fa63ec39bca53cee5eadfc58f6c6feb156dab1ae95be7541da32788dcfa",
+    "simulation/mujoco/config/phase32_markov_closure_v2.json": "32d84b81faa603c193d34dfa643f5d8d13fff9dde88c7dbf210792b0a73f202c",
+    "simulation/mujoco/config/phase34_feasibility_v1.json": "167b4ad4e4cb888e3909698a03fb84bf1ff27704ff8e6a6c0ba74d4df75f908f",
+    "simulation/mujoco/model/phase19_standing.xml": "5334205529e9625a9e508b2eb8d61f5401b3518deff8c4daef6caac1d3f52664",
+    "tools/experiments/run_phase33_zeta_authority.py": "c2fdb62def30fc49b47bbdd5ecf057fadaab1e3cbd3b8b3f7d9d730d17d2f9c3",
+    "tools/experiments/run_phase34_xi_authority.py": "20509a4b6167afa96f401d905126bf643e652527d1fac893afb76674fd6e3349"
+  },
+  "python": "3.10.20",
+  "replay_of": null
+}

@@ -1,0 +1,274 @@
+{
+  "samples": [
+    {
+      "baseline_dxi_m_s": [
+        5.944819210006863e-05,
+        -0.017663296127905268
+      ],
+      "baseline_xi_m": [
+        -0.011522632175387041,
+        -0.015158981197545978
+      ],
+      "case": "T0_static",
+      "full_half_matrix_relative_error": 7.769710676545567e-12,
+      "scales": {
+        "0.5": {
+          "common": {
+            "maximum_realized_wrench_relative_change": 1.3782164832142694e-06,
+            "physical_common_differential_response": [
+              0.9488830825556129,
+              -0.00017091671827845767
+            ],
+            "physical_dxi_m_s": [
+              5.9448192100103325e-05,
+              -0.01766329612790519
+            ],
+            "physical_side_response": [
+              0.9490539992738913,
+              0.9487121658373344
+            ],
+            "physical_xi_m": [
+              -0.011522632175386996,
+              -0.015158981197545902
+            ],
+            "wbc_model_side_response": [
+              0.999999978541149,
+              0.9999999767770842
+            ]
+          },
+          "condition_number": 1.3246676442522356,
+          "differential": {
+            "maximum_realized_wrench_relative_change": 0.0008606777094705485,
+            "physical_common_differential_response": [
+              -0.0003296632420171086,
+              0.7163183245477087
+            ],
+            "physical_dxi_m_s": [
+              5.9448192100103325e-05,
+              -0.01766329612790519
+            ],
+            "physical_side_response": [
+              -0.7166479877897258,
+              0.7159886613056916
+            ],
+            "physical_xi_m": [
+              -0.011522632175386996,
+              -0.015158981197545902
+            ],
+            "wbc_model_side_response": [
+              -0.9999989546205872,
+              0.9999989528565223
+            ]
+          },
+          "maximum_cross_to_self_ratio": 0.0004602189148592026,
+          "response_matrix": [
+            [
+              0.9488830825556129,
+              -0.0003296632420171086
+            ],
+            [
+              -0.00017091671827845767,
+              0.7163183245477087
+            ]
+          ]
+        },
+        "1.0": {
+          "common": {
+            "maximum_realized_wrench_relative_change": 2.756432972955422e-06,
+            "physical_common_differential_response": [
+              0.9488830825556127,
+              -0.0001709167234826281
+            ],
+            "physical_dxi_m_s": [
+              5.9448192100103325e-05,
+              -0.01766329612790519
+            ],
+            "physical_side_response": [
+              0.9490539992790953,
+              0.94871216583213
+            ],
+            "physical_xi_m": [
+              -0.011522632175386996,
+              -0.015158981197545902
+            ],
+            "wbc_model_side_response": [
+              0.9999999785411483,
+              0.9999999767770834
+            ]
+          },
+          "condition_number": 1.3246676442546343,
+          "differential": {
+            "maximum_realized_wrench_relative_change": 0.0017213554189355303,
+            "physical_common_differential_response": [
+              -0.0003296632346445616,
+              0.7163183245464076
+            ],
+            "physical_dxi_m_s": [
+              5.9448192100103325e-05,
+              -0.01766329612790519
+            ],
+            "physical_side_response": [
+              -0.7166479877810522,
+              0.7159886613117631
+            ],
+            "physical_xi_m": [
+              -0.011522632175386996,
+              -0.015158981197545902
+            ],
+            "wbc_model_side_response": [
+              -0.9999989546205872,
+              0.9999989528565225
+            ]
+          },
+          "maximum_cross_to_self_ratio": 0.00046021890456776095,
+          "response_matrix": [
+            [
+              0.9488830825556127,
+              -0.0003296632346445616
+            ],
+            [
+              -0.0001709167234826281,
+              0.7163183245464076
+            ]
+          ]
+        }
+      },
+      "tick": 56
+    },
+    {
+      "baseline_dxi_m_s": [
+        -0.005615101404753544,
+        -0.024852899718801797
+      ],
+      "baseline_xi_m": [
+        -0.012413414135494457,
+        -0.015521716646602391
+      ],
+      "case": "T1_straight_start_cruise_brake",
+      "full_half_matrix_relative_error": 7.55974654998686e-12,
+      "scales": {
+        "0.5": {
+          "common": {
+            "maximum_realized_wrench_relative_change": 1.3947328003026886e-06,
+            "physical_common_differential_response": [
+              0.9465556038553911,
+              0.0012383919037808888
+            ],
+            "physical_dxi_m_s": [
+              -0.005615101404753487,
+              -0.0248528997188016
+            ],
+            "physical_side_response": [
+              0.9453172119516101,
+              0.9477939957591719
+            ],
+            "physical_xi_m": [
+              -0.012413414135494377,
+              -0.015521716646602358
+            ],
+            "wbc_model_side_response": [
+              0.9999999790153083,
+              0.9999999763177199
+            ]
+          },
+          "condition_number": 1.3507698488028739,
+          "differential": {
+            "maximum_realized_wrench_relative_change": 0.0008377924394018043,
+            "physical_common_differential_response": [
+              0.009139702176943376,
+              0.7009409312753491
+            ],
+            "physical_dxi_m_s": [
+              -0.005615101404753487,
+              -0.0248528997188016
+            ],
+            "physical_side_response": [
+              -0.6918012290984057,
+              0.7100806334522924
+            ],
+            "physical_xi_m": [
+              -0.012413414135494377,
+              -0.015521716646602358
+            ],
+            "wbc_model_side_response": [
+              -0.9999990356000414,
+              0.9999990329024527
+            ]
+          },
+          "maximum_cross_to_self_ratio": 0.01303919027857862,
+          "response_matrix": [
+            [
+              0.9465556038553911,
+              0.009139702176943376
+            ],
+            [
+              0.0012383919037808888,
+              0.7009409312753491
+            ]
+          ]
+        },
+        "1.0": {
+          "common": {
+            "maximum_realized_wrench_relative_change": 2.7894656017750663e-06,
+            "physical_common_differential_response": [
+              0.9465556038543068,
+              0.0012383919057324388
+            ],
+            "physical_dxi_m_s": [
+              -0.005615101404753487,
+              -0.0248528997188016
+            ],
+            "physical_side_response": [
+              0.9453172119485743,
+              0.9477939957600392
+            ],
+            "physical_xi_m": [
+              -0.012413414135494377,
+              -0.015521716646602358
+            ],
+            "wbc_model_side_response": [
+              0.9999999790153081,
+              0.9999999763177194
+            ]
+          },
+          "condition_number": 1.350769848802385,
+          "differential": {
+            "maximum_realized_wrench_relative_change": 0.0016755848788045846,
+            "physical_common_differential_response": [
+              0.009139702184099097,
+              0.7009409312751322
+            ],
+            "physical_dxi_m_s": [
+              -0.005615101404753487,
+              -0.0248528997188016
+            ],
+            "physical_side_response": [
+              -0.6918012290910331,
+              0.7100806334592313
+            ],
+            "physical_xi_m": [
+              -0.012413414135494377,
+              -0.015521716646602358
+            ],
+            "wbc_model_side_response": [
+              -0.9999990356000413,
+              0.9999990329024526
+            ]
+          },
+          "maximum_cross_to_self_ratio": 0.01303919028879139,
+          "response_matrix": [
+            [
+              0.9465556038543068,
+              0.009139702184099097
+            ],
+            [
+              0.0012383919057324388,
+              0.7009409312751322
+            ]
+          ]
+        }
+      },
+      "tick": 44
+    }
+  ]
+}

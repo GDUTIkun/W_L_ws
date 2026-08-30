@@ -1,0 +1,20 @@
+{
+  "authority_pass": true,
+  "blocking_finding": null,
+  "classification": "gain_free_longitudinal_authority_pass",
+  "gate_results": {
+    "conditioning": true,
+    "cross_channel_isolation": true,
+    "hard_constraints": true,
+    "positive_self_authority": true,
+    "solver_status": true,
+    "wrench_preservation": true
+  },
+  "maximum_condition_number": 1.3507698488028739,
+  "maximum_cross_to_self_ratio": 0.01303919028879139,
+  "maximum_hard_violation": 1.3678236876479843e-08,
+  "maximum_realized_wrench_relative_change": 0.0017213554189355303,
+  "maximum_wbc_to_physical_ddxi_error_m_s2": 1.8196486079037357,
+  "minimum_physical_self_gain": 0.7009409312751322,
+  "sample_count": 2
+}

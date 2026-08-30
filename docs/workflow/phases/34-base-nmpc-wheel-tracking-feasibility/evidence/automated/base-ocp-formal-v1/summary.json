@@ -1,0 +1,22 @@
+{
+  "gates": {
+    "cold_reset_determinism": true,
+    "rti_deadline": true,
+    "rti_defect": false,
+    "rti_stationarity": false,
+    "rti_status": true,
+    "sqp_feasibility": true,
+    "sqp_stationarity": true,
+    "sqp_status": true
+  },
+  "maxima": {
+    "deterministic_u0_error": 0.0,
+    "rti_defect": 0.003396291828017463,
+    "rti_feasibility": 0.003396291828017463,
+    "rti_stationarity": 22.930324442581735,
+    "rti_time_s": 0.002162,
+    "sqp_feasibility": 2.49108341584781e-10,
+    "sqp_stationarity": 9.61949631061998e-10
+  },
+  "pass": false
+}
