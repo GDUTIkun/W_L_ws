@@ -23,6 +23,7 @@
 
 ## 当前模型文档
 
+- [当前 MuJoCo 轮腿模型（Model B）](current_mujoco_model.md)：当前 plant、闭链拓扑、canonical Adapter 边界与 12/16 维动力学映射。
 - [Simulink MPC–WM-WBC baseline](simulink_mpc_wm_wbc_baseline.md)：三维 Simscape plant、16-state NMPC、12-DoF weighted WM-WBC、slack 契约、采样链、平地证据和 terrain failure 边界。
 
 ## 维护规则

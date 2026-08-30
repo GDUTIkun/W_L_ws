@@ -1,0 +1,32 @@
+{
+  "command": "tools/experiments/run_phase44_regime_authority_addendum.py --output docs/workflow/phases/44-wbc-to-plant-constrained-rolling-realization-audit/evidence/automated/regime-authority-replay-v4 --replay-of docs/workflow/phases/44-wbc-to-plant-constrained-rolling-realization-audit/evidence/automated/regime-authority-formal-v4",
+  "contact_modification": false,
+  "created_utc": "2026-08-30T12:02:49.635947+00:00",
+  "dependencies": {
+    "mujoco": "3.7.0",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3"
+  },
+  "gain_tuning": false,
+  "inputs": {
+    "docs/workflow/phases/44-wbc-to-plant-constrained-rolling-realization-audit/evidence/automated/realization-audit-formal-v1/snapshot-selection.json": "773c7d2cb68f1a4c69a2461cc144764382f0412dd4c3f5f5ea51fc5f9e783b0a",
+    "docs/workflow/phases/44-wbc-to-plant-constrained-rolling-realization-audit/evidence/automated/realization-audit-formal-v1/summary.json": "2787a7ea35e9f28a2e92321c9e93a3e3cfa22675a4b8e9d62a655efc69349325",
+    "ros_ws/build/wheel_leg_mujoco/phase43_rolling_repair_loop": "bb1d37e63c634e344a57ed1dde9dc76499dcc92c33c00954b12e679c2a5e179d",
+    "simulation/mujoco/config/phase44_realization_audit_v1.json": "46288e2568a3bce6f251e9924b03ad636116666f030f7b468fd32d32a233ba6e",
+    "simulation/mujoco/config/phase44_regime_authority_addendum_v1.json": "fefd9fdc0e2af9aa65a19240a09ca47180094f1ffdc1aa8308e9c0b89ddb02b9",
+    "simulation/mujoco/model/scene_axisymmetric_centered_com_v1.xml": "1bf6a0c85f3fabf3c7447b913085ca6b79eff97d5baf824b44faf4e48343e419",
+    "tools/experiments/run_phase44_realization_audit.py": "61b88b433a0811746f760b4aa5d0e633e8879d7163113e60914607950160ca8c",
+    "tools/experiments/run_phase44_regime_authority_addendum.py": "79082a13bf05508ac20bba269f1a47a1396443d3aa806d636c1282f74598afa3"
+  },
+  "new_candidate": false,
+  "new_repair": false,
+  "new_task": false,
+  "nmpc_12d_run": false,
+  "phase34_run": false,
+  "plant_modification": false,
+  "platform": "Linux-7.0.0-30-generic-x86_64-with-glibc2.39",
+  "python": "3.10.20 (main, Jun 11 2026, 04:03:45) [Clang 22.1.3 ]",
+  "repair_16d": false,
+  "replay_of": "docs/workflow/phases/44-wbc-to-plant-constrained-rolling-realization-audit/evidence/automated/regime-authority-formal-v4",
+  "weight_tuning": false
+}

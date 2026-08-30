@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "phase": 44,
+  "profile": "phase44_regime_authority_addendum_v1",
+  "base_config": "simulation/mujoco/config/phase44_realization_audit_v1.json",
+  "base_formal": "docs/workflow/phases/44-wbc-to-plant-constrained-rolling-realization-audit/evidence/automated/realization-audit-formal-v1",
+  "delta_scales": [1.0, 0.5, 0.25],
+  "regime_thresholds": {
+    "inequality_active_distance": 1e-7,
+    "positive_normal_load_n": 1e-6,
+    "friction_near_limit_utilization": 0.95,
+    "penetration_deadband_m": 1e-8,
+    "slip_deadband_m_s": 1e-5,
+    "slack_inactive": 1e-7,
+    "slack_material": 0.02
+  },
+  "derivative_tolerances": {
+    "directional_convergence_relative": 0.05,
+    "smooth_branch_relative": 0.05,
+    "balance_max_abs": 1e-8,
+    "semantic_replay_max_abs": 1e-11,
+    "near_null_singular_value": 1e-5
+  },
+  "output_families": {
+    "native_wheel": [0, 1],
+    "xi": [2, 3],
+    "slip": [4, 5],
+    "base": [6, 7, 8],
+    "normal_load": [9, 10]
+  },
+  "persistent_nonsmooth_snapshots": 2,
+  "no_repair_contract": {
+    "gain_tuning": false,
+    "weight_tuning": false,
+    "new_task": false,
+    "new_candidate": false,
+    "new_repair": false,
+    "phase34_run": false,
+    "nmpc_12d_run": false,
+    "repair_16d": false,
+    "plant_modification": false,
+    "contact_modification": false
+  }
+}

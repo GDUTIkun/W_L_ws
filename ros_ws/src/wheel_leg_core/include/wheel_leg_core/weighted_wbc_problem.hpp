@@ -13,6 +13,7 @@ enum class WeightedWbcProfile {
   kPhase34XiTracking,
   kPhase43NativeWheelRate,
   kPhase43XiAndNativeWheelRate,
+  kPhase45ContactConsistentRolling,
 };
 
 struct WbcReference {
@@ -23,6 +24,16 @@ struct WbcReference {
   Eigen::Vector2d wheel_vertical_acceleration_m_s2{Eigen::Vector2d::Zero()};
   Eigen::Vector2d wheel_longitudinal_acceleration_m_s2{Eigen::Vector2d::Zero()};
   Eigen::Vector2d wheel_joint_acceleration_rad_s2{Eigen::Vector2d::Zero()};
+  // Phase45 contact observation. Each active row is the acceleration of the
+  // current wheel-surface material point along the measured ground tangent:
+  //   a_roll = rolling_acceleration_map * nudot + rolling_acceleration_bias.
+  std::array<NominalWbcModel::Matrix1x12, 2> rolling_acceleration_map{
+      NominalWbcModel::Matrix1x12::Zero(),
+      NominalWbcModel::Matrix1x12::Zero()};
+  Eigen::Vector2d rolling_acceleration_bias_m_s2{Eigen::Vector2d::Zero()};
+  Eigen::Vector2d rolling_acceleration_m_s2{Eigen::Vector2d::Zero()};
+  Eigen::Vector2d rolling_velocity_m_s{Eigen::Vector2d::Zero()};
+  std::array<bool, 2> rolling_task_active{};
   Eigen::Matrix<double, 12, 1> interaction_wrench_flu{
       Eigen::Matrix<double, 12, 1>::Zero()};
 };

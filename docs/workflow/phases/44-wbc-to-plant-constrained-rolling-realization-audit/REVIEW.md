@@ -1,6 +1,6 @@
 # Phase 44: WBC-to-Plant Constrained Rolling Realization Audit — REVIEW
 
-Status: `review`  
+Status: `PASS`（initial REWORK 由 append-only addendum 关闭）
 Reviewer/date: Codex, 2026-08-30
 
 ## Review Scope
@@ -67,6 +67,12 @@ Reviewer/date: Codex, 2026-08-30
 
 ## Verdict
 
-`REWORK`
+`REWORK`（initial review）
 
-不创建 `RECORD.md`，ROADMAP保持 `review`。
+当时不创建 `RECORD.md`，ROADMAP保持 `review`。
+
+## Addendum Supersession
+
+`REVIEW-addendum.md` 使用 regime-aware directional oracle关闭 DG44-06，DG44-R1..R10 全部PASS，
+最终分类 `P44-E`。该 addendum 不覆盖上述 initial REWORK 事实；它追加授权 `RECORD.md` 与 ROADMAP
+complete。Phase45 未在本 Phase 创建或执行。

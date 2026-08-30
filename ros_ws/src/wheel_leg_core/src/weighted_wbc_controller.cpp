@@ -15,7 +15,8 @@ bool usesMinimalInteractionWrench(WeightedWbcProfile profile) {
          profile == WeightedWbcProfile::kPhase33ZetaManifold ||
          profile == WeightedWbcProfile::kPhase34XiTracking ||
          profile == WeightedWbcProfile::kPhase43NativeWheelRate ||
-         profile == WeightedWbcProfile::kPhase43XiAndNativeWheelRate;
+         profile == WeightedWbcProfile::kPhase43XiAndNativeWheelRate ||
+         profile == WeightedWbcProfile::kPhase45ContactConsistentRolling;
 }
 
 }  // namespace
@@ -117,11 +118,15 @@ WeightedWbcController::Result WeightedWbcController::step(
         std::numeric_limits<double>::infinity();
     for (int row = inequality_ranges[group].first;
          row < inequality_ranges[group].second; ++row) {
-      const double margin = std::min(ax[row] - problem.lower[row],
-                                     problem.upper[row] - ax[row]);
+      const double lower_margin = ax[row] - problem.lower[row];
+      const double upper_margin = problem.upper[row] - ax[row];
+      const double margin = std::min(lower_margin, upper_margin);
       output.minimum_inequality_margin[group] =
           std::min(output.minimum_inequality_margin[group], margin);
       output.active_inequality_count[group] += margin <= 1.0e-7 ? 1 : 0;
+      output.inequality_active_side[row] =
+          (lower_margin <= 1.0e-7 ? 1 : 0) |
+          (upper_margin <= 1.0e-7 ? 2 : 0);
     }
   }
   for (int joint = 0; joint < 6; ++joint) {
@@ -167,10 +172,27 @@ WeightedWbcController::Result WeightedWbcController::step(
                     reference.wheel_vertical_acceleration_m_s2);
   }
   if (profile_ == WeightedWbcProfile::kPhase34XiTracking ||
-      profile_ == WeightedWbcProfile::kPhase43XiAndNativeWheelRate) {
+      profile_ == WeightedWbcProfile::kPhase43XiAndNativeWheelRate ||
+      profile_ == WeightedWbcProfile::kPhase45ContactConsistentRolling) {
     record_task(Task::kWheelLongitudinalTracking,
                 output.wheel_longitudinal_acceleration_m_s2 -
                     reference.wheel_longitudinal_acceleration_m_s2);
+  }
+  if (profile_ == WeightedWbcProfile::kPhase45ContactConsistentRolling) {
+    output.rolling_velocity_m_s = reference.rolling_velocity_m_s;
+    output.rolling_task_active = reference.rolling_task_active;
+    Eigen::Vector2d residual = Eigen::Vector2d::Zero();
+    for (int side = 0; side < 2; ++side) {
+      output.rolling_acceleration_m_s2[side] =
+          (reference.rolling_acceleration_map[side] *
+           output.physical_solution.head<12>())(0) +
+          reference.rolling_acceleration_bias_m_s2[side];
+      if (reference.rolling_task_active[side]) {
+        residual[side] = output.rolling_acceleration_m_s2[side] -
+                         reference.rolling_acceleration_m_s2[side];
+      }
+    }
+    record_task(Task::kContactConsistentRolling, residual);
   }
   if (profile_ == WeightedWbcProfile::kPhase43NativeWheelRate ||
       profile_ == WeightedWbcProfile::kPhase43XiAndNativeWheelRate) {

@@ -162,6 +162,37 @@ int main() {
   assert((combined.g - tracking.g - rate.g + minimal.g)
              .cwiseAbs().maxCoeff() <= 2.0e-12);
 
+  auto rolling_reference = reference;
+  rolling_reference.rolling_task_active = {true, true};
+  rolling_reference.rolling_acceleration_map[0].setZero();
+  rolling_reference.rolling_acceleration_map[1].setZero();
+  rolling_reference.rolling_acceleration_map[0](0, 8) = 0.05;
+  rolling_reference.rolling_acceleration_map[1](0, 11) = 0.05;
+  rolling_reference.rolling_acceleration_bias_m_s2 << 0.1, -0.2;
+  rolling_reference.rolling_acceleration_m_s2 << -0.3, 0.4;
+  const auto rolling = assembler.assemble(
+      evaluated, rolling_reference,
+      wheel_leg::WeightedWbcProfile::kPhase45ContactConsistentRolling);
+  assert(rolling.ok());
+  Eigen::Matrix<double, 2, 42> rolling_task =
+      Eigen::Matrix<double, 2, 42>::Zero();
+  rolling_task.block<1, 12>(0, 0) =
+      rolling_reference.rolling_acceleration_map[0];
+  rolling_task.block<1, 12>(1, 0) =
+      rolling_reference.rolling_acceleration_map[1];
+  for (int column = 0; column < 42; ++column)
+    rolling_task.col(column) *=
+        wheel_leg::phase21_profile::kVariableScale[column];
+  const Eigen::Vector2d rolling_target =
+      rolling_reference.rolling_acceleration_m_s2 -
+      rolling_reference.rolling_acceleration_bias_m_s2;
+  assert((rolling.h - tracking.h -
+          rolling_task.transpose() * rolling_task)
+             .cwiseAbs().maxCoeff() <= 2.0e-12);
+  assert((rolling.g - tracking.g +
+          rolling_task.transpose() * rolling_target)
+             .cwiseAbs().maxCoeff() <= 2.0e-12);
+
   auto nonfinite = reference;
   nonfinite.wheel_longitudinal_acceleration_m_s2[0] =
       std::numeric_limits<double>::quiet_NaN();
@@ -175,6 +206,13 @@ int main() {
   assert(assembler.assemble(
       evaluated, nonfinite,
       wheel_leg::WeightedWbcProfile::kPhase43NativeWheelRate).status ==
+      wheel_leg::WeightedWbcProblem::Status::kNonFinite);
+  nonfinite = rolling_reference;
+  nonfinite.rolling_acceleration_map[0](0, 0) =
+      std::numeric_limits<double>::quiet_NaN();
+  assert(assembler.assemble(
+      evaluated, nonfinite,
+      wheel_leg::WeightedWbcProfile::kPhase45ContactConsistentRolling).status ==
       wheel_leg::WeightedWbcProblem::Status::kNonFinite);
 
   wheel_leg::WeightedWbcController controller(

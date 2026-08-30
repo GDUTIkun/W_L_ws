@@ -11,6 +11,7 @@ class WeightedWbcController {
     kContact, kBaseX, kHeight, kOrientation, kLeg, kWheelVerticalManifold,
     kWheelLongitudinalTracking,
     kNativeWheelRate,
+    kContactConsistentRolling,
     kWrenchFidelity, kSlackPenalty, kCount,
   };
   static constexpr std::size_t kTaskCount = static_cast<std::size_t>(Task::kCount);
@@ -62,8 +63,13 @@ class WeightedWbcController {
         Eigen::Vector2d::Zero()};
     Eigen::Matrix<double, 6, 1> contact_task_residual{
         Eigen::Matrix<double, 6, 1>::Zero()};
+    Eigen::Vector2d rolling_velocity_m_s{Eigen::Vector2d::Zero()};
+    Eigen::Vector2d rolling_acceleration_m_s2{Eigen::Vector2d::Zero()};
+    std::array<bool, 2> rolling_task_active{};
     std::array<int, 3> active_inequality_count{};
     std::array<double, 3> minimum_inequality_margin{};
+    // 0=inactive, 1=lower near-active, 2=upper near-active, 3=both.
+    std::array<int, 104> inequality_active_side{};
 
     [[nodiscard]] bool ok() const { return status == Status::kOk; }
   };

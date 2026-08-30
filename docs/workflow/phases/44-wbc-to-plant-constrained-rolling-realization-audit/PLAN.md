@@ -1,6 +1,6 @@
 # Phase 44: WBC-to-Plant Constrained Rolling Realization Audit — PLAN
 
-Status: `review`  
+Status: `complete`
 Date: 2026-08-30
 
 ## Goal
@@ -106,7 +106,7 @@ Date: 2026-08-30
 | P44-T07 | C paradox decomposition | C own-trajectory key snapshots | decomposition JSON、`xi-realization-decomposition.md` | components sum to realized ddxi within tolerance | done |
 | P44-T08 | formal/replay/regression | T01-T07实现 | append-only formal与fresh replay | dependency probe、py_compile、colcon build/test、parse/nonfinite/diff | done |
 | P44-T09 | classification与review | 全部证据 | `phase44-decision.md`、`REVIEW.md` | 五个问题逐项回答、DG44-00..09审查 | done |
-| P44-T10 | record/roadmap | REVIEW PASS | `RECORD.md`、ROADMAP complete | 仅PASS后执行 | blocked |
+| P44-T10 | record/roadmap | REVIEW PASS | `RECORD.md`、ROADMAP complete | addendum REVIEW PASS | done |
 
 ## Validation Plan
 
@@ -156,4 +156,5 @@ Date: 2026-08-30
 
 ## Blockers
 
-DG44-06 authority matrix validity在late snapshots失败；REVIEW=REWORK，P44-T10不得执行。
+原 symmetric DG44-06 在 late snapshots 失败；append-only regime-aware addendum 已以
+DG44-R1..R10 修复 authority oracle并通过 REVIEW，见 `REVIEW-addendum.md`。

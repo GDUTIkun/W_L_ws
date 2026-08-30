@@ -81,6 +81,100 @@ bool pairMatches(int geom1, int geom2, int first, int second) {
          (geom1 == second && geom2 == first);
 }
 
+#ifdef WHEEL_LEG_PHASE45_CONTACT_ROLLING
+struct RollingObservation {
+  std::array<wheel_leg::NominalWbcModel::Matrix1x12, 2> map{
+      wheel_leg::NominalWbcModel::Matrix1x12::Zero(),
+      wheel_leg::NominalWbcModel::Matrix1x12::Zero()};
+  Eigen::Vector2d bias{Eigen::Vector2d::Zero()};
+  Eigen::Vector2d velocity{Eigen::Vector2d::Zero()};
+  std::array<double, 2> normal_load{};
+  std::array<bool, 2> contact_exists{};
+  std::array<bool, 2> geometry_valid{};
+};
+
+Eigen::Matrix3d skew(const Eigen::Vector3d &value) {
+  Eigen::Matrix3d result;
+  result << 0.0, -value.z(), value.y(), value.z(), 0.0, -value.x(),
+      -value.y(), value.x(), 0.0;
+  return result;
+}
+
+RollingObservation observeRolling(
+    const mjModel *model, const mjData *data,
+    const std::array<int, 2> &wheel_geom,
+    const std::array<int, 2> &wheel_body, int floor_geom,
+    const wheel_leg::NominalWbcModel::Result &reduced) {
+  RollingObservation result;
+  std::array<Eigen::Vector3d, 2> point{};
+  std::array<Eigen::Vector3d, 2> tangent{};
+  for (int contact_index = 0; contact_index < data->ncon; ++contact_index) {
+    const auto &contact = data->contact[contact_index];
+    double force[6]{};
+    mj_contactForce(model, data, contact_index, force);
+    for (int side = 0; side < 2; ++side) {
+      if (!pairMatches(contact.geom1, contact.geom2, wheel_geom[side], floor_geom))
+        continue;
+      result.normal_load[side] += std::abs(force[0]);
+      if (result.contact_exists[side]) continue;
+      result.contact_exists[side] = true;
+      point[side] = Eigen::Map<const Eigen::Vector3d>(contact.pos);
+      Eigen::Vector3d normal(contact.frame[0], contact.frame[1], contact.frame[2]);
+      if (contact.geom2 != wheel_geom[side]) normal = -normal;
+      const double normal_norm = normal.norm();
+      if (!(normal_norm > 0.0) || !normal.allFinite()) continue;
+      normal /= normal_norm;
+      tangent[side] = Eigen::Vector3d::UnitX() - normal.x() * normal;
+      const double tangent_norm = tangent[side].norm();
+      if (!(tangent_norm > 1.0e-9) || !tangent[side].allFinite()) continue;
+      tangent[side] /= tangent_norm;
+      result.geometry_valid[side] = true;
+    }
+  }
+
+  constexpr double kEpsilonS = 1.0e-6;
+  for (int side = 0; side < 2; ++side) {
+    if (!result.geometry_valid[side]) continue;
+    const Eigen::Vector3d center =
+        Eigen::Map<const Eigen::Vector3d>(data->xpos + 3 * wheel_body[side]);
+    const Eigen::Vector3d radius = point[side] - center;
+    Eigen::Matrix<double, 3, 16, Eigen::RowMajor> jacobian_position;
+    Eigen::Matrix<double, 3, 16, Eigen::RowMajor> jacobian_rotation;
+    mj_jacBody(model, data, jacobian_position.data(),
+               jacobian_rotation.data(), wheel_body[side]);
+    const Eigen::Matrix<double, 3, 16> point_jacobian =
+        jacobian_position - skew(radius) * jacobian_rotation;
+    const Eigen::Matrix<double, 1, 16> tree_row =
+        tangent[side].transpose() * point_jacobian;
+    result.velocity[side] = (tree_row *
+        Eigen::Map<const Eigen::Matrix<double, 16, 1>>(data->qvel))(0);
+    result.map[side] = tree_row * reduced.reduction;
+
+    std::array<Eigen::Vector3d, 2> point_velocity{};
+    for (int sample = 0; sample < 2; ++sample) {
+      const double sign = sample == 0 ? -1.0 : 1.0;
+      DataPtr probe(mj_makeData(model));
+      mj_copyData(probe.get(), model, data);
+      mj_integratePos(model, probe->qpos, data->qvel, sign * kEpsilonS);
+      mj_forward(model, probe.get());
+      Eigen::Matrix<double, 3, 16, Eigen::RowMajor> jp;
+      Eigen::Matrix<double, 3, 16, Eigen::RowMajor> jr;
+      mj_jacBody(model, probe.get(), jp.data(), jr.data(), wheel_body[side]);
+      const Eigen::Map<const Eigen::Matrix<double, 16, 1>> qvel(data->qvel);
+      point_velocity[sample] = jp * qvel + (jr * qvel).cross(radius);
+    }
+    const double jdot_v = tangent[side].dot(
+        (point_velocity[1] - point_velocity[0]) / (2.0 * kEpsilonS));
+    result.bias[side] = (tree_row * reduced.reduction_bias)(0) + jdot_v;
+    result.geometry_valid[side] =
+        std::isfinite(result.normal_load[side]) &&
+        std::isfinite(result.velocity[side]) && std::isfinite(result.bias[side]) &&
+        result.map[side].allFinite();
+  }
+  return result;
+}
+#endif
+
 #ifdef WHEEL_LEG_PHASE43_ROLLING_REPAIR
 void restoreNativeSnapshot(const std::string &path, int tick,
                            const mjModel *model, mjData *data) {
@@ -168,6 +262,18 @@ void writeHeader(std::ostream &output) {
     output << ",task_max_residual" << index << ",task_cost" << index;
   for (int index = 0; index < 3; ++index)
     output << ",active_count" << index << ",minimum_inequality_margin" << index;
+  for (int row = 12; row < 104; ++row)
+    output << ",active_row" << row;
+#ifdef WHEEL_LEG_PHASE45_CONTACT_ROLLING
+  output << ",rolling_active_left,rolling_active_right"
+         << ",rolling_velocity_left,rolling_velocity_right"
+         << ",desired_rolling_acceleration_left,desired_rolling_acceleration_right"
+         << ",qp_rolling_acceleration_left,qp_rolling_acceleration_right"
+         << ",rolling_bias_left,rolling_bias_right";
+  for (int side = 0; side < 2; ++side)
+    for (int column = 0; column < 12; ++column)
+      output << ",rolling_map_" << side << '_' << column;
+#endif
 #endif
   output << '\n';
 }
@@ -206,11 +312,13 @@ void run(const std::string &model_path, const std::string &output_path,
          [[maybe_unused]] const std::array<double, 4> &wrench_trim = {},
          [[maybe_unused]] const std::string &snapshot_path = {},
          [[maybe_unused]] int snapshot_tick = -1,
-         [[maybe_unused]] const std::array<double, 4> &task_delta = {}) {
+         [[maybe_unused]] const std::array<double, 4> &task_delta = {},
+         [[maybe_unused]] int requested_total_ticks = -1) {
 #ifdef WHEEL_LEG_PHASE43_ROLLING_REPAIR
   const bool phase43_case = case_id.rfind("R43-0", 0) == 0 ||
       case_id.rfind("R43-A", 0) == 0 || case_id.rfind("R43-B", 0) == 0 ||
-      case_id.rfind("R43-C", 0) == 0 || case_id.rfind("R43-D", 0) == 0;
+      case_id.rfind("R43-C", 0) == 0 || case_id.rfind("R43-D", 0) == 0 ||
+      case_id.rfind("R45-", 0) == 0;
   const bool known_case = phase43_case;
 #else
   const bool known_case = case_id == "H0_minimal_hold" ||
@@ -262,6 +370,10 @@ void run(const std::string &model_path, const std::string &output_path,
     profile = wheel_leg::WeightedWbcProfile::kPhase34XiTracking;
   if (case_id.rfind("R43-D", 0) == 0)
     profile = wheel_leg::WeightedWbcProfile::kPhase43XiAndNativeWheelRate;
+#ifdef WHEEL_LEG_PHASE45_CONTACT_ROLLING
+  if (case_id.rfind("R45-", 0) == 0)
+    profile = wheel_leg::WeightedWbcProfile::kPhase45ContactConsistentRolling;
+#endif
 #else
   const auto profile = case_id == "H0_minimal_hold"
       ? wheel_leg::WeightedWbcProfile::kPhase27Minimal
@@ -307,6 +419,10 @@ void run(const std::string &model_path, const std::string &output_path,
     wheel_body[side] = requiredId(model.get(), mjOBJ_BODY,
                                   side == 0 ? "left_wheel_body" : "right_wheel_body");
   const int base_site = requiredId(model.get(), mjOBJ_SITE, "base_control_frame");
+#ifdef WHEEL_LEG_PHASE45_CONTACT_ROLLING
+  std::array<bool, 2> rolling_active{};
+  std::array<int, 2> enable_persistence{};
+#endif
 
   std::ofstream output(output_path);
   if (!output) throw std::runtime_error("cannot create output");
@@ -325,7 +441,8 @@ void run(const std::string &model_path, const std::string &output_path,
 
   constexpr int kActivationTick = 50;
 #ifdef WHEEL_LEG_PHASE43_ROLLING_REPAIR
-  const int kTotalTicks = snapshot_path.empty() ? 1000 : 1;
+  const int kTotalTicks = requested_total_ticks > 0 ? requested_total_ticks :
+      (snapshot_path.empty() ? 1000 : 1);
 #elif defined(WHEEL_LEG_PHASE40_ANGLE_DOMAIN_DIAGNOSTIC) || \
     defined(WHEEL_LEG_PHASE41_PRODUCTION_REVALIDATION)
   constexpr int kTotalTicks = 2000;
@@ -343,6 +460,12 @@ void run(const std::string &model_path, const std::string &output_path,
     state = adapter.extractState(data.get());
     const auto workspace = wheel_leg::NominalWbcModel::inspectWorkspace(state);
     const auto measurement = wbc_model.evaluate(state);
+#ifdef WHEEL_LEG_PHASE45_CONTACT_ROLLING
+    const auto rolling = measurement.ok()
+        ? observeRolling(model.get(), data.get(), wheel_geom, wheel_body,
+                         floor_geom, measurement)
+        : RollingObservation{};
+#endif
     const double target_time = std::max(0.0, (tick - kActivationTick) * kDt);
     double offset = 0.0;
     if (case_id.rfind("tracking_step_", 0) == 0 && tick >= kActivationTick)
@@ -410,6 +533,33 @@ void run(const std::string &model_path, const std::string &output_path,
     reference.wheel_longitudinal_acceleration_m_s2[1] += task_delta[1];
     reference.wheel_joint_acceleration_rad_s2[0] += task_delta[2];
     reference.wheel_joint_acceleration_rad_s2[1] += task_delta[3];
+#ifdef WHEEL_LEG_PHASE45_CONTACT_ROLLING
+    if (case_id.rfind("R45-", 0) == 0 && measurement.ok()) {
+      constexpr double kEnableLoadN = 5.0;
+      constexpr double kDisableLoadN = 2.0;
+      constexpr int kEnablePersistenceTicks = 2;
+      constexpr double kSlipGainPerS = 2.0 * std::acos(-1.0) * 3.5;
+      for (int side = 0; side < 2; ++side) {
+        const bool valid = rolling.contact_exists[side] &&
+            rolling.geometry_valid[side] &&
+            state.contact_state[side] == wheel_leg::ContactState::kContact;
+        if (!valid || rolling.normal_load[side] <= kDisableLoadN) {
+          rolling_active[side] = false;
+          enable_persistence[side] = 0;
+        } else if (!rolling_active[side] && rolling.normal_load[side] >= kEnableLoadN) {
+          ++enable_persistence[side];
+          if (tick == 0 || enable_persistence[side] >= kEnablePersistenceTicks)
+            rolling_active[side] = true;
+        }
+        reference.rolling_task_active[side] = rolling_active[side];
+        reference.rolling_acceleration_map[side] = rolling.map[side];
+        reference.rolling_acceleration_bias_m_s2[side] = rolling.bias[side];
+        reference.rolling_velocity_m_s[side] = rolling.velocity[side];
+        reference.rolling_acceleration_m_s2[side] =
+            -kSlipGainPerS * rolling.velocity[side] + task_delta[2 + side];
+      }
+    }
+#endif
 #endif
 
     wheel_leg::WeightedWbcController::Result result;
@@ -564,6 +714,23 @@ void run(const std::string &model_path, const std::string &output_path,
     for (int index = 0; index < 3; ++index)
       output << ',' << (result.ok() ? result.active_inequality_count[index] : -1)
              << ',' << (result.ok() ? result.minimum_inequality_margin[index] : nan);
+    for (int row = 12; row < 104; ++row)
+      output << ',' << (result.ok() ? result.inequality_active_side[row] : -1);
+#ifdef WHEEL_LEG_PHASE45_CONTACT_ROLLING
+    output << ',' << result.rolling_task_active[0]
+           << ',' << result.rolling_task_active[1]
+           << ',' << result.rolling_velocity_m_s[0]
+           << ',' << result.rolling_velocity_m_s[1]
+           << ',' << reference.rolling_acceleration_m_s2[0]
+           << ',' << reference.rolling_acceleration_m_s2[1]
+           << ',' << result.rolling_acceleration_m_s2[0]
+           << ',' << result.rolling_acceleration_m_s2[1]
+           << ',' << reference.rolling_acceleration_bias_m_s2[0]
+           << ',' << reference.rolling_acceleration_bias_m_s2[1];
+    for (int side = 0; side < 2; ++side)
+      for (int column = 0; column < 12; ++column)
+        output << ',' << reference.rolling_acceleration_map[side](0, column);
+#endif
 #endif
     output << '\n';
 
@@ -649,7 +816,7 @@ void run(const std::string &model_path, const std::string &output_path,
 
 int main(int argc, char **argv) {
 #ifdef WHEEL_LEG_PHASE43_ROLLING_REPAIR
-  if (argc != 12 && argc != 14 && argc != 18) {
+  if (argc != 12 && argc != 13 && argc != 14 && argc != 18) {
     std::cerr << "usage: phase43_rolling_repair_loop MODEL OUTPUT CASE GAIN KP KD RATE_GAIN DFX_L DFX_R DTY_L DTY_R [NATIVE_CSV TICK [DDXI_L DDXI_R QDD_L QDD_R]]\n";
     return 1;
   }
@@ -677,7 +844,8 @@ int main(int argc, char **argv) {
         argc == 18 ? std::array<double, 4>{
             std::stod(argv[14]), std::stod(argv[15]),
             std::stod(argv[16]), std::stod(argv[17])}
-                   : std::array<double, 4>{});
+                   : std::array<double, 4>{},
+        argc == 13 ? std::stoi(argv[12]) : -1);
 #else
     run(argv[1], argv[2], argv[3], argv[4], std::stod(argv[5]), std::stod(argv[6]));
 #endif

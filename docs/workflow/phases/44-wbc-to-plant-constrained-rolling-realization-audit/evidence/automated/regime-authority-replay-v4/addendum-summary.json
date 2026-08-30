@@ -1,0 +1,158 @@
+{
+  "classification": "P44-E",
+  "classification_counts": {
+    "R44-B": 0,
+    "R44-O+": 0,
+    "R44-O-": 0,
+    "R44-P": 84,
+    "R44-S": 396
+  },
+  "contact_cancellation": {
+    "all_opposing_sign": true,
+    "count": 27,
+    "ratio_max": 0.9017022370616248,
+    "ratio_min": 0.7610663507109005,
+    "scope": "trusted D/native_common directions"
+  },
+  "gates": {
+    "DG44-R1": true,
+    "DG44-R10": true,
+    "DG44-R2": true,
+    "DG44-R3": true,
+    "DG44-R4": true,
+    "DG44-R5": true,
+    "DG44-R6": true,
+    "DG44-R7": true,
+    "DG44-R8": true,
+    "DG44-R9": true
+  },
+  "max_contact_balance_residual": 0.0,
+  "max_contact_reconstruction_residual": 0.0,
+  "max_directional_convergence_relative": 0.7489723283937786,
+  "max_full_dynamics_residual": 1.7763568394002505e-13,
+  "no_repair_contract": {
+    "contact_modification": false,
+    "gain_tuning": false,
+    "new_candidate": false,
+    "new_repair": false,
+    "new_task": false,
+    "nmpc_12d_run": false,
+    "phase34_run": false,
+    "plant_modification": false,
+    "repair_16d": false,
+    "weight_tuning": false
+  },
+  "pass": true,
+  "replay_max_abs_error": 0.0,
+  "snapshot_reconstruction": {
+    "qpos_max_abs": 2.220446049250313e-16,
+    "qvel_max_abs": 4.440892098500626e-16
+  },
+  "total_family_rows": 480,
+  "transition_events": {
+    "B": {
+      "first_persistent_nonsmooth_tick": 98,
+      "interpretation": "chronology_association_only",
+      "ordered_ticks": [
+        0,
+        93,
+        97,
+        98,
+        101,
+        115,
+        119
+      ],
+      "phase43_events": {
+        "contact_or_load_deterioration": null,
+        "failure_minus_1": 119,
+        "failure_minus_5": 115,
+        "material_base_rotation": 101,
+        "material_slack": 115,
+        "material_task_residual": 98,
+        "material_xi_deviation": 93,
+        "persistent_common_rate": 97,
+        "persistent_differential_rate": null,
+        "tick0": 0
+      },
+      "regime_sensitive": [
+        false,
+        false,
+        false,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    "C": {
+      "first_persistent_nonsmooth_tick": null,
+      "interpretation": "chronology_association_only",
+      "ordered_ticks": [
+        0,
+        84,
+        94,
+        98,
+        102,
+        103,
+        106
+      ],
+      "phase43_events": {
+        "contact_or_load_deterioration": null,
+        "failure_minus_1": 106,
+        "failure_minus_5": 102,
+        "material_base_rotation": 94,
+        "material_slack": 103,
+        "material_task_residual": null,
+        "material_xi_deviation": 98,
+        "persistent_common_rate": 84,
+        "persistent_differential_rate": null,
+        "tick0": 0
+      },
+      "regime_sensitive": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    "D": {
+      "first_persistent_nonsmooth_tick": 110,
+      "interpretation": "chronology_association_only",
+      "ordered_ticks": [
+        0,
+        103,
+        110,
+        113,
+        120,
+        121,
+        124
+      ],
+      "phase43_events": {
+        "contact_or_load_deterioration": null,
+        "failure_minus_1": 124,
+        "failure_minus_5": 120,
+        "material_base_rotation": 113,
+        "material_slack": 121,
+        "material_task_residual": null,
+        "material_xi_deviation": 110,
+        "persistent_common_rate": 103,
+        "persistent_differential_rate": null,
+        "tick0": 0
+      },
+      "regime_sensitive": [
+        false,
+        false,
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    }
+  },
+  "trusted_family_rows": 380,
+  "trusted_fraction": 0.7916666666666666
+}

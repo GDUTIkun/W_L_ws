@@ -46,7 +46,8 @@ bool usesMinimalInteractionWrench(WeightedWbcProfile profile) {
          profile == WeightedWbcProfile::kPhase33ZetaManifold ||
          profile == WeightedWbcProfile::kPhase34XiTracking ||
          profile == WeightedWbcProfile::kPhase43NativeWheelRate ||
-         profile == WeightedWbcProfile::kPhase43XiAndNativeWheelRate;
+         profile == WeightedWbcProfile::kPhase43XiAndNativeWheelRate ||
+         profile == WeightedWbcProfile::kPhase45ContactConsistentRolling;
 }
 
 }  // namespace
@@ -62,6 +63,9 @@ WeightedWbcProblem::Result WeightedWbcProblem::assemble(
       !reference.wheel_vertical_acceleration_m_s2.allFinite() ||
       !reference.wheel_longitudinal_acceleration_m_s2.allFinite() ||
       !reference.wheel_joint_acceleration_rad_s2.allFinite() ||
+      !reference.rolling_acceleration_bias_m_s2.allFinite() ||
+      !reference.rolling_acceleration_m_s2.allFinite() ||
+      !reference.rolling_velocity_m_s.allFinite() ||
       !reference.interaction_wrench_flu.allFinite() ||
       !std::isfinite(reference.base_x_acceleration_m_s2) ||
       !std::isfinite(reference.base_height_acceleration_m_s2)) {
@@ -151,7 +155,8 @@ WeightedWbcProblem::Result WeightedWbcProblem::assemble(
   }
 
   if (profile == WeightedWbcProfile::kPhase34XiTracking ||
-      profile == WeightedWbcProfile::kPhase43XiAndNativeWheelRate) {
+      profile == WeightedWbcProfile::kPhase43XiAndNativeWheelRate ||
+      profile == WeightedWbcProfile::kPhase45ContactConsistentRolling) {
     Eigen::Matrix<double, 2, 42> wheel_longitudinal =
         Eigen::Matrix<double, 2, 42>::Zero();
     Eigen::Vector2d wheel_longitudinal_target =
@@ -165,6 +170,26 @@ WeightedWbcProblem::Result WeightedWbcProblem::assemble(
     wheel_longitudinal *= transform;
     addTask<2>(result.h, result.g, wheel_longitudinal,
                wheel_longitudinal_target,
+               Eigen::Vector2d::Constant(kWheelLongitudinalScale));
+  }
+
+  if (profile == WeightedWbcProfile::kPhase45ContactConsistentRolling) {
+    Eigen::Matrix<double, 2, 42> rolling =
+        Eigen::Matrix<double, 2, 42>::Zero();
+    Eigen::Vector2d target = Eigen::Vector2d::Zero();
+    for (int side = 0; side < 2; ++side) {
+      if (!reference.rolling_acceleration_map[side].allFinite()) {
+        result.status = Status::kNonFinite;
+        return result;
+      }
+      if (!reference.rolling_task_active[side]) continue;
+      rolling.block<1, 12>(side, 0) =
+          reference.rolling_acceleration_map[side];
+      target[side] = reference.rolling_acceleration_m_s2[side] -
+                     reference.rolling_acceleration_bias_m_s2[side];
+    }
+    rolling *= transform;
+    addTask<2>(result.h, result.g, rolling, target,
                Eigen::Vector2d::Constant(kWheelLongitudinalScale));
   }
 
