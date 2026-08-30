@@ -1,0 +1,29 @@
+{
+  "all_directional_scales_trusted": true,
+  "classification": "C-CROSS_COUPLING_REVERSAL",
+  "pass": true,
+  "qp_plant_hip_mode_classification": "C-HIP_MODE_CREATED_BY_PLANT_REALIZATION",
+  "replay_max_abs_error": 0.0,
+  "scope_contract": {
+    "compatible_wrench_frozen": true,
+    "cross_gain_precompensation": false,
+    "gain_tuning": false,
+    "model_b_frozen": true,
+    "new_candidate": false,
+    "new_task": false,
+    "nmpc_12d_run": false,
+    "planner_run": false,
+    "state_contact_friction_torque_solver_frozen": true,
+    "state_dependent_projection": false,
+    "static_hip_common_deletion": false,
+    "tracking_run": false,
+    "trajectory_run": false,
+    "weight_tuning": false,
+    "wrench_tuning": false,
+    "xi_slip_observable_frozen": true
+  },
+  "slip_mj_leg_dof_closure": 0.0,
+  "slip_mj_leg_mode_closure": 8.881784197001252e-16,
+  "slip_qp_leg_dof_closure": -3.0357660829594124e-18,
+  "slip_qp_leg_mode_closure": -1.0842021724855044e-19
+}

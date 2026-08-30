@@ -1,6 +1,6 @@
 # Phase 46 Review
 
-结论：`REWORK`  
+结论：`REWORK`
 日期：2026-08-31  
 classification：`P46-E — multiple remaining mechanisms`
 
@@ -48,3 +48,39 @@ Machine-readable authority：
 [formal-v1](evidence/automated/hip-common-safe-formal-v1/summary.json) 与
 [fresh replay-v1](evidence/automated/hip-common-safe-replay-v1/summary.json)。
 
+## REWORK — Frozen Nominal, Limited Increment
+
+结论：`REWORK`
+classification：`B-EQUILIBRIUM_PRESERVED_BUT_COUPLING_REMAINS`
+
+唯一新增的约束只在 external `slip-common` delta 非零时生效：将 QP 的 bilateral
+hip-common acceleration 固定为 frozen compatible-H0 nominal 值
+`-0.009961062735978504 rad/s2`；zero delta 完全保留原 Phase45 rolling realization。
+它不是 static deletion、target/bias offset、gain/weight/wrench tuning 或 cross-gain
+precompensation。
+
+**DG46I-EQ PASS。** zero delta 下 `ddxi=[4.06e-14,2.87e-14] m/s2`，material tangent
+`[1.04e-16,-6.94e-17] m/s2`，loads `[30.970,31.499] N`，hard `4.68e-11`，slack
+`0.001344`，torque margin `1.998 Nm`，whole-dynamics/contact residual
+`2.13e-14/0`。因此 nominal equilibrium 没有被改变。
+
+**DG46I-AUTH FAIL。** hard equality 在 QP 端确实清除了 hip-common increment：QP hip
+common gain `2.97e-11 rad/s2/(m/s2)`，对应 `ddxi_c` contribution `-8.25e-12`。但相同
+fixed-state command 经 MuJoCo realization 后，hip-common gain 回到 `+14.4813`，并贡献
+`-4.027036` 至 `ddxi_c`。故 actual cross 为 `-4.2950569`，相对 frozen
+`-4.2950932` 的降低只有 `8.45e-6`（约 `0.000845%`），远未满足收敛门。
+
+slip self authority 仍为正 `+0.0308533`，没有被投影摧毁。knee-common 是次级负贡献
+`-0.267966`；base `5.18e-17`、native wheel `0`、`(Jdot,v)` `4.51e-15`、hip differential
+`+0.000310`，均没有取代 hip-common 为主导路径。`+/-` branches 与 `1/0.5/0.25` scales
+一致；leg DOF/mode decomposition closure `<=8.88e-16`，whole dynamics/contact closure
+`<=1e-8`。fresh replay semantic max error 为 `0`，且所有记录为 tick0 command snapshots，未做
+trajectory/REAL/SHORT/10 s。
+
+这说明 nominal hip-common 可以保留，但静态地限制其 **QP increment** 不能限制其 **actual plant
+increment**；failure 仍是 QP-to-MuJoCo realization，而不是 authority loss。Phase46 保持
+`review/REWORK`；不创建 RECORD，不尝试下一 repair。
+
+Machine-readable evidence：
+[incremental formal-v1](evidence/automated/incremental-hip-common-formal-v1/summary.json) 与
+[fresh replay-v1](evidence/automated/incremental-hip-common-replay-v1/summary.json)。

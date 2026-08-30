@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "phase": 46,
+  "profile": "phase46_hip_common_increment_limited_v1",
+  "continuation_config": "simulation/mujoco/config/phase45_contact_consistent_rolling_v2.json",
+  "runtime_executable": "ros_ws/build/wheel_leg_mujoco/phase46_hip_common_increment_limited_rolling_loop",
+  "case_id": "R46I-H0",
+  "frozen_nominal_hip_common_acceleration_rad_s2": -0.009961062735978504,
+  "increment_constraint": "0.5*(nudot_left_hip+nudot_right_hip)=frozen nominal only for nonzero slip-common task delta",
+  "input_channels": {
+    "xi_common_only": [1.0, 1.0, 0.0, 0.0],
+    "slip_common_only": [0.0, 0.0, 1.0, 1.0]
+  },
+  "output_rows": ["ddxi_common_m_s2", "a_t_common_m_s2"],
+  "delta_m_s2": 0.01,
+  "delta_scales": [1.0, 0.5, 0.25],
+  "maximum_directional_convergence_relative": 0.05,
+  "maximum_directional_split_relative": 0.05,
+  "contact_redirection": {
+    "minimum_contact_to_actuator_norm_ratio": 0.5,
+    "maximum_contact_actuator_cosine": -0.5,
+    "minimum_contact_force_share": 0.5
+  },
+  "authority_gates": {
+    "phase45_harmful_cross_gain": -4.295093192621674,
+    "phase45_slip_self_gain": 0.030842288660802054,
+    "maximum_abs_actual_cross_gain": 0.1,
+    "minimum_cross_reduction_fraction": 0.9,
+    "minimum_slip_self_retention_fraction": 0.5,
+    "maximum_abs_hip_common_increment_gain": 1e-8,
+    "maximum_abs_migrated_mode_contribution": 0.1
+  },
+  "scope_contract": {
+    "compatible_wrench_frozen": true,
+    "model_b_frozen": true,
+    "state_contact_friction_torque_solver_frozen": true,
+    "xi_slip_observable_frozen": true,
+    "gain_tuning": false,
+    "weight_tuning": false,
+    "wrench_tuning": false,
+    "new_task": false,
+    "new_candidate": false,
+    "static_hip_common_deletion": false,
+    "cross_gain_precompensation": false,
+    "state_dependent_projection": false,
+    "trajectory_run": false,
+    "tracking_run": false,
+    "planner_run": false,
+    "nmpc_12d_run": false
+  }
+}

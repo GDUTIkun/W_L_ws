@@ -225,6 +225,22 @@ int main() {
   assert((safe.g - tracking.g + safe_task.transpose() * rolling_target)
              .cwiseAbs().maxCoeff() <= 2.0e-12);
 
+  auto increment_limited_reference = rolling_reference;
+  increment_limited_reference.hip_common_increment_limit_active = true;
+  increment_limited_reference.nominal_hip_common_acceleration_rad_s2 = -0.0123;
+  const auto increment_limited = assembler.assemble(
+      evaluated, increment_limited_reference,
+      wheel_leg::WeightedWbcProfile::kPhase46HipCommonIncrementLimitedRolling);
+  assert(increment_limited.ok());
+  assert((increment_limited.h - rolling.h).cwiseAbs().maxCoeff() <= 2.0e-12);
+  assert((increment_limited.g - rolling.g).cwiseAbs().maxCoeff() <= 2.0e-12);
+  assert(std::abs(increment_limited.a(104, 6) -
+                  0.5 * wheel_leg::phase21_profile::kVariableScale[6]) <= 1.0e-15);
+  assert(std::abs(increment_limited.a(104, 9) -
+                  0.5 * wheel_leg::phase21_profile::kVariableScale[9]) <= 1.0e-15);
+  assert(increment_limited.lower[104] == -0.0123);
+  assert(increment_limited.upper[104] == -0.0123);
+
   auto nonfinite = reference;
   nonfinite.wheel_longitudinal_acceleration_m_s2[0] =
       std::numeric_limits<double>::quiet_NaN();

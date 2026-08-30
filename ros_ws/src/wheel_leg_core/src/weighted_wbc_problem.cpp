@@ -48,7 +48,8 @@ bool usesMinimalInteractionWrench(WeightedWbcProfile profile) {
          profile == WeightedWbcProfile::kPhase43NativeWheelRate ||
          profile == WeightedWbcProfile::kPhase43XiAndNativeWheelRate ||
          profile == WeightedWbcProfile::kPhase45ContactConsistentRolling ||
-         profile == WeightedWbcProfile::kPhase46HipCommonSafeRolling;
+         profile == WeightedWbcProfile::kPhase46HipCommonSafeRolling ||
+         profile == WeightedWbcProfile::kPhase46HipCommonIncrementLimitedRolling;
 }
 
 }  // namespace
@@ -77,6 +78,8 @@ WeightedWbcProblem::Result WeightedWbcProblem::assemble(
       !reference.rolling_acceleration_m_s2.allFinite() ||
       !reference.rolling_velocity_m_s.allFinite() ||
       !reference.interaction_wrench_flu.allFinite() ||
+      (reference.hip_common_increment_limit_active &&
+       !std::isfinite(reference.nominal_hip_common_acceleration_rad_s2)) ||
       !std::isfinite(reference.base_x_acceleration_m_s2) ||
       !std::isfinite(reference.base_height_acceleration_m_s2)) {
     result.status = Status::kNonFinite;
@@ -129,6 +132,15 @@ WeightedWbcProblem::Result WeightedWbcProblem::assemble(
     result.lower[row] = -1.0;
     result.upper[row] = 1.0;
   }
+  result.lower[104] = -kInfinity;
+  result.upper[104] = kInfinity;
+  if (profile == WeightedWbcProfile::kPhase46HipCommonIncrementLimitedRolling &&
+      reference.hip_common_increment_limit_active) {
+    result.a(104, 6) = 0.5 * variable_scale[6];
+    result.a(104, 9) = 0.5 * variable_scale[9];
+    result.lower[104] = result.upper[104] =
+        reference.nominal_hip_common_acceleration_rad_s2;
+  }
 
   result.h.setIdentity();
   result.h *= kRegularization;
@@ -167,7 +179,8 @@ WeightedWbcProblem::Result WeightedWbcProblem::assemble(
   if (profile == WeightedWbcProfile::kPhase34XiTracking ||
       profile == WeightedWbcProfile::kPhase43XiAndNativeWheelRate ||
       profile == WeightedWbcProfile::kPhase45ContactConsistentRolling ||
-      profile == WeightedWbcProfile::kPhase46HipCommonSafeRolling) {
+      profile == WeightedWbcProfile::kPhase46HipCommonSafeRolling ||
+      profile == WeightedWbcProfile::kPhase46HipCommonIncrementLimitedRolling) {
     Eigen::Matrix<double, 2, 42> wheel_longitudinal =
         Eigen::Matrix<double, 2, 42>::Zero();
     Eigen::Vector2d wheel_longitudinal_target =
@@ -185,7 +198,8 @@ WeightedWbcProblem::Result WeightedWbcProblem::assemble(
   }
 
   if (profile == WeightedWbcProfile::kPhase45ContactConsistentRolling ||
-      profile == WeightedWbcProfile::kPhase46HipCommonSafeRolling) {
+      profile == WeightedWbcProfile::kPhase46HipCommonSafeRolling ||
+      profile == WeightedWbcProfile::kPhase46HipCommonIncrementLimitedRolling) {
     Eigen::Matrix<double, 2, 42> rolling =
         Eigen::Matrix<double, 2, 42>::Zero();
     Eigen::Vector2d target = Eigen::Vector2d::Zero();

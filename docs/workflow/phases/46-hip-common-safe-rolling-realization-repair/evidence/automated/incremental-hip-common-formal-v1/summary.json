@@ -1,0 +1,31 @@
+{
+  "classification": "B-EQUILIBRIUM_PRESERVED_BUT_COUPLING_REMAINS",
+  "entered": {
+    "AUTH": true,
+    "EQ": true
+  },
+  "gates": {
+    "DG46I-AUTH": false,
+    "DG46I-EQ": true
+  },
+  "pass": false,
+  "replay_max_abs_error": null,
+  "scope_contract": {
+    "compatible_wrench_frozen": true,
+    "cross_gain_precompensation": false,
+    "gain_tuning": false,
+    "model_b_frozen": true,
+    "new_candidate": false,
+    "new_task": false,
+    "nmpc_12d_run": false,
+    "planner_run": false,
+    "state_contact_friction_torque_solver_frozen": true,
+    "state_dependent_projection": false,
+    "static_hip_common_deletion": false,
+    "tracking_run": false,
+    "trajectory_run": false,
+    "weight_tuning": false,
+    "wrench_tuning": false,
+    "xi_slip_observable_frozen": true
+  }
+}

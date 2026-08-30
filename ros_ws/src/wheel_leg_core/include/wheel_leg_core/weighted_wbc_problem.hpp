@@ -15,6 +15,7 @@ enum class WeightedWbcProfile {
   kPhase43XiAndNativeWheelRate,
   kPhase45ContactConsistentRolling,
   kPhase46HipCommonSafeRolling,
+  kPhase46HipCommonIncrementLimitedRolling,
 };
 
 [[nodiscard]] NominalWbcModel::Matrix1x12 hipCommonSafeRollingMap(
@@ -38,6 +39,8 @@ struct WbcReference {
   Eigen::Vector2d rolling_acceleration_m_s2{Eigen::Vector2d::Zero()};
   Eigen::Vector2d rolling_velocity_m_s{Eigen::Vector2d::Zero()};
   std::array<bool, 2> rolling_task_active{};
+  bool hip_common_increment_limit_active{false};
+  double nominal_hip_common_acceleration_rad_s2{0.0};
   Eigen::Matrix<double, 12, 1> interaction_wrench_flu{
       Eigen::Matrix<double, 12, 1>::Zero()};
 };
@@ -45,13 +48,13 @@ struct WbcReference {
 class WeightedWbcProblem {
  public:
   static constexpr int kVariableCount = 42;
-  static constexpr int kConstraintCount = 104;
+  static constexpr int kConstraintCount = 105;
 
   using Matrix42 = Eigen::Matrix<double, kVariableCount, kVariableCount>;
   using Vector42 = Eigen::Matrix<double, kVariableCount, 1>;
-  using Matrix104x42 =
+  using MatrixConstraintx42 =
       Eigen::Matrix<double, kConstraintCount, kVariableCount>;
-  using Vector104 = Eigen::Matrix<double, kConstraintCount, 1>;
+  using VectorConstraint = Eigen::Matrix<double, kConstraintCount, 1>;
 
   enum class Status { kOk, kModelRejected, kNonFinite };
 
@@ -60,9 +63,9 @@ class WeightedWbcProblem {
     NominalWbcModel::Status model_status{NominalWbcModel::Status::kInvalidState};
     Matrix42 h{Matrix42::Zero()};
     Vector42 g{Vector42::Zero()};
-    Matrix104x42 a{Matrix104x42::Zero()};
-    Vector104 lower{Vector104::Zero()};
-    Vector104 upper{Vector104::Zero()};
+    MatrixConstraintx42 a{MatrixConstraintx42::Zero()};
+    VectorConstraint lower{VectorConstraint::Zero()};
+    VectorConstraint upper{VectorConstraint::Zero()};
 
     [[nodiscard]] bool ok() const { return status == Status::kOk; }
   };

@@ -87,10 +87,22 @@ bool pairMatches(int geom1, int geom2, int first, int second) {
 #ifdef WHEEL_LEG_PHASE46_HIP_COMMON_SAFE_ROLLING
   if (case_id.rfind("R46-", 0) == 0) return true;
 #endif
+#ifdef WHEEL_LEG_PHASE46_HIP_COMMON_INCREMENT_LIMIT
+  if (case_id.rfind("R46I-", 0) == 0) return true;
+#endif
 #else
   static_cast<void>(case_id);
 #endif
   return false;
+}
+
+[[maybe_unused]] bool isIncrementalHipCommonCase(const std::string &case_id) {
+#ifdef WHEEL_LEG_PHASE46_HIP_COMMON_INCREMENT_LIMIT
+  return case_id.rfind("R46I-", 0) == 0;
+#else
+  static_cast<void>(case_id);
+  return false;
+#endif
 }
 
 #ifdef WHEEL_LEG_PHASE45_CONTACT_ROLLING
@@ -389,6 +401,10 @@ void run(const std::string &model_path, const std::string &output_path,
   if (case_id.rfind("R46-", 0) == 0)
     profile = wheel_leg::WeightedWbcProfile::kPhase46HipCommonSafeRolling;
 #endif
+#ifdef WHEEL_LEG_PHASE46_HIP_COMMON_INCREMENT_LIMIT
+  if (isIncrementalHipCommonCase(case_id))
+    profile = wheel_leg::WeightedWbcProfile::kPhase46HipCommonIncrementLimitedRolling;
+#endif
 #endif
 #else
   const auto profile = case_id == "H0_minimal_hold"
@@ -575,6 +591,18 @@ void run(const std::string &model_path, const std::string &output_path,
         reference.rolling_acceleration_m_s2[side] =
             -kSlipGainPerS * rolling.velocity[side] + task_delta[2 + side];
       }
+#ifdef WHEEL_LEG_PHASE46_HIP_COMMON_INCREMENT_LIMIT
+      constexpr double kCompatibleH0NominalHipCommonAcceleration =
+          -0.009961062735978504;
+      const double slip_common_delta = 0.5 * (task_delta[2] + task_delta[3]);
+      const double slip_differential_delta = 0.5 * (task_delta[3] - task_delta[2]);
+      reference.hip_common_increment_limit_active =
+          isIncrementalHipCommonCase(case_id) &&
+          std::abs(slip_common_delta) > 0.0 &&
+          std::abs(slip_differential_delta) <= 1.0e-15;
+      reference.nominal_hip_common_acceleration_rad_s2 =
+          kCompatibleH0NominalHipCommonAcceleration;
+#endif
     }
 #endif
 #endif

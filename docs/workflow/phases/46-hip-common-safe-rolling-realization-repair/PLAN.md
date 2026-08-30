@@ -70,6 +70,15 @@ gate FAIL 后不进入后续 gate。fixed-state AUTH 使用 xi-only/slip-only、
 | P46-T09 / DG46-REAUDIT | post-repair authority | DG46-EQ FAIL，mandatory stop，未进入 | blocked |
 | P46-T10 | formal/replay/review | dependency probe、py_compile、fresh replay、classification、REVIEW；PASS only creates RECORD | done |
 
+### REWORK tasks — frozen nominal, limited increment
+
+| ID | Task | Deliverable / validation | Status |
+| --- | --- | --- | --- |
+| P46-R01 | 实现唯一 incremental restriction | zero delta 维持原 rolling QP；仅 external slip-common delta 启用 frozen nominal hip-common hard equality | done |
+| P46-R02 / DG46I-EQ | 重新验证 compatible-H0 equilibrium | 原 ddxi/tangent/contact/load/hard/slack/torque/dynamics/contact gates 全部 PASS | done |
+| P46-R03 / DG46I-AUTH | frozen directional incremental audit | `+/-`、`1/0.5/0.25`、QP/MuJoCo decomposition 与 closure 完成；actual cross 未下降，FAIL | done |
+| P46-R04 | formal、fresh replay 与 REVIEW | dependency probe、py_compile、build/test、non-finite audit、replay 完成；保持 REWORK | done |
+
 ## Classification
 
 最终只能选择：
@@ -83,3 +92,13 @@ gate FAIL 后不进入后续 gate。fixed-state AUTH 使用 xi-only/slip-only、
 
 若 mandatory gate FAIL，保持 Phase46 `review/REWORK`，不创建 RECORD，也不自动进入 soft penalty、
 coupled task、precompensation 或 dynamic projection。
+
+## REWORK — Frozen Nominal, Limited Increment
+
+本次 REWORK 不新开 Phase。Phase46 static row projection 已可靠地在 EQ FAIL，故唯一允许的替代是：
+zero slip perturbation 继续走未投影的 Phase45 rolling QP；仅在 frozen tick0 `slip-common` external
+task delta 非零时，追加一个无权重的 hard equality
+`0.5*(nudot_left_hip+nudot_right_hip)= -0.009961062735978504 rad/s2`。
+该右端是已冻结 compatible-H0 nominal QP hip-common 值，不是 xi/slip target offset、gain/weight
+调整或 cross-gain precompensation；它只令 requested slip perturbation 的 QP hip-common increment 为零。
+不运行 REAL/SHORT/10 s。本轮 gate 仅为 `EQ -> Incremental AUTH -> fresh replay`。

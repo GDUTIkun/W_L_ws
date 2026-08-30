@@ -64,9 +64,9 @@ int main() {
     auto reference = readReference(input);
     wheel_leg::WeightedWbcProblem::Matrix42 expected_h;
     wheel_leg::WeightedWbcProblem::Vector42 expected_g;
-    wheel_leg::WeightedWbcProblem::Matrix104x42 expected_a;
-    wheel_leg::WeightedWbcProblem::Vector104 expected_lower;
-    wheel_leg::WeightedWbcProblem::Vector104 expected_upper;
+    Eigen::Matrix<double, 104, 42> expected_a;
+    Eigen::Matrix<double, 104, 1> expected_lower;
+    Eigen::Matrix<double, 104, 1> expected_upper;
     readMatrix(input, expected_h);
     readMatrix(input, expected_g);
     readMatrix(input, expected_a);
@@ -78,9 +78,9 @@ int main() {
     assert(actual.ok());
     assert((actual.h - expected_h).cwiseAbs().maxCoeff() <= 2.0e-10);
     assert((actual.g - expected_g).cwiseAbs().maxCoeff() <= 2.0e-8);
-    assert((actual.a - expected_a).cwiseAbs().maxCoeff() <= 2.0e-9);
-    assert((actual.lower - expected_lower).cwiseAbs().maxCoeff() <= 2.0e-9);
-    assert((actual.upper - expected_upper).cwiseAbs().maxCoeff() <= 2.0e-9);
+    assert((actual.a.topRows<104>() - expected_a).cwiseAbs().maxCoeff() <= 2.0e-9);
+    assert((actual.lower.head<104>() - expected_lower).cwiseAbs().maxCoeff() <= 2.0e-9);
+    assert((actual.upper.head<104>() - expected_upper).cwiseAbs().maxCoeff() <= 2.0e-9);
     if (index == 0) {
       equilibrium = state;
       equilibrium_reference = reference;
