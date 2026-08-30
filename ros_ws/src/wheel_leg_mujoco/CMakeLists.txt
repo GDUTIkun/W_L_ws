@@ -64,6 +64,27 @@ target_link_libraries(phase34_xi_tracking_loop wheel_leg_mujoco_adapter)
 target_compile_options(
   phase34_xi_tracking_loop PRIVATE -Wall -Wextra -Wpedantic -Werror)
 
+add_executable(
+  phase35_workspace_attribution_loop src/phase35_workspace_attribution_loop.cpp)
+target_link_libraries(phase35_workspace_attribution_loop wheel_leg_mujoco_adapter)
+target_compile_options(
+  phase35_workspace_attribution_loop PRIVATE -Wall -Wextra -Wpedantic -Werror)
+add_executable(
+  phase40_angle_domain_loop src/phase35_workspace_attribution_loop.cpp)
+target_link_libraries(phase40_angle_domain_loop wheel_leg_mujoco_adapter)
+target_compile_definitions(
+  phase40_angle_domain_loop PRIVATE WHEEL_LEG_PHASE40_ANGLE_DOMAIN_DIAGNOSTIC=1)
+target_compile_options(
+  phase40_angle_domain_loop PRIVATE -Wall -Wextra -Wpedantic -Werror)
+add_executable(
+  phase41_workspace_contract_loop src/phase35_workspace_attribution_loop.cpp)
+target_link_libraries(phase41_workspace_contract_loop wheel_leg_mujoco_adapter)
+target_compile_definitions(
+  phase41_workspace_contract_loop
+  PRIVATE WHEEL_LEG_PHASE41_PRODUCTION_REVALIDATION=1)
+target_compile_options(
+  phase41_workspace_contract_loop PRIVATE -Wall -Wextra -Wpedantic -Werror)
+
 if(BUILD_TESTING)
   find_package(ament_cmake_gtest REQUIRED)
   ament_add_gtest(test_adapter test/test_adapter.cpp)
@@ -80,7 +101,8 @@ install(DIRECTORY
   DESTINATION share/${PROJECT_NAME}/simulation)
 install(TARGETS wheel_leg_mujoco_adapter mujoco_node deterministic_loop
   planar_standing_loop standing_3d_loop weighted_wbc_loop
-  phase34_xi_tracking_loop
+  phase34_xi_tracking_loop phase35_workspace_attribution_loop
+  phase40_angle_domain_loop phase41_workspace_contract_loop
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION lib/${PROJECT_NAME})

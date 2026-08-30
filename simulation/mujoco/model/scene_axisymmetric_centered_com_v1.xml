@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mujoco model="wheel_leg_axisymmetric_centered_com_scene_v1">
+  <compiler angle="radian" autolimits="true"/>
+  <option timestep="0.002" gravity="0 0 -9.81" integrator="implicitfast"
+          density="1.225" viscosity="1.8e-5"/>
+  <include file="wheel_leg_axisymmetric_centered_com_v1.xml"/>
+  <worldbody>
+    <geom name="floor" pos="0 0 0" size="0 0 .25" type="plane"
+          contype="1" conaffinity="0" condim="3"/>
+  </worldbody>
+</mujoco>

@@ -1,0 +1,42 @@
+{
+  "classification": [
+    "P40-A_cyclic_unbounded_engineering_domain",
+    "P40-F_current_plus_minus_1_rad_contract_unsupported"
+  ],
+  "dg40_00_consumer_trace_pass": true,
+  "dg40_01_corpus_frozen": true,
+  "dg40_02_engineering_periodicity_pass": true,
+  "dg40_03_recenter_equivalence_pass": true,
+  "dg40_03_wrapped_physical_equivalence_pass": true,
+  "diagnostic_policy_default": "enforce",
+  "phase34_tracking_run": false,
+  "production_gate_modified": false,
+  "real_hardware_limit_authority": "unknown_not_established",
+  "representation_recommendation": "R3_raw_unwrapped_plus_periodic_physical_validator",
+  "shadow_h0": {
+    "continued_past_historical_gate": true,
+    "final_tick": 111,
+    "historical_workspace_crossing_tick": 96,
+    "maximum_wheel_revolutions": 0.45329612204545966,
+    "maximum_wheel_rotation_rad": 2.8481435338375167,
+    "replay_max_abs_error": 0.0,
+    "replay_pass": true,
+    "stop_gates": [
+      "bilateral_contact"
+    ],
+    "stop_tick": 111,
+    "three_revolution_stop_reached": false,
+    "valid_until_stop": true,
+    "validity_before_stop": {
+      "base_angular_speed": true,
+      "base_linear_speed": true,
+      "base_position": true,
+      "base_rotation": true,
+      "bilateral_contact": true,
+      "hard": true,
+      "model_controller_solver": true,
+      "slack": true,
+      "torque": true
+    }
+  }
+}

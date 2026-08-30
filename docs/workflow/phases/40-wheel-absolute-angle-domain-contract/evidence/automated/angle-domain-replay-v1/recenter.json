@@ -1,0 +1,4055 @@
+{
+  "pass": true,
+  "records": [
+    {
+      "contact_topology_exact": true,
+      "domain": "mandatory",
+      "errors": {
+        "bias": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "positions": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "qacc": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "rotations": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "wheel_qacc": {
+          "normalized": 0.0,
+          "raw": 0.0
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 0.0,
+      "maximum_normalized_error": 0.0,
+      "mode": "left",
+      "raw_reconstruction_error_rad": 0.0,
+      "revolutions": 0,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "mandatory",
+      "errors": {
+        "bias": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "positions": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "qacc": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "rotations": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "wheel_qacc": {
+          "normalized": 0.0,
+          "raw": 0.0
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 0.0,
+      "maximum_normalized_error": 0.0,
+      "mode": "right",
+      "raw_reconstruction_error_rad": 0.0,
+      "revolutions": 0,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "mandatory",
+      "errors": {
+        "bias": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "positions": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "qacc": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "rotations": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "wheel_qacc": {
+          "normalized": 0.0,
+          "raw": 0.0
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 0.0,
+      "maximum_normalized_error": 0.0,
+      "mode": "bilateral",
+      "raw_reconstruction_error_rad": 0.0,
+      "revolutions": 0,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "mandatory",
+      "errors": {
+        "bias": {
+          "normalized": 7.144281354207841e-19,
+          "raw": 4.5102810375396984e-17
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 4.437753038511346e-16,
+          "raw": 7.105427357601002e-15
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 2.156811483248548e-18,
+          "raw": 1.3877787807814457e-17
+        },
+        "positions": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "qacc": {
+          "normalized": 4.461466578718253e-15,
+          "raw": 3.197442310920451e-14
+        },
+        "rotations": {
+          "normalized": 2.3592239273284576e-16,
+          "raw": 2.3592239273284576e-16
+        },
+        "wheel_qacc": {
+          "normalized": 4.461466578718253e-15,
+          "raw": 3.197442310920451e-14
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 3.197442310920451e-14,
+      "maximum_normalized_error": 4.461466578718253e-15,
+      "mode": "left",
+      "raw_reconstruction_error_rad": 2.5673907444456745e-16,
+      "revolutions": -1,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "mandatory",
+      "errors": {
+        "bias": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 2.063555162907776e-14,
+          "raw": 3.304023721284466e-13
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 2.696014354060685e-19,
+          "raw": 1.734723475976807e-18
+        },
+        "positions": {
+          "normalized": 6.938893903907228e-18,
+          "raw": 6.938893903907228e-18
+        },
+        "qacc": {
+          "normalized": 2.0944106994538463e-14,
+          "raw": 1.5010215292932116e-13
+        },
+        "rotations": {
+          "normalized": 3.3306690738754696e-16,
+          "raw": 3.3306690738754696e-16
+        },
+        "wheel_qacc": {
+          "normalized": 1.2516892345848431e-14,
+          "raw": 8.970602038971265e-14
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 1.5010215292932116e-13,
+      "maximum_normalized_error": 2.0944106994538463e-14,
+      "mode": "right",
+      "raw_reconstruction_error_rad": 1.1102230246251565e-16,
+      "revolutions": -1,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "mandatory",
+      "errors": {
+        "bias": {
+          "normalized": 7.144281354207841e-19,
+          "raw": 4.5102810375396984e-17
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 2.041366397715219e-14,
+          "raw": 3.268496584496461e-13
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 2.156811483248548e-18,
+          "raw": 1.3877787807814457e-17
+        },
+        "positions": {
+          "normalized": 6.938893903907228e-18,
+          "raw": 6.938893903907228e-18
+        },
+        "qacc": {
+          "normalized": 2.1068036621725083e-14,
+          "raw": 1.509903313490213e-13
+        },
+        "rotations": {
+          "normalized": 3.3306690738754696e-16,
+          "raw": 3.3306690738754696e-16
+        },
+        "wheel_qacc": {
+          "normalized": 8.55114427587665e-15,
+          "raw": 6.128431095930864e-14
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 1.509903313490213e-13,
+      "maximum_normalized_error": 2.1068036621725083e-14,
+      "mode": "bilateral",
+      "raw_reconstruction_error_rad": 2.5673907444456745e-16,
+      "revolutions": -1,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "mandatory",
+      "errors": {
+        "bias": {
+          "normalized": 7.144281354207841e-19,
+          "raw": 4.5102810375396984e-17
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 4.437753038511346e-16,
+          "raw": 7.105427357601002e-15
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 2.156811483248548e-18,
+          "raw": 1.3877787807814457e-17
+        },
+        "positions": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "qacc": {
+          "normalized": 4.461466578718253e-15,
+          "raw": 3.197442310920451e-14
+        },
+        "rotations": {
+          "normalized": 2.3592239273284576e-16,
+          "raw": 2.3592239273284576e-16
+        },
+        "wheel_qacc": {
+          "normalized": 4.461466578718253e-15,
+          "raw": 3.197442310920451e-14
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 3.197442310920451e-14,
+      "maximum_normalized_error": 4.461466578718253e-15,
+      "mode": "left",
+      "raw_reconstruction_error_rad": 2.5673907444456745e-16,
+      "revolutions": 1,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "mandatory",
+      "errors": {
+        "bias": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 2.063555162907776e-14,
+          "raw": 3.304023721284466e-13
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 2.696014354060685e-19,
+          "raw": 1.734723475976807e-18
+        },
+        "positions": {
+          "normalized": 6.938893903907228e-18,
+          "raw": 6.938893903907228e-18
+        },
+        "qacc": {
+          "normalized": 2.0944106994538463e-14,
+          "raw": 1.5010215292932116e-13
+        },
+        "rotations": {
+          "normalized": 3.3306690738754696e-16,
+          "raw": 3.3306690738754696e-16
+        },
+        "wheel_qacc": {
+          "normalized": 1.2516892345848431e-14,
+          "raw": 8.970602038971265e-14
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 1.5010215292932116e-13,
+      "maximum_normalized_error": 2.0944106994538463e-14,
+      "mode": "right",
+      "raw_reconstruction_error_rad": 1.1102230246251565e-16,
+      "revolutions": 1,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "mandatory",
+      "errors": {
+        "bias": {
+          "normalized": 7.144281354207841e-19,
+          "raw": 4.5102810375396984e-17
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 2.041366397715219e-14,
+          "raw": 3.268496584496461e-13
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 2.156811483248548e-18,
+          "raw": 1.3877787807814457e-17
+        },
+        "positions": {
+          "normalized": 6.938893903907228e-18,
+          "raw": 6.938893903907228e-18
+        },
+        "qacc": {
+          "normalized": 2.1068036621725083e-14,
+          "raw": 1.509903313490213e-13
+        },
+        "rotations": {
+          "normalized": 3.3306690738754696e-16,
+          "raw": 3.3306690738754696e-16
+        },
+        "wheel_qacc": {
+          "normalized": 8.55114427587665e-15,
+          "raw": 6.128431095930864e-14
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 1.509903313490213e-13,
+      "maximum_normalized_error": 2.1068036621725083e-14,
+      "mode": "bilateral",
+      "raw_reconstruction_error_rad": 2.5673907444456745e-16,
+      "revolutions": 1,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "mandatory",
+      "errors": {
+        "bias": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 7.766067817394855e-16,
+          "raw": 1.2434497875801753e-14
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 8.425044856439641e-21,
+          "raw": 5.421010862427522e-20
+        },
+        "positions": {
+          "normalized": 6.938893903907228e-18,
+          "raw": 6.938893903907228e-18
+        },
+        "qacc": {
+          "normalized": 5.497828086066347e-14,
+          "raw": 3.9401815143946806e-13
+        },
+        "rotations": {
+          "normalized": 1.5543122344752192e-15,
+          "raw": 1.5543122344752192e-15
+        },
+        "wheel_qacc": {
+          "normalized": 2.0820177367351846e-14,
+          "raw": 1.4921397450962104e-13
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 3.9401815143946806e-13,
+      "maximum_normalized_error": 5.497828086066347e-14,
+      "mode": "left",
+      "raw_reconstruction_error_rad": 1.519617764955683e-15,
+      "revolutions": -5,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "mandatory",
+      "errors": {
+        "bias": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 2.063555162907776e-14,
+          "raw": 3.304023721284466e-13
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "positions": {
+          "normalized": 6.938893903907228e-18,
+          "raw": 6.938893903907228e-18
+        },
+        "qacc": {
+          "normalized": 2.0944106994538463e-14,
+          "raw": 1.5010215292932116e-13
+        },
+        "rotations": {
+          "normalized": 1.6653345369377348e-15,
+          "raw": 1.6653345369377348e-15
+        },
+        "wheel_qacc": {
+          "normalized": 1.2516892345848431e-14,
+          "raw": 8.970602038971265e-14
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 1.5010215292932116e-13,
+      "maximum_normalized_error": 2.0944106994538463e-14,
+      "mode": "right",
+      "raw_reconstruction_error_rad": 1.6653345369377348e-15,
+      "revolutions": -5,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "mandatory",
+      "errors": {
+        "bias": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 2.063555162907776e-14,
+          "raw": 3.304023721284466e-13
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 8.425044856439641e-21,
+          "raw": 5.421010862427522e-20
+        },
+        "positions": {
+          "normalized": 6.938893903907228e-18,
+          "raw": 6.938893903907228e-18
+        },
+        "qacc": {
+          "normalized": 4.543569956729387e-14,
+          "raw": 3.256284131225584e-13
+        },
+        "rotations": {
+          "normalized": 1.6653345369377348e-15,
+          "raw": 1.6653345369377348e-15
+        },
+        "wheel_qacc": {
+          "normalized": 3.160205493258762e-14,
+          "raw": 2.2648549702353193e-13
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 3.256284131225584e-13,
+      "maximum_normalized_error": 4.543569956729387e-14,
+      "mode": "bilateral",
+      "raw_reconstruction_error_rad": 1.6653345369377348e-15,
+      "revolutions": -5,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "mandatory",
+      "errors": {
+        "bias": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 7.766067817394855e-16,
+          "raw": 1.2434497875801753e-14
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 8.425044856439641e-21,
+          "raw": 5.421010862427522e-20
+        },
+        "positions": {
+          "normalized": 6.938893903907228e-18,
+          "raw": 6.938893903907228e-18
+        },
+        "qacc": {
+          "normalized": 5.497828086066347e-14,
+          "raw": 3.9401815143946806e-13
+        },
+        "rotations": {
+          "normalized": 1.5543122344752192e-15,
+          "raw": 1.5543122344752192e-15
+        },
+        "wheel_qacc": {
+          "normalized": 2.0820177367351846e-14,
+          "raw": 1.4921397450962104e-13
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 3.9401815143946806e-13,
+      "maximum_normalized_error": 5.497828086066347e-14,
+      "mode": "left",
+      "raw_reconstruction_error_rad": 1.519617764955683e-15,
+      "revolutions": 5,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "mandatory",
+      "errors": {
+        "bias": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 2.063555162907776e-14,
+          "raw": 3.304023721284466e-13
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "positions": {
+          "normalized": 6.938893903907228e-18,
+          "raw": 6.938893903907228e-18
+        },
+        "qacc": {
+          "normalized": 2.0944106994538463e-14,
+          "raw": 1.5010215292932116e-13
+        },
+        "rotations": {
+          "normalized": 1.6653345369377348e-15,
+          "raw": 1.6653345369377348e-15
+        },
+        "wheel_qacc": {
+          "normalized": 1.2516892345848431e-14,
+          "raw": 8.970602038971265e-14
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 1.5010215292932116e-13,
+      "maximum_normalized_error": 2.0944106994538463e-14,
+      "mode": "right",
+      "raw_reconstruction_error_rad": 1.6653345369377348e-15,
+      "revolutions": 5,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "mandatory",
+      "errors": {
+        "bias": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 2.063555162907776e-14,
+          "raw": 3.304023721284466e-13
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 8.425044856439641e-21,
+          "raw": 5.421010862427522e-20
+        },
+        "positions": {
+          "normalized": 6.938893903907228e-18,
+          "raw": 6.938893903907228e-18
+        },
+        "qacc": {
+          "normalized": 4.543569956729387e-14,
+          "raw": 3.256284131225584e-13
+        },
+        "rotations": {
+          "normalized": 1.6653345369377348e-15,
+          "raw": 1.6653345369377348e-15
+        },
+        "wheel_qacc": {
+          "normalized": 3.160205493258762e-14,
+          "raw": 2.2648549702353193e-13
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 3.256284131225584e-13,
+      "maximum_normalized_error": 4.543569956729387e-14,
+      "mode": "bilateral",
+      "raw_reconstruction_error_rad": 1.6653345369377348e-15,
+      "revolutions": 5,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "mandatory",
+      "errors": {
+        "bias": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "positions": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "qacc": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "rotations": {
+          "normalized": 5.5441762292218755e-15,
+          "raw": 5.5441762292218755e-15
+        },
+        "wheel_qacc": {
+          "normalized": 0.0,
+          "raw": 0.0
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 0.0,
+      "maximum_normalized_error": 5.5441762292218755e-15,
+      "mode": "left",
+      "raw_reconstruction_error_rad": 5.585809592645319e-15,
+      "revolutions": -25,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "mandatory",
+      "errors": {
+        "bias": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 2.063555162907776e-14,
+          "raw": 3.304023721284466e-13
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "positions": {
+          "normalized": 6.938893903907228e-18,
+          "raw": 6.938893903907228e-18
+        },
+        "qacc": {
+          "normalized": 2.0944106994538463e-14,
+          "raw": 1.5010215292932116e-13
+        },
+        "rotations": {
+          "normalized": 1.6653345369377348e-15,
+          "raw": 1.6653345369377348e-15
+        },
+        "wheel_qacc": {
+          "normalized": 1.2516892345848431e-14,
+          "raw": 8.970602038971265e-14
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 1.5010215292932116e-13,
+      "maximum_normalized_error": 2.0944106994538463e-14,
+      "mode": "right",
+      "raw_reconstruction_error_rad": 1.6653345369377348e-15,
+      "revolutions": -25,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "mandatory",
+      "errors": {
+        "bias": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 2.063555162907776e-14,
+          "raw": 3.304023721284466e-13
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "positions": {
+          "normalized": 6.938893903907228e-18,
+          "raw": 6.938893903907228e-18
+        },
+        "qacc": {
+          "normalized": 2.0944106994538463e-14,
+          "raw": 1.5010215292932116e-13
+        },
+        "rotations": {
+          "normalized": 5.5441762292218755e-15,
+          "raw": 5.5441762292218755e-15
+        },
+        "wheel_qacc": {
+          "normalized": 1.2516892345848431e-14,
+          "raw": 8.970602038971265e-14
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 1.5010215292932116e-13,
+      "maximum_normalized_error": 2.0944106994538463e-14,
+      "mode": "bilateral",
+      "raw_reconstruction_error_rad": 5.585809592645319e-15,
+      "revolutions": -25,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "mandatory",
+      "errors": {
+        "bias": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "positions": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "qacc": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "rotations": {
+          "normalized": 5.5441762292218755e-15,
+          "raw": 5.5441762292218755e-15
+        },
+        "wheel_qacc": {
+          "normalized": 0.0,
+          "raw": 0.0
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 0.0,
+      "maximum_normalized_error": 5.5441762292218755e-15,
+      "mode": "left",
+      "raw_reconstruction_error_rad": 5.585809592645319e-15,
+      "revolutions": 25,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "mandatory",
+      "errors": {
+        "bias": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 2.063555162907776e-14,
+          "raw": 3.304023721284466e-13
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "positions": {
+          "normalized": 6.938893903907228e-18,
+          "raw": 6.938893903907228e-18
+        },
+        "qacc": {
+          "normalized": 2.0944106994538463e-14,
+          "raw": 1.5010215292932116e-13
+        },
+        "rotations": {
+          "normalized": 1.6653345369377348e-15,
+          "raw": 1.6653345369377348e-15
+        },
+        "wheel_qacc": {
+          "normalized": 1.2516892345848431e-14,
+          "raw": 8.970602038971265e-14
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 1.5010215292932116e-13,
+      "maximum_normalized_error": 2.0944106994538463e-14,
+      "mode": "right",
+      "raw_reconstruction_error_rad": 1.6653345369377348e-15,
+      "revolutions": 25,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "mandatory",
+      "errors": {
+        "bias": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 2.063555162907776e-14,
+          "raw": 3.304023721284466e-13
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "positions": {
+          "normalized": 6.938893903907228e-18,
+          "raw": 6.938893903907228e-18
+        },
+        "qacc": {
+          "normalized": 2.0944106994538463e-14,
+          "raw": 1.5010215292932116e-13
+        },
+        "rotations": {
+          "normalized": 5.5441762292218755e-15,
+          "raw": 5.5441762292218755e-15
+        },
+        "wheel_qacc": {
+          "normalized": 1.2516892345848431e-14,
+          "raw": 8.970602038971265e-14
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 1.5010215292932116e-13,
+      "maximum_normalized_error": 2.0944106994538463e-14,
+      "mode": "bilateral",
+      "raw_reconstruction_error_rad": 5.585809592645319e-15,
+      "revolutions": 25,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "mandatory",
+      "errors": {
+        "bias": {
+          "normalized": 7.144281354207841e-19,
+          "raw": 4.5102810375396984e-17
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 4.437753038511346e-16,
+          "raw": 7.105427357601002e-15
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 2.156811483248548e-18,
+          "raw": 1.3877787807814457e-17
+        },
+        "positions": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "qacc": {
+          "normalized": 4.461466578718253e-15,
+          "raw": 3.197442310920451e-14
+        },
+        "rotations": {
+          "normalized": 2.288447209508604e-14,
+          "raw": 2.288447209508604e-14
+        },
+        "wheel_qacc": {
+          "normalized": 4.461466578718253e-15,
+          "raw": 3.197442310920451e-14
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 3.197442310920451e-14,
+      "maximum_normalized_error": 2.288447209508604e-14,
+      "mode": "left",
+      "raw_reconstruction_error_rad": 2.283589983775869e-14,
+      "revolutions": -50,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "mandatory",
+      "errors": {
+        "bias": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 2.063555162907776e-14,
+          "raw": 3.304023721284466e-13
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "positions": {
+          "normalized": 6.938893903907228e-18,
+          "raw": 6.938893903907228e-18
+        },
+        "qacc": {
+          "normalized": 2.0944106994538463e-14,
+          "raw": 1.5010215292932116e-13
+        },
+        "rotations": {
+          "normalized": 1.6653345369377348e-15,
+          "raw": 1.6653345369377348e-15
+        },
+        "wheel_qacc": {
+          "normalized": 1.2516892345848431e-14,
+          "raw": 8.970602038971265e-14
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 1.5010215292932116e-13,
+      "maximum_normalized_error": 2.0944106994538463e-14,
+      "mode": "right",
+      "raw_reconstruction_error_rad": 1.6653345369377348e-15,
+      "revolutions": -50,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "mandatory",
+      "errors": {
+        "bias": {
+          "normalized": 7.144281354207841e-19,
+          "raw": 4.5102810375396984e-17
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 2.041366397715219e-14,
+          "raw": 3.268496584496461e-13
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 2.156811483248548e-18,
+          "raw": 1.3877787807814457e-17
+        },
+        "positions": {
+          "normalized": 6.938893903907228e-18,
+          "raw": 6.938893903907228e-18
+        },
+        "qacc": {
+          "normalized": 2.1068036621725083e-14,
+          "raw": 1.509903313490213e-13
+        },
+        "rotations": {
+          "normalized": 2.288447209508604e-14,
+          "raw": 2.288447209508604e-14
+        },
+        "wheel_qacc": {
+          "normalized": 8.55114427587665e-15,
+          "raw": 6.128431095930864e-14
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 1.509903313490213e-13,
+      "maximum_normalized_error": 2.288447209508604e-14,
+      "mode": "bilateral",
+      "raw_reconstruction_error_rad": 2.283589983775869e-14,
+      "revolutions": -50,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "mandatory",
+      "errors": {
+        "bias": {
+          "normalized": 7.144281354207841e-19,
+          "raw": 4.5102810375396984e-17
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 4.437753038511346e-16,
+          "raw": 7.105427357601002e-15
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 2.156811483248548e-18,
+          "raw": 1.3877787807814457e-17
+        },
+        "positions": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "qacc": {
+          "normalized": 4.461466578718253e-15,
+          "raw": 3.197442310920451e-14
+        },
+        "rotations": {
+          "normalized": 2.288447209508604e-14,
+          "raw": 2.288447209508604e-14
+        },
+        "wheel_qacc": {
+          "normalized": 4.461466578718253e-15,
+          "raw": 3.197442310920451e-14
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 3.197442310920451e-14,
+      "maximum_normalized_error": 2.288447209508604e-14,
+      "mode": "left",
+      "raw_reconstruction_error_rad": 2.283589983775869e-14,
+      "revolutions": 50,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "mandatory",
+      "errors": {
+        "bias": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 2.063555162907776e-14,
+          "raw": 3.304023721284466e-13
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "positions": {
+          "normalized": 6.938893903907228e-18,
+          "raw": 6.938893903907228e-18
+        },
+        "qacc": {
+          "normalized": 2.0944106994538463e-14,
+          "raw": 1.5010215292932116e-13
+        },
+        "rotations": {
+          "normalized": 1.6653345369377348e-15,
+          "raw": 1.6653345369377348e-15
+        },
+        "wheel_qacc": {
+          "normalized": 1.2516892345848431e-14,
+          "raw": 8.970602038971265e-14
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 1.5010215292932116e-13,
+      "maximum_normalized_error": 2.0944106994538463e-14,
+      "mode": "right",
+      "raw_reconstruction_error_rad": 1.6653345369377348e-15,
+      "revolutions": 50,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "mandatory",
+      "errors": {
+        "bias": {
+          "normalized": 7.144281354207841e-19,
+          "raw": 4.5102810375396984e-17
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 2.041366397715219e-14,
+          "raw": 3.268496584496461e-13
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 2.156811483248548e-18,
+          "raw": 1.3877787807814457e-17
+        },
+        "positions": {
+          "normalized": 6.938893903907228e-18,
+          "raw": 6.938893903907228e-18
+        },
+        "qacc": {
+          "normalized": 2.1068036621725083e-14,
+          "raw": 1.509903313490213e-13
+        },
+        "rotations": {
+          "normalized": 2.288447209508604e-14,
+          "raw": 2.288447209508604e-14
+        },
+        "wheel_qacc": {
+          "normalized": 8.55114427587665e-15,
+          "raw": 6.128431095930864e-14
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 1.509903313490213e-13,
+      "maximum_normalized_error": 2.288447209508604e-14,
+      "mode": "bilateral",
+      "raw_reconstruction_error_rad": 2.283589983775869e-14,
+      "revolutions": 50,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "engineering",
+      "errors": {
+        "bias": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 2.551707997144024e-14,
+          "raw": 4.085620730620576e-13
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "positions": {
+          "normalized": 1.3877787807814457e-17,
+          "raw": 1.3877787807814457e-17
+        },
+        "qacc": {
+          "normalized": 3.016137301654319e-14,
+          "raw": 2.1616042289451798e-13
+        },
+        "rotations": {
+          "normalized": 1.3648804308985518e-13,
+          "raw": 1.3648804308985518e-13
+        },
+        "wheel_qacc": {
+          "normalized": 1.4747625635207558e-14,
+          "raw": 1.056932319443149e-13
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 2.1616042289451798e-13,
+      "maximum_normalized_error": 1.3648804308985518e-13,
+      "mode": "left",
+      "raw_reconstruction_error_rad": 1.3652273755937472e-13,
+      "revolutions": -500,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "engineering",
+      "errors": {
+        "bias": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 2.041366397715219e-14,
+          "raw": 3.268496584496461e-13
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 4.196067262484586e-21,
+          "raw": 2.6999175193730823e-20
+        },
+        "positions": {
+          "normalized": 2.7755575615628914e-17,
+          "raw": 2.7755575615628914e-17
+        },
+        "qacc": {
+          "normalized": 2.930935682963519e-14,
+          "raw": 2.1005419625907962e-13
+        },
+        "rotations": {
+          "normalized": 1.6331380692236053e-13,
+          "raw": 1.6331380692236053e-13
+        },
+        "wheel_qacc": {
+          "normalized": 2.930935682963519e-14,
+          "raw": 2.1005419625907962e-13
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 2.1005419625907962e-13,
+      "maximum_normalized_error": 1.6331380692236053e-13,
+      "mode": "right",
+      "raw_reconstruction_error_rad": 1.688649220454863e-13,
+      "revolutions": -500,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "engineering",
+      "errors": {
+        "bias": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 2.618274292721694e-14,
+          "raw": 4.192202140984591e-13
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 4.196067262484586e-21,
+          "raw": 2.6999175193730823e-20
+        },
+        "positions": {
+          "normalized": 2.7755575615628914e-17,
+          "raw": 2.7755575615628914e-17
+        },
+        "qacc": {
+          "normalized": 2.6505449014537953e-14,
+          "raw": 1.8995915951336428e-13
+        },
+        "rotations": {
+          "normalized": 1.6331380692236053e-13,
+          "raw": 1.6331380692236053e-13
+        },
+        "wheel_qacc": {
+          "normalized": 1.9085162586739192e-14,
+          "raw": 1.3677947663381929e-13
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 1.8995915951336428e-13,
+      "maximum_normalized_error": 1.6331380692236053e-13,
+      "mode": "bilateral",
+      "raw_reconstruction_error_rad": 1.688649220454863e-13,
+      "revolutions": -500,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "engineering",
+      "errors": {
+        "bias": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 2.551707997144024e-14,
+          "raw": 4.085620730620576e-13
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "positions": {
+          "normalized": 1.3877787807814457e-17,
+          "raw": 1.3877787807814457e-17
+        },
+        "qacc": {
+          "normalized": 3.016137301654319e-14,
+          "raw": 2.1616042289451798e-13
+        },
+        "rotations": {
+          "normalized": 1.3648804308985518e-13,
+          "raw": 1.3648804308985518e-13
+        },
+        "wheel_qacc": {
+          "normalized": 1.4747625635207558e-14,
+          "raw": 1.056932319443149e-13
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 2.1616042289451798e-13,
+      "maximum_normalized_error": 1.3648804308985518e-13,
+      "mode": "left",
+      "raw_reconstruction_error_rad": 1.3652273755937472e-13,
+      "revolutions": 500,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "engineering",
+      "errors": {
+        "bias": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 2.041366397715219e-14,
+          "raw": 3.268496584496461e-13
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 4.196067262484586e-21,
+          "raw": 2.6999175193730823e-20
+        },
+        "positions": {
+          "normalized": 2.7755575615628914e-17,
+          "raw": 2.7755575615628914e-17
+        },
+        "qacc": {
+          "normalized": 2.930935682963519e-14,
+          "raw": 2.1005419625907962e-13
+        },
+        "rotations": {
+          "normalized": 1.6331380692236053e-13,
+          "raw": 1.6331380692236053e-13
+        },
+        "wheel_qacc": {
+          "normalized": 2.930935682963519e-14,
+          "raw": 2.1005419625907962e-13
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 2.1005419625907962e-13,
+      "maximum_normalized_error": 1.6331380692236053e-13,
+      "mode": "right",
+      "raw_reconstruction_error_rad": 1.688649220454863e-13,
+      "revolutions": 500,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "engineering",
+      "errors": {
+        "bias": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 2.618274292721694e-14,
+          "raw": 4.192202140984591e-13
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 4.196067262484586e-21,
+          "raw": 2.6999175193730823e-20
+        },
+        "positions": {
+          "normalized": 2.7755575615628914e-17,
+          "raw": 2.7755575615628914e-17
+        },
+        "qacc": {
+          "normalized": 2.6505449014537953e-14,
+          "raw": 1.8995915951336428e-13
+        },
+        "rotations": {
+          "normalized": 1.6331380692236053e-13,
+          "raw": 1.6331380692236053e-13
+        },
+        "wheel_qacc": {
+          "normalized": 1.9085162586739192e-14,
+          "raw": 1.3677947663381929e-13
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 1.8995915951336428e-13,
+      "maximum_normalized_error": 1.6331380692236053e-13,
+      "mode": "bilateral",
+      "raw_reconstruction_error_rad": 1.688649220454863e-13,
+      "revolutions": 500,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "engineering",
+      "errors": {
+        "bias": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 2.551707997144024e-14,
+          "raw": 4.085620730620576e-13
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "positions": {
+          "normalized": 1.3877787807814457e-17,
+          "raw": 1.3877787807814457e-17
+        },
+        "qacc": {
+          "normalized": 3.016137301654319e-14,
+          "raw": 2.1616042289451798e-13
+        },
+        "rotations": {
+          "normalized": 1.3648804308985518e-13,
+          "raw": 1.3648804308985518e-13
+        },
+        "wheel_qacc": {
+          "normalized": 1.4747625635207558e-14,
+          "raw": 1.056932319443149e-13
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 2.1616042289451798e-13,
+      "maximum_normalized_error": 1.3648804308985518e-13,
+      "mode": "left",
+      "raw_reconstruction_error_rad": 1.3652273755937472e-13,
+      "revolutions": -5000,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "engineering",
+      "errors": {
+        "bias": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 2.063555162907776e-14,
+          "raw": 3.304023721284466e-13
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "positions": {
+          "normalized": 1.1102230246251565e-16,
+          "raw": 1.1102230246251565e-16
+        },
+        "qacc": {
+          "normalized": 2.0944106994538463e-14,
+          "raw": 1.5010215292932116e-13
+        },
+        "rotations": {
+          "normalized": 1.0428879981816408e-12,
+          "raw": 1.0428879981816408e-12
+        },
+        "wheel_qacc": {
+          "normalized": 1.2516892345848431e-14,
+          "raw": 8.970602038971265e-14
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 1.5010215292932116e-13,
+      "maximum_normalized_error": 1.0428879981816408e-12,
+      "mode": "right",
+      "raw_reconstruction_error_rad": 1.0783596238184145e-12,
+      "revolutions": -5000,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "engineering",
+      "errors": {
+        "bias": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 2.618274292721694e-14,
+          "raw": 4.192202140984591e-13
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "positions": {
+          "normalized": 1.1102230246251565e-16,
+          "raw": 1.1102230246251565e-16
+        },
+        "qacc": {
+          "normalized": 2.788416611698908e-14,
+          "raw": 1.9984014443252818e-13
+        },
+        "rotations": {
+          "normalized": 1.0428879981816408e-12,
+          "raw": 1.0428879981816408e-12
+        },
+        "wheel_qacc": {
+          "normalized": 1.970481072267228e-14,
+          "raw": 1.412203687323199e-13
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 1.9984014443252818e-13,
+      "maximum_normalized_error": 1.0428879981816408e-12,
+      "mode": "bilateral",
+      "raw_reconstruction_error_rad": 1.0783596238184145e-12,
+      "revolutions": -5000,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "engineering",
+      "errors": {
+        "bias": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 2.551707997144024e-14,
+          "raw": 4.085620730620576e-13
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "positions": {
+          "normalized": 1.3877787807814457e-17,
+          "raw": 1.3877787807814457e-17
+        },
+        "qacc": {
+          "normalized": 3.016137301654319e-14,
+          "raw": 2.1616042289451798e-13
+        },
+        "rotations": {
+          "normalized": 1.3648804308985518e-13,
+          "raw": 1.3648804308985518e-13
+        },
+        "wheel_qacc": {
+          "normalized": 1.4747625635207558e-14,
+          "raw": 1.056932319443149e-13
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 2.1616042289451798e-13,
+      "maximum_normalized_error": 1.3648804308985518e-13,
+      "mode": "left",
+      "raw_reconstruction_error_rad": 1.3652273755937472e-13,
+      "revolutions": 5000,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "engineering",
+      "errors": {
+        "bias": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 2.063555162907776e-14,
+          "raw": 3.304023721284466e-13
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "positions": {
+          "normalized": 1.1102230246251565e-16,
+          "raw": 1.1102230246251565e-16
+        },
+        "qacc": {
+          "normalized": 2.0944106994538463e-14,
+          "raw": 1.5010215292932116e-13
+        },
+        "rotations": {
+          "normalized": 1.0428879981816408e-12,
+          "raw": 1.0428879981816408e-12
+        },
+        "wheel_qacc": {
+          "normalized": 1.2516892345848431e-14,
+          "raw": 8.970602038971265e-14
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 1.5010215292932116e-13,
+      "maximum_normalized_error": 1.0428879981816408e-12,
+      "mode": "right",
+      "raw_reconstruction_error_rad": 1.0783596238184145e-12,
+      "revolutions": 5000,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "engineering",
+      "errors": {
+        "bias": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 2.618274292721694e-14,
+          "raw": 4.192202140984591e-13
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "positions": {
+          "normalized": 1.1102230246251565e-16,
+          "raw": 1.1102230246251565e-16
+        },
+        "qacc": {
+          "normalized": 2.788416611698908e-14,
+          "raw": 1.9984014443252818e-13
+        },
+        "rotations": {
+          "normalized": 1.0428879981816408e-12,
+          "raw": 1.0428879981816408e-12
+        },
+        "wheel_qacc": {
+          "normalized": 1.970481072267228e-14,
+          "raw": 1.412203687323199e-13
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 1.9984014443252818e-13,
+      "maximum_normalized_error": 1.0428879981816408e-12,
+      "mode": "bilateral",
+      "raw_reconstruction_error_rad": 1.0783596238184145e-12,
+      "revolutions": 5000,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "engineering",
+      "errors": {
+        "bias": {
+          "normalized": 7.144281354207841e-19,
+          "raw": 4.5102810375396984e-17
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 4.437753038511346e-16,
+          "raw": 7.105427357601002e-15
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 2.156811483248548e-18,
+          "raw": 1.3877787807814457e-17
+        },
+        "positions": {
+          "normalized": 2.1094237467877974e-15,
+          "raw": 2.1094237467877974e-15
+        },
+        "qacc": {
+          "normalized": 4.461466578718253e-15,
+          "raw": 3.197442310920451e-14
+        },
+        "rotations": {
+          "normalized": 1.802660798411182e-11,
+          "raw": 1.802660798411182e-11
+        },
+        "wheel_qacc": {
+          "normalized": 4.461466578718253e-15,
+          "raw": 3.197442310920451e-14
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 3.197442310920451e-14,
+      "maximum_normalized_error": 1.802660798411182e-11,
+      "mode": "left",
+      "raw_reconstruction_error_rad": 1.805337129789919e-11,
+      "revolutions": -50000,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "engineering",
+      "errors": {
+        "bias": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 2.063555162907776e-14,
+          "raw": 3.304023721284466e-13
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "positions": {
+          "normalized": 4.85722573273506e-16,
+          "raw": 4.85722573273506e-16
+        },
+        "qacc": {
+          "normalized": 2.0944106994538463e-14,
+          "raw": 1.5010215292932116e-13
+        },
+        "rotations": {
+          "normalized": 4.561073740916299e-12,
+          "raw": 4.561073740916299e-12
+        },
+        "wheel_qacc": {
+          "normalized": 1.2516892345848431e-14,
+          "raw": 8.970602038971265e-14
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 1.5010215292932116e-13,
+      "maximum_normalized_error": 4.561073740916299e-12,
+      "mode": "right",
+      "raw_reconstruction_error_rad": 4.7163384309101275e-12,
+      "revolutions": -50000,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "engineering",
+      "errors": {
+        "bias": {
+          "normalized": 7.144281354207841e-19,
+          "raw": 4.5102810375396984e-17
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 2.041366397715219e-14,
+          "raw": 3.268496584496461e-13
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 2.156811483248548e-18,
+          "raw": 1.3877787807814457e-17
+        },
+        "positions": {
+          "normalized": 2.1094237467877974e-15,
+          "raw": 2.1094237467877974e-15
+        },
+        "qacc": {
+          "normalized": 2.1068036621725083e-14,
+          "raw": 1.509903313490213e-13
+        },
+        "rotations": {
+          "normalized": 1.802660798411182e-11,
+          "raw": 1.802660798411182e-11
+        },
+        "wheel_qacc": {
+          "normalized": 8.55114427587665e-15,
+          "raw": 6.128431095930864e-14
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 1.509903313490213e-13,
+      "maximum_normalized_error": 1.802660798411182e-11,
+      "mode": "bilateral",
+      "raw_reconstruction_error_rad": 1.805337129789919e-11,
+      "revolutions": -50000,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "engineering",
+      "errors": {
+        "bias": {
+          "normalized": 7.144281354207841e-19,
+          "raw": 4.5102810375396984e-17
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 4.437753038511346e-16,
+          "raw": 7.105427357601002e-15
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 2.156811483248548e-18,
+          "raw": 1.3877787807814457e-17
+        },
+        "positions": {
+          "normalized": 2.1094237467877974e-15,
+          "raw": 2.1094237467877974e-15
+        },
+        "qacc": {
+          "normalized": 4.461466578718253e-15,
+          "raw": 3.197442310920451e-14
+        },
+        "rotations": {
+          "normalized": 1.802660798411182e-11,
+          "raw": 1.802660798411182e-11
+        },
+        "wheel_qacc": {
+          "normalized": 4.461466578718253e-15,
+          "raw": 3.197442310920451e-14
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 3.197442310920451e-14,
+      "maximum_normalized_error": 1.802660798411182e-11,
+      "mode": "left",
+      "raw_reconstruction_error_rad": 1.805337129789919e-11,
+      "revolutions": 50000,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "engineering",
+      "errors": {
+        "bias": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 2.063555162907776e-14,
+          "raw": 3.304023721284466e-13
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "positions": {
+          "normalized": 4.85722573273506e-16,
+          "raw": 4.85722573273506e-16
+        },
+        "qacc": {
+          "normalized": 2.0944106994538463e-14,
+          "raw": 1.5010215292932116e-13
+        },
+        "rotations": {
+          "normalized": 4.561073740916299e-12,
+          "raw": 4.561073740916299e-12
+        },
+        "wheel_qacc": {
+          "normalized": 1.2516892345848431e-14,
+          "raw": 8.970602038971265e-14
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 1.5010215292932116e-13,
+      "maximum_normalized_error": 4.561073740916299e-12,
+      "mode": "right",
+      "raw_reconstruction_error_rad": 4.7163384309101275e-12,
+      "revolutions": 50000,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "engineering",
+      "errors": {
+        "bias": {
+          "normalized": 7.144281354207841e-19,
+          "raw": 4.5102810375396984e-17
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 2.041366397715219e-14,
+          "raw": 3.268496584496461e-13
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 2.156811483248548e-18,
+          "raw": 1.3877787807814457e-17
+        },
+        "positions": {
+          "normalized": 2.1094237467877974e-15,
+          "raw": 2.1094237467877974e-15
+        },
+        "qacc": {
+          "normalized": 2.1068036621725083e-14,
+          "raw": 1.509903313490213e-13
+        },
+        "rotations": {
+          "normalized": 1.802660798411182e-11,
+          "raw": 1.802660798411182e-11
+        },
+        "wheel_qacc": {
+          "normalized": 8.55114427587665e-15,
+          "raw": 6.128431095930864e-14
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 1.509903313490213e-13,
+      "maximum_normalized_error": 1.802660798411182e-11,
+      "mode": "bilateral",
+      "raw_reconstruction_error_rad": 1.805337129789919e-11,
+      "revolutions": 50000,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "engineering",
+      "errors": {
+        "bias": {
+          "normalized": 7.144281354207841e-19,
+          "raw": 4.5102810375396984e-17
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 4.437753038511346e-16,
+          "raw": 7.105427357601002e-15
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 2.156811483248548e-18,
+          "raw": 1.3877787807814457e-17
+        },
+        "positions": {
+          "normalized": 4.697631172945194e-15,
+          "raw": 4.697631172945194e-15
+        },
+        "qacc": {
+          "normalized": 4.461466578718253e-15,
+          "raw": 3.197442310920451e-14
+        },
+        "rotations": {
+          "normalized": 4.009450410569215e-11,
+          "raw": 4.009450410569215e-11
+        },
+        "wheel_qacc": {
+          "normalized": 4.461466578718253e-15,
+          "raw": 3.197442310920451e-14
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 3.197442310920451e-14,
+      "maximum_normalized_error": 4.009450410569215e-11,
+      "mode": "left",
+      "raw_reconstruction_error_rad": 4.015428961556822e-11,
+      "revolutions": -500000,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "engineering",
+      "errors": {
+        "bias": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 6.771473752611307e-20,
+          "raw": 1.0842021724855044e-18
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 8.425044856439641e-21,
+          "raw": 5.421010862427522e-20
+        },
+        "positions": {
+          "normalized": 1.2281842209915794e-14,
+          "raw": 1.2281842209915794e-14
+        },
+        "qacc": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "rotations": {
+          "normalized": 1.1714368364224015e-10,
+          "raw": 1.1714368364224015e-10
+        },
+        "wheel_qacc": {
+          "normalized": 0.0,
+          "raw": 0.0
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 0.0,
+      "maximum_normalized_error": 1.1714368364224015e-10,
+      "mode": "right",
+      "raw_reconstruction_error_rad": 1.2113166025784494e-10,
+      "revolutions": -500000,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "engineering",
+      "errors": {
+        "bias": {
+          "normalized": 7.144281354207841e-19,
+          "raw": 4.5102810375396984e-17
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 4.437753038511346e-16,
+          "raw": 7.105427357601002e-15
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 2.156811483248548e-18,
+          "raw": 1.3877787807814457e-17
+        },
+        "positions": {
+          "normalized": 1.2281842209915794e-14,
+          "raw": 1.2281842209915794e-14
+        },
+        "qacc": {
+          "normalized": 4.461466578718253e-15,
+          "raw": 3.197442310920451e-14
+        },
+        "rotations": {
+          "normalized": 1.1714368364224015e-10,
+          "raw": 1.1714368364224015e-10
+        },
+        "wheel_qacc": {
+          "normalized": 4.461466578718253e-15,
+          "raw": 3.197442310920451e-14
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 3.197442310920451e-14,
+      "maximum_normalized_error": 1.1714368364224015e-10,
+      "mode": "bilateral",
+      "raw_reconstruction_error_rad": 1.2113166025784494e-10,
+      "revolutions": -500000,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "engineering",
+      "errors": {
+        "bias": {
+          "normalized": 7.144281354207841e-19,
+          "raw": 4.5102810375396984e-17
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 4.437753038511346e-16,
+          "raw": 7.105427357601002e-15
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 2.156811483248548e-18,
+          "raw": 1.3877787807814457e-17
+        },
+        "positions": {
+          "normalized": 4.697631172945194e-15,
+          "raw": 4.697631172945194e-15
+        },
+        "qacc": {
+          "normalized": 4.461466578718253e-15,
+          "raw": 3.197442310920451e-14
+        },
+        "rotations": {
+          "normalized": 4.009450410569215e-11,
+          "raw": 4.009450410569215e-11
+        },
+        "wheel_qacc": {
+          "normalized": 4.461466578718253e-15,
+          "raw": 3.197442310920451e-14
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 3.197442310920451e-14,
+      "maximum_normalized_error": 4.009450410569215e-11,
+      "mode": "left",
+      "raw_reconstruction_error_rad": 4.015428961556822e-11,
+      "revolutions": 500000,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "engineering",
+      "errors": {
+        "bias": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 6.771473752611307e-20,
+          "raw": 1.0842021724855044e-18
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 8.425044856439641e-21,
+          "raw": 5.421010862427522e-20
+        },
+        "positions": {
+          "normalized": 1.2281842209915794e-14,
+          "raw": 1.2281842209915794e-14
+        },
+        "qacc": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "rotations": {
+          "normalized": 1.1714368364224015e-10,
+          "raw": 1.1714368364224015e-10
+        },
+        "wheel_qacc": {
+          "normalized": 0.0,
+          "raw": 0.0
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 0.0,
+      "maximum_normalized_error": 1.1714368364224015e-10,
+      "mode": "right",
+      "raw_reconstruction_error_rad": 1.2113166025784494e-10,
+      "revolutions": 500000,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "engineering",
+      "errors": {
+        "bias": {
+          "normalized": 7.144281354207841e-19,
+          "raw": 4.5102810375396984e-17
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 4.437753038511346e-16,
+          "raw": 7.105427357601002e-15
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 2.156811483248548e-18,
+          "raw": 1.3877787807814457e-17
+        },
+        "positions": {
+          "normalized": 1.2281842209915794e-14,
+          "raw": 1.2281842209915794e-14
+        },
+        "qacc": {
+          "normalized": 4.461466578718253e-15,
+          "raw": 3.197442310920451e-14
+        },
+        "rotations": {
+          "normalized": 1.1714368364224015e-10,
+          "raw": 1.1714368364224015e-10
+        },
+        "wheel_qacc": {
+          "normalized": 4.461466578718253e-15,
+          "raw": 3.197442310920451e-14
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 3.197442310920451e-14,
+      "maximum_normalized_error": 1.1714368364224015e-10,
+      "mode": "bilateral",
+      "raw_reconstruction_error_rad": 1.2113166025784494e-10,
+      "revolutions": 500000,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "engineering",
+      "errors": {
+        "bias": {
+          "normalized": 7.144281354207841e-19,
+          "raw": 4.5102810375396984e-17
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 4.437753038511346e-16,
+          "raw": 7.105427357601002e-15
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 2.156811483248548e-18,
+          "raw": 1.3877787807814457e-17
+        },
+        "positions": {
+          "normalized": 4.697631172945194e-15,
+          "raw": 4.697631172945194e-15
+        },
+        "qacc": {
+          "normalized": 4.461466578718253e-15,
+          "raw": 3.197442310920451e-14
+        },
+        "rotations": {
+          "normalized": 4.009450410569215e-11,
+          "raw": 4.009450410569215e-11
+        },
+        "wheel_qacc": {
+          "normalized": 4.461466578718253e-15,
+          "raw": 3.197442310920451e-14
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 3.197442310920451e-14,
+      "maximum_normalized_error": 4.009450410569215e-11,
+      "mode": "left",
+      "raw_reconstruction_error_rad": 4.015428961556822e-11,
+      "revolutions": -1000000,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "engineering",
+      "errors": {
+        "bias": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 6.771473752611307e-20,
+          "raw": 1.0842021724855044e-18
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 8.425044856439641e-21,
+          "raw": 5.421010862427522e-20
+        },
+        "positions": {
+          "normalized": 1.2281842209915794e-14,
+          "raw": 1.2281842209915794e-14
+        },
+        "qacc": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "rotations": {
+          "normalized": 1.1714368364224015e-10,
+          "raw": 1.1714368364224015e-10
+        },
+        "wheel_qacc": {
+          "normalized": 0.0,
+          "raw": 0.0
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 0.0,
+      "maximum_normalized_error": 1.1714368364224015e-10,
+      "mode": "right",
+      "raw_reconstruction_error_rad": 1.2113166025784494e-10,
+      "revolutions": -1000000,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "engineering",
+      "errors": {
+        "bias": {
+          "normalized": 7.144281354207841e-19,
+          "raw": 4.5102810375396984e-17
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 4.437753038511346e-16,
+          "raw": 7.105427357601002e-15
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 2.156811483248548e-18,
+          "raw": 1.3877787807814457e-17
+        },
+        "positions": {
+          "normalized": 1.2281842209915794e-14,
+          "raw": 1.2281842209915794e-14
+        },
+        "qacc": {
+          "normalized": 4.461466578718253e-15,
+          "raw": 3.197442310920451e-14
+        },
+        "rotations": {
+          "normalized": 1.1714368364224015e-10,
+          "raw": 1.1714368364224015e-10
+        },
+        "wheel_qacc": {
+          "normalized": 4.461466578718253e-15,
+          "raw": 3.197442310920451e-14
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 3.197442310920451e-14,
+      "maximum_normalized_error": 1.1714368364224015e-10,
+      "mode": "bilateral",
+      "raw_reconstruction_error_rad": 1.2113166025784494e-10,
+      "revolutions": -1000000,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "engineering",
+      "errors": {
+        "bias": {
+          "normalized": 7.144281354207841e-19,
+          "raw": 4.5102810375396984e-17
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 4.437753038511346e-16,
+          "raw": 7.105427357601002e-15
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 2.156811483248548e-18,
+          "raw": 1.3877787807814457e-17
+        },
+        "positions": {
+          "normalized": 4.697631172945194e-15,
+          "raw": 4.697631172945194e-15
+        },
+        "qacc": {
+          "normalized": 4.461466578718253e-15,
+          "raw": 3.197442310920451e-14
+        },
+        "rotations": {
+          "normalized": 4.009450410569215e-11,
+          "raw": 4.009450410569215e-11
+        },
+        "wheel_qacc": {
+          "normalized": 4.461466578718253e-15,
+          "raw": 3.197442310920451e-14
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 3.197442310920451e-14,
+      "maximum_normalized_error": 4.009450410569215e-11,
+      "mode": "left",
+      "raw_reconstruction_error_rad": 4.015428961556822e-11,
+      "revolutions": 1000000,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "engineering",
+      "errors": {
+        "bias": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 6.771473752611307e-20,
+          "raw": 1.0842021724855044e-18
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 8.425044856439641e-21,
+          "raw": 5.421010862427522e-20
+        },
+        "positions": {
+          "normalized": 1.2281842209915794e-14,
+          "raw": 1.2281842209915794e-14
+        },
+        "qacc": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "rotations": {
+          "normalized": 1.1714368364224015e-10,
+          "raw": 1.1714368364224015e-10
+        },
+        "wheel_qacc": {
+          "normalized": 0.0,
+          "raw": 0.0
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 0.0,
+      "maximum_normalized_error": 1.1714368364224015e-10,
+      "mode": "right",
+      "raw_reconstruction_error_rad": 1.2113166025784494e-10,
+      "revolutions": 1000000,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "engineering",
+      "errors": {
+        "bias": {
+          "normalized": 7.144281354207841e-19,
+          "raw": 4.5102810375396984e-17
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 4.437753038511346e-16,
+          "raw": 7.105427357601002e-15
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 2.156811483248548e-18,
+          "raw": 1.3877787807814457e-17
+        },
+        "positions": {
+          "normalized": 1.2281842209915794e-14,
+          "raw": 1.2281842209915794e-14
+        },
+        "qacc": {
+          "normalized": 4.461466578718253e-15,
+          "raw": 3.197442310920451e-14
+        },
+        "rotations": {
+          "normalized": 1.1714368364224015e-10,
+          "raw": 1.1714368364224015e-10
+        },
+        "wheel_qacc": {
+          "normalized": 4.461466578718253e-15,
+          "raw": 3.197442310920451e-14
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 3.197442310920451e-14,
+      "maximum_normalized_error": 1.1714368364224015e-10,
+      "mode": "bilateral",
+      "raw_reconstruction_error_rad": 1.2113166025784494e-10,
+      "revolutions": 1000000,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "diagnostic",
+      "errors": {
+        "bias": {
+          "normalized": 7.144281354207841e-19,
+          "raw": 4.5102810375396984e-17
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 7.766067817394855e-16,
+          "raw": 1.2434497875801753e-14
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 4.313622966497096e-18,
+          "raw": 2.7755575615628914e-17
+        },
+        "positions": {
+          "normalized": 1.1361050988867305e-13,
+          "raw": 1.1361050988867305e-13
+        },
+        "qacc": {
+          "normalized": 5.53965433524183e-14,
+          "raw": 3.97015753605956e-13
+        },
+        "rotations": {
+          "normalized": 9.700338518547902e-10,
+          "raw": 9.700338518547902e-10
+        },
+        "wheel_qacc": {
+          "normalized": 1.6854429297380066e-14,
+          "raw": 1.2079226507921703e-13
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 3.97015753605956e-13,
+      "maximum_normalized_error": 9.700338518547902e-10,
+      "mode": "left",
+      "raw_reconstruction_error_rad": 9.714768642310467e-10,
+      "revolutions": -5000000,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "diagnostic",
+      "errors": {
+        "bias": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 6.771473752611307e-20,
+          "raw": 1.0842021724855044e-18
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 8.425044856439641e-21,
+          "raw": 5.421010862427522e-20
+        },
+        "positions": {
+          "normalized": 1.2281842209915794e-14,
+          "raw": 1.2281842209915794e-14
+        },
+        "qacc": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "rotations": {
+          "normalized": 1.1714368364224015e-10,
+          "raw": 1.1714368364224015e-10
+        },
+        "wheel_qacc": {
+          "normalized": 0.0,
+          "raw": 0.0
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 0.0,
+      "maximum_normalized_error": 1.1714368364224015e-10,
+      "mode": "right",
+      "raw_reconstruction_error_rad": 1.2113166025784494e-10,
+      "revolutions": -5000000,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "diagnostic",
+      "errors": {
+        "bias": {
+          "normalized": 7.144281354207841e-19,
+          "raw": 4.5102810375396984e-17
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 6.656629557767019e-16,
+          "raw": 1.0658141036401503e-14
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 4.313622966497096e-18,
+          "raw": 2.7755575615628914e-17
+        },
+        "positions": {
+          "normalized": 1.1361050988867305e-13,
+          "raw": 1.1361050988867305e-13
+        },
+        "qacc": {
+          "normalized": 5.316581006305918e-14,
+          "raw": 3.810285420513537e-13
+        },
+        "rotations": {
+          "normalized": 9.700338518547902e-10,
+          "raw": 9.700338518547902e-10
+        },
+        "wheel_qacc": {
+          "normalized": 1.6854429297380066e-14,
+          "raw": 1.2079226507921703e-13
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 3.810285420513537e-13,
+      "maximum_normalized_error": 9.700338518547902e-10,
+      "mode": "bilateral",
+      "raw_reconstruction_error_rad": 9.714768642310467e-10,
+      "revolutions": -5000000,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "diagnostic",
+      "errors": {
+        "bias": {
+          "normalized": 7.144281354207841e-19,
+          "raw": 4.5102810375396984e-17
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 7.766067817394855e-16,
+          "raw": 1.2434497875801753e-14
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 4.313622966497096e-18,
+          "raw": 2.7755575615628914e-17
+        },
+        "positions": {
+          "normalized": 1.1361050988867305e-13,
+          "raw": 1.1361050988867305e-13
+        },
+        "qacc": {
+          "normalized": 5.53965433524183e-14,
+          "raw": 3.97015753605956e-13
+        },
+        "rotations": {
+          "normalized": 9.700338518547902e-10,
+          "raw": 9.700338518547902e-10
+        },
+        "wheel_qacc": {
+          "normalized": 1.6854429297380066e-14,
+          "raw": 1.2079226507921703e-13
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 3.97015753605956e-13,
+      "maximum_normalized_error": 9.700338518547902e-10,
+      "mode": "left",
+      "raw_reconstruction_error_rad": 9.714768642310467e-10,
+      "revolutions": 5000000,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "diagnostic",
+      "errors": {
+        "bias": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 6.771473752611307e-20,
+          "raw": 1.0842021724855044e-18
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 8.425044856439641e-21,
+          "raw": 5.421010862427522e-20
+        },
+        "positions": {
+          "normalized": 1.2281842209915794e-14,
+          "raw": 1.2281842209915794e-14
+        },
+        "qacc": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "rotations": {
+          "normalized": 1.1714368364224015e-10,
+          "raw": 1.1714368364224015e-10
+        },
+        "wheel_qacc": {
+          "normalized": 0.0,
+          "raw": 0.0
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 0.0,
+      "maximum_normalized_error": 1.1714368364224015e-10,
+      "mode": "right",
+      "raw_reconstruction_error_rad": 1.2113166025784494e-10,
+      "revolutions": 5000000,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "diagnostic",
+      "errors": {
+        "bias": {
+          "normalized": 7.144281354207841e-19,
+          "raw": 4.5102810375396984e-17
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 6.656629557767019e-16,
+          "raw": 1.0658141036401503e-14
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 4.313622966497096e-18,
+          "raw": 2.7755575615628914e-17
+        },
+        "positions": {
+          "normalized": 1.1361050988867305e-13,
+          "raw": 1.1361050988867305e-13
+        },
+        "qacc": {
+          "normalized": 5.316581006305918e-14,
+          "raw": 3.810285420513537e-13
+        },
+        "rotations": {
+          "normalized": 9.700338518547902e-10,
+          "raw": 9.700338518547902e-10
+        },
+        "wheel_qacc": {
+          "normalized": 1.6854429297380066e-14,
+          "raw": 1.2079226507921703e-13
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 3.810285420513537e-13,
+      "maximum_normalized_error": 9.700338518547902e-10,
+      "mode": "bilateral",
+      "raw_reconstruction_error_rad": 9.714768642310467e-10,
+      "revolutions": 5000000,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "diagnostic",
+      "errors": {
+        "bias": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 2.5628023797403025e-14,
+          "raw": 4.1033842990145786e-13
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 2.5881737798982575e-17,
+          "raw": 1.6653345369377348e-16
+        },
+        "positions": {
+          "normalized": 9.849343562962076e-13,
+          "raw": 9.849343562962076e-13
+        },
+        "qacc": {
+          "normalized": 2.978958413498333e-14,
+          "raw": 2.134958876354176e-13
+        },
+        "rotations": {
+          "normalized": 8.40954732933552e-09,
+          "raw": 8.40954732933552e-09
+        },
+        "wheel_qacc": {
+          "normalized": 1.3508329363341377e-14,
+          "raw": 9.681144774731365e-14
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 2.134958876354176e-13,
+      "maximum_normalized_error": 8.40954732933552e-09,
+      "mode": "left",
+      "raw_reconstruction_error_rad": 8.422057461154875e-09,
+      "revolutions": -50000000,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "diagnostic",
+      "errors": {
+        "bias": {
+          "normalized": 6.869501302122924e-21,
+          "raw": 4.336808689942018e-19
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 2.041366397715219e-14,
+          "raw": 3.268496584496461e-13
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 1.941130334923693e-17,
+          "raw": 1.249000902703301e-16
+        },
+        "positions": {
+          "normalized": 7.425171588693047e-13,
+          "raw": 7.425171588693047e-13
+        },
+        "qacc": {
+          "normalized": 2.4847890250916933e-14,
+          "raw": 1.780797731498751e-13
+        },
+        "rotations": {
+          "normalized": 7.088147957468038e-09,
+          "raw": 7.088147957468038e-09
+        },
+        "wheel_qacc": {
+          "normalized": 2.4847890250916933e-14,
+          "raw": 1.780797731498751e-13
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 1.780797731498751e-13,
+      "maximum_normalized_error": 7.088147957468038e-09,
+      "mode": "right",
+      "raw_reconstruction_error_rad": 7.329448936665983e-09,
+      "revolutions": -50000000,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "diagnostic",
+      "errors": {
+        "bias": {
+          "normalized": 6.869501302122924e-21,
+          "raw": 4.336808689942018e-19
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 2.618274292721694e-14,
+          "raw": 4.192202140984591e-13
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 4.529304114821951e-17,
+          "raw": 2.914335439641036e-16
+        },
+        "positions": {
+          "normalized": 9.849343562962076e-13,
+          "raw": 9.849343562962076e-13
+        },
+        "qacc": {
+          "normalized": 2.6768799472309516e-14,
+          "raw": 1.9184653865522705e-13
+        },
+        "rotations": {
+          "normalized": 8.40954732933552e-09,
+          "raw": 8.40954732933552e-09
+        },
+        "wheel_qacc": {
+          "normalized": 2.199750882562472e-14,
+          "raw": 1.5765166949677223e-13
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 1.9184653865522705e-13,
+      "maximum_normalized_error": 8.40954732933552e-09,
+      "mode": "bilateral",
+      "raw_reconstruction_error_rad": 8.422057461154875e-09,
+      "revolutions": -50000000,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "diagnostic",
+      "errors": {
+        "bias": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 2.5628023797403025e-14,
+          "raw": 4.1033842990145786e-13
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 2.5881737798982575e-17,
+          "raw": 1.6653345369377348e-16
+        },
+        "positions": {
+          "normalized": 9.849343562962076e-13,
+          "raw": 9.849343562962076e-13
+        },
+        "qacc": {
+          "normalized": 2.978958413498333e-14,
+          "raw": 2.134958876354176e-13
+        },
+        "rotations": {
+          "normalized": 8.40954732933552e-09,
+          "raw": 8.40954732933552e-09
+        },
+        "wheel_qacc": {
+          "normalized": 1.3508329363341377e-14,
+          "raw": 9.681144774731365e-14
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 2.134958876354176e-13,
+      "maximum_normalized_error": 8.40954732933552e-09,
+      "mode": "left",
+      "raw_reconstruction_error_rad": 8.422057461154875e-09,
+      "revolutions": 50000000,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "diagnostic",
+      "errors": {
+        "bias": {
+          "normalized": 6.869501302122924e-21,
+          "raw": 4.336808689942018e-19
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 2.041366397715219e-14,
+          "raw": 3.268496584496461e-13
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 1.941130334923693e-17,
+          "raw": 1.249000902703301e-16
+        },
+        "positions": {
+          "normalized": 7.425171588693047e-13,
+          "raw": 7.425171588693047e-13
+        },
+        "qacc": {
+          "normalized": 2.4847890250916933e-14,
+          "raw": 1.780797731498751e-13
+        },
+        "rotations": {
+          "normalized": 7.088147957468038e-09,
+          "raw": 7.088147957468038e-09
+        },
+        "wheel_qacc": {
+          "normalized": 2.4847890250916933e-14,
+          "raw": 1.780797731498751e-13
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 1.780797731498751e-13,
+      "maximum_normalized_error": 7.088147957468038e-09,
+      "mode": "right",
+      "raw_reconstruction_error_rad": 7.329448936665983e-09,
+      "revolutions": 50000000,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "diagnostic",
+      "errors": {
+        "bias": {
+          "normalized": 6.869501302122924e-21,
+          "raw": 4.336808689942018e-19
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 2.618274292721694e-14,
+          "raw": 4.192202140984591e-13
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 4.529304114821951e-17,
+          "raw": 2.914335439641036e-16
+        },
+        "positions": {
+          "normalized": 9.849343562962076e-13,
+          "raw": 9.849343562962076e-13
+        },
+        "qacc": {
+          "normalized": 2.6768799472309516e-14,
+          "raw": 1.9184653865522705e-13
+        },
+        "rotations": {
+          "normalized": 8.40954732933552e-09,
+          "raw": 8.40954732933552e-09
+        },
+        "wheel_qacc": {
+          "normalized": 2.199750882562472e-14,
+          "raw": 1.5765166949677223e-13
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 1.9184653865522705e-13,
+      "maximum_normalized_error": 8.40954732933552e-09,
+      "mode": "bilateral",
+      "raw_reconstruction_error_rad": 8.422057461154875e-09,
+      "revolutions": 50000000,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "diagnostic",
+      "errors": {
+        "bias": {
+          "normalized": 7.144281354207841e-19,
+          "raw": 4.5102810375396984e-17
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 4.437753038511346e-16,
+          "raw": 7.105427357601002e-15
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 2.0921071387510915e-16,
+          "raw": 1.3461454173580023e-15
+        },
+        "positions": {
+          "normalized": 7.955511249768676e-12,
+          "raw": 7.955511249768676e-12
+        },
+        "qacc": {
+          "normalized": 1.2052156243898613e-14,
+          "raw": 8.637535131583718e-14
+        },
+        "rotations": {
+          "normalized": 6.792565485774782e-08,
+          "raw": 6.792565485774782e-08
+        },
+        "wheel_qacc": {
+          "normalized": 8.799003530249886e-15,
+          "raw": 6.306066779870889e-14
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 8.637535131583718e-14,
+      "maximum_normalized_error": 6.792565485774782e-08,
+      "mode": "left",
+      "raw_reconstruction_error_rad": 6.80267022365455e-08,
+      "revolutions": -500000000,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "diagnostic",
+      "errors": {
+        "bias": {
+          "normalized": 6.869501302122924e-21,
+          "raw": 4.336808689942018e-19
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 2.041366397715219e-14,
+          "raw": 3.268496584496461e-13
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 1.941130334923693e-17,
+          "raw": 1.249000902703301e-16
+        },
+        "positions": {
+          "normalized": 7.425171588693047e-13,
+          "raw": 7.425171588693047e-13
+        },
+        "qacc": {
+          "normalized": 2.4847890250916933e-14,
+          "raw": 1.780797731498751e-13
+        },
+        "rotations": {
+          "normalized": 7.088147957468038e-09,
+          "raw": 7.088147957468038e-09
+        },
+        "wheel_qacc": {
+          "normalized": 2.4847890250916933e-14,
+          "raw": 1.780797731498751e-13
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 1.780797731498751e-13,
+      "maximum_normalized_error": 7.088147957468038e-09,
+      "mode": "right",
+      "raw_reconstruction_error_rad": 7.329448936665983e-09,
+      "revolutions": -500000000,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "diagnostic",
+      "errors": {
+        "bias": {
+          "normalized": 7.144281354207841e-19,
+          "raw": 4.5102810375396984e-17
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 2.008083249926384e-14,
+          "raw": 3.2152058793144533e-13
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 2.2862201722434605e-16,
+          "raw": 1.4710455076283324e-15
+        },
+        "positions": {
+          "normalized": 7.955511249768676e-12,
+          "raw": 7.955511249768676e-12
+        },
+        "qacc": {
+          "normalized": 3.246956232289395e-14,
+          "raw": 2.327027459614328e-13
+        },
+        "rotations": {
+          "normalized": 6.792565485774782e-08,
+          "raw": 6.792565485774782e-08
+        },
+        "wheel_qacc": {
+          "normalized": 3.246956232289395e-14,
+          "raw": 2.327027459614328e-13
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 2.327027459614328e-13,
+      "maximum_normalized_error": 6.792565485774782e-08,
+      "mode": "bilateral",
+      "raw_reconstruction_error_rad": 6.80267022365455e-08,
+      "revolutions": -500000000,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "diagnostic",
+      "errors": {
+        "bias": {
+          "normalized": 7.144281354207841e-19,
+          "raw": 4.5102810375396984e-17
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 4.437753038511346e-16,
+          "raw": 7.105427357601002e-15
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 2.0921071387510915e-16,
+          "raw": 1.3461454173580023e-15
+        },
+        "positions": {
+          "normalized": 7.955511249768676e-12,
+          "raw": 7.955511249768676e-12
+        },
+        "qacc": {
+          "normalized": 1.2052156243898613e-14,
+          "raw": 8.637535131583718e-14
+        },
+        "rotations": {
+          "normalized": 6.792565485774782e-08,
+          "raw": 6.792565485774782e-08
+        },
+        "wheel_qacc": {
+          "normalized": 8.799003530249886e-15,
+          "raw": 6.306066779870889e-14
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 8.637535131583718e-14,
+      "maximum_normalized_error": 6.792565485774782e-08,
+      "mode": "left",
+      "raw_reconstruction_error_rad": 6.80267022365455e-08,
+      "revolutions": 500000000,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "diagnostic",
+      "errors": {
+        "bias": {
+          "normalized": 6.869501302122924e-21,
+          "raw": 4.336808689942018e-19
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 2.041366397715219e-14,
+          "raw": 3.268496584496461e-13
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 1.941130334923693e-17,
+          "raw": 1.249000902703301e-16
+        },
+        "positions": {
+          "normalized": 7.425171588693047e-13,
+          "raw": 7.425171588693047e-13
+        },
+        "qacc": {
+          "normalized": 2.4847890250916933e-14,
+          "raw": 1.780797731498751e-13
+        },
+        "rotations": {
+          "normalized": 7.088147957468038e-09,
+          "raw": 7.088147957468038e-09
+        },
+        "wheel_qacc": {
+          "normalized": 2.4847890250916933e-14,
+          "raw": 1.780797731498751e-13
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 1.780797731498751e-13,
+      "maximum_normalized_error": 7.088147957468038e-09,
+      "mode": "right",
+      "raw_reconstruction_error_rad": 7.329448936665983e-09,
+      "revolutions": 500000000,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    },
+    {
+      "contact_topology_exact": true,
+      "domain": "diagnostic",
+      "errors": {
+        "bias": {
+          "normalized": 7.144281354207841e-19,
+          "raw": 4.5102810375396984e-17
+        },
+        "closure": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "contact": {
+          "normalized": 2.008083249926384e-14,
+          "raw": 3.2152058793144533e-13
+        },
+        "ddxi": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "jacobian": {
+          "normalized": 0.0,
+          "raw": 0.0
+        },
+        "mass": {
+          "normalized": 2.2862201722434605e-16,
+          "raw": 1.4710455076283324e-15
+        },
+        "positions": {
+          "normalized": 7.955511249768676e-12,
+          "raw": 7.955511249768676e-12
+        },
+        "qacc": {
+          "normalized": 3.246956232289395e-14,
+          "raw": 2.327027459614328e-13
+        },
+        "rotations": {
+          "normalized": 6.792565485774782e-08,
+          "raw": 6.792565485774782e-08
+        },
+        "wheel_qacc": {
+          "normalized": 3.246956232289395e-14,
+          "raw": 2.327027459614328e-13
+        }
+      },
+      "finite": true,
+      "maximum_dynamic_error_m_s2": 2.327027459614328e-13,
+      "maximum_normalized_error": 6.792565485774782e-08,
+      "mode": "bilateral",
+      "raw_reconstruction_error_rad": 6.80267022365455e-08,
+      "revolutions": 500000000,
+      "rotation_orthogonality": 6.439293542825908e-15,
+      "velocity_error_rad_s": 0.0
+    }
+  ]
+}

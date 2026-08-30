@@ -1,0 +1,143 @@
+{
+  "left": {
+    "anisotropy_significant": false,
+    "body_frame": "wheel body local frame",
+    "collision_axis_b": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "com_axial_m": 0.0074151403411230315,
+    "com_b_m": [
+      -5.829442826290297e-05,
+      -0.00010619134315086336,
+      0.0074151403411230315
+    ],
+    "com_radial_distance_m": 0.00012113976113020512,
+    "hinge_axis_b": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "hinge_point_b_m": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "inertia_body_axle_frame_kg_m2": [
+      [
+        0.0002458819212432081,
+        5.4620578962057116e-09,
+        2.352216157436752e-20
+      ],
+      [
+        5.4620578962154285e-09,
+        0.00024589840150462234,
+        0.0
+      ],
+      [
+        2.352216157436752e-20,
+        0.0,
+        0.00042373759240508255
+      ]
+    ],
+    "inertial_frame_quaternion_b": [
+      0.10310958854528945,
+      0.6995487207836373,
+      -0.10310958854528945,
+      0.6995487207836373
+    ],
+    "mass_kg": 0.3431,
+    "normalized_products": {
+      "Ixy": 1.789825564022989e-05,
+      "Ixz": 7.707821284012373e-17,
+      "Iyz": 0.0
+    },
+    "positive_definite": true,
+    "principal_inertia_kg_m2": [
+      0.00042373759240507875,
+      0.00024590004741612074,
+      0.0002458802753317054
+    ],
+    "products_kg_m2": {
+      "Ixy": 5.4620578962057116e-09,
+      "Ixz": 2.352216157436752e-20,
+      "Iyz": 0.0
+    },
+    "radial_com_significant": true,
+    "transverse_anisotropy": 6.702285818244679e-05
+  },
+  "left_right": {
+    "inertia_relative_mismatch": 1.2890189575141206e-05,
+    "radial_com_relative_mismatch": 0.011461353599411072,
+    "v4_authorized": false
+  },
+  "right": {
+    "anisotropy_significant": false,
+    "body_frame": "wheel body local frame",
+    "collision_axis_b": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "com_axial_m": -0.007415140339568024,
+    "com_b_m": [
+      0.00011422123248387527,
+      3.597071589790871e-05,
+      -0.007415140339568024
+    ],
+    "com_radial_distance_m": 0.00011975133549294365,
+    "hinge_axis_b": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "hinge_point_b_m": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "inertia_body_axle_frame_kg_m2": [
+      [
+        0.0002458802736524955,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.00024590004587548604,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0004237375893857538
+      ]
+    ],
+    "inertial_frame_quaternion_b": [
+      0.0,
+      0.7071067811865489,
+      0.0,
+      0.7071067811865489
+    ],
+    "mass_kg": 0.3431,
+    "normalized_products": {
+      "Ixy": 0.0,
+      "Ixz": 0.0,
+      "Iyz": 0.0
+    },
+    "positive_definite": true,
+    "principal_inertia_kg_m2": [
+      0.0004237375893857504,
+      0.0002459000458754841,
+      0.00024588027365249354
+    ],
+    "products_kg_m2": {
+      "Ixy": 0.0,
+      "Ixz": 0.0,
+      "Iyz": 0.0
+    },
+    "radial_com_significant": true,
+    "transverse_anisotropy": 8.041079402904176e-05
+  }
+}

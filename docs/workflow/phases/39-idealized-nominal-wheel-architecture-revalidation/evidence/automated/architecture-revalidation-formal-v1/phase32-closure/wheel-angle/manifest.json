@@ -1,0 +1,23 @@
+{
+  "command": "/home/t/W_L_ws/tools/experiments/run_phase32_wheel_angle_hybrid.py --method /home/t/W_L_ws/simulation/mujoco/config/phase39_wheel_angle_closure_v1.json --output /home/t/W_L_ws/docs/workflow/phases/39-idealized-nominal-wheel-architecture-revalidation/evidence/automated/architecture-revalidation-formal-v1/phase32-closure/wheel-angle",
+  "created_utc": "2026-08-30T06:40:15.459846+00:00",
+  "dependencies": {
+    "mujoco": "3.7.0",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3"
+  },
+  "inputs": {
+    "docs/workflow/phases/28-minimal-closed-loop-drift-attribution/evidence/automated/phase28-drift-attribution-v5/T0_static_control.csv": "97764748b0948713cb13aadff60cc44a11ae5940d8fa1e30577314f86451c611",
+    "docs/workflow/phases/28-minimal-closed-loop-drift-attribution/evidence/automated/phase28-drift-attribution-v5/T0_static_plant.csv": "2330188f8e9cfe7b2f24f6a28ebe0730d15e59891b920cab522c890b2556caac",
+    "docs/workflow/phases/28-minimal-closed-loop-drift-attribution/evidence/automated/phase28-drift-attribution-v5/T1_straight_start_cruise_brake_control.csv": "bc79c789a7394f3b7c226322b9f5eba936ae1a28b929e566ca18c2aab64de03e",
+    "docs/workflow/phases/28-minimal-closed-loop-drift-attribution/evidence/automated/phase28-drift-attribution-v5/T1_straight_start_cruise_brake_plant.csv": "9567fae6bb3bcab9830756afa4e15dae29a5aad0287ebe5744537f43a0bf011f",
+    "ros_ws/build/wheel_leg_core/phase31_wbc_wrench_sweep": "58a67a55c3de24fd2d06c7e0773abe599b227634cd6e267a9ad72a27b746a440",
+    "simulation/mujoco/config/phase39_phase32_markov_closure_v1.json": "b22db59265078be2d6617996a7ab67e2d064cb09962e8d15472b068509780a32",
+    "simulation/mujoco/config/phase39_wheel_angle_closure_v1.json": "377ad74cb82fafe243daac3c837f5c0e8fde7bb35035e080ba9d560f77dfcc33",
+    "simulation/mujoco/model/scene_axisymmetric_centered_com_v1.xml": "1bf6a0c85f3fabf3c7447b913085ca6b79eff97d5baf824b44faf4e48343e419",
+    "tools/experiments/run_phase32_markov_closure.py": "4af4f93c9455a971f53639d79ec233354429aefbf63bb0c5fc2006b670f1d754",
+    "tools/experiments/run_phase32_wheel_angle_hybrid.py": "748841be9999648e236fc0e9041eca28b54d39e701a114199c1b8dbdefd42402"
+  },
+  "python": "3.10.20",
+  "replay_of": null
+}

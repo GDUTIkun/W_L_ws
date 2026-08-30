@@ -1,0 +1,23 @@
+{
+  "command": "tools/experiments/run_phase40_angle_domain.py --output docs/workflow/phases/40-wheel-absolute-angle-domain-contract/evidence/automated/angle-domain-replay-v1 --replay-of angle-domain-formal-v1",
+  "created_utc": "2026-08-30T07:14:56.824957+00:00",
+  "dependencies": {
+    "mujoco": "3.7.0",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3"
+  },
+  "inputs": {
+    "docs/workflow/phases/28-minimal-closed-loop-drift-attribution/evidence/automated/phase28-drift-attribution-v5/T0_static_control.csv": "97764748b0948713cb13aadff60cc44a11ae5940d8fa1e30577314f86451c611",
+    "docs/workflow/phases/28-minimal-closed-loop-drift-attribution/evidence/automated/phase28-drift-attribution-v5/T0_static_plant.csv": "2330188f8e9cfe7b2f24f6a28ebe0730d15e59891b920cab522c890b2556caac",
+    "ros_ws/build/wheel_leg_core/phase31_wbc_wrench_sweep": "d4250fd0a5567ca2d68e91bd22bd61967d16e6cc41927df6c9bbc9d5b86d385d",
+    "ros_ws/build/wheel_leg_mujoco/phase40_angle_domain_loop": "62363a23ecce18dc8e6b89ae380af2ff4f81852fbeca10da40f838c72acebfb1",
+    "simulation/mujoco/config/phase39_phase32_markov_closure_v1.json": "b22db59265078be2d6617996a7ab67e2d064cb09962e8d15472b068509780a32",
+    "simulation/mujoco/config/phase40_angle_domain_v1.json": "a9bd3c3073ed903a3bb2ca61acd9200a59cb5c20bf85da542126afde5c7db876",
+    "simulation/mujoco/model/scene_axisymmetric_centered_com_v1.xml": "1bf6a0c85f3fabf3c7447b913085ca6b79eff97d5baf824b44faf4e48343e419",
+    "tools/experiments/run_phase32_markov_closure.py": "4af4f93c9455a971f53639d79ec233354429aefbf63bb0c5fc2006b670f1d754",
+    "tools/experiments/run_phase40_angle_domain.py": "bb11723503ed1b44131c00564724f8b5e629d54f48b91b34fa3728d396637320"
+  },
+  "platform": "Linux-7.0.0-30-generic-x86_64-with-glibc2.39",
+  "python": "3.10.20 (main, Jun 11 2026, 04:03:45) [Clang 22.1.3 ]",
+  "replay_of": "angle-domain-formal-v1"
+}

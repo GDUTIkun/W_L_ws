@@ -1,0 +1,25 @@
+{
+  "classification": "P35-A_pre_target_minimal_wbc_workspace_drift",
+  "limiting_joint": "right_wheel",
+  "activation_branch": "Phase27 Minimal fixed equilibrium-wrench hold",
+  "h0_failure_tick": 88,
+  "h0_first_failed_index": 5,
+  "h0_replay_max_abs_error": 0.0,
+  "h1_replay_max_abs_error": 0.0,
+  "tracking_failure_ticks": [
+    91,
+    92,
+    91,
+    90,
+    92,
+    92
+  ],
+  "phase34_timing_reproduced": true,
+  "inspector_parity": true,
+  "rejecting_envelope_complete": true,
+  "upstream_contact_loss": false,
+  "upstream_hard_violation": false,
+  "upstream_slack_violation": false,
+  "upstream_torque_limit": false,
+  "direct_and_h2_causally_ineligible": true
+}

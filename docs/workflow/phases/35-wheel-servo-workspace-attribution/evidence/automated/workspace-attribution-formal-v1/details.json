@@ -1,0 +1,572 @@
+{
+  "H0-a": {
+    "sample_count": 89,
+    "failure_tick": 88,
+    "first_failed_index": 5,
+    "minimum_margin_index": 5,
+    "rejecting_signed_margin_rad": -0.07438836463776766,
+    "finite_rejecting_envelope": true,
+    "workspace_inspector_parity": true,
+    "trends": [
+      {
+        "joint": 0,
+        "trend_tick": 12,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.9080513831208464
+      },
+      {
+        "joint": 1,
+        "trend_tick": 24,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.9731682404991769
+      },
+      {
+        "joint": 2,
+        "trend_tick": 9,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.49230740917547233
+      },
+      {
+        "joint": 3,
+        "trend_tick": 20,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.7088190121463201
+      },
+      {
+        "joint": 4,
+        "trend_tick": 23,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.888698565315663
+      },
+      {
+        "joint": 5,
+        "trend_tick": 9,
+        "near_boundary_tick": 87,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": -0.07438836463776766
+      }
+    ],
+    "maximum_hard_violation_before_failure": 7.897214809177155e-10,
+    "maximum_normalized_slack_before_failure": 0.0006738410131657436,
+    "minimum_torque_margin_before_failure_nm": 1.9999673850527522,
+    "bilateral_contact_before_failure": true
+  },
+  "H0-b": {
+    "sample_count": 89,
+    "failure_tick": 88,
+    "first_failed_index": 5,
+    "minimum_margin_index": 5,
+    "rejecting_signed_margin_rad": -0.07438836463776766,
+    "finite_rejecting_envelope": true,
+    "workspace_inspector_parity": true,
+    "trends": [
+      {
+        "joint": 0,
+        "trend_tick": 12,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.9080513831208464
+      },
+      {
+        "joint": 1,
+        "trend_tick": 24,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.9731682404991769
+      },
+      {
+        "joint": 2,
+        "trend_tick": 9,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.49230740917547233
+      },
+      {
+        "joint": 3,
+        "trend_tick": 20,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.7088190121463201
+      },
+      {
+        "joint": 4,
+        "trend_tick": 23,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.888698565315663
+      },
+      {
+        "joint": 5,
+        "trend_tick": 9,
+        "near_boundary_tick": 87,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": -0.07438836463776766
+      }
+    ],
+    "maximum_hard_violation_before_failure": 7.897214809177155e-10,
+    "maximum_normalized_slack_before_failure": 0.0006738410131657436,
+    "minimum_torque_margin_before_failure_nm": 1.9999673850527522,
+    "bilateral_contact_before_failure": true
+  },
+  "H1-a": {
+    "sample_count": 90,
+    "failure_tick": 89,
+    "first_failed_index": 5,
+    "minimum_margin_index": 5,
+    "rejecting_signed_margin_rad": -0.041550954694139275,
+    "finite_rejecting_envelope": true,
+    "workspace_inspector_parity": true,
+    "trends": [
+      {
+        "joint": 0,
+        "trend_tick": 15,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.8095530793397888
+      },
+      {
+        "joint": 1,
+        "trend_tick": 24,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.9410726706377837
+      },
+      {
+        "joint": 2,
+        "trend_tick": 9,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.1086709038049889
+      },
+      {
+        "joint": 3,
+        "trend_tick": 18,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.7301451661686815
+      },
+      {
+        "joint": 4,
+        "trend_tick": 23,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.8906832315081269
+      },
+      {
+        "joint": 5,
+        "trend_tick": 8,
+        "near_boundary_tick": 89,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": -0.041550954694139275
+      }
+    ],
+    "maximum_hard_violation_before_failure": 1.6331138753822305e-08,
+    "maximum_normalized_slack_before_failure": 0.0004744015938590255,
+    "minimum_torque_margin_before_failure_nm": 1.9999657460922138,
+    "bilateral_contact_before_failure": true
+  },
+  "H1-b": {
+    "sample_count": 90,
+    "failure_tick": 89,
+    "first_failed_index": 5,
+    "minimum_margin_index": 5,
+    "rejecting_signed_margin_rad": -0.041550954694139275,
+    "finite_rejecting_envelope": true,
+    "workspace_inspector_parity": true,
+    "trends": [
+      {
+        "joint": 0,
+        "trend_tick": 15,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.8095530793397888
+      },
+      {
+        "joint": 1,
+        "trend_tick": 24,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.9410726706377837
+      },
+      {
+        "joint": 2,
+        "trend_tick": 9,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.1086709038049889
+      },
+      {
+        "joint": 3,
+        "trend_tick": 18,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.7301451661686815
+      },
+      {
+        "joint": 4,
+        "trend_tick": 23,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.8906832315081269
+      },
+      {
+        "joint": 5,
+        "trend_tick": 8,
+        "near_boundary_tick": 89,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": -0.041550954694139275
+      }
+    ],
+    "maximum_hard_violation_before_failure": 1.6331138753822305e-08,
+    "maximum_normalized_slack_before_failure": 0.0004744015938590255,
+    "minimum_torque_margin_before_failure_nm": 1.9999657460922138,
+    "bilateral_contact_before_failure": true
+  },
+  "tracking-g1_2p5hz-step": {
+    "sample_count": 92,
+    "failure_tick": 91,
+    "first_failed_index": 5,
+    "minimum_margin_index": 5,
+    "rejecting_signed_margin_rad": -0.09987482418028071,
+    "finite_rejecting_envelope": true,
+    "workspace_inspector_parity": true,
+    "trends": [
+      {
+        "joint": 0,
+        "trend_tick": 21,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.878896761040342
+      },
+      {
+        "joint": 1,
+        "trend_tick": 25,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.928757058107203
+      },
+      {
+        "joint": 2,
+        "trend_tick": 9,
+        "near_boundary_tick": 91,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.03631038981995416
+      },
+      {
+        "joint": 3,
+        "trend_tick": 29,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.8306636360000045
+      },
+      {
+        "joint": 4,
+        "trend_tick": 22,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.8878865166772005
+      },
+      {
+        "joint": 5,
+        "trend_tick": 8,
+        "near_boundary_tick": 90,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": -0.09987482418028071
+      }
+    ],
+    "maximum_hard_violation_before_failure": 7.494508319494386e-09,
+    "maximum_normalized_slack_before_failure": 0.012355957699564834,
+    "minimum_torque_margin_before_failure_nm": 1.938220211502129,
+    "bilateral_contact_before_failure": true
+  },
+  "tracking-g1_2p5hz-ramp": {
+    "sample_count": 93,
+    "failure_tick": 92,
+    "first_failed_index": 5,
+    "minimum_margin_index": 5,
+    "rejecting_signed_margin_rad": -0.07854566297981957,
+    "finite_rejecting_envelope": true,
+    "workspace_inspector_parity": true,
+    "trends": [
+      {
+        "joint": 0,
+        "trend_tick": 21,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.8785770331090386
+      },
+      {
+        "joint": 1,
+        "trend_tick": 25,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.9312738068040721
+      },
+      {
+        "joint": 2,
+        "trend_tick": 9,
+        "near_boundary_tick": 92,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.02460745059123204
+      },
+      {
+        "joint": 3,
+        "trend_tick": 29,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.8333583137412964
+      },
+      {
+        "joint": 4,
+        "trend_tick": 22,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.8926169908141874
+      },
+      {
+        "joint": 5,
+        "trend_tick": 8,
+        "near_boundary_tick": 91,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": -0.07854566297981957
+      }
+    ],
+    "maximum_hard_violation_before_failure": 1.3899530970640228e-08,
+    "maximum_normalized_slack_before_failure": 0.01484500356906739,
+    "minimum_torque_margin_before_failure_nm": 1.9257749821546064,
+    "bilateral_contact_before_failure": true
+  },
+  "tracking-g2_3p5hz-step": {
+    "sample_count": 92,
+    "failure_tick": 91,
+    "first_failed_index": 5,
+    "minimum_margin_index": 5,
+    "rejecting_signed_margin_rad": -0.07267371397444333,
+    "finite_rejecting_envelope": true,
+    "workspace_inspector_parity": true,
+    "trends": [
+      {
+        "joint": 0,
+        "trend_tick": 22,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.8919204880899654
+      },
+      {
+        "joint": 1,
+        "trend_tick": 25,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.9309776314510566
+      },
+      {
+        "joint": 2,
+        "trend_tick": 9,
+        "near_boundary_tick": 91,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.02829033379595569
+      },
+      {
+        "joint": 3,
+        "trend_tick": 27,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.8541363069426894
+      },
+      {
+        "joint": 4,
+        "trend_tick": 22,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.8932379423770135
+      },
+      {
+        "joint": 5,
+        "trend_tick": 8,
+        "near_boundary_tick": 90,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": -0.07267371397444333
+      }
+    ],
+    "maximum_hard_violation_before_failure": 1.4084078792109267e-08,
+    "maximum_normalized_slack_before_failure": 0.01994371994855094,
+    "minimum_torque_margin_before_failure_nm": 1.9002814002572586,
+    "bilateral_contact_before_failure": true
+  },
+  "tracking-g2_3p5hz-ramp": {
+    "sample_count": 91,
+    "failure_tick": 90,
+    "first_failed_index": 5,
+    "minimum_margin_index": 5,
+    "rejecting_signed_margin_rad": -0.006651358811080144,
+    "finite_rejecting_envelope": true,
+    "workspace_inspector_parity": true,
+    "trends": [
+      {
+        "joint": 0,
+        "trend_tick": 22,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.9095847114901038
+      },
+      {
+        "joint": 1,
+        "trend_tick": 25,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.9509152304234926
+      },
+      {
+        "joint": 2,
+        "trend_tick": 9,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.0819125860080322
+      },
+      {
+        "joint": 3,
+        "trend_tick": 27,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.8734635884915556
+      },
+      {
+        "joint": 4,
+        "trend_tick": 22,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.9138991257963429
+      },
+      {
+        "joint": 5,
+        "trend_tick": 8,
+        "near_boundary_tick": 90,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": -0.006651358811080144
+      }
+    ],
+    "maximum_hard_violation_before_failure": 1.4942987056065782e-08,
+    "maximum_normalized_slack_before_failure": 0.012970390873409626,
+    "minimum_torque_margin_before_failure_nm": 1.9351480456320784,
+    "bilateral_contact_before_failure": true
+  },
+  "tracking-g3_5hz-step": {
+    "sample_count": 93,
+    "failure_tick": 92,
+    "first_failed_index": 2,
+    "minimum_margin_index": 5,
+    "rejecting_signed_margin_rad": -0.030599461731979805,
+    "finite_rejecting_envelope": true,
+    "workspace_inspector_parity": true,
+    "trends": [
+      {
+        "joint": 0,
+        "trend_tick": 23,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.8961344134645015
+      },
+      {
+        "joint": 1,
+        "trend_tick": 25,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.9219809677834997
+      },
+      {
+        "joint": 2,
+        "trend_tick": 9,
+        "near_boundary_tick": 92,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": -0.030599461731979805
+      },
+      {
+        "joint": 3,
+        "trend_tick": 26,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.865691840372002
+      },
+      {
+        "joint": 4,
+        "trend_tick": 22,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.8876078205384363
+      },
+      {
+        "joint": 5,
+        "trend_tick": 8,
+        "near_boundary_tick": 91,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": -0.08999141686575496
+      }
+    ],
+    "maximum_hard_violation_before_failure": 1.6974008601455814e-08,
+    "maximum_normalized_slack_before_failure": 0.024105552368531322,
+    "minimum_torque_margin_before_failure_nm": 1.8794722381563458,
+    "bilateral_contact_before_failure": true
+  },
+  "tracking-g3_5hz-ramp": {
+    "sample_count": 93,
+    "failure_tick": 92,
+    "first_failed_index": 2,
+    "minimum_margin_index": 5,
+    "rejecting_signed_margin_rad": -0.013002804758842856,
+    "finite_rejecting_envelope": true,
+    "workspace_inspector_parity": true,
+    "trends": [
+      {
+        "joint": 0,
+        "trend_tick": 23,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.9062015939083722
+      },
+      {
+        "joint": 1,
+        "trend_tick": 25,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.9326160584004768
+      },
+      {
+        "joint": 2,
+        "trend_tick": 9,
+        "near_boundary_tick": 92,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": -0.013002804758842856
+      },
+      {
+        "joint": 3,
+        "trend_tick": 26,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.8753766887288577
+      },
+      {
+        "joint": 4,
+        "trend_tick": 22,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": 0.8983157110699178
+      },
+      {
+        "joint": 5,
+        "trend_tick": 8,
+        "near_boundary_tick": 91,
+        "reset_normalized_margin": 1.0,
+        "last_normalized_margin": -0.09628738510984536
+      }
+    ],
+    "maximum_hard_violation_before_failure": 1.894751866515776e-08,
+    "maximum_normalized_slack_before_failure": 0.024018773235128018,
+    "minimum_torque_margin_before_failure_nm": 1.87990613382438,
+    "bilateral_contact_before_failure": true
+  }
+}

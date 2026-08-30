@@ -1,0 +1,103 @@
+{
+  "corrected_dimensions": [
+    17,
+    16,
+    6,
+    12,
+    76
+  ],
+  "errors": {
+    "actuator_ctrlrange": 0.0,
+    "actuator_gear": 0.0,
+    "body_inertia": 0.0,
+    "body_ipos": 0.0,
+    "body_iquat": 0.0,
+    "body_mass": 0.0,
+    "body_pos": 0.0,
+    "body_quat": 0.0,
+    "dimensions_except_geom": 0.0,
+    "dof_armature": 0.0,
+    "dof_damping": 0.0,
+    "dof_frictionloss": 0.0,
+    "eq_data": 0.0,
+    "gravity": 0.0,
+    "ground_friction": 0.0,
+    "ground_solimp": 0.0,
+    "ground_solref": 0.0,
+    "integrator": 0,
+    "jnt_axis": 0.0,
+    "jnt_pos": 0.0,
+    "jnt_range": 0.0,
+    "solver_tolerance": 0.0,
+    "timestep": 0.0
+  },
+  "maximum_noncollision_error": 0.0,
+  "nominal_dimensions": [
+    17,
+    16,
+    6,
+    12,
+    74
+  ],
+  "only_collision_representation_changed": true,
+  "wheel": {
+    "left": {
+      "body_com_error_m": 0.0,
+      "body_inertia_error_kg_m2": 0.0,
+      "body_inertia_quaternion_error": 0.0,
+      "body_mass_error_kg": 0.0,
+      "collision_mask": [
+        0,
+        1
+      ],
+      "collision_position_b_m": [
+        0.0,
+        0.0,
+        0.0075
+      ],
+      "collision_size_m": [
+        0.05,
+        0.02,
+        0.0
+      ],
+      "collision_type": 5,
+      "friction_error": 0.0,
+      "solimp_error": 0.0,
+      "solref_error": 0.0,
+      "visual_mass_mask": [
+        0.0,
+        0.0
+      ],
+      "visual_mesh_data_id_equal": true
+    },
+    "right": {
+      "body_com_error_m": 0.0,
+      "body_inertia_error_kg_m2": 0.0,
+      "body_inertia_quaternion_error": 0.0,
+      "body_mass_error_kg": 0.0,
+      "collision_mask": [
+        0,
+        1
+      ],
+      "collision_position_b_m": [
+        0.0,
+        0.0,
+        -0.0075
+      ],
+      "collision_size_m": [
+        0.05,
+        0.02,
+        0.0
+      ],
+      "collision_type": 5,
+      "friction_error": 0.0,
+      "solimp_error": 0.0,
+      "solref_error": 0.0,
+      "visual_mass_mask": [
+        0.0,
+        0.0
+      ],
+      "visual_mesh_data_id_equal": true
+    }
+  }
+}

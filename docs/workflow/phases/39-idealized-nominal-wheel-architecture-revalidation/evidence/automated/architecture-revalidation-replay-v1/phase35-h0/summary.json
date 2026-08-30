@@ -1,0 +1,77 @@
+{
+  "analysis": {
+    "bilateral_contact_before_failure": true,
+    "failure_tick": 96,
+    "finite_rejecting_envelope": true,
+    "finite_rejecting_geometry": true,
+    "first_failed_index": 5,
+    "maximum_hard_violation_before_failure": 4.3120895547830995e-10,
+    "maximum_normalized_slack_before_failure": 0.00021414465271541377,
+    "minimum_margin_index": 5,
+    "minimum_torque_margin_before_failure_nm": 1.999981411861613,
+    "rejecting_signed_margin_rad": -0.03678810536546262,
+    "sample_count": 97,
+    "trends": [
+      {
+        "joint": 0,
+        "last_normalized_margin": 0.928792943697667,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "trend_tick": 1
+      },
+      {
+        "joint": 1,
+        "last_normalized_margin": 0.9994702730843109,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "trend_tick": 2
+      },
+      {
+        "joint": 2,
+        "last_normalized_margin": 0.9744798374222653,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "trend_tick": 10
+      },
+      {
+        "joint": 3,
+        "last_normalized_margin": 0.7655714748984526,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "trend_tick": 0
+      },
+      {
+        "joint": 4,
+        "last_normalized_margin": 0.9559792125825345,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "trend_tick": 0
+      },
+      {
+        "joint": 5,
+        "last_normalized_margin": -0.03678810536546262,
+        "near_boundary_tick": 95,
+        "reset_normalized_margin": 1.0,
+        "trend_tick": 14
+      }
+    ],
+    "workspace_inspector_parity": true
+  },
+  "classification": "P37-F_H0_wheel_spin_drift_persists_with_clean_contact",
+  "commands": [
+    "/home/t/W_L_ws/ros_ws/build/wheel_leg_mujoco/phase35_workspace_attribution_loop /home/t/W_L_ws/simulation/mujoco/model/scene_axisymmetric_centered_com_v1.xml /home/t/W_L_ws/docs/workflow/phases/39-idealized-nominal-wheel-architecture-revalidation/evidence/automated/architecture-revalidation-replay-v1/phase35-h0/H0-a.csv H0_minimal_hold none 0 0",
+    "/home/t/W_L_ws/ros_ws/build/wheel_leg_mujoco/phase35_workspace_attribution_loop /home/t/W_L_ws/simulation/mujoco/model/scene_axisymmetric_centered_com_v1.xml /home/t/W_L_ws/docs/workflow/phases/39-idealized-nominal-wheel-architecture-revalidation/evidence/automated/architecture-revalidation-replay-v1/phase35-h0/H0-b.csv H0_minimal_hold none 0 0"
+  ],
+  "drift_persists": true,
+  "final_tick": 96,
+  "final_xi_m": [
+    NaN,
+    NaN
+  ],
+  "final_zeta_m": [
+    NaN,
+    NaN
+  ],
+  "maximum_absolute_wheel_spin_rad": 1.0367881053654626,
+  "replay_max_abs_error": 0.0
+}

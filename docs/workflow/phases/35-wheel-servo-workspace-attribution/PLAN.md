@@ -1,6 +1,6 @@
 # Phase 35: Wheel-Position Servo Workspace Failure Attribution — PLAN
 
-Status: `planned`
+Status: `complete`
 
 Design input: user-provided Phase35 attribution proposal. It is accepted after grounding corrections
 below. Current live source and append-only Phase34 evidence remain authoritative. This Phase diagnoses
@@ -263,16 +263,16 @@ definition before formal classification.
 
 | ID | Task | Input | Deliverable | Validation | Status |
 | --- | --- | --- | --- | --- | --- |
-| T01 | Audit live workspace contract and bound provenance | CBM/source, Phase21 runtime profile | `workspace-contract.md` | exhaustive return-path/mapping/bound audit + coverage | todo |
-| T02 | Freeze method, corpus, trend/precedence and schema | T01, Phase34 runner/evidence | versioned config, `state-envelope-contract.md`, hashes | schema synthetic cases; values frozen before dynamic results | todo |
-| T03 | Implement behavior-invariant inspector and full logger | T01/T02 | diagnostic API, runner/log schema | exact old/new acceptance parity; invalid-tick persistence | todo |
-| T04 | Run H0 Minimal and H1 zero-ddxi-row holds | T03 | `hold-attribution.md`, formal/replay | DG35-02, 1.5 s or earlier exact rejection | todo |
-| T05 | Run sign-mirrored direct-ddxi pulse controls | T04 PASS-to-proceed | `direct-ddxi-attribution.md` | DG35-03; zero-net-velocity and sign symmetry | todo |
-| T06 | Run frozen-gain zero-displacement PD holds | T05 PASS-to-proceed | hold-servo evidence | DG35-04; no target displacement or gain change | todo |
-| T07 | Replay exact Phase34 step/ramp corpus | T03–T06 | `tracking-replay.md` | DG35-05; six cases, fresh replay, original semantics | todo |
-| T08 | Perform first-mover/coupling/precedence analysis | T04–T07 | `first-mover-analysis.md` | DG35-06; timing, margins, common/diff, raw/derived | todo |
-| T09 | Compare identified direction to sourced WBC task coverage | T08 | `paper-wbc-coverage-comparison.md` | exact source/equation; no invented task or repair | todo |
-| T10 | Select one next experiment and review | T01–T09 | `next-direction.md`, `REVIEW.md` | DG35-07/08; build/test/replay/non-overwrite | todo |
+| T01 | Audit live workspace contract and bound provenance | CBM/source, Phase21 runtime profile | `workspace-contract.md` | exhaustive return-path/mapping/bound audit + coverage | done |
+| T02 | Freeze method, corpus, trend/precedence and schema | T01, Phase34 runner/evidence | versioned config, `state-envelope-contract.md`, hashes | schema synthetic cases; values frozen before dynamic results | done |
+| T03 | Implement behavior-invariant inspector and full logger | T01/T02 | diagnostic API, runner/log schema | exact old/new acceptance parity; invalid-tick persistence | done |
+| T04 | Run H0 Minimal and H1 zero-ddxi-row holds | T03 | `hold-attribution.md`, formal/replay | DG35-02, 1.5 s or earlier exact rejection | done |
+| T05 | Run sign-mirrored direct-ddxi pulse controls | T04 PASS-to-proceed | `direct-ddxi-attribution.md` | DG35-03; zero-net-velocity and sign symmetry | blocked |
+| T06 | Run frozen-gain zero-displacement PD holds | T05 PASS-to-proceed | hold-servo evidence | DG35-04; no target displacement or gain change | blocked |
+| T07 | Replay exact Phase34 step/ramp corpus | T03–T06 | `tracking-replay.md` | DG35-05; six cases, fresh replay, original semantics | done |
+| T08 | Perform first-mover/coupling/precedence analysis | T04–T07 | `first-mover-analysis.md` | DG35-06; timing, margins, common/diff, raw/derived | done |
+| T09 | Compare identified direction to sourced WBC task coverage | T08 | `paper-wbc-coverage-comparison.md` | exact source/equation; no invented task or repair | done |
+| T10 | Select one next experiment and review | T01–T09 | `next-direction.md`, `REVIEW.md` | DG35-07/08; build/test/replay/non-overwrite | done |
 
 Task status is `todo / doing / done / blocked`.
 
@@ -303,16 +303,16 @@ PASS.
 
 ## Acceptance Criteria
 
-- [ ] The exact first live condition, canonical index, side, joint type, raw value, bound and signed
+- [x] The exact first live condition, canonical index, side, joint type, raw value, bound and signed
       margin are reproduced without changing the gate.
-- [ ] The earliest physical driver and activation branch are isolated by the nearest ordered
+- [x] The earliest physical driver and activation branch are isolated by the nearest ordered
       counterfactual; every skipped branch is explicitly causally ineligible.
-- [ ] The Phase34 six-case mechanism reproduces, or non-reproduction is classified truthfully.
-- [ ] Wrench/slack/contact/torque/hard/QP precedence is established to one-tick resolution.
-- [ ] Paper/reproduced-baseline comparison cites an actual task/equation or states no supported map.
-- [ ] Exactly one next experiment is recommended; no repair, retuning, feedback or architecture
+- [x] The Phase34 six-case mechanism reproduces, or non-reproduction is classified truthfully.
+- [x] Wrench/slack/contact/torque/hard/QP precedence is established to one-tick resolution.
+- [x] Paper/reproduced-baseline comparison cites an actual task/equation or states no supported map.
+- [x] Exactly one next experiment is recommended; no repair, retuning, feedback or architecture
       change is implemented.
-- [ ] Production Phase27 and prior formal artifacts remain invariant; fresh replay and repository
+- [x] Production Phase27 and prior formal artifacts remain invariant; fresh replay and repository
       regression pass.
 
 ## Required Terminal Form

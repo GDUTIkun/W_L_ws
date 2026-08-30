@@ -88,14 +88,49 @@ int main() {
   }
 
   equilibrium.joint_position_rad[0] += 0.651;
+  const auto inspection = wheel_leg::NominalWbcModel::inspectWorkspace(equilibrium);
+  assert(!inspection.inside());
+  assert(inspection.first_failed_index == 0);
+  assert(inspection.minimum_margin_index == 0);
+  assert(std::abs(inspection.joint[0].signed_margin_rad + 0.001) <= 1.0e-12);
   const auto outside = model.evaluate(equilibrium);
   assert(outside.status ==
          wheel_leg::NominalWbcModel::Status::kOutsideWorkspace);
   assert(assembler.assemble(outside, equilibrium_reference).status ==
          wheel_leg::WeightedWbcProblem::Status::kModelRejected);
+  equilibrium.joint_position_rad[0] -= 0.651;
+  auto wheel_outside = equilibrium;
+  wheel_outside.joint_position_rad[2] += 2.0 * std::acos(-1.0);
+  assert(wheel_leg::NominalWbcModel::inspectWorkspace(wheel_outside).inside());
+  assert(model.evaluate(wheel_outside).ok());
+  wheel_outside.joint_position_rad[5] += 10.0 * std::acos(-1.0);
+  assert(wheel_leg::NominalWbcModel::inspectWorkspace(wheel_outside).inside());
+  assert(model.evaluate(wheel_outside).ok());
+  wheel_outside.joint_position_rad[2] =
+      std::numeric_limits<double>::infinity();
+  assert(model.evaluate(wheel_outside).status ==
+         wheel_leg::NominalWbcModel::Status::kInvalidState);
   equilibrium_reference.interaction_wrench_flu[0] =
       std::numeric_limits<double>::quiet_NaN();
-  equilibrium.joint_position_rad[0] -= 0.651;
+  constexpr std::array<int, 4> kWorkspaceJoints{0, 1, 3, 4};
+  for (int joint : kWorkspaceJoints) {
+    const auto baseline = wheel_leg::NominalWbcModel::inspectWorkspace(equilibrium);
+    const double lower = baseline.joint[joint].lower_bound_rad;
+    const double upper = baseline.joint[joint].upper_bound_rad;
+    equilibrium.joint_position_rad[joint] =
+        baseline.joint[joint].equilibrium_rad + lower;
+    assert(wheel_leg::NominalWbcModel::inspectWorkspace(equilibrium).inside());
+    equilibrium.joint_position_rad[joint] -= 1.0e-9;
+    auto failed = wheel_leg::NominalWbcModel::inspectWorkspace(equilibrium);
+    assert(failed.first_failed_index == joint);
+    equilibrium.joint_position_rad[joint] =
+        baseline.joint[joint].equilibrium_rad + upper;
+    assert(wheel_leg::NominalWbcModel::inspectWorkspace(equilibrium).inside());
+    equilibrium.joint_position_rad[joint] += 1.0e-9;
+    failed = wheel_leg::NominalWbcModel::inspectWorkspace(equilibrium);
+    assert(failed.first_failed_index == joint);
+    equilibrium.joint_position_rad[joint] = baseline.joint[joint].position_rad;
+  }
   assert(assembler.assemble(model.evaluate(equilibrium), equilibrium_reference).status ==
          wheel_leg::WeightedWbcProblem::Status::kNonFinite);
   return 0;

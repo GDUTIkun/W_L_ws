@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "phase": 41,
+  "profile": "phase41_workspace_contract_v1",
+  "scene": "simulation/mujoco/model/scene_axisymmetric_centered_com_v1.xml",
+  "executable": "ros_ws/build/wheel_leg_mujoco/phase41_workspace_contract_loop",
+  "phase40_config": "simulation/mujoco/config/phase40_angle_domain_v1.json",
+  "phase40_summary": "docs/workflow/phases/40-wheel-absolute-angle-domain-contract/evidence/automated/angle-domain-formal-v2/summary.json",
+  "phase40_shadow_csv": "docs/workflow/phases/40-wheel-absolute-angle-domain-contract/evidence/automated/angle-domain-formal-v2/shadow-a.csv",
+  "case": "H0_minimal_hold",
+  "gain": "production_r3_contract",
+  "kp": 0.0,
+  "kd": 0.0,
+  "expected_old_bound_crossing_tick": 96,
+  "expected_failure_tick": 111,
+  "expected_failure": "right_contact_loss",
+  "semantic_tolerance": 1e-12
+}

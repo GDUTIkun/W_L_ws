@@ -1,0 +1,32 @@
+{
+  "analysis": {
+    "crossing_continued": true,
+    "crossing_model_status": 0,
+    "final_tick": 111,
+    "first_independent_failure_tick": 111,
+    "first_independent_failures": [
+      "right_contact_loss"
+    ],
+    "maximum_wheel_revolutions": 0.45329612204545966,
+    "maximum_wheel_rotation_rad": 2.8481435338375167,
+    "old_bound_crossing_tick": 96,
+    "valid_before_failure": true
+  },
+  "classification": "P41-A_workspace_contract_corrected_contact_loss_reproduced",
+  "contact_loss_repair": false,
+  "contract": "leg_workspace_enforced_wheel_q_finite_only",
+  "formal_replay_max_abs_error": 0.0,
+  "gates": {
+    "crossing_not_rejected": true,
+    "failure_kind": true,
+    "failure_tick": true,
+    "fresh_replay": true,
+    "old_bound_crossing": true,
+    "phase40_shadow_decision": true,
+    "phase40_shadow_semantics": true,
+    "valid_before_failure": true
+  },
+  "pass": true,
+  "phase34_tracking_run": false,
+  "phase40_shadow_physical_control_max_abs_error": 0.0
+}

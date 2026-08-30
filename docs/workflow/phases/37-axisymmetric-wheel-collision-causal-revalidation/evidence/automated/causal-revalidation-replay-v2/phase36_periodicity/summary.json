@@ -1,0 +1,113 @@
+{
+  "boundary": [
+    {
+      "central_ddxi_jump_m_s2": 9.09529783045121e-05,
+      "central_slope_m_s2_per_rad": 0.004547648915225605,
+      "contact_counts_0p99_1p00_1p01": [
+        4,
+        4,
+        4
+      ],
+      "jump_ratio": 0.966901977900319,
+      "mode": "left",
+      "neighbor_slope_max": 0.0047033194875669565,
+      "sign": -1,
+      "special": false
+    },
+    {
+      "central_ddxi_jump_m_s2": 0.0001330338627747868,
+      "central_slope_m_s2_per_rad": 0.00665169313873934,
+      "contact_counts_0p99_1p00_1p01": [
+        4,
+        4,
+        4
+      ],
+      "jump_ratio": 0.9918067586985739,
+      "mode": "left",
+      "neighbor_slope_max": 0.0067066422772391054,
+      "sign": 1,
+      "special": false
+    },
+    {
+      "central_ddxi_jump_m_s2": 3.151608128248995e-06,
+      "central_slope_m_s2_per_rad": 0.00015758040641244975,
+      "contact_counts_0p99_1p00_1p01": [
+        4,
+        4,
+        4
+      ],
+      "jump_ratio": 0.4467588221619164,
+      "mode": "right",
+      "neighbor_slope_max": 0.00035271918224222265,
+      "sign": -1,
+      "special": false
+    },
+    {
+      "central_ddxi_jump_m_s2": 0.00011706117432686014,
+      "central_slope_m_s2_per_rad": 0.005853058716343007,
+      "contact_counts_0p99_1p00_1p01": [
+        4,
+        4,
+        4
+      ],
+      "jump_ratio": 0.9859574954268893,
+      "mode": "right",
+      "neighbor_slope_max": 0.005936420934463116,
+      "sign": 1,
+      "special": false
+    },
+    {
+      "central_ddxi_jump_m_s2": 9.120353633748635e-05,
+      "central_slope_m_s2_per_rad": 0.004560176816874317,
+      "contact_counts_0p99_1p00_1p01": [
+        4,
+        4,
+        4
+      ],
+      "jump_ratio": 0.9702184342548286,
+      "mode": "bilateral",
+      "neighbor_slope_max": 0.004700154785635194,
+      "sign": -1,
+      "special": false
+    },
+    {
+      "central_ddxi_jump_m_s2": 0.0001236220403332544,
+      "central_slope_m_s2_per_rad": 0.006181102016662721,
+      "contact_counts_0p99_1p00_1p01": [
+        4,
+        4,
+        4
+      ],
+      "jump_ratio": 0.9900493384218022,
+      "mode": "bilateral",
+      "neighbor_slope_max": 0.006243226248214828,
+      "sign": 1,
+      "special": false
+    }
+  ],
+  "classification": "P36-C_periodic_consistent_bound_unsupported",
+  "dg36_00_semantics_pass": true,
+  "dg36_01_static_geometry_pass": true,
+  "dg36_02_core_model_periodicity_pass": true,
+  "dg36_03_dynamic_equivalence_audit_complete": true,
+  "dg36_04_one_rad_boundary_special": false,
+  "dg36_05_terminal_interpretation_pass": true,
+  "live_gate_bypassed": false,
+  "material_contact_phase_effect": false,
+  "material_dynamic_phase_effect": false,
+  "maxima": {
+    "closure_residual_m": 0.00016348568008428543,
+    "closure_residual_variation_m": 0.0,
+    "contact_centroid_change_m": 2.7755575615628914e-17,
+    "contact_isolation_ratio": 0.01004618471243584,
+    "contact_off_ddxi_change_m_s2": 0.00013384056580889592,
+    "core_periodic_error": 3.469446951953614e-18,
+    "periodic_response_error": 2.299271883998699e-13,
+    "physical_ddxi_change_m_s2": 0.013322526873631849,
+    "wheel_origin_change_m": 0.0
+  },
+  "periodic_contact_topology_pass": true,
+  "periodic_dynamic_response_equivalence_pass": true,
+  "production_modified": false,
+  "qp_outside_gate_available": false
+}

@@ -1,0 +1,22 @@
+{
+  "collision_artifact_removed": false,
+  "contact_off_effect_m_s2": 0.00013384056580889592,
+  "ddxi_improvement_ratio": 0.008707479771912474,
+  "isolation_pass": false,
+  "new_ddxi_phase_effect_m_s2": 0.013322526873631849,
+  "old_phase36_ddxi_m_s2": 1.5300095116621495,
+  "retained_core_phase_variation": {
+    "bias": 0.0007820295220073437,
+    "mass_matrix": 7.9717586341288e-05,
+    "reduced_bias": 0.0007820295220073437,
+    "reduced_mass": 7.9717586341288e-05
+  },
+  "static_contact_metrics": {
+    "centroid_m": 2.7755575615628914e-17,
+    "contact_count_difference": 0,
+    "depth_m": 6.938893903907228e-18,
+    "normal": 0.0,
+    "normal_load_n": 0.0013559030498555558
+  },
+  "static_pass": true
+}

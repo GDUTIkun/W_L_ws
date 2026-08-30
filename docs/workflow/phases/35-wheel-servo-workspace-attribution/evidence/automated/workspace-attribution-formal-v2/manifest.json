@@ -1,0 +1,30 @@
+{
+  "created_utc": "2026-08-30T03:30:48.899334+00:00",
+  "command": "tools/experiments/run_phase35_workspace_attribution.py --supersedes workspace-attribution-formal-v1 --output docs/workflow/phases/35-wheel-servo-workspace-attribution/evidence/automated/workspace-attribution-formal-v2",
+  "python": "3.10.20",
+  "commands": [
+    "/home/t/W_L_ws/ros_ws/build/wheel_leg_mujoco/phase35_workspace_attribution_loop /home/t/W_L_ws/simulation/mujoco/model/scence.xml /home/t/W_L_ws/docs/workflow/phases/35-wheel-servo-workspace-attribution/evidence/automated/workspace-attribution-formal-v2/H0-a.csv H0_minimal_hold none 0.0 0.0",
+    "/home/t/W_L_ws/ros_ws/build/wheel_leg_mujoco/phase35_workspace_attribution_loop /home/t/W_L_ws/simulation/mujoco/model/scence.xml /home/t/W_L_ws/docs/workflow/phases/35-wheel-servo-workspace-attribution/evidence/automated/workspace-attribution-formal-v2/H0-b.csv H0_minimal_hold none 0.0 0.0",
+    "/home/t/W_L_ws/ros_ws/build/wheel_leg_mujoco/phase35_workspace_attribution_loop /home/t/W_L_ws/simulation/mujoco/model/scence.xml /home/t/W_L_ws/docs/workflow/phases/35-wheel-servo-workspace-attribution/evidence/automated/workspace-attribution-formal-v2/H1-a.csv H1_zero_ddxi_row none 0.0 0.0",
+    "/home/t/W_L_ws/ros_ws/build/wheel_leg_mujoco/phase35_workspace_attribution_loop /home/t/W_L_ws/simulation/mujoco/model/scence.xml /home/t/W_L_ws/docs/workflow/phases/35-wheel-servo-workspace-attribution/evidence/automated/workspace-attribution-formal-v2/H1-b.csv H1_zero_ddxi_row none 0.0 0.0",
+    "/home/t/W_L_ws/ros_ws/build/wheel_leg_mujoco/phase35_workspace_attribution_loop /home/t/W_L_ws/simulation/mujoco/model/scence.xml /home/t/W_L_ws/docs/workflow/phases/35-wheel-servo-workspace-attribution/evidence/automated/workspace-attribution-formal-v2/tracking-g1_2p5hz-step.csv tracking_step_g1_2p5hz g1_2p5hz 246.74011002723395 31.41592653589793",
+    "/home/t/W_L_ws/ros_ws/build/wheel_leg_mujoco/phase35_workspace_attribution_loop /home/t/W_L_ws/simulation/mujoco/model/scence.xml /home/t/W_L_ws/docs/workflow/phases/35-wheel-servo-workspace-attribution/evidence/automated/workspace-attribution-formal-v2/tracking-g1_2p5hz-ramp.csv tracking_ramp_g1_2p5hz g1_2p5hz 246.74011002723395 31.41592653589793",
+    "/home/t/W_L_ws/ros_ws/build/wheel_leg_mujoco/phase35_workspace_attribution_loop /home/t/W_L_ws/simulation/mujoco/model/scence.xml /home/t/W_L_ws/docs/workflow/phases/35-wheel-servo-workspace-attribution/evidence/automated/workspace-attribution-formal-v2/tracking-g2_3p5hz-step.csv tracking_step_g2_3p5hz g2_3p5hz 483.61061565337855 43.982297150257104",
+    "/home/t/W_L_ws/ros_ws/build/wheel_leg_mujoco/phase35_workspace_attribution_loop /home/t/W_L_ws/simulation/mujoco/model/scence.xml /home/t/W_L_ws/docs/workflow/phases/35-wheel-servo-workspace-attribution/evidence/automated/workspace-attribution-formal-v2/tracking-g2_3p5hz-ramp.csv tracking_ramp_g2_3p5hz g2_3p5hz 483.61061565337855 43.982297150257104",
+    "/home/t/W_L_ws/ros_ws/build/wheel_leg_mujoco/phase35_workspace_attribution_loop /home/t/W_L_ws/simulation/mujoco/model/scence.xml /home/t/W_L_ws/docs/workflow/phases/35-wheel-servo-workspace-attribution/evidence/automated/workspace-attribution-formal-v2/tracking-g3_5hz-step.csv tracking_step_g3_5hz g3_5hz 986.9604401089358 62.83185307179586",
+    "/home/t/W_L_ws/ros_ws/build/wheel_leg_mujoco/phase35_workspace_attribution_loop /home/t/W_L_ws/simulation/mujoco/model/scence.xml /home/t/W_L_ws/docs/workflow/phases/35-wheel-servo-workspace-attribution/evidence/automated/workspace-attribution-formal-v2/tracking-g3_5hz-ramp.csv tracking_ramp_g3_5hz g3_5hz 986.9604401089358 62.83185307179586"
+  ],
+  "inputs": {
+    "simulation/mujoco/config/phase35_workspace_attribution_v1.json": "781d0a22bcb77b970cd5ac815374a924c438c26055f5451580335ce29a6922ee",
+    "simulation/mujoco/config/phase34_xi_tracking_gains_v1.json": "12360217051a472b8079b60b8116cc2dcae8b80f44bda4e69ed9fefd58746afb",
+    "simulation/mujoco/model/scence.xml": "80dd3ae1a12066a99cb031ce51b2f7a2b41218236c361eba74645a551c81e360",
+    "simulation/mujoco/model/wheel_leg.xml": "d7d46cd47d92097fb21d0d5923c83dfac07a5f1c48e2be65deb8e98c4a67f0d9",
+    "ros_ws/build/wheel_leg_mujoco/phase35_workspace_attribution_loop": "fe60da55db31c739358203967462e5b89e3ad7a4510698ef5006eeea70fc3ee2",
+    "tools/experiments/run_phase35_workspace_attribution.py": "d2e122f00c622af3d1f480c44455ed03adf6a060e5099194d45f3d4658ae5f89",
+    "ros_ws/src/wheel_leg_core/include/wheel_leg_core/nominal_wbc_model.hpp": "6e95b6f9919d9d8a815dcf611aaa4137c5d181faee704240b8f67520c9793602",
+    "ros_ws/src/wheel_leg_core/src/nominal_wbc_model.cpp": "7517a34074c5dc12ea957753910d7991bda0ae9c7eb6232d2839553bf742ffba",
+    "ros_ws/src/wheel_leg_mujoco/src/phase35_workspace_attribution_loop.cpp": "f91ebb3e58f449518bd4c2ddf7c9f6b184df311fee455b21439146974f73b79b"
+  },
+  "supersedes": "workspace-attribution-formal-v1",
+  "source_phase34": "xi-tracking-formal-v3"
+}

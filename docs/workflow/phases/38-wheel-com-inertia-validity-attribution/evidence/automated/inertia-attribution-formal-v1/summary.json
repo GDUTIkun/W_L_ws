@@ -1,0 +1,207 @@
+{
+  "causal_ratios": {
+    "V1": {
+      "contact_off": {
+        "bias": 0.0,
+        "mass_matrix": 0.0004707045904738869,
+        "physical_ddxi_m_s2": 0.0007126605741329049,
+        "qacc_rad_m_s2": 1.2955836059925695e-07
+      },
+      "contact_on": {
+        "bias": 0.0,
+        "mass_matrix": 0.0004707045904738869,
+        "physical_ddxi_m_s2": 2.147205625959374e-06,
+        "qacc_rad_m_s2": 4.065189609539373e-07
+      },
+      "multi_observable_primary": true
+    },
+    "V2": {
+      "contact_off": {
+        "bias": 1.0,
+        "mass_matrix": 1.0,
+        "physical_ddxi_m_s2": 0.9997242900386593,
+        "qacc_rad_m_s2": 1.0000000002063651
+      },
+      "contact_on": {
+        "bias": 1.0,
+        "mass_matrix": 1.0,
+        "physical_ddxi_m_s2": 1.0000000182716227,
+        "qacc_rad_m_s2": 0.9999999996819275
+      },
+      "multi_observable_primary": false
+    },
+    "V3": {
+      "contact_off": {
+        "bias": 0.0,
+        "mass_matrix": 5.100202268310361e-16,
+        "physical_ddxi_m_s2": 0.0,
+        "qacc_rad_m_s2": 0.0
+      },
+      "contact_on": {
+        "bias": 0.0,
+        "mass_matrix": 5.100202268310361e-16,
+        "physical_ddxi_m_s2": 3.358370999494686e-12,
+        "qacc_rad_m_s2": 5.123139103502564e-13
+      },
+      "multi_observable_primary": true
+    }
+  },
+  "classification": "P38-A_COM_eccentricity_is_primary_phase_source",
+  "com_radial_m": {
+    "left": 0.00012113976113020512,
+    "right": 0.00011975133549294365
+  },
+  "contact_amplification": {
+    "V0": 99.54027609726637,
+    "V1": 0.29990916939056084,
+    "V2": 99.56772973094363,
+    "V3": 4.474198789239381e+16
+  },
+  "dg38_00_semantics_pass": true,
+  "dg38_01_com_audit_pass": true,
+  "dg38_02_tensor_audit_pass": true,
+  "dg38_03_plausibility_pass": true,
+  "dg38_04_rigid_body_isolation_complete": true,
+  "dg38_05_contact_amplification_complete": true,
+  "dg38_06_attribution_complete": true,
+  "geometry_invariance_pass": true,
+  "metrics": {
+    "V0": {
+      "contact_off": {
+        "bias": 0.0007820295220073437,
+        "contact_centroid_m": 0.0,
+        "contact_count_difference": 0,
+        "contact_depth_m": 0.0,
+        "contact_normal": 0.0,
+        "mass_matrix": 7.9717586341288e-05,
+        "normal_load_n": 0.0,
+        "physical_ddxi_m_s2": 0.00013384056580889592,
+        "qacc_rad_m_s2": 4.170186184189518,
+        "reduced_bias": 0.0007820295220073437,
+        "reduced_mass": 7.9717586341288e-05,
+        "tangential_load_n": 0.0,
+        "wheel_acceleration_rad_s2": 4.170186184189518
+      },
+      "contact_on": {
+        "bias": 0.0007820295220073437,
+        "contact_centroid_m": 2.7755575615628914e-17,
+        "contact_count_difference": 0,
+        "contact_depth_m": 6.938893903907228e-18,
+        "contact_normal": 0.0,
+        "mass_matrix": 7.9717586341288e-05,
+        "normal_load_n": 0.0013559030498555558,
+        "physical_ddxi_m_s2": 0.013322526873631849,
+        "qacc_rad_m_s2": 0.3606013960685219,
+        "reduced_bias": 0.0007820295220073437,
+        "reduced_mass": 7.9717586341288e-05,
+        "tangential_load_n": 0.0006078164279754161,
+        "wheel_acceleration_rad_s2": 0.3606013960685219
+      }
+    },
+    "V1": {
+      "contact_off": {
+        "bias": 0.0,
+        "contact_centroid_m": 0.0,
+        "contact_count_difference": 0,
+        "contact_depth_m": 0.0,
+        "contact_normal": 0.0,
+        "mass_matrix": 3.752343383234269e-08,
+        "normal_load_n": 0.0,
+        "physical_ddxi_m_s2": 9.538289447164061e-08,
+        "qacc_rad_m_s2": 5.40282485417265e-07,
+        "reduced_bias": 0.0,
+        "reduced_mass": 3.752343383234269e-08,
+        "tangential_load_n": 0.0,
+        "wheel_acceleration_rad_s2": 4.381820701837569e-07
+      },
+      "contact_on": {
+        "bias": 0.0,
+        "contact_centroid_m": 2.7755575615628914e-17,
+        "contact_count_difference": 0,
+        "contact_depth_m": 6.938893903907228e-18,
+        "contact_normal": 0.0,
+        "mass_matrix": 3.752343383234269e-08,
+        "normal_load_n": 1.3233645290711138e-09,
+        "physical_ddxi_m_s2": 2.8606204655057255e-08,
+        "qacc_rad_m_s2": 1.4659130484831473e-07,
+        "reduced_bias": 0.0,
+        "reduced_mass": 3.752343383234269e-08,
+        "tangential_load_n": 2.535934162661846e-08,
+        "wheel_acceleration_rad_s2": 4.626848085220736e-08
+      }
+    },
+    "V2": {
+      "contact_off": {
+        "bias": 0.0007820295220073437,
+        "contact_centroid_m": 0.0,
+        "contact_count_difference": 0,
+        "contact_depth_m": 0.0,
+        "contact_normal": 0.0,
+        "mass_matrix": 7.9717586341288e-05,
+        "normal_load_n": 0.0,
+        "physical_ddxi_m_s2": 0.00013380366463167093,
+        "qacc_rad_m_s2": 4.170186185050099,
+        "reduced_bias": 0.0007820295220073437,
+        "reduced_mass": 7.9717586341288e-05,
+        "tangential_load_n": 0.0,
+        "wheel_acceleration_rad_s2": 4.170186185050099
+      },
+      "contact_on": {
+        "bias": 0.0007820295220073437,
+        "contact_centroid_m": 2.7755575615628914e-17,
+        "contact_count_difference": 0,
+        "contact_depth_m": 6.938893903907228e-18,
+        "contact_normal": 0.0,
+        "mass_matrix": 7.9717586341288e-05,
+        "normal_load_n": 0.0013559030513192738,
+        "physical_ddxi_m_s2": 0.013322527117056032,
+        "qacc_rad_m_s2": 0.3606013959538245,
+        "reduced_bias": 0.0007820295220073437,
+        "reduced_mass": 7.9717586341288e-05,
+        "tangential_load_n": 0.0006078415949330451,
+        "wheel_acceleration_rad_s2": 0.3606013959538245
+      }
+    },
+    "V3": {
+      "contact_off": {
+        "bias": 0.0,
+        "contact_centroid_m": 0.0,
+        "contact_count_difference": 0,
+        "contact_depth_m": 0.0,
+        "contact_normal": 0.0,
+        "mass_matrix": 4.0657581468206416e-20,
+        "normal_load_n": 0.0,
+        "physical_ddxi_m_s2": 0.0,
+        "qacc_rad_m_s2": 0.0,
+        "reduced_bias": 0.0,
+        "reduced_mass": 4.0657581468206416e-20,
+        "tangential_load_n": 0.0,
+        "wheel_acceleration_rad_s2": 0.0
+      },
+      "contact_on": {
+        "bias": 0.0,
+        "contact_centroid_m": 2.7755575615628914e-17,
+        "contact_count_difference": 0,
+        "contact_depth_m": 6.938893903907228e-18,
+        "contact_normal": 0.0,
+        "mass_matrix": 4.0657581468206416e-20,
+        "normal_load_n": 1.4210854715202004e-14,
+        "physical_ddxi_m_s2": 4.474198789239381e-14,
+        "qacc_rad_m_s2": 1.8474111129762605e-13,
+        "reduced_bias": 0.0,
+        "reduced_mass": 4.0657581468206416e-20,
+        "tangential_load_n": 2.270406085358445e-14,
+        "wheel_acceleration_rad_s2": 8.837375276016246e-14
+      }
+    }
+  },
+  "phase32_or_h0_run": false,
+  "physical_correction_justified": false,
+  "physical_correction_limitation": "no CAD mass-property/density/assembly provenance beyond STL geometry and assigned total mass",
+  "production_modified": false,
+  "transverse_anisotropy": {
+    "left": 6.702285818244679e-05,
+    "right": 8.041079402904176e-05
+  },
+  "v4_authorized": false
+}

@@ -1,0 +1,205 @@
+{
+  "finite_difference_epsilon_rad": 1e-06,
+  "records": [
+    {
+      "derivative_max_abs_error": 0.0,
+      "domain": "mandatory",
+      "revolutions": 0,
+      "step_representable": true,
+      "step_to_ulp": 144115188075.85587,
+      "ulp_rad": 6.938893903907228e-18
+    },
+    {
+      "derivative_max_abs_error": 2.7755575615628914e-10,
+      "domain": "mandatory",
+      "revolutions": -1,
+      "step_representable": true,
+      "step_to_ulp": 1125899906.842624,
+      "ulp_rad": 8.881784197001252e-16
+    },
+    {
+      "derivative_max_abs_error": 2.505591220614001e-10,
+      "domain": "mandatory",
+      "revolutions": 1,
+      "step_representable": true,
+      "step_to_ulp": 1125899906.842624,
+      "ulp_rad": 8.881784197001252e-16
+    },
+    {
+      "derivative_max_abs_error": 1.061650767297806e-09,
+      "domain": "mandatory",
+      "revolutions": -5,
+      "step_representable": true,
+      "step_to_ulp": 281474976.710656,
+      "ulp_rad": 3.552713678800501e-15
+    },
+    {
+      "derivative_max_abs_error": 1.0234868508263162e-09,
+      "domain": "mandatory",
+      "revolutions": 5,
+      "step_representable": true,
+      "step_to_ulp": 281474976.710656,
+      "ulp_rad": 3.552713678800501e-15
+    },
+    {
+      "derivative_max_abs_error": 2.4771851236948805e-09,
+      "domain": "mandatory",
+      "revolutions": -25,
+      "step_representable": true,
+      "step_to_ulp": 35184372.088832,
+      "ulp_rad": 2.842170943040401e-14
+    },
+    {
+      "derivative_max_abs_error": 2.6229018956769323e-09,
+      "domain": "mandatory",
+      "revolutions": 25,
+      "step_representable": true,
+      "step_to_ulp": 35184372.088832,
+      "ulp_rad": 2.842170943040401e-14
+    },
+    {
+      "derivative_max_abs_error": 2.4980018054066022e-09,
+      "domain": "mandatory",
+      "revolutions": -50,
+      "step_representable": true,
+      "step_to_ulp": 17592186.044416,
+      "ulp_rad": 5.684341886080802e-14
+    },
+    {
+      "derivative_max_abs_error": 2.5951463200613034e-09,
+      "domain": "mandatory",
+      "revolutions": 50,
+      "step_representable": true,
+      "step_to_ulp": 17592186.044416,
+      "ulp_rad": 5.684341886080802e-14
+    },
+    {
+      "derivative_max_abs_error": 1.1609116445931988e-07,
+      "domain": "engineering",
+      "revolutions": -500,
+      "step_representable": true,
+      "step_to_ulp": 2199023.255552,
+      "ulp_rad": 4.547473508864641e-13
+    },
+    {
+      "derivative_max_abs_error": 1.160148366263769e-07,
+      "domain": "engineering",
+      "revolutions": 500,
+      "step_representable": true,
+      "step_to_ulp": 2199023.255552,
+      "ulp_rad": 4.547473508864641e-13
+    },
+    {
+      "derivative_max_abs_error": 3.378824997568586e-07,
+      "domain": "engineering",
+      "revolutions": -5000,
+      "step_representable": true,
+      "step_to_ulp": 274877.906944,
+      "ulp_rad": 3.637978807091713e-12
+    },
+    {
+      "derivative_max_abs_error": 3.379865831654172e-07,
+      "domain": "engineering",
+      "revolutions": 5000,
+      "step_representable": true,
+      "step_to_ulp": 274877.906944,
+      "ulp_rad": 3.637978807091713e-12
+    },
+    {
+      "derivative_max_abs_error": 7.603181972903883e-06,
+      "domain": "engineering",
+      "revolutions": -50000,
+      "step_representable": true,
+      "step_to_ulp": 17179.869184,
+      "ulp_rad": 5.820766091346741e-11
+    },
+    {
+      "derivative_max_abs_error": 7.603209728479499e-06,
+      "domain": "engineering",
+      "revolutions": 50000,
+      "step_representable": true,
+      "step_to_ulp": 17179.869184,
+      "ulp_rad": 5.820766091346741e-11
+    },
+    {
+      "derivative_max_abs_error": 0.00022488164108658282,
+      "domain": "engineering",
+      "revolutions": -500000,
+      "step_representable": true,
+      "step_to_ulp": 2147.483648,
+      "ulp_rad": 4.656612873077393e-10
+    },
+    {
+      "derivative_max_abs_error": 0.00022488167578105234,
+      "domain": "engineering",
+      "revolutions": 500000,
+      "step_representable": true,
+      "step_to_ulp": 2147.483648,
+      "ulp_rad": 4.656612873077393e-10
+    },
+    {
+      "derivative_max_abs_error": 0.00024008791829621678,
+      "domain": "engineering",
+      "revolutions": -1000000,
+      "step_representable": true,
+      "step_to_ulp": 1073.741824,
+      "ulp_rad": 9.313225746154785e-10
+    },
+    {
+      "derivative_max_abs_error": 0.0002400880189101784,
+      "domain": "engineering",
+      "revolutions": 1000000,
+      "step_representable": true,
+      "step_to_ulp": 1073.741824,
+      "ulp_rad": 9.313225746154785e-10
+    },
+    {
+      "derivative_max_abs_error": 0.001619790513524011,
+      "domain": "diagnostic",
+      "revolutions": -5000000,
+      "step_representable": true,
+      "step_to_ulp": 268.435456,
+      "ulp_rad": 3.725290298461914e-09
+    },
+    {
+      "derivative_max_abs_error": 0.0016197905516879274,
+      "domain": "diagnostic",
+      "revolutions": 5000000,
+      "step_representable": true,
+      "step_to_ulp": 268.435456,
+      "ulp_rad": 3.725290298461914e-09
+    },
+    {
+      "derivative_max_abs_error": 0.01325923827330544,
+      "domain": "diagnostic",
+      "revolutions": -50000000,
+      "step_representable": true,
+      "step_to_ulp": 16.777216,
+      "ulp_rad": 5.960464477539063e-08
+    },
+    {
+      "derivative_max_abs_error": 0.013259233905271728,
+      "domain": "diagnostic",
+      "revolutions": 50000000,
+      "step_representable": true,
+      "step_to_ulp": 16.777216,
+      "ulp_rad": 5.960464477539063e-08
+    },
+    {
+      "derivative_max_abs_error": 0.04625687294312897,
+      "domain": "diagnostic",
+      "revolutions": -500000000,
+      "step_representable": true,
+      "step_to_ulp": 2.097152,
+      "ulp_rad": 4.76837158203125e-07
+    },
+    {
+      "derivative_max_abs_error": 0.046256876384820345,
+      "domain": "diagnostic",
+      "revolutions": 500000000,
+      "step_representable": true,
+      "step_to_ulp": 2.097152,
+      "ulp_rad": 4.76837158203125e-07
+    }
+  ]
+}

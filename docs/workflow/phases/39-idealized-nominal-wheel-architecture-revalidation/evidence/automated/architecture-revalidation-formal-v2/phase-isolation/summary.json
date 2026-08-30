@@ -1,0 +1,26 @@
+{
+  "classification": "DG39-01_PASS",
+  "contact_off_ddxi_effect_m_s2": 9.538289447164061e-08,
+  "contact_on_ddxi_effect_m_s2": 2.8606204655057255e-08,
+  "contact_on_off_ratio": 0.29990916939056084,
+  "contact_phase_metrics": {
+    "centroid_m": 2.7755575615628914e-17,
+    "contact_count_difference": 0,
+    "depth_m": 6.938893903907228e-18,
+    "normal": 0.0,
+    "normal_load_n": 1.3233645290711138e-09
+  },
+  "core_periodicity_pass": true,
+  "geometry_pass": true,
+  "improvement_pass": true,
+  "isolation_pass": true,
+  "pass": true,
+  "phase36_improvement_ratio": 1.8696749554177908e-08,
+  "response_periodicity_pass": true,
+  "retained_core_phase_variation": {
+    "bias": 0.0,
+    "mass_matrix": 3.752343383234269e-08,
+    "reduced_bias": 0.0,
+    "reduced_mass": 3.752343383234269e-08
+  }
+}

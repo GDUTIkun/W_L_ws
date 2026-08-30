@@ -1,0 +1,27 @@
+{
+  "C1_closure_failure": true,
+  "C2_closure_failure": true,
+  "bilateral_contact_pass": true,
+  "classification": "P32-C_16state_markov_closure_failure",
+  "finite_pass": true,
+  "full_ddxi_oracle_pass": true,
+  "hidden_families": [
+    "P32-D_leg_configuration_hidden_state",
+    "P32-E_leg_velocity_hidden_state"
+  ],
+  "maxima": {
+    "C1_full_half_sensitivity_relative_error": 0.0175109360512383,
+    "C1_symmetric_ddxi_difference_m_s2": 0.0848021715835201,
+    "C2_full_half_sensitivity_relative_error": 2.8563702003290445e-06,
+    "C2_symmetric_ddxi_difference_m_s2": 2.0784645360684415,
+    "ddxi_oracle_error_m_s2": 3.1745450712605816e-10,
+    "realized_wrench_relative_difference": 2.669850696265148e-06,
+    "xi_dxi_projection_error": 3.2786273695961654e-16
+  },
+  "perturbation_consistency_pass": true,
+  "physical_interaction_wrench_parity_established": false,
+  "production_modified": false,
+  "projection_pass": true,
+  "valid": true,
+  "wbc_realized_wrench_parity_pass": true
+}

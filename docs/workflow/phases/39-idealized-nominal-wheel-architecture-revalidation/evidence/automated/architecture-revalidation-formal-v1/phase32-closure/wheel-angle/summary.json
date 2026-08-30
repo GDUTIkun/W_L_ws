@@ -1,0 +1,23 @@
+{
+  "bilateral_contact_pass": true,
+  "classification": "P32-A_full_dynamics_oracle_incomplete",
+  "discrete_contact_patch_closure_failure_candidate": false,
+  "finite_pass": true,
+  "fresh_replay_required_for_decision": true,
+  "full_ddxi_oracle_pass": true,
+  "maxima": {
+    "ddxi_oracle_error_m_s2": 1.214306433183765e-10,
+    "maximum_symmetric_ddxi_difference_m_s2": 6.044636666202585e-05,
+    "minimum_symmetric_ddxi_difference_m_s2": 9.320599847484345e-07,
+    "realized_wrench_relative_difference": 6.536833158389957e-08,
+    "smooth_full_half_relative_error_diagnostic_only": 0.00017491951841307058,
+    "xi_dxi_projection_error": 0.0
+  },
+  "physical_interaction_wrench_parity_established": false,
+  "production_modified": false,
+  "projection_pass": true,
+  "smooth_full_half_gate_applicable": false,
+  "smooth_full_half_limitation": "Phase32 faceted-mesh gate retained numerically; Phase39 centered-cylinder verdict uses maximum pair difference <= 0.05 m/s2 for restored closure",
+  "valid": true,
+  "wbc_realized_wrench_parity_pass": true
+}

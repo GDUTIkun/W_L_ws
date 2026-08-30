@@ -1,0 +1,23 @@
+{
+  "command": "/home/t/W_L_ws/tools/experiments/run_phase36_wheel_phase_validity.py --method /home/t/W_L_ws/simulation/mujoco/config/phase39_architecture_revalidation_v1.json --output /home/t/W_L_ws/docs/workflow/phases/39-idealized-nominal-wheel-architecture-revalidation/evidence/automated/architecture-revalidation-formal-v1/phase-isolation/periodicity",
+  "contact_off_sample_count": 69,
+  "created_utc": "2026-08-30T06:39:31.206604+00:00",
+  "dependencies": {
+    "mujoco": "3.7.0",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3"
+  },
+  "inputs": {
+    "docs/workflow/phases/35-wheel-servo-workspace-attribution/evidence/automated/workspace-attribution-formal-v2/H0-a.csv": "ef0e29dc0f872e4dd512cda5f892f7b3411c194471463557ae87e13e58238b15",
+    "simulation/mujoco/config/phase39_architecture_revalidation_v1.json": "3cb175394dff64551efa4d3189235e171cff791b2da891d5b538a251f29d6f93",
+    "simulation/mujoco/model/scene_axisymmetric_centered_com_v1.xml": "1bf6a0c85f3fabf3c7447b913085ca6b79eff97d5baf824b44faf4e48343e419",
+    "tools/experiments/run_phase36_wheel_phase_validity.py": "7b5d912034d34658e279e0553267980337f3b381283531a0b950b3aec2120bdb"
+  },
+  "method_hash": "3cb175394dff64551efa4d3189235e171cff791b2da891d5b538a251f29d6f93",
+  "periodic_pair_count": 15,
+  "platform": "Linux-7.0.0-30-generic-x86_64-with-glibc2.39",
+  "python": "3.10.20 (main, Jun 11 2026, 04:03:45) [Clang 22.1.3 ]",
+  "replay_of": null,
+  "sample_count": 69,
+  "schema_version": 1
+}

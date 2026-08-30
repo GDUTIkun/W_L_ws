@@ -38,6 +38,25 @@ class NominalWbcModel {
     double passive_condition_number{0.0};
   };
 
+  struct WorkspaceEntry {
+    double position_rad{0.0};
+    double equilibrium_rad{0.0};
+    double delta_rad{0.0};
+    double lower_bound_rad{0.0};
+    double upper_bound_rad{0.0};
+    double lower_margin_rad{0.0};
+    double upper_margin_rad{0.0};
+    double signed_margin_rad{0.0};
+  };
+
+  struct WorkspaceInspection {
+    std::array<WorkspaceEntry, 6> joint{};
+    int minimum_margin_index{-1};
+    int first_failed_index{-1};
+
+    [[nodiscard]] bool inside() const { return first_failed_index < 0; }
+  };
+
   struct Result {
     Status status{Status::kInvalidState};
     Diagnostics diagnostics{};
@@ -79,6 +98,8 @@ class NominalWbcModel {
     [[nodiscard]] bool ok() const { return status == Status::kOk; }
   };
 
+  [[nodiscard]] static WorkspaceInspection inspectWorkspace(
+      const RobotState &state);
   [[nodiscard]] Result evaluate(const RobotState &state) const;
 };
 

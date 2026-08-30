@@ -264,6 +264,36 @@ bool finite(const NominalWbcModel::Result &result) {
 
 }  // namespace
 
+NominalWbcModel::WorkspaceInspection NominalWbcModel::inspectWorkspace(
+    const RobotState &state) {
+  WorkspaceInspection inspection;
+  double minimum_margin = std::numeric_limits<double>::infinity();
+  for (int canonical = 0; canonical < 6; ++canonical) {
+    auto &entry = inspection.joint[canonical];
+    const int coordinate = canonical % 3;
+    const bool wheel = coordinate == 2;
+    entry.position_rad = state.joint_position_rad[canonical];
+    entry.equilibrium_rad = phase21_profile::kCanonicalOffset[canonical] -
+        phase21_profile::kEquilibriumActiveNative[canonical];
+    entry.delta_rad = entry.position_rad - entry.equilibrium_rad;
+    entry.lower_bound_rad = phase21_profile::kWorkspaceBounds[coordinate][0];
+    entry.upper_bound_rad = phase21_profile::kWorkspaceBounds[coordinate][1];
+    entry.lower_margin_rad = entry.delta_rad - entry.lower_bound_rad;
+    entry.upper_margin_rad = entry.upper_bound_rad - entry.delta_rad;
+    entry.signed_margin_rad =
+        std::min(entry.lower_margin_rad, entry.upper_margin_rad);
+    if (!wheel && entry.signed_margin_rad < minimum_margin) {
+      minimum_margin = entry.signed_margin_rad;
+      inspection.minimum_margin_index = canonical;
+    }
+    if (!wheel && inspection.first_failed_index < 0 &&
+        entry.signed_margin_rad < 0.0) {
+      inspection.first_failed_index = canonical;
+    }
+  }
+  return inspection;
+}
+
 NominalWbcModel::Result NominalWbcModel::evaluate(
     const RobotState &state) const {
   Result result;
@@ -271,17 +301,13 @@ NominalWbcModel::Result NominalWbcModel::evaluate(
 
   Eigen::Matrix<double, 10, 1> q =
       Eigen::Matrix<double, 10, 1>::Zero();
+  const auto workspace = inspectWorkspace(state);
+  if (!workspace.inside()) {
+    result.status = Status::kOutsideWorkspace;
+    return result;
+  }
   for (int canonical = 0; canonical < 6; ++canonical) {
     const int native = phase21_profile::kActiveNative[canonical];
-    const double equilibrium = phase21_profile::kCanonicalOffset[canonical] -
-        phase21_profile::kEquilibriumActiveNative[canonical];
-    const double delta = state.joint_position_rad[canonical] - equilibrium;
-    const int coordinate = canonical % 3;
-    if (delta < phase21_profile::kWorkspaceBounds[coordinate][0] ||
-        delta > phase21_profile::kWorkspaceBounds[coordinate][1]) {
-      result.status = Status::kOutsideWorkspace;
-      return result;
-    }
     q[native] = phase21_profile::kCanonicalOffset[canonical] -
                 state.joint_position_rad[canonical];
   }

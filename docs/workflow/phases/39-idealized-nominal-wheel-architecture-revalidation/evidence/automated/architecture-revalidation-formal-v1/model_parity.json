@@ -1,0 +1,142 @@
+{
+  "allowed_difference": "left/right wheel body_ipos body-X/Y only",
+  "classification": "DG39-00_PASS",
+  "dimensions": {
+    "nbody": [
+      12,
+      12
+    ],
+    "neq": [
+      3,
+      3
+    ],
+    "ngeom": [
+      76,
+      76
+    ],
+    "njnt": [
+      11,
+      11
+    ],
+    "nq": [
+      17,
+      17
+    ],
+    "nsite": [
+      6,
+      6
+    ],
+    "nu": [
+      6,
+      6
+    ],
+    "nv": [
+      16,
+      16
+    ]
+  },
+  "forbidden_body_ipos_error_m": 0.0,
+  "name_parity": {
+    "actuator": true,
+    "body": true,
+    "equality": true,
+    "geom": true,
+    "joint": true,
+    "site": true
+  },
+  "pass": true,
+  "unchanged_parameter_max_abs_errors": {
+    "actuator_biasprm": 0.0,
+    "actuator_biastype": 0.0,
+    "actuator_ctrlrange": 0.0,
+    "actuator_dynprm": 0.0,
+    "actuator_dyntype": 0.0,
+    "actuator_forcerange": 0.0,
+    "actuator_gainprm": 0.0,
+    "actuator_gaintype": 0.0,
+    "actuator_gear": 0.0,
+    "actuator_trnid": 0.0,
+    "actuator_trntype": 0.0,
+    "body_inertia": 0.0,
+    "body_iquat": 0.0,
+    "body_mass": 0.0,
+    "body_pos": 0.0,
+    "body_quat": 0.0,
+    "dof_armature": 0.0,
+    "dof_damping": 0.0,
+    "dof_frictionloss": 0.0,
+    "eq_data": 0.0,
+    "eq_obj1id": 0.0,
+    "eq_obj2id": 0.0,
+    "eq_solimp": 0.0,
+    "eq_solref": 0.0,
+    "eq_type": 0.0,
+    "geom_bodyid": 0.0,
+    "geom_conaffinity": 0.0,
+    "geom_condim": 0.0,
+    "geom_contype": 0.0,
+    "geom_dataid": 0.0,
+    "geom_friction": 0.0,
+    "geom_gap": 0.0,
+    "geom_margin": 0.0,
+    "geom_pos": 0.0,
+    "geom_quat": 0.0,
+    "geom_size": 0.0,
+    "geom_solimp": 0.0,
+    "geom_solref": 0.0,
+    "geom_type": 0.0,
+    "gravity": 0.0,
+    "integrator": 0,
+    "jnt_axis": 0.0,
+    "jnt_bodyid": 0.0,
+    "jnt_margin": 0.0,
+    "jnt_pos": 0.0,
+    "jnt_range": 0.0,
+    "jnt_type": 0.0,
+    "site_bodyid": 0.0,
+    "site_pos": 0.0,
+    "site_quat": 0.0,
+    "site_size": 0.0,
+    "site_type": 0.0,
+    "timestep": 0.0,
+    "tolerance": 0.0
+  },
+  "wheels": {
+    "left": {
+      "axial_com_error_m": 0.0,
+      "body_id": 9,
+      "inertial_orientation_error": 0.0,
+      "mass_error_kg": 0.0,
+      "model_a_ipos_b_m": [
+        -5.829442826290297e-05,
+        -0.00010619134315086336,
+        0.0074151403411230315
+      ],
+      "model_b_ipos_b_m": [
+        0.0,
+        0.0,
+        0.0074151403411230315
+      ],
+      "principal_inertia_error_kg_m2": 0.0,
+      "radial_com_m": 0.0
+    },
+    "right": {
+      "axial_com_error_m": 0.0,
+      "body_id": 4,
+      "inertial_orientation_error": 0.0,
+      "mass_error_kg": 0.0,
+      "model_a_ipos_b_m": [
+        0.00011422123248387527,
+        3.597071589790871e-05,
+        -0.007415140339568024
+      ],
+      "model_b_ipos_b_m": [
+        0.0,
+        0.0,
+        -0.007415140339568024
+      ],
+      "principal_inertia_error_kg_m2": 0.0,
+      "radial_com_m": 0.0
+    }
+  }
+}

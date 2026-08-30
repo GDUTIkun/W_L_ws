@@ -1,0 +1,146 @@
+{
+  "classification": "P39-D_x16_nonclosure_structurally_persists",
+  "comparison_to_phase32": {
+    "C1_ratio_to_phase32": 0.7828285586166731,
+    "C2_ratio_to_phase32": 0.9894354939899312,
+    "C3_ratio_to_phase32": 0.9896981406506173,
+    "angle_ratio_to_phase32": 4.555526781239905e-05
+  },
+  "dg39_00_parity_pass": true,
+  "dg39_01_phase_isolation_pass": true,
+  "dg39_02_phase32_valid": true,
+  "dg39_03_h0_valid": true,
+  "families": {
+    "C1_leg_configuration": {
+      "maximum_ddxi_difference_m_s2": 0.0848021715835201,
+      "pass": false,
+      "valid": true
+    },
+    "C2_leg_velocity": {
+      "maximum_ddxi_difference_m_s2": 2.0784645360684415,
+      "pass": false,
+      "valid": true
+    },
+    "C3_wheel_spin_rate": {
+      "maximum_ddxi_difference_m_s2": 1.65810060518334,
+      "pass": false,
+      "valid": true
+    },
+    "wheel_absolute_angle": {
+      "fixed_torque_maximum_ddxi_difference_m_s2": 7.927686285214008e-09,
+      "maximum_ddxi_difference_m_s2": 6.044636666202585e-05,
+      "pass": true,
+      "valid": true
+    }
+  },
+  "h0": {
+    "classification": "P39-F_H0_spin_drift_persists",
+    "failure_tick": 96,
+    "final_tick": 96,
+    "final_xi_m": [
+      NaN,
+      NaN
+    ],
+    "final_zeta_m": [
+      NaN,
+      NaN
+    ],
+    "first_failed_index": 5,
+    "maximum_absolute_wheel_spin_rad": 1.0367881053654626,
+    "maximum_wheel_canonical_delta_change_rad": {
+      "left": 0.31961889080735545,
+      "right": 1.0367881053654626
+    },
+    "replay_max_abs_error": 0.0,
+    "trend": [
+      {
+        "joint": 0,
+        "last_normalized_margin": 0.928792943697667,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "trend_tick": 1
+      },
+      {
+        "joint": 1,
+        "last_normalized_margin": 0.9994702730843109,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "trend_tick": 2
+      },
+      {
+        "joint": 2,
+        "last_normalized_margin": 0.9744798374222653,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "trend_tick": 10
+      },
+      {
+        "joint": 3,
+        "last_normalized_margin": 0.7655714748984526,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "trend_tick": 0
+      },
+      {
+        "joint": 4,
+        "last_normalized_margin": 0.9559792125825345,
+        "near_boundary_tick": null,
+        "reset_normalized_margin": 1.0,
+        "trend_tick": 0
+      },
+      {
+        "joint": 5,
+        "last_normalized_margin": -0.03678810536546262,
+        "near_boundary_tick": 95,
+        "reset_normalized_margin": 1.0,
+        "trend_tick": 14
+      }
+    ],
+    "upstream_contact_loss": false,
+    "upstream_hard_violation": false,
+    "upstream_slack_violation": false,
+    "upstream_torque_limit": false,
+    "valid": true,
+    "validity": {
+      "bilateral_contact": true,
+      "finite": true,
+      "hard": true,
+      "replay": true,
+      "slack": true,
+      "torque": true
+    }
+  },
+  "h0_classification": "P39-F_H0_spin_drift_persists",
+  "phase34_tracking_run": false,
+  "phase_isolation": {
+    "classification": "DG39-01_PASS",
+    "contact_off_ddxi_effect_m_s2": 9.538289447164061e-08,
+    "contact_on_ddxi_effect_m_s2": 2.8606204655057255e-08,
+    "contact_on_off_ratio": 0.29990916939056084,
+    "contact_phase_metrics": {
+      "centroid_m": 2.7755575615628914e-17,
+      "contact_count_difference": 0,
+      "depth_m": 6.938893903907228e-18,
+      "normal": 0.0,
+      "normal_load_n": 1.3233645290711138e-09
+    },
+    "core_periodicity_pass": true,
+    "geometry_pass": true,
+    "improvement_pass": true,
+    "isolation_pass": true,
+    "pass": true,
+    "phase36_improvement_ratio": 1.8696749554177908e-08,
+    "response_periodicity_pass": true,
+    "retained_core_phase_variation": {
+      "bias": 0.0,
+      "mass_matrix": 3.752343383234269e-08,
+      "reduced_bias": 0.0,
+      "reduced_mass": 3.752343383234269e-08
+    }
+  },
+  "production_modified": false,
+  "realized_wrench_parity_pass": true,
+  "requested_wrench_parity_pass": true,
+  "workspace_absolute_angle_model_validity_basis": false,
+  "workspace_safety_domain_basis_resolved": false
+}

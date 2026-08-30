@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "phase": 38,
+  "profile": "phase38_wheel_inertia_attribution_v1",
+  "scene": "simulation/mujoco/model/scene_axisymmetric_collision_v1.xml",
+  "model": "simulation/mujoco/model/wheel_leg_axisymmetric_collision_v1.xml",
+  "source_phase35_hold": "docs/workflow/phases/35-wheel-servo-workspace-attribution/evidence/automated/workspace-attribution-formal-v2/H0-a.csv",
+  "source_phase37_summary": "docs/workflow/phases/37-axisymmetric-wheel-collision-causal-revalidation/evidence/automated/causal-revalidation-formal-v2/summary.json",
+  "source_meshes": {
+    "left": "simulation/mujoco/model/assets/zong_zhuang____left_wheel_1.stl",
+    "right": "simulation/mujoco/model/assets/zong_zhuang____right_wheel_1.stl"
+  },
+  "canonical_to_native_sign": -1.0,
+  "coarse_phase_rad": [-6.283185307179586, -3.141592653589793, -2.0, -1.5, -1.0, -0.5, 0.0, 0.5, 1.0, 1.5, 2.0, 3.141592653589793, 6.283185307179586],
+  "boundary_phase_rad": [-1.10, -1.05, -1.01, -1.00, -0.99, -0.95, 0.95, 0.99, 1.00, 1.01, 1.05, 1.10],
+  "periodic_base_phase_rad": [-2.0, -1.0, 0.0, 1.0, 2.0],
+  "modes": ["left", "right", "bilateral"],
+  "finite_symmetry_search_orders": [2, 3, 4, 5, 6, 8, 10, 12, 16, 20, 24],
+  "variants": {
+    "V0": "current Phase37 compiled COM and COM-centered principal inertia",
+    "V1": "project body_ipos onto axle: set body-frame x/y COM to zero; preserve z, mass, body_inertia and body_iquat",
+    "V2": "preserve COM and mass; in body/axle frame set Ixx=Iyy=(Ixx+Iyy)/2, preserve Izz, set products to zero",
+    "V3": "apply V1 and V2"
+  },
+  "thresholds": {
+    "symmetry_hausdorff_m": 1e-12,
+    "periodic_absolute": 1e-8,
+    "periodic_relative": 1e-8,
+    "wheel_origin_invariance_m": 1e-10,
+    "closure_residual_m": 1e-10,
+    "material_contact_point_change_m": 1e-4,
+    "material_ddxi_change_m_s2": 0.05,
+    "boundary_jump_ratio": 5.0,
+    "boundary_absolute_ddxi_m_s2": 0.05,
+    "radial_com_significant_m": 0.00005,
+    "transverse_anisotropy_significant": 0.0001,
+    "normalized_product_significant": 0.0001,
+    "left_right_relative_mismatch": 0.05,
+    "positive_inertia_eigenvalue_kg_m2": 1e-8,
+    "analytic_scale_ratio_min": 0.1,
+    "analytic_scale_ratio_max": 10.0,
+    "primary_causal_reduction_ratio": 0.2,
+    "nonprimary_reduction_ratio": 0.5,
+    "geometry_invariance_m": 1e-8,
+    "geometry_invariance_normal": 1e-8,
+    "geometry_contact_count_difference": 0,
+    "replay_max_abs_error": 1e-12
+  }
+}

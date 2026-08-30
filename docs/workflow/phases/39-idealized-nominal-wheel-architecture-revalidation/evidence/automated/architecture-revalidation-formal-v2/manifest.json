@@ -1,0 +1,177 @@
+{
+  "command": "tools/experiments/run_phase39_architecture_revalidation.py --config simulation/mujoco/config/phase39_architecture_revalidation_v1.json --output docs/workflow/phases/39-idealized-nominal-wheel-architecture-revalidation/evidence/automated/architecture-revalidation-formal-v2",
+  "created_utc": "2026-08-30T06:45:11.541585+00:00",
+  "dependencies": {
+    "mujoco": "3.7.0",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3"
+  },
+  "inputs": {
+    "docs/workflow/phases/32-wheel-state-markov-closure/evidence/automated/leg-nullspace-v5/summary.json": "5a82a26ec1dc8f3670ab436846e9f91699d3326129e2c98c6caa4243d552004a",
+    "docs/workflow/phases/32-wheel-state-markov-closure/evidence/automated/markov-closure-v4/summary.json": "1dd8f07b7e3842a96fde5490a3003719e55906ed8cc2df50c012ff9310fef68d",
+    "docs/workflow/phases/32-wheel-state-markov-closure/evidence/automated/wheel-angle-hybrid-v4/summary.json": "d3667407db5051e3575033a1b744cff728e18fe0bcdbfe14508457b14615daec",
+    "docs/workflow/phases/35-wheel-servo-workspace-attribution/evidence/automated/workspace-attribution-formal-v2/H0-a.csv": "ef0e29dc0f872e4dd512cda5f892f7b3411c194471463557ae87e13e58238b15",
+    "docs/workflow/phases/36-wheel-spin-rotating-mesh-validity-audit/evidence/automated/wheel-phase-validity-formal-v2/summary.json": "b895daeeb012dc0c11fa123004665648e555b0149947d4e1cc0a98b028091db0",
+    "docs/workflow/phases/38-wheel-com-inertia-validity-attribution/evidence/automated/inertia-attribution-formal-v1/summary.json": "d89c907168d6cd124a70c4780389fba2e935ee0abd66eaaf355cf9b7c77bd256",
+    "ros_ws/build/wheel_leg_mujoco/phase35_workspace_attribution_loop": "fe60da55db31c739358203967462e5b89e3ad7a4510698ef5006eeea70fc3ee2",
+    "simulation/mujoco/config/phase35_workspace_attribution_v1.json": "781d0a22bcb77b970cd5ac815374a924c438c26055f5451580335ce29a6922ee",
+    "simulation/mujoco/config/phase37_axisymmetric_collision_v1.json": "2eb11907e0691341db1c1f0a40e86d5bd803436d635e63cafc445d60a6a6e1f3",
+    "simulation/mujoco/config/phase39_architecture_revalidation_v1.json": "3cb175394dff64551efa4d3189235e171cff791b2da891d5b538a251f29d6f93",
+    "simulation/mujoco/config/phase39_phase32_markov_closure_v1.json": "b22db59265078be2d6617996a7ab67e2d064cb09962e8d15472b068509780a32",
+    "simulation/mujoco/config/phase39_wheel_angle_closure_v1.json": "377ad74cb82fafe243daac3c837f5c0e8fde7bb35035e080ba9d560f77dfcc33",
+    "simulation/mujoco/model/scene_axisymmetric_centered_com_v1.xml": "1bf6a0c85f3fabf3c7447b913085ca6b79eff97d5baf824b44faf4e48343e419",
+    "simulation/mujoco/model/scene_axisymmetric_collision_v1.xml": "4efce36cbc27ca1aee9bfb978538ddee5fc40658ba27357550689b613677f526",
+    "simulation/mujoco/model/wheel_leg_axisymmetric_centered_com_v1.xml": "407a7b6f227d137cffdeeae968831a27b3f356dd4e575a95637f342039a9cb3b",
+    "simulation/mujoco/model/wheel_leg_axisymmetric_collision_v1.xml": "96b5c7fb853e811c3dec1bef50c0acce60309a86a926694a48aeb726a9d4191c",
+    "tools/experiments/run_phase32_leg_nullspace.py": "1a4464dbee9daa75c2f40fb797510767074ded043d7376c1d782e866d57fd8a1",
+    "tools/experiments/run_phase32_markov_closure.py": "4af4f93c9455a971f53639d79ec233354429aefbf63bb0c5fc2006b670f1d754",
+    "tools/experiments/run_phase32_wheel_angle_hybrid.py": "748841be9999648e236fc0e9041eca28b54d39e701a114199c1b8dbdefd42402",
+    "tools/experiments/run_phase37_causal_revalidation.py": "c46e7e18eda1528915b03a207258bddfaefd21d3a46e41d84043768ebde5052d",
+    "tools/experiments/run_phase39_architecture_revalidation.py": "1a3ccb2162c0dffa0bbddb3225eb04142dae02579a8be0ab8c8a18fd44ede015"
+  },
+  "model_a_b_compiled_diff": {
+    "allowed_difference": "left/right wheel body_ipos body-X/Y only",
+    "classification": "DG39-00_PASS",
+    "dimensions": {
+      "nbody": [
+        12,
+        12
+      ],
+      "neq": [
+        3,
+        3
+      ],
+      "ngeom": [
+        76,
+        76
+      ],
+      "njnt": [
+        11,
+        11
+      ],
+      "nq": [
+        17,
+        17
+      ],
+      "nsite": [
+        6,
+        6
+      ],
+      "nu": [
+        6,
+        6
+      ],
+      "nv": [
+        16,
+        16
+      ]
+    },
+    "forbidden_body_ipos_error_m": 0.0,
+    "name_parity": {
+      "actuator": true,
+      "body": true,
+      "equality": true,
+      "geom": true,
+      "joint": true,
+      "site": true
+    },
+    "pass": true,
+    "unchanged_parameter_max_abs_errors": {
+      "actuator_biasprm": 0.0,
+      "actuator_biastype": 0.0,
+      "actuator_ctrlrange": 0.0,
+      "actuator_dynprm": 0.0,
+      "actuator_dyntype": 0.0,
+      "actuator_forcerange": 0.0,
+      "actuator_gainprm": 0.0,
+      "actuator_gaintype": 0.0,
+      "actuator_gear": 0.0,
+      "actuator_trnid": 0.0,
+      "actuator_trntype": 0.0,
+      "body_inertia": 0.0,
+      "body_iquat": 0.0,
+      "body_mass": 0.0,
+      "body_pos": 0.0,
+      "body_quat": 0.0,
+      "dof_armature": 0.0,
+      "dof_damping": 0.0,
+      "dof_frictionloss": 0.0,
+      "eq_data": 0.0,
+      "eq_obj1id": 0.0,
+      "eq_obj2id": 0.0,
+      "eq_solimp": 0.0,
+      "eq_solref": 0.0,
+      "eq_type": 0.0,
+      "geom_bodyid": 0.0,
+      "geom_conaffinity": 0.0,
+      "geom_condim": 0.0,
+      "geom_contype": 0.0,
+      "geom_dataid": 0.0,
+      "geom_friction": 0.0,
+      "geom_gap": 0.0,
+      "geom_margin": 0.0,
+      "geom_pos": 0.0,
+      "geom_quat": 0.0,
+      "geom_size": 0.0,
+      "geom_solimp": 0.0,
+      "geom_solref": 0.0,
+      "geom_type": 0.0,
+      "gravity": 0.0,
+      "integrator": 0,
+      "jnt_axis": 0.0,
+      "jnt_bodyid": 0.0,
+      "jnt_margin": 0.0,
+      "jnt_pos": 0.0,
+      "jnt_range": 0.0,
+      "jnt_type": 0.0,
+      "site_bodyid": 0.0,
+      "site_pos": 0.0,
+      "site_quat": 0.0,
+      "site_size": 0.0,
+      "site_type": 0.0,
+      "timestep": 0.0,
+      "tolerance": 0.0
+    },
+    "wheels": {
+      "left": {
+        "axial_com_error_m": 0.0,
+        "body_id": 9,
+        "inertial_orientation_error": 0.0,
+        "mass_error_kg": 0.0,
+        "model_a_ipos_b_m": [
+          -5.829442826290297e-05,
+          -0.00010619134315086336,
+          0.0074151403411230315
+        ],
+        "model_b_ipos_b_m": [
+          0.0,
+          0.0,
+          0.0074151403411230315
+        ],
+        "principal_inertia_error_kg_m2": 0.0,
+        "radial_com_m": 0.0
+      },
+      "right": {
+        "axial_com_error_m": 0.0,
+        "body_id": 4,
+        "inertial_orientation_error": 0.0,
+        "mass_error_kg": 0.0,
+        "model_a_ipos_b_m": [
+          0.00011422123248387527,
+          3.597071589790871e-05,
+          -0.007415140339568024
+        ],
+        "model_b_ipos_b_m": [
+          0.0,
+          0.0,
+          -0.007415140339568024
+        ],
+        "principal_inertia_error_kg_m2": 0.0,
+        "radial_com_m": 0.0
+      }
+    }
+  },
+  "platform": "Linux-7.0.0-30-generic-x86_64-with-glibc2.39",
+  "python": "3.10.20 (main, Jun 11 2026, 04:03:45) [Clang 22.1.3 ]",
+  "replay_of": null
+}

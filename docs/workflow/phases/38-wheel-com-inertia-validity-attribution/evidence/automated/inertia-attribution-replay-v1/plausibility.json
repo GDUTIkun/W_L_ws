@@ -1,0 +1,22 @@
+{
+  "left": {
+    "actual_axial_ratio": 0.9880212005947713,
+    "actual_transverse_ratios": [
+      0.9450303006263181,
+      0.9450936413807742
+    ],
+    "solid_cylinder_axial_kg_m2": 0.000428875,
+    "solid_cylinder_transverse_kg_m2": 0.00026018416666666674
+  },
+  "right": {
+    "actual_axial_ratio": 0.9880211935546576,
+    "actual_transverse_ratios": [
+      0.9450239682244131,
+      0.9450999614074107
+    ],
+    "solid_cylinder_axial_kg_m2": 0.000428875,
+    "solid_cylinder_transverse_kg_m2": 0.00026018416666666674
+  },
+  "scale_plausible": true,
+  "source_limit": "STL geometry plus explicit geom mass is available; no STEP/SolidWorks mass-property report or assembly-density provenance was found"
+}

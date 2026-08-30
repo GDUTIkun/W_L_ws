@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "profile": "phase36_wheel_phase_validity_v1",
+  "scene": "simulation/mujoco/model/scence.xml",
+  "source_phase35_hold": "docs/workflow/phases/35-wheel-servo-workspace-attribution/evidence/automated/workspace-attribution-formal-v2/H0-a.csv",
+  "canonical_to_native_sign": -1.0,
+  "coarse_phase_rad": [-2.0, -1.5, -1.25, -1.0, -0.75, -0.5, -0.25, 0.0, 0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 2.0],
+  "boundary_phase_rad": [-1.10, -1.05, -1.01, -1.00, -0.99, -0.95, 0.95, 0.99, 1.00, 1.01, 1.05, 1.10],
+  "periodic_base_phase_rad": [-2.0, -1.0, 0.0, 1.0, 2.0],
+  "modes": ["left", "right", "bilateral"],
+  "finite_symmetry_search_orders": [2, 3, 4, 5, 6, 8, 10, 12, 16, 20, 24],
+  "thresholds": {
+    "symmetry_hausdorff_m": 1e-6,
+    "periodic_absolute": 1e-8,
+    "periodic_relative": 1e-8,
+    "wheel_origin_invariance_m": 1e-10,
+    "closure_residual_m": 1e-10,
+    "material_contact_point_change_m": 1e-4,
+    "material_ddxi_change_m_s2": 0.05,
+    "boundary_jump_ratio": 5.0,
+    "boundary_absolute_ddxi_m_s2": 0.05
+  }
+}
