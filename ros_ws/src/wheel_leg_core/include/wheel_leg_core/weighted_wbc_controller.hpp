@@ -10,6 +10,7 @@ class WeightedWbcController {
   enum class Task : std::size_t {
     kContact, kBaseX, kHeight, kOrientation, kLeg, kWheelVerticalManifold,
     kWheelLongitudinalTracking,
+    kNativeWheelRate,
     kWrenchFidelity, kSlackPenalty, kCount,
   };
   static constexpr std::size_t kTaskCount = static_cast<std::size_t>(Task::kCount);

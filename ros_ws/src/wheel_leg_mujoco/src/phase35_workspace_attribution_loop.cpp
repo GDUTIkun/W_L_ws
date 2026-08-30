@@ -7,8 +7,10 @@
 #include <iostream>
 #include <limits>
 #include <memory>
+#include <sstream>
 #include <stdexcept>
 #include <string>
+#include <vector>
 
 #include <Eigen/Geometry>
 
@@ -79,6 +81,32 @@ bool pairMatches(int geom1, int geom2, int first, int second) {
          (geom1 == second && geom2 == first);
 }
 
+#ifdef WHEEL_LEG_PHASE43_ROLLING_REPAIR
+void restoreNativeSnapshot(const std::string &path, int tick,
+                           const mjModel *model, mjData *data) {
+  std::ifstream input(path);
+  if (!input) throw std::runtime_error("cannot open native snapshot authority");
+  std::string line;
+  std::getline(input, line);
+  while (std::getline(input, line)) {
+    std::vector<std::string> fields;
+    std::stringstream stream(line);
+    std::string field;
+    while (std::getline(stream, field, ',')) fields.push_back(field);
+    if (fields.size() < 4 + 17 + 16 || fields[0] != "pre_command" ||
+        std::stoi(fields[1]) != tick) continue;
+    data->time = std::stod(fields[3]);
+    for (int index = 0; index < model->nq; ++index)
+      data->qpos[index] = std::stod(fields[4 + index]);
+    for (int index = 0; index < model->nv; ++index)
+      data->qvel[index] = std::stod(fields[4 + model->nq + index]);
+    mj_forward(model, data);
+    return;
+  }
+  throw std::runtime_error("requested native snapshot not found");
+}
+#endif
+
 void writeHeader(std::ostream &output) {
   output << "tick,time_s,case_id,gain_id,activation,model_status,controller_status"
          << ",solver_status,iterations,wbc_time_s,hard,primal,dual,stationarity"
@@ -113,17 +141,60 @@ void writeHeader(std::ostream &output) {
            << ",slack" << index << ",wrench_residual" << index;
   for (int joint = 0; joint < 6; ++joint)
     output << ",tau" << joint << ",tau_margin" << joint;
-  output << ",maximum_normalized_slack\n";
+  output << ",maximum_normalized_slack";
+#ifdef WHEEL_LEG_PHASE43_ROLLING_REPAIR
+  output << ",desired_qdd_wheel_left,desired_qdd_wheel_right"
+         << ",realized_qdd_wheel_left,realized_qdd_wheel_right";
+#endif
+  output << '\n';
 }
+
+#ifdef WHEEL_LEG_PHASE42_CAUSAL_ATTRIBUTION
+void writeNativeHeader(std::ostream &output) {
+  output << "record_kind,control_tick,physics_substep,time_s";
+  for (int index = 0; index < 17; ++index) output << ",qpos" << index;
+  for (int index = 0; index < 16; ++index) output << ",qvel" << index;
+  for (int index = 0; index < 6; ++index) output << ",ctrl" << index;
+  for (int index = 0; index < 16; ++index) output << ",qacc" << index;
+  output << '\n';
+}
+
+void writeNativeRow(std::ostream &output, const char *kind, int tick, int substep,
+                    const mjModel *model, const mjData *data) {
+  output << kind << ',' << tick << ',' << substep << ',' << data->time;
+  for (int index = 0; index < model->nq; ++index) output << ',' << data->qpos[index];
+  for (int index = 0; index < model->nv; ++index) output << ',' << data->qvel[index];
+  for (int index = 0; index < model->nu; ++index) output << ',' << data->ctrl[index];
+  for (int index = 0; index < model->nv; ++index) output << ',' << data->qacc[index];
+  output << '\n';
+}
+
+std::string nativeOutputPath(const std::string &control_path) {
+  const auto suffix = control_path.rfind(".csv");
+  return suffix == control_path.size() - 4
+      ? control_path.substr(0, suffix) + "_native.csv"
+      : control_path + "_native.csv";
+}
+#endif
 
 void run(const std::string &model_path, const std::string &output_path,
          const std::string &case_id, const std::string &gain_id,
-         double kp, double kd) {
+         double kp, double kd, [[maybe_unused]] double rate_gain = 0.0,
+         [[maybe_unused]] const std::array<double, 4> &wrench_trim = {},
+         [[maybe_unused]] const std::string &snapshot_path = {},
+         [[maybe_unused]] int snapshot_tick = -1) {
+#ifdef WHEEL_LEG_PHASE43_ROLLING_REPAIR
+  const bool phase43_case = case_id.rfind("R43-0", 0) == 0 ||
+      case_id.rfind("R43-A", 0) == 0 || case_id.rfind("R43-B", 0) == 0 ||
+      case_id.rfind("R43-C", 0) == 0 || case_id.rfind("R43-D", 0) == 0;
+  const bool known_case = phase43_case;
+#else
   const bool known_case = case_id == "H0_minimal_hold" ||
       case_id == "H1_zero_ddxi_row" || case_id == "D_positive" ||
       case_id == "D_negative" || case_id.rfind("H2_", 0) == 0 ||
       case_id.rfind("tracking_step_", 0) == 0 ||
       case_id.rfind("tracking_ramp_", 0) == 0;
+#endif
   if (!known_case) throw std::invalid_argument("unknown Phase35 case");
   std::ifstream probe(output_path);
   if (probe.good()) throw std::runtime_error("refusing to overwrite output");
@@ -139,9 +210,39 @@ void run(const std::string &model_path, const std::string &output_path,
   wheel_leg_mujoco::Adapter adapter(model.get(), adapter_config);
   adapter.reset(data.get());
   setInitialState(model.get(), data.get());
+#ifdef WHEEL_LEG_PHASE43_ROLLING_REPAIR
+  if (!snapshot_path.empty())
+    restoreNativeSnapshot(snapshot_path, snapshot_tick, model.get(), data.get());
+  const bool rate_common = case_id.find("__rate_common") != std::string::npos;
+  const bool rate_differential =
+      case_id.find("__rate_differential") != std::string::npos;
+  constexpr double kRimRatePerturbation = 0.02;
+  constexpr double kWheelRadius = 0.05;
+  if (rate_common || rate_differential) {
+    const int left = requiredId(model.get(), mjOBJ_JOINT, "left_wheel_joint");
+    const int right = requiredId(model.get(), mjOBJ_JOINT, "right_wheel_joint");
+    data->qvel[model->jnt_dofadr[left]] =
+        -kRimRatePerturbation / kWheelRadius;
+    data->qvel[model->jnt_dofadr[right]] =
+        (rate_differential ? 1.0 : -1.0) *
+        kRimRatePerturbation / kWheelRadius;
+    mj_forward(model.get(), data.get());
+  }
+#endif
+#ifdef WHEEL_LEG_PHASE43_ROLLING_REPAIR
+  wheel_leg::WeightedWbcProfile profile =
+      wheel_leg::WeightedWbcProfile::kPhase27Minimal;
+  if (case_id.rfind("R43-B", 0) == 0)
+    profile = wheel_leg::WeightedWbcProfile::kPhase43NativeWheelRate;
+  if (case_id.rfind("R43-C", 0) == 0)
+    profile = wheel_leg::WeightedWbcProfile::kPhase34XiTracking;
+  if (case_id.rfind("R43-D", 0) == 0)
+    profile = wheel_leg::WeightedWbcProfile::kPhase43XiAndNativeWheelRate;
+#else
   const auto profile = case_id == "H0_minimal_hold"
       ? wheel_leg::WeightedWbcProfile::kPhase27Minimal
       : wheel_leg::WeightedWbcProfile::kPhase34XiTracking;
+#endif
   wheel_leg::WeightedWbcController controller(profile);
   wheel_leg::NominalWbcModel wbc_model;
   wheel_leg::WheelPositionPlanner planner;
@@ -155,17 +256,21 @@ void run(const std::string &model_path, const std::string &output_path,
   const auto reset_reference = planner.reset(common_initial, 0.5 *
       (initial_model.wheel_velocity_b_x_m_s[0] +
        initial_model.wheel_velocity_b_x_m_s[1]));
-  if (std::abs(reset_reference.common_position_m - common_initial) > 1e-12)
+  if (snapshot_path.empty() &&
+      std::abs(reset_reference.common_position_m - common_initial) > 1e-12)
     throw std::runtime_error("planner reset failed");
 
   std::array<int, 10> joint_ids{};
   for (int index = 0; index < 10; ++index)
     joint_ids[index] = requiredId(model.get(), mjOBJ_JOINT, kRawJointNames[index]);
 #if defined(WHEEL_LEG_PHASE40_ANGLE_DOMAIN_DIAGNOSTIC) || \
-    defined(WHEEL_LEG_PHASE41_PRODUCTION_REVALIDATION)
+    defined(WHEEL_LEG_PHASE41_PRODUCTION_REVALIDATION) || \
+    defined(WHEEL_LEG_PHASE43_ROLLING_REPAIR)
+#ifndef WHEEL_LEG_PHASE43_ROLLING_REPAIR
   const std::array<double, 2> initial_wheel_phase{
       data->qpos[model->jnt_qposadr[joint_ids[2]]],
       data->qpos[model->jnt_qposadr[joint_ids[5]]]};
+#endif
   const auto initial_base_position = state.base_position_n_m;
   const auto initial_base_quaternion = state.q_n_from_b;
 #endif
@@ -183,9 +288,21 @@ void run(const std::string &model_path, const std::string &output_path,
   if (!output) throw std::runtime_error("cannot create output");
   output << std::setprecision(17);
   writeHeader(output);
+#ifdef WHEEL_LEG_PHASE42_CAUSAL_ATTRIBUTION
+  const std::string native_path = nativeOutputPath(output_path);
+  std::ifstream native_probe(native_path);
+  if (native_probe.good()) throw std::runtime_error("refusing to overwrite native output");
+  std::ofstream native(native_path);
+  if (!native) throw std::runtime_error("cannot create native output");
+  native << std::setprecision(17);
+  writeNativeHeader(native);
+  DataPtr post_command(mj_makeData(model.get()));
+#endif
 
   constexpr int kActivationTick = 50;
-#if defined(WHEEL_LEG_PHASE40_ANGLE_DOMAIN_DIAGNOSTIC) || \
+#ifdef WHEEL_LEG_PHASE43_ROLLING_REPAIR
+  const int kTotalTicks = snapshot_path.empty() ? 1000 : 1;
+#elif defined(WHEEL_LEG_PHASE40_ANGLE_DOMAIN_DIAGNOSTIC) || \
     defined(WHEEL_LEG_PHASE41_PRODUCTION_REVALIDATION)
   constexpr int kTotalTicks = 2000;
 #else
@@ -194,6 +311,11 @@ void run(const std::string &model_path, const std::string &output_path,
   constexpr double kDt = 0.01;
   const double nan = std::numeric_limits<double>::quiet_NaN();
   for (int tick = 0; tick < kTotalTicks; ++tick) {
+#ifdef WHEEL_LEG_PHASE42_CAUSAL_ATTRIBUTION
+    mj_copyData(post_command.get(), model.get(), data.get());
+    mj_forward(model.get(), post_command.get());
+    writeNativeRow(native, "pre_command", tick, -1, model.get(), post_command.get());
+#endif
     state = adapter.extractState(data.get());
     const auto workspace = wheel_leg::NominalWbcModel::inspectWorkspace(state);
     const auto measurement = wbc_model.evaluate(state);
@@ -229,6 +351,14 @@ void run(const std::string &model_path, const std::string &output_path,
           kp * (common_initial - common) - kd * common_velocity;
       differential_acceleration =
           kp * (differential_initial - differential) - kd * differential_velocity;
+#ifdef WHEEL_LEG_PHASE43_ROLLING_REPAIR
+    } else if (case_id.rfind("R43-C", 0) == 0 ||
+               case_id.rfind("R43-D", 0) == 0) {
+      common_acceleration =
+          kp * (common_initial - common) - kd * common_velocity;
+      differential_acceleration =
+          kp * (differential_initial - differential) - kd * differential_velocity;
+#endif
     } else if (case_id.rfind("tracking_", 0) == 0) {
       common_acceleration = planned.common_acceleration_m_s2 +
           kp * (planned.common_position_m - common) +
@@ -237,9 +367,22 @@ void run(const std::string &model_path, const std::string &output_path,
           kp * (differential_initial - differential) - kd * differential_velocity;
     }
     auto reference = equilibriumReference();
+#ifdef WHEEL_LEG_PHASE43_ROLLING_REPAIR
+    if (case_id.rfind("R43-A", 0) == 0) {
+      reference.interaction_wrench_flu[0] += wrench_trim[0];
+      reference.interaction_wrench_flu[6] += wrench_trim[1];
+      reference.interaction_wrench_flu[4] += wrench_trim[2];
+      reference.interaction_wrench_flu[10] += wrench_trim[3];
+    }
+#endif
     reference.wheel_longitudinal_acceleration_m_s2 <<
         common_acceleration - differential_acceleration,
         common_acceleration + differential_acceleration;
+#ifdef WHEEL_LEG_PHASE43_ROLLING_REPAIR
+    reference.wheel_joint_acceleration_rad_s2 <<
+        -rate_gain * state.joint_velocity_rad_s[2],
+        -rate_gain * state.joint_velocity_rad_s[5];
+#endif
 
     wheel_leg::WeightedWbcController::Result result;
     double wbc_time = 0.0;
@@ -356,11 +499,19 @@ void run(const std::string &model_path, const std::string &output_path,
       output << ',' << torque << ','
              << (result.ok() ? kTorqueLimit[joint] - std::abs(torque) : nan);
     }
-    output << ',' << (result.ok() ? result.maximum_normalized_slack : nan) << '\n';
+    output << ',' << (result.ok() ? result.maximum_normalized_slack : nan);
+#ifdef WHEEL_LEG_PHASE43_ROLLING_REPAIR
+    output << ',' << reference.wheel_joint_acceleration_rad_s2[0]
+           << ',' << reference.wheel_joint_acceleration_rad_s2[1]
+           << ',' << (result.ok() ? result.physical_solution[8] : nan)
+           << ',' << (result.ok() ? result.physical_solution[11] : nan);
+#endif
+    output << '\n';
 
     if (!measurement.ok()) break;
 #if defined(WHEEL_LEG_PHASE40_ANGLE_DOMAIN_DIAGNOSTIC) || \
-    defined(WHEEL_LEG_PHASE41_PRODUCTION_REVALIDATION)
+    defined(WHEEL_LEG_PHASE41_PRODUCTION_REVALIDATION) || \
+    defined(WHEEL_LEG_PHASE43_ROLLING_REPAIR)
     if (!result.ok()) break;
     const double base_position_change = std::sqrt(
         std::pow(state.base_position_n_m[0] - initial_base_position[0], 2) +
@@ -393,6 +544,7 @@ void run(const std::string &model_path, const std::string &output_path,
         base_rotation_change > 0.35 || base_linear_speed > 2.0 ||
         base_angular_speed > 5.0;
     if (independent_failure) break;
+#ifndef WHEEL_LEG_PHASE43_ROLLING_REPAIR
     double maximum_wheel_rotation = 0.0;
     for (int side = 0; side < 2; ++side) {
       maximum_wheel_rotation = std::max(
@@ -401,21 +553,53 @@ void run(const std::string &model_path, const std::string &output_path,
                    initial_wheel_phase[side]));
     }
     if (maximum_wheel_rotation >= 6.0 * std::acos(-1.0)) break;
+#endif
 #else
     if (!result.ok()) throw std::runtime_error("WBC solve failed before workspace gate");
 #endif
     for (int joint = 0; joint < 6; ++joint)
       data->ctrl[joint] = -result.torque_nm[joint];
-    for (int substep = 0; substep < 5; ++substep) mj_step(model.get(), data.get());
+#ifdef WHEEL_LEG_PHASE43_ROLLING_REPAIR
+    const bool xi_common = case_id.find("__xi_common") != std::string::npos;
+    const bool xi_differential =
+        case_id.find("__xi_differential") != std::string::npos;
+    for (int side = 0; side < 2; ++side) {
+      data->xfrc_applied[6 * wheel_body[side]] =
+          tick < 5 && (xi_common || xi_differential)
+              ? (xi_differential && side == 1 ? -2.0 : 2.0)
+              : 0.0;
+    }
+#endif
+#ifdef WHEEL_LEG_PHASE42_CAUSAL_ATTRIBUTION
+    mj_copyData(post_command.get(), model.get(), data.get());
+    mj_forward(model.get(), post_command.get());
+    writeNativeRow(native, "post_command", tick, -1, model.get(), post_command.get());
+#endif
+    for (int substep = 0; substep < 5; ++substep) {
+      mj_step(model.get(), data.get());
+#ifdef WHEEL_LEG_PHASE42_CAUSAL_ATTRIBUTION
+      mj_copyData(post_command.get(), model.get(), data.get());
+      mj_forward(model.get(), post_command.get());
+      writeNativeRow(native, "stepped", tick, substep, model.get(), post_command.get());
+#endif
+    }
   }
 }
 
 }  // namespace
 
 int main(int argc, char **argv) {
+#ifdef WHEEL_LEG_PHASE43_ROLLING_REPAIR
+  if (argc != 12 && argc != 14) {
+    std::cerr << "usage: phase43_rolling_repair_loop MODEL OUTPUT CASE GAIN KP KD RATE_GAIN DFX_L DFX_R DTY_L DTY_R [NATIVE_CSV TICK]\n";
+    return 1;
+  }
+#else
   if (argc != 7) {
 #ifdef WHEEL_LEG_PHASE41_PRODUCTION_REVALIDATION
     std::cerr << "usage: phase41_workspace_contract_loop MODEL OUTPUT CASE GAIN KP KD\n";
+#elif defined(WHEEL_LEG_PHASE42_CAUSAL_ATTRIBUTION)
+    std::cerr << "usage: phase42_causal_attribution_loop MODEL OUTPUT CASE GAIN KP KD\n";
 #elif defined(WHEEL_LEG_PHASE40_ANGLE_DOMAIN_DIAGNOSTIC)
     std::cerr << "usage: phase40_angle_domain_loop MODEL OUTPUT CASE GAIN KP KD\n";
 #else
@@ -423,8 +607,17 @@ int main(int argc, char **argv) {
 #endif
     return 1;
   }
+#endif
   try {
+#ifdef WHEEL_LEG_PHASE43_ROLLING_REPAIR
+    run(argv[1], argv[2], argv[3], argv[4], std::stod(argv[5]),
+        std::stod(argv[6]), std::stod(argv[7]),
+        {std::stod(argv[8]), std::stod(argv[9]), std::stod(argv[10]),
+         std::stod(argv[11])}, argc == 14 ? argv[12] : "",
+        argc == 14 ? std::stoi(argv[13]) : -1);
+#else
     run(argv[1], argv[2], argv[3], argv[4], std::stod(argv[5]), std::stod(argv[6]));
+#endif
   } catch (const std::exception &exception) {
     std::cerr << exception.what() << '\n';
     return 2;

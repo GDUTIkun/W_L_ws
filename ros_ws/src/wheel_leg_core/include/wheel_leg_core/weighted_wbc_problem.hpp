@@ -11,6 +11,8 @@ enum class WeightedWbcProfile {
   kPhase27Minimal,
   kPhase33ZetaManifold,
   kPhase34XiTracking,
+  kPhase43NativeWheelRate,
+  kPhase43XiAndNativeWheelRate,
 };
 
 struct WbcReference {
@@ -20,6 +22,7 @@ struct WbcReference {
   Eigen::Vector4d leg_acceleration_rad_s2{Eigen::Vector4d::Zero()};
   Eigen::Vector2d wheel_vertical_acceleration_m_s2{Eigen::Vector2d::Zero()};
   Eigen::Vector2d wheel_longitudinal_acceleration_m_s2{Eigen::Vector2d::Zero()};
+  Eigen::Vector2d wheel_joint_acceleration_rad_s2{Eigen::Vector2d::Zero()};
   Eigen::Matrix<double, 12, 1> interaction_wrench_flu{
       Eigen::Matrix<double, 12, 1>::Zero()};
 };

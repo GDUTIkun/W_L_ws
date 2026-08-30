@@ -1,0 +1,153 @@
+{
+  "families": {
+    "base_position_change_m": {
+      "final_bilateral": 0.04204828646727045,
+      "initial": 0.0,
+      "material_onset_tick": 4,
+      "numeric_onset_tick": 1,
+      "ordering_sensitivity_stable": false,
+      "peak_abs": 0.04204828646727045,
+      "peak_derivative_per_tick": 0.004178293794971394,
+      "sensitivity_onset_ticks": {
+        "0.5": 3,
+        "1.0": 4,
+        "2.0": 6
+      }
+    },
+    "base_speed_m_s": {
+      "final_bilateral": 0.4357185594166182,
+      "initial": 0.0,
+      "material_onset_tick": 74,
+      "numeric_onset_tick": 1,
+      "ordering_sensitivity_stable": false,
+      "peak_abs": 0.4357185594166182,
+      "peak_derivative_per_tick": 0.04194438475204049,
+      "sensitivity_onset_ticks": {
+        "0.5": 5,
+        "1.0": 74,
+        "2.0": 81
+      }
+    },
+    "leg_position_change_rad": {
+      "final_bilateral": 0.4287751895550723,
+      "initial": 0.0,
+      "material_onset_tick": 1,
+      "numeric_onset_tick": 1,
+      "ordering_sensitivity_stable": true,
+      "peak_abs": 0.4287751895550723,
+      "peak_derivative_per_tick": 0.03762164167513593,
+      "sensitivity_onset_ticks": {
+        "0.5": 1,
+        "1.0": 1,
+        "2.0": 1
+      }
+    },
+    "normal_load_difference_n": {
+      "final_bilateral": 5.264658181537495,
+      "initial": 0.5366958458094047,
+      "material_onset_tick": 0,
+      "numeric_onset_tick": 0,
+      "ordering_sensitivity_stable": false,
+      "peak_abs": 8.106691865065045,
+      "peak_derivative_per_tick": 9.24537481017795,
+      "sensitivity_onset_ticks": {
+        "0.5": 0,
+        "1.0": 0,
+        "2.0": 2
+      }
+    },
+    "penetration_difference_m": {
+      "final_bilateral": -9.295845052770951e-05,
+      "initial": -0.000126446097363557,
+      "material_onset_tick": 0,
+      "numeric_onset_tick": 0,
+      "ordering_sensitivity_stable": true,
+      "peak_abs": 0.00019296938541131514,
+      "peak_derivative_per_tick": 0.00024314897270492214,
+      "sensitivity_onset_ticks": {
+        "0.5": 0,
+        "1.0": 0,
+        "2.0": 0
+      }
+    },
+    "wheel_common_acceleration_m_s2": {
+      "final_bilateral": 3.8601119769221537,
+      "initial": -0.1202064017542945,
+      "material_onset_tick": 47,
+      "numeric_onset_tick": 2,
+      "ordering_sensitivity_stable": false,
+      "peak_abs": 4.796945995644286,
+      "peak_derivative_per_tick": 1.7108695623546666,
+      "sensitivity_onset_ticks": {
+        "0.5": 6,
+        "1.0": 47,
+        "2.0": 75
+      }
+    },
+    "wheel_common_rate_m_s": {
+      "final_bilateral": 0.4669651910884308,
+      "initial": 0.0,
+      "material_onset_tick": 1,
+      "numeric_onset_tick": 1,
+      "ordering_sensitivity_stable": false,
+      "peak_abs": 0.4669651910884308,
+      "peak_derivative_per_tick": 0.04389153735961843,
+      "sensitivity_onset_ticks": {
+        "0.5": 1,
+        "1.0": 1,
+        "2.0": 16
+      }
+    },
+    "wheel_differential_acceleration_m_s2": {
+      "final_bilateral": -2.149015989744152,
+      "initial": -0.02144501160270109,
+      "material_onset_tick": 9,
+      "numeric_onset_tick": 0,
+      "ordering_sensitivity_stable": false,
+      "peak_abs": 2.149015989744152,
+      "peak_derivative_per_tick": 2.8675352120310915,
+      "sensitivity_onset_ticks": {
+        "0.5": 5,
+        "1.0": 9,
+        "2.0": 14
+      }
+    },
+    "wheel_differential_rate_m_s": {
+      "final_bilateral": 0.004764968530418634,
+      "initial": 0.0,
+      "material_onset_tick": 7,
+      "numeric_onset_tick": 2,
+      "ordering_sensitivity_stable": false,
+      "peak_abs": 0.034941320403849056,
+      "peak_derivative_per_tick": 0.028027902934007864,
+      "sensitivity_onset_ticks": {
+        "0.5": 6,
+        "1.0": 7,
+        "2.0": 10
+      }
+    }
+  },
+  "key_snapshot_ticks": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    46,
+    47,
+    48,
+    73,
+    74,
+    75,
+    101,
+    106,
+    109,
+    110
+  ]
+}

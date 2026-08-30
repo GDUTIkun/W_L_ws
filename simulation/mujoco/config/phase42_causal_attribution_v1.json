@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "phase": 42,
+  "profile": "phase42_causal_attribution_v1",
+  "scene": "simulation/mujoco/model/scene_axisymmetric_centered_com_v1.xml",
+  "executable": "ros_ws/build/wheel_leg_mujoco/phase42_causal_attribution_loop",
+  "phase41_config": "simulation/mujoco/config/phase41_workspace_contract_v1.json",
+  "phase41_authority": "docs/workflow/phases/41-workspace-contract-correction-h0-production-revalidation/evidence/automated/workspace-contract-formal-v1/H0-production-a.csv",
+  "phase41_summary": "docs/workflow/phases/41-workspace-contract-correction-h0-production-revalidation/evidence/automated/workspace-contract-formal-v1/summary.json",
+  "phase31_contract": "simulation/mujoco/config/phase31_wheel_state_contract_v1.json",
+  "wbc_snapshot_executable": "ros_ws/build/wheel_leg_core/phase31_wbc_wrench_sweep",
+  "case": "H0_minimal_hold",
+  "gain": "production_r3_contract",
+  "kp": 0.0,
+  "kd": 0.0,
+  "expected_failure_tick": 111,
+  "expected_failure": "right_contact_loss",
+  "canonical_wheel_radius_m": 0.05,
+  "canonical_to_native_wheel_rate_sign": -1.0,
+  "finite_difference_epsilon_s": 1e-6,
+  "closure_tolerances": {
+    "full_dynamics_max_abs": 1e-8,
+    "contact_reconstruction_max_abs": 1e-8,
+    "captured_qacc_max_abs": 1e-10,
+    "ddxi_half_step_max_abs_m_s2": 1e-5,
+    "snapshot_restore_max_abs": 1e-12
+  },
+  "event_detection": {
+    "window_ticks": 5,
+    "minimum_same_direction_steps": 4,
+    "sensitivity_multipliers": [0.5, 1.0, 2.0],
+    "families": {
+      "wheel_common_rate_m_s": {"numeric_floor": 1e-9, "material_floor": 0.001},
+      "wheel_differential_rate_m_s": {"numeric_floor": 1e-9, "material_floor": 0.001},
+      "wheel_common_acceleration_m_s2": {"numeric_floor": 1e-7, "material_floor": 0.05},
+      "wheel_differential_acceleration_m_s2": {"numeric_floor": 1e-7, "material_floor": 0.05},
+      "normal_load_difference_n": {"numeric_floor": 1e-8, "material_floor": 0.5},
+      "base_position_change_m": {"numeric_floor": 1e-10, "material_floor": 0.0001},
+      "base_speed_m_s": {"numeric_floor": 1e-9, "material_floor": 0.01},
+      "leg_position_change_rad": {"numeric_floor": 1e-10, "material_floor": 0.0001},
+      "penetration_difference_m": {"numeric_floor": 1e-10, "material_floor": 0.00001}
+    }
+  },
+  "key_snapshot_offsets_from_loss": [10, 5, 2, 1],
+  "semantic_tolerance": 1e-12,
+  "counterfactual_material_ddxi_m_s2": 0.05,
+  "counterfactual_material_load_n": 0.5,
+  "wheel_rate_jacobian_step_rad_s": 0.001
+}

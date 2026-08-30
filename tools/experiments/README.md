@@ -25,8 +25,18 @@
 - `run_mujoco_controller_loop.py`：编排 Phase 16 的 C++ Controller↔Adapter↔MuJoCo 固定步数循环，校验 5-step ZOH、双时钟、reset/fail-safe、fresh/reset replay，并生成逐 tick CSV、SHA-256 manifest 和汇总。方法见 `docs/experiments/mujoco_controller_loop_validation.md`。
 - `run_mujoco_joint_pd_gravity.py`：编排 Phase 17 的解析重力双 oracle、Joint PD+gravity hold/阶跃/对称/扰动/饱和/replay 正式矩阵，并生成非覆盖逐 tick evidence 与 manifest。方法见 `docs/experiments/mujoco_joint_pd_gravity_validation.md`。
 - `run_mujoco_contact_floating_base.py`：执行 Phase 18 的 actual-wheel probe 与完整机器人零控制 floating-base 验证，覆盖 wheel-only collision、normal/rolling/lateral/friction、触地、base state、闭链和 reset replay。方法见 `docs/experiments/mujoco_contact_floating_base_validation.md`。
+- `run_phase42_causal_attribution.py`：在 Phase41 frozen H0 上生成同步 control/native/plant/contact chronology、wheel-row balance 与 zero-wheel-rate fixed-state counterfactual；只做 Phase42 归因，不实施 repair。方法见 `docs/experiments/phase42_wheel_spin_contact_loss_causal_attribution.md`。
 - `build_mujoco_planar_model.py`：从 authoritative `wheel_leg.xml` 非覆盖派生 Phase 19 exact `X/Z/pitch` plant，并审计除 base DOF topology 外的 XML/compiled physics 差异；输出 derived model、scene、audit 和 hash manifest。
 - `solve_mujoco_planar_equilibrium.py`：求解 Phase 19 柔性闭链/接触一致、左右轮力矩严格为零的 exact-planar 静态平衡点，并输出可重放审计证据。
 - `validate_mujoco_planar_state_contract.py`：验证 Phase 19 `x/dx/pitch/pitch-rate` site/Jacobian/有限差分符号，以及 native/canonical wheel rolling 与 Adapter 符号关系。
 - `run_mujoco_planar_prefreeze.py`：同时比较 Phase 19 四状态 reset-local 模型与完整 26 状态 sampled plant，并用非线性 holdout 决定是否允许进入 Core。
 - `view_mujoco_planar_standing.py`：加载 Phase 19 冻结的 exact-planar scene/profile，在 MuJoCo viewer 中按 `2 ms / 10 ms / 5-step ZOH` 播放站立闭环；仅供动画观察，不替代 C++ formal evidence。
+### Phase 43 rolling-repair selection
+
+Run the frozen four-candidate rolling stabilization screen, 10 s regulation and
+small-perturbation recovery suite with:
+
+```bash
+./.venv/bin/python tools/experiments/run_phase43_rolling_repair.py \
+  --output docs/workflow/phases/43-minimal-rolling-stabilization-repair-selection/evidence/automated/rolling-repair-formal-v1
+```

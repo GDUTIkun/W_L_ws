@@ -1,0 +1,26 @@
+{
+  "command": "tools/experiments/run_phase42_causal_attribution.py --output docs/workflow/phases/42-wheel-spin-contact-loss-causal-attribution/evidence/automated/causal-attribution-replay-v1 --replay-of causal-attribution-formal-v1",
+  "created_utc": "2026-08-30T08:05:36.992724+00:00",
+  "dependencies": {
+    "mujoco": "3.7.0",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3"
+  },
+  "inputs": {
+    "docs/workflow/phases/41-workspace-contract-correction-h0-production-revalidation/evidence/automated/workspace-contract-formal-v1/H0-production-a.csv": "350da8a3f785c8c22ee72354f0b7c6c90702f06672e2b6e4b7d547ec6b950499",
+    "docs/workflow/phases/41-workspace-contract-correction-h0-production-revalidation/evidence/automated/workspace-contract-formal-v1/summary.json": "09c827656550d6bf9cb2f63f4675a7ff9b22e5153090e71b422566f7389846c7",
+    "ros_ws/build/wheel_leg_core/phase31_wbc_wrench_sweep": "b6b2babfe911caa9d74506633476e2728b829b2a181b13ce9ef78613407766ad",
+    "ros_ws/build/wheel_leg_mujoco/phase42_causal_attribution_loop": "648ed68f83e90dc7473894215304713340315863dabd9754fe44e38529b4d8db",
+    "ros_ws/src/wheel_leg_mujoco/src/phase35_workspace_attribution_loop.cpp": "1e528b56cbc1eff3fb4a60e484600a46211f3b656c37f2a36eb65facd42eb6b5",
+    "simulation/mujoco/config/phase31_wheel_state_contract_v1.json": "277c8a0cf6dcad82d70dd1987d241f3f210790e6fd1e900421e7295037ffb63e",
+    "simulation/mujoco/config/phase41_workspace_contract_v1.json": "0dc1426cddc743f60dcbdd60a395726a78becefba81d2b2ccdd606fd0911cb92",
+    "simulation/mujoco/config/phase42_causal_attribution_v1.json": "7bedb3d3a46cbb3433e94d6aa4208f44c7d756546b427e66633f8b772503ec6a",
+    "simulation/mujoco/model/scene_axisymmetric_centered_com_v1.xml": "1bf6a0c85f3fabf3c7447b913085ca6b79eff97d5baf824b44faf4e48343e419",
+    "tools/experiments/run_phase42_causal_attribution.py": "fe96e4025aa01d5f704ba07782f45ed3203be3c3c218c843d574d4dc7b454bcf"
+  },
+  "no_repair": true,
+  "phase34_run": false,
+  "platform": "Linux-7.0.0-30-generic-x86_64-with-glibc2.39",
+  "python": "3.10.20 (main, Jun 11 2026, 04:03:45) [Clang 22.1.3 ]",
+  "replay_of": "causal-attribution-formal-v1"
+}

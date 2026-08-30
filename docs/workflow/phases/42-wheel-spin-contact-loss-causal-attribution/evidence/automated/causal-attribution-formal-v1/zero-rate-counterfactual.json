@@ -1,0 +1,860 @@
+[
+  {
+    "actual_ddxi_left_m_s2": -0.09876139015159342,
+    "actual_ddxi_right_m_s2": -0.1416514133569956,
+    "actual_normal_load_left_n": 30.97295508475522,
+    "actual_normal_load_right_n": 31.509650930564625,
+    "actual_torque_nm": [
+      -0.044899868693107324,
+      -3.1446312396198666,
+      1.7898405885383532e-07,
+      0.03866128076519509,
+      -3.2402320309996417,
+      1.90399545647433e-07
+    ],
+    "changed_qvel_indices": [],
+    "delta_ddxi_left_m_s2": 0.0,
+    "delta_ddxi_right_m_s2": 0.0,
+    "delta_normal_load_left_n": 0.0,
+    "delta_normal_load_right_n": 0.0,
+    "expected_wheel_qvel_indices": [
+      13,
+      8
+    ],
+    "only_wheel_qvel_changed": true,
+    "tick": 0,
+    "zero_rate_ddxi_left_m_s2": -0.09876139015159342,
+    "zero_rate_ddxi_right_m_s2": -0.1416514133569956,
+    "zero_rate_normal_load_left_n": 30.97295508475522,
+    "zero_rate_normal_load_right_n": 31.509650930564625,
+    "zero_rate_torque_nm": [
+      -0.044899868693107324,
+      -3.1446312396198666,
+      1.7898405885383532e-07,
+      0.03866128076519509,
+      -3.2402320309996417,
+      1.90399545647433e-07
+    ],
+    "zero_wheel_rates_exact": true
+  },
+  {
+    "actual_ddxi_left_m_s2": -0.05493929781605084,
+    "actual_ddxi_right_m_s2": -0.05028516967555373,
+    "actual_normal_load_left_n": 31.037154556366062,
+    "actual_normal_load_right_n": 31.951323082169537,
+    "actual_torque_nm": [
+      -0.0444095912119984,
+      -3.1443653295371625,
+      1.501812815081366e-07,
+      0.03966580505605137,
+      -3.2393439330554177,
+      1.6107994701817744e-07
+    ],
+    "changed_qvel_indices": [
+      8,
+      13
+    ],
+    "delta_ddxi_left_m_s2": 0.0019047013867382404,
+    "delta_ddxi_right_m_s2": 0.01672153990056255,
+    "delta_normal_load_left_n": -0.00010598166869613124,
+    "delta_normal_load_right_n": -0.0016971143761068674,
+    "expected_wheel_qvel_indices": [
+      13,
+      8
+    ],
+    "only_wheel_qvel_changed": true,
+    "tick": 1,
+    "zero_rate_ddxi_left_m_s2": -0.0530345964293126,
+    "zero_rate_ddxi_right_m_s2": -0.03356362977499118,
+    "zero_rate_normal_load_left_n": 31.037048574697366,
+    "zero_rate_normal_load_right_n": 31.94962596779343,
+    "zero_rate_torque_nm": [
+      -0.044409570297718845,
+      -3.1443653170780115,
+      1.5018118464613914e-07,
+      0.03966578413447319,
+      -3.239343946479603,
+      1.6107988847804006e-07
+    ],
+    "zero_wheel_rates_exact": true
+  },
+  {
+    "actual_ddxi_left_m_s2": -0.028797740090681125,
+    "actual_ddxi_right_m_s2": -0.00193790092664365,
+    "actual_normal_load_left_n": 31.060891768353244,
+    "actual_normal_load_right_n": 32.124436796955926,
+    "actual_torque_nm": [
+      -0.04449810272539729,
+      -3.144455033928208,
+      9.561343847923313e-08,
+      0.04072441613691595,
+      -3.238178393631557,
+      1.0561684089315621e-07
+    ],
+    "changed_qvel_indices": [
+      8,
+      13
+    ],
+    "delta_ddxi_left_m_s2": 0.0008074148240191231,
+    "delta_ddxi_right_m_s2": 0.020415111607837745,
+    "delta_normal_load_left_n": 2.6995664782702988e-05,
+    "delta_normal_load_right_n": -0.0020822422647412964,
+    "expected_wheel_qvel_indices": [
+      13,
+      8
+    ],
+    "only_wheel_qvel_changed": true,
+    "tick": 2,
+    "zero_rate_ddxi_left_m_s2": -0.027990325266662,
+    "zero_rate_ddxi_right_m_s2": 0.018477210681194095,
+    "zero_rate_normal_load_left_n": 31.060918764018027,
+    "zero_rate_normal_load_right_n": 32.122354554691185,
+    "zero_rate_torque_nm": [
+      -0.04449806232371001,
+      -3.1444550095268635,
+      9.561322661013024e-08,
+      0.04072437578348625,
+      -3.2381784195405987,
+      1.0561670300665148e-07
+    ],
+    "zero_wheel_rates_exact": true
+  },
+  {
+    "actual_ddxi_left_m_s2": -0.01365280182115923,
+    "actual_ddxi_right_m_s2": 0.024563278356844534,
+    "actual_normal_load_left_n": 31.065104631052776,
+    "actual_normal_load_right_n": 32.171031370067475,
+    "actual_torque_nm": [
+      -0.044971004949323226,
+      -3.144823182990308,
+      4.402726950446552e-08,
+      0.04184233595981374,
+      -3.236950691042264,
+      5.2997774170154615e-08
+    ],
+    "changed_qvel_indices": [
+      8,
+      13
+    ],
+    "delta_ddxi_left_m_s2": -0.0010913935151674395,
+    "delta_ddxi_right_m_s2": 0.018952788748355723,
+    "delta_normal_load_left_n": 0.0002148115610545176,
+    "delta_normal_load_right_n": -0.0019447417837596959,
+    "expected_wheel_qvel_indices": [
+      13,
+      8
+    ],
+    "only_wheel_qvel_changed": true,
+    "tick": 3,
+    "zero_rate_ddxi_left_m_s2": -0.01474419533632667,
+    "zero_rate_ddxi_right_m_s2": 0.04351606710520026,
+    "zero_rate_normal_load_left_n": 31.06531944261383,
+    "zero_rate_normal_load_right_n": 32.169086628283715,
+    "zero_rate_torque_nm": [
+      -0.04497096494631525,
+      -3.1448231582401758,
+      4.4027022892350866e-08,
+      0.041842296051119804,
+      -3.236950717231122,
+      5.299760068830148e-08
+    ],
+    "zero_wheel_rates_exact": true
+  },
+  {
+    "actual_ddxi_left_m_s2": -0.005659531000313037,
+    "actual_ddxi_right_m_s2": 0.04063806447222266,
+    "actual_normal_load_left_n": 31.061402080417963,
+    "actual_normal_load_right_n": 32.16403770514849,
+    "actual_torque_nm": [
+      -0.04572869584454445,
+      -3.145421392897065,
+      -2.1212236723595177e-09,
+      0.04304017453880865,
+      -3.2357191553741416,
+      5.6597230038405914e-09
+    ],
+    "changed_qvel_indices": [
+      8,
+      13
+    ],
+    "delta_ddxi_left_m_s2": -0.002687843842679241,
+    "delta_ddxi_right_m_s2": 0.01591525556645084,
+    "delta_normal_load_left_n": 0.0003630635715907715,
+    "delta_normal_load_right_n": -0.0016435653572699493,
+    "expected_wheel_qvel_indices": [
+      13,
+      8
+    ],
+    "only_wheel_qvel_changed": true,
+    "tick": 4,
+    "zero_rate_ddxi_left_m_s2": -0.008347374842992278,
+    "zero_rate_ddxi_right_m_s2": 0.0565533200386735,
+    "zero_rate_normal_load_left_n": 31.061765143989554,
+    "zero_rate_normal_load_right_n": 32.16239413979122,
+    "zero_rate_torque_nm": [
+      -0.04572866959046508,
+      -3.1454213757412317,
+      -2.121443084145697e-09,
+      0.04304014838449935,
+      -3.2357191737411073,
+      5.659551354695182e-09
+    ],
+    "zero_wheel_rates_exact": true
+  },
+  {
+    "actual_ddxi_left_m_s2": -0.0026131347435291025,
+    "actual_ddxi_right_m_s2": 0.052363683667659526,
+    "actual_normal_load_left_n": 31.055530894232472,
+    "actual_normal_load_right_n": 32.14042632672403,
+    "actual_torque_nm": [
+      -0.04671419288801602,
+      -3.1462137157297585,
+      -4.1042629614999e-08,
+      0.044333036473423834,
+      -3.2344814307011593,
+      -3.46127353389848e-08
+    ],
+    "changed_qvel_indices": [
+      8,
+      13
+    ],
+    "delta_ddxi_left_m_s2": -0.003466542119546015,
+    "delta_ddxi_right_m_s2": 0.012664807471306737,
+    "delta_normal_load_left_n": 0.00042588480081917623,
+    "delta_normal_load_right_n": -0.001315428081277048,
+    "expected_wheel_qvel_indices": [
+      13,
+      8
+    ],
+    "only_wheel_qvel_changed": true,
+    "tick": 5,
+    "zero_rate_ddxi_left_m_s2": -0.0060796768630751175,
+    "zero_rate_ddxi_right_m_s2": 0.06502849113896626,
+    "zero_rate_normal_load_left_n": 31.05595677903329,
+    "zero_rate_normal_load_right_n": 32.139110898642755,
+    "zero_rate_torque_nm": [
+      -0.04671418245532191,
+      -3.146213707620685,
+      -4.1042802396915426e-08,
+      0.04433302612199003,
+      -3.234481439829903,
+      -3.461288951694766e-08
+    ],
+    "zero_wheel_rates_exact": true
+  },
+  {
+    "actual_ddxi_left_m_s2": -0.0031800963160542872,
+    "actual_ddxi_right_m_s2": 0.06269285000588387,
+    "actual_normal_load_left_n": 31.049906223939793,
+    "actual_normal_load_right_n": 32.11722104555818,
+    "actual_torque_nm": [
+      -0.04788208840569022,
+      -3.1471660422000083,
+      -7.138494929820844e-08,
+      0.045718349188012306,
+      -3.2332243171659676,
+      -6.64502585498947e-08
+    ],
+    "changed_qvel_indices": [
+      8,
+      13
+    ],
+    "delta_ddxi_left_m_s2": -0.003201319921392748,
+    "delta_ddxi_right_m_s2": 0.009458454206597189,
+    "delta_normal_load_left_n": 0.00038122102598237007,
+    "delta_normal_load_right_n": -0.000985797136799249,
+    "expected_wheel_qvel_indices": [
+      13,
+      8
+    ],
+    "only_wheel_qvel_changed": true,
+    "tick": 6,
+    "zero_rate_ddxi_left_m_s2": -0.006381416237447035,
+    "zero_rate_ddxi_right_m_s2": 0.07215130421248106,
+    "zero_rate_normal_load_left_n": 31.050287444965775,
+    "zero_rate_normal_load_right_n": 32.11623524842138,
+    "zero_rate_torque_nm": [
+      -0.047882086742153274,
+      -3.147166039358191,
+      -7.138508272344853e-08,
+      0.04571834758228959,
+      -3.2332243208980276,
+      -6.645038951042291e-08
+    ],
+    "zero_wheel_rates_exact": true
+  },
+  {
+    "actual_ddxi_left_m_s2": -0.006488780455874213,
+    "actual_ddxi_right_m_s2": 0.07277348722637171,
+    "actual_normal_load_left_n": 31.045250961312025,
+    "actual_normal_load_right_n": 32.10040669189865,
+    "actual_torque_nm": [
+      -0.04918684849953611,
+      -3.148242806866995,
+      -9.208806926038669e-08,
+      0.04717569172571942,
+      -3.2319437131032362,
+      -8.876204188617097e-08
+    ],
+    "changed_qvel_indices": [
+      8,
+      13
+    ],
+    "delta_ddxi_left_m_s2": -0.0017921729844518758,
+    "delta_ddxi_right_m_s2": 0.006080348001323177,
+    "delta_normal_load_left_n": 0.00021749206183940828,
+    "delta_normal_load_right_n": -0.0006322868927526315,
+    "expected_wheel_qvel_indices": [
+      13,
+      8
+    ],
+    "only_wheel_qvel_changed": true,
+    "tick": 7,
+    "zero_rate_ddxi_left_m_s2": -0.008280953440326089,
+    "zero_rate_ddxi_right_m_s2": 0.07885383522769489,
+    "zero_rate_normal_load_left_n": 31.045468453373864,
+    "zero_rate_normal_load_right_n": 32.099774405005896,
+    "zero_rate_torque_nm": [
+      -0.04918684305844191,
+      -3.1482428024219935,
+      -9.20881727166857e-08,
+      0.04717568631880623,
+      -3.2319437183163906,
+      -8.876213579377104e-08
+    ],
+    "zero_wheel_rates_exact": true
+  },
+  {
+    "actual_ddxi_left_m_s2": -0.011933510981904788,
+    "actual_ddxi_right_m_s2": 0.08281669692177755,
+    "actual_normal_load_left_n": 31.04155605489418,
+    "actual_normal_load_right_n": 32.090529473105775,
+    "actual_torque_nm": [
+      -0.05058079892110279,
+      -3.14940719320015,
+      -1.0233345544189938e-07,
+      0.048671872815900206,
+      -3.2306488761322205,
+      -1.006937841973351e-07
+    ],
+    "changed_qvel_indices": [
+      8,
+      13
+    ],
+    "delta_ddxi_left_m_s2": 0.0008151745944928734,
+    "delta_ddxi_right_m_s2": 0.0021853738507954107,
+    "delta_normal_load_left_n": -7.283649387801461e-05,
+    "delta_normal_load_right_n": -0.00021937974673846838,
+    "expected_wheel_qvel_indices": [
+      13,
+      8
+    ],
+    "only_wheel_qvel_changed": true,
+    "tick": 8,
+    "zero_rate_ddxi_left_m_s2": -0.011118336387411915,
+    "zero_rate_ddxi_right_m_s2": 0.08500207077257296,
+    "zero_rate_normal_load_left_n": 31.041483218400302,
+    "zero_rate_normal_load_right_n": 32.09031009335904,
+    "zero_rate_torque_nm": [
+      -0.05058077477921129,
+      -3.1494071790216593,
+      -1.0233351895914483e-07,
+      0.04867184867532733,
+      -3.2306488908522137,
+      -1.00693803305096e-07
+    ],
+    "zero_wheel_rates_exact": true
+  },
+  {
+    "actual_ddxi_left_m_s2": -0.019080232033447456,
+    "actual_ddxi_right_m_s2": 0.09263786156980901,
+    "actual_normal_load_left_n": 31.038581061790254,
+    "actual_normal_load_right_n": 32.08606180629768,
+    "actual_torque_nm": [
+      -0.05201552399773387,
+      -3.1506223069272794,
+      -1.0155164252743161e-07,
+      0.05016671710259735,
+      -3.2293600093417303,
+      -1.0164032022835679e-07
+    ],
+    "changed_qvel_indices": [
+      8,
+      13
+    ],
+    "delta_ddxi_left_m_s2": 0.0046629052331565585,
+    "delta_ddxi_right_m_s2": -0.002541553941262653,
+    "delta_normal_load_left_n": -0.0004958682878708487,
+    "delta_normal_load_right_n": 0.0002853822770632064,
+    "expected_wheel_qvel_indices": [
+      13,
+      8
+    ],
+    "only_wheel_qvel_changed": true,
+    "tick": 9,
+    "zero_rate_ddxi_left_m_s2": -0.014417326800290897,
+    "zero_rate_ddxi_right_m_s2": 0.09009630762854635,
+    "zero_rate_normal_load_left_n": 31.038085193502383,
+    "zero_rate_normal_load_right_n": 32.08634718857474,
+    "zero_rate_torque_nm": [
+      -0.05201546613988522,
+      -3.150622274952256,
+      -1.0155161978650984e-07,
+      0.050166659185638174,
+      -3.229360041358621,
+      -1.0164018999166005e-07
+    ],
+    "zero_wheel_rates_exact": true
+  },
+  {
+    "actual_ddxi_left_m_s2": -0.02761302429960845,
+    "actual_ddxi_right_m_s2": 0.10195093868735003,
+    "actual_normal_load_left_n": 31.036076972773092,
+    "actual_normal_load_right_n": 32.08513418368313,
+    "actual_torque_nm": [
+      -0.05344359926856355,
+      -3.151852147795333,
+      -8.944680344650345e-08,
+      0.05161751826741849,
+      -3.2281041611117267,
+      -9.127248614653356e-08
+    ],
+    "changed_qvel_indices": [
+      8,
+      13
+    ],
+    "delta_ddxi_left_m_s2": 0.009791166067588813,
+    "delta_ddxi_right_m_s2": -0.008333156882849718,
+    "delta_normal_load_left_n": -0.0010570379733145785,
+    "delta_normal_load_right_n": 0.0009060541279310996,
+    "expected_wheel_qvel_indices": [
+      13,
+      8
+    ],
+    "only_wheel_qvel_changed": true,
+    "tick": 10,
+    "zero_rate_ddxi_left_m_s2": -0.017821858232019636,
+    "zero_rate_ddxi_right_m_s2": 0.09361778180450031,
+    "zero_rate_normal_load_left_n": 31.035019934799777,
+    "zero_rate_normal_load_right_n": 32.08604023781106,
+    "zero_rate_torque_nm": [
+      -0.05344349431862365,
+      -3.151852091019209,
+      -8.944659769926539e-08,
+      0.05161741314573293,
+      -3.2281042169308662,
+      -9.127208421346483e-08
+    ],
+    "zero_wheel_rates_exact": true
+  },
+  {
+    "actual_ddxi_left_m_s2": 0.07494353138418064,
+    "actual_ddxi_right_m_s2": 0.022530872754306097,
+    "actual_normal_load_left_n": 31.02926434164865,
+    "actual_normal_load_right_n": 32.08827965807779,
+    "actual_torque_nm": [
+      0.1333499707306598,
+      -3.027062519150417,
+      -1.3290944392912596e-07,
+      -0.1353667560066041,
+      -3.349770643847532,
+      -4.7088144347474274e-08
+    ],
+    "changed_qvel_indices": [
+      8,
+      13
+    ],
+    "delta_ddxi_left_m_s2": 0.5044484202472443,
+    "delta_ddxi_right_m_s2": -0.5178643035091968,
+    "delta_normal_load_left_n": -0.05378580007350919,
+    "delta_normal_load_right_n": 0.0563103770285025,
+    "expected_wheel_qvel_indices": [
+      13,
+      8
+    ],
+    "only_wheel_qvel_changed": true,
+    "tick": 46,
+    "zero_rate_ddxi_left_m_s2": 0.579391951631425,
+    "zero_rate_ddxi_right_m_s2": -0.49533343075489067,
+    "zero_rate_normal_load_left_n": 30.97547854157514,
+    "zero_rate_normal_load_right_n": 32.14459003510629,
+    "zero_rate_torque_nm": [
+      0.13334962980329737,
+      -3.0270634153035383,
+      -1.3271851994178898e-07,
+      -0.1353664480088088,
+      -3.3497683152556763,
+      -4.68939066368791e-08
+    ],
+    "zero_wheel_rates_exact": true
+  },
+  {
+    "actual_ddxi_left_m_s2": 0.07913101644080323,
+    "actual_ddxi_right_m_s2": 0.028569198902428372,
+    "actual_normal_load_left_n": 31.029847121400856,
+    "actual_normal_load_right_n": 32.08699276445525,
+    "actual_torque_nm": [
+      0.14124247286641942,
+      -3.021369595557202,
+      -1.580834687255546e-07,
+      -0.14315896809073864,
+      -3.3549742944617957,
+      -6.875329469127815e-08
+    ],
+    "changed_qvel_indices": [
+      8,
+      13
+    ],
+    "delta_ddxi_left_m_s2": 0.504796899877813,
+    "delta_ddxi_right_m_s2": -0.5237345213626732,
+    "delta_normal_load_left_n": -0.05379561436268432,
+    "delta_normal_load_right_n": 0.05694129868604847,
+    "expected_wheel_qvel_indices": [
+      13,
+      8
+    ],
+    "only_wheel_qvel_changed": true,
+    "tick": 47,
+    "zero_rate_ddxi_left_m_s2": 0.5839279163186162,
+    "zero_rate_ddxi_right_m_s2": -0.4951653224602448,
+    "zero_rate_normal_load_left_n": 30.97605150703817,
+    "zero_rate_normal_load_right_n": 32.1439340631413,
+    "zero_rate_torque_nm": [
+      0.14124195628761413,
+      -3.0213706175076194,
+      -1.5790400418788387e-07,
+      -0.143158471251744,
+      -3.3549718065840666,
+      -6.857078896771386e-08
+    ],
+    "zero_wheel_rates_exact": true
+  },
+  {
+    "actual_ddxi_left_m_s2": 0.08223513267568983,
+    "actual_ddxi_right_m_s2": 0.0337383271875602,
+    "actual_normal_load_left_n": 31.030395730942104,
+    "actual_normal_load_right_n": 32.08586133216089,
+    "actual_torque_nm": [
+      0.14904070770101047,
+      -3.0157555590072316,
+      -1.6716117260192767e-07,
+      -0.15089446494589123,
+      -3.360133114055204,
+      -7.438307976769589e-08
+    ],
+    "changed_qvel_indices": [
+      8,
+      13
+    ],
+    "delta_ddxi_left_m_s2": 0.504522617499753,
+    "delta_ddxi_right_m_s2": -0.5296669992709002,
+    "delta_normal_load_left_n": -0.05374241167081806,
+    "delta_normal_load_right_n": 0.05757545877732184,
+    "expected_wheel_qvel_indices": [
+      13,
+      8
+    ],
+    "only_wheel_qvel_changed": true,
+    "tick": 48,
+    "zero_rate_ddxi_left_m_s2": 0.5867577501754428,
+    "zero_rate_ddxi_right_m_s2": -0.49592867208334,
+    "zero_rate_normal_load_left_n": 30.976653319271286,
+    "zero_rate_normal_load_right_n": 32.14343679093821,
+    "zero_rate_torque_nm": [
+      0.1490400199714521,
+      -3.0157567032221873,
+      -1.669943113034625e-07,
+      -0.15089378245825924,
+      -3.3601304676136845,
+      -7.421344802438522e-08
+    ],
+    "zero_wheel_rates_exact": true
+  },
+  {
+    "actual_ddxi_left_m_s2": 0.08100396640432772,
+    "actual_ddxi_right_m_s2": 0.053884194724240775,
+    "actual_normal_load_left_n": 31.021359846628826,
+    "actual_normal_load_right_n": 32.08811897351275,
+    "actual_torque_nm": [
+      0.33472823636077653,
+      -2.888955117729492,
+      3.1328974469157853e-06,
+      -0.3450286597415312,
+      -3.4842296007020583,
+      3.3069722909403158e-06
+    ],
+    "changed_qvel_indices": [
+      8,
+      13
+    ],
+    "delta_ddxi_left_m_s2": 0.17864348986727785,
+    "delta_ddxi_right_m_s2": -0.9465961609625428,
+    "delta_normal_load_left_n": -0.02185390671186127,
+    "delta_normal_load_right_n": 0.0998486723781582,
+    "expected_wheel_qvel_indices": [
+      13,
+      8
+    ],
+    "only_wheel_qvel_changed": true,
+    "tick": 73,
+    "zero_rate_ddxi_left_m_s2": 0.25964745627160557,
+    "zero_rate_ddxi_right_m_s2": -0.8927119662383021,
+    "zero_rate_normal_load_left_n": 30.999505939916965,
+    "zero_rate_normal_load_right_n": 32.18796764589091,
+    "zero_rate_torque_nm": [
+      0.33472959760707544,
+      -2.888953854777214,
+      3.1320046900638067e-06,
+      -0.34502849104280064,
+      -3.4842235749438535,
+      3.3060874414264786e-06
+    ],
+    "zero_wheel_rates_exact": true
+  },
+  {
+    "actual_ddxi_left_m_s2": 0.09802826685806343,
+    "actual_ddxi_right_m_s2": 0.07080186301827718,
+    "actual_normal_load_left_n": 31.019315639840855,
+    "actual_normal_load_right_n": 32.08694218382668,
+    "actual_torque_nm": [
+      0.34224943291744775,
+      -2.8840544760305082,
+      3.3153155123413477e-06,
+      -0.35304985213848333,
+      -3.4891369571492126,
+      3.4927759320061886e-06
+    ],
+    "changed_qvel_indices": [
+      8,
+      13
+    ],
+    "delta_ddxi_left_m_s2": 0.13595516882083936,
+    "delta_ddxi_right_m_s2": -0.9919439427803767,
+    "delta_normal_load_left_n": -0.017779940534673244,
+    "delta_normal_load_right_n": 0.1044142333766871,
+    "expected_wheel_qvel_indices": [
+      13,
+      8
+    ],
+    "only_wheel_qvel_changed": true,
+    "tick": 74,
+    "zero_rate_ddxi_left_m_s2": 0.23398343567890278,
+    "zero_rate_ddxi_right_m_s2": -0.9211420797620995,
+    "zero_rate_normal_load_left_n": 31.00153569930618,
+    "zero_rate_normal_load_right_n": 32.191356417203366,
+    "zero_rate_torque_nm": [
+      0.34225094802111283,
+      -2.88405295092483,
+      3.3143018782748965e-06,
+      -0.3530496559021317,
+      -3.4891304799412817,
+      3.4917708548980647e-06
+    ],
+    "zero_wheel_rates_exact": true
+  },
+  {
+    "actual_ddxi_left_m_s2": 0.11773853011813606,
+    "actual_ddxi_right_m_s2": 0.09032368027475646,
+    "actual_normal_load_left_n": 31.017075875554788,
+    "actual_normal_load_right_n": 32.08546038850125,
+    "actual_torque_nm": [
+      0.34978287638007777,
+      -2.8791781812265285,
+      3.5111026529335853e-06,
+      -0.36111283598566957,
+      -3.4940643595418903,
+      3.6919776039084044e-06
+    ],
+    "changed_qvel_indices": [
+      8,
+      13
+    ],
+    "delta_ddxi_left_m_s2": 0.08822422151687215,
+    "delta_ddxi_right_m_s2": -1.0420628440629964,
+    "delta_normal_load_left_n": -0.01322869837720475,
+    "delta_normal_load_right_n": 0.10946141355771033,
+    "expected_wheel_qvel_indices": [
+      13,
+      8
+    ],
+    "only_wheel_qvel_changed": true,
+    "tick": 75,
+    "zero_rate_ddxi_left_m_s2": 0.2059627516350082,
+    "zero_rate_ddxi_right_m_s2": -0.95173916378824,
+    "zero_rate_normal_load_left_n": 31.003847177177583,
+    "zero_rate_normal_load_right_n": 32.19492180205896,
+    "zero_rate_torque_nm": [
+      0.3497845148228634,
+      -2.879176406361243,
+      3.509952880686714e-06,
+      -0.36111256054155694,
+      -3.4940573459674873,
+      3.6908370880073283e-06
+    ],
+    "zero_wheel_rates_exact": true
+  },
+  {
+    "actual_ddxi_left_m_s2": 2.109905247321686,
+    "actual_ddxi_right_m_s2": 1.8563832499540744,
+    "actual_normal_load_left_n": 30.667571617049223,
+    "actual_normal_load_right_n": 31.771863614676313,
+    "actual_torque_nm": [
+      0.5221687021325915,
+      -2.8381127856914157,
+      3.294603039593174e-05,
+      -0.6234177320652379,
+      -3.6384678817629146,
+      3.322347450267705e-05
+    ],
+    "changed_qvel_indices": [
+      8,
+      13
+    ],
+    "delta_ddxi_left_m_s2": -6.533722843177214,
+    "delta_ddxi_right_m_s2": -7.155820831078463,
+    "delta_normal_load_left_n": 0.65489405285442,
+    "delta_normal_load_right_n": 0.7005829123225524,
+    "expected_wheel_qvel_indices": [
+      13,
+      8
+    ],
+    "only_wheel_qvel_changed": true,
+    "tick": 101,
+    "zero_rate_ddxi_left_m_s2": -4.423817595855528,
+    "zero_rate_ddxi_right_m_s2": -5.299437581124389,
+    "zero_rate_normal_load_left_n": 31.322465669903643,
+    "zero_rate_normal_load_right_n": 32.472446526998866,
+    "zero_rate_torque_nm": [
+      0.5221872928759574,
+      -2.83813980834309,
+      3.29314655741828e-05,
+      -0.623415125190463,
+      -3.63852753010958,
+      3.320949216648133e-05
+    ],
+    "zero_wheel_rates_exact": true
+  },
+  {
+    "actual_ddxi_left_m_s2": 1.8082983943012998,
+    "actual_ddxi_right_m_s2": 2.8404492192213304,
+    "actual_normal_load_left_n": 29.34988652984761,
+    "actual_normal_load_right_n": 31.43389345379221,
+    "actual_torque_nm": [
+      0.5216000505148571,
+      -2.8770928815355385,
+      0.00023919625111552213,
+      -0.689738679441469,
+      -3.620169888948718,
+      0.00023946744703904209
+    ],
+    "changed_qvel_indices": [
+      8,
+      13
+    ],
+    "delta_ddxi_left_m_s2": -9.280773822006871,
+    "delta_ddxi_right_m_s2": -11.565313384309661,
+    "delta_normal_load_left_n": 1.0065737834980268,
+    "delta_normal_load_right_n": 0.9390001801131618,
+    "expected_wheel_qvel_indices": [
+      13,
+      8
+    ],
+    "only_wheel_qvel_changed": true,
+    "tick": 106,
+    "zero_rate_ddxi_left_m_s2": -7.472475427705572,
+    "zero_rate_ddxi_right_m_s2": -8.72486416508833,
+    "zero_rate_normal_load_left_n": 30.356460313345636,
+    "zero_rate_normal_load_right_n": 32.37289363390537,
+    "zero_rate_torque_nm": [
+      0.5209198885789363,
+      -2.8770074904967053,
+      0.00025967081289477394,
+      -0.6890545934364254,
+      -3.620422194662321,
+      0.0002599419480649456
+    ],
+    "zero_wheel_rates_exact": true
+  },
+  {
+    "actual_ddxi_left_m_s2": 6.738790730265176,
+    "actual_ddxi_right_m_s2": 2.654166939786151,
+    "actual_normal_load_left_n": 33.93820010657956,
+    "actual_normal_load_right_n": 32.79951716146665,
+    "actual_torque_nm": [
+      0.633615145086699,
+      -2.7470202066736755,
+      0.007903666809916306,
+      -0.7885305152724409,
+      -3.399069413440354,
+      0.04146128789854639
+    ],
+    "changed_qvel_indices": [
+      8,
+      13
+    ],
+    "delta_ddxi_left_m_s2": -13.230806218067492,
+    "delta_ddxi_right_m_s2": -13.345383282459267,
+    "delta_normal_load_left_n": 1.2701400535476068,
+    "delta_normal_load_right_n": 1.1473267899319808,
+    "expected_wheel_qvel_indices": [
+      13,
+      8
+    ],
+    "only_wheel_qvel_changed": true,
+    "tick": 109,
+    "zero_rate_ddxi_left_m_s2": -6.492015487802316,
+    "zero_rate_ddxi_right_m_s2": -10.691216342673115,
+    "zero_rate_normal_load_left_n": 35.208340160127165,
+    "zero_rate_normal_load_right_n": 33.946843951398634,
+    "zero_rate_torque_nm": [
+      0.6345155395145836,
+      -2.743524526846013,
+      0.008115382841604511,
+      -0.7895177425347133,
+      -3.3966286405114676,
+      0.042825906773645915
+    ],
+    "zero_wheel_rates_exact": true
+  },
+  {
+    "actual_ddxi_left_m_s2": 6.0091279666663056,
+    "actual_ddxi_right_m_s2": 1.7110959871780018,
+    "actual_normal_load_left_n": 30.153313358409402,
+    "actual_normal_load_right_n": 35.4179715399469,
+    "actual_torque_nm": [
+      0.732039839945109,
+      -2.5986255767622817,
+      0.026698421864779016,
+      -0.8864185664639518,
+      -3.150727216247846,
+      0.12351645534461231
+    ],
+    "changed_qvel_indices": [
+      8,
+      13
+    ],
+    "delta_ddxi_left_m_s2": -13.712468601656536,
+    "delta_ddxi_right_m_s2": -14.074687208431857,
+    "delta_normal_load_left_n": 1.417698748602529,
+    "delta_normal_load_right_n": 1.083489488311983,
+    "expected_wheel_qvel_indices": [
+      13,
+      8
+    ],
+    "only_wheel_qvel_changed": true,
+    "tick": 110,
+    "zero_rate_ddxi_left_m_s2": -7.70334063499023,
+    "zero_rate_ddxi_right_m_s2": -12.363591221253856,
+    "zero_rate_normal_load_left_n": 31.57101210701193,
+    "zero_rate_normal_load_right_n": 36.50146102825888,
+    "zero_rate_torque_nm": [
+      0.732892264712311,
+      -2.594313033330036,
+      0.02732064720111581,
+      -0.88738098176447,
+      -3.1480245395557915,
+      0.12499981022260016
+    ],
+    "zero_wheel_rates_exact": true
+  }
+]

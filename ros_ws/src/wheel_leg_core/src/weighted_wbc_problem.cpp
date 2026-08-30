@@ -12,6 +12,7 @@ constexpr double kInfinity = 1.0e30;
 constexpr double kContactScale = 10.0;
 constexpr double kWheelVerticalScale = 1.0;
 constexpr double kWheelLongitudinalScale = 1.0;
+constexpr double kWheelJointAccelerationScale = 20.0;
 constexpr double kBaseLinearScale = 10.0;
 constexpr double kBaseAngularScale = 20.0;
 constexpr double kLegScale = 50.0;
@@ -43,7 +44,9 @@ bool finite(const WeightedWbcProblem::Result &result) {
 bool usesMinimalInteractionWrench(WeightedWbcProfile profile) {
   return profile == WeightedWbcProfile::kPhase27Minimal ||
          profile == WeightedWbcProfile::kPhase33ZetaManifold ||
-         profile == WeightedWbcProfile::kPhase34XiTracking;
+         profile == WeightedWbcProfile::kPhase34XiTracking ||
+         profile == WeightedWbcProfile::kPhase43NativeWheelRate ||
+         profile == WeightedWbcProfile::kPhase43XiAndNativeWheelRate;
 }
 
 }  // namespace
@@ -58,6 +61,7 @@ WeightedWbcProblem::Result WeightedWbcProblem::assemble(
       !reference.leg_acceleration_rad_s2.allFinite() ||
       !reference.wheel_vertical_acceleration_m_s2.allFinite() ||
       !reference.wheel_longitudinal_acceleration_m_s2.allFinite() ||
+      !reference.wheel_joint_acceleration_rad_s2.allFinite() ||
       !reference.interaction_wrench_flu.allFinite() ||
       !std::isfinite(reference.base_x_acceleration_m_s2) ||
       !std::isfinite(reference.base_height_acceleration_m_s2)) {
@@ -146,7 +150,8 @@ WeightedWbcProblem::Result WeightedWbcProblem::assemble(
                Eigen::Vector2d::Constant(kWheelVerticalScale));
   }
 
-  if (profile == WeightedWbcProfile::kPhase34XiTracking) {
+  if (profile == WeightedWbcProfile::kPhase34XiTracking ||
+      profile == WeightedWbcProfile::kPhase43XiAndNativeWheelRate) {
     Eigen::Matrix<double, 2, 42> wheel_longitudinal =
         Eigen::Matrix<double, 2, 42>::Zero();
     Eigen::Vector2d wheel_longitudinal_target =
@@ -161,6 +166,17 @@ WeightedWbcProblem::Result WeightedWbcProblem::assemble(
     addTask<2>(result.h, result.g, wheel_longitudinal,
                wheel_longitudinal_target,
                Eigen::Vector2d::Constant(kWheelLongitudinalScale));
+  }
+
+  if (profile == WeightedWbcProfile::kPhase43NativeWheelRate ||
+      profile == WeightedWbcProfile::kPhase43XiAndNativeWheelRate) {
+    Eigen::Matrix<double, 2, 42> wheel_joint =
+        Eigen::Matrix<double, 2, 42>::Zero();
+    wheel_joint(0, 8) = variable_scale[8];
+    wheel_joint(1, 11) = variable_scale[11];
+    addTask<2>(result.h, result.g, wheel_joint,
+               reference.wheel_joint_acceleration_rad_s2,
+               Eigen::Vector2d::Constant(kWheelJointAccelerationScale));
   }
 
   if (profile == WeightedWbcProfile::kNominal) {

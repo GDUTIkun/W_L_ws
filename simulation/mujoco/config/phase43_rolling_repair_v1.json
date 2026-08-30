@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "phase": 43,
+  "profile": "phase43_rolling_repair_v1",
+  "scene": "simulation/mujoco/model/scene_axisymmetric_centered_com_v1.xml",
+  "executable": "ros_ws/build/wheel_leg_mujoco/phase43_rolling_repair_loop",
+  "phase42_config": "simulation/mujoco/config/phase42_causal_attribution_v1.json",
+  "phase42_native_authority": "docs/workflow/phases/42-wheel-spin-contact-loss-causal-attribution/evidence/automated/causal-attribution-formal-v1/control-a_native.csv",
+  "phase42_summary": "docs/workflow/phases/42-wheel-spin-contact-loss-causal-attribution/evidence/automated/causal-attribution-formal-v1/summary.json",
+  "baseline_failure_tick": 111,
+  "snapshot_ticks": [0, 46, 74, 101, 110],
+  "horizon_s": 10.0,
+  "control_period_s": 0.01,
+  "physics_period_s": 0.002,
+  "bandwidth_hz": [2.5, 3.5, 5.0],
+  "damping_ratio": 1.0,
+  "native_rate_task_scale_rad_s2": 20.0,
+  "trim": {
+    "components": ["left_Fx", "right_Fx", "left_Ty", "right_Ty"],
+    "lower": [-10.0, -10.0, -1.0, -1.0],
+    "upper": [10.0, 10.0, 1.0, 1.0],
+    "regularization": 0.001,
+    "maximum_evaluations": 60
+  },
+  "perturbations": {
+    "rim_rate_m_s": 0.02,
+    "xi_force_n": 2.0,
+    "xi_force_duration_s": 0.05,
+    "assessment_start_s": 0.05
+  },
+  "gates": {
+    "equilibrium_ddxi_abs_m_s2": 0.05,
+    "equilibrium_ddxi_relative_to_baseline": 0.5,
+    "equilibrium_wheel_qdd_abs_rad_s2": 1.0,
+    "maximum_direction_normalized_rim_rate_m_s": 0.25,
+    "maximum_xi_error_m": 0.05,
+    "maximum_base_position_change_m": 0.1,
+    "maximum_base_rotation_change_rad": 0.35,
+    "maximum_base_linear_speed_m_s": 2.0,
+    "maximum_base_angular_speed_rad_s": 5.0,
+    "maximum_normalized_slack": 0.05,
+    "maximum_hard_violation": 1e-7,
+    "minimum_torque_margin_nm": -1e-10,
+    "maximum_perturbation_growth_ratio": 2.0,
+    "maximum_perturbation_final_ratio": 1.0,
+    "final_window_s": 1.0,
+    "maximum_wrench_residual_degradation": 0.1
+  },
+  "semantic_tolerance": 1e-12
+}

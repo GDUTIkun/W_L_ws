@@ -1,0 +1,68 @@
+{
+  "classification": "P42-E_multiple_coupled_causes",
+  "control_replay_max_abs_error": 0.0,
+  "counterfactual_maximum_effect": {
+    "ddxi_m_s2": 14.074687208431857,
+    "normal_load_n": 1.417698748602529
+  },
+  "failure_tick": 111,
+  "final_bilateral": {
+    "common_dxi_m_s": 0.4669651910884308,
+    "differential_dxi_m_s": 0.004764968530418634,
+    "tick": 110
+  },
+  "gates": {
+    "captured_qacc_parity": true,
+    "classification_resolved": true,
+    "contact_reconstruction": true,
+    "control_replay": true,
+    "counterfactual_changes_only_wheel_rate": true,
+    "ddxi_oracle": true,
+    "full_dynamics_closure": true,
+    "native_replay": true,
+    "phase41_failure_reproduced": true,
+    "phase41_semantic_parity": true,
+    "wbc_snapshot_replay": true
+  },
+  "key_snapshot_ticks": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    46,
+    47,
+    48,
+    73,
+    74,
+    75,
+    101,
+    106,
+    109,
+    110
+  ],
+  "maximum_residuals": {
+    "captured_qacc": 6.899369964230573e-12,
+    "contact_reconstruction": 0.0,
+    "ddxi_half_step": 1.7208456881689926e-09,
+    "full_dynamics": 1.2789769243681803e-13
+  },
+  "native_replay_max_abs_error": 0.0,
+  "pass": true,
+  "phase34_run": false,
+  "phase41_semantic_max_abs_error": 0.0,
+  "repair": false,
+  "tick0": {
+    "common_ddxi_m_s2": -0.1202064017542945,
+    "differential_ddxi_m_s2": -0.02144501160270109,
+    "direction_matches_final_rate": false,
+    "normal_load_asymmetry_n": 0.5366958458094047
+  },
+  "wbc_snapshot_torque_max_abs_error_nm": 0.0
+}

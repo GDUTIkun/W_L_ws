@@ -84,6 +84,22 @@ target_compile_definitions(
   PRIVATE WHEEL_LEG_PHASE41_PRODUCTION_REVALIDATION=1)
 target_compile_options(
   phase41_workspace_contract_loop PRIVATE -Wall -Wextra -Wpedantic -Werror)
+add_executable(
+  phase42_causal_attribution_loop src/phase35_workspace_attribution_loop.cpp)
+target_link_libraries(phase42_causal_attribution_loop wheel_leg_mujoco_adapter)
+target_compile_definitions(
+  phase42_causal_attribution_loop
+  PRIVATE WHEEL_LEG_PHASE41_PRODUCTION_REVALIDATION=1
+          WHEEL_LEG_PHASE42_CAUSAL_ATTRIBUTION=1)
+target_compile_options(
+  phase42_causal_attribution_loop PRIVATE -Wall -Wextra -Wpedantic -Werror)
+add_executable(
+  phase43_rolling_repair_loop src/phase35_workspace_attribution_loop.cpp)
+target_link_libraries(phase43_rolling_repair_loop wheel_leg_mujoco_adapter)
+target_compile_definitions(
+  phase43_rolling_repair_loop PRIVATE WHEEL_LEG_PHASE43_ROLLING_REPAIR=1)
+target_compile_options(
+  phase43_rolling_repair_loop PRIVATE -Wall -Wextra -Wpedantic -Werror)
 
 if(BUILD_TESTING)
   find_package(ament_cmake_gtest REQUIRED)
@@ -103,6 +119,7 @@ install(TARGETS wheel_leg_mujoco_adapter mujoco_node deterministic_loop
   planar_standing_loop standing_3d_loop weighted_wbc_loop
   phase34_xi_tracking_loop phase35_workspace_attribution_loop
   phase40_angle_domain_loop phase41_workspace_contract_loop
+  phase42_causal_attribution_loop phase43_rolling_repair_loop
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION lib/${PROJECT_NAME})

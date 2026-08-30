@@ -12,7 +12,9 @@ namespace {
 bool usesMinimalInteractionWrench(WeightedWbcProfile profile) {
   return profile == WeightedWbcProfile::kPhase27Minimal ||
          profile == WeightedWbcProfile::kPhase33ZetaManifold ||
-         profile == WeightedWbcProfile::kPhase34XiTracking;
+         profile == WeightedWbcProfile::kPhase34XiTracking ||
+         profile == WeightedWbcProfile::kPhase43NativeWheelRate ||
+         profile == WeightedWbcProfile::kPhase43XiAndNativeWheelRate;
 }
 
 }  // namespace
@@ -139,10 +141,20 @@ WeightedWbcController::Result WeightedWbcController::step(
                 output.wheel_vertical_acceleration_m_s2 -
                     reference.wheel_vertical_acceleration_m_s2);
   }
-  if (profile_ == WeightedWbcProfile::kPhase34XiTracking) {
+  if (profile_ == WeightedWbcProfile::kPhase34XiTracking ||
+      profile_ == WeightedWbcProfile::kPhase43XiAndNativeWheelRate) {
     record_task(Task::kWheelLongitudinalTracking,
                 output.wheel_longitudinal_acceleration_m_s2 -
                     reference.wheel_longitudinal_acceleration_m_s2);
+  }
+  if (profile_ == WeightedWbcProfile::kPhase43NativeWheelRate ||
+      profile_ == WeightedWbcProfile::kPhase43XiAndNativeWheelRate) {
+    Eigen::Vector2d wheel_acceleration;
+    wheel_acceleration << output.physical_solution[8],
+        output.physical_solution[11];
+    record_task(Task::kNativeWheelRate,
+                (wheel_acceleration -
+                 reference.wheel_joint_acceleration_rad_s2) / 20.0);
   }
   if (profile_ == WeightedWbcProfile::kNominal) {
     record_task(Task::kBaseX, (Eigen::Matrix<double, 1, 1>() <<

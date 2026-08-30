@@ -137,12 +137,44 @@ int main() {
   assert((tracking.g - minimal.g + task.transpose() * target)
              .cwiseAbs().maxCoeff() <= 2.0e-12);
 
+  auto rate_reference = reference;
+  rate_reference.wheel_joint_acceleration_rad_s2 << -0.7, 0.4;
+  const auto rate = assembler.assemble(
+      evaluated, rate_reference,
+      wheel_leg::WeightedWbcProfile::kPhase43NativeWheelRate);
+  const auto combined = assembler.assemble(
+      evaluated, rate_reference,
+      wheel_leg::WeightedWbcProfile::kPhase43XiAndNativeWheelRate);
+  assert(rate.ok() && combined.ok());
+  Eigen::Matrix<double, 2, 42> rate_task =
+      Eigen::Matrix<double, 2, 42>::Zero();
+  rate_task(0, 8) = wheel_leg::phase21_profile::kVariableScale[8] / 20.0;
+  rate_task(1, 11) = wheel_leg::phase21_profile::kVariableScale[11] / 20.0;
+  const Eigen::Vector2d normalized_rate_target =
+      rate_reference.wheel_joint_acceleration_rad_s2 / 20.0;
+  assert((rate.h - minimal.h - rate_task.transpose() * rate_task)
+             .cwiseAbs().maxCoeff() <= 2.0e-12);
+  assert((rate.g - minimal.g +
+          rate_task.transpose() * normalized_rate_target)
+             .cwiseAbs().maxCoeff() <= 2.0e-12);
+  assert((combined.h - tracking.h - rate.h + minimal.h)
+             .cwiseAbs().maxCoeff() <= 2.0e-12);
+  assert((combined.g - tracking.g - rate.g + minimal.g)
+             .cwiseAbs().maxCoeff() <= 2.0e-12);
+
   auto nonfinite = reference;
   nonfinite.wheel_longitudinal_acceleration_m_s2[0] =
       std::numeric_limits<double>::quiet_NaN();
   assert(assembler.assemble(
       evaluated, nonfinite,
       wheel_leg::WeightedWbcProfile::kPhase34XiTracking).status ==
+      wheel_leg::WeightedWbcProblem::Status::kNonFinite);
+  nonfinite = reference;
+  nonfinite.wheel_joint_acceleration_rad_s2[1] =
+      std::numeric_limits<double>::infinity();
+  assert(assembler.assemble(
+      evaluated, nonfinite,
+      wheel_leg::WeightedWbcProfile::kPhase43NativeWheelRate).status ==
       wheel_leg::WeightedWbcProblem::Status::kNonFinite);
 
   wheel_leg::WeightedWbcController controller(

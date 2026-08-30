@@ -1,0 +1,85 @@
+{
+  "passing": [],
+  "selected": null,
+  "specs": [
+    {
+      "candidate": "A",
+      "gain": "trim",
+      "kd": 0.0,
+      "kp": 0.0,
+      "rate_gain": 0.0
+    },
+    {
+      "bandwidth_hz": 2.5,
+      "candidate": "B",
+      "gain": "2.5Hz",
+      "kd": 0.0,
+      "kp": 0.0,
+      "rate_gain": 15.707963267948966
+    },
+    {
+      "bandwidth_hz": 2.5,
+      "candidate": "C",
+      "gain": "2.5Hz",
+      "kd": 31.41592653589793,
+      "kp": 246.74011002723395,
+      "rate_gain": 0.0
+    },
+    {
+      "bandwidth_hz": 2.5,
+      "candidate": "D",
+      "gain": "2.5Hz",
+      "kd": 31.41592653589793,
+      "kp": 246.74011002723395,
+      "rate_gain": 15.707963267948966
+    },
+    {
+      "bandwidth_hz": 3.5,
+      "candidate": "B",
+      "gain": "3.5Hz",
+      "kd": 0.0,
+      "kp": 0.0,
+      "rate_gain": 21.991148575128552
+    },
+    {
+      "bandwidth_hz": 3.5,
+      "candidate": "C",
+      "gain": "3.5Hz",
+      "kd": 43.982297150257104,
+      "kp": 483.61061565337855,
+      "rate_gain": 0.0
+    },
+    {
+      "bandwidth_hz": 3.5,
+      "candidate": "D",
+      "gain": "3.5Hz",
+      "kd": 43.982297150257104,
+      "kp": 483.61061565337855,
+      "rate_gain": 21.991148575128552
+    },
+    {
+      "bandwidth_hz": 5.0,
+      "candidate": "B",
+      "gain": "5Hz",
+      "kd": 0.0,
+      "kp": 0.0,
+      "rate_gain": 31.41592653589793
+    },
+    {
+      "bandwidth_hz": 5.0,
+      "candidate": "C",
+      "gain": "5Hz",
+      "kd": 62.83185307179586,
+      "kp": 986.9604401089358,
+      "rate_gain": 0.0
+    },
+    {
+      "bandwidth_hz": 5.0,
+      "candidate": "D",
+      "gain": "5Hz",
+      "kd": 62.83185307179586,
+      "kp": 986.9604401089358,
+      "rate_gain": 31.41592653589793
+    }
+  ]
+}
