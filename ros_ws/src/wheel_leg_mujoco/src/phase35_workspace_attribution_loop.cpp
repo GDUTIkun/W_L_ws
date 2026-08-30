@@ -81,6 +81,18 @@ bool pairMatches(int geom1, int geom2, int first, int second) {
          (geom1 == second && geom2 == first);
 }
 
+[[maybe_unused]] bool isContactRollingCase(const std::string &case_id) {
+#ifdef WHEEL_LEG_PHASE45_CONTACT_ROLLING
+  if (case_id.rfind("R45-", 0) == 0) return true;
+#ifdef WHEEL_LEG_PHASE46_HIP_COMMON_SAFE_ROLLING
+  if (case_id.rfind("R46-", 0) == 0) return true;
+#endif
+#else
+  static_cast<void>(case_id);
+#endif
+  return false;
+}
+
 #ifdef WHEEL_LEG_PHASE45_CONTACT_ROLLING
 struct RollingObservation {
   std::array<wheel_leg::NominalWbcModel::Matrix1x12, 2> map{
@@ -318,7 +330,7 @@ void run(const std::string &model_path, const std::string &output_path,
   const bool phase43_case = case_id.rfind("R43-0", 0) == 0 ||
       case_id.rfind("R43-A", 0) == 0 || case_id.rfind("R43-B", 0) == 0 ||
       case_id.rfind("R43-C", 0) == 0 || case_id.rfind("R43-D", 0) == 0 ||
-      case_id.rfind("R45-", 0) == 0;
+      isContactRollingCase(case_id);
   const bool known_case = phase43_case;
 #else
   const bool known_case = case_id == "H0_minimal_hold" ||
@@ -373,6 +385,10 @@ void run(const std::string &model_path, const std::string &output_path,
 #ifdef WHEEL_LEG_PHASE45_CONTACT_ROLLING
   if (case_id.rfind("R45-", 0) == 0)
     profile = wheel_leg::WeightedWbcProfile::kPhase45ContactConsistentRolling;
+#ifdef WHEEL_LEG_PHASE46_HIP_COMMON_SAFE_ROLLING
+  if (case_id.rfind("R46-", 0) == 0)
+    profile = wheel_leg::WeightedWbcProfile::kPhase46HipCommonSafeRolling;
+#endif
 #endif
 #else
   const auto profile = case_id == "H0_minimal_hold"
@@ -516,7 +532,7 @@ void run(const std::string &model_path, const std::string &output_path,
     auto reference = equilibriumReference();
 #ifdef WHEEL_LEG_PHASE43_ROLLING_REPAIR
     if (case_id.rfind("R43-A", 0) == 0 ||
-        case_id.rfind("R45-", 0) == 0) {
+        isContactRollingCase(case_id)) {
       reference.interaction_wrench_flu[0] += wrench_trim[0];
       reference.interaction_wrench_flu[6] += wrench_trim[1];
       reference.interaction_wrench_flu[4] += wrench_trim[2];
@@ -535,7 +551,7 @@ void run(const std::string &model_path, const std::string &output_path,
     reference.wheel_joint_acceleration_rad_s2[0] += task_delta[2];
     reference.wheel_joint_acceleration_rad_s2[1] += task_delta[3];
 #ifdef WHEEL_LEG_PHASE45_CONTACT_ROLLING
-    if (case_id.rfind("R45-", 0) == 0 && measurement.ok()) {
+    if (isContactRollingCase(case_id) && measurement.ok()) {
       constexpr double kEnableLoadN = 5.0;
       constexpr double kDisableLoadN = 2.0;
       constexpr int kEnablePersistenceTicks = 2;

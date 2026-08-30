@@ -14,7 +14,11 @@ enum class WeightedWbcProfile {
   kPhase43NativeWheelRate,
   kPhase43XiAndNativeWheelRate,
   kPhase45ContactConsistentRolling,
+  kPhase46HipCommonSafeRolling,
 };
+
+[[nodiscard]] NominalWbcModel::Matrix1x12 hipCommonSafeRollingMap(
+    const NominalWbcModel::Matrix1x12 &map);
 
 struct WbcReference {
   double base_x_acceleration_m_s2{0.0};

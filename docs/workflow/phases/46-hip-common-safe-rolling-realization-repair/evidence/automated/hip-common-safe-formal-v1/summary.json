@@ -1,0 +1,45 @@
+{
+  "classification": "P46-E \u2014 multiple remaining mechanisms",
+  "entered": {
+    "AUTH": false,
+    "EQ": true,
+    "REAL": false,
+    "REAUDIT": false,
+    "ROLL": false,
+    "SHORT": false
+  },
+  "first_failure": "DG46-EQ",
+  "gates": {
+    "DG46-AUTH": false,
+    "DG46-CONTACT": false,
+    "DG46-EQ": false,
+    "DG46-FULLBODY": false,
+    "DG46-REAL": false,
+    "DG46-REAUDIT": false,
+    "DG46-ROLL": false,
+    "DG46-SHORT": false,
+    "DG46-WBC": false,
+    "DG46-WR": false
+  },
+  "pass": false,
+  "replay_max_abs_error": null,
+  "scope_contract": {
+    "compatible_wrench_frozen": true,
+    "contact_model_modification": false,
+    "coupled_redesign": false,
+    "dynamic_projection": false,
+    "gain_tuning": false,
+    "model_b_frozen": true,
+    "new_candidate_count": 1,
+    "new_task": false,
+    "nmpc_12d_run": false,
+    "planner_run": false,
+    "precompensation": false,
+    "slip_observable_modification": false,
+    "state_contact_friction_torque_solver_frozen": true,
+    "tracking_run": false,
+    "weight_tuning": false,
+    "wrench_tuning": false,
+    "xi_task_modification": false
+  }
+}

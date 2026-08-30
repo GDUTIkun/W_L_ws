@@ -139,8 +139,8 @@ def classify_qp_plant_hip_modes(summaries: dict[str, dict[str, Any]]) -> dict[st
 
 def sample(base: dict[str, Any], authority: Path, trim: np.ndarray, native: dict[str, str],
            model: mujoco.MjModel, oracle: Any, reduction0: np.ndarray, delta: np.ndarray,
-           path: Path) -> dict[str, Any]:
-    control = P45.run(base, path, "R45-H0", authority=authority, tick=0,
+           path: Path, case_id: str = "R45-H0") -> dict[str, Any]:
+    control = P45.run(base, path, case_id, authority=authority, tick=0,
                       delta=delta, wrench_trim=trim)[0]
     actual = P45.actual(base, model, oracle, native, control)
     material = actual["material"]
@@ -215,14 +215,18 @@ def main() -> int:
     continuation_path = ROOT / config["continuation_config"]
     continuation = json.loads(continuation_path.read_text(encoding="utf-8"))
     base, trim, wrench_source = P45C.frozen_inputs(continuation)
+    if "runtime_executable" in config:
+        base["executable"] = config["runtime_executable"]
+    case_id = config.get("case_id", "R45-H0")
     model = mujoco.MjModel.from_xml_path(str(ROOT / base["scene"]))
     oracle = P42.Oracle(json.loads((ROOT / base["phase42_config"]).read_text(encoding="utf-8")))
     authority = ROOT / base["phase42_native_authority"]
     native = P45.native_state(P44.read_csv(authority), 0)
-    baseline_control = P45.run(base, probes / "baseline.csv", "R45-H0", authority=authority,
+    baseline_control = P45.run(base, probes / "baseline.csv", case_id, authority=authority,
                                tick=0, wrench_trim=trim)[0]
     reduction0 = P44.matrix(baseline_control, "reduction_", model.nv, 12)
-    baseline = sample(base, authority, trim, native, model, oracle, reduction0, np.zeros(4), probes / "baseline-detail.csv")
+    baseline = sample(base, authority, trim, native, model, oracle, reduction0,
+                      np.zeros(4), probes / "baseline-detail.csv", case_id)
     model_leg_dofs = leg_dofs(model, oracle.wheel_dadr)
     delta = float(config["delta_m_s2"])
     data: dict[tuple[str, float, int], dict[str, Any]] = {}
@@ -233,7 +237,7 @@ def main() -> int:
             for sign in (-1, 1):
                 values = sign * scale * delta * vector_direction
                 item = sample(base, authority, trim, native, model, oracle, reduction0, values,
-                              probes / f"{channel}-{scale:g}-{sign:+d}.csv")
+                              probes / f"{channel}-{scale:g}-{sign:+d}.csv", case_id)
                 data[(channel, scale, sign)] = item
                 probe_rows.append({"channel": channel, "scale": scale, "sign": sign,
                     "delta_ddxi_common_m_s2": values[0], "delta_a_t_common_m_s2": values[2],

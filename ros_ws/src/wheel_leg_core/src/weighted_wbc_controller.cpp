@@ -16,7 +16,8 @@ bool usesMinimalInteractionWrench(WeightedWbcProfile profile) {
          profile == WeightedWbcProfile::kPhase34XiTracking ||
          profile == WeightedWbcProfile::kPhase43NativeWheelRate ||
          profile == WeightedWbcProfile::kPhase43XiAndNativeWheelRate ||
-         profile == WeightedWbcProfile::kPhase45ContactConsistentRolling;
+         profile == WeightedWbcProfile::kPhase45ContactConsistentRolling ||
+         profile == WeightedWbcProfile::kPhase46HipCommonSafeRolling;
 }
 
 }  // namespace
@@ -173,18 +174,24 @@ WeightedWbcController::Result WeightedWbcController::step(
   }
   if (profile_ == WeightedWbcProfile::kPhase34XiTracking ||
       profile_ == WeightedWbcProfile::kPhase43XiAndNativeWheelRate ||
-      profile_ == WeightedWbcProfile::kPhase45ContactConsistentRolling) {
+      profile_ == WeightedWbcProfile::kPhase45ContactConsistentRolling ||
+      profile_ == WeightedWbcProfile::kPhase46HipCommonSafeRolling) {
     record_task(Task::kWheelLongitudinalTracking,
                 output.wheel_longitudinal_acceleration_m_s2 -
                     reference.wheel_longitudinal_acceleration_m_s2);
   }
-  if (profile_ == WeightedWbcProfile::kPhase45ContactConsistentRolling) {
+  if (profile_ == WeightedWbcProfile::kPhase45ContactConsistentRolling ||
+      profile_ == WeightedWbcProfile::kPhase46HipCommonSafeRolling) {
     output.rolling_velocity_m_s = reference.rolling_velocity_m_s;
     output.rolling_task_active = reference.rolling_task_active;
     Eigen::Vector2d residual = Eigen::Vector2d::Zero();
     for (int side = 0; side < 2; ++side) {
+      const auto rolling_map =
+          profile_ == WeightedWbcProfile::kPhase46HipCommonSafeRolling
+              ? hipCommonSafeRollingMap(reference.rolling_acceleration_map[side])
+              : reference.rolling_acceleration_map[side];
       output.rolling_acceleration_m_s2[side] =
-          (reference.rolling_acceleration_map[side] *
+          (rolling_map *
            output.physical_solution.head<12>())(0) +
           reference.rolling_acceleration_bias_m_s2[side];
       if (reference.rolling_task_active[side]) {

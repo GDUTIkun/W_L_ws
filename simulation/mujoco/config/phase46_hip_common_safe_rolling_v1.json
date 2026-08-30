@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "phase": 46,
+  "profile": "phase46_hip_common_safe_rolling_v1",
+  "continuation_config": "simulation/mujoco/config/phase45_contact_consistent_rolling_v2.json",
+  "runtime_executable": "ros_ws/build/wheel_leg_mujoco/phase46_hip_common_safe_rolling_loop",
+  "case_id": "R46-H0",
+  "projection": {
+    "kind": "static_orthogonal_rank_one",
+    "reduced_dimension": 12,
+    "unit_direction": {"6": 0.7071067811865476, "9": 0.7071067811865476},
+    "removed_mode": "bilateral_hip_common",
+    "state_dependent": false
+  },
+  "input_channels": {
+    "xi_common_only": [1.0, 1.0, 0.0, 0.0],
+    "slip_common_only": [0.0, 0.0, 1.0, 1.0]
+  },
+  "output_rows": ["ddxi_common_m_s2", "a_t_common_m_s2"],
+  "delta_m_s2": 0.01,
+  "delta_scales": [1.0, 0.5, 0.25],
+  "maximum_directional_convergence_relative": 0.05,
+  "maximum_directional_split_relative": 0.05,
+  "authority_gates": {
+    "phase45_harmful_cross_gain": -4.295093192621674,
+    "phase45_slip_self_gain": 0.030842288660802054,
+    "maximum_abs_actual_cross_gain": 0.1,
+    "minimum_cross_reduction_fraction": 0.9,
+    "minimum_slip_self_retention_fraction": 0.5,
+    "minimum_abs_actual_xi_self_gain": 0.05,
+    "minimum_abs_actual_unified_projected_gain": 0.05
+  },
+  "realization_gates": {
+    "maximum_decomposition_closure": 1e-10,
+    "maximum_abs_migrated_mode_contribution": 0.1
+  },
+  "contact_redirection": {
+    "minimum_contact_to_actuator_norm_ratio": 0.5,
+    "maximum_contact_actuator_cosine": -0.5,
+    "minimum_contact_force_share": 0.5
+  },
+  "post_reaudit": {
+    "snapshot_ticks": [0, 50, 500, 999],
+    "regime_signature": {
+      "positive_normal_load_n": 1e-6,
+      "slip_deadband_m_s": 1e-5,
+      "slack_inactive": 1e-7,
+      "slack_material": 0.02,
+      "inequality_active_distance": 1e-7
+    }
+  },
+  "scope_contract": {
+    "compatible_wrench_frozen": true,
+    "model_b_frozen": true,
+    "state_contact_friction_torque_solver_frozen": true,
+    "gain_tuning": false,
+    "weight_tuning": false,
+    "wrench_tuning": false,
+    "new_candidate_count": 1,
+    "new_task": false,
+    "xi_task_modification": false,
+    "slip_observable_modification": false,
+    "contact_model_modification": false,
+    "dynamic_projection": false,
+    "coupled_redesign": false,
+    "precompensation": false,
+    "planner_run": false,
+    "tracking_run": false,
+    "nmpc_12d_run": false
+  }
+}

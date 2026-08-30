@@ -213,7 +213,7 @@ def rollout_metrics(rows: list[dict[str, str]], base: dict[str, Any], expected: 
 
 def post_reaudit(config: dict[str, Any], base: dict[str, Any], output: Path,
                  authority: Path, trim: np.ndarray, model: mujoco.MjModel,
-                 oracle: Any) -> tuple[list[dict[str, Any]], bool]:
+                 oracle: Any, case_id: str = "R45-H0") -> tuple[list[dict[str, Any]], bool]:
     native_rows = P44.read_csv(authority)
     native = {int(row["control_tick"]): row for row in native_rows if row["record_kind"] == "pre_command"}
     cfg, regime = base["authority"], config["post_reaudit"]["regime_signature"]
@@ -221,7 +221,7 @@ def post_reaudit(config: dict[str, Any], base: dict[str, Any], output: Path,
     modes = {"common": np.array([1., 1.]), "differential": np.array([-1., 1.])}
     rows: list[dict[str, Any]] = []
     for tick in config["post_reaudit"]["snapshot_ticks"]:
-        baseline_control = P45.run(base, output / f"reaudit-t{tick}-base.csv", "R45-H0",
+        baseline_control = P45.run(base, output / f"reaudit-t{tick}-base.csv", case_id,
                                    authority=authority, tick=tick, wrench_trim=trim)[0]
         baseline_actual = P45.actual(base, model, oracle, native[tick], baseline_control)
         baseline_qp, baseline_mj = task_output(baseline_control, baseline_actual)
@@ -233,7 +233,7 @@ def post_reaudit(config: dict[str, Any], base: dict[str, Any], output: Path,
                     delta = np.r_[sign * scale * xi_delta * signs,
                                   sign * scale * slip_delta * signs]
                     control = P45.run(base, output / f"reaudit-t{tick}-{mode}-{scale:g}-{sign:+d}.csv",
-                                      "R45-H0", authority=authority, tick=tick, delta=delta,
+                                      case_id, authority=authority, tick=tick, delta=delta,
                                       wrench_trim=trim)[0]
                     actual = P45.actual(base, model, oracle, native[tick], control)
                     qp, mj = task_output(control, actual)

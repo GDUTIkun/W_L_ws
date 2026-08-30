@@ -193,6 +193,38 @@ int main() {
           rolling_task.transpose() * rolling_target)
              .cwiseAbs().maxCoeff() <= 2.0e-12);
 
+  auto safe_reference = rolling_reference;
+  safe_reference.rolling_acceleration_map[0](0, 6) = 0.8;
+  safe_reference.rolling_acceleration_map[0](0, 9) = -0.2;
+  safe_reference.rolling_acceleration_map[1](0, 6) = -0.3;
+  safe_reference.rolling_acceleration_map[1](0, 9) = 0.7;
+  Eigen::Matrix<double, 2, 42> safe_task =
+      Eigen::Matrix<double, 2, 42>::Zero();
+  for (int side = 0; side < 2; ++side) {
+    const auto projected = wheel_leg::hipCommonSafeRollingMap(
+        safe_reference.rolling_acceleration_map[side]);
+    assert(std::abs(projected(0, 6) + projected(0, 9)) <= 1.0e-15);
+    assert((wheel_leg::hipCommonSafeRollingMap(projected) - projected)
+               .cwiseAbs().maxCoeff() <= 1.0e-15);
+    for (int column = 0; column < 12; ++column) {
+      if (column != 6 && column != 9)
+        assert(projected(0, column) ==
+               safe_reference.rolling_acceleration_map[side](0, column));
+    }
+    safe_task.block<1, 12>(side, 0) = projected;
+  }
+  for (int column = 0; column < 42; ++column)
+    safe_task.col(column) *=
+        wheel_leg::phase21_profile::kVariableScale[column];
+  const auto safe = assembler.assemble(
+      evaluated, safe_reference,
+      wheel_leg::WeightedWbcProfile::kPhase46HipCommonSafeRolling);
+  assert(safe.ok());
+  assert((safe.h - tracking.h - safe_task.transpose() * safe_task)
+             .cwiseAbs().maxCoeff() <= 2.0e-12);
+  assert((safe.g - tracking.g + safe_task.transpose() * rolling_target)
+             .cwiseAbs().maxCoeff() <= 2.0e-12);
+
   auto nonfinite = reference;
   nonfinite.wheel_longitudinal_acceleration_m_s2[0] =
       std::numeric_limits<double>::quiet_NaN();
