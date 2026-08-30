@@ -82,3 +82,20 @@ gain 为 `G_QP=+0.998203`、`G_MJ=-1.875899`，且三档 scale 收敛，因此�
 `C-CROSS_COUPLING_REVERSAL`，不是 `D-CONTACT_REDIRECTION_DOMINANT`。详细输入、矩阵、closure 与
 scope contract 见 [AUTHORITY_ATTRIBUTION.md](AUTHORITY_ATTRIBUTION.md)。这只解释 DG45-AUTH，既不
 改变该 gate 的 FAIL，也不授权 REAL/trajectory/Phase46。
+
+## Compatible-H0 slip-to-xi leg-DOF attribution addendum
+
+`slip_common_only -> ddxi_common=-4.295093` 的 non-wheel 项已按每个 native leg DOF 展开：
+right/left hip 分别为 `-2.734463/-1.373567`，合计 `95.65%` 的 hip-common mode；两 knee 合计
+`4.35%`，connect DOF 为零。该结论支持 specific bilateral hip-common harmful leg mode，不支持
+distributed full-body coupling。完整定义、closure、scale/branch 与 fresh replay 见
+[LEG_DOF_ATTRIBUTION.md](LEG_DOF_ATTRIBUTION.md)。未实施修复，REWORK 仍保持 `review`。
+
+## Compatible-H0 QP-to-plant hip-mode attribution addendum
+
+同一 `slip_common_only` probe 中，QP 的 hip-common `-0.0840223` 被 knee-common `+0.0834701`
+抵消；MuJoCo realization 后二者为 `-4.1083402/-0.1867006`，变为同号叠加。故分类为
+`B-QP_CANCELLATION_BROKEN_IN_PLANT`，而不是 QP already-dominant 或 plant-created mode。完整
+frozen-input、closure、branch/scale 和 fresh-replay evidence 见
+[QP_PLANT_HIP_MODE_ATTRIBUTION.md](QP_PLANT_HIP_MODE_ATTRIBUTION.md)。未实施修复，REWORK 仍保持
+`review`。
