@@ -1,0 +1,13 @@
+{
+  "classification": "FIXED_WRENCH_EQUILIBRIUM_MISMATCH",
+  "counterfactual_closes_qp_to_mujoco_gap": true,
+  "fixed_wrench_equilibrium_mismatch": true,
+  "gates": {
+    "counterfactual_equality": true,
+    "decomposition": true,
+    "feasibility": true,
+    "qp_realization": true
+  },
+  "qp_to_mujoco_realization_gap_at_fixed_wrench": 0.05339650939624063,
+  "qp_xi_realization_mismatch": false
+}

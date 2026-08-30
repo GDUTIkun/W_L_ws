@@ -1,0 +1,28 @@
+{
+  "common": {
+    "g_mj_projected": -1.8758993629329999,
+    "g_mj_slip": 0.03477291942973085,
+    "g_mj_xi": -3.7865716452957305,
+    "g_qp_projected": 0.9982026331370629,
+    "g_qp_slip": 0.9967392659236047,
+    "g_qp_xi": 0.9996660003505211,
+    "mj_convergence_relative": 0.0,
+    "mode": "common",
+    "qp_convergence_relative": 0.0,
+    "scale": 1.0,
+    "sign_match": false
+  },
+  "differential": {
+    "g_mj_projected": 0.2370227160795393,
+    "g_mj_slip": 0.0025213351777203996,
+    "g_mj_xi": 0.47152409698135817,
+    "g_qp_projected": 0.995035295774036,
+    "g_qp_slip": 0.9900484870867677,
+    "g_qp_xi": 1.0000221044613042,
+    "mj_convergence_relative": 0.0,
+    "mode": "differential",
+    "qp_convergence_relative": 0.0,
+    "scale": 1.0,
+    "sign_match": true
+  }
+}

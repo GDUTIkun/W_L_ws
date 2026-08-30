@@ -1,0 +1,20 @@
+{
+  "classification": "FIXED_WRENCH_EQUILIBRIUM_MISMATCH",
+  "pass": true,
+  "replay_max_abs_error": 0.0,
+  "right_compatible_ddxi_m_s2": 2.8693241088239424e-14,
+  "right_ddxi_fraction_removed": 0.9999999999994627,
+  "right_fixed_ddxi_m_s2": -0.05339650935877247,
+  "scope_contract": {
+    "candidate_search": false,
+    "contact_model_modification": false,
+    "friction_modification": false,
+    "gain_tuning": false,
+    "new_controller_task": false,
+    "plant_modification": false,
+    "solver_change": false,
+    "tick0_only": true,
+    "trajectory_run": false,
+    "weight_tuning": false
+  }
+}

@@ -11,8 +11,8 @@ class WeightedWbcController {
     kContact, kBaseX, kHeight, kOrientation, kLeg, kWheelVerticalManifold,
     kWheelLongitudinalTracking,
     kNativeWheelRate,
-    kContactConsistentRolling,
-    kWrenchFidelity, kSlackPenalty, kCount,
+    kWrenchFidelity, kSlackPenalty,
+    kContactConsistentRolling, kCount,
   };
   static constexpr std::size_t kTaskCount = static_cast<std::size_t>(Task::kCount);
   enum class Status {

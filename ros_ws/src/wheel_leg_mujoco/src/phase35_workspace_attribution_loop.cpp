@@ -515,7 +515,8 @@ void run(const std::string &model_path, const std::string &output_path,
     }
     auto reference = equilibriumReference();
 #ifdef WHEEL_LEG_PHASE43_ROLLING_REPAIR
-    if (case_id.rfind("R43-A", 0) == 0) {
+    if (case_id.rfind("R43-A", 0) == 0 ||
+        case_id.rfind("R45-", 0) == 0) {
       reference.interaction_wrench_flu[0] += wrench_trim[0];
       reference.interaction_wrench_flu[6] += wrench_trim[1];
       reference.interaction_wrench_flu[4] += wrench_trim[2];
@@ -800,6 +801,9 @@ void run(const std::string &model_path, const std::string &output_path,
     mj_copyData(post_command.get(), model.get(), data.get());
     mj_forward(model.get(), post_command.get());
     writeNativeRow(native, "post_command", tick, -1, model.get(), post_command.get());
+#endif
+#ifdef WHEEL_LEG_PHASE45_CONTACT_ROLLING
+    if (!snapshot_path.empty()) break;
 #endif
     for (int substep = 0; substep < 5; ++substep) {
       mj_step(model.get(), data.get());

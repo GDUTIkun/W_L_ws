@@ -1,0 +1,12 @@
+{
+  "DG45-AUTH": false,
+  "DG45-CONTACT": false,
+  "DG45-EQ": true,
+  "DG45-FULLBODY": false,
+  "DG45-REAL": false,
+  "DG45-REAUDIT": false,
+  "DG45-ROLL": false,
+  "DG45-SHORT": false,
+  "DG45-WBC": false,
+  "DG45-WR": false
+}

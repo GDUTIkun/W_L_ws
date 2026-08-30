@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "phase": 45,
+  "profile": "phase45_equilibrium_compatibility_v1",
+  "base_config": "simulation/mujoco/config/phase45_contact_consistent_rolling_v1.json",
+  "snapshot_tick": 0,
+  "wrench_counterfactual": {
+    "components": ["left_Fx", "right_Fx", "left_Ty", "right_Ty"],
+    "requested_wrench_indices": [0, 6, 4, 10],
+    "lower_delta": [-10.0, -10.0, -1.0, -1.0],
+    "upper_delta": [10.0, 10.0, 1.0, 1.0],
+    "maximum_evaluations": 60
+  },
+  "gates": {
+    "maximum_qp_task_realization_error_m_s2": 1e-7,
+    "maximum_counterfactual_equality_error_m_s2": 1e-7,
+    "maximum_decomposition_closure_error_m_s2": 1e-7,
+    "maximum_hard_violation": 1e-7,
+    "maximum_normalized_slack": 0.05,
+    "minimum_torque_margin_nm": -1e-10,
+    "full_dynamics_max_abs": 1e-8,
+    "contact_reconstruction_max_abs": 1e-8,
+    "semantic_replay_max_abs": 1e-11
+  },
+  "scope_contract": {
+    "tick0_only": true,
+    "trajectory_run": false,
+    "new_controller_task": false,
+    "gain_tuning": false,
+    "weight_tuning": false,
+    "plant_modification": false,
+    "contact_model_modification": false,
+    "friction_modification": false,
+    "solver_change": false,
+    "candidate_search": false
+  }
+}

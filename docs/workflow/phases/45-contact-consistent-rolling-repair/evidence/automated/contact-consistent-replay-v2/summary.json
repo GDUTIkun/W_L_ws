@@ -1,0 +1,141 @@
+{
+  "authority_scale1": {},
+  "baseline_failure_ticks": [
+    111,
+    111
+  ],
+  "baseline_semantic_error": 0.0,
+  "classification": "P45-STRUCTURE-FAIL",
+  "entered": {
+    "nominal_10s": false,
+    "post_repair_authority": false,
+    "short": false
+  },
+  "equilibrium": [
+    {
+      "ddxi_m_s2": -0.010335585652163647,
+      "material_tangent_acceleration_m_s2": -0.0005572418830146423,
+      "native_wheel_qdd_rad_s2": -0.09494945280044022,
+      "normal_load_n": 30.97341722670003,
+      "rolling_active": 1,
+      "side": 0
+    },
+    {
+      "ddxi_m_s2": -0.05339650935877247,
+      "material_tangent_acceleration_m_s2": -0.001345106660638147,
+      "native_wheel_qdd_rad_s2": -3.086851114690302,
+      "normal_load_n": 31.51012870912016,
+      "rolling_active": 1,
+      "side": 1
+    }
+  ],
+  "gates": {
+    "DG45-AUTH": false,
+    "DG45-BASE": true,
+    "DG45-CONTACT": false,
+    "DG45-EQ": false,
+    "DG45-FULLBODY": false,
+    "DG45-ORACLE": true,
+    "DG45-REAL": false,
+    "DG45-REAUDIT": false,
+    "DG45-ROLL": false,
+    "DG45-SHORT": false,
+    "DG45-WBC": false,
+    "DG45-WR": false
+  },
+  "oracle": {
+    "bias_max_abs_error_m_s2": 0.0,
+    "controller_bias_m_s2": [
+      0.0,
+      0.0
+    ],
+    "controller_map": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        -0.34793292952929106,
+        -0.1998000000000001,
+        0.3279329295292911,
+        0.22647310446540714,
+        0.04978473450320357,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        -0.3478697064806093,
+        0.23979999999999993,
+        0.0,
+        0.0,
+        0.0,
+        0.3278697064806092,
+        0.22811027124705294,
+        0.04984795755188537
+      ]
+    ],
+    "controller_slip_m_s": [
+      0.0,
+      0.0
+    ],
+    "map_max_abs_error": 0.0,
+    "oracle_bias_m_s2": [
+      0.0,
+      0.0
+    ],
+    "oracle_map": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        -0.34793292952929106,
+        -0.1998000000000001,
+        0.3279329295292911,
+        0.22647310446540714,
+        0.04978473450320357,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        -0.3478697064806093,
+        0.23979999999999993,
+        0.0,
+        0.0,
+        0.0,
+        0.3278697064806092,
+        0.22811027124705294,
+        0.04984795755188537
+      ]
+    ],
+    "oracle_slip_m_s": [
+      0.0,
+      0.0
+    ],
+    "velocity_max_abs_error_m_s": 0.0
+  },
+  "pass": false,
+  "replay_max_abs_error": 0.0,
+  "scope_contract": {
+    "contact_model_modification": false,
+    "friction_modification": false,
+    "new_candidate_count": 1,
+    "nmpc_12d_run": false,
+    "phase34_tracking": false,
+    "planner_run": false,
+    "plant_modification": false,
+    "repair_16d": false,
+    "solver_change": false,
+    "wrench_tuning": false
+  }
+}

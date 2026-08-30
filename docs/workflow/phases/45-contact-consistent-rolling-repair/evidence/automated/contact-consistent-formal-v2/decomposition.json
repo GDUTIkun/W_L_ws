@@ -1,0 +1,21 @@
+{
+  "equilibrium": [
+    {
+      "ddxi_m_s2": -0.010335585652163647,
+      "material_tangent_acceleration_m_s2": -0.0005572418830146423,
+      "native_wheel_qdd_rad_s2": -0.09494945280044022,
+      "normal_load_n": 30.97341722670003,
+      "rolling_active": 1,
+      "side": 0
+    },
+    {
+      "ddxi_m_s2": -0.05339650935877247,
+      "material_tangent_acceleration_m_s2": -0.001345106660638147,
+      "native_wheel_qdd_rad_s2": -3.086851114690302,
+      "normal_load_n": 31.51012870912016,
+      "rolling_active": 1,
+      "side": 1
+    }
+  ],
+  "scope": "tick0; rollout decomposition not entered before AUTH PASS"
+}

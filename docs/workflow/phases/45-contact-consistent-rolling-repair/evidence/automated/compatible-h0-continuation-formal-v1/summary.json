@@ -1,0 +1,65 @@
+{
+  "classification": "P45-REWORK",
+  "entered": {
+    "AUTH": true,
+    "EQ": true,
+    "REAL": false,
+    "REAUDIT": false,
+    "ROLL": false,
+    "SHORT": false
+  },
+  "equilibrium": [
+    {
+      "ddxi_m_s2": 4.061787679880387e-14,
+      "material_tangent_acceleration_m_s2": 1.0408340855860843e-16,
+      "native_wheel_qdd_rad_s2": -1.1089849597118413,
+      "normal_load_n": 30.96984193815947,
+      "rolling_active": 1,
+      "side": 0
+    },
+    {
+      "ddxi_m_s2": 2.8693241088239424e-14,
+      "material_tangent_acceleration_m_s2": -6.938893903907228e-17,
+      "native_wheel_qdd_rad_s2": -3.6554756065133005,
+      "normal_load_n": 31.498985133048688,
+      "rolling_active": 1,
+      "side": 1
+    }
+  ],
+  "first_failure": "DG45-AUTH",
+  "frozen_equilibrium_wrench_delta": [
+    -0.06319271068216474,
+    -0.187485780522428,
+    0.0025935527300793705,
+    0.0027966651369644964
+  ],
+  "gates": {
+    "DG45-AUTH": false,
+    "DG45-CONTACT": false,
+    "DG45-EQ": true,
+    "DG45-FULLBODY": false,
+    "DG45-REAL": false,
+    "DG45-REAUDIT": false,
+    "DG45-ROLL": false,
+    "DG45-SHORT": false,
+    "DG45-WBC": false,
+    "DG45-WR": false
+  },
+  "pass": false,
+  "replay_max_abs_error": null,
+  "scope_contract": {
+    "compatible_wrench_frozen": true,
+    "contact_model_modification": false,
+    "friction_modification": false,
+    "gain_tuning": false,
+    "new_candidate": false,
+    "new_task": false,
+    "nmpc_12d_run": false,
+    "phase46_tracking": false,
+    "planner_run": false,
+    "plant_modification": false,
+    "solver_change": false,
+    "weight_tuning": false,
+    "wrench_tuning": false
+  }
+}

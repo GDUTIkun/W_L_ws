@@ -1,0 +1,40 @@
+{
+  "compatible_residual": [
+    4.061787679880387e-14,
+    2.8693241088239424e-14,
+    1.0408340855860843e-16,
+    -6.938893903907228e-17
+  ],
+  "feasibility": {
+    "contact_reconstruction_residual": 0.0,
+    "full_dynamics_residual": 2.1316282072803006e-14,
+    "hard_violation": 4.6762593797211593e-11,
+    "maximum_normalized_slack": 0.0013444515744080498,
+    "minimum_torque_margin_nm": 1.998249790457789,
+    "normal_load_left_n": 30.96984193815947,
+    "normal_load_right_n": 31.498985133048688,
+    "solver_success": true
+  },
+  "fixed_residual": [
+    -0.010335585652163647,
+    -0.05339650935877247,
+    -0.0005572418830146423,
+    -0.001345106660638147
+  ],
+  "right_ddxi_fraction_removed": 0.9999999999994627,
+  "solver": {
+    "controller_evaluations_including_archived_probes": 34,
+    "cost": 1.2365648239857195e-27,
+    "message": "`gtol` termination condition is satisfied.",
+    "nfev": 6,
+    "optimality": 7.638560740792972e-13,
+    "status": 1,
+    "success": true
+  },
+  "trim": [
+    -0.06319271068216474,
+    -0.187485780522428,
+    0.0025935527300793705,
+    0.0027966651369644964
+  ]
+}

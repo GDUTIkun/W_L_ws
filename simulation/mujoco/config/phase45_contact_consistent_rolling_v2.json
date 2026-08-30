@@ -1,0 +1,37 @@
+{
+  "schema_version": 2,
+  "phase": 45,
+  "profile": "phase45_contact_consistent_rolling_v2_compatible_h0",
+  "base_config": "simulation/mujoco/config/phase45_contact_consistent_rolling_v1.json",
+  "equilibrium_reference": {
+    "source": "docs/workflow/phases/45-contact-consistent-rolling-repair/evidence/automated/equilibrium-compatibility-formal-v2/wrench-counterfactual.json",
+    "components": ["left_Fx", "right_Fx", "left_Ty", "right_Ty"],
+    "delta": [-0.06319271068216474, -0.187485780522428, 0.0025935527300793705, 0.0027966651369644964],
+    "maximum_source_error": 1e-15
+  },
+  "post_reaudit": {
+    "snapshot_ticks": [0, 50, 500, 999],
+    "regime_signature": {
+      "positive_normal_load_n": 1e-6,
+      "slip_deadband_m_s": 1e-5,
+      "slack_inactive": 1e-7,
+      "slack_material": 0.02,
+      "inequality_active_distance": 1e-7
+    }
+  },
+  "scope_contract": {
+    "compatible_wrench_frozen": true,
+    "wrench_tuning": false,
+    "new_task": false,
+    "new_candidate": false,
+    "gain_tuning": false,
+    "weight_tuning": false,
+    "planner_run": false,
+    "phase46_tracking": false,
+    "nmpc_12d_run": false,
+    "plant_modification": false,
+    "contact_model_modification": false,
+    "friction_modification": false,
+    "solver_change": false
+  }
+}

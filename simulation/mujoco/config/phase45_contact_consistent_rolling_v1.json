@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "phase": 45,
+  "profile": "phase45_contact_consistent_rolling_v1",
+  "scene": "simulation/mujoco/model/scene_axisymmetric_centered_com_v1.xml",
+  "executable": "ros_ws/build/wheel_leg_mujoco/phase45_contact_consistent_rolling_loop",
+  "phase42_config": "simulation/mujoco/config/phase42_causal_attribution_v1.json",
+  "phase42_native_authority": "docs/workflow/phases/42-wheel-spin-contact-loss-causal-attribution/evidence/automated/causal-attribution-formal-v1/control-a_native.csv",
+  "phase43_formal": "docs/workflow/phases/43-minimal-rolling-stabilization-repair-selection/evidence/automated/rolling-repair-formal-v3",
+  "baseline_failure_tick": 111,
+  "control_period_s": 0.01,
+  "physics_period_s": 0.002,
+  "short_horizon_ticks": 223,
+  "nominal_horizon_ticks": 1000,
+  "gain": {
+    "bandwidth_hz": 3.5,
+    "xi_kp_s2": 483.61061565337855,
+    "xi_kd_s": 43.982297150257104,
+    "slip_k_s": 21.991148575128552,
+    "task_scale_m_s2": 1.0
+  },
+  "contact_activation": {
+    "enable_normal_load_n": 5.0,
+    "disable_normal_load_n": 2.0,
+    "enable_persistence_ticks": 2,
+    "initial_valid_contact_enables_synchronously": true,
+    "minimum_tangent_norm": 1e-9
+  },
+  "authority": {
+    "xi_delta_m_s2": 0.01,
+    "slip_delta_m_s2": 0.01,
+    "delta_scales": [1.0, 0.5, 0.25],
+    "channels": ["common", "differential"],
+    "projection": "mean of same-mode ddxi and material-point tangential acceleration gains",
+    "minimum_abs_actual_projected_gain": 0.05,
+    "maximum_directional_convergence_relative": 0.05
+  },
+  "gates": {
+    "maximum_oracle_velocity_error_m_s": 1e-10,
+    "maximum_oracle_affine_acceleration_error_m_s2": 1e-7,
+    "maximum_equilibrium_ddxi_abs_m_s2": 0.05,
+    "maximum_equilibrium_slip_acceleration_abs_m_s2": 0.01,
+    "maximum_hard_violation": 1e-7,
+    "maximum_normalized_slack": 0.05,
+    "minimum_torque_margin_nm": -1e-10,
+    "maximum_abs_xi_error_m": 0.05,
+    "maximum_abs_wheel_rate_rad_s": 5.0,
+    "maximum_abs_slip_m_s": 0.25,
+    "maximum_base_position_change_m": 0.1,
+    "maximum_base_rotation_change_rad": 0.35,
+    "maximum_base_linear_speed_m_s": 2.0,
+    "maximum_base_angular_speed_rad_s": 5.0,
+    "maximum_wrench_residual_degradation": 0.1,
+    "full_dynamics_max_abs": 1e-8,
+    "contact_reconstruction_max_abs": 1e-8,
+    "semantic_replay_max_abs": 1e-11
+  },
+  "scope_contract": {
+    "nmpc_12d_run": false,
+    "planner_run": false,
+    "phase34_tracking": false,
+    "repair_16d": false,
+    "plant_modification": false,
+    "contact_model_modification": false,
+    "friction_modification": false,
+    "wrench_tuning": false,
+    "solver_change": false,
+    "new_candidate_count": 1
+  }
+}
