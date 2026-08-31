@@ -695,3 +695,73 @@ attribution，closure-model attribution candidate同时保留；inertial modific
 详见 [audit](CLOSURE_CONDITIONED_EFFECTIVE_INERTIA_AUDIT.md)、
 [formal-v2](evidence/automated/closure-conditioned-effective-inertia-formal-v2/closure-conditioned-effective-inertia-audit.json)
 与 [fresh replay-v1](evidence/automated/closure-conditioned-effective-inertia-replay-v1/summary.json)。
+
+## REWORK — Common-tangent inertial / kinematic-assembly source attribution
+
+结论：`H-KINEMATIC-INERTIA-ASSEMBLY-MISMATCH`。
+
+11-body mapping、kinematic/inertial provenance均PASS。双方mass与principal inertia逐body一致，
+armature全零；centered-wheel COM存在微小source差异。使用各自真实body/COM/angular Jacobian与
+normalized inertia独立重建runtime M，production/MJ max errors分别 `<=2.22e-16/1.11e-16`。
+
+fixed-common4 factorial精确重现 target `-0.3883828695`。inertial main effect为
+`-0.0086175696`（signed `2.2188%`，nonmaterial），kinematic assembly为
+`-0.3797747947`（signed `97.7836%`，material），interaction仅 `+9.49e-6`
+（signed `-0.0024%`）。按stop rule未进入inertial group/body attribution。
+
+dominant source定位为production `base_control_frame` point velocity与MuJoCo `base_body` origin
+free-joint translational velocity的reference/Jacobian assembly语义。真实source-level Jacobian
+transport关闭 `97.7812%` slip-c target，remaining `-0.0086174558`；tangent mass/operator gaps降至
+`1.54e-5/5.74e-4`，dominant Delta-K input/output alignment均 `0.999810`，dominant tangent
+kinetic-energy gap从 `-0.154433` 降至 `-1.02e-6`。
+
+fresh replay error `0`。本轮不修改任何source/model/controller/contact/closure；允许下一轮定义一个
+base generalized-velocity reference semantic parity candidate，但kinematic/inertial modification与R2
+仍不授权。详见 [report](COMMON_TANGENT_INERTIAL_KINEMATIC_SOURCE_ATTRIBUTION.md)、
+[formal-v3](evidence/automated/common-tangent-source-attribution-formal-v3/common-tangent-inertial-kinematic-source-attribution.json)
+与 [fresh replay-v1](evidence/automated/common-tangent-source-attribution-replay-v1/summary.json)。
+
+## REWORK — Base reference semantic canonicalization candidate
+
+结论：`A-EXACT-BASE-REFERENCE-CANONICALIZATION-CANDIDATE`。
+
+真实`base_control_frame` site geometry导出configuration mapping与其微分，不使用拟合offset。
+body pose/rotation parity为 `3.93e-17/2.76e-16`，configuration/acceleration FD errors最大
+`4.34e-9/4.48e-10`；X inverse closure为zero，twist/virtual-power residuals
+`<=2.35e-16/4.44e-16`。H0 `Xdot*nu=0`经实际zero velocity证明。
+
+same-production-model covariance全部machine-scale PASS：mass relative `3.08e-17`，energy
+`3.55e-15`，bias/full-EOM `1.78e-15`，Jacobian `2.35e-16`，reduction `2.83e-16`。
+因此production control-point dynamics内部自洽；first wrong consumer是Phase46 cross-model audit直接
+比较不同base reference coordinates，最小插入点是diagnostic comparison boundary，不是production
+controller或`NominalWbcModel`。
+
+candidate移除common4 slip-c `-0.379765414`（signed `97.7812%`），remaining
+`-0.008617456`与冻结secondary inertial effect一致；mass/operator/kinetic residual分别
+`1.54e-5/5.74e-4/-1.02e-6`。MJ-only closure与contact机制未混入。
+
+fresh replay error `0`。下一轮只授权实现一个diagnostic-boundary base reference canonicalization；
+不授权production kinematic/inertial modification或R2。详见
+[report](BASE_REFERENCE_SEMANTIC_CANONICALIZATION_CANDIDATE.md)、
+[formal-v2](evidence/automated/base-reference-candidate-formal-v2/base-reference-semantic-canonicalization-candidate.json)
+与 [fresh replay-v1](evidence/automated/base-reference-candidate-replay-v1/summary.json)。
+
+## REWORK — Diagnostic-boundary base reference canonicalization implementation
+
+结论：`A-DIAGNOSTIC-BASE-REFERENCE-CANONICALIZATION-IMPLEMENTED`。
+
+已授权candidate仅实现在Phase46 cross-model diagnostic comparison boundary，位于
+`M/h/Q/J/N/qacc/observable`比较之前。`DG46RC-COMP`全部PASS，最大协变残差`1.78e-15`，observable
+invariance PASS。production controller、reduced QP、state semantics、模型参数、contact与equality均未修改；
+fresh controller CSV数值差`0`，R1继续closed。
+
+common4 slip-c gap从`-0.388382869511`降至`-0.008598876446`，移除`97.7859795%`。reference
+semantic mismatch已关闭，旧precontact physical-mismatch interpretation被取代，secondary inertial
+family residual为nonmaterial。physical-channel re-decomposition无double count：legal equality
+nonmaterial；contact response `-0.748977633253`与独立MJ-only closure mechanism均material。
+
+因此contact不是unique material remaining mismatch，R2 candidate NO、R2 unauthorized。fresh replay
+error `0`；按stop rule下一允许动作仅为closure-model attribution。详见
+[report](BASE_REFERENCE_CANONICALIZATION_IMPLEMENTATION.md)、
+[formal-v3](evidence/automated/base-reference-canonicalization-implementation-formal-v3/base-reference-canonicalization-implementation.json)
+与 [fresh replay-v1](evidence/automated/base-reference-canonicalization-implementation-replay-v1/summary.json)。

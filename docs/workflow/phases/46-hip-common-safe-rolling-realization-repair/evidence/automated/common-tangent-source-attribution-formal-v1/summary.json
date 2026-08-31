@@ -1,0 +1,7 @@
+{
+  "R2_authorized": false,
+  "classification": "U-UNTRUSTED",
+  "pass": false,
+  "replay_max_abs_error": null,
+  "replay_pass": true
+}

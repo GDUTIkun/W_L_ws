@@ -1,0 +1,7 @@
+{
+  "R2_authorized": false,
+  "classification": "H-KINEMATIC-INERTIA-ASSEMBLY-MISMATCH",
+  "pass": true,
+  "replay_max_abs_error": 0.0,
+  "replay_pass": true
+}

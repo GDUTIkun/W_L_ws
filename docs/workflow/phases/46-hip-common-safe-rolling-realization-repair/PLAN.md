@@ -315,6 +315,40 @@ rank-6 的额外两模态；不实施 repair，不修改模型、controller、cl
 | P46-R82 | tangent mass/energy/operator audit | tangent mass gap `0.09703`、kinetic energy FAIL、Delta-K SVD、probe controls | done |
 | P46-R83 | classification and fresh replay | Primary D；replay `0`；source NOT ATTRIBUTED；R2 NO | done |
 
+### REWORK tasks — common-tangent inertial / kinematic-assembly source attribution
+
+| ID | Task | Deliverable / validation | Status |
+| --- | --- | --- | --- |
+| P46-R84 | body mapping and provenance | 11-body ID/name/parent mapping；normalized inertials与armature provenance | done |
+| P46-R85 | independent runtime-M rebuild | production/MJ max errors `<=2.22e-16/1.11e-16` | done |
+| P46-R86 | four-combination factorial | target closure `1.1e-14`；I/K/interaction=`2.219%/97.784%/-0.0024%` | done |
+| P46-R87 | dominant assembly closure | base control-point vs body-origin Jacobian reference；97.781% closure、energy/Delta-K validation | done |
+| P46-R88 | classification and replay | H；source-specific candidate YES；fresh replay `0`；no repair/R2 | done |
+
+### REWORK tasks — base reference semantic canonicalization candidate
+
+| ID | Task | Deliverable / validation | Status |
+| --- | --- | --- | --- |
+| P46-R89 | configuration/frame mapping | real site offset、orientation/joint map、pose + configuration FD parity | done |
+| P46-R90 | twist/force/acceleration transform | `X/X^-1/Xdot`、point twist、virtual power、acceleration FD | done |
+| P46-R91 | same-model covariance | M/energy/h/full-EOM/J/reduction machine-scale PASS | done |
+| P46-R92 | first-consumer and candidate oracle | diagnostic comparison boundary；common4 source closure `97.781%` | done |
+| P46-R93 | classification and replay | A；candidate authorized next round；fresh replay `0`；no implementation/R2 | done |
+
+### REWORK tasks — diagnostic-boundary base reference canonicalization implementation
+
+只实施已授权的diagnostic candidate；不修改production controller、QP、state semantics、模型参数、
+contact或equality。执行顺序固定为IMPLEMENT → DG46RC-COMP → controller regression → common4
+re-attribution → physical-channel re-decomposition → reclassification → STOP。
+
+| ID | Task | Deliverable / validation | Status |
+| --- | --- | --- | --- |
+| P46-R94 | diagnostic canonicalization utility | 在cross-model comparison boundary统一configuration/twist reference | done |
+| P46-R95 / DG46RC-COMP | covariance and invariance | M/h/Q/J/N/qacc协变与observable不变；最大残差`1.78e-15` | done |
+| P46-R96 | controller regression | controller CSV数值差`0`；R1与production reduced QP保持有效 | done |
+| P46-R97 | common4 and physical re-attribution | reference gap关闭`97.786%`；physical channels无double count | done |
+| P46-R98 | classification and replay | A implemented；replay`0`；contact不unique；R2 NO；STOP | done |
+
 ## Classification
 
 最终只能选择：

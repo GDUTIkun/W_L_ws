@@ -1,0 +1,20 @@
+{
+  "command": "tools/experiments/run_phase46_base_reference_candidate.py --output docs/workflow/phases/46-hip-common-safe-rolling-realization-repair/evidence/automated/base-reference-candidate-formal-v2",
+  "created_utc": "2026-08-31T06:45:48.855658+00:00",
+  "dependencies": {
+    "mujoco": "3.7.0",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3"
+  },
+  "platform": "Linux-7.0.0-30-generic-x86_64-with-glibc2.39",
+  "python": "3.10.20 (main, Jun 11 2026, 04:03:45) [Clang 22.1.3 ]",
+  "sources": {
+    "docs/workflow/phases/46-hip-common-safe-rolling-realization-repair/evidence/automated/closure-conditioned-effective-inertia-formal-v2/closure-conditioned-effective-inertia-audit.json": "ac8f40c63488e23482736c88ea2b4731d32f2e59a273e6f3573596fdb3e4f244",
+    "docs/workflow/phases/46-hip-common-safe-rolling-realization-repair/evidence/automated/closure-conditioned-effective-inertia-formal-v2/probes/baseline.csv": "bec4899430b7ed452fee4250cbfe50220f3e83e3d87af452701eb2c3cb684334",
+    "docs/workflow/phases/46-hip-common-safe-rolling-realization-repair/evidence/automated/closure-conditioned-effective-inertia-formal-v2/probes/baseline_native.csv": "0d7232ca1edfbae572ee313d21864ce686fa0caa5a9765c4a3b4fea4ad403af6",
+    "docs/workflow/phases/46-hip-common-safe-rolling-realization-repair/evidence/automated/common-tangent-source-attribution-formal-v3/common-tangent-inertial-kinematic-source-attribution.json": "937f5746e06df50dc989913e76085a578ade04b96eb3ebffe3d3b313c7911781",
+    "ros_ws/src/wheel_leg_core/src/nominal_wbc_profile_data.hpp": "f4d0c1d71e5e2e4f0d251ab4a6d3dc964d44c0011e7a0454fe16c97b03aa31a3",
+    "simulation/mujoco/model/scene_axisymmetric_centered_com_v1.xml": "1bf6a0c85f3fabf3c7447b913085ca6b79eff97d5baf824b44faf4e48343e419",
+    "tools/experiments/run_phase46_base_reference_candidate.py": "ed9a13afbc0a2a30d8becd73dd5c1bb2a61bd093294fb3298545d70e93832445"
+  }
+}
