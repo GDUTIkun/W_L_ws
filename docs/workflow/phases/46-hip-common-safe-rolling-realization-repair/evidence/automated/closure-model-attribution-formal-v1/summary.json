@@ -1,0 +1,9 @@
+{
+  "R2_authorized": false,
+  "R2_candidate_for_next_reauthorization": true,
+  "classification": "BOOKKEEPING-HARD-RANK-ARTIFACT-NOT-INDEPENDENT",
+  "contact_unique_remaining_mismatch": true,
+  "independent_physical_mismatch": false,
+  "pass": true,
+  "replay_max_abs_error": null
+}

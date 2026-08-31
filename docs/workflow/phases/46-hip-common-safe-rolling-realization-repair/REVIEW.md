@@ -765,3 +765,29 @@ error `0`；按stop rule下一允许动作仅为closure-model attribution。详�
 [report](BASE_REFERENCE_CANONICALIZATION_IMPLEMENTATION.md)、
 [formal-v3](evidence/automated/base-reference-canonicalization-implementation-formal-v3/base-reference-canonicalization-implementation.json)
 与 [fresh replay-v1](evidence/automated/base-reference-canonicalization-implementation-replay-v1/summary.json)。
+## REWORK addendum — MuJoCo-only closure-model attribution
+
+P46-R99～R103 已完成。exact site-pair geometry证明 native6 中两个弱方向分别是左右 connect
+的 Cartesian-y row；其 norm 为 `1.83e-4/1.81e-4`，完全由有限 x/z closure residual 对 base
+rotation 的叉乘产生，exact manifold 上同时消失并恢复 rank4。旧 `MJ6-common4`
+slip-common `-0.044281228354` 的数值复现闭合，但 hard conditioned inverse 会归一化任意非零
+row，因而该 material counterfactual 在零 row 极限不连续，不能解释为独立 physical closure。
+weak-row `efc_pos/aref` 均为 roundoff，stabilization 也没有提供独立 target。
+
+结论为 `BOOKKEEPING-HARD-RANK-ARTIFACT-NOT-INDEPENDENT`：MJ-only closure从 remaining physical
+mechanisms 中移除，contact response成为 unique material remaining mismatch；R2 candidate可在下一轮
+重新授权，但本轮 `R2 AUTHORIZED=NO`。formal-v1 PASS，fresh replay-v1 error `0`。Phase46仍为
+`REWORK`，不创建 RECORD。详见 [closure-model attribution](CLOSURE_MODEL_ATTRIBUTION.md)。
+## REWORK addendum — R2 contact-response re-authorization
+
+P46-R104～R112 已完成。fresh contact slip-common gap为 `-0.753272490427`。current QP 已 hard
+couple `nudot/tau/contact wrench`，但缺少将 chosen wrench绑定到 same-tau plant reaction 的
+constitutive/complementarity law。native runtime oracle以
+`f=D(aref-Jqacc)` 与 coupled dynamics重建 qacc/row force/point force/generalized force/observable，
+最大 material reconstruction error `4.34e-14`，Stage S PASS。
+
+coupled A 与 Schur B 物理等价；但 Stage R diagnostic integration在 H0产生 `0.0368512` constraint
+violation，H0 equilibrium、branch和scale gates均 FAIL。故不得从 source-oracle PASS 推断 repair
+authorization。最终为 `E-R2-SOURCE-CLOSED-BUT-LAW-NOT-TRUSTED`，R2 authorized/implemented均 NO，
+production numerics unchanged，严格停止。formal-v1 PASS，fresh replay error `0`。详见
+[R2 re-authorization](R2_CONTACT_RESPONSE_REAUTHORIZATION.md)。

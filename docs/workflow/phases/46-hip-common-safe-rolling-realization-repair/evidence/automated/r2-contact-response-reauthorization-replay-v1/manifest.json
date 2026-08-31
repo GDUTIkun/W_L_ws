@@ -1,0 +1,27 @@
+{
+  "command": "tools/experiments/run_phase46_r2_contact_response_reauthorization.py --qp-dump /tmp/phase46_dump_qp_operators_r2 --output docs/workflow/phases/46-hip-common-safe-rolling-realization-repair/evidence/automated/r2-contact-response-reauthorization-replay-v1 --replay-of docs/workflow/phases/46-hip-common-safe-rolling-realization-repair/evidence/automated/r2-contact-response-reauthorization-formal-v1",
+  "created_utc": "2026-08-31T08:23:37.699799+00:00",
+  "dependencies": {
+    "mujoco": "3.7.0",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3"
+  },
+  "platform": "Linux-7.0.0-30-generic-x86_64-with-glibc2.39",
+  "python": "3.10.20 (main, Jun 11 2026, 04:03:45) [Clang 22.1.3 ]",
+  "sources": {
+    "/tmp/phase46_dump_qp_operators_r2": "1db62bdf1385e7fba5a762e1b57dd3f0e9dec422b0c92e18a2d7656852b66672",
+    "docs/workflow/phases/42-wheel-spin-contact-loss-causal-attribution/evidence/automated/causal-attribution-formal-v1/control-a_native.csv": "44d35d53e8335c2ed569dc971d268205385011f3bce5b6438ffaff3db482572f",
+    "docs/workflow/phases/45-contact-consistent-rolling-repair/evidence/automated/equilibrium-compatibility-formal-v2/wrench-counterfactual.json": "c1063f062c7c4dd1c70aeea4860ca14ff087ef375dd81caeee310496b84598d4",
+    "docs/workflow/phases/46-hip-common-safe-rolling-realization-repair/evidence/automated/base-reference-candidate-formal-v2/base-reference-semantic-canonicalization-candidate.json": "c7dda9985edc7a3099ccc381f7c5d1f2710bd62a571085f58edac39dafce34e2",
+    "docs/workflow/phases/46-hip-common-safe-rolling-realization-repair/evidence/automated/closure-conditioned-effective-inertia-formal-v2/closure-conditioned-effective-inertia-audit.json": "ac8f40c63488e23482736c88ea2b4731d32f2e59a273e6f3573596fdb3e4f244",
+    "docs/workflow/phases/46-hip-common-safe-rolling-realization-repair/evidence/automated/production-reference-image-audit-formal-v1/production-reference-image-audit.json": "6f465d3c2e00d2ceb5739915680d746921da40d8304d5fced0308a15b0f67bce",
+    "docs/workflow/phases/46-hip-common-safe-rolling-realization-repair/evidence/automated/wrench-generalized-force-operator-audit-formal-v2/wrench-generalized-force-operator-audit.json": "c1b58ec04bab4d048267faef84eaa67d67d3aee03f1823029f95a9974e4c6482",
+    "ros_ws/build/wheel_leg_mujoco/phase46_point_realizable_rolling_loop": "ea25e3b0c55fc38642d7c69dad6426c87d5add6e73c294e35e58876996a1505c",
+    "simulation/mujoco/config/phase45_contact_consistent_rolling_v2.json": "4c94a171f9c75c57db4a502262beaed62665a1f525570683bfba519b644c4968",
+    "simulation/mujoco/config/phase46_point_realizable_rolling_v1.json": "06d2ac603acfef6c20b6b00600657aae9198e7134bc1cb06add0207a6736fbbd",
+    "simulation/mujoco/model/scene_axisymmetric_centered_com_v1.xml": "1bf6a0c85f3fabf3c7447b913085ca6b79eff97d5baf824b44faf4e48343e419",
+    "tools/experiments/phase46_base_reference_canonicalization.py": "931fa92be0beb0d2ae1fb4b94c9cd274debc6fc4fe066353adca852dc57b009f",
+    "tools/experiments/run_phase46_post_corrected_r1_authority_attribution.py": "cd8fff45a910ca4c3aeafb626d305f87b9accf0563fb8ff8ee89439ce1086d29",
+    "tools/experiments/run_phase46_r2_contact_response_reauthorization.py": "72c96409bb6e55a5471f11a5fb1b4bf3da16a007f1ad26be34e69ac2bc1155be"
+  }
+}

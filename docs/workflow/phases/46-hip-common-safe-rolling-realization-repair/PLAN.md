@@ -349,6 +349,39 @@ re-attribution → physical-channel re-decomposition → reclassification → ST
 | P46-R97 | common4 and physical re-attribution | reference gap关闭`97.786%`；physical channels无double count | done |
 | P46-R98 | classification and replay | A implemented；replay`0`；contact不unique；R2 NO；STOP | done |
 
+### REWORK tasks — MuJoCo-only closure-model attribution
+
+只解释此前 `native6-common4` 的两个方向及其 material observable counterfactual；不修改 XML、
+controller、QP、contact、`solref/solimp` 或 solver。必须区分 raw row magnitude、exact-manifold
+rank 与把任意非零 row 正交归一化后的 hard-constraint rank，禁止用 row count 直接宣称 physical
+DOF。执行顺序为 `GEOMETRY -> SUBSPACE -> RESPONSE-SEMANTICS -> CLASSIFY -> STOP`。
+
+| ID | Task | Deliverable / validation | Status |
+| --- | --- | --- | --- |
+| P46-R99 | exact site-pair and row geometry | 两个 connect、6 raw rows、site residual、row norms 与 singular spectrum | done |
+| P46-R100 | common4 / native-only 2D decomposition | native-only basis、Cartesian row coefficients、generalized-force/relative-motion interpretation | done |
+| P46-R101 | hard-rank response semantics | weak-row scaling/null limit、conditioned-operator discontinuity、observable contribution closure | done |
+| P46-R102 | stabilization/compliance independence | `efc_pos/aref/D/R` 与 weak-row origin；判断是否 independent physical mechanism | done |
+| P46-R103 | classification and fresh replay | formal-v1 + replay-v1 `0`；contact unique；R2 candidate YES / authorized NO；STOP | done |
+
+### REWORK tasks — R2 contact-response repair re-authorization
+
+本轮只做 source freeze、native runtime oracle、missing-relation attribution 与 diagnostic controller
+counterfactual；不修改 production controller/model/contact/solver。最多授权一个 physical law 的下一轮
+implementation，严格停在 authorization decision。
+
+| ID | Task | Deliverable / validation | Status |
+| --- | --- | --- | --- |
+| P46-R104 | authoritative source freeze and contact-law inventory | current equations/variables/tasks/R1；fresh contact gap | done |
+| P46-R105 | native runtime contact-response oracle | qacc/row force/point force/wrench/observable/generalized-force reconstruction | done |
+| P46-R106 | first missing relation attribution | RHS/operator/compliance/friction/geometry/active-set split；no-repackaging gate | done |
+| P46-R107 | physical-law candidates and A/B equivalence | coupled primal vs Schur elimination；C/D rejection reasons | done |
+| P46-R108 | Stage-S same-tau source validation | force and observable errors；explained contact-gap fraction | done |
+| P46-R109 | Stage-R closed-loop diagnostic counterfactual | attempted；H0/feasibility/branch/scale FAIL，结果不可信 | done |
+| P46-R110 | R1/H0/healthy-control/computational gates | R1 PASS；H0/feasibility/branch/scale FAIL；无 authorization | done |
+| P46-R111 | classification and authorization decision | E；R2 authorized NO；production unchanged；STOP | done |
+| P46-R112 | formal, fresh replay and regressions | formal-v1 PASS、replay-v1 `0`、targeted/regression/diff checks | done |
+
 ## Classification
 
 最终只能选择：
