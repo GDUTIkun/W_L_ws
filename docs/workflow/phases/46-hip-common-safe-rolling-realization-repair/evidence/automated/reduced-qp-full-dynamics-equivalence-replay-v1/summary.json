@@ -1,0 +1,5 @@
+{
+  "classification": "B-REDUCED-QP-VALID-DIAGNOSTIC-RECONSTRUCTION-INVALID",
+  "replay_max_abs_error": 0.0,
+  "replay_pass": true
+}

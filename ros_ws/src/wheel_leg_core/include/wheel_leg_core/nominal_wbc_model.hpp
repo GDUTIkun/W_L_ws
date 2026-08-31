@@ -21,6 +21,10 @@ class NominalWbcModel {
   using Matrix3x12 = Eigen::Matrix<double, 3, kReducedDoF>;
   using Matrix1x12 = Eigen::Matrix<double, 1, kReducedDoF>;
   using Matrix16x12 = Eigen::Matrix<double, kTreeDoF, kReducedDoF>;
+  using Matrix16 = Eigen::Matrix<double, kTreeDoF, kTreeDoF>;
+  using Matrix16x6 = Eigen::Matrix<double, kTreeDoF, 6>;
+  using Matrix6x16 = Eigen::Matrix<double, 6, kTreeDoF>;
+  using Vector6 = Eigen::Matrix<double, 6, 1>;
   using Vector16 = Eigen::Matrix<double, kTreeDoF, 1>;
 
   enum class Status {
@@ -102,6 +106,14 @@ class NominalWbcModel {
     // At the evaluated state, native tree acceleration is affine in the
     // reduced acceleration: qdd_tree = reduction * nudot + reduction_bias.
     Vector16 reduction_bias{Vector16::Zero()};
+    // Read-only audit provenance for the affine closure relation
+    // J_eq * qdd_tree + JdotV = 0 used to construct the reduction.
+    Matrix6x16 equality_jacobian{Matrix6x16::Zero()};
+    Vector6 equality_jdot_v{Vector6::Zero()};
+    Matrix16 full_mass{Matrix16::Zero()};
+    Vector16 full_bias{Vector16::Zero()};
+    Matrix16x6 full_actuation{Matrix16x6::Zero()};
+    std::array<Matrix16x6, 2> full_wrench_map{};
     Eigen::Matrix<double, 10, 1> native_joint_position_rad{
         Eigen::Matrix<double, 10, 1>::Zero()};
 

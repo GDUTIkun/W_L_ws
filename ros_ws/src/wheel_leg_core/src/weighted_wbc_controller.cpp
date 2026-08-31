@@ -52,6 +52,12 @@ WeightedWbcController::Result WeightedWbcController::step(
   }
   output.reduction = model.reduction;
   output.reduction_bias = model.reduction_bias;
+  output.equality_jacobian = model.equality_jacobian;
+  output.equality_jdot_v = model.equality_jdot_v;
+  output.full_mass = model.full_mass;
+  output.full_bias = model.full_bias;
+  output.full_actuation = model.full_actuation;
+  output.full_wrench_map = model.full_wrench_map;
   output.contact_wrench_map = model.wrench_map;
   output.wheel_longitudinal_acceleration_map =
       model.wheel_longitudinal_acceleration_map;

@@ -271,6 +271,50 @@ controller/parameter，不实施 repair，不运行 trajectory 层验证。
 | P46-R64 / DG46ER-RUNTIME-PROVENANCE | runtime reaction provenance | implementation-status FAIL，未运行 | blocked |
 | P46-R65 / DG46ER-COMP-A | runtime reaction legality | implementation-status FAIL，未运行 | blocked |
 
+### REWORK tasks — reduced-QP/full-constrained-dynamics equivalence audit
+
+本轮只读审计 production reduced QP；不修改 formulation，不实现 `lambda_eq`，不运行
+EQ/AUTH/REAL/trajectory/R2。
+
+| ID | Task | Deliverable / validation | Status |
+| --- | --- | --- | --- |
+| P46-R66 | runtime/full-tree provenance | actual `R46E-H0` 42D solve；只读记录 `N/c_N/J_eq/JdotV/M_full/h_full/B_full/Aw_full` | done |
+| P46-R67 | kinematic and dual equivalence | `rank(N)=12`、`rank(J_eq)=4`；primal/dual projector differences `<=1.75e-15` | done |
+| P46-R68 | legal full-dynamics lift | projected residual `4.48e-9`；legal reaction recovery、range与virtual work PASS | done |
+| P46-R69 | QP-contact full oracle | exact affine pullback；primal/contact/slack/objective differences `0`；nonunique but equivalent | done |
+| P46-R70 | reconciliation/formal replay | classification B；formal-v4、fresh replay `0`、35 tests、non-finite/diff checks | done |
+
+### REWORK tasks — legal equality reaction re-attribution
+
+| ID | Task | Deliverable / validation | Status |
+| --- | --- | --- | --- |
+| P46-R71 | legal production reaction recovery | `Qeq=Pprod*rfull`；range `6.97e-17`、reconstruction `1.08e-16` | done |
+| P46-R72 | production/MuJoCo force-space audit | ranks `4/6`；common/prod-only/MJ-only dimensions `4/0/2` | done |
+| P46-R73 | corrected-R1 re-decomposition | baseline + 32 probes；all source closures PASS | done |
+| P46-R74 | classification and replay | `E-MIXED-REMAINING-MECHANISMS`；replay `0`；R2 NO | done |
+
+### REWORK tasks — smooth/pre-contact first-mismatch attribution
+
+| ID | Task | Deliverable / validation | Status |
+| --- | --- | --- | --- |
+| P46-R75 | remainder bookkeeping | reproduce slip-common `-0.388661935`；closure residual `5.56e-13` | done |
+| P46-R76 | torque/actuation/smooth-force gates | torque and `B*tau` gaps `0`；other smooth `<=1.78e-13` | done |
+| P46-R77 | raw mass first-mismatch closure | mass relative difference `0.09699`；raw output gap explains target | done |
+| P46-R78 | mode attribution and replay | hip signed share `92.884%`；classification C1；replay `0` | done |
+
+### REWORK tasks — closure-conditioned effective-inertia / precontact response attribution
+
+只在同一个合法 rank-4 closure tangent space 比较 production/MuJoCo，并独立量化 MuJoCo native
+rank-6 的额外两模态；不实施 repair，不修改模型、controller、closure 或 contact。
+
+| ID | Task | Deliverable / validation | Status |
+| --- | --- | --- | --- |
+| P46-R79 | common closure subspace gate | shared orthonormal common4；ranks `4/4/6`、angles/projectors/containment/tangent PASS | done |
+| P46-R80 | conditioned/reduced response gate | `K_prod4/K_MJ4/K_MJ6`；production KKT-vs-reduced spectral gap `6.36e-11` | done |
+| P46-R81 | three-way response attribution | common4 slip-c保留 raw target `99.928%`；MJ-only贡献 `11.393%` | done |
+| P46-R82 | tangent mass/energy/operator audit | tangent mass gap `0.09703`、kinetic energy FAIL、Delta-K SVD、probe controls | done |
+| P46-R83 | classification and fresh replay | Primary D；replay `0`；source NOT ATTRIBUTED；R2 NO | done |
+
 ## Classification
 
 最终只能选择：

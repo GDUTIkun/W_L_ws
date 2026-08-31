@@ -601,3 +601,97 @@ hypothesis。下一允许动作仅为 implementation fix。
 
 Evidence：
 [formal-v3](evidence/automated/constraint-consistent-leg-closure-reaction-formal-v3/constraint-consistent-leg-closure-reaction-repair.json)。
+
+## REWORK — Reduced-QP/full-constrained-dynamics equivalence
+
+结论：`B-REDUCED-QP-VALID-DIAGNOSTIC-RECONSTRUCTION-INVALID`。
+
+actual `R46E-H0` runtime 以 status 0 解出 unchanged 42D production QP。只读 instrumentation
+记录 production 自身的 `N/c_N/J_eq/JdotV` 与 full-tree dynamics；旧 CSV 的 776 个共同字段逐值
+不变，semantic max error 为 `0`。production closure operator 的 rank 是 `4`，不是此前用作
+plant/equality geometry审计的 MuJoCo 6-row operator；`rank(N)=12=16-rank(J_eq)`，
+`||J_eq N||_2=2.47e-13`，affine residual `0`，primal/dual projector difference分别
+`1.75e-15/1.74e-15`，故 primal与dual subspace equivalence均 PASS。
+
+runtime lifted full EOM 的 projected residual为 `4.48e-9`。required equality reaction 的
+range-orthogonal fraction为 `3.44e-8`，但 absolute residual同为 `4.48e-9`，与 solver-feasibility
+误差一致；legal `J_eq^T lambda` recovery max residual `4.48e-9`、virtual work residual
+`1.06e-16`，algebraic consistency PASS。exact affine pullback full oracle 保留所有 production
+contact/objective/constraint semantics，reduced/full qacc、tau、physical contact、slack、task、active
+set与objective difference均为 `0`；latent optimum nonunique but physically equivalent。
+
+因此 historical `0.999233` 只证明旧 post-hoc reaction reconstruction无效，不能证明 production
+reduced QP formulation错误。corrected-R1保持 CLOSED，本 audit未造成 regression。explicit-lambda
+controller repair与R2均不授权；下一允许动作仅为修复 diagnostic/reaction reporting。
+
+Evidence：
+[audit report](REDUCED_QP_FULL_DYNAMICS_EQUIVALENCE_AUDIT.md)、
+[formal-v4](evidence/automated/reduced-qp-full-dynamics-equivalence-formal-v4/reduced-qp-full-dynamics-equivalence-audit.json) 与
+[fresh replay-v2](evidence/automated/reduced-qp-full-dynamics-equivalence-replay-v2/summary.json)。
+
+## REWORK — Legal equality reaction re-attribution
+
+结论：`E-MIXED-REMAINING-MECHANISMS`。历史 QP equality reaction 与 equality gap均
+**SUPERSEDED**。production rank-4合法 recovery在全部 probe通过；MuJoCo raw equality rank为6，
+operational common/prod-only/MJ-only dimensions为 `4/0/2`。
+
+slip-common new legal QP/MJ-common equality contributions分别 `-0.067334201/-0.063724030`，
+gap仅 `+0.003610170`；旧 `-0.371684465` equality gap约 `99.03%` 被移除。contact gap仍为
+material `-0.749895431`，但只占 total discrepancy norm `0.678965`，FREE response仍有独立
+material gap，故 contact不是 unique remaining mismatch。
+
+range/reconstruction residual norms `<=6.97e-17/1.08e-16`，source closure `0`，branch/scale
+errors `5.83e-11/1.33e-10`，fresh replay `0`。production numerics未改变，corrected-R1保持
+CLOSED；R2与explicit-lambda repair均不授权。详见
+[report](LEGAL_EQUALITY_REACTION_REATTRIBUTION.md)、
+[formal-v4](evidence/automated/legal-equality-reaction-reattribution-formal-v4/legal-equality-reaction-reattribution.json) 与
+[fresh replay-v1](evidence/automated/legal-equality-reaction-reattribution-replay-v1/summary.json)。
+
+## REWORK — Smooth/pre-contact first-mismatch attribution
+
+结论：`C1-RAW-MASS-INERTIA-RESPONSE-MISMATCH`。
+
+strict bookkeeping重现 target remainder `-0.388661935`，residual `<=5.56e-13`。torque
+application、generalized actuator mapping和other smooth-force gates依次通过（errors
+`0/0/1.78e-13`），state provenance通过。first material mismatch首次出现在full-tree mass
+operator：matrix max difference `0.497927324`、relative Frobenius `0.096988856`；同一smooth
+force的raw qacc gap norm `1.016570084`，slip-common projection `-0.388661935`，解释目标
+`99.999983%`。
+
+dominant qacc DOF为base-z translation；RH/LH actuator contributions为
+`-0.653811267/+0.292795751`，hip family signed share `92.884%`。slip-differential self gap仅
+`-0.000129902`，故common-mode specific。按stop rule未进入closure-conditioned与observable
+层。branch/scale errors `2.64e-10/1.23e-9`，fresh replay `0`。contact仍material但不是unique；
+legal equality不material；R2不授权。详见
+[report](PRECONTACT_FREE_RESPONSE_ATTRIBUTION.md)、
+[formal-v3](evidence/automated/precontact-free-response-attribution-formal-v3/precontact-free-response-attribution.json) 与
+[replay-v1](evidence/automated/precontact-free-response-attribution-replay-v1/summary.json)。
+
+## REWORK — Closure-conditioned effective-inertia / precontact response attribution
+
+结论：`D-MIXED-EFFECTIVE-INERTIA-AND-CLOSURE`。上一轮 C1 只冻结为 raw-tree first mismatch，
+不再提前称 physical inertial-parameter root cause。
+
+common4 没有抽选四条 MuJoCo rows，而是用 verified production rank-4 closure row space在共享
+full-tree ordering 中建立唯一正交 operator与 tangent basis。ranks `4/4/6`；production/common
+principal angles `<=4.87e-16`、projector difference `0`、mutual containment `6.97e-16`。
+production conditioned K与matched reduced response spectral gap `6.36e-11`，全部 closure residual
+`<=1.42e-14`，故 operator semantics可信。
+
+同一 smooth force下，raw slip-c gap `-0.3886619350`；common4 gap
+`-0.3883828695`、qacc norm `1.012755439`，解释 raw target `99.9281984%`。MuJoCo native6相对
+common4的 slip-c contribution为 `-0.04428122835`、qacc norm `3.709800806`，占 raw target
+`11.3932506%`。两者均 material，因此不能分类 A 或 C，也不能把 contact写成 unique mismatch。
+
+matched tangent mass relative gap为 `0.0970278065`，representative tangent kinetic-energy parity
+FAIL（max relative `0.187622671`）。Delta-K dominant input/output均为 base-z/base-ry/hip combination。
+slip-differential与xi-common conditioned self gaps仅 `-0.000132496/-0.000867364`，common-mode
+specific。observable map parity PASS。
+
+force provenance `<=1.78e-13`，branch/scale errors `5.52e-11/2.23e-10`，全部 R1/regime PASS，fresh
+replay error `0`。本轮没有修改 controller、QP、plant、mass/inertia、closure/contact，也没有实施
+body-level counterfactual；source保持 NOT ATTRIBUTED。下一允许动作仅为 additional inertial-source
+attribution，closure-model attribution candidate同时保留；inertial modification、R2均不授权。
+详见 [audit](CLOSURE_CONDITIONED_EFFECTIVE_INERTIA_AUDIT.md)、
+[formal-v2](evidence/automated/closure-conditioned-effective-inertia-formal-v2/closure-conditioned-effective-inertia-audit.json)
+与 [fresh replay-v1](evidence/automated/closure-conditioned-effective-inertia-replay-v1/summary.json)。

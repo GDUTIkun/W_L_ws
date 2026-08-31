@@ -56,6 +56,15 @@ class WeightedWbcController {
         NominalWbcModel::Matrix16x12::Zero()};
     NominalWbcModel::Vector16 reduction_bias{
         NominalWbcModel::Vector16::Zero()};
+    NominalWbcModel::Matrix6x16 equality_jacobian{
+        NominalWbcModel::Matrix6x16::Zero()};
+    NominalWbcModel::Vector6 equality_jdot_v{
+        NominalWbcModel::Vector6::Zero()};
+    NominalWbcModel::Matrix16 full_mass{NominalWbcModel::Matrix16::Zero()};
+    NominalWbcModel::Vector16 full_bias{NominalWbcModel::Vector16::Zero()};
+    NominalWbcModel::Matrix16x6 full_actuation{
+        NominalWbcModel::Matrix16x6::Zero()};
+    std::array<NominalWbcModel::Matrix16x6, 2> full_wrench_map{};
     std::array<NominalWbcModel::Matrix12x6, 2> contact_wrench_map{};
     std::array<NominalWbcModel::Matrix1x12, 2>
         wheel_longitudinal_acceleration_map{};

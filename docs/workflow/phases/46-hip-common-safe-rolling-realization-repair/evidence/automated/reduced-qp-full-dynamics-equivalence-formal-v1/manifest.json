@@ -1,0 +1,14 @@
+{
+  "command": "tools/experiments/run_phase46_reduced_qp_full_dynamics_equivalence_audit.py --runtime-csv docs/workflow/phases/46-hip-common-safe-rolling-realization-repair/evidence/automated/reduced-qp-full-dynamics-runtime-v1/baseline.csv --output docs/workflow/phases/46-hip-common-safe-rolling-realization-repair/evidence/automated/reduced-qp-full-dynamics-equivalence-formal-v1",
+  "created_utc": "2026-08-31T04:39:48.762552+00:00",
+  "dependencies": {
+    "numpy": "2.2.6"
+  },
+  "inputs": {
+    "/home/t/W_L_ws/docs/workflow/phases/46-hip-common-safe-rolling-realization-repair/evidence/automated/reduced-qp-full-dynamics-runtime-v1/baseline.csv": "097ca38e10c72bc5408101dc82082ca43d1fb13eeb2eb929dd52b8ad18168e0c",
+    "/home/t/W_L_ws/tools/experiments/run_phase46_reduced_qp_full_dynamics_equivalence_audit.py": "d54d0b5903f3ddb44924c824a2f68cc9ae0d4ff2176f4bbce8ac78eb5a6d5ab3"
+  },
+  "platform": "Linux-7.0.0-30-generic-x86_64-with-glibc2.39",
+  "python": "3.10.20 (main, Jun 11 2026, 04:03:45) [Clang 22.1.3 ]",
+  "replay_of": null
+}

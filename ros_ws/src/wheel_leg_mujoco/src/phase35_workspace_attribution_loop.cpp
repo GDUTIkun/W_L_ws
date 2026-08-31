@@ -276,6 +276,25 @@ void writeHeader(std::ostream &output) {
       output << ",reduction_" << row << '_' << column;
   for (int index = 0; index < 16; ++index)
     output << ",reduction_bias" << index;
+#ifdef WHEEL_LEG_PHASE46_CONSTRAINT_CONSISTENT_LEG_CLOSURE
+  for (int row = 0; row < 6; ++row)
+    for (int column = 0; column < 16; ++column)
+      output << ",equality_jacobian_" << row << '_' << column;
+  for (int row = 0; row < 6; ++row)
+    output << ",equality_jdot_v" << row;
+  for (int row = 0; row < 16; ++row)
+    for (int column = 0; column < 16; ++column)
+      output << ",full_mass_" << row << '_' << column;
+  for (int row = 0; row < 16; ++row)
+    output << ",full_bias" << row;
+  for (int row = 0; row < 16; ++row)
+    for (int column = 0; column < 6; ++column)
+      output << ",full_actuation_" << row << '_' << column;
+  for (int side = 0; side < 2; ++side)
+    for (int row = 0; row < 16; ++row)
+      for (int column = 0; column < 6; ++column)
+        output << ",full_wrench_map_" << side << '_' << row << '_' << column;
+#endif
   for (int side = 0; side < 2; ++side)
     for (int row = 0; row < 12; ++row)
       for (int column = 0; column < 6; ++column)
@@ -752,6 +771,27 @@ void run(const std::string &model_path, const std::string &output_path,
         output << ',' << (result.ok() ? result.reduction(row, column) : nan);
     for (int index = 0; index < 16; ++index)
       output << ',' << (result.ok() ? result.reduction_bias[index] : nan);
+#ifdef WHEEL_LEG_PHASE46_CONSTRAINT_CONSISTENT_LEG_CLOSURE
+    for (int row = 0; row < 6; ++row)
+      for (int column = 0; column < 16; ++column)
+        output << ',' << (result.ok()
+            ? result.equality_jacobian(row, column) : nan);
+    for (int row = 0; row < 6; ++row)
+      output << ',' << (result.ok() ? result.equality_jdot_v[row] : nan);
+    for (int row = 0; row < 16; ++row)
+      for (int column = 0; column < 16; ++column)
+        output << ',' << (result.ok() ? result.full_mass(row, column) : nan);
+    for (int row = 0; row < 16; ++row)
+      output << ',' << (result.ok() ? result.full_bias[row] : nan);
+    for (int row = 0; row < 16; ++row)
+      for (int column = 0; column < 6; ++column)
+        output << ',' << (result.ok() ? result.full_actuation(row, column) : nan);
+    for (int side = 0; side < 2; ++side)
+      for (int row = 0; row < 16; ++row)
+        for (int column = 0; column < 6; ++column)
+          output << ',' << (result.ok()
+              ? result.full_wrench_map[side](row, column) : nan);
+#endif
     for (int side = 0; side < 2; ++side)
       for (int row = 0; row < 12; ++row)
         for (int column = 0; column < 6; ++column)

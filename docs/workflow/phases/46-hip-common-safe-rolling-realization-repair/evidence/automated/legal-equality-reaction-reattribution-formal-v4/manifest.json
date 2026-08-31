@@ -1,0 +1,24 @@
+{
+  "command": "tools/experiments/run_phase46_legal_equality_reaction_reattribution.py --config simulation/mujoco/config/phase46_constraint_consistent_leg_closure_v1.json --qp-dump /tmp/phase46_corrected_exact_r1_dump --output docs/workflow/phases/46-hip-common-safe-rolling-realization-repair/evidence/automated/legal-equality-reaction-reattribution-formal-v4",
+  "created_utc": "2026-08-31T05:26:03.521839+00:00",
+  "dependencies": {
+    "mujoco": "3.7.0",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3"
+  },
+  "platform": "Linux-7.0.0-30-generic-x86_64-with-glibc2.39",
+  "python": "3.10.20 (main, Jun 11 2026, 04:03:45) [Clang 22.1.3 ]",
+  "sources": {
+    "/tmp/phase46_corrected_exact_r1_dump": "87d9959a14d305c66326ac9092bd29ab44f0e25d0b25fb8adb180174433ef51a",
+    "docs/workflow/phases/42-wheel-spin-contact-loss-causal-attribution/evidence/automated/causal-attribution-formal-v1/control-a_native.csv": "44d35d53e8335c2ed569dc971d268205385011f3bce5b6438ffaff3db482572f",
+    "docs/workflow/phases/45-contact-consistent-rolling-repair/evidence/automated/equilibrium-compatibility-formal-v2/wrench-counterfactual.json": "c1063f062c7c4dd1c70aeea4860ca14ff087ef375dd81caeee310496b84598d4",
+    "docs/workflow/phases/46-hip-common-safe-rolling-realization-repair/evidence/automated/production-reference-image-audit-formal-v1/production-reference-image-audit.json": "6f465d3c2e00d2ceb5739915680d746921da40d8304d5fced0308a15b0f67bce",
+    "docs/workflow/phases/46-hip-common-safe-rolling-realization-repair/evidence/automated/wrench-generalized-force-operator-audit-formal-v2/wrench-generalized-force-operator-audit.json": "c1b58ec04bab4d048267faef84eaa67d67d3aee03f1823029f95a9974e4c6482",
+    "ros_ws/build/wheel_leg_mujoco/phase46_constraint_consistent_leg_closure_loop": "78c12902a8e95e554644db6177e56890ac98435aa987c206b27cf01cb86143ad",
+    "simulation/mujoco/config/phase45_contact_consistent_rolling_v2.json": "4c94a171f9c75c57db4a502262beaed62665a1f525570683bfba519b644c4968",
+    "simulation/mujoco/config/phase46_constraint_consistent_leg_closure_v1.json": "cfa9085c9efd9a2d60c46b40d2f0045d114554b492f55848aa73d64e3c9bf695",
+    "simulation/mujoco/model/scene_axisymmetric_centered_com_v1.xml": "1bf6a0c85f3fabf3c7447b913085ca6b79eff97d5baf824b44faf4e48343e419",
+    "tools/experiments/run_phase46_legal_equality_reaction_reattribution.py": "0aaabe5e523f66060edbe3d19dbbfcfef504c2976004c623b6f290799057decc",
+    "tools/experiments/run_phase46_post_corrected_r1_authority_attribution.py": "cd8fff45a910ca4c3aeafb626d305f87b9accf0563fb8ff8ee89439ce1086d29"
+  }
+}

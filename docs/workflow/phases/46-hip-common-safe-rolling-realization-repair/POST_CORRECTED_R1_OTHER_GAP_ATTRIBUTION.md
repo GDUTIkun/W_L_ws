@@ -1,5 +1,8 @@
 # Post-corrected-R1 other-gap attribution
 
+> Superseded interpretation (2026-08-31): historical post-hoc QP equality reaction/gap 已由
+> [legal re-attribution](LEGAL_EQUALITY_REACTION_REATTRIBUTION.md) 取代；原始数值产物保留。
+
 ## Decision
 
 `OTHER-GAP CLASSIFICATION = D-NONCONTACT-CONSTRAINT-GAP`。上一轮 slip-common

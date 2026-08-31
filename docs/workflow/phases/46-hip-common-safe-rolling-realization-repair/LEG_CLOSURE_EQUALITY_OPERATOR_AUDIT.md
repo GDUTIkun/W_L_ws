@@ -1,5 +1,8 @@
 # Bilateral leg-closure equality-response operator audit
 
+> Superseded interpretation (2026-08-31): production operator实际 rank 4；本文的 historical
+> residual-reaction attribution已由 [legal re-attribution](LEGAL_EQUALITY_REACTION_REATTRIBUTION.md) 取代。
+
 ## Decision
 
 `D-QP-CONSTRAINED-REDUCTION/REACTION-MISMATCH`。QP 与 MuJoCo 描述同一 bilateral closure

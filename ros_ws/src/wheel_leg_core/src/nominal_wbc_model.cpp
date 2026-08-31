@@ -246,7 +246,10 @@ Eigen::Vector3d radialVelocity(
 
 bool finite(const NominalWbcModel::Result &result) {
   if (!result.mass.allFinite() || !result.bias.allFinite() ||
-      !result.actuation.allFinite() || !result.reduction.allFinite()) return false;
+      !result.actuation.allFinite() || !result.reduction.allFinite() ||
+      !result.equality_jacobian.allFinite() ||
+      !result.equality_jdot_v.allFinite() || !result.full_mass.allFinite() ||
+      !result.full_bias.allFinite() || !result.full_actuation.allFinite()) return false;
   for (int side = 0; side < 2; ++side) {
     if (!result.wrench_map[side].allFinite() ||
         !result.wrench_flu_map[side].allFinite() ||
@@ -267,7 +270,8 @@ bool finite(const NominalWbcModel::Result &result) {
             result.wheel_vertical_acceleration_bias_m_s2[side]) ||
         !result.interaction_acceleration_map[side].allFinite() ||
         !result.interaction_contact_map[side].allFinite() ||
-        !result.interaction_bias[side].allFinite()) return false;
+        !result.interaction_bias[side].allFinite() ||
+        !result.full_wrench_map[side].allFinite()) return false;
   }
   return true;
 }
@@ -391,6 +395,7 @@ NominalWbcModel::Result NominalWbcModel::evaluate(
   const Kinematics pose =
       forwardKinematics(base_position, base_rotation, q, zero);
   const auto closure_jacobian = closureJacobian(pose);
+  result.equality_jacobian = closure_jacobian;
   Eigen::Matrix<double, 6, 4> passive;
   for (int column = 0; column < 4; ++column) {
     passive.col(column) = closure_jacobian.col(
@@ -426,6 +431,7 @@ NominalWbcModel::Result NominalWbcModel::evaluate(
       forwardKinematics(base_position, base_rotation, q, tree_velocity);
   const Eigen::Vector4d passive_acceleration =
       passive_svd.solve(-closureBias(bodies));
+  result.equality_jdot_v = closureBias(bodies);
   Vector16 reduction_bias = Vector16::Zero();
   for (int index = 0; index < 4; ++index) {
     reduction_bias[6 + phase21_profile::kPassiveNative[index]] =
@@ -467,12 +473,15 @@ NominalWbcModel::Result NominalWbcModel::evaluate(
   }
   result.mass.noalias() =
       result.reduction.transpose() * tree_mass * result.reduction;
+  result.full_mass = tree_mass;
+  result.full_bias = tree_bias;
   result.bias.noalias() = result.reduction.transpose() *
       (tree_bias + tree_mass * reduction_bias);
   for (int canonical = 0; canonical < 6; ++canonical) {
     const int native = phase21_profile::kActiveNative[canonical];
     result.actuation.col(canonical) =
         -result.reduction.row(6 + native).transpose();
+    result.full_actuation(6 + native, canonical) = -1.0;
   }
 
   for (int side = 0; side < 2; ++side) {
@@ -563,6 +572,10 @@ NominalWbcModel::Result NominalWbcModel::evaluate(
         pointContactWrenchProjector(result.contact_axis[side],
                                     contact_line_offset);
     const Matrix3x16 angular_jacobian = wheel.angular_jacobian;
+    result.full_wrench_map[side].leftCols<3>() =
+        material_jacobian.transpose() * geometry.frame;
+    result.full_wrench_map[side].rightCols<3>() =
+        angular_jacobian.transpose() * geometry.frame;
     result.wrench_map[side].leftCols<3>() =
         result.reduction.transpose() * material_jacobian.transpose() *
         geometry.frame;
