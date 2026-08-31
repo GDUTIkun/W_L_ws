@@ -565,6 +565,7 @@ NominalWbcModel::Result NominalWbcModel::evaluate(
     result.contact_bias[side] = geometry.frame.transpose() *
         material_bias_world + frame_velocity.transpose() * material_velocity;
     result.contact_frame_world[side] = geometry.frame;
+    result.contact_reference_world[side] = geometry.center;
     result.contact_axis[side] = geometry.frame.transpose() * geometry.axis;
     const Eigen::Vector3d contact_line_offset(
         kPhase46ActualContactLineOffsetM[side].data());

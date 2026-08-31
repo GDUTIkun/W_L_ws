@@ -47,6 +47,7 @@ int main() {
   std::string case_id;
   assert(input >> case_id);
   auto state = readState(input);
+  const auto initial_state = state;
   const auto reference = readReference(input);
   wheel_leg::WeightedWbcController controller;
   const auto cold = controller.step(state, reference);
@@ -79,5 +80,29 @@ int main() {
   assert(rejected.status ==
          wheel_leg::WeightedWbcController::Status::kModelRejected);
   for (const double torque : rejected.torque_nm) assert(torque == 0.0);
+
+  wheel_leg::WeightedWbcController closure_controller(
+      wheel_leg::WeightedWbcProfile::kPhase46ConstraintConsistentLegClosureReaction);
+  const auto closure = closure_controller.step(initial_state, reference);
+  assert(closure.ok());
+  wheel_leg::NominalWbcModel model;
+  const auto evaluated = model.evaluate(initial_state);
+  assert(evaluated.ok());
+  auto contact_reference = reference;
+  contact_reference.primitive_contact_active = true;
+  contact_reference.primitive_contact_row_count = 12;
+  contact_reference.primitive_contact_wrench.setIdentity();
+  contact_reference.primitive_contact_rhs =
+      closure.physical_solution.segment<12>(18);
+  wheel_leg::WeightedWbcController contact_controller(
+      wheel_leg::WeightedWbcProfile::kPhase46MujocoContactResponse);
+  const auto contact = contact_controller.step(initial_state, contact_reference);
+  assert(contact.ok());
+  assert(contact.contact_response_hard_residual.cwiseAbs().maxCoeff() <=
+         1.0e-6);
+  contact_reference.primitive_contact_active = false;
+  const auto inactive = contact_controller.step(initial_state, contact_reference);
+  assert(inactive.status ==
+         wheel_leg::WeightedWbcController::Status::kProblemRejected);
   return 0;
 }

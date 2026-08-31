@@ -1,0 +1,6 @@
+{
+  "classification": "H-MUJOCO-R2-HARD-INTEGRATION-OVERCONSTRAINED",
+  "mandatory_stop": "COMP",
+  "pass": true,
+  "replay_equal": null
+}

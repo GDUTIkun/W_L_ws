@@ -18,6 +18,9 @@ enum class WeightedWbcProfile {
   kPhase46HipCommonIncrementLimitedRolling,
   kPhase46PointRealizableRolling,
   kPhase46ConstraintConsistentLegClosureReaction,
+  // WARNING: diagnostic MuJoCo contact-response payload only; never select
+  // this profile for production control.
+  kPhase46MujocoContactResponse,
 };
 
 [[nodiscard]] NominalWbcModel::Matrix1x12 hipCommonSafeRollingMap(
@@ -43,6 +46,16 @@ struct WbcReference {
   std::array<bool, 2> rolling_task_active{};
   bool hip_common_increment_limit_active{false};
   double nominal_hip_common_acceleration_rad_s2{0.0};
+  // Compressed primitive contact-law rows over [nudot, W_left, W_right].
+  // MuJoCo is confined to the simulation adapter that constructs this payload.
+  bool primitive_contact_active{false};
+  int primitive_contact_row_count{0};
+  Eigen::Matrix<double, 12, 12> primitive_contact_nudot{
+      Eigen::Matrix<double, 12, 12>::Zero()};
+  Eigen::Matrix<double, 12, 12> primitive_contact_wrench{
+      Eigen::Matrix<double, 12, 12>::Zero()};
+  Eigen::Matrix<double, 12, 1> primitive_contact_rhs{
+      Eigen::Matrix<double, 12, 1>::Zero()};
   Eigen::Matrix<double, 12, 1> interaction_wrench_flu{
       Eigen::Matrix<double, 12, 1>::Zero()};
 };
@@ -50,7 +63,7 @@ struct WbcReference {
 class WeightedWbcProblem {
  public:
   static constexpr int kVariableCount = 42;
-  static constexpr int kConstraintCount = 105;
+  static constexpr int kConstraintCount = 117;
 
   using Matrix42 = Eigen::Matrix<double, kVariableCount, kVariableCount>;
   using Vector42 = Eigen::Matrix<double, kVariableCount, 1>;

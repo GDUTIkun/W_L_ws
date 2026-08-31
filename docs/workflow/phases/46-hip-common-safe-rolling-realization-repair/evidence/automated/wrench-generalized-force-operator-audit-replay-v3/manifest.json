@@ -1,0 +1,19 @@
+{
+  "command": "tools/experiments/run_phase46_wrench_generalized_force_operator_audit.py --output docs/workflow/phases/46-hip-common-safe-rolling-realization-repair/evidence/automated/wrench-generalized-force-operator-audit-replay-v3 --replay-of docs/workflow/phases/46-hip-common-safe-rolling-realization-repair/evidence/automated/wrench-generalized-force-operator-audit-formal-v2",
+  "created_utc": "2026-08-31T09:56:06.396934+00:00",
+  "dependencies": {
+    "mujoco": "3.7.0",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3"
+  },
+  "platform": "Linux-7.0.0-30-generic-x86_64-with-glibc2.39",
+  "python": "3.10.20 (main, Jun 11 2026, 04:03:45) [Clang 22.1.3 ]",
+  "replay_of": "docs/workflow/phases/46-hip-common-safe-rolling-realization-repair/evidence/automated/wrench-generalized-force-operator-audit-formal-v2",
+  "sources": {
+    "docs/workflow/phases/46-hip-common-safe-rolling-realization-repair/evidence/automated/contact-realization-sensitivity-formal-v4/probe-records.json": "6e277360820758172943a582d72fb5071029459ac0ad59053982eacc24bbb8a2",
+    "docs/workflow/phases/46-hip-common-safe-rolling-realization-repair/evidence/automated/exact-r1-equilibrium-formal-v3/equilibrium-decision.json": "c28afc42373fff03951b8e3a7268652d6e40b4e8f96bef8412e8c7cd13ff4124",
+    "docs/workflow/phases/46-hip-common-safe-rolling-realization-repair/evidence/automated/incremental-contact-parity-formal-v7/incremental-authority/contact-mapping-wrench-parity.json": "f46ac9d8050f27d06cde71d67b8d8151d6fe76be2a2692058f3eb228ab9adc32",
+    "ros_ws/src/wheel_leg_core/src/nominal_wbc_model.cpp": "1cdbf7ef8e6b0c630116eee009d26033ef47049a809d768f3feb63c5ebb02169",
+    "tools/experiments/run_phase46_wrench_generalized_force_operator_audit.py": "2e3f6536a820cffdfc9edf539e53c95e4b95d11d0ad440c223a941de50dce89f"
+  }
+}

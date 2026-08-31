@@ -1,0 +1,7 @@
+{
+  "classification": "A-DIAGNOSTIC-STAGER-REFERENCE-MIX-CLOSED",
+  "controller_numerics_changed": false,
+  "nonfinite": false,
+  "pass": true,
+  "replay_max_abs_error": 0.0
+}

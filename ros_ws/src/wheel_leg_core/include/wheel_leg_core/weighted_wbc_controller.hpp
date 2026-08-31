@@ -34,6 +34,8 @@ class WeightedWbcController {
     double stationarity_residual{0.0};
     double primal_residual{0.0};
     double dual_residual{0.0};
+    Eigen::Matrix<double, 12, 1> contact_response_hard_residual{
+        Eigen::Matrix<double, 12, 1>::Zero()};
     NominalWbcModel::Diagnostics model_diagnostics{};
     Eigen::Matrix<double, 42, 1> physical_solution{
         Eigen::Matrix<double, 42, 1>::Zero()};

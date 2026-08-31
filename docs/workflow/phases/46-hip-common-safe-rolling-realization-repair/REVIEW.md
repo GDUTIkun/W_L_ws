@@ -791,3 +791,120 @@ violation，H0 equilibrium、branch和scale gates均 FAIL。故不得从 source-
 authorization。最终为 `E-R2-SOURCE-CLOSED-BUT-LAW-NOT-TRUSTED`，R2 authorized/implemented均 NO，
 production numerics unchanged，严格停止。formal-v1 PASS，fresh replay error `0`。详见
 [R2 re-authorization](R2_CONTACT_RESPONSE_REAUTHORIZATION.md)。
+
+## REWORK addendum — R2 reduced-integration first-mismatch attribution
+
+P46-R113～R116 completed without production repair. Historical Stage R reproduced fresh with H0
+violation `0.0368511841794`, `ddxi_c/slip_c=-6.86299498911/-0.783202206426`, branch
+`3.12034206829`, and scale error `8.29578558891`; the trusted plant oracle remained machine-level closed.
+
+After retaining the frozen nonmaterial legal-equality conditioning, the actual H0 witness closes full and
+reduced dynamics at `2.84e-14/2.13e-14`, R1 at `2.73e-14`, and constitutive response at `1.33e-15`.
+The first material hard mismatch is the Stage-R mixed-level relation
+`Aw_prod W_actual = Qc0_prod + Qct_prod tau_current`, residual `4.83664403838`. Row-force to
+point-force generalized-force parity is exact, while point/aggregate mapping has the same residual and a
+one-dimensional redistribution nullity per side. Classification is therefore
+`B-CONTACT-REACTION-REPRESENTATION-MISMATCH`; closure double-count is rejected and optimization audit is
+not entered because the witness is already hard-infeasible. Formal-v2 PASS, fresh replay error `0`, no
+nonfinite values, production numerics unchanged. Phase46 remains `REWORK`; R2 candidate, authorization,
+implementation authorization, and implementation remain `NO`. See
+[reduced-integration attribution](R2_CONTACT_LAW_REDUCED_INTEGRATION_ATTRIBUTION.md).
+
+## REWORK addendum — R2 contact-reaction commuting-diagram attribution
+
+P46-R117～R121 completed without repair. Fresh maps re-establish `Aw*Gp=Jp^T` at
+`1.67e-16` full/reduced and virtual work at `5.77e-16`. H0 row→point E1 is `4.88e-15` and
+point→aggregate E2 is `8.88e-16`; after putting both sides in production `P` generalized-force
+coordinates, aggregate→Stage-R E3 is `1.25e-13`.
+
+The historical `4.83664403838` is reproduced only when `Qagg_M` is compared directly with
+`QStageR_P`. It decomposes into `1.52219637586` offset-frame and `3.31444766252` slope-frame
+contributions. Therefore the prior `B-CONTACT-REACTION-REPRESENTATION-MISMATCH` remains a valid broad
+localization but the stronger aggregate-incompatibility interpretation is superseded. Primary is now
+`A-AGGREGATE-DYNAMICS-SUFFICIENT-STAGER-AFFINE-MAP-MISMATCH`: the missing relation is force-dual
+base-reference canonicalization at the Stage-R affine-map boundary, not point-force information loss.
+
+Both `Gp` maps have rank/nullity `5/1`, `Jp^T n_p` is numerical, and H0 eta amplitudes are below
+`8e-16`; directional slip-common, xi-common, and slip-differential representation replays all close at
+machine scale. No representation change is required or proposed. Formal-v2 PASS, fresh replay error `0`,
+operator replay error `0`, production numerics unchanged. Phase46 remains `REWORK`; R2 authorization and
+implementation remain `NO`. See
+[commuting-diagram attribution](R2_CONTACT_REACTION_COMMUTING_DIAGRAM_ATTRIBUTION.md).
+
+## REWORK addendum — Stage-R affine reaction-map provenance/reference attribution
+
+P46-R122～R126 completed without production repair. `Qc0/Qct` are built and consumed only by the
+Phase46 diagnostic Stage-R script; CBM/source audit confirms production `WeightedWbcProblem` consumes
+independent aggregate wrench through reduced dynamics and tasks, not an equivalent constitutive affine law.
+
+The affine origin is `tau=0`. Producer outputs are `Qc0_M/Qct_M`; the historical producer transformed
+them to P, while the extra-equality consumer left `Aw*W` in M. Thus the first wrong edge is exactly
+`Aw_M W == Qc0_P + Qct_P tau`. `X_MP^T` covariance passes per actuator column, and the historical
+residual decomposes as `1.52219637586 + 3.31444766252 = 4.83664403838` in the dominant component.
+
+Applying `Aw_P=X_MP^T Aw_M` only inside the diagnostic equality closes the map at `1.98e-14`.
+Corrected H0 has violation `0`, `ddxi_c=0.000401232234`, `slip_c=0.027082170421`, KKT
+`2.90e-14` and R1 `2.67e-14`; branch/scale are `1.16e-10/9.14e-11`, with xi-common and
+slip-differential controls PASS. Classification is `A-DIAGNOSTIC-STAGER-REFERENCE-MIX-CLOSED`.
+Because production does not consume the affine law, R2 candidate/authorization/implementation remain NO.
+Phase46 stays `REWORK`; next is production contact-response integration attribution. See
+[Stage-R affine reference attribution](R2_STAGER_AFFINE_REFERENCE_ATTRIBUTION.md).
+
+## REWORK addendum — production contact-response integration attribution
+
+P46-R127～R130 completed without production repair. The 42D production QP already couples
+`nudot/tau/aggregate wrench` through 12 hard reduced-dynamics rows, cones and corrected R1, but has no
+constitutive/complementarity relation binding the selected wrench to the same-state, same-tau plant
+reaction. That is the first missing production relation.
+
+The corrected diagnostic `Qc=Qc0+Qct*tau` is an `R1` closed-response operator obtained by eliminating
+`qacc` and constraint reactions from MuJoCo full dynamics plus `f=D(aref-Jqacc)`. Under identical
+primitives it is algebraically equivalent to the coupled equations and does not literally count contact
+force twice. Its coefficients nevertheless require `efc_J/D/aref`, active solver rows, pyramidal friction
+regime and solver/contact parameters. It is therefore `P2`, local to a fixed state/active set, and not a
+production-computable `P0/P1` contact law.
+
+The strict P2 stop was applied before rank augmentation, physical-H0 witness, shadow-QP, independent
+prediction or contact-response residual claims; all are `NOT ENTERED`. Corrected diagnostic Stage-R
+H0/branch/scale/controls remain frozen PASS but do not authorize production insertion. Preferred form is
+`I4`; classification is `B-DIAGNOSTIC-LAW-SIMULATOR-SPECIFIC`. Aggregate representation remains
+sufficient; R2 candidate/authorization/implementation authorization/implementation remain `NO`.
+Next allowed action is only to derive a controller-side physical contact-response model. See
+[integration attribution](R2_PRODUCTION_CONTACT_RESPONSE_INTEGRATION_ATTRIBUTION.md).
+
+## REWORK addendum — MuJoCo-dependent simulation-only hard R2
+
+> **WARNING — MUJOCO-DEPENDENT SIMULATION-ONLY R2.** This implementation uses current-state
+> MuJoCo internal constraint-response quantities only to close the simulation loop. It must not be deployed
+> to the real robot unchanged; replace it with a hardware-valid realization model first.
+
+P46-R131～R136 completed to the first mandatory failure. Same pre-command snapshot provenance passes,
+post-response leakage is absent, qacc oracle error is `1.48e-12`, contact/equality partition error is
+`2.36e-16`, and M→P virtual-power error is `3.55e-15`. Full 16D insertion is illegal; the legal reduced
+form has decision-row rank 7 and condition `121.623`, increases hard rank `12→19`, and has corrected-R1
+image residual `3.55e-15`. Pre-solve active-set consistency passes with minimum predicted row force
+`1.15928`.
+
+The only new profile, `kPhase46MujocoContactResponse`, rebuilds this payload from every pre-command
+MuJoCo snapshot and adds seven independent hard rows. Historical/default profiles leave the extra capacity
+unbounded and pass golden/controller regressions. At compatible H0, however, ProxQP returns
+`PrimalInfeasible` with primal residual `0.149974`; therefore `COMP=FAIL` and classification is
+`H-MUJOCO-R2-HARD-INTEGRATION-OVERCONSTRAINED`. EQ, AUTH, REAL, SHORT and 10 s were not entered.
+No soft fallback, tuning or active-set iteration was attempted. Formal and fresh replay agree exactly.
+See [simulation R2 report](R2_MUJOCO_DEPENDENT_SIMULATION_REPAIR.md).
+
+## REWORK addendum — primitive contact-law pre-assembly result
+
+P46-R137 remains `REWORK`. The implementation no longer assembles the rejected closed tau-response:
+the simulation adapter constructs primitive contact rows from the legal production acceleration lift and
+the core receives only compressed `[nudot,W_L,W_R]` rows. Core and adapter builds pass; all 35 selected
+tests pass.
+
+The fresh compatible-H0 pre-assembly audit stopped before the 42D witness and COMP. W1 acceleration
+lift, W2 primitive row law, W3 row-to-point virtual-work decode, W4 per-wheel rank-5 aggregation and W6
+rank independence pass (`row rank=10`, hard-rank increment `=10`). W5 generalized commuting fails with
+maximum affine operator residual `7.65679` (`offset residual=7.20092`). The diagnostic projection of raw
+MuJoCo `qacc` also predicts minimum row force `-3.73503`; it is diagnostic only and was not used as a
+legal witness. Therefore 42D witness, COMP, EQ, AUTH, REAL, SHORT and 10 s are `NOT ENTERED`; no formal
+output directory was created. The next allowed action is to resolve the production-reference/operator
+commuting mismatch, not to relax the law, add soft fallback, or revive `Qc(tau)`.

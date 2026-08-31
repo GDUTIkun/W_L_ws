@@ -57,6 +57,7 @@ int main() {
   wheel_leg::WeightedWbcProblem assembler;
   wheel_leg::RobotState equilibrium;
   wheel_leg::WbcReference equilibrium_reference;
+  wheel_leg::WbcReference valid_equilibrium_reference;
   for (int index = 0; index < count; ++index) {
     std::string case_id;
     assert(input >> case_id);
@@ -81,9 +82,17 @@ int main() {
     assert((actual.a.topRows<104>() - expected_a).cwiseAbs().maxCoeff() <= 2.0e-9);
     assert((actual.lower.head<104>() - expected_lower).cwiseAbs().maxCoeff() <= 2.0e-9);
     assert((actual.upper.head<104>() - expected_upper).cwiseAbs().maxCoeff() <= 2.0e-9);
+    assert(actual.a.row(104).isZero(0.0));
+    assert(actual.lower[104] == -1.0e30 && actual.upper[104] == 1.0e30);
+    for (int row = 105; row < wheel_leg::WeightedWbcProblem::kConstraintCount;
+         ++row) {
+      assert(actual.a.row(row).isZero(0.0));
+      assert(actual.lower[row] == -1.0e30 && actual.upper[row] == 1.0e30);
+    }
     if (index == 0) {
       equilibrium = state;
       equilibrium_reference = reference;
+      valid_equilibrium_reference = reference;
     }
   }
 
@@ -133,5 +142,53 @@ int main() {
   }
   assert(assembler.assemble(model.evaluate(equilibrium), equilibrium_reference).status ==
          wheel_leg::WeightedWbcProblem::Status::kNonFinite);
+
+  auto contact_reference = valid_equilibrium_reference;
+  contact_reference.primitive_contact_active = true;
+  contact_reference.primitive_contact_row_count = 12;
+  for (int row = 0; row < 12; ++row) {
+    for (int column = 0; column < 12; ++column) {
+      contact_reference.primitive_contact_nudot(row, column) =
+          0.01 * static_cast<double>((row + 1) * (column + 1));
+    }
+    contact_reference.primitive_contact_wrench(row, row) = 1.0;
+    contact_reference.primitive_contact_rhs[row] =
+        0.1 * static_cast<double>(row + 1);
+  }
+  const auto contact_model = model.evaluate(equilibrium);
+  const auto contact_problem = assembler.assemble(
+      contact_model, contact_reference,
+      wheel_leg::WeightedWbcProfile::kPhase46MujocoContactResponse);
+  assert(contact_problem.ok());
+  int contact_equality_count = 0;
+  for (int row = 0;
+       row < wheel_leg::WeightedWbcProblem::kConstraintCount; ++row) {
+    contact_equality_count +=
+        contact_problem.lower[row] == contact_problem.upper[row] ? 1 : 0;
+  }
+  assert(contact_equality_count == 24);
+  for (int row = 0; row < 12; ++row) {
+    const int constraint_row = 105 + row;
+    assert(std::abs(contact_problem.a.row(constraint_row).norm() - 1.0) <=
+           1.0e-12);
+    assert(contact_problem.lower[constraint_row] ==
+           contact_problem.upper[constraint_row]);
+    assert(contact_problem.a.row(constraint_row).head<12>().norm() > 0.0);
+    assert(contact_problem.a.row(constraint_row).tail<12>().isZero(0.0));
+    assert(contact_problem.a.row(constraint_row).segment<6>(12).isZero(0.0));
+    assert(contact_problem.a.row(constraint_row).segment<12>(18).norm() > 0.0);
+  }
+  contact_reference.primitive_contact_active = false;
+  assert(assembler.assemble(
+             contact_model, contact_reference,
+             wheel_leg::WeightedWbcProfile::kPhase46MujocoContactResponse)
+             .status == wheel_leg::WeightedWbcProblem::Status::kModelRejected);
+  contact_reference.primitive_contact_active = true;
+  contact_reference.primitive_contact_nudot(0, 0) =
+      std::numeric_limits<double>::quiet_NaN();
+  assert(assembler.assemble(
+             contact_model, contact_reference,
+             wheel_leg::WeightedWbcProfile::kPhase46MujocoContactResponse)
+             .status == wheel_leg::WeightedWbcProblem::Status::kNonFinite);
   return 0;
 }

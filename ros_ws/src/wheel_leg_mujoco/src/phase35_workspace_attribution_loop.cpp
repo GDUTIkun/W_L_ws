@@ -18,8 +18,16 @@
 #include "wheel_leg_core/weighted_wbc_controller.hpp"
 #include "wheel_leg_core/wheel_position_planner.hpp"
 #include "wheel_leg_mujoco/adapter.hpp"
+#include "wheel_leg_mujoco/mujoco_contact_response.hpp"
 
 namespace {
+
+#ifdef WHEEL_LEG_PHASE46_MUJOCO_CONTACT_RESPONSE
+// WARNING — MUJOCO-DEPENDENT SIMULATION-ONLY R2
+// This profile uses current-state MuJoCo internal constraint-response
+// quantities only to close the simulation control loop. It must not be
+// deployed to hardware unchanged; replace it with a hardware-valid model.
+#endif
 
 struct ModelDeleter { void operator()(mjModel *value) const { mj_deleteModel(value); } };
 struct DataDeleter { void operator()(mjData *value) const { mj_deleteData(value); } };
@@ -95,6 +103,9 @@ bool pairMatches(int geom1, int geom2, int first, int second) {
 #endif
 #ifdef WHEEL_LEG_PHASE46_CONSTRAINT_CONSISTENT_LEG_CLOSURE
   if (case_id.rfind("R46E-", 0) == 0) return true;
+#endif
+#ifdef WHEEL_LEG_PHASE46_MUJOCO_CONTACT_RESPONSE
+  if (case_id.rfind("R46M-", 0) == 0) return true;
 #endif
 #else
   static_cast<void>(case_id);
@@ -324,6 +335,18 @@ void writeHeader(std::ostream &output) {
       output << ",rolling_map_" << side << '_' << column;
 #endif
 #endif
+#ifdef WHEEL_LEG_PHASE46_MUJOCO_CONTACT_RESPONSE
+  output << ",r2_same_snapshot,r2_post_response_leakage"
+         << ",r2_contact_equality_partition,r2_partition_max_abs"
+         << ",r2_force_dual_covariance,r2_virtual_power_max_abs"
+         << ",r2_full_space_legal,r2_reduced_legal"
+         << ",r2_current_hard_rank,r2_rank_with_response,r2_incremental_rank"
+         << ",r2_decision_row_rank,r2_decision_row_condition"
+         << ",r2_contact_image_compatible,r2_contact_image_residual"
+         << ",r2_active_set_consistent,r2_minimum_predicted_row_force"
+         << ",r2_oracle_qacc_max_abs,r2_qc0_norm,r2_qct_norm"
+         << ",r2_active_set_signature";
+#endif
   output << '\n';
 }
 
@@ -441,6 +464,10 @@ void run(const std::string &model_path, const std::string &output_path,
       profile != wheel_leg::WeightedWbcProfile::kPhase46ConstraintConsistentLegClosureReaction)
     throw std::runtime_error("Phase46 equality-repair profile selection failed");
 #endif
+#ifdef WHEEL_LEG_PHASE46_MUJOCO_CONTACT_RESPONSE
+  if (case_id.rfind("R46M-", 0) == 0)
+    profile = wheel_leg::WeightedWbcProfile::kPhase46MujocoContactResponse;
+#endif
 #endif
 #else
   const auto profile = case_id == "H0_minimal_hold"
@@ -528,6 +555,17 @@ void run(const std::string &model_path, const std::string &output_path,
     state = adapter.extractState(data.get());
     const auto workspace = wheel_leg::NominalWbcModel::inspectWorkspace(state);
     const auto measurement = wbc_model.evaluate(state);
+#ifdef WHEEL_LEG_PHASE46_MUJOCO_CONTACT_RESPONSE
+    const auto contact_response = measurement.ok()
+        ? wheel_leg_mujoco::buildMujocoContactResponse(
+              model.get(), data.get(), measurement)
+        : wheel_leg_mujoco::MujocoContactResponse{};
+    if (measurement.ok() && !contact_response.ok) {
+      throw std::runtime_error(
+          "Phase46 MuJoCo R2 pre-solve gate failed: " +
+          contact_response.failure);
+    }
+#endif
 #ifdef WHEEL_LEG_PHASE45_CONTACT_ROLLING
     const auto rolling = measurement.ok()
         ? observeRolling(model.get(), data.get(), wheel_geom, wheel_body,
@@ -582,6 +620,13 @@ void run(const std::string &model_path, const std::string &output_path,
           kp * (differential_initial - differential) - kd * differential_velocity;
     }
     auto reference = equilibriumReference();
+#ifdef WHEEL_LEG_PHASE46_MUJOCO_CONTACT_RESPONSE
+    reference.primitive_contact_active = true;
+    reference.primitive_contact_row_count = contact_response.decision_row_rank;
+    reference.primitive_contact_nudot = contact_response.decision_nudot;
+    reference.primitive_contact_wrench = contact_response.decision_wrench;
+    reference.primitive_contact_rhs = contact_response.decision_rhs;
+#endif
 #ifdef WHEEL_LEG_PHASE43_ROLLING_REPAIR
     if (case_id.rfind("R43-A", 0) == 0 ||
         isContactRollingCase(case_id)) {
@@ -654,6 +699,17 @@ void run(const std::string &model_path, const std::string &output_path,
       result.model_status = measurement.status;
       result.status = wheel_leg::WeightedWbcController::Status::kModelRejected;
     }
+#ifdef WHEEL_LEG_PHASE46_MUJOCO_CONTACT_RESPONSE
+    if (result.ok()) {
+      const auto candidate_rows =
+          contact_response.predictedContactRowForce(
+              result.physical_solution.head<12>());
+      if (candidate_rows.minCoeff() < -1.0e-9) {
+        throw std::runtime_error(
+            "Phase46 MuJoCo R2 candidate invalidates active set");
+      }
+    }
+#endif
 
     std::array<double, 2> normal_load{};
     for (int contact = 0; contact < data->ncon; ++contact) {
@@ -833,6 +889,29 @@ void run(const std::string &model_path, const std::string &output_path,
       for (int column = 0; column < 12; ++column)
         output << ',' << reference.rolling_acceleration_map[side](0, column);
 #endif
+#endif
+#ifdef WHEEL_LEG_PHASE46_MUJOCO_CONTACT_RESPONSE
+    output << ',' << contact_response.same_snapshot
+           << ',' << false
+           << ',' << contact_response.primitive_contact_law
+           << ',' << contact_response.primitive_law_residual
+           << ',' << contact_response.point_force_decode
+           << ',' << contact_response.point_force_decode_residual
+           << ',' << false
+           << ',' << contact_response.production_dynamics_compatible
+           << ',' << contact_response.current_hard_equality_rank
+           << ',' << contact_response.hard_equality_rank_with_response
+           << ',' << contact_response.incremental_rank
+           << ',' << contact_response.decision_row_rank
+           << ',' << contact_response.decision_row_condition
+           << ',' << contact_response.generalized_commuting
+           << ',' << contact_response.generalized_commuting_residual
+           << ',' << contact_response.active_set_consistent
+           << ',' << contact_response.minimum_predicted_contact_row_force
+           << ',' << contact_response.raw_qacc_diagnostic_max_abs
+           << ',' << contact_response.rank5_projector_residual
+           << ',' << contact_response.acceleration_lift_residual
+           << ',' << contact_response.active_set_signature;
 #endif
     output << '\n';
 

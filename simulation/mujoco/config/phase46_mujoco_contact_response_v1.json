@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "phase": 46,
+  "profile": "phase46_mujoco_contact_response_v1",
+  "simulation_only": true,
+  "mujoco_dependent": true,
+  "hardware_ready": false,
+  "warning": "WARNING — MUJOCO-DEPENDENT SIMULATION-ONLY R2 primitive contact law. It must not be deployed to the real robot unchanged.",
+  "scene": "simulation/mujoco/model/scene_axisymmetric_centered_com_v1.xml",
+  "runtime_executable": "ros_ws/build/wheel_leg_mujoco/phase46_mujoco_contact_response_loop",
+  "case_id": "R46M-H0",
+  "gain_id": "mujoco_r2",
+  "xi_kp_s2": 483.61061565337855,
+  "xi_kd_s": 43.982297150257104,
+  "rate_gain": 0.0,
+  "wrench_trim": [-0.06319271068216474, -0.187485780522428, 0.0025935527300793705, 0.0027966651369644964],
+  "formal_ticks": 1,
+  "short_ticks": 223,
+  "ten_second_ticks": 1000,
+  "forbidden_future_inputs": ["post-command efc_force", "post-step efc_force", "future qacc", "future contact force", "next-state measurement"],
+  "contact_response_law": "contact rows only: fc=Dc*(aref_c-Jc*(N*nudot+cN)); row reaction -> Cartesian point force -> per-wheel rank-5 production-reference aggregate wrench",
+  "scope_contract": {
+    "default_profile_unchanged": true,
+    "soft_fallback": false,
+    "weight_tuning": false,
+    "gain_tuning": false,
+    "friction_tuning": false,
+    "active_set_inner_iteration": false,
+    "hardware_deployment": false
+  }
+}

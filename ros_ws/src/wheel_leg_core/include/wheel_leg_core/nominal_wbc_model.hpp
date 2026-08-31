@@ -73,6 +73,8 @@ class NominalWbcModel {
     std::array<Matrix3x12, 2> contact_jacobian{};
     std::array<Eigen::Vector3d, 2> contact_bias{};
     std::array<Eigen::Matrix3d, 2> contact_frame_world{};
+    // Production contact-wrench reference point in world coordinates.
+    std::array<Eigen::Vector3d, 2> contact_reference_world{};
     // Wheel axis expressed in the corresponding contact frame. The actual
     // two-point force image cannot produce a moment parallel to this axis.
     std::array<Eigen::Vector3d, 2> contact_axis{};

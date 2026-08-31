@@ -1,0 +1,43 @@
+{
+  "command": [
+    "/home/t/W_L_ws/.venv/bin/python",
+    "tools/experiments/run_phase46_mujoco_dependent_simulation_repair.py",
+    "--config",
+    "simulation/mujoco/config/phase46_mujoco_contact_response_v1.json",
+    "--output",
+    "docs/workflow/phases/46-hip-common-safe-rolling-realization-repair/evidence/automated/r2-mujoco-dependent-simulation-repair-replay-v1",
+    "--replay-of",
+    "docs/workflow/phases/46-hip-common-safe-rolling-realization-repair/evidence/automated/r2-mujoco-dependent-simulation-repair-formal-v1"
+  ],
+  "created_utc": "2026-08-31T12:55:22.162900+00:00",
+  "dependencies": {
+    "mujoco": "3.7.0",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3"
+  },
+  "platform": "Linux-7.0.0-30-generic-x86_64-with-glibc2.39",
+  "python": "3.10.20 (main, Jun 11 2026, 04:03:45) [Clang 22.1.3 ]",
+  "runtime_command": [
+    "/home/t/W_L_ws/ros_ws/build/wheel_leg_mujoco/phase46_mujoco_contact_response_loop",
+    "/home/t/W_L_ws/simulation/mujoco/model/scene_axisymmetric_centered_com_v1.xml",
+    "/home/t/W_L_ws/docs/workflow/phases/46-hip-common-safe-rolling-realization-repair/evidence/automated/r2-mujoco-dependent-simulation-repair-replay-v1/compatible-h0.csv",
+    "R46M-H0",
+    "mujoco_r2",
+    "483.61061565337855",
+    "43.982297150257104",
+    "0.0",
+    "-0.06319271068216474",
+    "-0.187485780522428",
+    "0.0025935527300793705",
+    "0.0027966651369644964",
+    "1"
+  ],
+  "sources": {
+    "ros_ws/build/wheel_leg_mujoco/phase46_mujoco_contact_response_loop": "ed33ce142bdebd21f503e057afe5bb3e8ccd0b42372677870ac3092741f375ed",
+    "ros_ws/src/wheel_leg_core/src/weighted_wbc_problem.cpp": "cd1a5f7b5fc27958c16515c66eda30210681cb9207604fd3f1ab0aed236e08f8",
+    "ros_ws/src/wheel_leg_mujoco/src/mujoco_contact_response.cpp": "cc739581a47297037aca67bb661ed681766d82b9c0ef809403dba89f954291ed",
+    "simulation/mujoco/config/phase46_mujoco_contact_response_v1.json": "889561206d227e1c5a4279fd113e765ea880c67dabdb08cedebda1eb88ee4687",
+    "simulation/mujoco/model/scene_axisymmetric_centered_com_v1.xml": "1bf6a0c85f3fabf3c7447b913085ca6b79eff97d5baf824b44faf4e48343e419",
+    "tools/experiments/run_phase46_mujoco_dependent_simulation_repair.py": "4130954edf02cb82f9bc1df176a5639b6d2aabb235b3d3344d1f85e79e1f62e4"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "R2_authorized": false,
+  "R2_implemented": false,
+  "classification": "E-R2-SOURCE-CLOSED-BUT-LAW-NOT-TRUSTED",
+  "pass": true,
+  "replay_max_abs_error": 0.0
+}

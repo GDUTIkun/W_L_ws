@@ -51,12 +51,14 @@ bool usesMinimalInteractionWrench(WeightedWbcProfile profile) {
          profile == WeightedWbcProfile::kPhase46HipCommonSafeRolling ||
          profile == WeightedWbcProfile::kPhase46HipCommonIncrementLimitedRolling ||
          profile == WeightedWbcProfile::kPhase46PointRealizableRolling ||
-         profile == WeightedWbcProfile::kPhase46ConstraintConsistentLegClosureReaction;
+         profile == WeightedWbcProfile::kPhase46ConstraintConsistentLegClosureReaction ||
+         profile == WeightedWbcProfile::kPhase46MujocoContactResponse;
 }
 
 bool usesPointRealizableContact(WeightedWbcProfile profile) {
   return profile == WeightedWbcProfile::kPhase46PointRealizableRolling ||
-         profile == WeightedWbcProfile::kPhase46ConstraintConsistentLegClosureReaction;
+         profile == WeightedWbcProfile::kPhase46ConstraintConsistentLegClosureReaction ||
+         profile == WeightedWbcProfile::kPhase46MujocoContactResponse;
 }
 
 }  // namespace
@@ -91,6 +93,17 @@ WeightedWbcProblem::Result WeightedWbcProblem::assemble(
       !std::isfinite(reference.base_height_acceleration_m_s2)) {
     result.status = Status::kNonFinite;
     return result;
+  }
+  if (profile == WeightedWbcProfile::kPhase46MujocoContactResponse) {
+    if (!reference.primitive_contact_active) return result;
+    if (reference.primitive_contact_row_count <= 0 ||
+        reference.primitive_contact_row_count > 12) return result;
+    if (!reference.primitive_contact_nudot.allFinite() ||
+        !reference.primitive_contact_wrench.allFinite() ||
+        !reference.primitive_contact_rhs.allFinite()) {
+      result.status = Status::kNonFinite;
+      return result;
+    }
   }
 
   Eigen::Matrix<double, 42, 1> variable_scale;
@@ -157,12 +170,36 @@ WeightedWbcProblem::Result WeightedWbcProblem::assemble(
   }
   result.lower[104] = -kInfinity;
   result.upper[104] = kInfinity;
+  for (int row = 105; row < kConstraintCount; ++row) {
+    result.lower[row] = -kInfinity;
+    result.upper[row] = kInfinity;
+  }
   if (profile == WeightedWbcProfile::kPhase46HipCommonIncrementLimitedRolling &&
       reference.hip_common_increment_limit_active) {
     result.a(104, 6) = 0.5 * variable_scale[6];
     result.a(104, 9) = 0.5 * variable_scale[9];
     result.lower[104] = result.upper[104] =
         reference.nominal_hip_common_acceleration_rad_s2;
+  }
+  if (profile == WeightedWbcProfile::kPhase46MujocoContactResponse) {
+    for (int row = 0; row < reference.primitive_contact_row_count; ++row) {
+      const int constraint_row = 105 + row;
+      Eigen::Matrix<double, 1, 42> physical =
+          Eigen::Matrix<double, 1, 42>::Zero();
+      physical.block<1, 12>(0, 0) =
+          reference.primitive_contact_nudot.row(row);
+      physical.block<1, 12>(0, 18) =
+          reference.primitive_contact_wrench.row(row);
+      const auto scaled = physical * variable_scale.asDiagonal();
+      const double norm = scaled.norm();
+      if (!std::isfinite(norm) || norm == 0.0) {
+        result.status = Status::kNonFinite;
+        return result;
+      }
+      result.a.row(constraint_row) = scaled / norm;
+      result.lower[constraint_row] = result.upper[constraint_row] =
+          reference.primitive_contact_rhs[row] / norm;
+    }
   }
 
   result.h.setIdentity();
@@ -205,7 +242,8 @@ WeightedWbcProblem::Result WeightedWbcProblem::assemble(
       profile == WeightedWbcProfile::kPhase46HipCommonSafeRolling ||
       profile == WeightedWbcProfile::kPhase46HipCommonIncrementLimitedRolling ||
       profile == WeightedWbcProfile::kPhase46PointRealizableRolling ||
-      profile == WeightedWbcProfile::kPhase46ConstraintConsistentLegClosureReaction) {
+      profile == WeightedWbcProfile::kPhase46ConstraintConsistentLegClosureReaction ||
+      profile == WeightedWbcProfile::kPhase46MujocoContactResponse) {
     Eigen::Matrix<double, 2, 42> wheel_longitudinal =
         Eigen::Matrix<double, 2, 42>::Zero();
     Eigen::Vector2d wheel_longitudinal_target =
@@ -226,7 +264,8 @@ WeightedWbcProblem::Result WeightedWbcProblem::assemble(
       profile == WeightedWbcProfile::kPhase46HipCommonSafeRolling ||
       profile == WeightedWbcProfile::kPhase46HipCommonIncrementLimitedRolling ||
       profile == WeightedWbcProfile::kPhase46PointRealizableRolling ||
-      profile == WeightedWbcProfile::kPhase46ConstraintConsistentLegClosureReaction) {
+      profile == WeightedWbcProfile::kPhase46ConstraintConsistentLegClosureReaction ||
+      profile == WeightedWbcProfile::kPhase46MujocoContactResponse) {
     Eigen::Matrix<double, 2, 42> rolling =
         Eigen::Matrix<double, 2, 42>::Zero();
     Eigen::Vector2d target = Eigen::Vector2d::Zero();

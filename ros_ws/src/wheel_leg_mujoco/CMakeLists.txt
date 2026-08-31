@@ -23,7 +23,9 @@ set_target_properties(MuJoCo::MuJoCo PROPERTIES
   IMPORTED_LOCATION "${MUJOCO_LIBRARY}"
   INTERFACE_INCLUDE_DIRECTORIES "${MUJOCO_INCLUDE_DIR}")
 
-add_library(wheel_leg_mujoco_adapter src/adapter.cpp)
+add_library(wheel_leg_mujoco_adapter
+  src/adapter.cpp
+  src/mujoco_contact_response.cpp)
 target_include_directories(wheel_leg_mujoco_adapter PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
@@ -169,6 +171,20 @@ target_compile_definitions(
 target_compile_options(
   phase46_constraint_consistent_leg_closure_loop PRIVATE
   -Wall -Wextra -Wpedantic -Werror)
+add_executable(
+  phase46_mujoco_contact_response_loop
+  src/phase35_workspace_attribution_loop.cpp)
+target_link_libraries(
+  phase46_mujoco_contact_response_loop wheel_leg_mujoco_adapter)
+target_compile_definitions(
+  phase46_mujoco_contact_response_loop PRIVATE
+  WHEEL_LEG_PHASE43_ROLLING_REPAIR=1
+  WHEEL_LEG_PHASE42_CAUSAL_ATTRIBUTION=1
+  WHEEL_LEG_PHASE45_CONTACT_ROLLING=1
+  WHEEL_LEG_PHASE46_MUJOCO_CONTACT_RESPONSE=1)
+target_compile_options(
+  phase46_mujoco_contact_response_loop PRIVATE
+  -Wall -Wextra -Wpedantic -Werror)
 
 if(BUILD_TESTING)
   find_package(ament_cmake_gtest REQUIRED)
@@ -193,6 +209,7 @@ install(TARGETS wheel_leg_mujoco_adapter mujoco_node deterministic_loop
   phase46_hip_common_increment_limited_rolling_loop
   phase46_point_realizable_rolling_loop
   phase46_constraint_consistent_leg_closure_loop
+  phase46_mujoco_contact_response_loop
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION lib/${PROJECT_NAME})

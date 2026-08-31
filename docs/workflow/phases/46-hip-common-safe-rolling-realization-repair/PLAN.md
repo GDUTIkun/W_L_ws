@@ -382,6 +382,75 @@ implementation，严格停在 authorization decision。
 | P46-R111 | classification and authorization decision | E；R2 authorized NO；production unchanged；STOP | done |
 | P46-R112 | formal, fresh replay and regressions | formal-v1 PASS、replay-v1 `0`、targeted/regression/diff checks | done |
 
+### REWORK tasks — R2 reduced-integration first-mismatch attribution
+
+本轮仅审计 valid plant contact law 到 production 12D reduced WBC 的 first wrong integration
+relation；不实施 production repair，不调权重、增益、contact 或 solver。
+
+| ID | Task | Deliverable / validation | Status |
+| --- | --- | --- | --- |
+| P46-R113 | exact Stage-R reconstruction | fresh H0/failure/branch/scale reproduction | done |
+| P46-R114 | complete H0 physical witness and ordered gates | canonical lift、rank4 conditioning、full/reduced dynamics、R1、row/point/wrench parity | done |
+| P46-R115 | H1/H2/H3 first-mismatch attribution | H2 confirmed；H1 rejected；optimizer audit not entered | done |
+| P46-R116 | evidence, replay, unchanged-production gate | formal-v2 PASS；replay-v2 `0`；production unchanged | done |
+
+### REWORK tasks — R2 contact-reaction commuting-diagram attribution
+
+本轮只定位 row reaction → point force → production aggregate wrench → generalized force 与
+Stage-R affine reaction map 的第一条不交换 edge；不预设 point-force variable，不实施 repair。
+
+| ID | Task | Deliverable / validation | Status |
+| --- | --- | --- | --- |
+| P46-R117 | fresh map/provenance reconstruction | contact points/frames/references/Tλp/Gp/Jp/Aw/Jefc | done |
+| P46-R118 | corrected-R1 operator and virtual-work gate | full/reduced `AwGp=JpT` machine-level PASS | done |
+| P46-R119 | E1/E2/E3 commuting attribution | E1/E2 numerical；historical 4.836644 located at mixed M/P aggregate→Stage-R edge | done |
+| P46-R120 | affine offset/slope and directional replay | offset 1.522196；slope 3.314448；corrected replay machine-level PASS | done |
+| P46-R121 | sufficiency/null regression and evidence | aggregate dynamics sufficient；eta nonmaterial；formal/replay PASS | done |
+
+### REWORK tasks — Stage-R affine reaction-map provenance/reference attribution
+
+本轮只审计 diagnostic `Qc0/Qct` producer/consumer、affine origin 与 M/P force-dual boundary；
+不修改 production QP，不实施 contact law。
+
+| ID | Task | Deliverable / validation | Status |
+| --- | --- | --- | --- |
+| P46-R122 | consumer and production provenance | diagnostic-only producer/consumer；production equivalent law absent | done |
+| P46-R123 | affine origin and force-dual covariance | tau=0 origin；Qc0/Qct column covariance PASS | done |
+| P46-R124 | historical mixed-reference reconstruction | offset 1.522196 + slope 3.314448 → 4.836644 | done |
+| P46-R125 | diagnostic-only corrected H0 replay | map 1.98e-14；violation 0；H0 PASS | done |
+| P46-R126 | minimal directional trust and evidence | branch/scale machine-level PASS；formal/replay PASS | done |
+
+### REWORK tasks — production contact-response integration attribution
+
+本轮只审计 production 42D QP 的首个缺失 contact-response relation，以及 diagnostic
+`Qc=Qc0+Qct*tau` 的 R0/R1/R2/R3、P0/P1/P2/P3 与合法插入形式；修正后的 diagnostic Stage-R
+PASS 保持冻结，不实施 production R2。
+
+| ID | Task | Deliverable / validation | Status |
+| --- | --- | --- | --- |
+| P46-R127 | production equation inventory | 42D variables/hard dynamics/cones/soft tasks/R1；first missing relation | done |
+| P46-R128 | diagnostic affine-law provenance | R1 Schur closed response；MuJoCo internal dependencies and exactness domain | done |
+| P46-R129 | double-counting, causality and insertion audit | identical-primitives algebraic equivalence；P2 stop；I4 | done |
+| P46-R130 | classification and append-only evidence | B；shadow/prediction/residual gates NOT ENTERED；R2 remains NO | done |
+
+### REWORK tasks — MuJoCo-dependent simulation-only hard R2
+
+> **WARNING — MUJOCO-DEPENDENT SIMULATION-ONLY R2.** This profile uses current-state MuJoCo
+> internals only for simulation closure. It is not hardware-ready and must be replaced before real-robot
+> deployment.
+
+本轮允许 one hard simulation-only profile；strict order 在首个 mandatory FAIL 停止，不允许 soft
+fallback、tuning、future-response feedback 或 active-set inner iteration。
+
+| ID | Task | Deliverable / validation | Status |
+| --- | --- | --- | --- |
+| P46-R131 | same-snapshot oracle and partition | pre-command provenance PASS；future leakage NO；partition/oracle machine-level PASS | done |
+| P46-R132 | full/reduced legality and rank | full illegal；reduced legal；rank 12→19，incremental independent rank 7 | done |
+| P46-R133 | image and active-set gates | R1 image residual `3.55e-15`；pre-solve row-force sign/regime PASS | done |
+| P46-R134 | one hard simulation profile | per-tick builder + `kPhase46MujocoContactResponse`；default profile unchanged | done |
+| P46-R135 | COMP and strict stop | H0 `PrimalInfeasible`；COMP FAIL；EQ/AUTH/REAL/SHORT/10 s NOT ENTERED | done |
+| P46-R136 | evidence, replay and regressions | formal/replay equal；targeted tests PASS；one unrelated timing test passed on rerun | done |
+
 ## Classification
 
 最终只能选择：
@@ -395,6 +464,14 @@ implementation，严格停在 authorization decision。
 
 若 mandatory gate FAIL，保持 Phase46 `review/REWORK`，不创建 RECORD，也不自动进入 soft penalty、
 coupled task、precompensation 或 dynamic projection。
+
+## REWORK addendum — primitive contact-law integration audit
+
+P46-R137 replaces the rejected closed `Qc0+Qct*tau` hard payload with contact rows only:
+`fc=Dc(aref_c-Jc(N*nudot+cN))`, followed by row reaction → Cartesian point force → per-wheel
+production-reference aggregate wrench and the frozen two rank-5 image bases. The core payload is a
+generic hard row over `[nudot,W_L,W_R]`; `tau` has no direct coefficient. Entry order remains
+`W1→W2→W3→W4→W5→W6→42D witness→COMP` and stops at the first failure.
 
 ## REWORK — Frozen Nominal, Limited Increment
 

@@ -1,0 +1,44 @@
+#include "wheel_leg_mujoco/mujoco_contact_response.hpp"
+#include <array>
+#include <sstream>
+#include <Eigen/Dense>
+namespace wheel_leg_mujoco { namespace {
+using M16=Eigen::Matrix<double,16,16>; using V16=Eigen::Matrix<double,16,1>;
+template<class D> double mx(const Eigen::MatrixBase<D>& x){return x.size()?x.cwiseAbs().maxCoeff():0.;}
+Eigen::Matrix3d skew(const Eigen::Vector3d& v){Eigen::Matrix3d s;s<<0.,-v.z(),v.y(),v.z(),0.,-v.x(),-v.y(),v.x(),0.;return s;}
+std::pair<int,double> rc(const Eigen::MatrixXd& a){Eigen::JacobiSVD<Eigen::MatrixXd>s(a);auto v=s.singularValues();int r=0;while(r<v.size()&&v[r]>1e-10)++r;return {r,r?v[0]/v[r-1]:0.};}
+Eigen::Matrix<double,6,5> basis(const Eigen::Matrix<double,6,6>& p,double& e){
+  Eigen::SelfAdjointEigenSolver<Eigen::Matrix<double,6,6>> s(p); Eigen::Matrix<double,6,5> u;int c=0;
+  for(int i=5;i>=0&&c<5;--i)if(s.eigenvalues()[i]>.5)u.col(c++)=s.eigenvectors().col(i);
+  if(c!=5){e=1.;return Eigen::Matrix<double,6,5>::Zero();}e=mx(u*u.transpose()-p);return u;
+}
+}
+Eigen::VectorXd MujocoContactResponse::predictedContactRowForce(const Eigen::Matrix<double,12,1>& n)const{return contact_row_force0+contact_row_force_nudot*n;}
+MujocoContactResponse buildMujocoContactResponse(const mjModel* m,const mjData* d,const wheel_leg::NominalWbcModel::Result& p){
+  MujocoContactResponse o;if(!m||!d||m->nv!=16||!p.ok()){o.failure="invalid input";return o;}
+  for(int r=0;r<d->nefc;++r)if(d->efc_type[r]==mjCNSTR_CONTACT_PYRAMIDAL)o.contact_rows.push_back(r);
+  if(o.contact_rows.empty()){o.failure="no contact rows";return o;}
+  Eigen::Map<const Eigen::Matrix<double,Eigen::Dynamic,16,Eigen::RowMajor>> ja(d->efc_J,d->nefc,16);
+  Eigen::Map<const Eigen::VectorXd> da(d->efc_D,d->nefc),aa(d->efc_aref,d->nefc);
+  Eigen::MatrixXd j(o.contact_rows.size(),16);Eigen::VectorXd dc(o.contact_rows.size()),a(o.contact_rows.size());
+  std::vector<int> local(d->nefc,-1);for(int i=0;i<(int)o.contact_rows.size();++i){int r=o.contact_rows[i];j.row(i)=ja.row(r);dc[i]=da[r];a[i]=aa[r];local[r]=i;}
+  int bb=mj_name2id(m,mjOBJ_BODY,"base_body"),bs=mj_name2id(m,mjOBJ_SITE,"base_control_frame");if(bb<0||bs<0){o.failure="missing base reference";return o;}
+  Eigen::Vector3d off=Eigen::Map<const Eigen::Vector3d>(d->site_xpos+3*bs)-Eigen::Map<const Eigen::Vector3d>(d->xpos+3*bb);
+  M16 x=M16::Identity();x.block<3,3>(0,3)=-skew(off);auto n=x*p.reduction;V16 cn=x*p.reduction_bias;
+  o.acceleration_lift_legal=true;o.contact_row_force0=dc.asDiagonal()*(a-j*cn);o.contact_row_force_nudot=-(dc.asDiagonal()*j*n);o.primitive_contact_law=true;
+  std::array<int,2>wg{mj_name2id(m,mjOBJ_GEOM,"left_wheel_collision"),mj_name2id(m,mjOBJ_GEOM,"right_wheel_collision")};int decoded=0;
+  std::array<int,2> wb{mj_name2id(m,mjOBJ_BODY,"left_wheel_body"),mj_name2id(m,mjOBJ_BODY,"right_wheel_body")};
+  for(int ci=0;ci<d->ncon;++ci){const auto& c=d->contact[ci];int side=-1;for(int s=0;s<2;++s)if(c.geom1==wg[s]||c.geom2==wg[s])side=s;if(side<0||c.dim<3||c.efc_address<0)continue;
+    std::array<int,4> q{};bool good=true;for(int k=0;k<4;++k){q[k]=c.efc_address+k<d->nefc?local[c.efc_address+k]:-1;good&=q[k]>=0;}if(!good)continue;
+    Eigen::Matrix<double,3,16,Eigen::RowMajor> jp,jr;mj_jac(m,d,jp.data(),jr.data(),c.pos,wb[side]);Eigen::Matrix<double,16,4> contact_j;for(int k=0;k<4;++k)contact_j.col(k)=j.row(q[k]).transpose();const Eigen::Matrix<double,3,4> world_decode=jp.transpose().completeOrthogonalDecomposition().solve(contact_j);
+    o.point_force_decode_residual=std::max(o.point_force_decode_residual,mx(jp.transpose()*world_decode-contact_j));Eigen::Matrix3d wp=p.contact_frame_world[side].transpose();Eigen::Vector3d lever=wp*(Eigen::Map<const Eigen::Vector3d>(c.pos)-p.contact_reference_world[side]);Eigen::Matrix<double,6,3> pm;pm.topRows<3>()=wp;pm.bottomRows<3>()=skew(lever)*wp;Eigen::MatrixXd row_map=Eigen::MatrixXd::Zero(6,o.contact_rows.size());for(int k=0;k<4;++k)row_map.col(q[k])=pm*world_decode.col(k);o.aggregate_force0.segment<6>(6*side)+=row_map*o.contact_row_force0;o.aggregate_force_nudot.block<6,12>(6*side,0)+=row_map*o.contact_row_force_nudot;++decoded;
+  }o.point_force_decode=decoded>0&&o.point_force_decode_residual<=1e-8;if(!decoded)o.point_force_decode_residual=1.;
+  Eigen::Matrix<double,10,24> raw=Eigen::Matrix<double,10,24>::Zero();Eigen::Matrix<double,10,1> rhs;
+  for(int s=0;s<2;++s){double e;auto u=basis(p.point_force_wrench_projector[s],e);o.rank5_projector_residual=std::max(o.rank5_projector_residual,e);raw.block<5,12>(5*s,0)=-u.transpose()*o.aggregate_force_nudot.block<6,12>(6*s,0);raw.block<5,6>(5*s,12+6*s)=u.transpose();rhs.segment<5>(5*s)=u.transpose()*o.aggregate_force0.segment<6>(6*s);}
+  o.rank5_aggregate=o.rank5_projector_residual<=1e-8;std::tie(o.decision_row_rank,o.decision_row_condition)=rc(raw);Eigen::JacobiSVD<Eigen::MatrixXd> svd(raw,Eigen::ComputeThinU);auto z=svd.matrixU().leftCols(o.decision_row_rank).transpose();o.decision_nudot.topRows(o.decision_row_rank)=z*raw.leftCols(12);o.decision_wrench.topRows(o.decision_row_rank)=z*raw.rightCols(12);o.decision_rhs.head(o.decision_row_rank)=z*rhs;
+  Eigen::Matrix<double,12,12> aw;aw<<p.wrench_map[0],p.wrench_map[1];auto g0=p.reduction.transpose()*x.transpose()*j.transpose()*o.contact_row_force0;auto gn=p.reduction.transpose()*x.transpose()*j.transpose()*o.contact_row_force_nudot;o.generalized_commuting_residual=std::max(mx(aw*o.aggregate_force0-g0),mx(aw*o.aggregate_force_nudot-gn));o.generalized_commuting=o.generalized_commuting_residual<=1e-8;
+  Eigen::Matrix<double,12,30> dyn;dyn<<p.mass,-p.actuation,-aw;std::tie(o.current_hard_equality_rank,std::ignore)=rc(dyn);Eigen::MatrixXd all(12+o.decision_row_rank,30);all.topRows(12)=dyn;all.bottomRows(o.decision_row_rank).setZero();all.bottomRows(o.decision_row_rank).leftCols(12)=o.decision_nudot.topRows(o.decision_row_rank);all.bottomRows(o.decision_row_rank).rightCols(12)=o.decision_wrench.topRows(o.decision_row_rank);std::tie(o.hard_equality_rank_with_response,std::ignore)=rc(all);o.incremental_rank=o.hard_equality_rank_with_response-o.current_hard_equality_rank;o.production_dynamics_compatible=o.decision_row_rank==10&&o.incremental_rank==10;
+  Eigen::Map<const V16> qacc(d->qacc);const auto decomposition=n.completeOrthogonalDecomposition();Eigen::Matrix<double,12,1> nd=decomposition.solve(qacc-cn);o.raw_qacc_diagnostic_max_abs=mx(qacc-(n*nd+cn));auto f=o.predictedContactRowForce(nd);o.minimum_predicted_contact_row_force=f.minCoeff();o.active_set_consistent=o.minimum_predicted_contact_row_force>=-1e-9;o.same_snapshot=true;
+  o.ok=o.acceleration_lift_legal&&o.primitive_contact_law&&o.point_force_decode&&o.rank5_aggregate&&o.generalized_commuting&&o.production_dynamics_compatible&&o.active_set_consistent;if(!o.ok){std::ostringstream s;s<<"primitive gates W1="<<o.acceleration_lift_legal<<" W2="<<o.primitive_contact_law<<" W3="<<o.point_force_decode<<" W4="<<o.rank5_aggregate<<" W5="<<o.generalized_commuting<<" err="<<o.generalized_commuting_residual<<" err0="<<mx(aw*o.aggregate_force0-g0)<<" errN="<<mx(aw*o.aggregate_force_nudot-gn)<<" sign_flip_err="<<std::max(mx(aw*o.aggregate_force0+g0),mx(aw*o.aggregate_force_nudot+gn))<<" aggregate0="<<mx(aw*o.aggregate_force0)<<" generalized0="<<mx(g0)<<" W6="<<o.production_dynamics_compatible<<" rank="<<o.decision_row_rank<<" increment="<<o.incremental_rank<<" active="<<o.active_set_consistent<<" min="<<o.minimum_predicted_contact_row_force;o.failure=s.str();}return o;
+}
+} // namespace wheel_leg_mujoco

@@ -19,7 +19,8 @@ bool usesMinimalInteractionWrench(WeightedWbcProfile profile) {
          profile == WeightedWbcProfile::kPhase45ContactConsistentRolling ||
          profile == WeightedWbcProfile::kPhase46HipCommonSafeRolling ||
          profile == WeightedWbcProfile::kPhase46HipCommonIncrementLimitedRolling ||
-         profile == WeightedWbcProfile::kPhase46PointRealizableRolling;
+         profile == WeightedWbcProfile::kPhase46PointRealizableRolling ||
+         profile == WeightedWbcProfile::kPhase46MujocoContactResponse;
 }
 
 }  // namespace
@@ -78,7 +79,9 @@ WeightedWbcController::Result WeightedWbcController::step(
     equality_count += problem.lower[row] == problem.upper[row] ? 1 : 0;
   }
   const int expected_equalities =
-      profile_ == WeightedWbcProfile::kPhase46HipCommonIncrementLimitedRolling &&
+      profile_ == WeightedWbcProfile::kPhase46MujocoContactResponse
+          ? 12 + reference.primitive_contact_row_count
+          : profile_ == WeightedWbcProfile::kPhase46HipCommonIncrementLimitedRolling &&
               reference.hip_common_increment_limit_active
           ? 13 : 12;
   if (problem.a.rows() != WeightedWbcProblem::kConstraintCount ||
@@ -152,7 +155,8 @@ WeightedWbcController::Result WeightedWbcController::step(
         phase21_profile::kVariableScale[index] * solved.x[index];
   }
   if (profile_ == WeightedWbcProfile::kPhase46PointRealizableRolling ||
-      profile_ == WeightedWbcProfile::kPhase46ConstraintConsistentLegClosureReaction) {
+      profile_ == WeightedWbcProfile::kPhase46ConstraintConsistentLegClosureReaction ||
+      profile_ == WeightedWbcProfile::kPhase46MujocoContactResponse) {
     for (int side = 0; side < 2; ++side) {
       output.physical_solution.segment<6>(18 + 6 * side) =
           model.point_force_wrench_projector[side] *
@@ -199,7 +203,8 @@ WeightedWbcController::Result WeightedWbcController::step(
       profile_ == WeightedWbcProfile::kPhase46HipCommonSafeRolling ||
       profile_ == WeightedWbcProfile::kPhase46HipCommonIncrementLimitedRolling ||
       profile_ == WeightedWbcProfile::kPhase46PointRealizableRolling ||
-      profile_ == WeightedWbcProfile::kPhase46ConstraintConsistentLegClosureReaction) {
+      profile_ == WeightedWbcProfile::kPhase46ConstraintConsistentLegClosureReaction ||
+      profile_ == WeightedWbcProfile::kPhase46MujocoContactResponse) {
     record_task(Task::kWheelLongitudinalTracking,
                 output.wheel_longitudinal_acceleration_m_s2 -
                     reference.wheel_longitudinal_acceleration_m_s2);
@@ -208,7 +213,8 @@ WeightedWbcController::Result WeightedWbcController::step(
       profile_ == WeightedWbcProfile::kPhase46HipCommonSafeRolling ||
       profile_ == WeightedWbcProfile::kPhase46HipCommonIncrementLimitedRolling ||
       profile_ == WeightedWbcProfile::kPhase46PointRealizableRolling ||
-      profile_ == WeightedWbcProfile::kPhase46ConstraintConsistentLegClosureReaction) {
+      profile_ == WeightedWbcProfile::kPhase46ConstraintConsistentLegClosureReaction ||
+      profile_ == WeightedWbcProfile::kPhase46MujocoContactResponse) {
     output.rolling_velocity_m_s = reference.rolling_velocity_m_s;
     output.rolling_task_active = reference.rolling_task_active;
     Eigen::Vector2d residual = Eigen::Vector2d::Zero();
@@ -280,6 +286,14 @@ WeightedWbcController::Result WeightedWbcController::step(
   const auto slack = output.physical_solution.tail<12>().cwiseQuotient(wrench_scale);
   record_task(Task::kSlackPenalty, slack);
   output.maximum_normalized_slack = slack.cwiseAbs().maxCoeff();
+  if (profile_ == WeightedWbcProfile::kPhase46MujocoContactResponse) {
+    output.contact_response_hard_residual =
+        reference.primitive_contact_nudot *
+            output.physical_solution.head<12>() +
+        reference.primitive_contact_wrench *
+            output.physical_solution.segment<12>(18) -
+        reference.primitive_contact_rhs;
+  }
   if (validateTorqueCommand(TorqueCommand{state.sample_time_ns,
                                           output.torque_nm}) !=
       ValidationError::kNone) {
