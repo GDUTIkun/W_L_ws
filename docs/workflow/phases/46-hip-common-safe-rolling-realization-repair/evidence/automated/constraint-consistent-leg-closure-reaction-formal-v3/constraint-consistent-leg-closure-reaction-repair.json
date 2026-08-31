@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "phase": 46,
+  "classification": "C-EXPLICIT-REACTION-NOT-ACTUALLY-IN-QP",
+  "implementation_status": "ABSENT_FROM_ACTUAL_QP",
+  "candidate_profile_reaches_runtime_qp": true,
+  "candidate_specific_qp_branch_executed": true,
+  "candidate_specific_branch_semantics": [
+    "minimal_interaction_wrench",
+    "corrected_point_realizable_contact",
+    "rolling_task"
+  ],
+  "constraint_consistent_reaction_formulation_present": false,
+  "runtime_qp_actually_solved": false,
+  "runtime_qp_solution_dimension": null,
+  "runtime_qp_reaction_probes_present": false,
+  "runtime_reaction_source": "invalid",
+  "runtime_lambda_eq": "UNAVAILABLE",
+  "old_path_in_real_qp": "NEVER_PRESENT",
+  "old_diagnostic_reconstruction": "HISTORICAL_ONLY",
+  "double_reaction_counting": false,
+  "double_closure_enforcement": false,
+  "R1_still_exactly_closed": null,
+  "QP_equality_range_residual": null,
+  "virtual_work_residual": null,
+  "equality_acceleration_closure": null,
+  "full_runtime_qp_dynamics_closure": null,
+  "RUNTIME_PROVENANCE": "NOT_RUN",
+  "DG46ER_COMP_A": "NOT_RUN",
+  "DG46ER_COMP_B": "NOT_RUN",
+  "EQ": "NOT_RUN",
+  "AUTH": "NOT_RUN",
+  "R2_authorized": false,
+  "stop_rule_triggered": "IMPLEMENTATION-STATUS FAIL",
+  "next_allowed_action": "implementation fix only",
+  "source_findings": {
+    "profile_selection": "R46E-* selects kPhase46ConstraintConsistentLegClosureReaction",
+    "qp_layout": "unchanged 42D decision vector",
+    "qp_formulation": "same corrected-R1 dynamics/contact/task branches; no J_eq, lambda_eq, coupled KKT, Schur recovery, or runtime equality-reaction output",
+    "negative_search_scope": [
+      "ros_ws/src/wheel_leg_core",
+      "ros_ws/src/wheel_leg_mujoco/src",
+      "ros_ws/src/wheel_leg_core/include",
+      "ros_ws/src/wheel_leg_mujoco/include"
+    ]
+  },
+  "verification": {
+    "cbm_project": "W_L_ws",
+    "cbm_generation": "2026-08-29T06:47:42Z",
+    "cbm_freshness": "changed sources verified directly",
+    "graphify_relation_query": true,
+    "build_run": false,
+    "tests_run": false,
+    "reason_not_run": "Case B requires immediate stop before instrumentation, runtime solve, COMP-A, or later gates"
+  }
+}

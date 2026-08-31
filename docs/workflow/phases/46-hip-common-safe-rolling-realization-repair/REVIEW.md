@@ -562,3 +562,42 @@ reduction/reaction reconstruction，而不是 geometry、target或已证明的 s
 与 [fresh replay-v4](evidence/automated/leg-closure-equality-operator-audit-replay-v4/summary.json)。
 本轮未修改 equality/reduction/solver，未实施 repair；R2 继续不授权，Phase46 保持
 `review/REWORK`。
+
+## REWORK — Constraint-consistent reaction implementation audit
+
+结论：`D-REACTION-SEMANTICS-IMPLEMENTATION-FAIL`。
+
+新 profile 的现有 C++ 改动只复用 corrected-R1 QP/profile 与 point-force projection，没有产生、
+保存或输出 coupled `[J_contact; J_eq]` KKT 恢复所得的 runtime `lambda_eq`、`Q_eq` 和 contact
+companion reaction。原 component runner 则直接把历史 `rigid.equality_generalized_force` 赋给
+`new_QP_equality_generalized_force`，随后执行 `relative(qeq, qeq)` 并把 contact parity 固定为
+`0.0`；因此 formal-v1 的 COMP-A/B PASS 不能作为实现证据。
+
+runner 已改为 fail-closed：输入没有 `runtime_qp_reaction_probes` 时直接输出 COMP-A FAIL，且
+COMP-B/EQ/AUTH 均为 `NOT_RUN`。fresh replay 的 decision JSON 逐值相同，non-finite audit 无命中。
+targeted build 通过；`wheel_leg_core` 与 `wheel_leg_mujoco` 共 35 tests 全部通过，但构建/回归通过
+不改变 reaction semantics gate 的失败。下一允许动作仅为 implementation fix；R2 仍未授权。
+
+Evidence：
+[formal-v2](evidence/automated/constraint-consistent-leg-closure-reaction-formal-v2/constraint-consistent-leg-closure-reaction-repair.json) 与
+[fresh replay-v1](evidence/automated/constraint-consistent-leg-closure-reaction-replay-v1/constraint-consistent-leg-closure-reaction-repair.json)。
+
+## REWORK — Runtime implementation-status audit
+
+结论：`C-EXPLICIT-REACTION-NOT-ACTUALLY-IN-QP`。
+
+`R46E-*` runtime command 能选择 `kPhase46ConstraintConsistentLegClosureReaction`，并进入
+`WeightedWbcController::step` 的通用 42D solve。candidate-specific profile checks也会执行，但只让
+该 profile复用 corrected-R1 的 minimal interaction wrench、point-realizable contact projector 和
+rolling task。actual QP construction、decision layout与solution extraction中不存在 `J_eq`、
+`lambda_eq`、explicit equality rows、coupled KKT/Schur recovery或 runtime equality-reaction output。
+
+因此 profile reachability 不能证明 frozen reaction formulation 已实现。旧 non-physical equality
+reaction也从未作为 term进入 real QP；它只存在于历史 post-hoc diagnostic reconstruction。按本轮
+Case B stop rule，IMPLEMENTATION-STATUS 是首个 mandatory FAIL，故没有补 instrumentation、没有
+执行 runtime solve，RUNTIME-PROVENANCE 与 COMP-A 均未运行；COMP-B/EQ/AUTH/R2 同样未进入。
+formal-v2 的失败仍只表示 runtime evidence contract拒绝 oracle 冒充，并不拒绝 physical repair
+hypothesis。下一允许动作仅为 implementation fix。
+
+Evidence：
+[formal-v3](evidence/automated/constraint-consistent-leg-closure-reaction-formal-v3/constraint-consistent-leg-closure-reaction-repair.json)。

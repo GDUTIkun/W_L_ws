@@ -1,0 +1,8 @@
+{
+  "R2_authorized": false,
+  "classification": "D-QP-CONSTRAINED-REDUCTION/REACTION-MISMATCH",
+  "next_allowed_action": "define one Phase46 REWORK repair candidate",
+  "pass": true,
+  "replay_max_abs_error": null,
+  "replay_pass": true
+}

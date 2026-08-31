@@ -50,11 +50,13 @@ bool usesMinimalInteractionWrench(WeightedWbcProfile profile) {
          profile == WeightedWbcProfile::kPhase45ContactConsistentRolling ||
          profile == WeightedWbcProfile::kPhase46HipCommonSafeRolling ||
          profile == WeightedWbcProfile::kPhase46HipCommonIncrementLimitedRolling ||
-         profile == WeightedWbcProfile::kPhase46PointRealizableRolling;
+         profile == WeightedWbcProfile::kPhase46PointRealizableRolling ||
+         profile == WeightedWbcProfile::kPhase46ConstraintConsistentLegClosureReaction;
 }
 
 bool usesPointRealizableContact(WeightedWbcProfile profile) {
-  return profile == WeightedWbcProfile::kPhase46PointRealizableRolling;
+  return profile == WeightedWbcProfile::kPhase46PointRealizableRolling ||
+         profile == WeightedWbcProfile::kPhase46ConstraintConsistentLegClosureReaction;
 }
 
 }  // namespace
@@ -202,7 +204,8 @@ WeightedWbcProblem::Result WeightedWbcProblem::assemble(
       profile == WeightedWbcProfile::kPhase45ContactConsistentRolling ||
       profile == WeightedWbcProfile::kPhase46HipCommonSafeRolling ||
       profile == WeightedWbcProfile::kPhase46HipCommonIncrementLimitedRolling ||
-      profile == WeightedWbcProfile::kPhase46PointRealizableRolling) {
+      profile == WeightedWbcProfile::kPhase46PointRealizableRolling ||
+      profile == WeightedWbcProfile::kPhase46ConstraintConsistentLegClosureReaction) {
     Eigen::Matrix<double, 2, 42> wheel_longitudinal =
         Eigen::Matrix<double, 2, 42>::Zero();
     Eigen::Vector2d wheel_longitudinal_target =
@@ -222,7 +225,8 @@ WeightedWbcProblem::Result WeightedWbcProblem::assemble(
   if (profile == WeightedWbcProfile::kPhase45ContactConsistentRolling ||
       profile == WeightedWbcProfile::kPhase46HipCommonSafeRolling ||
       profile == WeightedWbcProfile::kPhase46HipCommonIncrementLimitedRolling ||
-      profile == WeightedWbcProfile::kPhase46PointRealizableRolling) {
+      profile == WeightedWbcProfile::kPhase46PointRealizableRolling ||
+      profile == WeightedWbcProfile::kPhase46ConstraintConsistentLegClosureReaction) {
     Eigen::Matrix<double, 2, 42> rolling =
         Eigen::Matrix<double, 2, 42>::Zero();
     Eigen::Vector2d target = Eigen::Vector2d::Zero();

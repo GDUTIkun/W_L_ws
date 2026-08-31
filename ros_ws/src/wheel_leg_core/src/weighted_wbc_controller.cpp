@@ -145,7 +145,8 @@ WeightedWbcController::Result WeightedWbcController::step(
     output.physical_solution[index] =
         phase21_profile::kVariableScale[index] * solved.x[index];
   }
-  if (profile_ == WeightedWbcProfile::kPhase46PointRealizableRolling) {
+  if (profile_ == WeightedWbcProfile::kPhase46PointRealizableRolling ||
+      profile_ == WeightedWbcProfile::kPhase46ConstraintConsistentLegClosureReaction) {
     for (int side = 0; side < 2; ++side) {
       output.physical_solution.segment<6>(18 + 6 * side) =
           model.point_force_wrench_projector[side] *
@@ -191,7 +192,8 @@ WeightedWbcController::Result WeightedWbcController::step(
       profile_ == WeightedWbcProfile::kPhase45ContactConsistentRolling ||
       profile_ == WeightedWbcProfile::kPhase46HipCommonSafeRolling ||
       profile_ == WeightedWbcProfile::kPhase46HipCommonIncrementLimitedRolling ||
-      profile_ == WeightedWbcProfile::kPhase46PointRealizableRolling) {
+      profile_ == WeightedWbcProfile::kPhase46PointRealizableRolling ||
+      profile_ == WeightedWbcProfile::kPhase46ConstraintConsistentLegClosureReaction) {
     record_task(Task::kWheelLongitudinalTracking,
                 output.wheel_longitudinal_acceleration_m_s2 -
                     reference.wheel_longitudinal_acceleration_m_s2);
@@ -199,7 +201,8 @@ WeightedWbcController::Result WeightedWbcController::step(
   if (profile_ == WeightedWbcProfile::kPhase45ContactConsistentRolling ||
       profile_ == WeightedWbcProfile::kPhase46HipCommonSafeRolling ||
       profile_ == WeightedWbcProfile::kPhase46HipCommonIncrementLimitedRolling ||
-      profile_ == WeightedWbcProfile::kPhase46PointRealizableRolling) {
+      profile_ == WeightedWbcProfile::kPhase46PointRealizableRolling ||
+      profile_ == WeightedWbcProfile::kPhase46ConstraintConsistentLegClosureReaction) {
     output.rolling_velocity_m_s = reference.rolling_velocity_m_s;
     output.rolling_task_active = reference.rolling_task_active;
     Eigen::Vector2d residual = Eigen::Vector2d::Zero();

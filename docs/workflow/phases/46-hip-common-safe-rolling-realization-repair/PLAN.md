@@ -246,6 +246,31 @@ controller/parameter，不实施 repair，不运行 trajectory 层验证。
 | P46-R55 | coupled rigid reaction counterfactual | all equality+contact rows；KKT residual `<=2.54e-14`；QP reaction range/rigid mismatch | done |
 | P46-R56 | classification and replay | `D-QP-CONSTRAINED-REDUCTION/REACTION-MISMATCH`；replay `0`；R2 not authorized | done |
 
+### REWORK tasks — constraint-consistent reaction implementation audit
+
+只审计附件冻结的 bilateral leg-closure reaction candidate。门序为
+`COMP-A -> COMP-B -> EQ -> AUTH`；首个 mandatory FAIL 后停止。
+
+| ID | Task | Deliverable / validation | Status |
+| --- | --- | --- | --- |
+| P46-R57 | runtime reaction evidence contract | component runner 必须读取真实 QP runtime reaction probes，禁止以 rigid oracle 自比较替代 | done |
+| P46-R58 / DG46ER-COMP-A | reaction legality gate | runtime probes 缺失，`D-REACTION-SEMANTICS-IMPLEMENTATION-FAIL`；立即停止 | done |
+| P46-R59 / DG46ER-COMP-B | coupled-rigid parity | DG46ER-COMP-A FAIL，未运行 | blocked |
+| P46-R60 / DG46ER-EQ | compatible-H0 equilibrium | DG46ER-COMP-A FAIL，未运行 | blocked |
+| P46-R61 / DG46ER-AUTH | fixed-state authority | DG46ER-COMP-A FAIL，未运行 | blocked |
+
+### REWORK tasks — runtime implementation-status audit
+
+只执行 `IMPLEMENTATION-STATUS -> RUNTIME-PROVENANCE -> COMP-A -> STOP`。Case B 在首关
+触发时立即停止，不补 instrumentation，不修改 QP formulation。
+
+| ID | Task | Deliverable / validation | Status |
+| --- | --- | --- | --- |
+| P46-R62 | actual runtime branch audit | `R46E-*` profile进入通用 42D solve；candidate-specific profile branches可达 | done |
+| P46-R63 / DG46ER-IMPLEMENTATION-STATUS | reaction formulation presence | actual QP 无 `J_eq/lambda_eq/coupled KKT/Schur recovery`；Case B FAIL | done |
+| P46-R64 / DG46ER-RUNTIME-PROVENANCE | runtime reaction provenance | implementation-status FAIL，未运行 | blocked |
+| P46-R65 / DG46ER-COMP-A | runtime reaction legality | implementation-status FAIL，未运行 | blocked |
+
 ## Classification
 
 最终只能选择：

@@ -1,0 +1,19 @@
+{
+  "created_utc": "2026-08-31T04:23:00Z",
+  "git_head": "5a5164a890671e2445eed6d57395c076cffb08ef",
+  "mode": "read-only implementation-status audit",
+  "inputs": {
+    "attachment": "34b4e8c964a38449c50dc7a9e3d38bcf99bceead578a17848f3ffca771227e2a",
+    "weighted_wbc_problem.hpp": "b0a514f25e8ba210bc750022d326fa57030f5a8c6bee8e7c1acda2d86e169580",
+    "weighted_wbc_controller.cpp": "c5027010db2c2fa328af6906b40e0991d8284f07f060210d2dbfc65b26f42d5b",
+    "weighted_wbc_problem.cpp": "4363fe9dd5fa72f674786511b8390c9eef752bd906520a014d79743b2567f33f",
+    "phase35_workspace_attribution_loop.cpp": "6893808dbd2bbc44457b0a4bef5153a256378c6d77fc06233b6d634569dc710e"
+  },
+  "commands": [
+    "CBM search_graph and inbound trace_path for WeightedWbcController::step",
+    "CBM check_index_coverage for all material source paths",
+    "graphify query for Phase46 reaction implementation/evidence relationship",
+    "rg candidate profile and reaction-formulation symbols over bounded runtime source scopes",
+    "direct source inspection of profile selection, QP assembly, and solver path"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "AUTH": "NOT_RUN",
+  "COMP_A": "FAIL",
+  "COMP_B": "NOT_RUN",
+  "EQ": "NOT_RUN",
+  "classification": "D-REACTION-SEMANTICS-IMPLEMENTATION-FAIL",
+  "failure": "runtime_qp_reaction_probes missing; rigid-oracle reactions cannot be relabeled as QP runtime reactions",
+  "new_constraint_consistent_path_active": false,
+  "next_allowed_action": "implementation fix only",
+  "old_reaction_path_removed": false,
+  "phase": 46,
+  "schema_version": 1
+}
