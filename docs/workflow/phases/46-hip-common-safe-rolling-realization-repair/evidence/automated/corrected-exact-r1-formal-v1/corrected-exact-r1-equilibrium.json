@@ -1,0 +1,10 @@
+{
+  "R1_exactly_closed_at_frozen_H0": false,
+  "R1_repair_preserves_equilibrium": false,
+  "R2_authorized": false,
+  "classification": "NOT-RUN",
+  "entered": false,
+  "metrics": {},
+  "next_allowed_action": "implementation fix only",
+  "pass": false
+}

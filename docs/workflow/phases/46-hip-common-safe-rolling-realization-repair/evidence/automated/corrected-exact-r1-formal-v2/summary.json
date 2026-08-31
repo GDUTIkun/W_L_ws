@@ -1,0 +1,9 @@
+{
+  "R2_authorized": false,
+  "comp_pass": true,
+  "equilibrium_status": "PASS",
+  "next_allowed_action": "fixed-state authority audit",
+  "pass": true,
+  "replay_max_abs_error": null,
+  "replay_pass": true
+}

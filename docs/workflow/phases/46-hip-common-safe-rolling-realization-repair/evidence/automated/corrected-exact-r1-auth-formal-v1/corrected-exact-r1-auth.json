@@ -1,0 +1,6162 @@
+{
+  "AUTH": "FAIL",
+  "R1_still_exactly_closed": true,
+  "R2_authorized": false,
+  "baseline": {
+    "mj": [
+      -0.01933909305259946,
+      -0.04911102767519838,
+      0.0007702889089677423,
+      0.00216294325597155
+    ],
+    "qp": [
+      -5.057570071884815e-06,
+      -1.0069114357416035e-05,
+      -7.438902237624605e-05,
+      -7.691255011907372e-05
+    ],
+    "r1": {
+      "pass": true,
+      "sides": [
+        {
+          "full_operator_closure_max_abs": 1.6653345369377348e-16,
+          "pass": true,
+          "physical_range_residual_max_abs": 2.74000216246181e-14,
+          "point_force_reconstruction_max_abs": 3.552713678800501e-15,
+          "projector_parity_max_abs": 8.881784197001252e-16,
+          "rank": 5,
+          "reduced_operator_closure_max_abs": 4.440892098500626e-15,
+          "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+          "side": "left"
+        },
+        {
+          "full_operator_closure_max_abs": 1.3877787807814457e-16,
+          "pass": true,
+          "physical_range_residual_max_abs": 2.1712071743464954e-14,
+          "point_force_reconstruction_max_abs": 1.4210854715202004e-14,
+          "projector_parity_max_abs": 2.1094237467877974e-15,
+          "rank": 5,
+          "reduced_operator_closure_max_abs": 3.9968028886505635e-15,
+          "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+          "side": "right"
+        }
+      ]
+    },
+    "regime": {
+      "active_constraints": {
+        "counts": [
+          0,
+          0,
+          0
+        ],
+        "rows": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "bilateral_contact": true,
+      "contact_count_per_side": [
+        2,
+        2
+      ],
+      "contact_dimension": [
+        3
+      ],
+      "contact_topology": [
+        [
+          [
+            0,
+            63,
+            3
+          ],
+          [
+            0,
+            63,
+            3
+          ]
+        ],
+        [
+          [
+            0,
+            31,
+            3
+          ],
+          [
+            0,
+            31,
+            3
+          ]
+        ]
+      ],
+      "hard_violation": 4.482025861562988e-11,
+      "maximum_normalized_slack": 0.001522220395389018,
+      "minimum_friction_margin_diagnostic_n": 15.201018814769785,
+      "minimum_torque_margin_nm": 1.9968371510787994,
+      "normal_frame_max_abs_delta_from_baseline": 0.0,
+      "rolling_active": [
+        1,
+        1
+      ],
+      "solver_contact_signature": "{\"active_constraints\":{\"counts\":[0,0,0],\"rows\":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},\"rolling_active\":[1,1],\"statuses\":[\"0\",\"0\",\"0\"],\"topology\":[[[0,63,3],[0,63,3]],[[0,31,3],[0,31,3]]]}",
+      "stable": true,
+      "statuses": [
+        "0",
+        "0",
+        "0"
+      ]
+    }
+  },
+  "baseline_subtraction_definition": "(probe_output - baseline_output) / signed_input_delta",
+  "checks": {
+    "baseline_subtracted_all_probes": true,
+    "branch_convergence": true,
+    "harmful_cross_abs": false,
+    "harmful_cross_reduction": true,
+    "qp_mj_slip_self_sign_consistent": false,
+    "qp_mj_xi_self_sign_consistent": true,
+    "r1_exact_all_probes": true,
+    "regime_stable_all_probes": true,
+    "scale_convergence": true,
+    "slip_self_positive_retained": false,
+    "xi_self_positive_material": true
+  },
+  "classification": "B-HARMFUL-CROSS-REMAINS",
+  "common_differential_contamination": [
+    {
+      "g_mj": [
+        0.018471287338549774,
+        -0.009589572698282672
+      ],
+      "g_qp": [
+        -2.915396518662905e-05,
+        9.848331850676947e-06
+      ],
+      "input_channel": "xi",
+      "input_mode": "common",
+      "output_mode": "differential"
+    },
+    {
+      "g_mj": [
+        0.1735731064853061,
+        -0.0899525906026647
+      ],
+      "g_qp": [
+        -0.00027337223393484266,
+        8.733209029840316e-05
+      ],
+      "input_channel": "slip",
+      "input_mode": "common",
+      "output_mode": "differential"
+    },
+    {
+      "g_mj": [
+        -0.006509888179480561,
+        -0.05283219787386422
+      ],
+      "g_qp": [
+        -2.9153965165146234e-05,
+        -0.00027337223395891737
+      ],
+      "input_channel": "xi",
+      "input_mode": "differential",
+      "output_mode": "common"
+    },
+    {
+      "g_mj": [
+        0.001856704664287244,
+        0.008760810389303944
+      ],
+      "g_qp": [
+        9.848331855284807e-06,
+        8.733209029082589e-05
+      ],
+      "input_channel": "slip",
+      "input_mode": "differential",
+      "output_mode": "common"
+    }
+  ],
+  "differential_authority": "FAIL",
+  "metrics": {
+    "actual_slip_self": -0.14016914577184578,
+    "actual_slip_to_ddxi_cross": -0.11803999921565639,
+    "actual_xi_self": 0.9873663720277985,
+    "maximum_common_differential_contamination_mj": 0.1735731064853061,
+    "reduction_vs_phase45": 0.9725174765896974
+  },
+  "next_allowed_action": "post-corrected-R1 authority attribution",
+  "phase": 46,
+  "probes": [
+    {
+      "baseline_mj": [
+        -0.01933909305259946,
+        -0.04911102767519838,
+        0.0007702889089677423,
+        0.00216294325597155
+      ],
+      "baseline_qp": [
+        -5.057570071884815e-06,
+        -1.0069114357416035e-05,
+        -7.438902237624605e-05,
+        -7.691255011907372e-05
+      ],
+      "baseline_subtracted": true,
+      "branch": -1,
+      "gain_mj_common": [
+        0.9873663720272037,
+        -0.014916103430868619
+      ],
+      "gain_mj_differential": [
+        0.01847128733902975,
+        -0.009589572698480778
+      ],
+      "gain_mj_per_side": [
+        0.968895084688174,
+        1.0058376593662335,
+        -0.005326530732387841,
+        -0.024505676129349396
+      ],
+      "gain_qp_common": [
+        0.9999404419369597,
+        -0.0005568723186051908
+      ],
+      "gain_qp_differential": [
+        -2.915396518682334e-05,
+        9.848331850199898e-06
+      ],
+      "gain_qp_per_side": [
+        0.9999695959021465,
+        0.9999112879717729,
+        -0.0005667206504553907,
+        -0.0005470239867549909
+      ],
+      "input": "xi",
+      "mode": "common",
+      "probe_mj": [
+        -0.0290280438994812,
+        -0.05916940426886071,
+        0.0008235542162916207,
+        0.002408000017265044
+      ],
+      "probe_qp": [
+        -0.01000475352909335,
+        -0.010009181994075144,
+        -6.872181587169214e-05,
+        -7.144231025152381e-05
+      ],
+      "r1": {
+        "pass": true,
+        "sides": [
+          {
+            "full_operator_closure_max_abs": 1.6653345369377348e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.7400178219834224e-14,
+            "point_force_reconstruction_max_abs": 3.552713678800501e-15,
+            "projector_parity_max_abs": 8.881784197001252e-16,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 4.440892098500626e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "left"
+          },
+          {
+            "full_operator_closure_max_abs": 1.3877787807814457e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.1712320321165193e-14,
+            "point_force_reconstruction_max_abs": 2.1316282072803006e-14,
+            "projector_parity_max_abs": 2.1094237467877974e-15,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 3.9968028886505635e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "right"
+          }
+        ]
+      },
+      "regime": {
+        "active_constraints": {
+          "counts": [
+            0,
+            0,
+            0
+          ],
+          "rows": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "bilateral_contact": true,
+        "contact_count_per_side": [
+          2,
+          2
+        ],
+        "contact_dimension": [
+          3
+        ],
+        "contact_topology": [
+          [
+            [
+              0,
+              63,
+              3
+            ],
+            [
+              0,
+              63,
+              3
+            ]
+          ],
+          [
+            [
+              0,
+              31,
+              3
+            ],
+            [
+              0,
+              31,
+              3
+            ]
+          ]
+        ],
+        "hard_violation": 4.482070270483973e-11,
+        "maximum_normalized_slack": 0.0015023036174798504,
+        "minimum_friction_margin_diagnostic_n": 15.201002915604708,
+        "minimum_torque_margin_nm": 1.996619405377662,
+        "normal_frame_max_abs_delta_from_baseline": 0.0,
+        "rolling_active": [
+          1,
+          1
+        ],
+        "solver_contact_signature": "{\"active_constraints\":{\"counts\":[0,0,0],\"rows\":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},\"rolling_active\":[1,1],\"statuses\":[\"0\",\"0\",\"0\"],\"topology\":[[[0,63,3],[0,63,3]],[[0,31,3],[0,31,3]]]}",
+        "stable": true,
+        "statuses": [
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "scale": 1.0,
+      "scale_convergence_pass": true,
+      "scale_convergence_relative": 0.0,
+      "signed_delta_m_s2": -0.01
+    },
+    {
+      "baseline_mj": [
+        -0.01933909305259946,
+        -0.04911102767519838,
+        0.0007702889089677423,
+        0.00216294325597155
+      ],
+      "baseline_qp": [
+        -5.057570071884815e-06,
+        -1.0069114357416035e-05,
+        -7.438902237624605e-05,
+        -7.691255011907372e-05
+      ],
+      "baseline_subtracted": true,
+      "branch": -1,
+      "gain_mj_common": [
+        0.9873663720280459,
+        -0.014916103431116684
+      ],
+      "gain_mj_differential": [
+        0.018471287339306308,
+        -0.009589572698629617
+      ],
+      "gain_mj_per_side": [
+        0.9688950846887395,
+        1.0058376593673521,
+        -0.005326530732487067,
+        -0.0245056761297463
+      ],
+      "gain_qp_common": [
+        0.9999404419369566,
+        -0.000556872318600507
+      ],
+      "gain_qp_differential": [
+        -2.915396518260449e-05,
+        9.848331846903924e-06
+      ],
+      "gain_qp_per_side": [
+        0.9999695959021393,
+        0.9999112879717741,
+        -0.0005667206504474109,
+        -0.0005470239867536031
+      ],
+      "input": "xi",
+      "mode": "common",
+      "probe_mj": [
+        -0.02418356847604316,
+        -0.05414021597203514,
+        0.0007969215626301776,
+        0.0022854716366202815
+      ],
+      "probe_qp": [
+        -0.005004905549582581,
+        -0.005009625554216286,
+        -7.155541912400899e-05,
+        -7.41774301853057e-05
+      ],
+      "r1": {
+        "pass": true,
+        "sides": [
+          {
+            "full_operator_closure_max_abs": 1.6653345369377348e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.7400099869286603e-14,
+            "point_force_reconstruction_max_abs": 7.105427357601002e-15,
+            "projector_parity_max_abs": 8.881784197001252e-16,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 4.440892098500626e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "left"
+          },
+          {
+            "full_operator_closure_max_abs": 1.3877787807814457e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.1712196019080184e-14,
+            "point_force_reconstruction_max_abs": 1.4210854715202004e-14,
+            "projector_parity_max_abs": 2.1094237467877974e-15,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 3.9968028886505635e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "right"
+          }
+        ]
+      },
+      "regime": {
+        "active_constraints": {
+          "counts": [
+            0,
+            0,
+            0
+          ],
+          "rows": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "bilateral_contact": true,
+        "contact_count_per_side": [
+          2,
+          2
+        ],
+        "contact_dimension": [
+          3
+        ],
+        "contact_topology": [
+          [
+            [
+              0,
+              63,
+              3
+            ],
+            [
+              0,
+              63,
+              3
+            ]
+          ],
+          [
+            [
+              0,
+              31,
+              3
+            ],
+            [
+              0,
+              31,
+              3
+            ]
+          ]
+        ],
+        "hard_violation": 4.4820369637932345e-11,
+        "maximum_normalized_slack": 0.0015122620064342903,
+        "minimum_friction_margin_diagnostic_n": 15.201010960122794,
+        "minimum_torque_margin_nm": 1.9967282782282292,
+        "normal_frame_max_abs_delta_from_baseline": 0.0,
+        "rolling_active": [
+          1,
+          1
+        ],
+        "solver_contact_signature": "{\"active_constraints\":{\"counts\":[0,0,0],\"rows\":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},\"rolling_active\":[1,1],\"statuses\":[\"0\",\"0\",\"0\"],\"topology\":[[[0,63,3],[0,63,3]],[[0,31,3],[0,31,3]]]}",
+        "stable": true,
+        "statuses": [
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "scale": 0.5,
+      "scale_convergence_pass": true,
+      "scale_convergence_relative": 9.439818752977845e-13,
+      "signed_delta_m_s2": -0.005
+    },
+    {
+      "baseline_mj": [
+        -0.01933909305259946,
+        -0.04911102767519838,
+        0.0007702889089677423,
+        0.00216294325597155
+      ],
+      "baseline_qp": [
+        -5.057570071884815e-06,
+        -1.0069114357416035e-05,
+        -7.438902237624605e-05,
+        -7.691255011907372e-05
+      ],
+      "baseline_subtracted": true,
+      "branch": -1,
+      "gain_mj_common": [
+        0.9873663720271222,
+        -0.014916103430449856
+      ],
+      "gain_mj_differential": [
+        0.018471287339698328,
+        -0.009589572698838478
+      ],
+      "gain_mj_per_side": [
+        0.9688950846874239,
+        1.0058376593668206,
+        -0.005326530731611379,
+        -0.024505676129288334
+      ],
+      "gain_qp_common": [
+        0.9999404419369613,
+        -0.0005568723186088337
+      ],
+      "gain_qp_differential": [
+        -2.9153965186712316e-05,
+        9.848331845516145e-06
+      ],
+      "gain_qp_per_side": [
+        0.999969595902148,
+        0.9999112879717745,
+        -0.0005667206504543498,
+        -0.0005470239867633175
+      ],
+      "input": "xi",
+      "mode": "common",
+      "probe_mj": [
+        -0.02176133076431802,
+        -0.05162562182361543,
+        0.0007836052357967707,
+        0.002224207446294771
+      ],
+      "probe_qp": [
+        -0.0025049815598272547,
+        -0.0025098473342868525,
+        -7.297222075011017e-05,
+        -7.554499015216543e-05
+      ],
+      "r1": {
+        "pass": true,
+        "sides": [
+          {
+            "full_operator_closure_max_abs": 1.6653345369377348e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.740006074695235e-14,
+            "point_force_reconstruction_max_abs": 3.552713678800501e-15,
+            "projector_parity_max_abs": 8.881784197001252e-16,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 4.440892098500626e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "left"
+          },
+          {
+            "full_operator_closure_max_abs": 1.3877787807814457e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.171213386803768e-14,
+            "point_force_reconstruction_max_abs": 1.4210854715202004e-14,
+            "projector_parity_max_abs": 2.1094237467877974e-15,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 3.9968028886505635e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "right"
+          }
+        ]
+      },
+      "regime": {
+        "active_constraints": {
+          "counts": [
+            0,
+            0,
+            0
+          ],
+          "rows": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "bilateral_contact": true,
+        "contact_count_per_side": [
+          2,
+          2
+        ],
+        "contact_dimension": [
+          3
+        ],
+        "contact_topology": [
+          [
+            [
+              0,
+              63,
+              3
+            ],
+            [
+              0,
+              63,
+              3
+            ]
+          ],
+          [
+            [
+              0,
+              31,
+              3
+            ],
+            [
+              0,
+              31,
+              3
+            ]
+          ]
+        ],
+        "hard_violation": 4.482014759332742e-11,
+        "maximum_normalized_slack": 0.001517241200911673,
+        "minimum_friction_margin_diagnostic_n": 15.20101491118681,
+        "minimum_torque_margin_nm": 1.9967827146535149,
+        "normal_frame_max_abs_delta_from_baseline": 0.0,
+        "rolling_active": [
+          1,
+          1
+        ],
+        "solver_contact_signature": "{\"active_constraints\":{\"counts\":[0,0,0],\"rows\":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},\"rolling_active\":[1,1],\"statuses\":[\"0\",\"0\",\"0\"],\"topology\":[[[0,63,3],[0,63,3]],[[0,31,3],[0,31,3]]]}",
+        "stable": true,
+        "statuses": [
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "scale": 0.25,
+      "scale_convergence_pass": true,
+      "scale_convergence_relative": 8.808625468532696e-13,
+      "signed_delta_m_s2": -0.0025
+    },
+    {
+      "baseline_mj": [
+        -0.01933909305259946,
+        -0.04911102767519838,
+        0.0007702889089677423,
+        0.00216294325597155
+      ],
+      "baseline_qp": [
+        -5.057570071884815e-06,
+        -1.0069114357416035e-05,
+        -7.438902237624605e-05,
+        -7.691255011907372e-05
+      ],
+      "baseline_subtracted": true,
+      "branch": 1,
+      "gain_mj_common": [
+        0.9873663720283935,
+        -0.01491610343133283
+      ],
+      "gain_mj_differential": [
+        0.018471287338069797,
+        -0.009589572698084567
+      ],
+      "gain_mj_per_side": [
+        0.9688950846903237,
+        1.0058376593664633,
+        -0.005326530733248264,
+        -0.024505676129417397
+      ],
+      "gain_qp_common": [
+        0.9999404419369577,
+        -0.0005568723186033693
+      ],
+      "gain_qp_differential": [
+        -2.915396518643476e-05,
+        9.848331851153996e-06
+      ],
+      "gain_qp_per_side": [
+        0.9999695959021442,
+        0.9999112879717713,
+        -0.0005667206504545233,
+        -0.0005470239867522153
+      ],
+      "input": "xi",
+      "mode": "common",
+      "probe_mj": [
+        -0.009650142205696224,
+        -0.039052651081533746,
+        0.0007170236016352596,
+        0.001917886494677376
+      ],
+      "probe_qp": [
+        0.009994638388949557,
+        0.009989043765360297,
+        -8.005622888079128e-05,
+        -8.238278998659587e-05
+      ],
+      "r1": {
+        "pass": true,
+        "sides": [
+          {
+            "full_operator_closure_max_abs": 1.6653345369377348e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.7399864923522858e-14,
+            "point_force_reconstruction_max_abs": 3.552713678800501e-15,
+            "projector_parity_max_abs": 8.881784197001252e-16,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 4.440892098500626e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "left"
+          },
+          {
+            "full_operator_closure_max_abs": 1.3877787807814457e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.1711823152529825e-14,
+            "point_force_reconstruction_max_abs": 1.4210854715202004e-14,
+            "projector_parity_max_abs": 2.1094237467877974e-15,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 3.9968028886505635e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "right"
+          }
+        ]
+      },
+      "regime": {
+        "active_constraints": {
+          "counts": [
+            0,
+            0,
+            0
+          ],
+          "rows": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "bilateral_contact": true,
+        "contact_count_per_side": [
+          2,
+          2
+        ],
+        "contact_dimension": [
+          3
+        ],
+        "contact_topology": [
+          [
+            [
+              0,
+              63,
+              3
+            ],
+            [
+              0,
+              63,
+              3
+            ]
+          ],
+          [
+            [
+              0,
+              31,
+              3
+            ],
+            [
+              0,
+              31,
+              3
+            ]
+          ]
+        ],
+        "hard_violation": 4.481970350411757e-11,
+        "maximum_normalized_slack": 0.001542137173297906,
+        "minimum_friction_margin_diagnostic_n": 15.20103395402547,
+        "minimum_torque_margin_nm": 1.9970548967799349,
+        "normal_frame_max_abs_delta_from_baseline": 0.0,
+        "rolling_active": [
+          1,
+          1
+        ],
+        "solver_contact_signature": "{\"active_constraints\":{\"counts\":[0,0,0],\"rows\":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},\"rolling_active\":[1,1],\"statuses\":[\"0\",\"0\",\"0\"],\"topology\":[[[0,63,3],[0,63,3]],[[0,31,3],[0,31,3]]]}",
+        "stable": true,
+        "statuses": [
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "scale": 1.0,
+      "scale_convergence_pass": true,
+      "scale_convergence_relative": 0.0,
+      "signed_delta_m_s2": 0.01
+    },
+    {
+      "baseline_mj": [
+        -0.01933909305259946,
+        -0.04911102767519838,
+        0.0007702889089677423,
+        0.00216294325597155
+      ],
+      "baseline_qp": [
+        -5.057570071884815e-06,
+        -1.0069114357416035e-05,
+        -7.438902237624605e-05,
+        -7.691255011907372e-05
+      ],
+      "baseline_subtracted": true,
+      "branch": 1,
+      "gain_mj_common": [
+        0.9873663720285912,
+        -0.014916103431121541
+      ],
+      "gain_mj_differential": [
+        0.01847128733736475,
+        -0.009589572697761561
+      ],
+      "gain_mj_per_side": [
+        0.9688950846912264,
+        1.005837659365956,
+        -0.00532653073335998,
+        -0.024505676128883103
+      ],
+      "gain_qp_common": [
+        0.9999404419369594,
+        -0.0005568723186145583
+      ],
+      "gain_qp_differential": [
+        -2.9153965189543385e-05,
+        9.848331851240733e-06
+      ],
+      "gain_qp_per_side": [
+        0.999969595902149,
+        0.9999112879717699,
+        -0.000566720650465799,
+        -0.0005470239867633175
+      ],
+      "input": "xi",
+      "mode": "common",
+      "probe_mj": [
+        -0.014494617629143329,
+        -0.0440818393783686,
+        0.0007436562553009424,
+        0.0020404148753271345
+      ],
+      "probe_qp": [
+        0.00499479040943886,
+        0.004989487325501434,
+        -7.722262562857504e-05,
+        -7.964767005289031e-05
+      ],
+      "r1": {
+        "pass": true,
+        "sides": [
+          {
+            "full_operator_closure_max_abs": 1.6653345369377348e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.739994316819136e-14,
+            "point_force_reconstruction_max_abs": 3.552713678800501e-15,
+            "projector_parity_max_abs": 8.881784197001252e-16,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 4.440892098500626e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "left"
+          },
+          {
+            "full_operator_closure_max_abs": 1.3877787807814457e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.1711947441379944e-14,
+            "point_force_reconstruction_max_abs": 7.105427357601002e-15,
+            "projector_parity_max_abs": 2.1094237467877974e-15,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 3.9968028886505635e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "right"
+          }
+        ]
+      },
+      "regime": {
+        "active_constraints": {
+          "counts": [
+            0,
+            0,
+            0
+          ],
+          "rows": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "bilateral_contact": true,
+        "contact_count_per_side": [
+          2,
+          2
+        ],
+        "contact_dimension": [
+          3
+        ],
+        "contact_topology": [
+          [
+            [
+              0,
+              63,
+              3
+            ],
+            [
+              0,
+              63,
+              3
+            ]
+          ],
+          [
+            [
+              0,
+              31,
+              3
+            ],
+            [
+              0,
+              31,
+              3
+            ]
+          ]
+        ],
+        "hard_violation": 4.4819925548722495e-11,
+        "maximum_normalized_slack": 0.0015321787843431865,
+        "minimum_friction_margin_diagnostic_n": 15.201026479439312,
+        "minimum_torque_margin_nm": 1.9969460239293646,
+        "normal_frame_max_abs_delta_from_baseline": 0.0,
+        "rolling_active": [
+          1,
+          1
+        ],
+        "solver_contact_signature": "{\"active_constraints\":{\"counts\":[0,0,0],\"rows\":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},\"rolling_active\":[1,1],\"statuses\":[\"0\",\"0\",\"0\"],\"topology\":[[[0,63,3],[0,63,3]],[[0,31,3],[0,31,3]]]}",
+        "stable": true,
+        "statuses": [
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "scale": 0.5,
+      "scale_convergence_pass": true,
+      "scale_convergence_relative": 8.380427872934636e-13,
+      "signed_delta_m_s2": 0.005
+    },
+    {
+      "baseline_mj": [
+        -0.01933909305259946,
+        -0.04911102767519838,
+        0.0007702889089677423,
+        0.00216294325597155
+      ],
+      "baseline_qp": [
+        -5.057570071884815e-06,
+        -1.0069114357416035e-05,
+        -7.438902237624605e-05,
+        -7.691255011907372e-05
+      ],
+      "baseline_subtracted": true,
+      "branch": 1,
+      "gain_mj_common": [
+        0.9873663720299741,
+        -0.014916103433335048
+      ],
+      "gain_mj_differential": [
+        0.018471287335575237,
+        -0.00958957269696914
+      ],
+      "gain_mj_per_side": [
+        0.9688950846943989,
+        1.0058376593655494,
+        -0.005326530736365909,
+        -0.024505676130304188
+      ],
+      "gain_qp_common": [
+        0.9999404419369458,
+        -0.0005568723185796903
+      ],
+      "gain_qp_differential": [
+        -2.915396518643476e-05,
+        9.848331855230597e-06
+      ],
+      "gain_qp_per_side": [
+        0.9999695959021322,
+        0.9999112879717593,
+        -0.0005667206504349209,
+        -0.0005470239867244597
+      ],
+      "input": "xi",
+      "mode": "common",
+      "probe_mj": [
+        -0.016916855340863464,
+        -0.046596433526784505,
+        0.0007569725821268275,
+        0.0021016790656457895
+      ],
+      "probe_qp": [
+        0.0024948664196834456,
+        0.0024897091055719823,
+        -7.580582400233335e-05,
+        -7.828011008588487e-05
+      ],
+      "r1": {
+        "pass": true,
+        "sides": [
+          {
+            "full_operator_closure_max_abs": 1.6653345369377348e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.739998234346517e-14,
+            "point_force_reconstruction_max_abs": 3.552713678800501e-15,
+            "projector_parity_max_abs": 8.881784197001252e-16,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 4.440892098500626e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "left"
+          },
+          {
+            "full_operator_closure_max_abs": 1.3877787807814457e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.171200957918756e-14,
+            "point_force_reconstruction_max_abs": 2.1316282072803006e-14,
+            "projector_parity_max_abs": 2.1094237467877974e-15,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 3.9968028886505635e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "right"
+          }
+        ]
+      },
+      "regime": {
+        "active_constraints": {
+          "counts": [
+            0,
+            0,
+            0
+          ],
+          "rows": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "bilateral_contact": true,
+        "contact_count_per_side": [
+          2,
+          2
+        ],
+        "contact_dimension": [
+          3
+        ],
+        "contact_topology": [
+          [
+            [
+              0,
+              63,
+              3
+            ],
+            [
+              0,
+              63,
+              3
+            ]
+          ],
+          [
+            [
+              0,
+              31,
+              3
+            ],
+            [
+              0,
+              31,
+              3
+            ]
+          ]
+        ],
+        "hard_violation": 4.482025861562988e-11,
+        "maximum_normalized_slack": 0.001527199589866171,
+        "minimum_friction_margin_diagnostic_n": 15.201022670858352,
+        "minimum_torque_margin_nm": 1.9968915875040834,
+        "normal_frame_max_abs_delta_from_baseline": 0.0,
+        "rolling_active": [
+          1,
+          1
+        ],
+        "solver_contact_signature": "{\"active_constraints\":{\"counts\":[0,0,0],\"rows\":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},\"rolling_active\":[1,1],\"statuses\":[\"0\",\"0\",\"0\"],\"topology\":[[[0,63,3],[0,63,3]],[[0,31,3],[0,31,3]]]}",
+        "stable": true,
+        "statuses": [
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "scale": 0.25,
+      "scale_convergence_pass": true,
+      "scale_convergence_relative": 3.78477495397252e-12,
+      "signed_delta_m_s2": 0.0025
+    },
+    {
+      "baseline_mj": [
+        -0.01933909305259946,
+        -0.04911102767519838,
+        0.0007702889089677423,
+        0.00216294325597155
+      ],
+      "baseline_qp": [
+        -5.057570071884815e-06,
+        -1.0069114357416035e-05,
+        -7.438902237624605e-05,
+        -7.691255011907372e-05
+      ],
+      "baseline_subtracted": true,
+      "branch": -1,
+      "gain_mj_common": [
+        -0.11803999921608017,
+        -0.14016914577107617
+      ],
+      "gain_mj_differential": [
+        0.17357310648618546,
+        -0.08995259060301034
+      ],
+      "gain_mj_per_side": [
+        -0.2916131057022656,
+        0.05553310727010527,
+        -0.050216555168065835,
+        -0.2301217363740865
+      ],
+      "gain_qp_common": [
+        -0.0005568723183777143,
+        0.9947780693566347
+      ],
+      "gain_qp_differential": [
+        -0.00027337223393429514,
+        8.733209029820888e-05
+      ],
+      "gain_qp_per_side": [
+        -0.00028350008444341917,
+        -0.0008302445523120094,
+        0.9946907372663365,
+        0.9948654014469329
+      ],
+      "input": "slip",
+      "mode": "common",
+      "probe_mj": [
+        -0.016422961995576805,
+        -0.04966635874789943,
+        0.0012724544606484006,
+        0.004464160619712415
+      ],
+      "probe_qp": [
+        -2.222569227450623e-06,
+        -1.7666688342959404e-06,
+        -0.010021296395039611,
+        -0.010025566564588403
+      ],
+      "r1": {
+        "pass": true,
+        "sides": [
+          {
+            "full_operator_closure_max_abs": 1.6653345369377348e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.7401529184445535e-14,
+            "point_force_reconstruction_max_abs": 3.552713678800501e-15,
+            "projector_parity_max_abs": 8.881784197001252e-16,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 4.440892098500626e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "left"
+          },
+          {
+            "full_operator_closure_max_abs": 1.3877787807814457e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.1714435627132283e-14,
+            "point_force_reconstruction_max_abs": 2.1316282072803006e-14,
+            "projector_parity_max_abs": 2.1094237467877974e-15,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 3.9968028886505635e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "right"
+          }
+        ]
+      },
+      "regime": {
+        "active_constraints": {
+          "counts": [
+            0,
+            0,
+            0
+          ],
+          "rows": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "bilateral_contact": true,
+        "contact_count_per_side": [
+          2,
+          2
+        ],
+        "contact_dimension": [
+          3
+        ],
+        "contact_topology": [
+          [
+            [
+              0,
+              63,
+              3
+            ],
+            [
+              0,
+              63,
+              3
+            ]
+          ],
+          [
+            [
+              0,
+              31,
+              3
+            ],
+            [
+              0,
+              31,
+              3
+            ]
+          ]
+        ],
+        "hard_violation": 4.482580973075301e-11,
+        "maximum_normalized_slack": 0.0013120294859680455,
+        "minimum_friction_margin_diagnostic_n": 15.200852319548092,
+        "minimum_torque_margin_nm": 1.994850638391903,
+        "normal_frame_max_abs_delta_from_baseline": 0.0,
+        "rolling_active": [
+          1,
+          1
+        ],
+        "solver_contact_signature": "{\"active_constraints\":{\"counts\":[0,0,0],\"rows\":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},\"rolling_active\":[1,1],\"statuses\":[\"0\",\"0\",\"0\"],\"topology\":[[[0,63,3],[0,63,3]],[[0,31,3],[0,31,3]]]}",
+        "stable": true,
+        "statuses": [
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "scale": 1.0,
+      "scale_convergence_pass": true,
+      "scale_convergence_relative": 0.0,
+      "signed_delta_m_s2": -0.01
+    },
+    {
+      "baseline_mj": [
+        -0.01933909305259946,
+        -0.04911102767519838,
+        0.0007702889089677423,
+        0.00216294325597155
+      ],
+      "baseline_qp": [
+        -5.057570071884815e-06,
+        -1.0069114357416035e-05,
+        -7.438902237624605e-05,
+        -7.691255011907372e-05
+      ],
+      "baseline_subtracted": true,
+      "branch": -1,
+      "gain_mj_common": [
+        -0.11803999921702682,
+        -0.14016914577118927
+      ],
+      "gain_mj_differential": [
+        0.17357310648558125,
+        -0.08995259060271682
+      ],
+      "gain_mj_per_side": [
+        -0.29161310570260807,
+        0.05553310726855443,
+        -0.050216555168472454,
+        -0.2301217363739061
+      ],
+      "gain_qp_common": [
+        -0.0005568723183736485,
+        0.9947780693566296
+      ],
+      "gain_qp_differential": [
+        -0.00027337223393844763,
+        8.733209029920808e-05
+      ],
+      "gain_qp_per_side": [
+        -0.0002835000844352009,
+        -0.0008302445523120962,
+        0.9946907372663304,
+        0.9948654014469288
+      ],
+      "input": "slip",
+      "mode": "common",
+      "probe_mj": [
+        -0.01788102752408642,
+        -0.04938869321154115,
+        0.0010213716848101045,
+        0.0033135519378410805
+      ],
+      "probe_qp": [
+        -3.6400696497088103e-06,
+        -5.917891595855554e-06,
+        -0.005047842708707898,
+        -0.005051239557353718
+      ],
+      "r1": {
+        "pass": true,
+        "sides": [
+          {
+            "full_operator_closure_max_abs": 1.6653345369377348e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.7400775431001597e-14,
+            "point_force_reconstruction_max_abs": 3.552713678800501e-15,
+            "projector_parity_max_abs": 8.881784197001252e-16,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 4.440892098500626e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "left"
+          },
+          {
+            "full_operator_closure_max_abs": 1.3877787807814457e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.171325368529862e-14,
+            "point_force_reconstruction_max_abs": 1.4210854715202004e-14,
+            "projector_parity_max_abs": 2.1094237467877974e-15,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 3.9968028886505635e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "right"
+          }
+        ]
+      },
+      "regime": {
+        "active_constraints": {
+          "counts": [
+            0,
+            0,
+            0
+          ],
+          "rows": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "bilateral_contact": true,
+        "contact_count_per_side": [
+          2,
+          2
+        ],
+        "contact_dimension": [
+          3
+        ],
+        "contact_topology": [
+          [
+            [
+              0,
+              63,
+              3
+            ],
+            [
+              0,
+              63,
+              3
+            ]
+          ],
+          [
+            [
+              0,
+              31,
+              3
+            ],
+            [
+              0,
+              31,
+              3
+            ]
+          ]
+        ],
+        "hard_violation": 4.482292315088898e-11,
+        "maximum_normalized_slack": 0.001417124940678632,
+        "minimum_friction_margin_diagnostic_n": 15.200943963796629,
+        "minimum_torque_margin_nm": 1.995843894735352,
+        "normal_frame_max_abs_delta_from_baseline": 0.0,
+        "rolling_active": [
+          1,
+          1
+        ],
+        "solver_contact_signature": "{\"active_constraints\":{\"counts\":[0,0,0],\"rows\":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},\"rolling_active\":[1,1],\"statuses\":[\"0\",\"0\",\"0\"],\"topology\":[[[0,63,3],[0,63,3]],[[0,31,3],[0,31,3]]]}",
+        "stable": true,
+        "statuses": [
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "scale": 0.5,
+      "scale_convergence_pass": true,
+      "scale_convergence_relative": 4.352403435111005e-12,
+      "signed_delta_m_s2": -0.005
+    },
+    {
+      "baseline_mj": [
+        -0.01933909305259946,
+        -0.04911102767519838,
+        0.0007702889089677423,
+        0.00216294325597155
+      ],
+      "baseline_qp": [
+        -5.057570071884815e-06,
+        -1.0069114357416035e-05,
+        -7.438902237624605e-05,
+        -7.691255011907372e-05
+      ],
+      "baseline_subtracted": true,
+      "branch": -1,
+      "gain_mj_common": [
+        -0.11803999921855893,
+        -0.1401691457683596
+      ],
+      "gain_mj_differential": [
+        0.1735731064909353,
+        -0.08995259060497474
+      ],
+      "gain_mj_per_side": [
+        -0.2916131057094942,
+        0.05553310727237637,
+        -0.05021655516338486,
+        -0.23012173637333433
+      ],
+      "gain_qp_common": [
+        -0.0005568723183827125,
+        0.9947780693566266
+      ],
+      "gain_qp_differential": [
+        -0.00027337223393241947,
+        8.733209028827238e-05
+      ],
+      "gain_qp_per_side": [
+        -0.000283500084450293,
+        -0.0008302445523151319,
+        0.9946907372663384,
+        0.9948654014469149
+      ],
+      "input": "slip",
+      "mode": "common",
+      "probe_mj": [
+        -0.018610060288325726,
+        -0.04924986044337932,
+        0.0008958302968762044,
+        0.002738247596904886
+      ],
+      "probe_qp": [
+        -4.348819860759082e-06,
+        -7.993502976628205e-06,
+        -0.002561115865542092,
+        -0.002564076053736361
+      ],
+      "r1": {
+        "pass": true,
+        "sides": [
+          {
+            "full_operator_closure_max_abs": 1.6653345369377348e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.740039850134007e-14,
+            "point_force_reconstruction_max_abs": 3.552713678800501e-15,
+            "projector_parity_max_abs": 8.881784197001252e-16,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 4.440892098500626e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "left"
+          },
+          {
+            "full_operator_closure_max_abs": 1.3877787807814457e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.171266269452945e-14,
+            "point_force_reconstruction_max_abs": 1.4210854715202004e-14,
+            "projector_parity_max_abs": 2.1094237467877974e-15,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 3.9968028886505635e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "right"
+          }
+        ]
+      },
+      "regime": {
+        "active_constraints": {
+          "counts": [
+            0,
+            0,
+            0
+          ],
+          "rows": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "bilateral_contact": true,
+        "contact_count_per_side": [
+          2,
+          2
+        ],
+        "contact_dimension": [
+          3
+        ],
+        "contact_topology": [
+          [
+            [
+              0,
+              63,
+              3
+            ],
+            [
+              0,
+              63,
+              3
+            ]
+          ],
+          [
+            [
+              0,
+              31,
+              3
+            ],
+            [
+              0,
+              31,
+              3
+            ]
+          ]
+        ],
+        "hard_violation": 4.482159088325943e-11,
+        "maximum_normalized_slack": 0.0014696726680335332,
+        "minimum_friction_margin_diagnostic_n": 15.200983494264783,
+        "minimum_torque_margin_nm": 1.996340522907074,
+        "normal_frame_max_abs_delta_from_baseline": 0.0,
+        "rolling_active": [
+          1,
+          1
+        ],
+        "solver_contact_signature": "{\"active_constraints\":{\"counts\":[0,0,0],\"rows\":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},\"rolling_active\":[1,1],\"statuses\":[\"0\",\"0\",\"0\"],\"topology\":[[[0,63,3],[0,63,3]],[[0,31,3],[0,31,3]]]}",
+        "stable": true,
+        "statuses": [
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "scale": 0.25,
+      "scale_convergence_pass": true,
+      "scale_convergence_relative": 2.358651130427156e-11,
+      "signed_delta_m_s2": -0.0025
+    },
+    {
+      "baseline_mj": [
+        -0.01933909305259946,
+        -0.04911102767519838,
+        0.0007702889089677423,
+        0.00216294325597155
+      ],
+      "baseline_qp": [
+        -5.057570071884815e-06,
+        -1.0069114357416035e-05,
+        -7.438902237624605e-05,
+        -7.691255011907372e-05
+      ],
+      "baseline_subtracted": true,
+      "branch": 1,
+      "gain_mj_common": [
+        -0.11803999921523259,
+        -0.14016914577261538
+      ],
+      "gain_mj_differential": [
+        0.17357310648442678,
+        -0.08995259060231905
+      ],
+      "gain_mj_per_side": [
+        -0.29161310569965937,
+        0.05553310726919419,
+        -0.05021655517029634,
+        -0.23012173637493444
+      ],
+      "gain_qp_common": [
+        -0.0005568723183822137,
+        0.9947780693566499
+      ],
+      "gain_qp_differential": [
+        -0.0002733722339353902,
+        8.733209029859745e-05
+      ],
+      "gain_qp_per_side": [
+        -0.00028350008444682356,
+        -0.0008302445523176039,
+        0.9946907372663514,
+        0.9948654014469486
+      ],
+      "input": "slip",
+      "mode": "common",
+      "probe_mj": [
+        -0.022255224109596055,
+        -0.048555696602506436,
+        0.00026812335726477884,
+        -0.00013827410777779436
+      ],
+      "probe_qp": [
+        -7.89257091635305e-06,
+        -1.8371559880592074e-05,
+        0.009872518350287268,
+        0.009871741464350412
+      ],
+      "r1": {
+        "pass": true,
+        "sides": [
+          {
+            "full_operator_closure_max_abs": 1.6653345369377348e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.739851380009287e-14,
+            "point_force_reconstruction_max_abs": 3.552713678800501e-15,
+            "projector_parity_max_abs": 8.881784197001252e-16,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 4.440892098500626e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "left"
+          },
+          {
+            "full_operator_closure_max_abs": 1.3877787807814457e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.1709707740683616e-14,
+            "point_force_reconstruction_max_abs": 1.4210854715202004e-14,
+            "projector_parity_max_abs": 2.1094237467877974e-15,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 3.9968028886505635e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "right"
+          }
+        ]
+      },
+      "regime": {
+        "active_constraints": {
+          "counts": [
+            0,
+            0,
+            0
+          ],
+          "rows": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "bilateral_contact": true,
+        "contact_count_per_side": [
+          2,
+          2
+        ],
+        "contact_dimension": [
+          3
+        ],
+        "contact_topology": [
+          [
+            [
+              0,
+              63,
+              3
+            ],
+            [
+              0,
+              63,
+              3
+            ]
+          ],
+          [
+            [
+              0,
+              31,
+              3
+            ],
+            [
+              0,
+              31,
+              3
+            ]
+          ]
+        ],
+        "hard_violation": 4.481448545590183e-11,
+        "maximum_normalized_slack": 0.0017324113048100532,
+        "minimum_friction_margin_diagnostic_n": 15.20111777607594,
+        "minimum_torque_margin_nm": 1.9988236637656986,
+        "normal_frame_max_abs_delta_from_baseline": 0.0,
+        "rolling_active": [
+          1,
+          1
+        ],
+        "solver_contact_signature": "{\"active_constraints\":{\"counts\":[0,0,0],\"rows\":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},\"rolling_active\":[1,1],\"statuses\":[\"0\",\"0\",\"0\"],\"topology\":[[[0,63,3],[0,63,3]],[[0,31,3],[0,31,3]]]}",
+        "stable": true,
+        "statuses": [
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "scale": 1.0,
+      "scale_convergence_pass": true,
+      "scale_convergence_relative": 0.0,
+      "signed_delta_m_s2": 0.01
+    },
+    {
+      "baseline_mj": [
+        -0.01933909305259946,
+        -0.04911102767519838,
+        0.0007702889089677423,
+        0.00216294325597155
+      ],
+      "baseline_qp": [
+        -5.057570071884815e-06,
+        -1.0069114357416035e-05,
+        -7.438902237624605e-05,
+        -7.691255011907372e-05
+      ],
+      "baseline_subtracted": true,
+      "branch": 1,
+      "gain_mj_common": [
+        -0.11803999921482405,
+        -0.1401691457721975
+      ],
+      "gain_mj_differential": [
+        0.17357310648466218,
+        -0.08995259060239694
+      ],
+      "gain_mj_per_side": [
+        -0.29161310569948623,
+        0.05553310726983812,
+        -0.05021655516980056,
+        -0.23012173637459443
+      ],
+      "gain_qp_common": [
+        -0.0005568723183805007,
+        0.9947780693566448
+      ],
+      "gain_qp_differential": [
+        -0.0002733722339383609,
+        8.733209029915256e-05
+      ],
+      "gain_qp_per_side": [
+        -0.0002835000844421398,
+        -0.0008302445523188616,
+        0.9946907372663457,
+        0.994865401446944
+      ],
+      "input": "slip",
+      "mode": "common",
+      "probe_mj": [
+        -0.020797158581096892,
+        -0.04883336213884919,
+        0.0005192061331187395,
+        0.0010123345740985779
+      ],
+      "probe_qp": [
+        -6.475070494095514e-06,
+        -1.4220337119010343e-05,
+        0.0048990646639554825,
+        0.004897414457115647
+      ],
+      "r1": {
+        "pass": true,
+        "sides": [
+          {
+            "full_operator_closure_max_abs": 1.6653345369377348e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.7399267818234603e-14,
+            "point_force_reconstruction_max_abs": 1.627170620466245e-15,
+            "projector_parity_max_abs": 8.881784197001252e-16,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 4.440892098500626e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "left"
+          },
+          {
+            "full_operator_closure_max_abs": 1.3877787807814457e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.171088976192662e-14,
+            "point_force_reconstruction_max_abs": 7.105427357601002e-15,
+            "projector_parity_max_abs": 2.1094237467877974e-15,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 3.9968028886505635e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "right"
+          }
+        ]
+      },
+      "regime": {
+        "active_constraints": {
+          "counts": [
+            0,
+            0,
+            0
+          ],
+          "rows": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "bilateral_contact": true,
+        "contact_count_per_side": [
+          2,
+          2
+        ],
+        "contact_dimension": [
+          3
+        ],
+        "contact_topology": [
+          [
+            [
+              0,
+              63,
+              3
+            ],
+            [
+              0,
+              63,
+              3
+            ]
+          ],
+          [
+            [
+              0,
+              31,
+              3
+            ],
+            [
+              0,
+              31,
+              3
+            ]
+          ]
+        ],
+        "hard_violation": 4.4817261013463394e-11,
+        "maximum_normalized_slack": 0.0016273158500994377,
+        "minimum_friction_margin_diagnostic_n": 15.201076781073457,
+        "minimum_torque_margin_nm": 1.997830407422248,
+        "normal_frame_max_abs_delta_from_baseline": 0.0,
+        "rolling_active": [
+          1,
+          1
+        ],
+        "solver_contact_signature": "{\"active_constraints\":{\"counts\":[0,0,0],\"rows\":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},\"rolling_active\":[1,1],\"statuses\":[\"0\",\"0\",\"0\"],\"topology\":[[[0,63,3],[0,63,3]],[[0,31,3],[0,31,3]]]}",
+        "stable": true,
+        "statuses": [
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "scale": 0.5,
+      "scale_convergence_pass": true,
+      "scale_convergence_relative": 2.369179983640755e-12,
+      "signed_delta_m_s2": 0.005
+    },
+    {
+      "baseline_mj": [
+        -0.01933909305259946,
+        -0.04911102767519838,
+        0.0007702889089677423,
+        0.00216294325597155
+      ],
+      "baseline_qp": [
+        -5.057570071884815e-06,
+        -1.0069114357416035e-05,
+        -7.438902237624605e-05,
+        -7.691255011907372e-05
+      ],
+      "baseline_subtracted": true,
+      "branch": 1,
+      "gain_mj_common": [
+        -0.1180399992142353,
+        -0.14016914577251322
+      ],
+      "gain_mj_differential": [
+        0.17357310648426633,
+        -0.0899525906022422
+      ],
+      "gain_mj_per_side": [
+        -0.29161310569850163,
+        0.055533107270031024,
+        -0.050216555170271016,
+        -0.23012173637475541
+      ],
+      "gain_qp_common": [
+        -0.0005568723183794165,
+        0.9947780693566406
+      ],
+      "gain_qp_differential": [
+        -0.0002733722339421339,
+        8.733209030215017e-05
+      ],
+      "gain_qp_per_side": [
+        -0.0002835000844372826,
+        -0.0008302445523215504,
+        0.9946907372663384,
+        0.9948654014469427
+      ],
+      "input": "slip",
+      "mode": "common",
+      "probe_mj": [
+        -0.020068125816845715,
+        -0.0489721949070233,
+        0.0006447475210420647,
+        0.0015876389150346615
+      ],
+      "probe_qp": [
+        -5.766320282978021e-06,
+        -1.2144725738219911e-05,
+        0.0024123378207896,
+        0.002410250953498283
+      ],
+      "r1": {
+        "pass": true,
+        "sides": [
+          {
+            "full_operator_closure_max_abs": 1.6653345369377348e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.7399644642017013e-14,
+            "point_force_reconstruction_max_abs": 3.552713678800501e-15,
+            "projector_parity_max_abs": 8.881784197001252e-16,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 4.440892098500626e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "left"
+          },
+          {
+            "full_operator_closure_max_abs": 1.3877787807814457e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.1711480726226007e-14,
+            "point_force_reconstruction_max_abs": 1.4210854715202004e-14,
+            "projector_parity_max_abs": 2.1094237467877974e-15,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 3.9968028886505635e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "right"
+          }
+        ]
+      },
+      "regime": {
+        "active_constraints": {
+          "counts": [
+            0,
+            0,
+            0
+          ],
+          "rows": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "bilateral_contact": true,
+        "contact_count_per_side": [
+          2,
+          2
+        ],
+        "contact_dimension": [
+          3
+        ],
+        "contact_topology": [
+          [
+            [
+              0,
+              63,
+              3
+            ],
+            [
+              0,
+              63,
+              3
+            ]
+          ],
+          [
+            [
+              0,
+              31,
+              3
+            ],
+            [
+              0,
+              31,
+              3
+            ]
+          ]
+        ],
+        "hard_violation": 4.4819037370302794e-11,
+        "maximum_normalized_slack": 0.0015747681227442254,
+        "minimum_friction_margin_diagnostic_n": 15.201049914032994,
+        "minimum_torque_margin_nm": 1.9973337792505237,
+        "normal_frame_max_abs_delta_from_baseline": 0.0,
+        "rolling_active": [
+          1,
+          1
+        ],
+        "solver_contact_signature": "{\"active_constraints\":{\"counts\":[0,0,0],\"rows\":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},\"rolling_active\":[1,1],\"statuses\":[\"0\",\"0\",\"0\"],\"topology\":[[[0,63,3],[0,63,3]],[[0,31,3],[0,31,3]]]}",
+        "stable": true,
+        "statuses": [
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "scale": 0.25,
+      "scale_convergence_pass": true,
+      "scale_convergence_relative": 3.799778046950788e-12,
+      "signed_delta_m_s2": 0.0025
+    },
+    {
+      "baseline_mj": [
+        -0.01933909305259946,
+        -0.04911102767519838,
+        0.0007702889089677423,
+        0.00216294325597155
+      ],
+      "baseline_qp": [
+        -5.057570071884815e-06,
+        -1.0069114357416035e-05,
+        -7.438902237624605e-05,
+        -7.691255011907372e-05
+      ],
+      "baseline_subtracted": true,
+      "branch": -1,
+      "gain_mj_common": [
+        -0.006509888179949852,
+        -0.05283219787381721
+      ],
+      "gain_mj_differential": [
+        0.938180501513675,
+        -0.005859952381342959
+      ],
+      "gain_mj_per_side": [
+        -0.9446903896936248,
+        0.9316706133337251,
+        -0.04697224549247425,
+        -0.05869215025516017
+      ],
+      "gain_qp_common": [
+        -2.9153965164896434e-05,
+        -0.0002733722339552311
+      ],
+      "gain_qp_differential": [
+        0.9999796889415782,
+        2.5926347012143747e-05
+      ],
+      "gain_qp_per_side": [
+        -1.000008842906743,
+        0.9999505349764133,
+        -0.00029929858096737483,
+        -0.00024744588694308733
+      ],
+      "input": "xi",
+      "mode": "differential",
+      "probe_mj": [
+        -0.009892189155663212,
+        -0.05842773380853563,
+        0.0012400113638924848,
+        0.0027498647585231517
+      ],
+      "probe_qp": [
+        0.009995030858995547,
+        -0.010009574464121549,
+        -7.13960365665723e-05,
+        -7.443809124964285e-05
+      ],
+      "r1": {
+        "pass": true,
+        "sides": [
+          {
+            "full_operator_closure_max_abs": 1.6653345369377348e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.7399758038552826e-14,
+            "point_force_reconstruction_max_abs": 3.552713678800501e-15,
+            "projector_parity_max_abs": 8.881784197001252e-16,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 4.440892098500626e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "left"
+          },
+          {
+            "full_operator_closure_max_abs": 1.3877787807814457e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.1712460293359727e-14,
+            "point_force_reconstruction_max_abs": 1.4210854715202004e-14,
+            "projector_parity_max_abs": 2.1094237467877974e-15,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 3.9968028886505635e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "right"
+          }
+        ]
+      },
+      "regime": {
+        "active_constraints": {
+          "counts": [
+            0,
+            0,
+            0
+          ],
+          "rows": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "bilateral_contact": true,
+        "contact_count_per_side": [
+          2,
+          2
+        ],
+        "contact_dimension": [
+          3
+        ],
+        "contact_topology": [
+          [
+            [
+              0,
+              63,
+              3
+            ],
+            [
+              0,
+              63,
+              3
+            ]
+          ],
+          [
+            [
+              0,
+              31,
+              3
+            ],
+            [
+              0,
+              31,
+              3
+            ]
+          ]
+        ],
+        "hard_violation": 4.4820813727142195e-11,
+        "maximum_normalized_slack": 0.001524039270810148,
+        "minimum_friction_margin_diagnostic_n": 15.201278021446656,
+        "minimum_torque_margin_nm": 1.9966895227833954,
+        "normal_frame_max_abs_delta_from_baseline": 0.0,
+        "rolling_active": [
+          1,
+          1
+        ],
+        "solver_contact_signature": "{\"active_constraints\":{\"counts\":[0,0,0],\"rows\":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},\"rolling_active\":[1,1],\"statuses\":[\"0\",\"0\",\"0\"],\"topology\":[[[0,63,3],[0,63,3]],[[0,31,3],[0,31,3]]]}",
+        "stable": true,
+        "statuses": [
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "scale": 1.0,
+      "scale_convergence_pass": true,
+      "scale_convergence_relative": 0.0,
+      "signed_delta_m_s2": -0.01
+    },
+    {
+      "baseline_mj": [
+        -0.01933909305259946,
+        -0.04911102767519838,
+        0.0007702889089677423,
+        0.00216294325597155
+      ],
+      "baseline_qp": [
+        -5.057570071884815e-06,
+        -1.0069114357416035e-05,
+        -7.438902237624605e-05,
+        -7.691255011907372e-05
+      ],
+      "baseline_subtracted": true,
+      "branch": -1,
+      "gain_mj_common": [
+        -0.006509888180990242,
+        -0.05283219787329471
+      ],
+      "gain_mj_differential": [
+        0.9381805015138494,
+        -0.005859952381424144
+      ],
+      "gain_mj_per_side": [
+        -0.9446903896948396,
+        0.9316706133328592,
+        -0.04697224549187057,
+        -0.058692150254718856
+      ],
+      "gain_qp_common": [
+        -2.9153965162620477e-05,
+        -0.0002733722339665068
+      ],
+      "gain_qp_differential": [
+        0.9999796889415786,
+        2.5926347008153883e-05
+      ],
+      "gain_qp_per_side": [
+        -1.0000088429067413,
+        0.9999505349764161,
+        -0.00029929858097466067,
+        -0.0002474458869583529
+      ],
+      "input": "xi",
+      "mode": "differential",
+      "probe_mj": [
+        -0.014615641104125263,
+        -0.053769380741862674,
+        0.0010051501364270951,
+        0.0024564040072451443
+      ],
+      "probe_qp": [
+        0.0049949866444618215,
+        -0.005009821789239496,
+        -7.289252947137274e-05,
+        -7.567532068428195e-05
+      ],
+      "r1": {
+        "pass": true,
+        "sides": [
+          {
+            "full_operator_closure_max_abs": 1.6653345369377348e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.7399889910994802e-14,
+            "point_force_reconstruction_max_abs": 3.552713678800501e-15,
+            "projector_parity_max_abs": 8.881784197001252e-16,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 4.440892098500626e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "left"
+          },
+          {
+            "full_operator_closure_max_abs": 1.3877787807814457e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.171226603164723e-14,
+            "point_force_reconstruction_max_abs": 1.4210854715202004e-14,
+            "projector_parity_max_abs": 2.1094237467877974e-15,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 3.9968028886505635e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "right"
+          }
+        ]
+      },
+      "regime": {
+        "active_constraints": {
+          "counts": [
+            0,
+            0,
+            0
+          ],
+          "rows": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "bilateral_contact": true,
+        "contact_count_per_side": [
+          2,
+          2
+        ],
+        "contact_dimension": [
+          3
+        ],
+        "contact_topology": [
+          [
+            [
+              0,
+              63,
+              3
+            ],
+            [
+              0,
+              63,
+              3
+            ]
+          ],
+          [
+            [
+              0,
+              31,
+              3
+            ],
+            [
+              0,
+              31,
+              3
+            ]
+          ]
+        ],
+        "hard_violation": 4.482059168253727e-11,
+        "maximum_normalized_slack": 0.0015231298330996889,
+        "minimum_friction_margin_diagnostic_n": 15.20115595020798,
+        "minimum_torque_margin_nm": 1.9967633369310986,
+        "normal_frame_max_abs_delta_from_baseline": 0.0,
+        "rolling_active": [
+          1,
+          1
+        ],
+        "solver_contact_signature": "{\"active_constraints\":{\"counts\":[0,0,0],\"rows\":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},\"rolling_active\":[1,1],\"statuses\":[\"0\",\"0\",\"0\"],\"topology\":[[[0,63,3],[0,63,3]],[[0,31,3],[0,31,3]]]}",
+        "stable": true,
+        "statuses": [
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "scale": 0.5,
+      "scale_convergence_pass": true,
+      "scale_convergence_relative": 1.255722307724648e-12,
+      "signed_delta_m_s2": -0.005
+    },
+    {
+      "baseline_mj": [
+        -0.01933909305259946,
+        -0.04911102767519838,
+        0.0007702889089677423,
+        0.00216294325597155
+      ],
+      "baseline_qp": [
+        -5.057570071884815e-06,
+        -1.0069114357416035e-05,
+        -7.438902237624605e-05,
+        -7.691255011907372e-05
+      ],
+      "baseline_subtracted": true,
+      "branch": -1,
+      "gain_mj_common": [
+        -0.006509888180890988,
+        -0.0528321978743862
+      ],
+      "gain_mj_differential": [
+        0.9381805015140736,
+        -0.00585995238159831
+      ],
+      "gain_mj_per_side": [
+        -0.9446903896949645,
+        0.9316706133331826,
+        -0.04697224549278789,
+        -0.05869215025598451
+      ],
+      "gain_qp_common": [
+        -2.9153965163897233e-05,
+        -0.0002733722339349348
+      ],
+      "gain_qp_differential": [
+        0.999979688941579,
+        2.5926347009888606e-05
+      ],
+      "gain_qp_per_side": [
+        -1.0000088429067429,
+        0.9999505349764151,
+        -0.0002992985809448234,
+        -0.0002474458869250462
+      ],
+      "input": "xi",
+      "mode": "differential",
+      "probe_mj": [
+        -0.01697736707836205,
+        -0.051440204208531334,
+        0.000887719522699712,
+        0.0023096736316115113
+      ],
+      "probe_qp": [
+        0.0024949645371949727,
+        -0.0025099454517984537,
+        -7.364077592388399e-05,
+        -7.62939354017611e-05
+      ],
+      "r1": {
+        "pass": true,
+        "sides": [
+          {
+            "full_operator_closure_max_abs": 1.6653345369377348e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.7399955714866892e-14,
+            "point_force_reconstruction_max_abs": 3.552713678800501e-15,
+            "projector_parity_max_abs": 8.881784197001252e-16,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 4.440892098500626e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "left"
+          },
+          {
+            "full_operator_closure_max_abs": 1.3877787807814457e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.1712168847851423e-14,
+            "point_force_reconstruction_max_abs": 1.4210854715202004e-14,
+            "projector_parity_max_abs": 2.1094237467877974e-15,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 3.9968028886505635e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "right"
+          }
+        ]
+      },
+      "regime": {
+        "active_constraints": {
+          "counts": [
+            0,
+            0,
+            0
+          ],
+          "rows": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "bilateral_contact": true,
+        "contact_count_per_side": [
+          2,
+          2
+        ],
+        "contact_dimension": [
+          3
+        ],
+        "contact_topology": [
+          [
+            [
+              0,
+              63,
+              3
+            ],
+            [
+              0,
+              63,
+              3
+            ]
+          ],
+          [
+            [
+              0,
+              31,
+              3
+            ],
+            [
+              0,
+              31,
+              3
+            ]
+          ]
+        ],
+        "hard_violation": 4.482048066023481e-11,
+        "maximum_normalized_slack": 0.001522675114244112,
+        "minimum_friction_margin_diagnostic_n": 15.201089263139554,
+        "minimum_torque_margin_nm": 1.9968002440049466,
+        "normal_frame_max_abs_delta_from_baseline": 0.0,
+        "rolling_active": [
+          1,
+          1
+        ],
+        "solver_contact_signature": "{\"active_constraints\":{\"counts\":[0,0,0],\"rows\":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},\"rolling_active\":[1,1],\"statuses\":[\"0\",\"0\",\"0\"],\"topology\":[[[0,63,3],[0,63,3]],[[0,31,3],[0,31,3]]]}",
+        "stable": true,
+        "statuses": [
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "scale": 0.25,
+      "scale_convergence_pass": true,
+      "scale_convergence_relative": 1.274128894667448e-12,
+      "signed_delta_m_s2": -0.0025
+    },
+    {
+      "baseline_mj": [
+        -0.01933909305259946,
+        -0.04911102767519838,
+        0.0007702889089677423,
+        0.00216294325597155
+      ],
+      "baseline_qp": [
+        -5.057570071884815e-06,
+        -1.0069114357416035e-05,
+        -7.438902237624605e-05,
+        -7.691255011907372e-05
+      ],
+      "baseline_subtracted": true,
+      "branch": 1,
+      "gain_mj_common": [
+        -0.0065098881790112695,
+        -0.05283219787391123
+      ],
+      "gain_mj_differential": [
+        0.9381805015128906,
+        -0.005859952380989422
+      ],
+      "gain_mj_per_side": [
+        -0.9446903896919018,
+        0.9316706133338792,
+        -0.04697224549292181,
+        -0.058692150254900655
+      ],
+      "gain_qp_common": [
+        -2.9153965165396034e-05,
+        -0.00027337223396260366
+      ],
+      "gain_qp_differential": [
+        0.9999796889415768,
+        2.5926347012577428e-05
+      ],
+      "gain_qp_per_side": [
+        -1.0000088429067422,
+        0.9999505349764114,
+        -0.0002992985809751811,
+        -0.00024744588695002623
+      ],
+      "input": "xi",
+      "mode": "differential",
+      "probe_mj": [
+        -0.02878599694951848,
+        -0.039794321541859586,
+        0.00030056645403852417,
+        0.0015760217534225435
+      ],
+      "probe_qp": [
+        -0.010005145999139308,
+        0.009989436235406698,
+        -7.738200818599786e-05,
+        -7.938700898857398e-05
+      ],
+      "r1": {
+        "pass": true,
+        "sides": [
+          {
+            "full_operator_closure_max_abs": 1.6653345369377348e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.7400285157743815e-14,
+            "point_force_reconstruction_max_abs": 1.627170620466245e-15,
+            "projector_parity_max_abs": 8.881784197001252e-16,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 4.440892098500626e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "left"
+          },
+          {
+            "full_operator_closure_max_abs": 1.3877787807814457e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.171168314063062e-14,
+            "point_force_reconstruction_max_abs": 2.1316282072803006e-14,
+            "projector_parity_max_abs": 2.1094237467877974e-15,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 3.9968028886505635e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "right"
+          }
+        ]
+      },
+      "regime": {
+        "active_constraints": {
+          "counts": [
+            0,
+            0,
+            0
+          ],
+          "rows": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "bilateral_contact": true,
+        "contact_count_per_side": [
+          2,
+          2
+        ],
+        "contact_dimension": [
+          3
+        ],
+        "contact_topology": [
+          [
+            [
+              0,
+              63,
+              3
+            ],
+            [
+              0,
+              63,
+              3
+            ]
+          ],
+          [
+            [
+              0,
+              31,
+              3
+            ],
+            [
+              0,
+              31,
+              3
+            ]
+          ]
+        ],
+        "hard_violation": 4.481959248181511e-11,
+        "maximum_normalized_slack": 0.0015204015199674558,
+        "minimum_friction_margin_diagnostic_n": 15.20069951357267,
+        "minimum_torque_margin_nm": 1.9969847793741995,
+        "normal_frame_max_abs_delta_from_baseline": 0.0,
+        "rolling_active": [
+          1,
+          1
+        ],
+        "solver_contact_signature": "{\"active_constraints\":{\"counts\":[0,0,0],\"rows\":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},\"rolling_active\":[1,1],\"statuses\":[\"0\",\"0\",\"0\"],\"topology\":[[[0,63,3],[0,63,3]],[[0,31,3],[0,31,3]]]}",
+        "stable": true,
+        "statuses": [
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "scale": 1.0,
+      "scale_convergence_pass": true,
+      "scale_convergence_relative": 0.0,
+      "signed_delta_m_s2": 0.01
+    },
+    {
+      "baseline_mj": [
+        -0.01933909305259946,
+        -0.04911102767519838,
+        0.0007702889089677423,
+        0.00216294325597155
+      ],
+      "baseline_qp": [
+        -5.057570071884815e-06,
+        -1.0069114357416035e-05,
+        -7.438902237624605e-05,
+        -7.691255011907372e-05
+      ],
+      "baseline_subtracted": true,
+      "branch": 1,
+      "gain_mj_common": [
+        -0.006509888178016621,
+        -0.0528321978741593
+      ],
+      "gain_mj_differential": [
+        0.9381805015120637,
+        -0.0058599523806483755
+      ],
+      "gain_mj_per_side": [
+        -0.9446903896900803,
+        0.9316706133340471,
+        -0.04697224549351092,
+        -0.05869215025480767
+      ],
+      "gain_qp_common": [
+        -2.9153965167838525e-05,
+        -0.0002733722339614761
+      ],
+      "gain_qp_differential": [
+        0.9999796889415771,
+        2.5926347012837636e-05
+      ],
+      "gain_qp_per_side": [
+        -1.0000088429067449,
+        0.9999505349764092,
+        -0.0002992985809743137,
+        -0.00024744588694863845
+      ],
+      "input": "xi",
+      "mode": "differential",
+      "probe_mj": [
+        -0.024062545001049863,
+        -0.04445267460852814,
+        0.0005354276815001877,
+        0.0018694825046975116
+      ],
+      "probe_qp": [
+        -0.005005101784605609,
+        0.00498968356052463,
+        -7.588551528111762e-05,
+        -7.814977955381691e-05
+      ],
+      "r1": {
+        "pass": true,
+        "sides": [
+          {
+            "full_operator_closure_max_abs": 1.6653345369377348e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.740015328530184e-14,
+            "point_force_reconstruction_max_abs": 3.552713678800501e-15,
+            "projector_parity_max_abs": 8.881784197001252e-16,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 4.440892098500626e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "left"
+          },
+          {
+            "full_operator_closure_max_abs": 1.3877787807814457e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.1711877442047788e-14,
+            "point_force_reconstruction_max_abs": 7.105427357601002e-15,
+            "projector_parity_max_abs": 2.1094237467877974e-15,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 3.9968028886505635e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "right"
+          }
+        ]
+      },
+      "regime": {
+        "active_constraints": {
+          "counts": [
+            0,
+            0,
+            0
+          ],
+          "rows": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "bilateral_contact": true,
+        "contact_count_per_side": [
+          2,
+          2
+        ],
+        "contact_dimension": [
+          3
+        ],
+        "contact_topology": [
+          [
+            [
+              0,
+              63,
+              3
+            ],
+            [
+              0,
+              63,
+              3
+            ]
+          ],
+          [
+            [
+              0,
+              31,
+              3
+            ],
+            [
+              0,
+              31,
+              3
+            ]
+          ]
+        ],
+        "hard_violation": 4.481981452642003e-11,
+        "maximum_normalized_slack": 0.001521310957678085,
+        "minimum_friction_margin_diagnostic_n": 15.20086665467336,
+        "minimum_torque_margin_nm": 1.9969109652264985,
+        "normal_frame_max_abs_delta_from_baseline": 0.0,
+        "rolling_active": [
+          1,
+          1
+        ],
+        "solver_contact_signature": "{\"active_constraints\":{\"counts\":[0,0,0],\"rows\":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},\"rolling_active\":[1,1],\"statuses\":[\"0\",\"0\",\"0\"],\"topology\":[[[0,63,3],[0,63,3]],[[0,31,3],[0,31,3]]]}",
+        "stable": true,
+        "statuses": [
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "scale": 0.5,
+      "scale_convergence_pass": true,
+      "scale_convergence_relative": 1.4477067136157758e-12,
+      "signed_delta_m_s2": 0.005
+    },
+    {
+      "baseline_mj": [
+        -0.01933909305259946,
+        -0.04911102767519838,
+        0.0007702889089677423,
+        0.00216294325597155
+      ],
+      "baseline_qp": [
+        -5.057570071884815e-06,
+        -1.0069114357416035e-05,
+        -7.438902237624605e-05,
+        -7.691255011907372e-05
+      ],
+      "baseline_subtracted": true,
+      "branch": 1,
+      "gain_mj_common": [
+        -0.006509888178510281,
+        -0.05283219787575871
+      ],
+      "gain_mj_differential": [
+        0.9381805015107186,
+        -0.005859952380070366
+      ],
+      "gain_mj_per_side": [
+        -0.9446903896892289,
+        0.9316706133322084,
+        -0.04697224549568835,
+        -0.05869215025582908
+      ],
+      "gain_qp_common": [
+        -2.915396516856017e-05,
+        -0.00027337223394846566
+      ],
+      "gain_qp_differential": [
+        0.999979688941579,
+        2.5926347015092777e-05
+      ],
+      "gain_qp_per_side": [
+        -1.0000088429067475,
+        0.9999505349764104,
+        -0.00029929858096355844,
+        -0.0002474458869333729
+      ],
+      "input": "xi",
+      "mode": "differential",
+      "probe_mj": [
+        -0.021700819026822533,
+        -0.04678185114186786,
+        0.0006528582952285214,
+        0.0020162128803319773
+      ],
+      "probe_qp": [
+        -0.0025050796773387536,
+        0.00248980722308361,
+        -7.513726882865494e-05,
+        -7.753116483640715e-05
+      ],
+      "r1": {
+        "pass": true,
+        "sides": [
+          {
+            "full_operator_closure_max_abs": 1.6653345369377348e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.7400087534369308e-14,
+            "point_force_reconstruction_max_abs": 3.552713678800501e-15,
+            "projector_parity_max_abs": 8.881784197001252e-16,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 4.440892098500626e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "left"
+          },
+          {
+            "full_operator_closure_max_abs": 1.3877787807814457e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.1711974625843595e-14,
+            "point_force_reconstruction_max_abs": 2.1316282072803006e-14,
+            "projector_parity_max_abs": 2.1094237467877974e-15,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 3.9968028886505635e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "right"
+          }
+        ]
+      },
+      "regime": {
+        "active_constraints": {
+          "counts": [
+            0,
+            0,
+            0
+          ],
+          "rows": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "bilateral_contact": true,
+        "contact_count_per_side": [
+          2,
+          2
+        ],
+        "contact_dimension": [
+          3
+        ],
+        "contact_topology": [
+          [
+            [
+              0,
+              63,
+              3
+            ],
+            [
+              0,
+              63,
+              3
+            ]
+          ],
+          [
+            [
+              0,
+              31,
+              3
+            ],
+            [
+              0,
+              31,
+              3
+            ]
+          ]
+        ],
+        "hard_violation": 4.481981452642003e-11,
+        "maximum_normalized_slack": 0.0015217656765335965,
+        "minimum_friction_margin_diagnostic_n": 15.200944610171186,
+        "minimum_torque_margin_nm": 1.9968740581526498,
+        "normal_frame_max_abs_delta_from_baseline": 0.0,
+        "rolling_active": [
+          1,
+          1
+        ],
+        "solver_contact_signature": "{\"active_constraints\":{\"counts\":[0,0,0],\"rows\":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},\"rolling_active\":[1,1],\"statuses\":[\"0\",\"0\",\"0\"],\"topology\":[[[0,63,3],[0,63,3]],[[0,31,3],[0,31,3]]]}",
+        "stable": true,
+        "statuses": [
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "scale": 0.25,
+      "scale_convergence_pass": true,
+      "scale_convergence_relative": 3.2322947736891656e-12,
+      "signed_delta_m_s2": 0.0025
+    },
+    {
+      "baseline_mj": [
+        -0.01933909305259946,
+        -0.04911102767519838,
+        0.0007702889089677423,
+        0.00216294325597155
+      ],
+      "baseline_qp": [
+        -5.057570071884815e-06,
+        -1.0069114357416035e-05,
+        -7.438902237624605e-05,
+        -7.691255011907372e-05
+      ],
+      "baseline_subtracted": true,
+      "branch": -1,
+      "gain_mj_common": [
+        0.001856704663784521,
+        0.008760810389363272
+      ],
+      "gain_mj_differential": [
+        -0.11260917592842301,
+        -0.0027965976256316694
+      ],
+      "gain_mj_per_side": [
+        0.11446588059220754,
+        -0.1107524712646385,
+        0.011557408014994941,
+        0.005964212763731602
+      ],
+      "gain_qp_common": [
+        9.848331856228063e-06,
+        8.733209029448963e-05
+      ],
+      "gain_qp_differential": [
+        2.592634701227385e-05,
+        0.9900199014625184
+      ],
+      "gain_qp_per_side": [
+        -1.607801515604579e-05,
+        3.5774678868501913e-05,
+        -0.989932569372224,
+        0.9901072335528129
+      ],
+      "input": "slip",
+      "mode": "differential",
+      "probe_mj": [
+        -0.020483751858521537,
+        -0.04800350296255199,
+        0.0006547148288177929,
+        0.002103301128334234
+      ],
+      "probe_qp": [
+        -4.896789920324357e-06,
+        -1.0426861146101054e-05,
+        0.009824936671345994,
+        -0.009977984885647204
+      ],
+      "r1": {
+        "pass": true,
+        "sides": [
+          {
+            "full_operator_closure_max_abs": 1.6653345369377348e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.739996524398755e-14,
+            "point_force_reconstruction_max_abs": 3.552713678800501e-15,
+            "projector_parity_max_abs": 8.881784197001252e-16,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 4.440892098500626e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "left"
+          },
+          {
+            "full_operator_closure_max_abs": 1.3877787807814457e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.1712114055407647e-14,
+            "point_force_reconstruction_max_abs": 7.105427357601002e-15,
+            "projector_parity_max_abs": 2.1094237467877974e-15,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 3.9968028886505635e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "right"
+          }
+        ]
+      },
+      "regime": {
+        "active_constraints": {
+          "counts": [
+            0,
+            0,
+            0
+          ],
+          "rows": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "bilateral_contact": true,
+        "contact_count_per_side": [
+          2,
+          2
+        ],
+        "contact_dimension": [
+          3
+        ],
+        "contact_topology": [
+          [
+            [
+              0,
+              63,
+              3
+            ],
+            [
+              0,
+              63,
+              3
+            ]
+          ],
+          [
+            [
+              0,
+              31,
+              3
+            ],
+            [
+              0,
+              31,
+              3
+            ]
+          ]
+        ],
+        "hard_violation": 4.4820369637932345e-11,
+        "maximum_normalized_slack": 0.0015101768182382846,
+        "minimum_friction_margin_diagnostic_n": 15.201084879771816,
+        "minimum_torque_margin_nm": 1.9968296508667471,
+        "normal_frame_max_abs_delta_from_baseline": 0.0,
+        "rolling_active": [
+          1,
+          1
+        ],
+        "solver_contact_signature": "{\"active_constraints\":{\"counts\":[0,0,0],\"rows\":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},\"rolling_active\":[1,1],\"statuses\":[\"0\",\"0\",\"0\"],\"topology\":[[[0,63,3],[0,63,3]],[[0,31,3],[0,31,3]]]}",
+        "stable": true,
+        "statuses": [
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "scale": 1.0,
+      "scale_convergence_pass": true,
+      "scale_convergence_relative": 0.0,
+      "signed_delta_m_s2": -0.01
+    },
+    {
+      "baseline_mj": [
+        -0.01933909305259946,
+        -0.04911102767519838,
+        0.0007702889089677423,
+        0.00216294325597155
+      ],
+      "baseline_qp": [
+        -5.057570071884815e-06,
+        -1.0069114357416035e-05,
+        -7.438902237624605e-05,
+        -7.691255011907372e-05
+      ],
+      "baseline_subtracted": true,
+      "branch": -1,
+      "gain_mj_common": [
+        0.0018567046641822932,
+        0.008760810388876855
+      ],
+      "gain_mj_differential": [
+        -0.1126091759287861,
+        -0.002796597625425584
+      ],
+      "gain_mj_per_side": [
+        0.11446588059296839,
+        -0.1107524712646038,
+        0.01155740801430244,
+        0.005964212763451271
+      ],
+      "gain_qp_common": [
+        9.848331851587677e-06,
+        8.733209030198363e-05
+      ],
+      "gain_qp_differential": [
+        2.5926347014832568e-05,
+        0.990019901462518
+      ],
+      "gain_qp_per_side": [
+        -1.607801516324489e-05,
+        3.5774678866420245e-05,
+        -0.989932569372216,
+        0.9901072335528199
+      ],
+      "input": "slip",
+      "mode": "differential",
+      "probe_mj": [
+        -0.019911422455564303,
+        -0.04855726531887536,
+        0.0007125018688962301,
+        0.0021331221921542937
+      ],
+      "probe_qp": [
+        -4.9771799960685904e-06,
+        -1.0247987751748136e-05,
+        0.004875273824484834,
+        -0.005027448717883173
+      ],
+      "r1": {
+        "pass": true,
+        "sides": [
+          {
+            "full_operator_closure_max_abs": 1.6653345369377348e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.7399993354893486e-14,
+            "point_force_reconstruction_max_abs": 3.552713678800501e-15,
+            "projector_parity_max_abs": 8.881784197001252e-16,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 4.440892098500626e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "left"
+          },
+          {
+            "full_operator_closure_max_abs": 1.3877787807814457e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.1712092866349076e-14,
+            "point_force_reconstruction_max_abs": 1.4210854715202004e-14,
+            "projector_parity_max_abs": 2.1094237467877974e-15,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 3.9968028886505635e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "right"
+          }
+        ]
+      },
+      "regime": {
+        "active_constraints": {
+          "counts": [
+            0,
+            0,
+            0
+          ],
+          "rows": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "bilateral_contact": true,
+        "contact_count_per_side": [
+          2,
+          2
+        ],
+        "contact_dimension": [
+          3
+        ],
+        "contact_topology": [
+          [
+            [
+              0,
+              63,
+              3
+            ],
+            [
+              0,
+              63,
+              3
+            ]
+          ],
+          [
+            [
+              0,
+              31,
+              3
+            ],
+            [
+              0,
+              31,
+              3
+            ]
+          ]
+        ],
+        "hard_violation": 4.482025861562988e-11,
+        "maximum_normalized_slack": 0.0015161986068136016,
+        "minimum_friction_margin_diagnostic_n": 15.201052299623731,
+        "minimum_torque_margin_nm": 1.9968334009727724,
+        "normal_frame_max_abs_delta_from_baseline": 0.0,
+        "rolling_active": [
+          1,
+          1
+        ],
+        "solver_contact_signature": "{\"active_constraints\":{\"counts\":[0,0,0],\"rows\":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},\"rolling_active\":[1,1],\"statuses\":[\"0\",\"0\",\"0\"],\"topology\":[[[0,63,3],[0,63,3]],[[0,31,3],[0,31,3]]]}",
+        "stable": true,
+        "statuses": [
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "scale": 0.5,
+      "scale_convergence_pass": true,
+      "scale_convergence_relative": 6.67615041362565e-12,
+      "signed_delta_m_s2": -0.005
+    },
+    {
+      "baseline_mj": [
+        -0.01933909305259946,
+        -0.04911102767519838,
+        0.0007702889089677423,
+        0.00216294325597155
+      ],
+      "baseline_qp": [
+        -5.057570071884815e-06,
+        -1.0069114357416035e-05,
+        -7.438902237624605e-05,
+        -7.691255011907372e-05
+      ],
+      "baseline_subtracted": true,
+      "branch": -1,
+      "gain_mj_common": [
+        0.0018567046611774052,
+        0.00876081038958948
+      ],
+      "gain_mj_differential": [
+        -0.11260917592782263,
+        -0.0027965976260077574
+      ],
+      "gain_mj_per_side": [
+        0.11446588058900004,
+        -0.11075247126664522,
+        0.011557408015597237,
+        0.005964212763581722
+      ],
+      "gain_qp_common": [
+        9.848331858873516e-06,
+        8.733209029865296e-05
+      ],
+      "gain_qp_differential": [
+        2.5926347019429585e-05,
+        0.9900199014625157
+      ],
+      "gain_qp_per_side": [
+        -1.607801516055607e-05,
+        3.57746788783031e-05,
+        -0.9899325693722171,
+        0.9901072335528144
+      ],
+      "input": "slip",
+      "mode": "differential",
+      "probe_mj": [
+        -0.01962525775407196,
+        -0.048834146497031765,
+        0.0007413953889287492,
+        0.0021480327240625957
+      ],
+      "probe_qp": [
+        -5.017375033983425e-06,
+        -1.0158551054611793e-05,
+        0.0024004424010542966,
+        -0.0025521806340011097
+      ],
+      "r1": {
+        "pass": true,
+        "sides": [
+          {
+            "full_operator_closure_max_abs": 1.6653345369377348e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.7400007489755793e-14,
+            "point_force_reconstruction_max_abs": 3.552713678800501e-15,
+            "projector_parity_max_abs": 8.881784197001252e-16,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 4.440892098500626e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "left"
+          },
+          {
+            "full_operator_closure_max_abs": 1.3877787807814457e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.1712082318141905e-14,
+            "point_force_reconstruction_max_abs": 1.4210854715202004e-14,
+            "projector_parity_max_abs": 2.1094237467877974e-15,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 3.9968028886505635e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "right"
+          }
+        ]
+      },
+      "regime": {
+        "active_constraints": {
+          "counts": [
+            0,
+            0,
+            0
+          ],
+          "rows": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "bilateral_contact": true,
+        "contact_count_per_side": [
+          2,
+          2
+        ],
+        "contact_dimension": [
+          3
+        ],
+        "contact_topology": [
+          [
+            [
+              0,
+              63,
+              3
+            ],
+            [
+              0,
+              63,
+              3
+            ]
+          ],
+          [
+            [
+              0,
+              31,
+              3
+            ],
+            [
+              0,
+              31,
+              3
+            ]
+          ]
+        ],
+        "hard_violation": 4.482014759332742e-11,
+        "maximum_normalized_slack": 0.0015192095011012413,
+        "minimum_friction_margin_diagnostic_n": 15.201035670290539,
+        "minimum_torque_margin_nm": 1.9968352760257857,
+        "normal_frame_max_abs_delta_from_baseline": 0.0,
+        "rolling_active": [
+          1,
+          1
+        ],
+        "solver_contact_signature": "{\"active_constraints\":{\"counts\":[0,0,0],\"rows\":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},\"rolling_active\":[1,1],\"statuses\":[\"0\",\"0\",\"0\"],\"topology\":[[[0,63,3],[0,63,3]],[[0,31,3],[0,31,3]]]}",
+        "stable": true,
+        "statuses": [
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "scale": 0.25,
+      "scale_convergence_pass": true,
+      "scale_convergence_relative": 2.3992290365525435e-11,
+      "signed_delta_m_s2": -0.0025
+    },
+    {
+      "baseline_mj": [
+        -0.01933909305259946,
+        -0.04911102767519838,
+        0.0007702889089677423,
+        0.00216294325597155
+      ],
+      "baseline_qp": [
+        -5.057570071884815e-06,
+        -1.0069114357416035e-05,
+        -7.438902237624605e-05,
+        -7.691255011907372e-05
+      ],
+      "baseline_subtracted": true,
+      "branch": 1,
+      "gain_mj_common": [
+        0.0018567046647899668,
+        0.008760810389244617
+      ],
+      "gain_mj_differential": [
+        -0.11260917592964564,
+        -0.002796597625093905
+      ],
+      "gain_mj_per_side": [
+        0.11446588059443562,
+        -0.11075247126485568,
+        0.011557408014338522,
+        0.0059642127641507114
+      ],
+      "gain_qp_common": [
+        9.84833185434155e-06,
+        8.733209028716216e-05
+      ],
+      "gain_qp_differential": [
+        2.5926347010647548e-05,
+        0.9900199014625217
+      ],
+      "gain_qp_per_side": [
+        -1.6078015156305997e-05,
+        3.57746788649891e-05,
+        -0.9899325693722345,
+        0.9901072335528088
+      ],
+      "input": "slip",
+      "mode": "differential",
+      "probe_mj": [
+        -0.018194434246655105,
+        -0.050218552387846935,
+        0.0008858629891111275,
+        0.002222585383613057
+      ],
+      "probe_qp": [
+        -5.218350223447875e-06,
+        -9.711367568766144e-06,
+        -0.009973714716098592,
+        0.009824159785409015
+      ],
+      "r1": {
+        "pass": true,
+        "sides": [
+          {
+            "full_operator_closure_max_abs": 1.6653345369377348e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.7400077793490415e-14,
+            "point_force_reconstruction_max_abs": 1.6306400674181987e-15,
+            "projector_parity_max_abs": 8.881784197001252e-16,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 4.440892098500626e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "left"
+          },
+          {
+            "full_operator_closure_max_abs": 1.3877787807814457e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.17120293785827e-14,
+            "point_force_reconstruction_max_abs": 1.4210854715202004e-14,
+            "projector_parity_max_abs": 2.1094237467877974e-15,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 3.9968028886505635e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "right"
+          }
+        ]
+      },
+      "regime": {
+        "active_constraints": {
+          "counts": [
+            0,
+            0,
+            0
+          ],
+          "rows": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "bilateral_contact": true,
+        "contact_count_per_side": [
+          2,
+          2
+        ],
+        "contact_dimension": [
+          3
+        ],
+        "contact_topology": [
+          [
+            [
+              0,
+              63,
+              3
+            ],
+            [
+              0,
+              63,
+              3
+            ]
+          ],
+          [
+            [
+              0,
+              31,
+              3
+            ],
+            [
+              0,
+              31,
+              3
+            ]
+          ]
+        ],
+        "hard_violation": 4.4820369637932345e-11,
+        "maximum_normalized_slack": 0.0015342639725391145,
+        "minimum_friction_margin_diagnostic_n": 15.200949130628024,
+        "minimum_torque_margin_nm": 1.9968446512908462,
+        "normal_frame_max_abs_delta_from_baseline": 0.0,
+        "rolling_active": [
+          1,
+          1
+        ],
+        "solver_contact_signature": "{\"active_constraints\":{\"counts\":[0,0,0],\"rows\":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},\"rolling_active\":[1,1],\"statuses\":[\"0\",\"0\",\"0\"],\"topology\":[[[0,63,3],[0,63,3]],[[0,31,3],[0,31,3]]]}",
+        "stable": true,
+        "statuses": [
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "scale": 1.0,
+      "scale_convergence_pass": true,
+      "scale_convergence_relative": 0.0,
+      "signed_delta_m_s2": 0.01
+    },
+    {
+      "baseline_mj": [
+        -0.01933909305259946,
+        -0.04911102767519838,
+        0.0007702889089677423,
+        0.00216294325597155
+      ],
+      "baseline_qp": [
+        -5.057570071884815e-06,
+        -1.0069114357416035e-05,
+        -7.438902237624605e-05,
+        -7.691255011907372e-05
+      ],
+      "baseline_subtracted": true,
+      "branch": 1,
+      "gain_mj_common": [
+        0.0018567046659236086,
+        0.008760810387579976
+      ],
+      "gain_mj_differential": [
+        -0.11260917593071615,
+        -0.0027965976247032454
+      ],
+      "gain_mj_per_side": [
+        0.11446588059663976,
+        -0.11075247126479254,
+        0.011557408012283221,
+        0.0059642127628767305
+      ],
+      "gain_qp_common": [
+        9.848331852238199e-06,
+        8.733209031153155e-05
+      ],
+      "gain_qp_differential": [
+        2.5926347008977876e-05,
+        0.9900199014625195
+      ],
+      "gain_qp_per_side": [
+        -1.6078015156739678e-05,
+        3.5774678861216075e-05,
+        -0.989932569372208,
+        0.990107233552831
+      ],
+      "input": "slip",
+      "mode": "differential",
+      "probe_mj": [
+        -0.018766763649616262,
+        -0.04966479003152234,
+        0.0008280759490291584,
+        0.0021927643197859337
+      ],
+      "probe_qp": [
+        -5.137960147668513e-06,
+        -9.890240963109954e-06,
+        -0.005024051869237286,
+        0.0048736236176450815
+      ],
+      "r1": {
+        "pass": true,
+        "sides": [
+          {
+            "full_operator_closure_max_abs": 1.6653345369377348e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.7400049682584478e-14,
+            "point_force_reconstruction_max_abs": 3.552713678800501e-15,
+            "projector_parity_max_abs": 8.881784197001252e-16,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 4.440892098500626e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "left"
+          },
+          {
+            "full_operator_closure_max_abs": 1.3877787807814457e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.1712050580876162e-14,
+            "point_force_reconstruction_max_abs": 2.1316282072803006e-14,
+            "projector_parity_max_abs": 2.1094237467877974e-15,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 3.9968028886505635e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "right"
+          }
+        ]
+      },
+      "regime": {
+        "active_constraints": {
+          "counts": [
+            0,
+            0,
+            0
+          ],
+          "rows": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "bilateral_contact": true,
+        "contact_count_per_side": [
+          2,
+          2
+        ],
+        "contact_dimension": [
+          3
+        ],
+        "contact_topology": [
+          [
+            [
+              0,
+              63,
+              3
+            ],
+            [
+              0,
+              63,
+              3
+            ]
+          ],
+          [
+            [
+              0,
+              31,
+              3
+            ],
+            [
+              0,
+              31,
+              3
+            ]
+          ]
+        ],
+        "hard_violation": 4.482003657102496e-11,
+        "maximum_normalized_slack": 0.0015282421839643192,
+        "minimum_friction_margin_diagnostic_n": 15.200984425127098,
+        "minimum_torque_margin_nm": 1.9968409011848263,
+        "normal_frame_max_abs_delta_from_baseline": 0.0,
+        "rolling_active": [
+          1,
+          1
+        ],
+        "solver_contact_signature": "{\"active_constraints\":{\"counts\":[0,0,0],\"rows\":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},\"rolling_active\":[1,1],\"statuses\":[\"0\",\"0\",\"0\"],\"topology\":[[[0,63,3],[0,63,3]],[[0,31,3],[0,31,3]]]}",
+        "stable": true,
+        "statuses": [
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "scale": 0.5,
+      "scale_convergence_pass": true,
+      "scale_convergence_relative": 2.0478299086298264e-11,
+      "signed_delta_m_s2": 0.005
+    },
+    {
+      "baseline_mj": [
+        -0.01933909305259946,
+        -0.04911102767519838,
+        0.0007702889089677423,
+        0.00216294325597155
+      ],
+      "baseline_qp": [
+        -5.057570071884815e-06,
+        -1.0069114357416035e-05,
+        -7.438902237624605e-05,
+        -7.691255011907372e-05
+      ],
+      "baseline_subtracted": true,
+      "branch": 1,
+      "gain_mj_common": [
+        0.0018567046633027884,
+        0.008760810387367646
+      ],
+      "gain_mj_differential": [
+        -0.11260917593149122,
+        -0.0027965976242744217
+      ],
+      "gain_mj_per_side": [
+        0.11446588059479401,
+        -0.11075247126818843,
+        0.011557408011642067,
+        0.005964212763093224
+      ],
+      "gain_qp_common": [
+        9.848331849332537e-06,
+        8.73320903097552e-05
+      ],
+      "gain_qp_differential": [
+        2.5926347003990546e-05,
+        0.9900199014625185
+      ],
+      "gain_qp_per_side": [
+        -1.607801515465801e-05,
+        3.577467885332308e-05,
+        -0.9899325693722087,
+        0.9901072335528283
+      ],
+      "input": "slip",
+      "mode": "differential",
+      "probe_mj": [
+        -0.019052928351112476,
+        -0.04938790885336885,
+        0.0007991824289968474,
+        0.002177853787879283
+      ],
+      "probe_qp": [
+        -5.09776510977146e-06,
+        -9.979677660282727e-06,
+        -0.002549220445806768,
+        0.002398355533762997
+      ],
+      "r1": {
+        "pass": true,
+        "sides": [
+          {
+            "full_operator_closure_max_abs": 1.6653345369377348e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.740003565360129e-14,
+            "point_force_reconstruction_max_abs": 7.105427357601002e-15,
+            "projector_parity_max_abs": 8.881784197001252e-16,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 4.440892098500626e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "left"
+          },
+          {
+            "full_operator_closure_max_abs": 1.3877787807814457e-16,
+            "pass": true,
+            "physical_range_residual_max_abs": 2.1712061155553113e-14,
+            "point_force_reconstruction_max_abs": 7.105427357601002e-15,
+            "projector_parity_max_abs": 2.1094237467877974e-15,
+            "rank": 5,
+            "reduced_operator_closure_max_abs": 3.9968028886505635e-15,
+            "reference_semantics": "production aggregate-wrench reference with transported actual two-point force image",
+            "side": "right"
+          }
+        ]
+      },
+      "regime": {
+        "active_constraints": {
+          "counts": [
+            0,
+            0,
+            0
+          ],
+          "rows": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "bilateral_contact": true,
+        "contact_count_per_side": [
+          2,
+          2
+        ],
+        "contact_dimension": [
+          3
+        ],
+        "contact_topology": [
+          [
+            [
+              0,
+              63,
+              3
+            ],
+            [
+              0,
+              63,
+              3
+            ]
+          ],
+          [
+            [
+              0,
+              31,
+              3
+            ],
+            [
+              0,
+              31,
+              3
+            ]
+          ]
+        ],
+        "hard_violation": 4.482003657102496e-11,
+        "maximum_normalized_slack": 0.0015252312896765657,
+        "minimum_friction_margin_diagnostic_n": 15.201001733051605,
+        "minimum_torque_margin_nm": 1.9968390261318119,
+        "normal_frame_max_abs_delta_from_baseline": 0.0,
+        "rolling_active": [
+          1,
+          1
+        ],
+        "solver_contact_signature": "{\"active_constraints\":{\"counts\":[0,0,0],\"rows\":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},\"rolling_active\":[1,1],\"statuses\":[\"0\",\"0\",\"0\"],\"topology\":[[[0,63,3],[0,63,3]],[[0,31,3],[0,31,3]]]}",
+        "stable": true,
+        "statuses": [
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "scale": 0.25,
+      "scale_convergence_pass": true,
+      "scale_convergence_relative": 2.7721197750828958e-11,
+      "signed_delta_m_s2": 0.0025
+    }
+  ],
+  "schema_version": 1,
+  "scope": "corrected production-reference exact-R1 compatible-H0 tick0 AUTH only",
+  "state_contact_regime": "STABLE",
+  "stop_after_AUTH": true,
+  "transfer": {
+    "common": {
+      "G_MJ": [
+        [
+          0.9873663720277985,
+          -0.11803999921565639
+        ],
+        [
+          -0.014916103431100725,
+          -0.14016914577184578
+        ]
+      ],
+      "G_QP": [
+        [
+          0.9999404419369587,
+          -0.000556872318379964
+        ],
+        [
+          -0.00055687231860428,
+          0.9947780693566424
+        ]
+      ],
+      "branch_split_relative": {
+        "slip": 9.588779440756613e-12,
+        "xi": 1.293370322109111e-12
+      },
+      "columns": [
+        "xi",
+        "slip"
+      ],
+      "rows": [
+        "ddxi",
+        "slip_acceleration"
+      ]
+    },
+    "differential": {
+      "G_MJ": [
+        [
+          0.9381805015132828,
+          -0.11260917592903433
+        ],
+        [
+          -0.0058599523811661905,
+          -0.0027965976253627872
+        ]
+      ],
+      "G_QP": [
+        [
+          0.9999796889415775,
+          2.59263470114607e-05
+        ],
+        [
+          2.5926347012360587e-05,
+          0.9900199014625201
+        ]
+      ],
+      "branch_split_relative": {
+        "slip": 1.1857481425559374e-11,
+        "xi": 9.171473408484193e-13
+      },
+      "columns": [
+        "xi",
+        "slip"
+      ],
+      "rows": [
+        "ddxi",
+        "slip_acceleration"
+      ]
+    }
+  }
+}

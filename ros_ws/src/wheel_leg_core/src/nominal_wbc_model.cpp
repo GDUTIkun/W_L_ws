@@ -24,8 +24,11 @@ constexpr double kMaximumPassiveCondition = 40.0;
 // Phase46 compatible-H0/tick0 actual two-point contact-line offsets from the
 // production wrench reference, expressed in each contact frame. These are
 // frozen evidence inputs, not a general contact estimator.
-constexpr std::array<double, 2> kPhase46ActualContactLineNormalOffsetM{
-    0.00021526549679640877, 0.0001520424481146268};
+constexpr std::array<std::array<double, 3>, 2>
+    kPhase46ActualContactLineOffsetM{{
+        {-0.00011617252454271308, 0.0, 0.0001809320398185113},
+        {0.00006065801447334452, 0.0, 0.0002552945068471646},
+    }};
 constexpr int kMaximumReconstructionIterations = 30;
 
 struct BodyState {
@@ -555,7 +558,7 @@ NominalWbcModel::Result NominalWbcModel::evaluate(
     result.contact_frame_world[side] = geometry.frame;
     result.contact_axis[side] = geometry.frame.transpose() * geometry.axis;
     const Eigen::Vector3d contact_line_offset(
-        0.0, 0.0, kPhase46ActualContactLineNormalOffsetM[side]);
+        kPhase46ActualContactLineOffsetM[side].data());
     result.point_force_wrench_projector[side] =
         pointContactWrenchProjector(result.contact_axis[side],
                                     contact_line_offset);

@@ -100,15 +100,19 @@ wheel_leg::WbcReference referenceFrom(const Row &row) {
 
 int main(int argc, char **argv) {
   try {
-    if (argc != 2) throw std::runtime_error("usage: phase46_dump_qp_operators ROW.csv");
+    if (argc < 2 || argc > 3)
+      throw std::runtime_error(
+          "usage: phase46_dump_qp_operators ROW.csv [point-realizable]");
     const Row row = readRow(argv[1]);
     const wheel_leg::NominalWbcModel::Result model =
         wheel_leg::NominalWbcModel{}.evaluate(stateFrom(row));
     if (!model.ok()) throw std::runtime_error("NominalWbcModel rejected frozen row");
     const auto reference = referenceFrom(row);
+    const auto profile = argc == 3
+        ? wheel_leg::WeightedWbcProfile::kPhase46PointRealizableRolling
+        : wheel_leg::WeightedWbcProfile::kPhase46HipCommonIncrementLimitedRolling;
     const auto problem = wheel_leg::WeightedWbcProblem{}.assemble(
-        model, reference,
-        wheel_leg::WeightedWbcProfile::kPhase46HipCommonIncrementLimitedRolling);
+        model, reference, profile);
     if (!problem.ok()) throw std::runtime_error("WeightedWbcProblem rejected frozen row");
 
     std::cout << std::setprecision(17);
@@ -120,6 +124,9 @@ int main(int argc, char **argv) {
       emit(("wrench_map_" + suffix).c_str(), model.wrench_map[side]);
       emit(("contact_jacobian_" + suffix).c_str(), model.contact_jacobian[side]);
       emit(("contact_bias_" + suffix).c_str(), model.contact_bias[side]);
+      emit(("contact_axis_" + suffix).c_str(), model.contact_axis[side]);
+      emit(("point_force_wrench_projector_" + suffix).c_str(),
+           model.point_force_wrench_projector[side]);
       emit(("interaction_acceleration_map_" + suffix).c_str(),
            model.interaction_acceleration_map[side]);
       emit(("interaction_contact_map_" + suffix).c_str(), model.interaction_contact_map[side]);

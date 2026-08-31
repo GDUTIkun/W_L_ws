@@ -1,0 +1,40 @@
+{
+  "R1_exactly_closed_at_frozen_H0": true,
+  "R1_repair_preserves_equilibrium": true,
+  "R2_authorized": false,
+  "classification": "CORRECTED_EXACT_R1_EQ_PASS",
+  "entered": true,
+  "metrics": {
+    "contact_count_per_side": [
+      2,
+      2
+    ],
+    "contact_reconstruction_closure": 0.0,
+    "hard_violation": 4.482025861562988e-11,
+    "maximum_normalized_slack": 0.001522220395389018,
+    "minimum_torque_margin_nm": 1.9968371510787994,
+    "mujoco_ddxi_per_side_m_s2": [
+      -0.01933909305259946,
+      -0.04911102767519838
+    ],
+    "mujoco_material_tangent_acceleration_per_side_m_s2": [
+      0.0007702889089677423,
+      0.00216294325597155
+    ],
+    "normal_load_per_side_n": [
+      9.92264238412998,
+      9.612382597653284
+    ],
+    "qp_ddxi_per_side_m_s2": [
+      -5.057570071884815e-06,
+      -1.0069114357416035e-05
+    ],
+    "qp_material_tangent_acceleration_per_side_m_s2": [
+      -7.438902237624605e-05,
+      -7.691255011907372e-05
+    ],
+    "whole_dynamics_closure": 2.1316282072803006e-14
+  },
+  "next_allowed_action": "fixed-state authority audit",
+  "pass": true
+}

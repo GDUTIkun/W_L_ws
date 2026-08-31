@@ -246,7 +246,17 @@ int main() {
       evaluated, rolling_reference,
       wheel_leg::WeightedWbcProfile::kPhase46PointRealizableRolling);
   assert(point_realizable.ok());
+  const std::array<Eigen::Vector3d, 2> production_line_offset{{
+      Eigen::Vector3d(-0.00011617252454271308, 0.0,
+                      0.0001809320398185113),
+      Eigen::Vector3d(0.00006065801447334452, 0.0,
+                      0.0002552945068471646),
+  }};
   for (int side = 0; side < 2; ++side) {
+    const auto production_projector = wheel_leg::pointContactWrenchProjector(
+        evaluated.contact_axis[side], production_line_offset[side]);
+    assert((evaluated.point_force_wrench_projector[side] -
+            production_projector).cwiseAbs().maxCoeff() <= 2.0e-15);
     const auto projector = wheel_leg::pointContactWrenchProjector(
         evaluated.contact_axis[side], Eigen::Vector3d(0.0, 0.0, 2.0e-4));
     assert((projector - projector.transpose()).cwiseAbs().maxCoeff() <= 1.0e-12);

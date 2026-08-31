@@ -185,6 +185,33 @@ AUTH/REAL/trajectory。
 | P46-R35 | construct and compare `Pg_prod` | rank/missing direction/projector/reconstruction；current projector comparison | done |
 | P46-R36 | formal replay and authority | `A-PRODUCTION-REFERENCE-IMAGE-CLOSED`；replay `0`；不实施 candidate | done |
 
+### REWORK tasks — corrected production-reference exact-R1 repair
+
+继续使用唯一 `kPhase46PointRealizableRolling` profile，只将 frozen compatible-H0 的 actual
+two-point image transport 到 production aggregate-wrench reference，并以
+`Pg_prod=Gp_prod Gp_prod^dagger` supersede 旧 projector。执行顺序严格为 `IMPLEMENT -> COMP -> EQ
+-> STOP`；不运行 AUTH、REAL、SHORT、10 s、trajectory 或 R2 classification。
+
+| ID | Task | Deliverable / validation | Status |
+| --- | --- | --- | --- |
+| P46-R37 | corrected projector implementation | 完整 frozen contact-line offset；同一 projector 进入 dynamics/cone/interaction/output | done |
+| P46-R38 / DG46PR-COMP | production-reference component gate | controller identity、rank-5 image、full/reduced operator、point-force、semantics 与 regression PASS | done |
+| P46-R39 / DG46PR-EQ | compatible-H0 tick0 equilibrium | COMP PASS 后进入；actual `ddxi=[-0.0193391,-0.0491110]`，全部 frozen EQ gates PASS；随后停止 | done |
+| P46-R40 | formal replay and review | formal-v2 authoritative、fresh replay error `0`；formal-v1 harness false failure rejected；R2 not authorized | done |
+
+### REWORK tasks — corrected production-reference exact-R1 AUTH
+
+只执行 compatible-H0、tick0 的 fixed-state directional AUTH。全部导数严格使用
+`(probe - baseline) / signed_delta`；不修改 controller/projector/task/参数，不进入 REAL、SHORT、
+10 s、trajectory 或 R2。
+
+| ID | Task | Deliverable / validation | Status |
+| --- | --- | --- | --- |
+| P46-R41 | common/differential directional probes | xi/slip 独立输入，`+/-`、scales `1/0.5/0.25`，baseline-subtracted QP/MJ 2x2 transfer | done |
+| P46-R42 | per-probe R1/regime closure | projector/range/point-force/full+reduced operator closure；contact/frame/friction/active-set/solver stability | done |
+| P46-R43 / DG46PR-AUTH | frozen authority gates | `B-HARMFUL-CROSS-REMAINS`：cross `-0.118040` 超 absolute gate；slip self 同时反号 | done |
+| P46-R44 | formal replay and review | 24 probes + baseline，fresh replay error `0`；严格停在 AUTH | done |
+
 ## Classification
 
 最终只能选择：

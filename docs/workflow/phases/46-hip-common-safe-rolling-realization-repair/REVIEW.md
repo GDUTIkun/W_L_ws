@@ -2,7 +2,7 @@
 
 结论：`REWORK`
 日期：2026-08-31  
-classification：`P46-E — multiple remaining mechanisms`
+classification：`B-HARMFUL-CROSS-REMAINS`
 
 ## Finding
 
@@ -438,3 +438,62 @@ projector 的 max difference 为 left `1.16173e-4`、right `1.03252e-4`，故 ex
 [formal-v2](evidence/automated/wrench-generalized-force-operator-audit-formal-v2/wrench-generalized-force-operator-audit.json)
 与 [replay-v2](evidence/automated/wrench-generalized-force-operator-audit-replay-v2/summary.json)，semantic
 error `0`。本轮未实施 repair，Phase46 保持 `review/REWORK`。
+
+## REWORK — corrected production-reference exact-R1 repair
+
+结论：`CORRECTED-R1-COMP PASS / CORRECTED_EXACT_R1_EQ_PASS`。
+
+唯一 `kPhase46PointRealizableRolling` candidate 现使用 frozen compatible-H0 actual two-point
+contact line 相对 production aggregate-wrench reference 的完整 contact-frame offset；未改 task、
+gain/weight、friction、solver、contact parameter 或 wrench reference，也未叠加 hip-common
+projection/hard equality、inverse map 或 precompensation。同一 `Pg_prod` 继续进入 dynamics、37-row
+wrench cone、minimal interaction-wrench realization 与 controller physical output。
+
+DG46PR-COMP PASS：controller 与 audited `Pg_prod` 的 max difference 为 left
+`8.88e-16`、right `2.11e-15`（spectral `1.18e-15 / 2.27e-15`）；左右 rank 5，symmetry exact，
+idempotence `<=1.55e-15`，mutual containment `<=1.55e-15`，missing-direction annihilation
+`<=3.94e-16`，point-force reconstruction `<=1.42e-14`。full/reduced operator parity 分别
+`1.67e-16 / 4.44e-15`。QP constraint、physical interaction task 与 controller diagnostic/output
+都仅使用 physical range；冻结 `1e-6` solver regularization 仍作用于 latent null direction，但从
+physical task Hessian 扣除该明确 numerical term 后 residual `<=8.98e-17`，没有改变 solver 或
+weight。core `17/17`、adapter `6/6` 与 historical profile tests 全部 PASS。
+
+COMP PASS 后合法进入 DG46PR-EQ。同一 Phase45 compatible-H0/tick0、Model B、state、contact、
+friction、solver、gain/weight 与 torque limits 下，actual `ddxi_L/R` 为
+`-0.0193390931/-0.0491110277 m/s2`，均满足 `abs(ddxi)<=0.05`。material tangent acceleration
+为 `+0.000770289/+0.002162943 m/s2`，bilateral two-point contact 保持，normal loads
+`9.92264/9.61238 N`，hard `4.48e-11`、slack `0.00152222`、minimum torque margin
+`1.99684 Nm`、whole-dynamics/contact closure `2.13e-14/0`，故 equilibrium PASS。
+
+按 stop rule，本轮没有运行 AUTH、REAL、SHORT、10 s 或 trajectory；`R2` 不授权。下一允许动作
+仅为独立 fixed-state authority audit。formal-v1 因把冻结 numerical regularization 误算成 physical
+interaction task 而得到 false COMP FAIL，已 rejected；它遵守 stop rule 且未运行 EQ。authoritative
+evidence 为 [formal-v2](evidence/automated/corrected-exact-r1-formal-v2/corrected-exact-r1-comp.json)
+与 [fresh replay-v1](evidence/automated/corrected-exact-r1-replay-v1/summary.json)，semantic error `0`。
+旧 pure-`Ml` 与 previous exact-R1 EQ 结果均为 superseded candidate evidence，不评价本 corrected
+candidate。Phase46 保持 `review/REWORK`，不创建 RECORD。
+
+## REWORK — corrected production-reference exact-R1 fixed-state AUTH
+
+结论：`B-HARMFUL-CROSS-REMAINS`，DG46PR-AUTH FAIL。全部 24 个 directional probe 都使用
+`(probe_output-baseline_output)/signed_delta`，没有直接以 probe output 除输入。common actual
+`slip -> ddxi` 为 `-0.1180399992`：相对 Phase45 `-4.2950931926` 降低 `97.2517%`，通过 90%
+reduction gate，但仍超过 absolute `0.1` gate。actual xi self 为 `+0.9873663720`；actual slip
+self 为 `-0.1401691458`，反号且未保留正 authority。QP common matrix 近单位阵，故 slip self
+还出现 QP/MuJoCo 符号不一致。
+
+differential actual matrix的 xi/slip self 为 `+0.9381805015/-0.0027965976`，slip self 同样反号；
+common-slip 输入到 differential 输出的最大 actual contamination 为 `0.1735731065`。这作为并存的
+self-authority loss/mode contamination 记录，但因 harmful common cross 本身仍超 mandatory absolute
+gate，主分类按冻结优先语义为 `B-HARMFUL-CROSS-REMAINS`。
+
+所有 branch split `<=1.19e-11`，scale convergence `<=2.78e-11`。每个 probe 的 corrected R1
+projector/range/point-force/full+reduced operator closure 均 PASS，最大 residual `2.75e-14`；双侧
+各两个 3D contacts、normal frame、active constraints 和 solver/contact signature 均稳定，最小
+friction margin `15.2007 N`。fresh replay semantic error 为 `0`。
+
+按 stop rule 未进入 REAL、SHORT、10 s、trajectory 或任何 repair/R2。下一允许动作仅为
+`post-corrected-R1 authority attribution`。证据见 [AUTH report](CORRECTED_EXACT_R1_AUTH.md)、
+[formal-v1](evidence/automated/corrected-exact-r1-auth-formal-v1/corrected-exact-r1-auth.json) 与
+[fresh replay-v1](evidence/automated/corrected-exact-r1-auth-replay-v1/summary.json)。Phase46 保持
+`review/REWORK`，不创建 RECORD。

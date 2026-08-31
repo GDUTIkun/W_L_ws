@@ -1,0 +1,9 @@
+{
+  "R2_authorized": false,
+  "comp_pass": false,
+  "equilibrium_status": "NOT RUN",
+  "next_allowed_action": "implementation fix only",
+  "pass": false,
+  "replay_max_abs_error": null,
+  "replay_pass": true
+}
