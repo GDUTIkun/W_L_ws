@@ -518,3 +518,47 @@ reaction 正常反向抵消 large negative free slip，没有 solver bug evidenc
 本轮未进入 KKT、未修改 controller 或参数、未实施 repair。`R2` 不授权；下一允许动作仅为继续
 fixed-state attribution，把 material `other` 拆成 other-constraint 与 passive/applied 后再决定
 repair layer。Phase46 保持 `review/REWORK`，不创建 RECORD。
+
+## REWORK — post-corrected-R1 other-gap closure
+
+结论：`D-NONCONTACT-CONSTRAINT-GAP`。slip-common previous other gap 的 slip_c
+`-0.371684465` 由 bilateral `left_leg_closure/right_leg_closure` equality-response gap 以 fraction
+`1.00000000000046` 重建。QP 已通过 frozen plant-constrained reduction 建模该项；MuJoCo 侧由
+equality `efc_J.T@efc_force` row-wise 重建，所以结论是同一物理项的 QP-vs-MJ response gap，
+不是把 plant equality contribution误称 omission。
+
+passive、applied、external/body-applied、bias delta、limit、friction-loss 与 other constraint 均为
+zero；numerical remainder `<=5.88e-13`。constraint total closure `<=1.42e-14`，contact-row vs
+point-contact closure `<=2.84e-12`，other-gap closure `<=7.54e-14`，fresh replay error `0`。
+因此 other gap 独立于 contact，且没有 contact bookkeeping overlap。
+
+slip-differential 继续由 contact gap支配；xi-common 中 contact/equality gaps 反向抵消，而
+slip-common 中两者同向破坏 authority。上一轮 overall
+`E-MULTIPLE-REMAINING-MECHANISMS` 因此继续 authoritative，不标 superseded；contact response
+不是 unique first mismatch，R2 不是 re-authorization candidate 且不授权。详见
+[other-gap report](POST_CORRECTED_R1_OTHER_GAP_ATTRIBUTION.md)、
+[formal-v2](evidence/automated/post-corrected-r1-other-gap-attribution-formal-v2/post-corrected-r1-other-gap-attribution.json)
+与 [fresh replay-v2](evidence/automated/post-corrected-r1-other-gap-attribution-replay-v2/summary.json)。
+本轮未进入 KKT、未实施 repair；Phase46 保持 `review/REWORK`。
+
+## REWORK — bilateral leg-closure equality-response operator audit
+
+结论：`D-QP-CONSTRAINED-REDUCTION/REACTION-MISMATCH`。QP 与 MuJoCo 使用完全相同的 bilateral
+site-pair Jacobian：raw/spectral difference `0`，rank均为 `6`，mutual containment
+`1.44e-15`，nullspace projector difference `0`；q/qdot frozen且 `Jdotv=0`。geometry/row-space
+不是 first mismatch。
+
+MuJoCo 因约 `1e-4 m` closure position residual产生最高 `efc_aref=0.409092 m/s2`，而 QP rigid
+target为 zero closure acceleration；但 full coupled target-gap传播到 slip_c 仅 `-0.00491981`，
+占 equality gap `1.32365%`，不足以解释 AUTH failure。继续合法进入 coupled rigid diagnostic后，
+QP reconstructed reaction 的 `99.9233%` 不在 `Range(J_eq^T)` 内，QP-vs-rigid relative difference
+`0.999967`；MuJoCo-vs-rigid 为 `0.111808`。因此 first material mismatch 位于 QP constrained
+reduction/reaction reconstruction，而不是 geometry、target或已证明的 solver bug。
+
+全 probe rigid KKT residual `<=2.54e-14`，branch split `1.80e-10`、scale convergence
+`4.16e-10`，fresh replay error `0`。详见
+[operator audit](LEG_CLOSURE_EQUALITY_OPERATOR_AUDIT.md)、
+[formal-v4](evidence/automated/leg-closure-equality-operator-audit-formal-v4/leg-closure-equality-operator-audit.json)
+与 [fresh replay-v4](evidence/automated/leg-closure-equality-operator-audit-replay-v4/summary.json)。
+本轮未修改 equality/reduction/solver，未实施 repair；R2 继续不授权，Phase46 保持
+`review/REWORK`。

@@ -130,7 +130,17 @@ def solver_force_channels(oracle: Any) -> dict[str, Any]:
     constraint = np.asarray(data.qfrc_constraint).copy()
     return {"efc_type": types, "efc_id": np.asarray(data.efc_id, dtype=int).copy(),
             "efc_J": jacobian, "efc_force": force, "generalized": generalized,
+            "efc_pos": np.asarray(data.efc_pos).copy(),
+            "efc_vel": np.asarray(data.efc_vel).copy(),
+            "efc_aref": np.asarray(data.efc_aref).copy(),
+            "efc_D": np.asarray(data.efc_D).copy(),
+            "efc_R": np.asarray(data.efc_R).copy(),
+            "efc_KBIP": np.asarray(data.efc_KBIP).copy(),
+            "efc_b": np.asarray(data.efc_b).copy(),
+            "efc_state": np.asarray(data.efc_state, dtype=int).copy(),
             "qfrc_constraint": constraint,
+            "qfrc_smooth": np.asarray(data.qfrc_smooth).copy(),
+            "xfrc_applied": np.asarray(data.xfrc_applied).copy(),
             "row_reconstruction_max_abs": float(np.max(np.abs(generalized["total"] - constraint)))}
 
 

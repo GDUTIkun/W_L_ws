@@ -1,0 +1,9 @@
+{
+  "R2_authorized": false,
+  "R2_candidate_for_reauthorization": false,
+  "classification": "D-NONCONTACT-CONSTRAINT-GAP",
+  "next_allowed_action": "define one Phase46 REWORK repair candidate",
+  "pass": true,
+  "replay_max_abs_error": null,
+  "replay_pass": true
+}

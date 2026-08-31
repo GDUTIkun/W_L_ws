@@ -224,6 +224,28 @@ controller/parameter，不实施 repair，不运行 trajectory 层验证。
 | P46-R47 | point-force aggregate/null split and dominance | production-reference closure、alignment/residual/norm metrics、solver interpretation | done |
 | P46-R48 | classification and fresh replay | `E-MULTIPLE-REMAINING-MECHANISMS`；replay `0`；R2 not authorized | done |
 
+### REWORK tasks — post-corrected-R1 other-gap closure
+
+只关闭 slip-common `other gap` 的 generalized-force source，不进入 KKT、repair 或 trajectory。
+
+| ID | Task | Deliverable / validation | Status |
+| --- | --- | --- | --- |
+| P46-R49 | smooth/constraint split | smooth-minus-actuator numerical zero；material gap 位于 constraint side | done |
+| P46-R50 | row-wise constraint reconstruction | equality/contact/limit/friction-loss/other 由 `efc_J.T@efc_force` 闭合 | done |
+| P46-R51 | QP-vs-MJ channel semantics | QP reduction equality reaction对比 MuJoCo bilateral leg-closure rows；passive/applied/external/bias zero | done |
+| P46-R52 | independence/classification/replay | `D-NONCONTACT-CONSTRAINT-GAP`；independent YES；replay `0`；R2 not authorized | done |
+
+### REWORK tasks — bilateral leg-closure equality-response operator audit
+
+只审计 equality geometry/J/RHS/coupled reaction operator；不修改 equality、reduction 或 solver。
+
+| ID | Task | Deliverable / validation | Status |
+| --- | --- | --- | --- |
+| P46-R53 | closure geometry and row-space parity | bilateral site/IDs/rows、raw J exact、rank/containment/nullspace PASS | done |
+| P46-R54 | Jdotv and acceleration-target audit | Jdotv exact；MJ stabilization target nonzero但 slip_c influence仅 `1.32%` | done |
+| P46-R55 | coupled rigid reaction counterfactual | all equality+contact rows；KKT residual `<=2.54e-14`；QP reaction range/rigid mismatch | done |
+| P46-R56 | classification and replay | `D-QP-CONSTRAINED-REDUCTION/REACTION-MISMATCH`；replay `0`；R2 not authorized | done |
+
 ## Classification
 
 最终只能选择：
