@@ -497,3 +497,24 @@ friction margin `15.2007 N`。fresh replay semantic error 为 `0`。
 [formal-v1](evidence/automated/corrected-exact-r1-auth-formal-v1/corrected-exact-r1-auth.json) 与
 [fresh replay-v1](evidence/automated/corrected-exact-r1-auth-replay-v1/summary.json)。Phase46 保持
 `review/REWORK`，不创建 RECORD。
+
+## REWORK — post-corrected-R1 fixed-state authority attribution
+
+结论：`E-MULTIPLE-REMAINING-MECHANISMS`。全部 parity、R1、regime 与 causal closure gates PASS，
+fresh replay error `0`。slip-common 四维 discrepancy 中 contact gap 的 alignment 为
+`0.687409`、residual `0.321378`；other constraint/passive gap alignment 为 `0.312591`。两者均
+material 且同向破坏 slip self，所以 contact response 虽是最大贡献者，仍不能按冻结 dominance
+规则单独分类为 A。slip-differential 则由 contact gap 支配（alignment `1.005667`、residual
+`0.006796`）。
+
+point-force gap 在 production reference 下几乎全是 aggregate-changing，left/right norm
+`1.48333/0.687654`；null redistribution 仅约 `6e-14`，wrench closure `<=1.77e-13`。actual
+reaction 正常反向抵消 large negative free slip，没有 solver bug evidence。xi-common self 仍健康，
+因为 contact/other gaps 主要互相抵消；slip-common 两者则同向累积。详见
+[attribution report](POST_CORRECTED_R1_AUTHORITY_ATTRIBUTION.md)、
+[formal-v3](evidence/automated/post-corrected-r1-authority-attribution-formal-v3/post-corrected-r1-authority-attribution.json)
+与 [fresh replay-v3](evidence/automated/post-corrected-r1-authority-attribution-replay-v3/summary.json)。
+
+本轮未进入 KKT、未修改 controller 或参数、未实施 repair。`R2` 不授权；下一允许动作仅为继续
+fixed-state attribution，把 material `other` 拆成 other-constraint 与 passive/applied 后再决定
+repair layer。Phase46 保持 `review/REWORK`，不创建 RECORD。

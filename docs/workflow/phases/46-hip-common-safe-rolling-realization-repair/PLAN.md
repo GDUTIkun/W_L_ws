@@ -212,6 +212,18 @@ two-point image transport 到 production aggregate-wrench reference，并以
 | P46-R43 / DG46PR-AUTH | frozen authority gates | `B-HARMFUL-CROSS-REMAINS`：cross `-0.118040` 超 absolute gate；slip self 同时反号 | done |
 | P46-R44 | formal replay and review | 24 probes + baseline，fresh replay error `0`；严格停在 AUTH | done |
 
+### REWORK tasks — post-corrected-R1 fixed-state authority attribution
+
+只分解 corrected-R1 AUTH 的 slip-common、slip-differential 与最小 xi-common control；不修改
+controller/parameter，不实施 repair，不运行 trajectory 层验证。
+
+| ID | Task | Deliverable / validation | Status |
+| --- | --- | --- | --- |
+| P46-R45 | common four-output causal balance | free/QP-contact/MJ-contact/other 与 actuator、contact-point closure | done |
+| P46-R46 | differential/contamination/healthy-control attribution | common↔differential mechanism 与 xi-common 对照 | done |
+| P46-R47 | point-force aggregate/null split and dominance | production-reference closure、alignment/residual/norm metrics、solver interpretation | done |
+| P46-R48 | classification and fresh replay | `E-MULTIPLE-REMAINING-MECHANISMS`；replay `0`；R2 not authorized | done |
+
 ## Classification
 
 最终只能选择：

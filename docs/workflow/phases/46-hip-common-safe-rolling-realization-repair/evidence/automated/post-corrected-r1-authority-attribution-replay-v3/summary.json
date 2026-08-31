@@ -1,0 +1,8 @@
+{
+  "R2_authorized": false,
+  "classification": "E-MULTIPLE-REMAINING-MECHANISMS",
+  "next_allowed_action": "additional attribution only",
+  "pass": true,
+  "replay_max_abs_error": 0.0,
+  "replay_pass": true
+}
