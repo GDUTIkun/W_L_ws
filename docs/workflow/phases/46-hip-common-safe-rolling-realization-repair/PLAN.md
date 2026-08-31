@@ -79,6 +79,112 @@ gate FAIL 后不进入后续 gate。fixed-state AUTH 使用 xi-only/slip-only、
 | P46-R03 / DG46I-AUTH | frozen directional incremental audit | `+/-`、`1/0.5/0.25`、QP/MuJoCo decomposition 与 closure 完成；actual cross 未下降，FAIL | done |
 | P46-R04 | formal、fresh replay 与 REVIEW | dependency probe、py_compile、build/test、non-finite audit、replay 完成；保持 REWORK | done |
 
+### REWORK tasks — root-cause closure
+
+本轮继续 Phase46，且只做 compatible-H0、tick0、fixed-state attribution；不实施 repair。
+前序 `contact-realization-sensitivity-formal-v1..v3` 仅为定义演进，正式 local 4D authority
+从 v4 起；旧目录保留并在本轮 decision evidence 中标明 superseded/rejected reason。
+
+| ID | Task | Deliverable / validation | Status |
+| --- | --- | --- | --- |
+| P46-R05 | 审计既有 attribution 与真实 QP 方程入口 | authoritative/superseded 关系、CBM/source coverage、QP operator dump contract | done |
+| P46-R06 | QP torque-source 与 contact-space closure | `qp-torque-source`、`contact-space-balance`；真实 sign/order 下 EOM closure | done |
+| P46-R07 | actual point-contact realizability gate | 左右 `G_p` rank/SVD、投影残差、nominal+increment feasibility、harmful contribution | done |
+| P46-R08 | conditional KKT / actual response / Fn→Fr closure | 按触发条件执行 KKT；复用 frozen torque replay 闭合 solver response 与 Fn_L/Fn_R chain | done |
+| P46-R09 | root-cause decision 与正式验证 | 四个主文档、machine-readable decision、fresh replay、build/tests/non-finite/diff-check | done |
+
+P46-R05～R09 的停止条件与用户冻结顺序一致：任一 EOM、mapping、replay 或 regime closure
+不可信即 `U-UNTRUSTED`；否则持续到唯一 first material mismatch 与唯一 repair layer 已闭合。
+
+### REWORK tasks — point-contact-realizable repair
+
+本轮继续 Phase46，不开启新 Phase。冻结唯一 repair candidate 为 actual two-point force image
+parameterization：对每轮 contact-frame 6D wrench 使用
+`P_w=diag(I3, I3-a*a^T)`，其中 `a` 是轮轴在 contact frame 中的单位向量。`P_w` 必须一致进入
+dynamics、wrench cone、interaction-wrench realization 与对外 physical solution；QP 仍为 42D，旧
+profile、task/gain/weight、friction、solver、plant/contact 参数均不变。新增独立
+`kPhase46PointRealizableRolling` profile，禁止叠加此前 hip-common projection 或 hard equality。
+
+| ID | Task | Deliverable / validation | Status |
+| --- | --- | --- | --- |
+| P46-R10 | 冻结 realizable parameterization 与影响面 | rank-5 projector；四处一致应用；历史 profile bitwise/algebra unchanged | done |
+| P46-R11 | 实现独立 repair profile | model axis contract、QP projection、controller output、MuJoCo repair executable/config | done |
+| P46-R12 / DG46P-COMP | component verification | `P=P^T=P^2`、rank 5、轴向 moment `<=1e-10`、EOM/constraint/task closure | done |
+| P46-R13 / DG46P-EQ | compatible-H0 equilibrium | component PASS；actual right `ddxi=-0.07538` 超 `0.05`，mandatory FAIL | done |
+| P46-R14 / DG46P-AUTH | fixed-state authority | DG46P-EQ FAIL，未授权进入；已误先生成的 full-direction result 仅 diagnostic-only | blocked |
+| P46-R15 / DG46P-REAL | realizability closure | DG46P-EQ FAIL，mandatory stop，未进入 | blocked |
+| P46-R16 | formal、fresh replay 与 REVIEW | dependency probe、py_compile、build/tests、non-finite、EQ fresh replay、REVIEW 完成；保持 REWORK | done |
+
+执行顺序为 `COMP -> EQ -> AUTH -> REAL -> fresh replay`；mandatory gate FAIL 时停止后续运行并保持
+`review/REWORK`。只有全部 PASS 才能创建 RECORD，并将 Phase46/ROADMAP 标记 complete。
+
+### REWORK tasks — post-R1 equilibrium attribution
+
+`DG46P-EQ` FAIL 后不进入原 AUTH/REAL。只在相同 frozen tick0 比较 Phase45 compatible-H0 与
+point-realizable candidate，按 `torque/free -> QP contact cancellation -> actual contact response ->
+remaining` 闭合 actual ddxi 变化；本节不实现第二 candidate。
+
+| ID | Task | Deliverable / validation | Status |
+| --- | --- | --- | --- |
+| P46-R17 | frozen before/after parity | state/mass/xi-map delta `0`；old/new 均 bilateral two-point contact | done |
+| P46-R18 | post-R1 causal balance | actuator-free、QP contact、actual contact、remaining 对 left/right ddxi closure `3.11e-14` | done |
+| P46-R19 | next mismatch decision | `R2-CONTACT_RESPONSE_MISMATCH_AFTER_R1`；fresh replay `0`；未授权下一 candidate | done |
+
+### REWORK tasks — point-subspace equivalence audit
+
+只审计 current `P_w` 与 actual `G_p` 的 range；不修改 projector/controller，不定义下一 repair，
+不运行 trajectory。
+
+| ID | Task | Deliverable / validation | Status |
+| --- | --- | --- | --- |
+| P46-R20 | actual two-point image vs current projector | 独立 `G_p` rebuild、`P_G`/`P_w` mutual containment、principal angles、双向 reconstruction、reference transport、formal/replay | done |
+
+### REWORK tasks — exact R1 point-force-image repair
+
+继续使用 `kPhase46PointRealizableRolling` 作为唯一 candidate，但以 frozen actual two-point
+`P_G=G_pG_p^dagger` supersede approximate pure-`Ml` projector。只执行 `COMP -> EQ`；EQ 后停止。
+
+| ID | Task | Deliverable / validation | Status |
+| --- | --- | --- | --- |
+| P46-R21 | exact projector implementation | actual two-point `G_p/P_G` 一致进入 dynamics/cone/interaction/output | done |
+| P46-R22 / EXACT-R1-COMP | exact image component gate | rank/SVD、symmetry/idempotence、containment、principal angle、reconstruction、missing direction、historical tests | done |
+| P46-R23 / EXACT-R1-EQ | compatible-H0 tick0 equilibrium | COMP PASS 后进入；actual right `ddxi=-0.0752634`，mandatory FAIL | done |
+| P46-R24 | causal evidence/formal replay/review | before/after closure、fresh replay；不分类 R2，不授权第二 repair | done |
+
+### REWORK tasks — post-exact-R1 first-mismatch attribution
+
+只比较 Phase45 compatible-H0 与 exact-R1 candidate 的 frozen tick0；不实施 repair，不运行
+AUTH/REAL/trajectory。
+
+| ID | Task | Deliverable / validation | Status |
+| --- | --- | --- | --- |
+| P46-R25 | strict state/regime parity | q/qdot、M/bias、reduction、J/Jdot、xi、contact topology/signature frozen-compatible | done |
+| P46-R26 | QP/plant causal decomposition | actuator/free、QP contact、actual contact、remaining 与 per-actuator closure | done |
+| P46-R27 | same-wrench and point-force gates | exact `G_p` reconstruction PASS；same-wrench reduced-force parity material FAIL | done |
+| P46-R28 | classification/formal replay | `C-MAPPING-OR-REFERENCE-REGRESSION`；replay `0`；R2 not authorized | done |
+
+### REWORK tasks — wrench/generalized-force operator identity
+
+只做 compatible-H0/tick0 frozen algebra；不修改 projector、reference、controller 或参数。
+
+| ID | Task | Deliverable / validation | Status |
+| --- | --- | --- | --- |
+| P46-R29 | independently rebuild `Gp/Jp/Aw` | actual point Jacobians、production map、full/reduced operators、frame/order/sign contract | done |
+| P46-R30 | basis/DOF/virtual-work audit | six projected wrench columns、DOF blocks、deterministic virtual work | done |
+| P46-R31 | reference transport and old-audit reconciliation | raw parity FAIL；transported parity machine-level PASS；old audit narrow-scope | done |
+| P46-R32 | authority/formal replay | `C-REFERENCE-POINT-MISMATCH`；exact R1 no longer closed at production reference；replay `0` | done |
+
+### REWORK tasks — production-reference point-force image
+
+仅将 frozen actual two-point image transport 到 production wrench reference；不实施 repair。
+
+| ID | Task | Deliverable / validation | Status |
+| --- | --- | --- | --- |
+| P46-R33 | construct `Gp_prod = Tw Gp_point` | frame/order/sign、reference offset、wrench/twist dual transport | done |
+| P46-R34 | close transported operators | full/reduced identity 与 deterministic virtual work machine-level PASS | done |
+| P46-R35 | construct and compare `Pg_prod` | rank/missing direction/projector/reconstruction；current projector comparison | done |
+| P46-R36 | formal replay and authority | `A-PRODUCTION-REFERENCE-IMAGE-CLOSED`；replay `0`；不实施 candidate | done |
+
 ## Classification
 
 最终只能选择：

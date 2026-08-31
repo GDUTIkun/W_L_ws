@@ -1,0 +1,17 @@
+{
+  "command": "tools/experiments/run_phase46_point_subspace_equivalence.py --output docs/workflow/phases/46-hip-common-safe-rolling-realization-repair/evidence/automated/point-subspace-equivalence-replay-v1 --replay-of docs/workflow/phases/46-hip-common-safe-rolling-realization-repair/evidence/automated/point-subspace-equivalence-formal-v1",
+  "created_utc": "2026-08-31T00:54:27.895724+00:00",
+  "dependencies": {
+    "mujoco": "3.7.0",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3"
+  },
+  "platform": "Linux-7.0.0-30-generic-x86_64-with-glibc2.39",
+  "python": "3.10.20 (main, Jun 11 2026, 04:03:45) [Clang 22.1.3 ]",
+  "sources": {
+    "docs/workflow/phases/46-hip-common-safe-rolling-realization-repair/evidence/automated/contact-realization-sensitivity-formal-v4/probe-records.json": "6e277360820758172943a582d72fb5071029459ac0ad59053982eacc24bbb8a2",
+    "docs/workflow/phases/46-hip-common-safe-rolling-realization-repair/evidence/automated/point-realizable-repair-equilibrium-formal-v1/baseline.csv": "287adf19ad20f26b4bdd3a0643343fbb1cbdb0ef00d29bb69530a1ee2dc4d3a0",
+    "docs/workflow/phases/46-hip-common-safe-rolling-realization-repair/evidence/automated/root-cause-closure-formal-v3/point-realizability.json": "c98a206b46cc7a61346cd89d944fd9dd8171a8924d1ef8918750066d633eee59",
+    "tools/experiments/run_phase46_point_subspace_equivalence.py": "5ebd4af6d2dc1a9c269a5e9176f66317ea547ba1585a496e21f2f9d47eb6b50d"
+  }
+}

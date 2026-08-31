@@ -1,0 +1,14 @@
+{
+  "command": "tools/experiments/run_phase46_production_reference_image_audit.py --output docs/workflow/phases/46-hip-common-safe-rolling-realization-repair/evidence/automated/production-reference-image-audit-replay-v1 --replay-of docs/workflow/phases/46-hip-common-safe-rolling-realization-repair/evidence/automated/production-reference-image-audit-formal-v1",
+  "created_utc": "2026-08-31T02:00:49.152882+00:00",
+  "dependencies": {
+    "numpy": "2.2.6"
+  },
+  "platform": "Linux-7.0.0-30-generic-x86_64-with-glibc2.39",
+  "python": "3.10.20 (main, Jun 11 2026, 04:03:45) [Clang 22.1.3 ]",
+  "replay_of": "docs/workflow/phases/46-hip-common-safe-rolling-realization-repair/evidence/automated/production-reference-image-audit-formal-v1",
+  "sources": {
+    "docs/workflow/phases/46-hip-common-safe-rolling-realization-repair/evidence/automated/wrench-generalized-force-operator-audit-formal-v2/wrench-generalized-force-operator-audit.json": "c1b58ec04bab4d048267faef84eaa67d67d3aee03f1823029f95a9974e4c6482",
+    "tools/experiments/run_phase46_production_reference_image_audit.py": "1ebc10e8d6586646f38372c05bc585c7b6d86cce30da941f6aafb07e7283784d"
+  }
+}

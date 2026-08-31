@@ -1,0 +1,8 @@
+{
+  "R2_reauthorized": false,
+  "classification": "EXACT_R1_EQ_FAIL_CAUSAL_EVIDENCE",
+  "next_candidate_authorized": false,
+  "pass": true,
+  "replay_max_abs_error": null,
+  "replay_pass": true
+}

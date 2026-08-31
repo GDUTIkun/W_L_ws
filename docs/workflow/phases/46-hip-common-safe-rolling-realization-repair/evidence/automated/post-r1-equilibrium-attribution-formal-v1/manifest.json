@@ -1,0 +1,23 @@
+{
+  "command": "tools/experiments/run_phase46_post_r1_equilibrium_attribution.py --config simulation/mujoco/config/phase46_point_realizable_rolling_v1.json --output docs/workflow/phases/46-hip-common-safe-rolling-realization-repair/evidence/automated/post-r1-equilibrium-attribution-formal-v1",
+  "created_utc": "2026-08-31T00:41:50.523335+00:00",
+  "dependencies": {
+    "mujoco": "3.7.0",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3"
+  },
+  "platform": "Linux-7.0.0-30-generic-x86_64-with-glibc2.39",
+  "python": "3.10.20 (main, Jun 11 2026, 04:03:45) [Clang 22.1.3 ]",
+  "replay_of": null,
+  "sources": {
+    "docs/workflow/phases/42-wheel-spin-contact-loss-causal-attribution/evidence/automated/causal-attribution-formal-v1/control-a_native.csv": "44d35d53e8335c2ed569dc971d268205385011f3bce5b6438ffaff3db482572f",
+    "docs/workflow/phases/45-contact-consistent-rolling-repair/evidence/automated/equilibrium-compatibility-formal-v2/wrench-counterfactual.json": "c1063f062c7c4dd1c70aeea4860ca14ff087ef375dd81caeee310496b84598d4",
+    "ros_ws/build/wheel_leg_mujoco/phase45_contact_consistent_rolling_loop": "39053e19af05e834013ab91e3a6df415f145291c39acc38a5039931b79151739",
+    "ros_ws/build/wheel_leg_mujoco/phase46_point_realizable_rolling_loop": "be9fd8b1ef02a9f0632ff8d42df7bf8560a8802b786f2277bd7ef36cecae1ed3",
+    "simulation/mujoco/config/phase45_contact_consistent_rolling_v2.json": "4c94a171f9c75c57db4a502262beaed62665a1f525570683bfba519b644c4968",
+    "simulation/mujoco/config/phase46_point_realizable_rolling_v1.json": "06d2ac603acfef6c20b6b00600657aae9198e7134bc1cb06add0207a6736fbbd",
+    "simulation/mujoco/model/scene_axisymmetric_centered_com_v1.xml": "1bf6a0c85f3fabf3c7447b913085ca6b79eff97d5baf824b44faf4e48343e419",
+    "tools/experiments/run_phase46_point_realizable_repair.py": "e3659fcbf548efca6bb399a4e998d909e945ab389318410a6ef079c849791506",
+    "tools/experiments/run_phase46_post_r1_equilibrium_attribution.py": "7f6e8af17677e977da288cb66c2fe7d48e67177b0860b4c76a54346e826c63c3"
+  }
+}

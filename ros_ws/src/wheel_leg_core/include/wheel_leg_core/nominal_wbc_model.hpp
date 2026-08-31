@@ -69,6 +69,12 @@ class NominalWbcModel {
     std::array<Matrix3x12, 2> contact_jacobian{};
     std::array<Eigen::Vector3d, 2> contact_bias{};
     std::array<Eigen::Matrix3d, 2> contact_frame_world{};
+    // Wheel axis expressed in the corresponding contact frame. The actual
+    // two-point force image cannot produce a moment parallel to this axis.
+    std::array<Eigen::Vector3d, 2> contact_axis{};
+    // Orthogonal projector onto the actual Model-B two-point force image at
+    // the production contact-wrench reference point.
+    std::array<Matrix6, 2> point_force_wrench_projector{};
     // Wheel-body origin relative to the canonical base-control point,
     // expressed in controller body/FLU. Side order is left, right.
     std::array<double, 2> wheel_position_b_x_m{};
@@ -106,5 +112,9 @@ class NominalWbcModel {
       const RobotState &state);
   [[nodiscard]] Result evaluate(const RobotState &state) const;
 };
+
+[[nodiscard]] NominalWbcModel::Matrix6 pointContactWrenchProjector(
+    const Eigen::Vector3d &contact_axis,
+    const Eigen::Vector3d &contact_line_offset);
 
 }  // namespace wheel_leg

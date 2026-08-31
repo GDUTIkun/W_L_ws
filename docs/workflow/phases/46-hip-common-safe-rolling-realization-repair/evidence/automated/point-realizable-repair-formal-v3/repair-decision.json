@@ -1,0 +1,110 @@
+{
+  "authority": {
+    "actual_slip_self_gain": -0.1405618516617279,
+    "actual_slip_to_ddxi_common_gain": -0.10763122674771232,
+    "actual_xi_self_gain": 0.9884749332533364,
+    "checks": {
+      "branch_scale": true,
+      "cross_abs": false,
+      "cross_reduction": true,
+      "slip_self_positive": false,
+      "slip_self_retained": false,
+      "xi_self": true
+    },
+    "cross_reduction_fraction": 0.9749408867466236,
+    "phase45_harmful_cross_gain": -4.295093192621674,
+    "phase45_slip_self_gain": 0.030842288660802054
+  },
+  "authority_pass": false,
+  "baseline": {
+    "contact_applyft_closure": 0.0,
+    "contact_count_per_side": [
+      2,
+      2
+    ],
+    "hard_violation": 4.48439063660544e-11,
+    "maximum_normalized_slack": 0.001679491951792072,
+    "minimum_torque_margin_nm": 1.9959469048544578,
+    "mujoco_ddxi_per_side_m_s2": [
+      0.03773086531464967,
+      -0.0753841595776507
+    ],
+    "mujoco_material_tangent_acceleration_per_side_m_s2": [
+      0.0009712619314601253,
+      0.004510492883581213
+    ],
+    "qp_ddxi_per_side_m_s2": [
+      -5.75554134179786e-06,
+      -8.210028013291154e-06
+    ],
+    "qp_material_tangent_acceleration_per_side_m_s2": [
+      -6.889962469087095e-05,
+      -7.066574117542412e-05
+    ],
+    "whole_dynamics_closure": 2.1316282072803006e-14
+  },
+  "classification": "P46-D-SLIP_AUTHORITY_DESTROYED",
+  "component_pass": true,
+  "entered_gates": {
+    "authority": false,
+    "component": true,
+    "equilibrium": true,
+    "realization": false
+  },
+  "equilibrium_pass": false,
+  "geometry_reconstruction": {
+    "closure_residual_m": 1.4843681839238343e-13,
+    "constraint_tangent_max_abs": 1.4843681839238343e-13,
+    "logged_map_reconstruction_max_abs": 4.440892098500626e-15,
+    "source": "simulation/mujoco/config/phase21_model_oracle_v8.json"
+  },
+  "mandatory_gate_stop": "DG46P-AUTH",
+  "pass": false,
+  "projector": {
+    "maximum_abs_axial_moment_nm": 2.421141376386106e-19,
+    "sides": [
+      {
+        "axis_contact_frame": [
+          0.0,
+          1.0,
+          2.2204460492502934e-16
+        ],
+        "axis_null_max_abs": 4.930380657631236e-32,
+        "idempotence_max_abs": 4.930380657631236e-32,
+        "rank": 5,
+        "side": "left",
+        "symmetry_max_abs": 0.0
+      },
+      {
+        "axis_contact_frame": [
+          0.0,
+          1.0,
+          3.191891195797301e-16
+        ],
+        "axis_null_max_abs": 1.0188169405808324e-31,
+        "idempotence_max_abs": 1.0188169405808324e-31,
+        "rank": 5,
+        "side": "right",
+        "symmetry_max_abs": 0.0
+      }
+    ]
+  },
+  "realization_gate": "not entered after mandatory AUTH failure",
+  "scope_contract": {
+    "compatible_wrench_frozen": true,
+    "contact_parameter_modification": false,
+    "cross_gain_precompensation": false,
+    "gain_tuning": false,
+    "hip_common_hard_equality": false,
+    "hip_common_projection": false,
+    "model_b_frozen": true,
+    "plant_modification": false,
+    "point_contact_realizable_wrench": true,
+    "qp_dimension_unchanged": true,
+    "state_contact_friction_torque_solver_frozen": true,
+    "trajectory_run": false,
+    "weight_tuning": false,
+    "wrench_tuning": false,
+    "xi_slip_observable_frozen": true
+  }
+}

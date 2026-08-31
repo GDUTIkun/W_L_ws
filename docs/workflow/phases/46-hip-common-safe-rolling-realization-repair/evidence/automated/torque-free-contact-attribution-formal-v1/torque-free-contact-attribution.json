@@ -1,0 +1,369 @@
+{
+  "baseline_parity": {
+    "aggregate_wrench_relative_error": 0.0,
+    "contact_solver_signature_match": true,
+    "hip_common_relative_error": 0.0,
+    "point_force_relative_error": 0.0
+  },
+  "branch_split_relative": 5.179153800676342e-09,
+  "classification": "A-FREE_ACCELERATION_DRIVEN",
+  "contact_solver_regime_signature_count": 1,
+  "cross_interpretation": "bilateral actuator-induced free rolling motion is already present; the solver reaction follows and cancels that bilateral tendency",
+  "fn_direction_summary": {
+    "Fn_L": {
+      "Fr_cross_ratio": 1.2970833334937193,
+      "Fr_opposes_free_rolling_tendency": [
+        true,
+        true
+      ],
+      "aggregate_Fr_response": [
+        -5.795091195525611,
+        -7.516716205792463
+      ],
+      "delta_tau_by_actuator_nm_per_n": {
+        "left_hip": 6.352154076760906,
+        "left_knee": 3.608569700320134,
+        "left_wheel": 0.12787861596417188,
+        "right_hip": 9.952224937334941,
+        "right_knee": 5.815732936831777,
+        "right_wheel": 0.1278782436620765
+      },
+      "free_cross_ratio": 1.2910505460853023,
+      "solver_cancellation_fraction": [
+        0.9893445909664209,
+        0.9879427696684681
+      ],
+      "wheel_mean_contact_reaction_rolling_acceleration": [
+        -40.54154788589237,
+        -52.433741750691844
+      ],
+      "wheel_mean_free_rolling_acceleration": [
+        41.50424828782323,
+        53.58408241685416
+      ],
+      "wheel_mean_net_rolling_acceleration": [
+        0.44224474213790677,
+        0.6460756238039183
+      ],
+      "wheel_mean_other_constraint_rolling_acceleration": [
+        -0.5204556597928811,
+        -0.5042650423585112
+      ]
+    },
+    "Fn_R": {
+      "Fr_cross_ratio": 1.2465506446855419,
+      "Fr_opposes_free_rolling_tendency": [
+        true,
+        true
+      ],
+      "aggregate_Fr_response": [
+        -7.386598870438383,
+        -5.9256307811719475
+      ],
+      "delta_tau_by_actuator_nm_per_n": {
+        "left_hip": 9.593611011886166,
+        "left_knee": 5.571442461020279,
+        "left_wheel": 0.129899187452784,
+        "right_hip": 6.588393450876217,
+        "right_knee": 3.772205895614788,
+        "right_wheel": 0.12990119024158395
+      },
+      "free_cross_ratio": 1.2337841208258398,
+      "solver_cancellation_fraction": [
+        0.9892630152281648,
+        0.9880308203907336
+      ],
+      "wheel_mean_contact_reaction_rolling_acceleration": [
+        -51.42773409754494,
+        -41.53319212487024
+      ],
+      "wheel_mean_free_rolling_acceleration": [
+        52.50063802736587,
+        42.55253179318299
+      ],
+      "wheel_mean_net_rolling_acceleration": [
+        0.563698551011562,
+        0.5093188958615564
+      ],
+      "wheel_mean_other_constraint_rolling_acceleration": [
+        -0.5092053788094753,
+        -0.510020772451125
+      ]
+    }
+  },
+  "free_reaction_qacc_balance_closure_max_abs": 6.479097838826808e-08,
+  "frozen_conclusion": "QP contact wrench is not a direct plant input; actual reaction is reproduced by the QP-solution torque increment",
+  "point_aggregate_wrench_closure_max_abs": 3.903127820947816e-17,
+  "scale_convergence_relative": 2.6734479501689304e-09,
+  "scope": "compatible-H0 tick0 fixed-state torque replay only; no QP re-solve or repair",
+  "stage0_maximum_relative_error": 3.1006557517081373e-09,
+  "stage0_parity": [
+    {
+      "FrFn_relative_error": 0.0,
+      "aggregate_wrench_relative_error": 0.0,
+      "branch": -1,
+      "contact_solver_signature_match": true,
+      "direction": "Fr_L",
+      "hip_common_relative_error": 0.0,
+      "point_force_relative_error": 0.0,
+      "scale": 1.0,
+      "torque_input_relative_error": 0.0
+    },
+    {
+      "FrFn_relative_error": 7.310853115906983e-10,
+      "aggregate_wrench_relative_error": 7.381035484273888e-10,
+      "branch": -1,
+      "contact_solver_signature_match": true,
+      "direction": "Fr_L",
+      "hip_common_relative_error": 2.1212921648163044e-11,
+      "point_force_relative_error": 4.418071276652865e-10,
+      "scale": 0.5,
+      "torque_input_relative_error": 6.373889412562149e-11
+    },
+    {
+      "FrFn_relative_error": 2.00456847007951e-09,
+      "aggregate_wrench_relative_error": 1.9972831724841204e-09,
+      "branch": -1,
+      "contact_solver_signature_match": true,
+      "direction": "Fr_L",
+      "hip_common_relative_error": 9.89329020593467e-11,
+      "point_force_relative_error": 1.8525303864870517e-09,
+      "scale": 0.25,
+      "torque_input_relative_error": 3.9935459134119276e-10
+    },
+    {
+      "FrFn_relative_error": 0.0,
+      "aggregate_wrench_relative_error": 0.0,
+      "branch": 1,
+      "contact_solver_signature_match": true,
+      "direction": "Fr_L",
+      "hip_common_relative_error": 0.0,
+      "point_force_relative_error": 0.0,
+      "scale": 1.0,
+      "torque_input_relative_error": 0.0
+    },
+    {
+      "FrFn_relative_error": 3.1006557517081373e-09,
+      "aggregate_wrench_relative_error": 3.0818750410337387e-09,
+      "branch": 1,
+      "contact_solver_signature_match": true,
+      "direction": "Fr_L",
+      "hip_common_relative_error": 2.5741815351856978e-11,
+      "point_force_relative_error": 1.8369230638770777e-09,
+      "scale": 0.5,
+      "torque_input_relative_error": 3.0896787993341706e-10
+    },
+    {
+      "FrFn_relative_error": 1.7015503107514368e-09,
+      "aggregate_wrench_relative_error": 1.6952326398654615e-09,
+      "branch": 1,
+      "contact_solver_signature_match": true,
+      "direction": "Fr_L",
+      "hip_common_relative_error": 1.9521093542736453e-11,
+      "point_force_relative_error": 1.1166853206017365e-09,
+      "scale": 0.25,
+      "torque_input_relative_error": 2.0782812567622697e-10
+    },
+    {
+      "FrFn_relative_error": 0.0,
+      "aggregate_wrench_relative_error": 0.0,
+      "branch": -1,
+      "contact_solver_signature_match": true,
+      "direction": "Fn_L",
+      "hip_common_relative_error": 0.0,
+      "point_force_relative_error": 0.0,
+      "scale": 1.0,
+      "torque_input_relative_error": 0.0
+    },
+    {
+      "FrFn_relative_error": 4.694573416328868e-10,
+      "aggregate_wrench_relative_error": 4.889259343142478e-10,
+      "branch": -1,
+      "contact_solver_signature_match": true,
+      "direction": "Fn_L",
+      "hip_common_relative_error": 2.326196489862762e-13,
+      "point_force_relative_error": 3.2030767847958083e-10,
+      "scale": 0.5,
+      "torque_input_relative_error": 5.212280043975926e-11
+    },
+    {
+      "FrFn_relative_error": 2.3245364869567076e-09,
+      "aggregate_wrench_relative_error": 2.310787663259961e-09,
+      "branch": -1,
+      "contact_solver_signature_match": true,
+      "direction": "Fn_L",
+      "hip_common_relative_error": 9.511558980866585e-12,
+      "point_force_relative_error": 1.6248609013865778e-09,
+      "scale": 0.25,
+      "torque_input_relative_error": 3.242010005956935e-10
+    },
+    {
+      "FrFn_relative_error": 0.0,
+      "aggregate_wrench_relative_error": 0.0,
+      "branch": 1,
+      "contact_solver_signature_match": true,
+      "direction": "Fn_L",
+      "hip_common_relative_error": 0.0,
+      "point_force_relative_error": 0.0,
+      "scale": 1.0,
+      "torque_input_relative_error": 0.0
+    },
+    {
+      "FrFn_relative_error": 1.075146962251205e-09,
+      "aggregate_wrench_relative_error": 1.0760846109112351e-09,
+      "branch": 1,
+      "contact_solver_signature_match": true,
+      "direction": "Fn_L",
+      "hip_common_relative_error": 1.7356010477908468e-11,
+      "point_force_relative_error": 7.510642781619344e-10,
+      "scale": 0.5,
+      "torque_input_relative_error": 1.2938615430276004e-10
+    },
+    {
+      "FrFn_relative_error": 4.5685634581269675e-10,
+      "aggregate_wrench_relative_error": 4.755581620811549e-10,
+      "branch": 1,
+      "contact_solver_signature_match": true,
+      "direction": "Fn_L",
+      "hip_common_relative_error": 1.281992732208893e-11,
+      "point_force_relative_error": 9.200804761508939e-10,
+      "scale": 0.25,
+      "torque_input_relative_error": 2.6547735067961514e-10
+    },
+    {
+      "FrFn_relative_error": 0.0,
+      "aggregate_wrench_relative_error": 0.0,
+      "branch": -1,
+      "contact_solver_signature_match": true,
+      "direction": "Fr_R",
+      "hip_common_relative_error": 0.0,
+      "point_force_relative_error": 0.0,
+      "scale": 1.0,
+      "torque_input_relative_error": 0.0
+    },
+    {
+      "FrFn_relative_error": 1.5460590060757589e-09,
+      "aggregate_wrench_relative_error": 1.540102070429681e-09,
+      "branch": -1,
+      "contact_solver_signature_match": true,
+      "direction": "Fr_R",
+      "hip_common_relative_error": 3.999279620738441e-11,
+      "point_force_relative_error": 9.142756648607814e-10,
+      "scale": 0.5,
+      "torque_input_relative_error": 1.4486904990546928e-10
+    },
+    {
+      "FrFn_relative_error": 1.9211785999860543e-09,
+      "aggregate_wrench_relative_error": 1.933364212782699e-09,
+      "branch": -1,
+      "contact_solver_signature_match": true,
+      "direction": "Fr_R",
+      "hip_common_relative_error": 5.1482583260518535e-11,
+      "point_force_relative_error": 1.295458098963519e-09,
+      "scale": 0.25,
+      "torque_input_relative_error": 2.2440144689627014e-10
+    },
+    {
+      "FrFn_relative_error": 0.0,
+      "aggregate_wrench_relative_error": 0.0,
+      "branch": 1,
+      "contact_solver_signature_match": true,
+      "direction": "Fr_R",
+      "hip_common_relative_error": 0.0,
+      "point_force_relative_error": 0.0,
+      "scale": 1.0,
+      "torque_input_relative_error": 0.0
+    },
+    {
+      "FrFn_relative_error": 7.556824137402202e-10,
+      "aggregate_wrench_relative_error": 7.682337356663017e-10,
+      "branch": 1,
+      "contact_solver_signature_match": true,
+      "direction": "Fr_R",
+      "hip_common_relative_error": 6.744062084266173e-11,
+      "point_force_relative_error": 1.0914201719996736e-09,
+      "scale": 0.5,
+      "torque_input_relative_error": 2.887846143971435e-10
+    },
+    {
+      "FrFn_relative_error": 2.991054510506997e-09,
+      "aggregate_wrench_relative_error": 2.97832513707413e-09,
+      "branch": 1,
+      "contact_solver_signature_match": true,
+      "direction": "Fr_R",
+      "hip_common_relative_error": 7.412345617102564e-11,
+      "point_force_relative_error": 1.7452715620042467e-09,
+      "scale": 0.25,
+      "torque_input_relative_error": 2.4357036756414806e-10
+    },
+    {
+      "FrFn_relative_error": 0.0,
+      "aggregate_wrench_relative_error": 0.0,
+      "branch": -1,
+      "contact_solver_signature_match": true,
+      "direction": "Fn_R",
+      "hip_common_relative_error": 0.0,
+      "point_force_relative_error": 0.0,
+      "scale": 1.0,
+      "torque_input_relative_error": 0.0
+    },
+    {
+      "FrFn_relative_error": 8.974815015661285e-10,
+      "aggregate_wrench_relative_error": 9.114212027002706e-10,
+      "branch": -1,
+      "contact_solver_signature_match": true,
+      "direction": "Fn_R",
+      "hip_common_relative_error": 8.656396140291164e-12,
+      "point_force_relative_error": 6.454363908924111e-10,
+      "scale": 0.5,
+      "torque_input_relative_error": 1.2766474940150075e-10
+    },
+    {
+      "FrFn_relative_error": 2.2163754820968593e-09,
+      "aggregate_wrench_relative_error": 2.2128629212003077e-09,
+      "branch": -1,
+      "contact_solver_signature_match": true,
+      "direction": "Fn_R",
+      "hip_common_relative_error": 9.441002625523006e-12,
+      "point_force_relative_error": 1.536759701399558e-09,
+      "scale": 0.25,
+      "torque_input_relative_error": 2.8673162428835884e-10
+    },
+    {
+      "FrFn_relative_error": 0.0,
+      "aggregate_wrench_relative_error": 0.0,
+      "branch": 1,
+      "contact_solver_signature_match": true,
+      "direction": "Fn_R",
+      "hip_common_relative_error": 0.0,
+      "point_force_relative_error": 0.0,
+      "scale": 1.0,
+      "torque_input_relative_error": 0.0
+    },
+    {
+      "FrFn_relative_error": 2.5180955714411524e-10,
+      "aggregate_wrench_relative_error": 2.592689985705404e-10,
+      "branch": 1,
+      "contact_solver_signature_match": true,
+      "direction": "Fn_R",
+      "hip_common_relative_error": 2.3641093767701634e-11,
+      "point_force_relative_error": 2.0234521834673876e-10,
+      "scale": 0.5,
+      "torque_input_relative_error": 4.3715230886673896e-11
+    },
+    {
+      "FrFn_relative_error": 1.615194486414832e-09,
+      "aggregate_wrench_relative_error": 1.6233671237339838e-09,
+      "branch": 1,
+      "contact_solver_signature_match": true,
+      "direction": "Fn_R",
+      "hip_common_relative_error": 1.6168038559052198e-10,
+      "point_force_relative_error": 2.2603772624845187e-09,
+      "scale": 0.25,
+      "torque_input_relative_error": 5.490653078867125e-10
+    }
+  ],
+  "stage0_pass": true,
+  "trusted": true,
+  "whole_dynamics_contact_closure_max_abs": 3.552713678800501e-14
+}

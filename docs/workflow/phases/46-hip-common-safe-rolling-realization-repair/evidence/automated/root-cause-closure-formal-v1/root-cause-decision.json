@@ -1,0 +1,41 @@
+{
+  "closure": {
+    "qp_contact_space": 1.135788352257805e-09,
+    "qp_eom": 3.39179972996817e-09,
+    "torque_decomposition": 2.628263162662847e-10,
+    "whole_dynamics_contact": 3.552713678800501e-14
+  },
+  "do_not_do": [
+    "QP-space hip-common projection/penalty",
+    "inverse Rc compensation",
+    "friction/solref/solimp/solver/contact tuning"
+  ],
+  "first_material_mismatch": "R4-MULTIPLE_MATERIAL_MISMATCH",
+  "left_right_asymmetry": {
+    "Fn_L_free_cross_ratio": 1.2910505460853023,
+    "Fn_R_free_cross_ratio": 1.2337841208258398,
+    "interpretation": "bilateral QP torque leverage is primary; load/geometry/effective-mass differences modulate the right/left residual",
+    "nominal_load_n": [
+      30.96984193815947,
+      31.498985133048688
+    ]
+  },
+  "ordered_mismatches": [
+    {
+      "classification": "R3-QP_TASK_FORMULATION_MISMATCH",
+      "primary": true,
+      "rank": 1,
+      "reason": "QP xi/rolling task excitation and soft contact structure create the acceleration-dominant bilateral hip/knee solution before plant realization"
+    },
+    {
+      "classification": "R1-AGGREGATE_POINT_REALIZABILITY_MISMATCH",
+      "primary": false,
+      "rank": 2,
+      "reason": "each two-point force map has rank 5 and Fn directions carry material unrealizable lateral-axis moment"
+    }
+  ],
+  "phase_status": "review/REWORK",
+  "recommended_repair_layer": "QP task/objective structure (coupled rolling formulation / hierarchy or nullspace)",
+  "repair_implemented": false,
+  "torque_generation_mechanism": "T2-ACCELERATION_TASK_COUPLING_DOMINANT"
+}

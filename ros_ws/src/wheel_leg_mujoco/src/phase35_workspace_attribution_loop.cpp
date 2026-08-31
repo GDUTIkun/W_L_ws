@@ -90,6 +90,9 @@ bool pairMatches(int geom1, int geom2, int first, int second) {
 #ifdef WHEEL_LEG_PHASE46_HIP_COMMON_INCREMENT_LIMIT
   if (case_id.rfind("R46I-", 0) == 0) return true;
 #endif
+#ifdef WHEEL_LEG_PHASE46_POINT_REALIZABLE_ROLLING
+  if (case_id.rfind("R46P-", 0) == 0) return true;
+#endif
 #else
   static_cast<void>(case_id);
 #endif
@@ -404,6 +407,10 @@ void run(const std::string &model_path, const std::string &output_path,
 #ifdef WHEEL_LEG_PHASE46_HIP_COMMON_INCREMENT_LIMIT
   if (isIncrementalHipCommonCase(case_id))
     profile = wheel_leg::WeightedWbcProfile::kPhase46HipCommonIncrementLimitedRolling;
+#endif
+#ifdef WHEEL_LEG_PHASE46_POINT_REALIZABLE_ROLLING
+  if (case_id.rfind("R46P-", 0) == 0)
+    profile = wheel_leg::WeightedWbcProfile::kPhase46PointRealizableRolling;
 #endif
 #endif
 #else

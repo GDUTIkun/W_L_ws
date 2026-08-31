@@ -1,0 +1,6 @@
+{
+  "classification": "A-PRODUCTION-REFERENCE-IMAGE-CLOSED",
+  "pass": true,
+  "replay_max_abs_error": null,
+  "replay_pass": true
+}

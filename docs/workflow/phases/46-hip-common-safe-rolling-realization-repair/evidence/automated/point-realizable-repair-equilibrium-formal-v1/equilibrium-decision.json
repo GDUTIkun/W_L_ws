@@ -1,0 +1,84 @@
+{
+  "classification": "P46P-EQ-FAIL",
+  "equilibrium_pass": false,
+  "mandatory_gate_stop": "DG46P-EQ",
+  "metrics": {
+    "component_pass": true,
+    "contact_applyft_closure": 0.0,
+    "contact_count_per_side": [
+      2,
+      2
+    ],
+    "geometry_reconstruction": {
+      "closure_residual_m": 1.4843681839238343e-13,
+      "constraint_tangent_max_abs": 1.4843681839238343e-13,
+      "logged_map_reconstruction_max_abs": 4.440892098500626e-15,
+      "source": "simulation/mujoco/config/phase21_model_oracle_v8.json"
+    },
+    "hard_violation": 4.48439063660544e-11,
+    "maximum_abs_axial_moment_nm": 2.2172048699439403e-19,
+    "maximum_normalized_slack": 0.001679491951792072,
+    "minimum_torque_margin_nm": 1.9959469048544578,
+    "mujoco_ddxi_per_side_m_s2": [
+      0.03773086531464967,
+      -0.0753841595776507
+    ],
+    "mujoco_material_tangent_acceleration_per_side_m_s2": [
+      0.0009712619314601253,
+      0.004510492883581213
+    ],
+    "projector": [
+      {
+        "axis_contact_frame": [
+          0.0,
+          1.0,
+          2.2204460492502934e-16
+        ],
+        "axis_null_max_abs": 4.930380657631236e-32,
+        "idempotence_max_abs": 4.930380657631236e-32,
+        "rank": 5,
+        "side": "left",
+        "symmetry_max_abs": 0.0
+      },
+      {
+        "axis_contact_frame": [
+          0.0,
+          1.0,
+          3.191891195797301e-16
+        ],
+        "axis_null_max_abs": 1.0188169405808324e-31,
+        "idempotence_max_abs": 1.0188169405808324e-31,
+        "rank": 5,
+        "side": "right",
+        "symmetry_max_abs": 0.0
+      }
+    ],
+    "qp_ddxi_per_side_m_s2": [
+      -5.75554134179786e-06,
+      -8.210028013291154e-06
+    ],
+    "qp_material_tangent_acceleration_per_side_m_s2": [
+      -6.889962469087095e-05,
+      -7.066574117542412e-05
+    ],
+    "whole_dynamics_closure": 2.1316282072803006e-14
+  },
+  "pass": false,
+  "scope_contract": {
+    "compatible_wrench_frozen": true,
+    "contact_parameter_modification": false,
+    "cross_gain_precompensation": false,
+    "gain_tuning": false,
+    "hip_common_hard_equality": false,
+    "hip_common_projection": false,
+    "model_b_frozen": true,
+    "plant_modification": false,
+    "point_contact_realizable_wrench": true,
+    "qp_dimension_unchanged": true,
+    "state_contact_friction_torque_solver_frozen": true,
+    "trajectory_run": false,
+    "weight_tuning": false,
+    "wrench_tuning": false,
+    "xi_slip_observable_frozen": true
+  }
+}

@@ -110,3 +110,331 @@ projection 或 penalty 当作主要 repair 方向；该层只说明 gap 位于 c
 Machine-readable evidence：
 [attribution formal-v5](evidence/automated/incremental-hip-common-attribution-formal-v5/incremental-authority/constrained-hip-common-attribution.json) 与
 [fresh replay-v5](evidence/automated/incremental-hip-common-attribution-replay-v5/incremental-authority/constrained-hip-common-attribution.json)。
+
+## REWORK — Contact mapping / wrench realization parity
+
+结论：`B-WRENCH_REALIZATION_DOMINANT`。本节 supersede 上一节把 QP reduced reduction
+直接用于 MuJoCo free-joint Jacobian 所产生的 mapping 混叠；范围仍严格保持 compatible-H0、
+tick0、fixed-state `slip-common only`，没有修改 controller、contact model、gain、weight、task、
+wrench、solver 或 plant，也没有运行 trajectory。
+
+geometry/frame parity 已由冻结 Model B oracle 独立重建：QP contact map 与 controller 日志最大误差
+`4.44e-15`，闭链残差 `1.48e-13 m`；QP 与 MuJoCo 的 rolling/lateral/normal frame 完全一致，
+两侧 analytic contact point 差异仅约 `0.06--0.21 mm`，统一到相同 base-control/canonical
+generalized-coordinate ordering 后，wrench-map 最大逐元素差 `1.70e-4`。
+
+同一 frozen actual constrained-dynamics mapping 下，固定 QP directional wrench 后，QP 与 MuJoCo
+same-wrench hip-common contribution 分别为 `-14.5790947` 与 `-14.5791298`，所以
+`(J_MJ^T-J_QP^T)dw_QP` 仅贡献 `-3.51e-5`。MuJoCo actual contact contribution 为
+`-0.1002359`，而 `J_MJ^T(dw_MJ-dw_QP)` 贡献 `+14.4788939`；两者闭合总 contact gap
+`+14.4788588`，mapping fraction `2.43e-6`、wrench-realization fraction `1.0000024`。
+
+wrench-realization hip-common contribution 以 right wheel 为主：right `+10.4274367`，left
+`+4.0514572`。分量上 right `Fr=+9.1501332`、`Fn=+1.2764542`，left
+`Fr=+3.5206261`、`Fn=+0.5269844`；其余 `Fl/Mr/Ml/Mn` 合计仅为小量。所有 probes
+均保持每轮两个 3D contact，normal-frame error 为 `0`，最小 friction-margin diagnostic
+为 `15.199 N`，没有 contact-count、contact-dimension、normal-frame 或 friction-bound switch。
+因此现有证据不要求重推 geometry/contact kinematic model；下一层若继续调查，应建模 QP aggregate
+6D wrench 到 MuJoCo two-point compliant solver reaction 的 realization relation。当前证据尚不能把
+该 relation 唯一归因到 friction、compliance 或某个 solver 子机制，所以不分类为
+`D-CONSTRAINT_REALIZATION_SPECIFIC`，且本 Phase 不实施 repair。
+
+`+/-` split `6.94e-5`，`1/0.5/0.25` scale convergence `1.04e-4`，contact decomposition
+closure `3.55e-13`；fresh replay semantic error `0`。证据见
+[contact parity formal-v7](evidence/automated/incremental-contact-parity-formal-v7/incremental-authority/contact-mapping-wrench-parity.json) 与
+[fresh replay-v1](evidence/automated/incremental-contact-parity-replay-v1/incremental-authority/contact-mapping-wrench-parity.json)。
+
+## REWORK — Local 4D QP-solution to plant contact sensitivity
+
+结论：`B-STABLE_BUT_STRONGLY_COUPLED`。本节仅在 compatible-H0、tick0、fixed-state
+下，以 command-space calibration 合成四个 QP `Fr/Fn` target directions；每个 direction 均执行
+`+/-` 与 `1/0.5/0.25` probes。MuJoCo 每个 probe 只接收一次完整 QP solution 的 actuator torque，
+actual contact 始终由原 solver 自洽生成；没有直接施加 QP wrench、没有重算 hypothetical reaction、
+没有修改 controller/contact/friction/solver，也没有运行 trajectory。
+
+以 `u=y=[Fr_L,Fn_L,Fr_R,Fn_R]` ordering，central local map 为：
+
+```text
+Rc = [[-0.105826, -5.795091, -0.154472, -7.386599],
+      [ 0.116083,  1.541001,  0.017805,  0.762607],
+      [-0.152731, -7.516716, -0.105773, -5.925631],
+      [ 0.023618,  0.892615,  0.114871,  1.602804]]
+```
+
+branch split `5.48e-8`、scale convergence `7.76e-9`，所有 probes 的 contact/solver
+regime signature 相同；point-to-aggregate wrench closure `3.90e-17`、whole-dynamics/contact
+closure `3.55e-14`，fresh replay semantic error `0`。因此该 fixed-state local map 稳定。
+
+但它不是 pure contact-physics law。command-to-u condition number 为 `4493.62`；target 4D u
+purity 很高（最大 off-target ratio `7.46e-9`），同时完整 QP solution 明显联动：lateral-force
+ratio 最高 `1.208`、moment-equivalent ratio 最高 `15.443`、torque-equivalent ratio 最高
+`272.964`，`Rc` off-diagonal Frobenius ratio 为 `0.9866`。结构上，Fr self realization
+约 `-0.106` 且反号；Fn self realization 为 `1.54--1.60`；Fn input 到 bilateral Fr 的 cross
+terms `-5.80--7.52` 为最大耦合，左右 Fn cross realization 也达到 `0.76--0.89`。
+
+原 slip-common direction 的 aggregate `y-u` 为
+`[-2.13166,+0.24378,-5.58777,+0.58867]`，right-wheel Fr 仍为最大 mismatch。每轮两个
+point force 严格求和到 aggregate resultant；point redistribution mode 确实显著，norm ratio
+约 `1.018`，但 actual aggregate Fr/Fn 本身已发生明显变化，因此不是
+point-redistribution-only。当前只具备稳定的 local QP-solution-to-plant sensitivity，尚不足以授权
+realization-aware correction 或 inverse map；应继续查 compliant multi-contact / solver-reaction
+mechanism。本 Phase 到此停止，不实施 repair。
+
+Machine-readable evidence：
+[formal-v4](evidence/automated/contact-realization-sensitivity-formal-v4/contact-realization-sensitivity.json) 与
+[fresh replay-v1](evidence/automated/contact-realization-sensitivity-replay-v1/contact-realization-sensitivity.json)。
+
+## REWORK — Torque replay and free-contact-acceleration attribution
+
+结论：`A-FREE_ACCELERATION_DRIVEN`。本节直接复用上一节保存的四个 `Fr/Fn` QP directions，
+不重新求 QP。对每个 full-scale branch 记录的 `Delta tau`，在同一 compatible-H0、tick0、
+frozen state 下直接施加 `tau0+s Delta tau`，`s={1,0.5,0.25}`，由原 MuJoCo solver 自洽生成
+contact reaction；没有修改 controller、contact、friction 或 solver，也没有运行 trajectory。
+
+Stage 0 torque replay PASS：baseline aggregate wrench、point forces 与 hip-common acceleration
+逐值相等；所有 replay 对原 QP probes 的 bilateral 6D wrench、Fr/Fn、point forces 与 hip-common
+最大相对误差 `3.10e-9`，contact/solver regime signature 全部一致。因此冻结结论：QP contact
+wrench 不是 plant direct input；当前 actual reaction 可由 QP solution 的 actuator torque increment
+单独重现。
+
+Stage 1 以同一 frozen `M` 和四个 actual contact-point Jacobian 计算
+`M^-1 B Delta tau`。`Fn_L` direction 的 torque gain
+`[LH,LK,LW,RH,RK,RW]=[6.352,3.609,0.128,9.952,5.816,0.128] Nm/N`，已在
+left/right contact 制造 `+41.50/+53.58` rolling free acceleration；contact reaction contribution
+为 `-40.54/-52.43`，other-constraint contribution 仅约 `-0.52/-0.50`，最后 actual aggregate
+Fr response 为 `-5.795/-7.517 N/N`。`Fn_R` direction 的 torque gain
+`[9.594,5.571,0.130,6.588,3.772,0.130] Nm/N`，制造 `+52.50/+42.55` bilateral free rolling
+acceleration；contact reaction 为 `-51.43/-41.53`，actual Fr 为 `-7.387/-5.926 N/N`。
+
+四个 wheel/direction 的 solver reaction 均与 free rolling tendency 反号，并抵消
+`98.79--98.93%`。更关键的是，`Fn_L` 的 free cross ratio `1.291` 与 actual Fr cross ratio
+`1.297` 匹配，`Fn_R` 分别为 `1.234` 与 `1.247`：左右 cross 在 solver 之前已由 bilateral
+torque/free motion 形成，solver 主要按约束要求抵消该 tendency，而不是独立生成新的 cross mode。
+因此当前 `Fn->Fr` 是正常 constrained-dynamics reaction：QP 的 Fn-labelled solution direction
+携带强 bilateral hip/knee torque，先造成 rolling free motion，再由 contact solver 产生相反 Fr。
+
+`+/-` branch split `5.18e-9`、scale convergence `2.67e-9`，point-to-aggregate wrench closure
+`3.90e-17`、whole-dynamics/contact closure `3.55e-14`、free/reaction qacc balance normalized
+closure `6.48e-8`；fresh replay semantic error `0`。本 Phase 到此停止，不实施 repair。
+
+Machine-readable evidence：
+[formal-v1](evidence/automated/torque-free-contact-attribution-formal-v1/torque-free-contact-attribution.json) 与
+[fresh replay-v1](evidence/automated/torque-free-contact-attribution-replay-v1/torque-free-contact-attribution.json)。
+
+## REWORK — Fn→Fr root-cause closure
+
+结论保持 `REWORK`；本节只做 compatible-H0、tick0、fixed-state attribution，没有实施 repair。
+
+**Torque-generation mechanism：`T2-ACCELERATION_TASK_COUPLING_DOMINANT`。** 项目真实 QP
+increment identity `M Δnudot = B Δtau + Jw^T Δlambda` 的最大 residual 为 `3.392e-9`，
+additive torque decomposition closure 为 `0`。Fn_L/Fn_R acceleration-component torque norm
+share 为 `94.9461% / 93.7565%`，contact component 为 `7.0881% / 9.8319%`；other 仅为
+`2.63e-10` 数值量级。fixed-active-set KKT 对 observed solution 的 relative error
+`<=9.16e-9`，xi+rolling excitation torque closure `<=9.27e-11`。因此 bilateral hip/knee
+torque 主要由 xi/rolling acceleration objectives 经 KKT dynamics coupling 生成，不是 contact
+balancing torque 本身；这解释 generation mechanism，但不单独构成 R3 verdict。
+
+**First material mismatch：`R1-AGGREGATE_POINT_REALIZABILITY_MISMATCH`。** 左右 actual
+two-point force map 均为 `rank 5`，condition(nonzero) 约 `50`，缺失方向几乎纯 `Ml`。
+compatible nominal wrench 的不可实现 fraction 仅 `8.73e-5 / 1.48e-4`，但 Fn_L 左右
+increments 为 `0.35798 / 0.33664`，Fn_R 为 `0.79030 / 0.04910`；该正交分量对 QP
+rolling cancellation 的 contribution fraction 为 `0.9995--1.0249`。minimum-norm projected
+point forces 在 nominal load 上仍 normal-positive、friction margin positive，故不是 friction、
+unilateral 或 regime switch。
+
+Stage C 在 actual frozen points 的 QP contact-space balance closure 为 `1.136e-9`。QP 确实把
+large torque-induced rolling motion 与 aggregate contact reaction 放在同一 balance 中，但承担
+material cancellation 的 `Ml` 不在 actual point-force image 内。MuJoCo 只接收 torque，随后在
+相同 regime 下正常抵消 `98.79--98.93%` free-motion tendency；actual Fr cross ratio 在 solver
+之前已经由 bilateral free acceleration 基本形成。因此 solver 不是 first mismatch，也不能描述为
+把 normal force 自行转换为 rolling force。
+
+唯一下一 repair layer 冻结为 **actual point-contact-realizable force/wrench parameterization**。
+本轮不批准 hip task redesign、hip-common projection/penalty、inverse `R_c`、precompensation 或
+contact/friction/solver tuning。
+
+Formal authority 为
+[root-cause formal-v3](evidence/automated/root-cause-closure-formal-v3/root-cause-decision.json)；
+[fresh replay-v3](evidence/automated/root-cause-closure-replay-v3/summary.json) semantic error=`0`。
+`formal-v1` 因 closure metric 与 R3/R4 interpretation 错误已标 rejected；`replay-v1` 因 Markdown
+比较器错误中断已标 incomplete；v2 为通过但被 v3 的新增 share 字段 supersede。
+
+Verification：`.venv` MuJoCo `3.7.0`、NumPy `2.2.6`、SciPy `1.15.3`；`py_compile` 与
+diagnostic-only C++ operator dump (`-Wall -Wextra -Wpedantic -Werror`) PASS；targeted colcon build
+PASS；workspace `35 tests, 0 errors, 0 failures`；formal/replay 共 `5057` numeric fields 无
+non-finite；`git diff --check` PASS。Phase46 保持 `review/REWORK`，不创建 RECORD。
+
+## REWORK — point-contact-realizable repair execution
+
+### Implemented candidate
+
+新增独立 `kPhase46PointRealizableRolling` profile。每轮以 contact-frame 轮轴单位向量 `a` 构造
+`P_w=diag(I3,I3-a*a^T)`；不改变 42D QP，且 projector 一致进入 dynamics、37-row wrench cone、
+minimal interaction-wrench realization 与对外 physical solution。未叠加旧 hip-common projection、
+increment hard equality、gain/weight/wrench tuning，也未修改 MuJoCo plant、friction 或 solver。
+
+`DG46P-COMP` PASS：左右 projector 均 rank 5，symmetry/idempotence/null residual 分别不超过
+`1.02e-31`，所有 formal probes 的 axial moment 最大 `2.42e-19 Nm`；目标组件测试和 EOM
+closure PASS，历史 weighted-WBC golden tests 保持通过。
+
+### Mandatory stop
+
+`DG46P-EQ` **FAIL**。QP 预测的 left/right ddxi 为
+`-5.76e-6 / -8.21e-6 m/s2`，但 frozen MuJoCo actual 为
+`+0.0377309 / -0.0753842 m/s2`；右侧超过 `abs(ddxi)<=0.05`。其余本次 EQ 指标可信且通过：
+material tangent acceleration `+0.000971 / +0.004510 m/s2`、bilateral two contacts、hard
+`4.48e-11`、slack `0.0016795`、minimum torque margin `1.99595 Nm`、whole dynamics
+`2.13e-14`、contact apply-ft closure `0`。
+
+因此按冻结顺序停在 EQ，不进入 AUTH、REAL、SHORT、10 s 或 RECORD。此前在完成 EQ 判定前误先
+生成的一次 full-direction probe 只保留为 diagnostic-only：harmful cross 从 `-4.29509` 降到
+`-0.107631`（97.49%），但 actual slip self 为 `-0.140562`、发生反号；该结果不能授权越过
+EQ，也不能作为调参理由。
+
+正式 COMP/EQ evidence 为
+[formal-v1](evidence/automated/point-realizable-repair-equilibrium-formal-v1/equilibrium-decision.json)；
+[fresh replay-v1](evidence/automated/point-realizable-repair-equilibrium-replay-v1/equilibrium-decision.json)
+semantic max error `0`。diagnostic-only decision 为
+[repair-formal-v4](evidence/automated/point-realizable-repair-formal-v4/repair-decision.json)。依赖探针为
+MuJoCo `3.7.0`、NumPy `2.2.6`、SciPy `1.15.3`；workspace `35 tests, 0 errors, 0 failures`。
+
+Verdict：point-realizable layer 已正确实施并关闭 axial unrealizability，但最小 subspace candidate
+未通过 actual equilibrium。Phase46 继续 `review/REWORK`，不创建 RECORD；下一步必须先归因
+post-R1 equilibrium response mismatch，禁止 friction/solref/solimp/solver 或 task weight tuning。
+
+### Post-R1 equilibrium attribution
+
+在 mandatory EQ stop 后，只对相同 frozen tick0 做 Phase45 compatible-H0 与 point-realizable
+candidate 的 before/after causal comparison，不运行原 AUTH/REAL。state、mass、xi map delta 均为
+`0`，两者均保持每侧 two-point contact，排除 state/regime switch。
+
+Phase45 actual ddxi 为数值零；point-realizable actual 为
+`+0.0377309 / -0.0753842 m/s2`，而 QP ddxi before/after 仅变化
+`+1.06e-7 / +5.32e-6 m/s2`。以 frozen plant mass 映射 generalized-force delta：
+
+- actuator-free contribution：`+0.0377318 / -0.0433649`；
+- QP contact prediction：`-0.154932 / +0.165665`；
+- actual contact response：`+0.0001186 / -0.0328795`；
+- actual-minus-QP contact-response gap：`+0.155050 / -0.198545`；
+- remaining：`-0.0001195 / +0.0008602`。
+
+actual/causal ddxi closure 均 `<=3.12e-14`，generalized-force closure `2.44e-15`；response-gap
+norm 是 observed actual delta 的 `2.9883` 倍。由此冻结新的 first mismatch 为
+`R2-CONTACT_RESPONSE_MISMATCH_AFTER_R1`。它说明 rank-5 realizability 修复后，QP contact
+prediction 仍不能代表 actual compliant constrained response；不等于授权 inverse map 或经验补偿。
+
+证据为
+[post-R1 formal-v1](evidence/automated/post-r1-equilibrium-attribution-formal-v1/post-r1-equilibrium-attribution.json)
+与 [fresh replay-v1](evidence/automated/post-r1-equilibrium-attribution-replay-v1/summary.json)，semantic
+error `0`。当前没有已冻结的下一 repair law；Phase46 保持 `review/REWORK`。
+
+## REWORK — point-subspace equivalence audit
+
+结论：`C-REFERENCE_POINT_MISMATCH`。本节 supersede 上一节把 current Ml-deletion candidate 当作
+exact point-force-image repair 的前提；上一节数值仍可作为 candidate-specific diagnostic，但
+`R2-CONTACT_RESPONSE_MISMATCH_AFTER_R1` 不再 authoritative。
+
+actual two-point map 与既有 rank/SVD oracle parity 闭合至 `2.22e-16`。然而 current `P_w` 删除
+pure `Ml`，actual missing direction 分别含 `Fr=-2.15265e-4 / -1.52042e-4`；左右
+`||P_w-P_G||_2=2.15265e-4 / 1.52042e-4`，最大 principal angle 同量级，mutual containment 与
+双向 reconstruction 均 material FAIL。因此 `Range(P_w) != Range(G_p)`。
+
+标准 wrench transport 表明该差异来自 production reference 相对 contact midpoint 的 normal offset；
+移到 midpoint 后 missing direction 才严格为 pure `Ml`，transport parity `<=3.47e-18`、往返 closure
+`0`。pure-`Ml` 是 reference-point-specific fact，不是 current production reference 下的 exact
+geometry fact。
+
+因此 current `DG46P-EQ FAIL` 只能证明 **approximate Ml-deletion candidate fails equilibrium**，
+不能证明 exact R1 repair fails equilibrium。Phase46 保持 `REWORK`；本轮不修改 production
+reference/projector/controller，也不定义新 repair。详见
+[audit](POINT_SUBSPACE_EQUIVALENCE.md) 与
+[machine-readable formal](evidence/automated/point-subspace-equivalence-formal-v1/point-subspace-equivalence.json)。
+
+## REWORK — exact R1 point-force-image repair
+
+结论：`EXACT-R1-COMP PASS / EXACT-R1-EQ FAIL`。
+
+唯一 candidate 已从 approximate pure-`Ml` deletion 替换为 frozen actual two-point
+`P_G=G_pG_p^dagger`。同一 projector 一致进入 dynamics、wrench cone、interaction realization 与
+controller physical output。左右 production/actual projector parity `<=1.55e-15`，mutual
+containment `<=9.16e-16`，最大 principal angle `<=1.10e-15 rad`，missing-direction annihilation
+`<=4.89e-16`，physical wrench reconstruction `<=1.60e-14`；rank 5、symmetry/idempotence、
+EOM/contact algebra与 historical tests 均 PASS。因此 `Range(decision)=Range(G_p)`，R1 已 exact
+closed；旧 `DG46P-EQ FAIL` 被 supersede。
+
+COMP 后进入同一 compatible-H0/tick0 EQ。actual `ddxi_L/R` 为
+`+0.0379952/-0.0752634 m/s2`，right 超过 `0.05`，故 mandatory EQ FAIL。tangent、bilateral
+two-point contact、hard/slack、torque margin 与 whole-dynamics/contact closure 均通过。按 stop rule
+未运行 AUTH、REAL、SHORT、10 s 或 trajectory。
+
+before/after causal evidence closure `<=4.85e-14`，但只记录
+`EXACT_R1_EQ_FAIL_CAUSAL_EVIDENCE`；没有设计 R2 或第二 repair，原
+`R2-CONTACT_RESPONSE_MISMATCH_AFTER_R1` **仍未重新授权**。详见
+[exact repair](EXACT_R1_REPAIR.md) 与
+[formal-v3](evidence/automated/exact-r1-equilibrium-formal-v3/equilibrium-decision.json)。
+
+## REWORK — post-exact-R1 first-mismatch attribution
+
+结论：`C-MAPPING-OR-REFERENCE-REGRESSION`。exact R1 closure 与 state/contact regime parity 均
+PASS，exact post-R1 wrench 的 `G_p` reconstruction residual `<=1.42e-14`。但是同一 wrench 经
+production aggregate-wrench map 与 reconstructed frozen point-contact map 后，reduced generalized
+force 最大差为 left `2.40757`、right `2.48120`，相对差 `7.511% / 7.503%`。因此按 mandatory
+ordering 在 same-wrench mapping gate 停止，不能把后续 response gap 直接冻结为 R2。
+
+frozen causal decomposition 仍可信：actuator/free `+0.0378838/-0.0432577`，QP contact
+`-0.0362691/+0.0447233`，actual contact `+0.000232924/-0.0328646`，actual-QP gap
+`+0.0365020/-0.0775879 m/s2`，gap/observed ratio `1.01702`；closures `<=4.85e-14`。contact
+signature stable，actual solver reaction 与 free-motion tendency 反向，故 solver 不是 first
+mismatch。
+
+旧 `R2-CONTACT_RESPONSE_MISMATCH_AFTER_R1` 保留为 historical / approximate-candidate /
+non-authoritative；`R2-CONTACT_RESPONSE_MISMATCH_AFTER_EXACT_R1` 不授权。详见
+[attribution](POST_EXACT_R1_ATTRIBUTION.md)、[formal-v4](evidence/automated/post-exact-r1-attribution-formal-v4/post-exact-r1-attribution.json)
+与 [replay-v4](evidence/automated/post-exact-r1-attribution-replay-v4/summary.json)，semantic error `0`。
+本轮未实施 repair，Phase46 保持 `review/REWORK`。
+
+## REWORK — production-reference point-force image
+
+结论：`A-PRODUCTION-REFERENCE-IMAGE-CLOSED`。以 frozen actual two-point map 为起点，使用已
+验证的 dual wrench/twist transport 唯一得到 `Gp_prod=Tw Gp_point`。左右 rank 均为 5；transported
+full/reduced operator residual 分别 `<=1.67e-16 / <=4.44e-15`，deterministic virtual work PASS。
+
+`Pg_prod=Gp_prod pinv(Gp_prod)` 的 symmetry exact，idempotence `<=1.11e-15`、range containment
+`<=1.13e-15`、point-force reconstruction `<=1.37e-14`。missing direction 仍以 `Ml` 为主，但同时
+包含 production-reference-specific `Fr/Fn` 分量。
+
+current projector 与 true `Pg_prod` 的 spectral difference 为 left `1.21140e-4`、right
+`1.19751e-4`，max element `1.16173e-4 / 1.03252e-4`，dominant column 均为 `Ml`。因此 true
+production-reference R1 image 已知，但 current controller 中 R1 尚未 exact closed。本轮未修改
+controller/projector，下一允许动作仅为另行实现一个 corrected exact-R1 candidate。详见
+[audit](PRODUCTION_REFERENCE_IMAGE_AUDIT.md)、
+[formal-v1](evidence/automated/production-reference-image-audit-formal-v1/production-reference-image-audit.json)
+与 [replay-v1](evidence/automated/production-reference-image-audit-replay-v1/summary.json)，semantic
+error `0`。Phase46 保持 `review/REWORK`。
+
+## REWORK — wrench/generalized-force operator identity
+
+结论：`C-REFERENCE-POINT-MISMATCH`。独立构造 actual `Gp/Jp` 与 production `Aw` 后，raw
+`Aw Gp-Jp^T` 在 full coordinates 的 spectral norm 为 left `4.18341e-4`、right
+`3.38708e-4`，max element `1.69721e-4 / 1.03252e-4`；reduced 层同样 FAIL。dominant basis
+为 left `Fn`，dominant DOF block 为 left base rotation。
+
+actual 与 production reference 在 contact coordinates 的 offset 为 left
+`[-1.16173e-4,-1.69721e-4,-3.43335e-5] m`、right
+`[+6.06580e-5,0,+1.03252e-4] m`。应用标准 wrench/twist dual transport 后，full residual
+`<=1.67e-16`、reduced residual `<=4.44e-15`，deterministic virtual work PASS。因此 first
+mismatch 唯一定位为 reference transport，不是 frame/order/sign 或 reduction 本身。
+
+旧 same-wrench audit 的 `-3.51221e-5` hip-common scalar 与 `2.42575e-6` fraction 在其窄范围内
+仍有效：它比较同一 numeric wrench 经各模型自己的 verified reference/map 后的单一 selector，未检验
+完整六列 operator identity。上一节 7.5% 则由未 transport reference 并混用 production/plant
+reduction semantics 产生，正式 supersede；真实 raw relative operator gap 仅约
+`1.4e-4--1.9e-4`，且 transport 后消失。
+
+authority consequence：existing exact-R1 projector 相对正确 production-reference point-image
+projector 的 max difference 为 left `1.16173e-4`、right `1.03252e-4`，故 exact R1 不再可称为
+在 production wrench reference 下 closed；R2 不授权。详见
+[operator audit](WRENCH_GENERALIZED_FORCE_OPERATOR_AUDIT.md)、
+[formal-v2](evidence/automated/wrench-generalized-force-operator-audit-formal-v2/wrench-generalized-force-operator-audit.json)
+与 [replay-v2](evidence/automated/wrench-generalized-force-operator-audit-replay-v2/summary.json)，semantic
+error `0`。本轮未实施 repair，Phase46 保持 `review/REWORK`。

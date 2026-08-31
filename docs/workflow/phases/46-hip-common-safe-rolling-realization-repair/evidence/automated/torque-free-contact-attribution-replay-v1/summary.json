@@ -1,0 +1,8 @@
+{
+  "classification": "A-FREE_ACCELERATION_DRIVEN",
+  "pass": true,
+  "replay_max_abs_error": 0.0,
+  "stable": true,
+  "stage0_pass": true,
+  "trusted": true
+}

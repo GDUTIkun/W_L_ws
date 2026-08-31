@@ -16,6 +16,7 @@ enum class WeightedWbcProfile {
   kPhase45ContactConsistentRolling,
   kPhase46HipCommonSafeRolling,
   kPhase46HipCommonIncrementLimitedRolling,
+  kPhase46PointRealizableRolling,
 };
 
 [[nodiscard]] NominalWbcModel::Matrix1x12 hipCommonSafeRollingMap(

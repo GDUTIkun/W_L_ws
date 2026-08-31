@@ -1,0 +1,19 @@
+{
+  "classification": "C-HIP_MODE_CREATED_BY_PLANT_REALIZATION",
+  "flags": {
+    "A-QP_HIP_MODE_DOMINANT": false,
+    "B-QP_CANCELLATION_BROKEN_IN_PLANT": false,
+    "C-HIP_MODE_CREATED_BY_PLANT_REALIZATION": true
+  },
+  "material_threshold": 0.05,
+  "mujoco": {
+    "common_leg_cancellation_ratio": 1.0665417341502315,
+    "hip_common": -4.027036189887627,
+    "knee_common": -0.2679659715608631
+  },
+  "qp": {
+    "common_leg_cancellation_ratio": 61042112.96714878,
+    "hip_common": -8.25034574203755e-12,
+    "knee_common": -0.0005036185285531453
+  }
+}

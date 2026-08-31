@@ -3,6 +3,7 @@
 #endif
 
 #include <Eigen/Geometry>
+#include <Eigen/SVD>
 
 #include <cassert>
 #include <cmath>
@@ -240,6 +241,62 @@ int main() {
                   0.5 * wheel_leg::phase21_profile::kVariableScale[9]) <= 1.0e-15);
   assert(increment_limited.lower[104] == -0.0123);
   assert(increment_limited.upper[104] == -0.0123);
+
+  const auto point_realizable = assembler.assemble(
+      evaluated, rolling_reference,
+      wheel_leg::WeightedWbcProfile::kPhase46PointRealizableRolling);
+  assert(point_realizable.ok());
+  for (int side = 0; side < 2; ++side) {
+    const auto projector = wheel_leg::pointContactWrenchProjector(
+        evaluated.contact_axis[side], Eigen::Vector3d(0.0, 0.0, 2.0e-4));
+    assert((projector - projector.transpose()).cwiseAbs().maxCoeff() <= 1.0e-12);
+    assert((projector * projector - projector).cwiseAbs().maxCoeff() <= 1.0e-12);
+    assert(std::abs(projector.trace() - 5.0) <= 1.0e-12);
+    Eigen::Matrix<double, 6, 6> point_map;
+    for (int point = 0; point < 2; ++point) {
+      const Eigen::Vector3d lever = Eigen::Vector3d(0.0, 0.0, 2.0e-4) +
+          (point == 0 ? -0.5 : 0.5) * evaluated.contact_axis[side].normalized();
+      point_map.block<3, 3>(0, 3 * point).setIdentity();
+      point_map.block<3, 3>(3, 3 * point) <<
+          0.0, -lever.z(), lever.y(), lever.z(), 0.0, -lever.x(),
+          -lever.y(), lever.x(), 0.0;
+    }
+    assert(((Eigen::Matrix<double, 6, 6>::Identity() - projector) * point_map)
+               .cwiseAbs().maxCoeff() <= 1.0e-14);
+    Eigen::JacobiSVD<Eigen::Matrix<double, 6, 6>> point_svd(
+        point_map, Eigen::ComputeFullU);
+    const auto missing = point_svd.matrixU().rightCols<1>();
+    assert((projector * missing).cwiseAbs().maxCoeff() <= 1.0e-14);
+    Eigen::JacobiSVD<Eigen::Matrix<double, 6, 6>> evaluated_projector_svd(
+        evaluated.point_force_wrench_projector[side], Eigen::ComputeFullV);
+    const auto evaluated_missing = evaluated_projector_svd.matrixV().rightCols<1>();
+    Eigen::Matrix<double, 42, 1> normalized_axis =
+        Eigen::Matrix<double, 42, 1>::Zero();
+    for (int index = 0; index < 6; ++index) {
+      normalized_axis[18 + 6 * side + index] =
+          evaluated_missing[index] /
+          wheel_leg::phase21_profile::kVariableScale[18 + 6 * side + index];
+    }
+    assert((point_realizable.a * normalized_axis).cwiseAbs().maxCoeff() <=
+           1.0e-14);
+  }
+
+  wheel_leg::WeightedWbcController point_controller(
+      wheel_leg::WeightedWbcProfile::kPhase46PointRealizableRolling);
+  const auto point_output = point_controller.step(state, rolling_reference);
+  assert(point_output.ok());
+  Eigen::Matrix<double, 12, 1> eom =
+      evaluated.mass * point_output.physical_solution.head<12>() -
+      evaluated.actuation * point_output.physical_solution.segment<6>(12);
+  for (int side = 0; side < 2; ++side) {
+    const auto wrench = point_output.physical_solution.segment<6>(18 + 6 * side);
+    eom.noalias() -= evaluated.wrench_map[side] * wrench;
+    assert(((Eigen::Matrix<double, 6, 6>::Identity() -
+             evaluated.point_force_wrench_projector[side]) * wrench)
+               .cwiseAbs().maxCoeff() <= 1.0e-10);
+  }
+  eom += evaluated.bias;
+  assert(eom.cwiseAbs().maxCoeff() <= 2.0e-7);
 
   auto nonfinite = reference;
   nonfinite.wheel_longitudinal_acceleration_m_s2[0] =

@@ -1,0 +1,24 @@
+{
+  "do_not_do": [
+    "QP-space hip-common projection/penalty",
+    "inverse Rc compensation",
+    "friction/solref/solimp/solver/contact tuning",
+    "hip-task redesign before realizability is repaired"
+  ],
+  "first_material_mismatch": "R1-AGGREGATE_POINT_REALIZABILITY_MISMATCH",
+  "ordered_mismatches": [
+    {
+      "classification": "R1-AGGREGATE_POINT_REALIZABILITY_MISMATCH",
+      "primary": true,
+      "rank": 1,
+      "reason": "the aggregate 6D wheel-wrench formulation admits a lateral-axis moment outside the rank-5 image of the actual two 3D point contacts, and that component supplies approximately all QP-predicted harmful rolling cancellation"
+    }
+  ],
+  "pass": true,
+  "phase_status": "review/REWORK",
+  "recommended_repair_layer": "actual point-contact-realizable force/wrench parameterization",
+  "repair_implemented": false,
+  "replay_max_abs_error": 0.0,
+  "torque_generation_mechanism": "T2-ACCELERATION_TASK_COUPLING_DOMINANT",
+  "trusted": true
+}

@@ -1,0 +1,434 @@
+{
+  "directions": {
+    "Fn_L": {
+      "active_rows": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "active_sides": [
+        "equality",
+        "equality",
+        "equality",
+        "equality",
+        "equality",
+        "equality",
+        "equality",
+        "equality",
+        "equality",
+        "equality",
+        "equality",
+        "equality"
+      ],
+      "block_counterfactuals": {
+        "contact_task": {
+          "diagnostic_only_non_candidate": true,
+          "kkt_residual": 2.1827872842550278e-11,
+          "tau_norm_ratio_to_full": 0.9865784463004934
+        },
+        "interaction_wrench_tracking": {
+          "diagnostic_only_non_candidate": true,
+          "kkt_residual": 9.822542779147625e-11,
+          "tau_norm_ratio_to_full": 41.525136328067134
+        },
+        "regularization": {
+          "diagnostic_only_non_candidate": true,
+          "kkt_residual": 1.9099388737231493e-11,
+          "tau_norm_ratio_to_full": 0.9999673374652508
+        },
+        "rolling_slip_task": {
+          "diagnostic_only_non_candidate": true,
+          "kkt_residual": 1.2196323950774968e-09,
+          "tau_norm_ratio_to_full": 518.3990143075907
+        },
+        "slack_penalty": {
+          "diagnostic_only_non_candidate": true,
+          "kkt_residual": 4.638422979041934e-11,
+          "tau_norm_ratio_to_full": 41.52513631769548
+        },
+        "xi_task": {
+          "diagnostic_only_non_candidate": true,
+          "kkt_residual": 3.2261095839203335e-06,
+          "tau_norm_ratio_to_full": 2047878.9040924166
+        }
+      },
+      "central_valid": true,
+      "dual_sensitivity": [
+        0.05330439692775446,
+        4.554746729690251e-05,
+        -0.0012129377731686652,
+        0.010959834322567197,
+        0.20461001493217434,
+        -0.03864145971114197,
+        6.352150405675161e-07,
+        3.6085812649133686e-07,
+        3.197004900812317e-07,
+        9.952225703546702e-07,
+        5.815739161363354e-07,
+        3.1969852631874573e-07
+      ],
+      "kkt_residual": 1.000444171950221e-11,
+      "rolling_excitation_tau_gain": [
+        -5.390317024230528,
+        -0.8837788523187873,
+        1.689675842699201,
+        14.614290014598447,
+        13.103340156496529,
+        1.6896926633085512
+      ],
+      "solution_relative_error": 9.159126694266871e-09,
+      "source_kkt_residuals": {
+        "rolling": 7.617018127348274e-12,
+        "xi": 1.2732925824820995e-11
+      },
+      "source_sum_tau_closure": [
+        4.370614981041854e-11,
+        5.625278021170743e-11,
+        7.23421322845752e-12,
+        4.563016631209393e-12,
+        1.684763439868675e-11,
+        5.836137129122676e-12
+      ],
+      "xi_excitation_tau_gain": [
+        11.742471210652802,
+        4.492348633073143,
+        -1.561797220827437,
+        -4.662065144869554,
+        -7.2876072635240385,
+        -1.5618144137357253
+      ]
+    },
+    "Fn_R": {
+      "active_rows": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "active_sides": [
+        "equality",
+        "equality",
+        "equality",
+        "equality",
+        "equality",
+        "equality",
+        "equality",
+        "equality",
+        "equality",
+        "equality",
+        "equality",
+        "equality"
+      ],
+      "block_counterfactuals": {
+        "contact_task": {
+          "diagnostic_only_non_candidate": true,
+          "kkt_residual": 1.000444171950221e-11,
+          "tau_norm_ratio_to_full": 1.0029425590260954
+        },
+        "interaction_wrench_tracking": {
+          "diagnostic_only_non_candidate": true,
+          "kkt_residual": 1.0822986951097846e-10,
+          "tau_norm_ratio_to_full": 93.55239172607386
+        },
+        "regularization": {
+          "diagnostic_only_non_candidate": true,
+          "kkt_residual": 9.068631893085897e-12,
+          "tau_norm_ratio_to_full": 0.9998026552589183
+        },
+        "rolling_slip_task": {
+          "diagnostic_only_non_candidate": true,
+          "kkt_residual": 6.320988177321851e-10,
+          "tau_norm_ratio_to_full": 501.2068856303467
+        },
+        "slack_penalty": {
+          "diagnostic_only_non_candidate": true,
+          "kkt_residual": 1.0550138540565968e-10,
+          "tau_norm_ratio_to_full": 93.5523916435163
+        },
+        "xi_task": {
+          "diagnostic_only_non_candidate": true,
+          "kkt_residual": 4.642880185201648e-06,
+          "tau_norm_ratio_to_full": 2391491.254324339
+        }
+      },
+      "central_valid": true,
+      "dual_sensitivity": [
+        0.059141340944875775,
+        0.0001400772241346715,
+        -0.0013936606584414868,
+        -0.007887157458634775,
+        0.207844823130654,
+        0.031940184457395215,
+        9.593614525016392e-07,
+        5.571448902230713e-07,
+        3.2474986255692784e-07,
+        6.588390815132072e-07,
+        3.772215668718104e-07,
+        3.2475065303572137e-07
+      ],
+      "kkt_residual": 1.3869794202037156e-11,
+      "rolling_excitation_tau_gain": [
+        -4.656788591785221,
+        -0.44591841939958465,
+        1.6446752405871932,
+        13.619064930346356,
+        12.321880693450357,
+        1.6446913347146321
+      ],
+      "solution_relative_error": 8.475219078870738e-09,
+      "source_kkt_residuals": {
+        "rolling": 1.014655026665423e-11,
+        "xi": 1.546140993013978e-11
+      },
+      "source_sum_tau_closure": [
+        7.102096688527126e-12,
+        9.268918965688044e-11,
+        4.9467097085198475e-12,
+        -1.7186252421197423e-11,
+        5.3889115392280473e-11,
+        5.9908467076041916e-12
+      ],
+      "xi_excitation_tau_gain": [
+        14.250399707454473,
+        6.017360956232135,
+        -1.5147760475652157,
+        -7.030671543400966,
+        -8.549674839583439,
+        -1.514790138890862
+      ]
+    },
+    "Fr_L": {
+      "active_rows": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "active_sides": [
+        "equality",
+        "equality",
+        "equality",
+        "equality",
+        "equality",
+        "equality",
+        "equality",
+        "equality",
+        "equality",
+        "equality",
+        "equality",
+        "equality"
+      ],
+      "block_counterfactuals": {
+        "contact_task": {
+          "diagnostic_only_non_candidate": true,
+          "kkt_residual": 4.263256414560601e-13,
+          "tau_norm_ratio_to_full": 1.1087043930136042
+        },
+        "interaction_wrench_tracking": {
+          "diagnostic_only_non_candidate": true,
+          "kkt_residual": 5.5138116294983774e-12,
+          "tau_norm_ratio_to_full": 169.17600275851922
+        },
+        "regularization": {
+          "diagnostic_only_non_candidate": true,
+          "kkt_residual": 2.5450675255592956e-13,
+          "tau_norm_ratio_to_full": 0.9998302298153464
+        },
+        "rolling_slip_task": {
+          "diagnostic_only_non_candidate": true,
+          "kkt_residual": 1.7678303265711293e-11,
+          "tau_norm_ratio_to_full": 540.6795222929251
+        },
+        "slack_penalty": {
+          "diagnostic_only_non_candidate": true,
+          "kkt_residual": 4.945377440890297e-12,
+          "tau_norm_ratio_to_full": 169.17600219250875
+        },
+        "xi_task": {
+          "diagnostic_only_non_candidate": true,
+          "kkt_residual": 7.553180125796644e-08,
+          "tau_norm_ratio_to_full": 2377060.843218159
+        }
+      },
+      "central_valid": true,
+      "dual_sensitivity": [
+        -0.0005524091389964084,
+        -0.00011518659253919108,
+        1.5761216429543978e-05,
+        -5.310025824670217e-06,
+        -0.000282815831760784,
+        -0.006780352971391582,
+        1.865554066782238e-08,
+        9.248051990873307e-09,
+        -4.4217962624770735e-10,
+        2.8322364731270255e-08,
+        1.6344853640687385e-08,
+        -4.421736865545256e-10
+      ],
+      "kkt_residual": 1.5631940186722204e-13,
+      "rolling_excitation_tau_gain": [
+        -0.2143408845886704,
+        -0.07136409687485586,
+        0.04609658841971184,
+        0.4678121219586448,
+        0.406800932856759,
+        0.046097079071379776
+      ],
+      "solution_relative_error": 8.411283466303388e-09,
+      "source_kkt_residuals": {
+        "rolling": 3.907985046680551e-13,
+        "xi": 5.115907697472721e-13
+      },
+      "source_sum_tau_closure": [
+        5.437317263101704e-13,
+        -1.1791609355604749e-12,
+        8.713862964526697e-14,
+        -8.565370634983083e-13,
+        -8.176445631669083e-13,
+        3.509161277531758e-14
+      ],
+      "xi_excitation_tau_gain": [
+        0.4008963504518591,
+        0.16384434736561396,
+        -0.04627348219520121,
+        -0.18458839043909464,
+        -0.24335261435119007,
+        -0.04627394374528078
+      ]
+    },
+    "Fr_R": {
+      "active_rows": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "active_sides": [
+        "equality",
+        "equality",
+        "equality",
+        "equality",
+        "equality",
+        "equality",
+        "equality",
+        "equality",
+        "equality",
+        "equality",
+        "equality",
+        "equality"
+      ],
+      "block_counterfactuals": {
+        "contact_task": {
+          "diagnostic_only_non_candidate": true,
+          "kkt_residual": 7.958078640513122e-13,
+          "tau_norm_ratio_to_full": 1.1013788877085706
+        },
+        "interaction_wrench_tracking": {
+          "diagnostic_only_non_candidate": true,
+          "kkt_residual": 5.030642569181509e-12,
+          "tau_norm_ratio_to_full": 175.37296192801688
+        },
+        "regularization": {
+          "diagnostic_only_non_candidate": true,
+          "kkt_residual": 6.821210263296962e-13,
+          "tau_norm_ratio_to_full": 0.9996320721003169
+        },
+        "rolling_slip_task": {
+          "diagnostic_only_non_candidate": true,
+          "kkt_residual": 8.44124770082999e-12,
+          "tau_norm_ratio_to_full": 475.178126865358
+        },
+        "slack_penalty": {
+          "diagnostic_only_non_candidate": true,
+          "kkt_residual": 2.3590018827235326e-12,
+          "tau_norm_ratio_to_full": 175.37296162050873
+        },
+        "xi_task": {
+          "diagnostic_only_non_candidate": true,
+          "kkt_residual": 1.0960187069031235e-07,
+          "tau_norm_ratio_to_full": 2330174.266334193
+        }
+      },
+      "central_valid": true,
+      "dual_sensitivity": [
+        0.0005557703642935785,
+        0.00011556829419018255,
+        -2.017863765998995e-05,
+        5.906523681153963e-06,
+        0.00036147502596010905,
+        0.00680146906241498,
+        2.745542315718552e-08,
+        1.5773814920905238e-08,
+        5.645836020917727e-10,
+        1.751837025443237e-08,
+        8.729786102334991e-09,
+        5.644903156021286e-10
+      ],
+      "kkt_residual": 2.8421709430404007e-13,
+      "rolling_excitation_tau_gain": [
+        -0.10032265714199767,
+        0.006359125380249117,
+        0.04472858394218343,
+        0.3433451399270384,
+        0.3158092814265383,
+        0.04472900921174339
+      ],
+      "solution_relative_error": 7.266921741548072e-09,
+      "source_kkt_residuals": {
+        "rolling": 2.1316282072803006e-13,
+        "xi": 6.821210263296962e-13
+      },
+      "source_sum_tau_closure": [
+        9.540770951055322e-12,
+        4.9615173081107855e-12,
+        1.8816892488615622e-13,
+        -7.545283842169681e-12,
+        -5.812746117772605e-12,
+        2.8077887237465404e-13
+      ],
+      "xi_excitation_tau_gain": [
+        0.37487686892461625,
+        0.15137870417002694,
+        -0.04450276727698667,
+        -0.16816167831415693,
+        -0.22851170026456036,
+        -0.04450322080810801
+      ]
+    }
+  },
+  "hessian_reconstruction_max_abs": 1.7763568394002505e-15,
+  "triggered": true
+}

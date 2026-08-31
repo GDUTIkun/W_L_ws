@@ -1,0 +1,8 @@
+{
+  "classification": "B-STABLE_BUT_STRONGLY_COUPLED",
+  "locally_stable": true,
+  "pass": true,
+  "replay_max_abs_error": null,
+  "scope": "compatible-H0 tick0 fixed-state only; no repair or trajectory",
+  "trusted": true
+}

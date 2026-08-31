@@ -1,0 +1,27 @@
+{
+  "command": "tools/experiments/run_phase46_post_r1_equilibrium_attribution.py --config simulation/mujoco/config/phase46_point_realizable_rolling_v1.json --output docs/workflow/phases/46-hip-common-safe-rolling-realization-repair/evidence/automated/post-exact-r1-attribution-replay-v4 --replay-of docs/workflow/phases/46-hip-common-safe-rolling-realization-repair/evidence/automated/post-exact-r1-attribution-formal-v4",
+  "created_utc": "2026-08-31T01:43:07.652486+00:00",
+  "dependencies": {
+    "mujoco": "3.7.0",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3"
+  },
+  "platform": "Linux-7.0.0-30-generic-x86_64-with-glibc2.39",
+  "python": "3.10.20 (main, Jun 11 2026, 04:03:45) [Clang 22.1.3 ]",
+  "replay_of": "docs/workflow/phases/46-hip-common-safe-rolling-realization-repair/evidence/automated/post-exact-r1-attribution-formal-v4",
+  "sources": {
+    "docs/workflow/phases/42-wheel-spin-contact-loss-causal-attribution/evidence/automated/causal-attribution-formal-v1/control-a_native.csv": "44d35d53e8335c2ed569dc971d268205385011f3bce5b6438ffaff3db482572f",
+    "docs/workflow/phases/45-contact-consistent-rolling-repair/evidence/automated/equilibrium-compatibility-formal-v2/wrench-counterfactual.json": "c1063f062c7c4dd1c70aeea4860ca14ff087ef375dd81caeee310496b84598d4",
+    "docs/workflow/phases/46-hip-common-safe-rolling-realization-repair/evidence/automated/exact-r1-equilibrium-formal-v3/equilibrium-decision.json": "c28afc42373fff03951b8e3a7268652d6e40b4e8f96bef8412e8c7cd13ff4124",
+    "ros_ws/build/wheel_leg_mujoco/phase45_contact_consistent_rolling_loop": "35934362df7bd2b8d6af955ea439a06886045ce3c93aea028d9e906c599663b4",
+    "ros_ws/build/wheel_leg_mujoco/phase46_point_realizable_rolling_loop": "4c81011c5370b8846ec920ac49065f0a466f8f318ce55500a7a4c37b24d33ad8",
+    "simulation/mujoco/config/phase45_contact_consistent_rolling_v2.json": "4c94a171f9c75c57db4a502262beaed62665a1f525570683bfba519b644c4968",
+    "simulation/mujoco/config/phase46_point_realizable_rolling_v1.json": "06d2ac603acfef6c20b6b00600657aae9198e7134bc1cb06add0207a6736fbbd",
+    "simulation/mujoco/model/scene_axisymmetric_centered_com_v1.xml": "1bf6a0c85f3fabf3c7447b913085ca6b79eff97d5baf824b44faf4e48343e419",
+    "tools/experiments/run_phase46_contact_realization_sensitivity.py": "e152a861b263985702fd69d60d7fe740b883d6c2d57306f85070f6728dce70cb",
+    "tools/experiments/run_phase46_point_realizable_repair.py": "e3659fcbf548efca6bb399a4e998d909e945ab389318410a6ef079c849791506",
+    "tools/experiments/run_phase46_post_r1_equilibrium_attribution.py": "ad55effa0cd909d9b7ec8661de1a03e4c9735551d7fe59014a0018b874b8f28b",
+    "tools/experiments/run_phase46_root_cause_closure.py": "002e0aa43356d178f7078c8840a5fe2be74e52c08cf36e9eba21442882ddb6ae",
+    "tools/experiments/run_phase46_torque_free_contact_attribution.py": "4e744afdda1689f1750f8fb54b89a2a3656d3891671fa44fd889f43f4600de36"
+  }
+}

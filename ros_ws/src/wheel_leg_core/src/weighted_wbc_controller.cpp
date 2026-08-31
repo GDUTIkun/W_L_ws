@@ -18,7 +18,8 @@ bool usesMinimalInteractionWrench(WeightedWbcProfile profile) {
          profile == WeightedWbcProfile::kPhase43XiAndNativeWheelRate ||
          profile == WeightedWbcProfile::kPhase45ContactConsistentRolling ||
          profile == WeightedWbcProfile::kPhase46HipCommonSafeRolling ||
-         profile == WeightedWbcProfile::kPhase46HipCommonIncrementLimitedRolling;
+         profile == WeightedWbcProfile::kPhase46HipCommonIncrementLimitedRolling ||
+         profile == WeightedWbcProfile::kPhase46PointRealizableRolling;
 }
 
 }  // namespace
@@ -144,6 +145,13 @@ WeightedWbcController::Result WeightedWbcController::step(
     output.physical_solution[index] =
         phase21_profile::kVariableScale[index] * solved.x[index];
   }
+  if (profile_ == WeightedWbcProfile::kPhase46PointRealizableRolling) {
+    for (int side = 0; side < 2; ++side) {
+      output.physical_solution.segment<6>(18 + 6 * side) =
+          model.point_force_wrench_projector[side] *
+          output.physical_solution.segment<6>(18 + 6 * side);
+    }
+  }
   const auto record_task = [&output](Task task, const auto &residual) {
     const auto index = static_cast<std::size_t>(task);
     output.task_max_abs_normalized_residual[index] =
@@ -182,14 +190,16 @@ WeightedWbcController::Result WeightedWbcController::step(
       profile_ == WeightedWbcProfile::kPhase43XiAndNativeWheelRate ||
       profile_ == WeightedWbcProfile::kPhase45ContactConsistentRolling ||
       profile_ == WeightedWbcProfile::kPhase46HipCommonSafeRolling ||
-      profile_ == WeightedWbcProfile::kPhase46HipCommonIncrementLimitedRolling) {
+      profile_ == WeightedWbcProfile::kPhase46HipCommonIncrementLimitedRolling ||
+      profile_ == WeightedWbcProfile::kPhase46PointRealizableRolling) {
     record_task(Task::kWheelLongitudinalTracking,
                 output.wheel_longitudinal_acceleration_m_s2 -
                     reference.wheel_longitudinal_acceleration_m_s2);
   }
   if (profile_ == WeightedWbcProfile::kPhase45ContactConsistentRolling ||
       profile_ == WeightedWbcProfile::kPhase46HipCommonSafeRolling ||
-      profile_ == WeightedWbcProfile::kPhase46HipCommonIncrementLimitedRolling) {
+      profile_ == WeightedWbcProfile::kPhase46HipCommonIncrementLimitedRolling ||
+      profile_ == WeightedWbcProfile::kPhase46PointRealizableRolling) {
     output.rolling_velocity_m_s = reference.rolling_velocity_m_s;
     output.rolling_task_active = reference.rolling_task_active;
     Eigen::Vector2d residual = Eigen::Vector2d::Zero();

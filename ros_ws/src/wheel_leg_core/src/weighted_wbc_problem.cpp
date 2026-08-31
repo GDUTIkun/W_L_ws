@@ -49,7 +49,12 @@ bool usesMinimalInteractionWrench(WeightedWbcProfile profile) {
          profile == WeightedWbcProfile::kPhase43XiAndNativeWheelRate ||
          profile == WeightedWbcProfile::kPhase45ContactConsistentRolling ||
          profile == WeightedWbcProfile::kPhase46HipCommonSafeRolling ||
-         profile == WeightedWbcProfile::kPhase46HipCommonIncrementLimitedRolling;
+         profile == WeightedWbcProfile::kPhase46HipCommonIncrementLimitedRolling ||
+         profile == WeightedWbcProfile::kPhase46PointRealizableRolling;
+}
+
+bool usesPointRealizableContact(WeightedWbcProfile profile) {
+  return profile == WeightedWbcProfile::kPhase46PointRealizableRolling;
 }
 
 }  // namespace
@@ -90,12 +95,21 @@ WeightedWbcProblem::Result WeightedWbcProblem::assemble(
   for (int index = 0; index < 42; ++index) {
     variable_scale[index] = phase21_profile::kVariableScale[index];
   }
+  std::array<NominalWbcModel::Matrix6, 2> wrench_projector{
+      NominalWbcModel::Matrix6::Identity(),
+      NominalWbcModel::Matrix6::Identity()};
+  if (usesPointRealizableContact(profile)) {
+    for (int side = 0; side < 2; ++side) {
+      wrench_projector[side] =
+          model.point_force_wrench_projector[side];
+    }
+  }
   Eigen::Matrix<double, 12, 42> dynamics =
       Eigen::Matrix<double, 12, 42>::Zero();
   dynamics.leftCols<12>() = model.mass;
   dynamics.middleCols<6>(12) = -model.actuation;
-  dynamics.middleCols<6>(18) = -model.wrench_map[0];
-  dynamics.middleCols<6>(24) = -model.wrench_map[1];
+  dynamics.middleCols<6>(18) = -model.wrench_map[0] * wrench_projector[0];
+  dynamics.middleCols<6>(24) = -model.wrench_map[1] * wrench_projector[1];
   for (int row = 0; row < 12; ++row) {
     const double row_scale = phase21_profile::kDynamicsRowScale[row];
     result.a.row(row) =
@@ -113,14 +127,21 @@ WeightedWbcProblem::Result WeightedWbcProblem::assemble(
     const int variable_start = 18 + 6 * side;
     const int row_start = 18 + 37 * side;
     for (int cone_row = 0; cone_row < 37; ++cone_row) {
+      Eigen::Matrix<double, 1, 6> physical;
+      for (int column = 0; column < 6; ++column) {
+        physical[column] = phase21_profile::kWrenchCone[cone_row][column];
+      }
+      physical *= wrench_projector[side];
       double norm_squared = 0.0;
       for (int column = 0; column < 6; ++column) {
-        const double value = phase21_profile::kWrenchCone[cone_row][column] *
+        const double value = physical[column] *
                              variable_scale[variable_start + column];
         result.a(row_start + cone_row, variable_start + column) = value;
         norm_squared += value * value;
       }
-      result.a.row(row_start + cone_row) /= std::sqrt(norm_squared);
+      if (norm_squared > 0.0) {
+        result.a.row(row_start + cone_row) /= std::sqrt(norm_squared);
+      }
       result.lower[row_start + cone_row] = -kInfinity;
       result.upper[row_start + cone_row] = 0.0;
     }
@@ -180,7 +201,8 @@ WeightedWbcProblem::Result WeightedWbcProblem::assemble(
       profile == WeightedWbcProfile::kPhase43XiAndNativeWheelRate ||
       profile == WeightedWbcProfile::kPhase45ContactConsistentRolling ||
       profile == WeightedWbcProfile::kPhase46HipCommonSafeRolling ||
-      profile == WeightedWbcProfile::kPhase46HipCommonIncrementLimitedRolling) {
+      profile == WeightedWbcProfile::kPhase46HipCommonIncrementLimitedRolling ||
+      profile == WeightedWbcProfile::kPhase46PointRealizableRolling) {
     Eigen::Matrix<double, 2, 42> wheel_longitudinal =
         Eigen::Matrix<double, 2, 42>::Zero();
     Eigen::Vector2d wheel_longitudinal_target =
@@ -199,7 +221,8 @@ WeightedWbcProblem::Result WeightedWbcProblem::assemble(
 
   if (profile == WeightedWbcProfile::kPhase45ContactConsistentRolling ||
       profile == WeightedWbcProfile::kPhase46HipCommonSafeRolling ||
-      profile == WeightedWbcProfile::kPhase46HipCommonIncrementLimitedRolling) {
+      profile == WeightedWbcProfile::kPhase46HipCommonIncrementLimitedRolling ||
+      profile == WeightedWbcProfile::kPhase46PointRealizableRolling) {
     Eigen::Matrix<double, 2, 42> rolling =
         Eigen::Matrix<double, 2, 42>::Zero();
     Eigen::Vector2d target = Eigen::Vector2d::Zero();
@@ -275,11 +298,11 @@ WeightedWbcProblem::Result WeightedWbcProblem::assemble(
       wrench.block<6, 12>(6 * side, 0) =
           model.interaction_acceleration_map[side];
       wrench.block<6, 6>(6 * side, 18 + 6 * side) =
-          model.interaction_contact_map[side];
+          model.interaction_contact_map[side] * wrench_projector[side];
       wrench_target.segment<6>(6 * side) -= model.interaction_bias[side];
     } else {
       wrench.block<6, 6>(6 * side, 18 + 6 * side) =
-          model.wrench_flu_map[side];
+          model.wrench_flu_map[side] * wrench_projector[side];
     }
   }
   wrench.block<12, 12>(0, 30) =

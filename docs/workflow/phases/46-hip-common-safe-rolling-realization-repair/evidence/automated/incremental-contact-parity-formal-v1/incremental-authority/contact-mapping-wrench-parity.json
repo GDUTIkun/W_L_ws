@@ -1,0 +1,81 @@
+{
+  "branch_split_relative": 3.817295996311343e-05,
+  "classification": "A-GEOMETRY_MAPPING_DOMINANT",
+  "decomposition_closure_max_abs": 3.552713678800501e-13,
+  "geometry_frame_parity": {
+    "frame_orthonormal_max_abs": 5.773159728050814e-15,
+    "left_right_order": [
+      "left",
+      "right"
+    ],
+    "qp_mj_same_point_map_max_abs": 1.0000000000000009,
+    "sides": [
+      {
+        "contact_count": 2,
+        "cop_minus_qp_center": [
+          -0.04887027708332997,
+          0.0001625811431388291,
+          -0.03921576014139203
+        ],
+        "lever_arm_difference": [
+          -0.04887027708332997,
+          0.0001625811431388291,
+          -0.03921576014139203
+        ],
+        "normal_max_vector_error": 0.0,
+        "side": 0
+      },
+      {
+        "contact_count": 2,
+        "cop_minus_qp_center": [
+          -0.04874676536991282,
+          0.00014192529394391196,
+          -0.038723207341981224
+        ],
+        "lever_arm_difference": [
+          -0.04874676536991282,
+          0.00014192529394391196,
+          -0.038723207341981224
+        ],
+        "normal_max_vector_error": 0.0,
+        "side": 1
+      }
+    ],
+    "wrench_reference": "QP analytic contact center; MuJoCo multi-contact wrench transported to the same point"
+  },
+  "mapping_fraction_of_contact_gap": 0.9965688561104102,
+  "same_wrench_and_realization_hip_common_gain": {
+    "gap": 41.58617462927036,
+    "mapping": 41.443486480299725,
+    "mj_actual": -0.1000140786926465,
+    "mj_same": -0.2427022276633437,
+    "qp_same": -41.686188707963005,
+    "wrench": 0.14268814897069104
+  },
+  "scale_convergence_relative": 5.726036970261151e-05,
+  "scope": "compatible-H0 tick0 fixed-state slip-common only; no trajectory or controller change",
+  "trusted": true,
+  "wrench_fraction_of_contact_gap": 0.003431143889591139,
+  "wrench_realization_component_contribution": {
+    "left": {
+      "Fl": -0.7062948912150515,
+      "Fn": 0.5270014033678208,
+      "Fr": 0.0033928012644377503,
+      "Ml": 0.0016192634389548821,
+      "Mn": 0.0036529715844249022,
+      "Mr": 3.911824160067163e-16
+    },
+    "right": {
+      "Fl": -0.9745204683818345,
+      "Fn": 1.2764921900873651,
+      "Fr": 0.0061959550833359245,
+      "Ml": 0.004484064094159801,
+      "Mn": 0.000664859647080563,
+      "Mr": 8.060021374718219e-17
+    }
+  },
+  "wrench_realization_side_contribution": {
+    "left": -0.1706284515594123,
+    "right": 0.3133166005301127
+  }
+}

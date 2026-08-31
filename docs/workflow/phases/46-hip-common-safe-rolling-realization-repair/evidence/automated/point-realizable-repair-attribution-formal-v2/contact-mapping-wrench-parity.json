@@ -1,0 +1,287 @@
+{
+  "branch_split_relative": 1.3438868630210567e-11,
+  "classification": "B-WRENCH_REALIZATION_DOMINANT",
+  "constraint_realization_mechanism_check": {
+    "contact_count_by_side_observed": {
+      "left": [
+        2
+      ],
+      "right": [
+        2
+      ]
+    },
+    "contact_dimension_observed": [
+      3
+    ],
+    "interpretation": "fixed two-point-per-wheel MuJoCo constraint reaction; the directional probe does not switch contact count, contact dimension, or normal frame",
+    "minimum_friction_margin_diagnostic_n": 15.197340346380251,
+    "normal_frame_max_vector_error": 0.0
+  },
+  "decomposition_closure_max_abs": 6.994405055138486e-13,
+  "geometry_frame_parity": {
+    "frame_orthonormal_max_abs": 8.881784197001252e-15,
+    "left_right_order": [
+      "left",
+      "right"
+    ],
+    "mujoco_plant_reduction": {
+      "base_twist_mapping_max_abs": 0.0,
+      "constraint_tangent_max_abs": 0.00016348568008428543
+    },
+    "qp_mj_wrench_map_max_abs": 0.0001697205007075986,
+    "qp_model_b_reconstruction": {
+      "closure_residual_m": 1.4843681839238343e-13,
+      "constraint_tangent_max_abs": 1.4843681839238343e-13,
+      "logged_map_reconstruction_max_abs": 4.440892098500626e-15,
+      "source": "simulation/mujoco/config/phase21_model_oracle_v8.json"
+    },
+    "qp_reconstructed_vs_logged_map_max_abs": 4.440892098500626e-15,
+    "sides": [
+      {
+        "actual_contact_count": 2,
+        "actual_contact_normal_max_vector_error": 0.0,
+        "actual_cop_minus_mj_reference_world_m": [
+          0.0,
+          0.00033307525608661237,
+          0.0002152654967964088
+        ],
+        "contact_frame_mj_world": [
+          [
+            1.0000000000000044,
+            -1.8474805019152996e-16,
+            0.0
+          ],
+          [
+            1.8474805019152996e-16,
+            1.0000000000000044,
+            0.0
+          ],
+          [
+            -0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "contact_frame_qp_world": [
+          [
+            1.0000000000000044,
+            -1.8474805019152996e-16,
+            0.0
+          ],
+          [
+            1.8474805019152996e-16,
+            1.0000000000000044,
+            0.0
+          ],
+          [
+            -0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "frame_max_abs_difference": 0.0,
+        "lever_arm_mj_world_m": [
+          0.0,
+          0.00733028009076922,
+          -0.05
+        ],
+        "lever_arm_qp_world_m": [
+          0.00011617252454271254,
+          0.007500000591476846,
+          -0.04996566654302205
+        ],
+        "mj_contact_point_world_m": [
+          -0.08695180149565013,
+          0.2196302800907693,
+          -0.00043053099359281755
+        ],
+        "mj_minus_qp_contact_point_world_m": [
+          -0.00011617252454271254,
+          -0.00016972050070762634,
+          -3.433345697789747e-05
+        ],
+        "mj_minus_qp_lever_arm_world_m": [
+          -0.00011617252454271254,
+          -0.00016972050070762634,
+          -3.433345697795298e-05
+        ],
+        "qp_contact_point_world_m": [
+          -0.08683562897110741,
+          0.21980000059147692,
+          -0.0003961975366149201
+        ],
+        "side": "left"
+      },
+      {
+        "actual_contact_count": 2,
+        "actual_contact_normal_max_vector_error": 0.0,
+        "actual_cop_minus_mj_reference_world_m": [
+          0.0,
+          0.00014253837777850054,
+          0.0001520424481146268
+        ],
+        "contact_frame_mj_world": [
+          [
+            1.0000000000000038,
+            6.071532165918825e-18,
+            0.0
+          ],
+          [
+            -6.071532165918825e-18,
+            1.0000000000000038,
+            0.0
+          ],
+          [
+            0.0,
+            -0.0,
+            1.0
+          ]
+        ],
+        "contact_frame_qp_world": [
+          [
+            1.0000000000000038,
+            6.071532165918825e-18,
+            0.0
+          ],
+          [
+            -6.071532165918825e-18,
+            1.0000000000000038,
+            0.0
+          ],
+          [
+            0.0,
+            -0.0,
+            1.0
+          ]
+        ],
+        "frame_max_abs_difference": 0.0,
+        "lever_arm_mj_world_m": [
+          0.0,
+          -0.0075000005899218125,
+          -0.05
+        ],
+        "lever_arm_qp_world_m": [
+          -6.065801447334429e-05,
+          -0.0075000005899218125,
+          -0.050103252058732485
+        ],
+        "mj_contact_point_world_m": [
+          -0.09011884784391144,
+          -0.21980000058992175,
+          -0.0003040848962292536
+        ],
+        "mj_minus_qp_contact_point_world_m": [
+          6.065801447334429e-05,
+          0.0,
+          0.00010325205873253779
+        ],
+        "mj_minus_qp_lever_arm_world_m": [
+          6.065801447334429e-05,
+          0.0,
+          0.00010325205873248228
+        ],
+        "qp_contact_point_world_m": [
+          -0.09017950585838479,
+          -0.21980000058992175,
+          -0.0004073369549617914
+        ],
+        "side": "right"
+      }
+    ],
+    "wrench_reference": {
+      "mapping_term": "same numeric QP wrench components through each model's own verified frame/reference mapping",
+      "mujoco": "current-plant analytic contact center and frame; multi-contact wrench transported to this reference",
+      "qp": "Model-B analytic contact center and Model-B contact frame",
+      "wrench_term": "MuJoCo-minus-QP wrench components through the frozen MuJoCo mapping"
+    }
+  },
+  "mapping_fraction_of_contact_gap": 5.3348647741500504e-05,
+  "mujoco_minus_qp_wrench_directional_gain": [
+    [
+      -0.09222052783071555,
+      -0.0458306793798309,
+      0.01264001907870238,
+      -0.0038370833266868076,
+      0.0002944880464363151,
+      -0.04191710967968183
+    ],
+    [
+      -0.10138750133502894,
+      0.09471886988065534,
+      0.005213734565501227,
+      -0.002921870629590817,
+      0.0005029962823213841,
+      -0.01902604650633274
+    ]
+  ],
+  "mujoco_wrench_directional_gain": [
+    [
+      1.368022515539608,
+      -0.08943805834338292,
+      -0.116173833763078,
+      -0.000575694107587954,
+      0.000294488046436309,
+      -0.014335335761863218
+    ],
+    [
+      3.3082621896627704,
+      0.019773445836301917,
+      -0.18349448983734362,
+      -0.0005137334285365558,
+      0.0005029962823213841,
+      -0.012521707425317686
+    ]
+  ],
+  "qp_wrench_directional_gain": [
+    [
+      1.4602430433703235,
+      -0.04360737896355202,
+      -0.12881385284178037,
+      0.0032613892190988536,
+      -6.124384092713568e-18,
+      0.027581773917818617
+    ],
+    [
+      3.4096496909977994,
+      -0.07494542404435342,
+      -0.18870822440284485,
+      0.002408137201054261,
+      -3.674920031393269e-20,
+      0.006504339081015055
+    ]
+  ],
+  "same_wrench_and_realization_hip_common_gain": {
+    "gap": 0.36169551025201885,
+    "mapping": -1.929596636611724e-05,
+    "mj_actual": -8.320067198635094,
+    "mj_same": -8.681782004853465,
+    "qp_same": -8.681762708887103,
+    "wrench": 0.36171480621838437
+  },
+  "scale_convergence_relative": 5.984216265006235e-11,
+  "scope": "compatible-H0 tick0 fixed-state slip-common only; no trajectory or controller change",
+  "trusted": true,
+  "wrench_fraction_of_contact_gap": 1.0000533486477399,
+  "wrench_realization_component_contribution": {
+    "left": {
+      "Fl": -0.0001435472323442627,
+      "Fn": 0.02709410327561241,
+      "Fr": 0.15252308893599392,
+      "Ml": -1.7864768019748964e-17,
+      "Mn": 0.0033204685220194347,
+      "Mr": -5.152174583934223e-05
+    },
+    "right": {
+      "Fl": 0.000320273016669384,
+      "Fn": 0.011263707299933888,
+      "Fr": 0.1659203166407241,
+      "Ml": -3.0261898230805046e-17,
+      "Mn": 0.0015071503976663361,
+      "Mr": -3.9232892052722644e-05
+    }
+  },
+  "wrench_realization_side_contribution": {
+    "left": 0.18274259175544263,
+    "right": 0.17897221446294226
+  }
+}

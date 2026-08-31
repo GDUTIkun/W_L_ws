@@ -1,0 +1,213 @@
+{
+  "branch_split_relative": 3.8172960033319714e-05,
+  "classification": "C-MIXED_CONTACT_GAP",
+  "decomposition_closure_max_abs": 7.105427357601002e-13,
+  "geometry_frame_parity": {
+    "frame_orthonormal_max_abs": 8.881784197001252e-15,
+    "left_right_order": [
+      "left",
+      "right"
+    ],
+    "qp_mj_wrench_map_max_abs": 0.07749432452454309,
+    "qp_model_b_reconstruction": {
+      "closure_residual_m": 1.4843681839238343e-13,
+      "constraint_tangent_max_abs": 1.4843681839238343e-13,
+      "logged_map_reconstruction_max_abs": 4.440892098500626e-15,
+      "source": "simulation/mujoco/config/phase21_model_oracle_v8.json"
+    },
+    "qp_reconstructed_vs_logged_map_max_abs": 4.440892098500626e-15,
+    "sides": [
+      {
+        "actual_contact_count": 2,
+        "actual_contact_normal_max_vector_error": 0.0,
+        "actual_cop_minus_mj_reference_world_m": [
+          0.0,
+          0.0003323010523695602,
+          0.0002152654967964088
+        ],
+        "contact_frame_mj_world": [
+          [
+            1.0000000000000044,
+            -1.8474805019152996e-16,
+            0.0
+          ],
+          [
+            1.8474805019152996e-16,
+            1.0000000000000044,
+            0.0
+          ],
+          [
+            -0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "contact_frame_qp_world": [
+          [
+            1.0000000000000044,
+            -1.8474805019152996e-16,
+            0.0
+          ],
+          [
+            1.8474805019152996e-16,
+            1.0000000000000044,
+            0.0
+          ],
+          [
+            -0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "frame_max_abs_difference": 0.0,
+        "lever_arm_mj_world_m": [
+          0.0,
+          0.00733028009076922,
+          -0.05
+        ],
+        "lever_arm_qp_world_m": [
+          0.00011617252454271254,
+          0.007500000591476846,
+          -0.04996566654302205
+        ],
+        "mj_contact_point_world_m": [
+          -0.08695180149565013,
+          0.2196302800907693,
+          -0.00043053099359281755
+        ],
+        "mj_minus_qp_contact_point_world_m": [
+          -0.00011617252454271254,
+          -0.00016972050070762634,
+          -3.433345697789747e-05
+        ],
+        "mj_minus_qp_lever_arm_world_m": [
+          -0.00011617252454271254,
+          -0.00016972050070762634,
+          -3.433345697795298e-05
+        ],
+        "qp_contact_point_world_m": [
+          -0.08683562897110741,
+          0.21980000059147692,
+          -0.0003961975366149201
+        ],
+        "side": "left"
+      },
+      {
+        "actual_contact_count": 2,
+        "actual_contact_normal_max_vector_error": 0.0,
+        "actual_cop_minus_mj_reference_world_m": [
+          1.3877787807814457e-17,
+          0.0001419258838656623,
+          0.0001520424481146268
+        ],
+        "contact_frame_mj_world": [
+          [
+            1.0000000000000038,
+            6.071532165918825e-18,
+            0.0
+          ],
+          [
+            -6.071532165918825e-18,
+            1.0000000000000038,
+            0.0
+          ],
+          [
+            0.0,
+            -0.0,
+            1.0
+          ]
+        ],
+        "contact_frame_qp_world": [
+          [
+            1.0000000000000038,
+            6.071532165918825e-18,
+            0.0
+          ],
+          [
+            -6.071532165918825e-18,
+            1.0000000000000038,
+            0.0
+          ],
+          [
+            0.0,
+            -0.0,
+            1.0
+          ]
+        ],
+        "frame_max_abs_difference": 0.0,
+        "lever_arm_mj_world_m": [
+          0.0,
+          -0.0075000005899218125,
+          -0.05
+        ],
+        "lever_arm_qp_world_m": [
+          -6.065801447334429e-05,
+          -0.0075000005899218125,
+          -0.050103252058732485
+        ],
+        "mj_contact_point_world_m": [
+          -0.09011884784391144,
+          -0.21980000058992175,
+          -0.0003040848962292536
+        ],
+        "mj_minus_qp_contact_point_world_m": [
+          6.065801447334429e-05,
+          0.0,
+          0.00010325205873253779
+        ],
+        "mj_minus_qp_lever_arm_world_m": [
+          6.065801447334429e-05,
+          0.0,
+          0.00010325205873248228
+        ],
+        "qp_contact_point_world_m": [
+          -0.09017950585838479,
+          -0.21980000058992175,
+          -0.0004073369549617914
+        ],
+        "side": "right"
+      }
+    ],
+    "wrench_reference": {
+      "mapping_term": "same numeric QP wrench components through each model's own verified frame/reference mapping",
+      "mujoco": "current-plant analytic contact center and frame; multi-contact wrench transported to this reference",
+      "qp": "Model-B analytic contact center and Model-B contact frame",
+      "wrench_term": "MuJoCo-minus-QP wrench components through the frozen MuJoCo mapping"
+    }
+  },
+  "mapping_fraction_of_contact_gap": 0.6518595465511521,
+  "same_wrench_and_realization_hip_common_gain": {
+    "gap": 41.586174629270374,
+    "mapping": 27.10834493663321,
+    "mj_actual": -0.10001407869266075,
+    "mj_same": -14.577843771329782,
+    "qp_same": -41.686188707963005,
+    "wrench": 14.477829692637126
+  },
+  "scale_convergence_relative": 5.726036965431653e-05,
+  "scope": "compatible-H0 tick0 fixed-state slip-common only; no trajectory or controller change",
+  "trusted": true,
+  "wrench_fraction_of_contact_gap": 0.34814045344884703,
+  "wrench_realization_component_contribution": {
+    "left": {
+      "Fl": -3.0344640028765954e-05,
+      "Fn": 0.5270008432083548,
+      "Fr": 3.520319320703959,
+      "Ml": 5.196633042409613e-15,
+      "Mn": 0.00390700521213086,
+      "Mr": -3.0197432889759665e-05
+    },
+    "right": {
+      "Fl": 0.0005721900662009338,
+      "Fn": 1.2764921900826844,
+      "Fr": 9.149321647938105,
+      "Ml": 1.5143111175739095e-14,
+      "Mn": 0.0003269743161983321,
+      "Mr": -4.9936817610107646e-05
+    }
+  },
+  "wrench_realization_side_contribution": {
+    "left": 4.051166627051524,
+    "right": 10.426663065585593
+  }
+}

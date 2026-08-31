@@ -21,6 +21,11 @@ using Matrix16 = Eigen::Matrix<double, 16, 16>;
 constexpr double kClosureTolerance = 1.0e-12;
 constexpr double kMinimumPassiveSingularValue = 0.005;
 constexpr double kMaximumPassiveCondition = 40.0;
+// Phase46 compatible-H0/tick0 actual two-point contact-line offsets from the
+// production wrench reference, expressed in each contact frame. These are
+// frozen evidence inputs, not a general contact estimator.
+constexpr std::array<double, 2> kPhase46ActualContactLineNormalOffsetM{
+    0.00021526549679640877, 0.0001520424481146268};
 constexpr int kMaximumReconstructionIterations = 30;
 
 struct BodyState {
@@ -245,6 +250,8 @@ bool finite(const NominalWbcModel::Result &result) {
         !result.contact_jacobian[side].allFinite() ||
         !result.contact_bias[side].allFinite() ||
         !result.contact_frame_world[side].allFinite() ||
+        !result.contact_axis[side].allFinite() ||
+        !result.point_force_wrench_projector[side].allFinite() ||
         !std::isfinite(result.wheel_position_b_x_m[side]) ||
         !std::isfinite(result.wheel_velocity_b_x_m_s[side]) ||
         !std::isfinite(result.wheel_position_b_z_m[side]) ||
@@ -263,6 +270,25 @@ bool finite(const NominalWbcModel::Result &result) {
 }
 
 }  // namespace
+
+NominalWbcModel::Matrix6 pointContactWrenchProjector(
+    const Eigen::Vector3d &contact_axis,
+    const Eigen::Vector3d &contact_line_offset) {
+  const Eigen::Vector3d axis = contact_axis.normalized();
+  Eigen::Matrix<double, 6, 6> point_map;
+  for (int point = 0; point < 2; ++point) {
+    const Eigen::Vector3d lever = contact_line_offset +
+        (point == 0 ? -0.5 : 0.5) * axis;
+    point_map.block<3, 3>(0, 3 * point).setIdentity();
+    point_map.block<3, 3>(3, 3 * point) <<
+        0.0, -lever.z(), lever.y(),
+        lever.z(), 0.0, -lever.x(),
+        -lever.y(), lever.x(), 0.0;
+  }
+  const Eigen::JacobiSVD<NominalWbcModel::Matrix6> svd(
+      point_map, Eigen::ComputeFullU);
+  return svd.matrixU().leftCols<5>() * svd.matrixU().leftCols<5>().transpose();
+}
 
 NominalWbcModel::WorkspaceInspection NominalWbcModel::inspectWorkspace(
     const RobotState &state) {
@@ -527,6 +553,12 @@ NominalWbcModel::Result NominalWbcModel::evaluate(
     result.contact_bias[side] = geometry.frame.transpose() *
         material_bias_world + frame_velocity.transpose() * material_velocity;
     result.contact_frame_world[side] = geometry.frame;
+    result.contact_axis[side] = geometry.frame.transpose() * geometry.axis;
+    const Eigen::Vector3d contact_line_offset(
+        0.0, 0.0, kPhase46ActualContactLineNormalOffsetM[side]);
+    result.point_force_wrench_projector[side] =
+        pointContactWrenchProjector(result.contact_axis[side],
+                                    contact_line_offset);
     const Matrix3x16 angular_jacobian = wheel.angular_jacobian;
     result.wrench_map[side].leftCols<3>() =
         result.reduction.transpose() * material_jacobian.transpose() *

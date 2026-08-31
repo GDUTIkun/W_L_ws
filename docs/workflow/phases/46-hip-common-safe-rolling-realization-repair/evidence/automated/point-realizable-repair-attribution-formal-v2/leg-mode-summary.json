@@ -1,0 +1,98 @@
+{
+  "channel": "slip_common_only",
+  "mujoco": {
+    "ddxi_cross_gain": -0.10763122674771232,
+    "dof_closure": -8.326672684688674e-17,
+    "dof_contributions": {
+      "left_connect1_joint": 0.0,
+      "left_connect2_joint": 0.0,
+      "left_hip_joint": -0.16565867699963954,
+      "left_knee_joint": 0.022592277866644896,
+      "right_connect1_joint": 0.0,
+      "right_connect2_joint": 0.0,
+      "right_hip_joint": -0.03518013914480256,
+      "right_knee_joint": 0.07061531153008116
+    },
+    "dof_sum": -0.10763122674771605,
+    "leg_nonwheel_contribution": -0.10763122674771597,
+    "mode_closure": 1.887379141862766e-15,
+    "modes": [
+      {
+        "common_mode_ddxi_contribution": -0.0,
+        "common_qacc_gain_rad_s2_per_m_s2": -0.2761965540088965,
+        "differential_mode_ddxi_contribution": -0.0,
+        "differential_qacc_gain_rad_s2_per_m_s2": -0.12620367548546313,
+        "joint_family": "connect1"
+      },
+      {
+        "common_mode_ddxi_contribution": 0.0,
+        "common_qacc_gain_rad_s2_per_m_s2": 0.12702530931844314,
+        "differential_mode_ddxi_contribution": -0.0,
+        "differential_qacc_gain_rad_s2_per_m_s2": -0.20424881036839315,
+        "joint_family": "connect2"
+      },
+      {
+        "common_mode_ddxi_contribution": -0.20080916202652896,
+        "common_qacc_gain_rad_s2_per_m_s2": 0.7221143976196047,
+        "differential_mode_ddxi_contribution": -2.9654117911240038e-05,
+        "differential_qacc_gain_rad_s2_per_m_s2": -0.46903967033400873,
+        "joint_family": "hip"
+      },
+      {
+        "common_mode_ddxi_contribution": 0.09299647132241441,
+        "common_qacc_gain_rad_s2_per_m_s2": -0.5239965753224614,
+        "differential_mode_ddxi_contribution": 0.000211118074311605,
+        "differential_qacc_gain_rad_s2_per_m_s2": -0.2682663552578617,
+        "joint_family": "knee"
+      }
+    ]
+  },
+  "qp": {
+    "ddxi_cross_gain": -0.000558171211687133,
+    "dof_closure": 4.119968255444917e-18,
+    "dof_contributions": {
+      "left_connect1_joint": 0.0,
+      "left_connect2_joint": 0.0,
+      "left_hip_joint": -0.02838226449214616,
+      "left_knee_joint": 0.028240252882360796,
+      "right_connect1_joint": 0.0,
+      "right_connect2_joint": 0.0,
+      "right_hip_joint": -0.0749288487550937,
+      "right_knee_joint": 0.07451268915319254
+    },
+    "dof_sum": -0.0005581712116865326,
+    "leg_nonwheel_contribution": -0.0005581712116865367,
+    "mode_closure": 2.0816681711721685e-17,
+    "modes": [
+      {
+        "common_mode_ddxi_contribution": 0.0,
+        "common_qacc_gain_rad_s2_per_m_s2": 0.2581637730797085,
+        "differential_mode_ddxi_contribution": 0.0,
+        "differential_qacc_gain_rad_s2_per_m_s2": 0.5778254790359022,
+        "joint_family": "connect1"
+      },
+      {
+        "common_mode_ddxi_contribution": 0.0,
+        "common_qacc_gain_rad_s2_per_m_s2": 0.5778254790242292,
+        "differential_mode_ddxi_contribution": 0.0,
+        "differential_qacc_gain_rad_s2_per_m_s2": 0.25816377307997446,
+        "joint_family": "connect2"
+      },
+      {
+        "common_mode_ddxi_contribution": -0.10332170102576434,
+        "common_qacc_gain_rad_s2_per_m_s2": 0.37154722993862177,
+        "differential_mode_ddxi_contribution": 1.05877785244802e-05,
+        "differential_qacc_gain_rad_s2_per_m_s2": 0.16746706691988145,
+        "joint_family": "hip"
+      },
+      {
+        "common_mode_ddxi_contribution": 0.10254977440919483,
+        "common_qacc_gain_rad_s2_per_m_s2": -0.5778254790357562,
+        "differential_mode_ddxi_contribution": 0.00020316762635852996,
+        "differential_qacc_gain_rad_s2_per_m_s2": -0.2581637730796501,
+        "joint_family": "knee"
+      }
+    ]
+  },
+  "scale": 1.0
+}

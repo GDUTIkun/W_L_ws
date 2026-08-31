@@ -1,0 +1,8 @@
+{
+  "R2_reauthorized": true,
+  "classification": "C-MAPPING-OR-REFERENCE-REGRESSION",
+  "next_candidate_authorized": true,
+  "pass": true,
+  "replay_max_abs_error": null,
+  "replay_pass": true
+}

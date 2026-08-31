@@ -1,0 +1,27 @@
+{
+  "central_averages_allowed": true,
+  "classification": "B-SLIP_SELF_REVERSAL",
+  "flags": {
+    "A-XI_SELF_REVERSAL": false,
+    "B-SLIP_SELF_REVERSAL": true,
+    "C-CROSS_COUPLING_REVERSAL": false,
+    "D-CONTACT_REDIRECTION_DOMINANT": false
+  },
+  "scope_contract": {
+    "compatible_wrench_frozen": true,
+    "contact_parameter_modification": false,
+    "cross_gain_precompensation": false,
+    "gain_tuning": false,
+    "hip_common_hard_equality": false,
+    "hip_common_projection": false,
+    "model_b_frozen": true,
+    "plant_modification": false,
+    "point_contact_realizable_wrench": true,
+    "qp_dimension_unchanged": true,
+    "state_contact_friction_torque_solver_frozen": true,
+    "trajectory_run": false,
+    "weight_tuning": false,
+    "wrench_tuning": false,
+    "xi_slip_observable_frozen": true
+  }
+}
