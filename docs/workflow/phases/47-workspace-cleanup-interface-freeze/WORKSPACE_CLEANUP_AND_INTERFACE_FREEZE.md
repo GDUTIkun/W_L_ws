@@ -29,4 +29,4 @@
 - `502ffc6`: pre-cleanup Phase 46 authority and evidence.
 - `5b0d8ff`: current ROS Weighted-WBC runtime and legacy build isolation.
 - `3e1d8e1`: retired hardware runtime deletion.
-- Post-cleanup documentation/regression commit: recorded in the final Phase 47 RECORD update.
+- `48934de`: MuJoCo-only route documentation, archive redirects and pre/post regression evidence.

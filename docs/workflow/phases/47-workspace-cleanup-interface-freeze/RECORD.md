@@ -18,3 +18,10 @@ See [cleanup regression](CLEANUP_REGRESSION.md), [inventory](LEGACY_INTERFACE_IN
 
 Historical Phase 46 stays `review/REWORK`. The next planned work is Phase 48 Weighted-WBC/QP
 realization closure, followed by Phase 49 12X/16X NMPC candidate comparison.
+
+## Commit boundaries
+
+- `502ffc6`: Phase 46 pre-cleanup authority and evidence.
+- `5b0d8ff`: current ROS Weighted-WBC path and legacy build isolation.
+- `3e1d8e1`: retired hardware runtime deletion.
+- `48934de`: route/workflow documentation, archive redirects and regression evidence.
