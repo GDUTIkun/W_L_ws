@@ -1,82 +1,88 @@
-# RobotState / TorqueCommand Contract
+# Lower-Layer Interface Contract
 
-Status: `frozen — Phase 03`
+Status: `frozen — Phase 47`
 
-## Boundary
-
-The shared physical boundary is:
+## Public ROS boundary
 
 ```text
-MuJoCo Adapter ─┐
-                ├─ RobotState → Controller Core → TorqueCommand ─┬─ MuJoCo Adapter
-Hardware Adapter┘                                                 └─ Hardware Adapter
+MuJoCo Adapter → RobotState → Controller Core → TorqueCommand → MuJoCo Adapter
 ```
 
-All vectors use SI units and Phase 02 canonical world `{N}`: X forward, Y left, Z up. `B` is the torso `base_control_frame`, parallel to the CAD body frame with origin at the torso rigid-body COM.
-
-## RobotState
-
-| C++ field | Type | Unit / order | Exact semantic |
-| --- | --- | --- | --- |
-| `sample_time_ns` | `uint64` | ns | Source-system monotonic acquisition time. MuJoCo uses deterministically rounded `mjData.time`; hardware later defines its own source-to-host mapping. It is not Unix/ROS wall time and must strictly increase between accepted samples until an explicit reset. |
-| `base_position_n_m` | `double[3]` | m, `[Nx,Ny,Nz]` | Position of the origin of `B` relative to the origin of `{N}`, expressed in `{N}`. |
-| `q_n_from_b` | `double[4]` | `[w,x,y,z]` | Active unit quaternion rotating vectors expressed in `B` into `{N}`. `q` and `-q` are equivalent. |
-| `base_linear_velocity_n_m_s` | `double[3]` | m/s, `[Nx,Ny,Nz]` | Velocity of the origin of `B` relative to `{N}`, expressed in `{N}`. |
-| `base_angular_velocity_n_rad_s` | `double[3]` | rad/s, `[Nx,Ny,Nz]` | Angular velocity of `B` relative to `{N}`, expressed in `{N}`; it is not Euler-rate order or raw gyro axes. |
-| `joint_position_rad` | `double[6]` | rad | Canonical output-joint coordinates in the fixed joint order below. |
-| `joint_velocity_rad_s` | `double[6]` | rad/s | Time derivative of the same canonical joint coordinates. |
-| `contact_state` | `uint8[2]` | `[left,right]` | Tri-state observation/estimate: `0 unknown`, `1 no-contact`, `2 contact`. Simulator ground truth is allowed only at its Adapter; hardware may validly publish `unknown`. |
-
-Fixed joint order:
+所有量使用 SI。世界系 `{N}` 为 X forward、Y left、Z up；`B` 是
+`base_control_frame`，原点为 torso rigid-body COM。固定关节顺序为：
 
 ```text
 [left_hip,left_knee,left_wheel,right_hip,right_knee,right_wheel]
 ```
 
-Every numeric field must be finite. Quaternion norm error must not exceed the configured tolerance (default `1e-6`). Contact values outside `0..2` are invalid. There is no public sequence number: sequencing is transport metadata, while time ordering is a physical sample property.
+### RobotState
 
-## TorqueCommand
+| Field | Unit/order | Frozen semantic |
+| --- | --- | --- |
+| `sample_time_ns` | ns | MuJoCo source monotonic time；reset 后开启新 epoch；同一 epoch 严格递增 |
+| `base_position_n_m` | m, `[Nx,Ny,Nz]` | `B` 原点在 `{N}` 的位置 |
+| `q_n_from_b` | `[w,x,y,z]` | 把 `B` 表达向量主动旋转到 `{N}` 的单位四元数 |
+| `base_linear_velocity_n_m_s` | m/s, `[Nx,Ny,Nz]` | `B` 原点速度，在 `{N}` 表达 |
+| `base_angular_velocity_n_rad_s` | rad/s, `[Nx,Ny,Nz]` | `B` 相对 `{N}` 角速度，在 `{N}` 表达 |
+| `joint_position_rad` | rad, six-joint order | canonical output-joint coordinate |
+| `joint_velocity_rad_s` | rad/s, six-joint order | canonical coordinate derivative |
+| `contact_state` | `[left,right]` | `0 unknown / 1 no-contact / 2 contact` |
 
-| C++ field | Type | Unit / order | Exact semantic |
-| --- | --- | --- | --- |
-| `source_sample_time_ns` | `uint64` | ns | `RobotState.sample_time_ns` from which this command was computed. |
-| `joint_torque_nm` | `double[6]` | N·m | Desired canonical output-axis torque in the fixed joint order. All values must be finite. |
+所有数值必须 finite；四元数 norm tolerance 默认 `1e-6`。ROS quaternion 字段为
+`x,y,z,w`，只有 `wheel_leg_ros::toRos/fromRos` 可做顺序转换。
 
-`TorqueCommand` contains no enable, e-stop, watchdog, transport sequence, current or driver diagnostics. Those safety/transport functions remain mandatory at the Adapter and actuator boundary but are not physical Controller output coordinates.
+### TorqueCommand
 
-## ROS representation
+| Field | Unit/order | Frozen semantic |
+| --- | --- | --- |
+| `source_sample_time_ns` | ns | 生成命令的 RobotState source timestamp |
+| `joint_torque_nm` | N·m, six-joint order | canonical output-axis torque；全部 finite |
 
-`wheel_leg_msgs/msg/RobotState` maps one-to-one except that `geometry_msgs/Quaternion` stores components as fields `x,y,z,w`. Only `wheel_leg_ros::toRos/fromRos` may reorder `[w,x,y,z] ↔ [x,y,z,w]`. The messages intentionally contain no `std_msgs/Header`; `sample_time_ns` keeps the monotonic clock contract explicit.
+Adapter 按 `data->ctrl[actuator_id] = -joint_torque_nm[index]` 写入 MuJoCo；这个负号
+来自 canonical joint 与 MuJoCo actuator coordinate 的冻结映射。Core 负责每关节
+`{10,10,2,10,10,2}` N·m saturation，Adapter 负责 stale/timeout fail-to-zero。
 
-## Controller lifecycle
+## Internal WBC interfaces
+
+### W_ref
+
+- Actor：当前 fixed reference；未来为 12X/16X NMPC。
+- Receiver：`ControllerCore::stepWeightedWbc` / `WeightedWbcController`。
+- Storage：`WbcReference::interaction_wrench_flu[12]`，不建立 ROS message。
+- Order：`[L_Fx,L_Fy,L_Fz,L_Tx,L_Ty,L_Tz,R_Fx,R_Fy,R_Fz,R_Tx,R_Ty,R_Tz]`。
+- Frame：controller body FLU；moment origin 为对应 wheel-body origin。
+- Sign：wheel 对 leg/base 的 follower wrench；force N，moment N·m。
+- Timestamp：与生成该 reference 的同一 accepted RobotState snapshot 关联。
+
+### W_WBC
+
+`WeightedWbcController::step` 从 authoritative physical solution 重建的实际选择 wrench，
+不是 raw solver latent/null component。frame、origin、sign、order 和单位与 W_ref 相同。
+signed slack 仅表示 interaction-wrench fidelity，并满足：
 
 ```text
-configure(config) → reset() → step(state) ...
+W_WBC - W_ref - signed_slack = interaction_residual
 ```
 
-- `configure` validates quaternion tolerance and resets history.
-- `reset` clears only time/history state; it produces no command.
-- `step` validates fields and rejects timestamps not strictly newer than the last accepted source sample.
-- The first accepted sample has `dt=0`; later calls derive `dt` from consecutive accepted sample times. A rejected sample never advances history.
-- `step` is deterministic for the same configuration, reset state and input sequence. Errors are returned as `StepStatus`; validation does not throw.
-- Until a separately validated algorithm is migrated, every accepted call returns exactly six finite zero torques. Rejected calls also carry a value-initialized zero command, but the ROS wrapper does not publish it.
+### W_MJ
 
-This contract leaves Planner/NMPC/WBC scheduling inside the Core. Later multi-rate modules may use the accepted sample time and derived `dt` without changing the Adapter boundary.
+MuJoCo 实际 contact wrench 仅用于诊断/oracle：`efc/contact rows → row reaction → Cartesian
+point force → per-wheel aggregate wrench → production reference`。其 order/frame/origin/sign 与
+W_ref 相同，但不作为 current ROS topic 或 Controller feedback channel。
 
-Source sample time and host receipt time are separate clock domains. Core never subtracts them. A ROS/transport Adapter records receipt time with its local steady clock and applies its watchdog there; where meaningful, it may separately compare a command's `source_sample_time_ns` with the current source clock. A source clock rollback is invalid until an explicit reset clears both Controller and Adapter history.
+### Planner → xi_ref
 
-## Package and dependency direction
+wheel-position planner 的 common/differential position、velocity、acceleration reference 保持
+Core 内部接口；Phase 47 不改变其单位、方向或调度，也不把它发布为 ROS API。
 
-```text
-wheel_leg_msgs ───────────────┐
-                              v
-wheel_leg_core ───────→ wheel_leg_ros ───────→ rclcpp
-  (C++17 only)           conversions + wrapper
-```
+## Timing and reset
 
-- `wheel_leg_core`: ordinary C++ types, validation and safe Core; no ROS, MuJoCo, serial or CAN dependency.
-- `wheel_leg_msgs`: aggregate ROS interface definitions only.
-- `wheel_leg_ros`: explicit conversions and minimal node; depends on both packages.
-- Adapters depend on the public types/messages; the Core never depends back on an Adapter.
+- MuJoCo step 2 ms；每 5 step 发布一次 RobotState，WBC period 10 ms。
+- Core first accepted sample 的 `dt=0`；之后从连续 source timestamps 计算。
+- rejected sample 不推进 Core history；source clock rollback 必须 reset。
+- Adapter receipt-time watchdog 为 100 ms，最大 source lag 为 50 ms。
+- current H0 reset 后先取得首个有效 torque，再进入 MuJoCo physical stepping。
+- simulation reset 后必须再调用 controller reset；两侧都完成后新 epoch 才能继续。
 
-Phase 05 `wheel_leg_stm32_bridge` remains isolated and is not a compatibility base. `canonicalFluToLegacyForwardRightUp` and its inverse are restricted to legacy position/linear-velocity fields and regression-tested. Full legacy Simulink state arrays still require named model-aware packers in the later algorithm migration phase; they are not aliases for this schema.
+`W_ref`、`W_WBC`、slack、solver/rank/residual 是内部诊断契约；公共 ROS 边界仍只有
+RobotState 和 TorqueCommand。

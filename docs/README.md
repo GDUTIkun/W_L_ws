@@ -1,42 +1,12 @@
-# docs
+# Documentation
 
-## 目录职责
+当前技术文档只服务 MuJoCo-only 路线：
 
-保存项目的技术设计、迁移路线、实验方法、验证证据说明和人工工作流文档。这里回答“为什么这样做、如何判断通过、结果在哪里”，不存放产品运行代码。
+- [MuJoCo-only 路线](mujoco/mujoco-only路线.md)
+- [Current control path](mujoco/CURRENT_CONTROL_PATH.md)
+- [Lower-layer interface contract](interfaces/robot_state_torque_command.md)
+- [ROADMAP](workflow/ROADMAP.md) 与 [Phase 规则](workflow/PHASES.md)
 
-## 允许内容
-
-- 坐标系、状态、接口、控制与系统架构设计；
-- Simulink → MuJoCo → 真机迁移路线；
-- 传感器、执行器、动力学和控制验证方法；
-- Phase 的 PLAN、REVIEW、RECORD 及其证据链接；
-- 外部资料的摘要与本项目相关结论。
-
-## 禁止内容
-
-- 可执行产品源码或复制出的第三方源码；
-- 大型原始数据、构建产物和临时日志；
-- 没有证据却写成已确认事实的仿真或真机结论；
-- 只在 README 中维护的任务进度。
-
-## 子目录
-
-- [`mujoco/`](mujoco/README.md)：迁移路线、ROS2 目标架构及机械/实验验证方法。
-- [`models/`](models/README.md)：模型语义、坐标/单位、参数来源和适用范围。
-- [`experiments/`](experiments/README.md)：正式设计实验的方法和验收标准。
-- [`workflow/`](workflow/README.md)：轻量人工 Phase 工作流、ROADMAP 与模板。
-
-## 上下游关系
-
-设计文档约束 `simulation/`、`ros_ws/` 和 `firmware/` 的实现；真实实现和实验结果反过来为文档提供证据。当前源码结构使用 CBM 查询，文档与历史关系使用 Graphify 查询。
-
-## 当前状态
-
-已有一组 MuJoCo/真机迁移与实验设计文档；工作流文档从 `workflow/` 统一进入。
-
-## 维护规则
-
-- 稳定设计与正式实验方法放在主题目录；阶段性执行过程放在对应 Phase。
-- 临时画图、快速测试和探索性试验不需要写文档或建立数据包，除非结果被提升为正式证据。
-- 文档引用真实文件时使用相对链接。
-- 技术结论发生变化时，保留原因和证据，不静默覆盖历史判断。
+`mujoco/` 保存 current 模型/控制语义与仿真验证说明；`workflow/` 保存状态和证据；
+`legacy/hardware/` 保存已退役实物路线的历史原文。legacy 文档和历史 Phase 不具有
+current authority，也不因路线切换改写原结论。

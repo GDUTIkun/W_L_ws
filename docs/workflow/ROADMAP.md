@@ -9,19 +9,21 @@
 - `review`：实现已停止扩张，等待或正在审查。
 - `complete`：REVIEW 为 PASS，RECORD 已完成。
 - `blocked`：存在明确阻塞条件，无法继续。
+- `cancelled`：因路线变化终止；保留历史产物，不要求 PASS/RECORD，也不代表技术通过。
 
 ## 当前总体状态
 
-- Simulink 控制仿真：平地验证基线已迁入并通过目标路径 smoke；terrain adaptation 仍未完成。
-- MuJoCo：3.7.0 基础 Adapter 与 nominal plant 内部动力学已分别通过 Phase 04/14；参数与真机一致性、接触保真度和控制效果尚未验证。
-- ROS2：canonical Core/messages/wrapper 与 MuJoCo Adapter 已通过 Jazzy build/test；Hardware Adapter 与树莓派部署 profile 尚未落地。
-- STM32：已有固件和 UART2 实验通信实现；生产链路尚未冻结。
-- 真机迁移：Phase 14 MuJoCo-only Gate B 已 PASS；当前按用户决定冻结所有真机上电、板级联调、传感器采集和辨识执行，Phase 05 保留已有实现与计划但不继续执行。
+- 当前唯一正式路线为 `Controller Core → ROS2 → MuJoCo`；current launch 为
+  `wheel_leg_mujoco current_weighted_wbc.launch.py`。
+- Simulink baseline 只作为冻结算法/数值参考，不属于 runtime，也不再扩展。
+- STM32、串口、Hardware Adapter、树莓派部署和所有实物验证已从路线及源码移除。
+- Phase 46 保持历史 `review/REWORK`；其 evidence 和数值结论不因路线重置而改写。
 
-## 当前路线决策：两轮复现与非覆盖
+## 当前路线决策：MuJoCo-only 与非覆盖
 
-- 第一轮使用当前 nominal MuJoCo 模型，继续完成可独立验证和复用的纯仿真工作；总体次序为：完整闭链运动学/Jacobian 补强 → Controller↔MuJoCo 闭环 → Joint PD/重力补偿 → 轮地接触与 floating-base → exact 2D sagittal 简单站立 → 完整 3D 简单站立 → WBC → NMPC。前七层已由 Phase 15/16/17/18/19/20/21 完成；Phase 22又以ProxQP替换并重新验证当前WBC的QP后端。任何 simulation-only PASS 都不能写成真机 PASS。
-- 第二轮在真机工作解冻后执行 MuJoCo–真机共同辨识；形成新的 identified plant profile 后，按第一轮相同的输入契约、runner、日志 schema、阈值口径和控制层次从头重跑。第二轮是对第一轮的复现与比较，不替换第一轮。
+- 当前只推进 MuJoCo simulation。Phase 47 清理并冻结接口；Phase 48 关闭
+  Weighted-WBC/QP realization；Phase 49 比较 12X/16X NMPC candidates。
+- 任何历史 real/identified/hardware 计划均已退役，不存在“解冻后继续”的隐含分支。
 - 每个后续阶段都必须把模型版本、参数 profile、Controller 版本、求解器配置、seed/激励、阈值和输入文件 hash 写入 manifest；运行输出进入新的带日期/模型 ID 的目录。已完成 Phase 的 PLAN/REVIEW/RECORD 和正式 evidence 不原地覆盖，修订通过新 Phase、新 run 或带 `supersedes` 关系的记录追加。
 - 当前 `wheel_leg.xml` 与 Phase 14 evidence 作为 nominal baseline 保留。后续 SolidWorks 调整髋部电机或连接件尺寸并重新导出时，必须建立新的模型 revision，保留旧导出和 hash；重新检查 joint/body/site 名称与拓扑、frame/axis/zero offset、closure、collision、mass/COM/inertia，并重跑 Adapter、运动学、内部动力学及Phase20 equilibrium/authority/gain。接口不变时控制与验证入口应直接复用，但不能假定几何、惯量或控制数值自动不变。
 
@@ -30,7 +32,7 @@
 | 顺序 | 阶段 | 状态 | Phase | 放行条件/证据 |
 | --- | --- | --- | --- | --- |
 | 01 | 迁入 Simulink 基线与验证入口 | complete | [Phase 01](phases/01-simulink-baseline-import/PLAN.md) | 基线模型、运行方式和当前验证结果可复现 |
-| 02 | 坐标系、单位、关节顺序与接口语义 | complete | [Phase 02](phases/02-coordinate-interface-contract/PLAN.md) | FLU canonical、Simscape/MuJoCo 映射、COM frame 与 joint sign 契约通过审查；真机安装验证转 Phase 06 |
+| 02 | 坐标系、单位、关节顺序与接口语义 | complete | [Phase 02](phases/02-coordinate-interface-contract/PLAN.md) | FLU canonical、Simscape/MuJoCo 映射、COM frame 与 joint sign 契约通过审查；旧硬件补充 gate 已由 Phase47 退役 |
 | 03 | 统一 Robot 接口与 Controller Core 骨架 | complete | [Phase 03](phases/03-robot-interface-controller-core/PLAN.md) | C++ Core、聚合消息、ROS2 wrapper 与 Jazzy pub/sub 测试通过 |
 | 04 | MuJoCo 基础模型与 Adapter | complete | [Phase 04](phases/04-mujoco-model-adapter/PLAN.md) | MuJoCo 3.7.0 状态/零力矩闭环、fixed/floating sanity、映射与 fail-safe 通过审查 |
 | 05 | MuJoCo 运动学与内部动力学验证 | complete | [Phase 14](phases/14-mujoco-internal-dynamics-validation/PLAN.md) | 不接真机；FK/Jacobian、重力、M(q)、正逆动力学、约束、耦合、能量与开环回放自洽并通过审查 |
@@ -65,14 +67,23 @@
 | 34 | WBC-to-plant constrained rolling realization audit | complete | [Phase 44](phases/44-wbc-to-plant-constrained-rolling-realization-audit/RECORD.md) | P44-E：addendum以逐contact/逐inequality-row regime signature和单边delta收敛修复DG44-06；396 R44-S/84 R44-P，tick0 QP→plant反号/衰减与D/native-common contact cancellation获trusted evidence，formal-v4/replay-v4及回归PASS |
 | 35 | Contact-consistent rolling repair | review | [Phase 45](phases/45-contact-consistent-rolling-repair/REVIEW.md) | REWORK：compatible wrench使DG45-EQ PASS，但DG45-AUTH common projected gain在三档scale均QP/MuJoCo反号`+0.998/-1.876`；mandatory stop，未进入REAL/SHORT/10s/REAUDIT，不授权Phase46 |
 | 36 | Hip-common-safe rolling realization repair | review | [Phase 46](phases/46-hip-common-safe-rolling-realization-repair/REVIEW.md) | REWORK/E：contact为unique source；native `f=D(aref-Jqacc)` oracle精确重建same-tau reaction，但等价coupled/Schur law的closed-loop diagnostic在H0 feasibility、equilibrium、branch和scale均FAIL；无可信R2 law获授权，production unchanged，下一步仅允许继续contact-response source attribution |
-| 37 | 执行器力矩映射、摩擦与附加惯量 | blocked | [Phase 05](phases/05-actuator-torque-identification/PLAN.md) | 当前冻结真机；解冻后仍须关闭 Phase 05 自身 DG01–DG06，才能执行真实辨识与 MuJoCo 对应验证 |
-| 38 | RobotState 与传感器正式验证 | planned | — | 真机解冻后验证时间戳、单位、方向、滤波和延迟，形成 identified/real 可用状态边界 |
-| 39 | MuJoCo–真机运动学、重力、质量与 COM 辨识 | planned | — | 复用 Phase 14/15 基线，FK/Jacobian/重力矩及 mass/COM 得到模型与实验支持 |
-| 40 | MuJoCo–真机完整惯量、动力学耦合与接触辨识 | planned | — | 复用 Phase 14/15 激励与分析，关键动力学和接触趋势在预定误差内一致 |
-| 41 | identified profile 分层复现与三方比较 | planned | — | 使用同一 runner/schema/阈值从运动学到 NMPC 追加重跑，保留 nominal ↔ identified ↔ real 对照，不覆盖第一轮 |
-| 42 | Roll/Yaw/Turning 与差分辨识 | planned | — | 在前述两轮证据基础上验证工作范围与鲁棒裕量 |
+| 37 | MuJoCo-only workspace cleanup + interface freeze | complete | [Phase 47](phases/47-workspace-cleanup-interface-freeze/RECORD.md) | hardware source removed；ROS current WBC path、interfaces、legacy inventory 与 pre/post regression 冻结 |
+| 38 | Weighted-WBC / QP realization closure | planned | Phase 48（待建） | 只研究 W_ref→W_WBC→tau→W_MJ，不改 Phase47 接口 authority |
+| 39 | 12X / 16X NMPC candidate comparison | planned | Phase 49（待建） | 两 candidate 共用冻结 W_ref contract 和 current ROS/MuJoCo path |
 
-README 与工作流骨架属于仓库引导建设，不作为产品开发 Phase。Phase 14/15/16/17/18/19/20/21/22/23/27/28/29 已完成；Phase 19最终authority为formal-v4，Phase 20最终authority为formal-v3，Phase 21最终authority为formal-v1，Phase 22最终authority为formal-v2，Phase 23最终authority为append-only acados formal-v2，既往REWORK与formal演进证据均已非覆盖归档。[Phase 23](phases/23-nominal-nmpc/RECORD.md) 完成12-state locked-composite/12-wrench acados SQP-RTI+HPIPM NMPC、state-bounded v2 generated artifact、2:1 NMPC→ProxQP WBC runtime、23+10 formal、fresh replay和历史回归；结论仅限current nominal simulation host。2026-08-29用户选择先执行[Phase 27](phases/27-theory-restored-minimal-wbc/RECORD.md)：此前的current-12D task-audit草案只有PLAN、全部任务todo，没有实现或evidence可迁移；Phase27从Phase21～23 baseline重新关闭wheel-state、internal interaction-wrench、16-state chart/model、timing与T0～T3 gates，最终得到可复现的Minimal FAIL：T0～T2为base/reference safety-envelope首失效，T3为NMPC native stationarity首失效，未在同Phase增加补偿task或放宽阈值。[Phase 28](phases/28-minimal-closed-loop-drift-attribution/RECORD.md) 进一步把T0/T1唯一归为B类NMPC净动作非恢复，排除了WBC realization/resource与model-to-plant mismatch；T2左右不一致，仅作symmetry finding，仍不批准补偿task。[Phase 29](phases/29-nmpc-corrective-root-cause-audit/RECORD.md) 进一步唯一关闭T0为terminal base-longitudinal有限域传播的`P29-E`、T1为attitude主导且wheel-rate次级的cross-state coupling `P29-D`；production lifecycle、cold snapshot与converged oracle均已分离验证，未调参或修改production控制律。编号26的空草案已按用户要求删除并退役，编号不复用。Phase 05 因当前真机冻结而blocked；恢复时现有PASS不替代通信、Load Cell、同步和安全放行条件。identified-profile Roll/yaw/turning仍无独立Phase，不从current-nominal测试自动继承放行。
+### Retired route items
+
+| Item | Status | Reason |
+| --- | --- | --- |
+| Phase 05 actuator identification | cancelled | MuJoCo-only route；见 [RETIREMENT](phases/05-actuator-torque-identification/RETIREMENT.md) |
+| RobotState sensor/hardware validation | cancelled | real sensor boundary removed |
+| MuJoCo–real kinematic/dynamic/contact identification | cancelled | real comparison removed |
+| identified/real replay and Roll/Yaw differential identification | cancelled | hardware/identified route removed |
+
+README 与工作流骨架属于仓库引导建设，不作为产品开发 Phase。历史 completed/REWORK
+结论和 evidence 均非覆盖保留。Phase 05 已因 MuJoCo-only route reset 进入 `cancelled`，不会
+恢复；Phase 46 保持 `review/REWORK`。Phase 47 只清理结构并冻结 current interface，后续
+技术研究从 Phase 48 继续，旧编号不复用。
 
 [Phase 30](phases/30-nmpc-corrective-formulation-repair/REVIEW.md) v1 direct-weight与v2 structured
 cost失败证据继续非覆盖保留；v3进一步证明T0/T1的full-horizon state reference在current
@@ -81,7 +92,7 @@ Branch M在20 ms定位到wheel-center relative-rate model/state contract误差�
 Phase28在真实state处的base acceleration direction gate，而是补充了此前未覆盖的wheel-state
 rollout gate。REVIEW=`REWORK`，production仍未修改。
 
-详细技术次序以 [MuJoCo → Real 当前更新路线](../mujoco/simulink%202%20mujoco%202%20real流程.md) 为准。建立真实 Phase 后，用 Phase 链接替换表中的“—”。
+详细技术次序以 [MuJoCo-only 当前路线](../mujoco/mujoco-only路线.md) 为准。
 
 ## 维护规则
 

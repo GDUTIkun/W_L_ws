@@ -29,5 +29,5 @@
 ## 维护规则
 
 - 参数必须附来源：CAD、器件手册、静态标定、辨识结果或假设。
-- 模型变更必须说明对 Simulink、MuJoCo、Controller、STM32 的影响。
+- 模型变更必须说明对 Simulink reference、MuJoCo 和 Controller 的影响。
 - 未经真实证据支持的参数标记为候选，不写成已验证结论。

@@ -1,6 +1,6 @@
 # Simulink MPC–WM-WBC baseline
 
-本目录是轮腿机器人从 Simulink 迁移到 C++ Controller Core、MuJoCo 和真机时的行为对照基线。它不是示例模型，也不是 terrain adaptation 完成版；它冻结的是截至 2026-08-24 已在平地验证过的三维 Simscape + 16-state NMPC + 12-DoF weighted WM-WBC 控制链。
+本目录是迁移到 C++ Controller Core 和 MuJoCo 时的只读行为对照基线。它不是 current runtime、示例模型或 terrain adaptation 完成版；它冻结的是截至 2026-08-24 已在平地验证过的三维 Simscape + 16-state NMPC + 12-DoF weighted WM-WBC 控制链。
 
 第一次接手时，先阅读：
 
@@ -54,7 +54,7 @@
 - 历史 raw MAT、完整 timeseries、批量权重扫描和图片；
 - 与当前默认配置无关的十余套旧 Acados solver 变体；
 - 第三方 Acados、CasADi 仓库；
-- MuJoCo、ROS2 和 STM32 代码。
+- MuJoCo 或 ROS2 runtime 代码。
 
 generated 下在本机保留当前 full 16-state solver 的冻结 runtime，以及 optional 8-state common-mode solver 的生成源码 bundle。后者当前没有顶层 S-Function，因此 startup 会明确显示 direct 8-state solver not built；主模型 source.slx 使用的是可用的 full solver。两者都不是权威模型源码，且由 generated/.gitignore 排除在版本控制之外；权威定义仍是 startup.m、full_base_body_dynamics.m、full_base_wheel_state_space.m、full_base_nmpc_ocp.m 和 build_base_nmpc_solver.m。
 

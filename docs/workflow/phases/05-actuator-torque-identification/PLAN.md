@@ -1,6 +1,9 @@
 # Phase 05: 执行器力矩辨识与模型校准 — PLAN
 
-Status: `blocked`
+Status: `cancelled — Phase 47 route reset`
+
+Retirement authority: [RETIREMENT.md](RETIREMENT.md). The text below is retained as the historical
+plan and does not describe current work.
 
 ## Goal
 
@@ -14,7 +17,9 @@ Status: `blocked`
 - 已有：实际测力数据由独立串口/USB Load Cell 进入电脑，适合由主机侧统一采集、记录和分析。
 - 缺少：辨识专用安全执行模式、请求值与实际施加值/原始电流的可追溯遥测、双数据源时间对齐、正式数据包、拟合工具、重复性评价和 MuJoCo 校准证据。
 - 当前代码风险：3508+C620 小电流命令包含 `Threshold_Current` 补偿；若不区分测试模式，会把软件补偿混入执行器本体的死区和摩擦辨识。
-- 代码证据：[`dvc_motor_dji.cpp`](../../../../firmware/stm32/Hardware/dvc_motor_dji.cpp)、[`dvc_motor_dji.h`](../../../../firmware/stm32/Hardware/dvc_motor_dji.h)、[`uart_protocol_test.cpp`](../../../../firmware/stm32/App/uart_protocol_test.cpp)、[`Car.cpp`](../../../../firmware/stm32/App/Car.cpp)。
+- 历史代码证据（Phase 47 已删除）：`firmware/stm32/Hardware/dvc_motor_dji.cpp`、
+  `firmware/stm32/Hardware/dvc_motor_dji.h`、`firmware/stm32/App/uart_protocol_test.cpp`、
+  `firmware/stm32/App/Car.cpp`。
 
 ## Scope
 

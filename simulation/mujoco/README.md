@@ -23,7 +23,7 @@ cd /home/t/W_L_ws
 ./.venv/bin/python tools/experiments/run_mujoco_internal_dynamics.py
 ```
 
-该验证只支持“MuJoCo 内部自洽”结论；参数与真机一致性必须由后续共同辨识 Phase 关闭。
+该验证只支持“MuJoCo 内部自洽”结论；项目不再建立真机一致性或共同辨识 gate。
 
 完整闭链运动学与 reduced Jacobian 验证入口：
 

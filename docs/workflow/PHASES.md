@@ -28,6 +28,7 @@ PLAN 在执行前创建；REVIEW 在实现进入审查后创建；RECORD 只在 
 planned → active → review → complete
              │         │
              └─────────┴→ blocked
+             └──────────→ cancelled
 ```
 
 - `planned → active`：PLAN 的目标、范围、任务、接口影响和验收标准完整。
@@ -35,6 +36,10 @@ planned → active → review → complete
 - `review → active`：REVIEW 为 REWORK，需要继续修改。
 - `review → complete`：仅当 REVIEW 为 PASS 且 RECORD 完成。
 - 任意未完成状态可进入 `blocked`；恢复时回到原来的有效状态。
+- `cancelled` 是路线变化导致的终态：保留 PLAN、实现和 evidence，记录取消原因，但不要求
+  REVIEW PASS 或 RECORD，也不得解释为技术结论 PASS。取消的编号永不复用。
+- 经用户明确批准的 route reset 可以开启新 Phase，同时把此前研究 Phase 保留为
+  `review/REWORK`；这不构成对旧 gate 的绕过或完成声明。
 
 ## 三类文档职责
 

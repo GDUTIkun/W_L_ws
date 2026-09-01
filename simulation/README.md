@@ -21,7 +21,7 @@ simulation/
 ## 禁止内容
 
 - 仿真日志、批量结果、缓存和生成代码；
-- STM32 固件；
+- ROS2 runtime 源码；
 - 与 ROS/MuJoCo 强耦合的 Controller Core 副本；
 - 尚未运行成功却写入 README 的启动命令。
 

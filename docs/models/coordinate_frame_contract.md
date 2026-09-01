@@ -1,8 +1,8 @@
-# Simulink–MuJoCo–Real 坐标与接口契约
+# Simulink reference–MuJoCo 坐标与接口契约
 
 Status: `frozen — Phase 02 complete`
 
-本文只冻结已有证据支持的语义。标为 `GATE` 的项目在动态或真机证据完成前不得假定已经统一。
+本文只冻结已有仿真证据支持的语义。历史 real-robot gate 已在 Phase 47 路线切换后退役。
 
 ## 1. 权威顺序
 
@@ -17,7 +17,7 @@ Status: `frozen — Phase 02 complete`
 
 ### 2.1 Canonical navigation/world frame `{N}`
 
-跨 Simulink、MuJoCo、Controller Adapter 和后续真机的 canonical world 采用右手 FLU：
+跨 Simulink reference、MuJoCo 和 Controller Adapter 的 canonical world 采用右手 FLU：
 
 | Axis | 正方向 |
 | --- | --- |
@@ -108,7 +108,7 @@ p_baseCad_to_baseControl expressed in base_cad =
     [-0.077378152, 0.000000810, -0.032277680] m
 ```
 
-Adapter 可用 `data.xipos[base_body]` 取机身刚体 COM 的 world 位置，并用 `data.xmat[base_body]` 取 CAD/control 平行 frame 的姿态；不要用惯性主轴姿态代替 body 姿态。整机 `subtree_com` 随关节构型变化，不是机身 base state。上述 COM 只反映当前 XML 几何和质量，不是经过真机辨识的最终值；质量/COM 标定属于 Phase 07。
+Adapter 可用 `data.xipos[base_body]` 取机身刚体 COM 的 world 位置，并用 `data.xmat[base_body]` 取 CAD/control 平行 frame 的姿态；不要用惯性主轴姿态代替 body 姿态。整机 `subtree_com` 随关节构型变化，不是机身 base state。上述 COM 只定义 current nominal MuJoCo 模型。
 
 当前 identity `base_frame` site 只是 `base_cad_frame` 的别名，不是已经批准的 COM frame 或真实 IMU frame。不得为了让 XML 原点“看起来在质心”而直接移动 `base_body`，否则所有子节点局部 pose 都需要同步补偿。
 
@@ -156,7 +156,7 @@ xi_delta  = (xi_R - xi_L)/2
 
 - 允许使用 local body/site frame 生成传感器和任务量。
 - 每个 Adapter 输出必须可追溯为 `native quantity -> named transform -> canonical quantity -> optional legacy pack`。
-- 保留 `base_body` CAD frame；已新增明确命名的 `base_control_frame` site。真实安装确定后再新增独立 `imu_frame`，不复刻 Simscape 的 world-fixed 传感器连线。
+- 保留 `base_body` CAD frame；`base_control_frame` 是 current state authority。不新增未被 MuJoCo runtime 使用的硬件 sensor frame。
 - 需要 world position/velocity 时，优先读取明确 object/site pose，再映射到 `{N}`。
 - 在 joint zero/sign 关闭前，不旋转 mesh、不改 joint axis/zero、不删除 weld；验证使用候选副本或显式测试场景。
 
@@ -165,15 +165,15 @@ xi_delta  = (xi_R - xi_L)/2
 | Gate | 状态 | 结论/剩余证据 |
 | --- | --- | --- |
 | DG01 | closed | `{N}`=FLU；`{S}`=前上右；显式 `R_N_from_S` |
-| DG02 | closed / transferred | canonical base 原点冻结为 torso COM，nominal site 已落地；真实 COM/IMU pose 转 Phase 07/06 |
+| DG02 | closed | canonical base 原点冻结为 current nominal torso COM，site 已落地 |
 | DG03 | closed | active `[w,x,y,z]`、Simscape→FLU 共轭变换和跨 ±π yaw round-trip 已测试 |
-| DG04 | closed / transferred | specific force、gyro/site-local 语义已冻结；真实 IMU 安装验证转 Phase 06 |
-| DG05 | closed / transferred | joint 顺序、轴和 `q/dq/tau` 相对符号已冻结；zero offset 转 Phase 04，真机复核转 Phase 06 |
+| DG04 | retired | historical IMU gate removed by the MuJoCo-only route |
+| DG05 | closed | joint 顺序、轴、zero offset 和 `q/dq/tau` 符号以 current Adapter 为准 |
 | DG06 | closed | 人工三视图与数值 FK 确认 `{M}`=FLU，`R_N_from_M=I` |
 | DG07 | closed | 坐标修正使用辅助 site + Adapter 足够；本 Phase 不需要 CAD 重导出 |
 | DG08 | closed | `conda:mujoco` + 冻结 environment + 动态探针 |
 
-真机坐标定义按用户决定延后；在 Phase 04 MuJoCo frame/site 落地后，于 Phase 06 按同一 `{N}` 契约补齐。该延期不允许把真机语义标记为 PASS。
+历史真机坐标 gate 已退役，不构成未完成的 current requirement。
 
 ## 9. 当前结论
 

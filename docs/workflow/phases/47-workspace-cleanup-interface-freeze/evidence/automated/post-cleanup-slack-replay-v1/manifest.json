@@ -1,0 +1,9 @@
+{
+  "inputs": {
+    "baseline.csv": "3165dfd48f8a03fa514358c835e96627e0ad9de200980440f8ece9f40a50c106",
+    "compatible-h0.csv": "51e3616d81339cf5806ebe25074cb1632779ff4a71908502720c92832093d7b5",
+    "candidate-qp-operators.csv": "836ed659429b5ca7208dc5dd1fe12abdd4e5ded9a6df6de86521a513522c86b8"
+  },
+  "runner": "/home/t/W_L_ws/tools/experiments/run_phase46_wrench_slack_closure.py",
+  "runner_sha256": "d24efbf701418a84d6f68efed67a9735ae3e0805c18feb21fb570184c980f4b2"
+}

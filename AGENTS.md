@@ -1,6 +1,6 @@
 # Project Agent Rules
 
-本仓库用于将轮腿机器人控制系统从 Simulink 逐步迁移到 MuJoCo 和真实机器。所有工作必须遵守“先定义与验证，再提高控制复杂度”的原则。
+本仓库用于轮腿机器人 Controller Core → ROS2 → MuJoCo 控制仿真。Simulink 仅作冻结参考；STM32、硬件部署和实物验证已退出范围。所有工作必须遵守“先定义与验证，再提高控制复杂度”的原则。
 
 ## Source of Truth
 
@@ -33,7 +33,7 @@ ROADMAP
   → ROADMAP complete
 ```
 
-- 状态固定为 `planned → active → review → complete`；无法继续时使用 `blocked`。
+- 状态为 `planned → active → review → complete`；无法继续时使用 `blocked`。路线变化终止且不宣称 PASS 时使用终态 `cancelled`。
 - PLAN 内的任务使用稳定 ID；不要另建重复任务台账。
 - REVIEW 存在未解决 blocking finding 时必须为 `REWORK`。
 - 范围外工作进入遗留项或新 Phase，不顺带扩张当前 Phase。
@@ -58,7 +58,7 @@ ROADMAP
 - formal 写入稳定输出目录前，先用同一解释器执行依赖探针并记录版本（至少导入脚本实际需要的 MuJoCo/NumPy/SciPy 等依赖），再执行 `py_compile`；探针失败时不得创建或污染 formal 输出目录。
 - 解释器、导入或依赖缺失属于运行环境失败，不得记为模型、控制器或验证 evidence FAIL；应先切回冻结解释器重试，并在结果中保留实际解释器与依赖版本。
 - 自动验证记录真实命令和结果；人工或昂贵验证提供明确入口、输出位置和通过条件。
-- MuJoCo PASS、Real FAIL 时停留在当前验证层排查失配，不继续增加控制复杂度。
+- MuJoCo evidence FAIL 时停留在当前验证层排查，不继续增加控制复杂度。
 - 最终技术验证由 Codex 负责，不能从提交、构建或任务状态推断 evidence PASS。
 
 ## Code and Knowledge Tools
@@ -110,8 +110,7 @@ ROADMAP
 ## Directory Boundaries
 
 - `docs/`：设计、实验方法、证据解释和人工工作流。
-- `firmware/stm32/`：STM32 自研实时逻辑；HAL、FreeRTOS、MDK 等第三方/生成区域不作为普通修改面。
-- `ros_ws/`：主机和树莓派共用的 ROS2 packages、launch 和配置。
+- `ros_ws/`：Controller Core、ROS2 packages、MuJoCo Adapter、launch 和配置。
 - `simulation/simulink_baseline/`：成功复现、受控的 Simulink 对照基线；`simulation/mujoco/`：MuJoCo 模型与场景。
 - `tools/`：非产品运行时的实验、分析和维护脚本。
 - `graphify-out/`、`.codebase-memory/`、构建输出、日志和实验数据是本地生成内容，不作为产品源码。
@@ -119,9 +118,8 @@ ROADMAP
 ## Current Architecture Constraints
 
 - Simulink 是算法对照基线；Controller Core 手工迁移为 C++，不采用代码生成作为生产主线。
-- 主机 profile 运行 Controller + MuJoCo Adapter。
-- 树莓派 profile 运行同一 Controller + Hardware Adapter。
-- MuJoCo 与真机最终使用统一 RobotState/TorqueCommand 边界。
-- 树莓派—STM32 正式通信方案、消息精确 schema、关节顺序、坐标与时间语义仍需独立 Phase 冻结。
-- 现有 UART2 实现是实验候选，不是已批准的生产协议。
+- 唯一 current runtime 是 `wheel_leg_mujoco current_weighted_wbc.launch.py`：Controller Core → ROS2 → MuJoCo Adapter。
+- `RobotState/TorqueCommand` 是唯一 public control boundary；`WbcReference`、W_WBC 与 W_MJ diagnostics 保持 Core/回归内部接口。
+- direct weighted-WBC loop 只作为 regression/oracle；Phase34–46 runners 为冻结历史诊断，不得成为 alternate current runtime。
+- 不新增 STM32、串口、CAN、Hardware Adapter、树莓派部署或 real-robot schema。
 - 要进入ros_ws再colcon build
