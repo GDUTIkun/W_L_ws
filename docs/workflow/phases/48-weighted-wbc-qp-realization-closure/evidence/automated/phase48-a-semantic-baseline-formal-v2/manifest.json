@@ -1,0 +1,33 @@
+{
+  "created_utc": "2026-09-01T02:38:48.376941+00:00",
+  "dependencies": {
+    "mujoco": "3.7.0",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3"
+  },
+  "dirty_files": [
+    " M docs/models/current_mujoco_model.md",
+    " M docs/workflow/ROADMAP.md",
+    "?? docs/workflow/phases/48-weighted-wbc-qp-realization-closure/",
+    "?? tools/experiments/summarize_phase48_semantic_baseline.py"
+  ],
+  "git_revision": "350f9bc3b75ebd97ef68b97a59ef95ec00dcf566",
+  "python": "/home/t/.local/share/uv/python/cpython-3.10.20-linux-x86_64-gnu/bin/python3.10",
+  "sources": {
+    "docs/workflow/phases/48-weighted-wbc-qp-realization-closure/evidence/automated/phase48-a-baseline-formal-v1/baseline.csv": "a36da0a1bace7f1993ff2589714fa6d719f23dd2d7db02a934fa6bca07fd562d",
+    "docs/workflow/phases/48-weighted-wbc-qp-realization-closure/evidence/automated/phase48-a-baseline-replay-v1/baseline.csv": "81b865fcb52b47a7fb3fb22b680d6f41e42576de412e0b83c7464590a10ab4a8",
+    "docs/workflow/phases/48-weighted-wbc-qp-realization-closure/evidence/automated/phase48-a-primitive-formal-v1/compatible-h0.csv": "af921400512cf4b44021024cefa044c2621b22d43eabeb765a71d0e8f5262292",
+    "docs/workflow/phases/48-weighted-wbc-qp-realization-closure/evidence/automated/phase48-a-primitive-formal-v1/r2-mujoco-primitive-contact-law-repair.json": "fe5b2e95b7a38dfddee0d8e7bed14ed588f291127bb26e0721635fe7f08dfbf0",
+    "docs/workflow/phases/48-weighted-wbc-qp-realization-closure/evidence/automated/phase48-a-primitive-replay-v1/r2-mujoco-primitive-contact-law-repair.json": "fe5b2e95b7a38dfddee0d8e7bed14ed588f291127bb26e0721635fe7f08dfbf0",
+    "docs/workflow/phases/48-weighted-wbc-qp-realization-closure/evidence/automated/phase48-a-semantic-baseline-formal-v2/wrench-components.csv": "dd5008030466f3767bb36e776e4cf78fed2ababba8719e3a57579fea44dae5b0",
+    "docs/workflow/phases/48-weighted-wbc-qp-realization-closure/evidence/automated/phase48-a-slack-formal-v1/r2-mujoco-primitive-contact-law-repair.json": "cfb594b97f377fdc94dfaed8edb74d25d88ab4e33461efd9f5dd56f465e6dbc3",
+    "docs/workflow/phases/48-weighted-wbc-qp-realization-closure/evidence/automated/phase48-a-slack-replay-v1/r2-mujoco-primitive-contact-law-repair.json": "cfb594b97f377fdc94dfaed8edb74d25d88ab4e33461efd9f5dd56f465e6dbc3",
+    "ros_ws/src/wheel_leg_core/src/weighted_wbc_controller.cpp": "284e36c2ac557909b15184c79baacdaa83d1a7bf2c3f67707fadf225a28a9889",
+    "ros_ws/src/wheel_leg_core/src/weighted_wbc_problem.cpp": "975d729e45d6adbf02dd2f297da1832b89bfd08c12dc3c88bd2584ad0ccece58",
+    "ros_ws/src/wheel_leg_mujoco/src/adapter.cpp": "8736c9f1b5fcf06318a32161be1022cca76640370d74d2988fd47a30643f5e55",
+    "simulation/mujoco/config/phase46_mujoco_contact_response_v1.json": "eb38bb2cd5975b1de4f6a80255734a85d7847ee6cf890b84f3cdcedc40d86f02",
+    "simulation/mujoco/config/phase46_point_realizable_rolling_v1.json": "06d2ac603acfef6c20b6b00600657aae9198e7134bc1cb06add0207a6736fbbd",
+    "simulation/mujoco/model/scene_axisymmetric_centered_com_v1.xml": "1bf6a0c85f3fabf3c7447b913085ca6b79eff97d5baf824b44faf4e48343e419",
+    "tools/experiments/summarize_phase48_semantic_baseline.py": "3535950a79ee7f0915fec99d68c8b920d7ace5680ef3e6e7845e69c552b43f48"
+  }
+}

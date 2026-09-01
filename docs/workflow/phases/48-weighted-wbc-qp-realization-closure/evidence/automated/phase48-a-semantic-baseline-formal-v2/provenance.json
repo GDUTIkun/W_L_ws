@@ -1,0 +1,20 @@
+{
+  "MuJoCo_pre_state_time_s": 0.0,
+  "MuJoCo_reaction_sample_time": "after ctrl assignment and constraint solve at unchanged qpos/qvel",
+  "MuJoCo_step_interval": "none for fixed-state H0 oracle",
+  "QP_side_same_snapshot": "YES",
+  "QP_solve_start_end": "within one synchronous controller.step; wall-clock duration is diagnostic only",
+  "QP_state_time": "same frozen H0 RobotState snapshot",
+  "W_MJ_reconstruction_time": "from that same reaction snapshot",
+  "W_WBC_extract_time": "immediately after the same QP solve",
+  "W_ref_time": "constructed before QP solve from the same frozen H0 snapshot",
+  "phase": 48,
+  "robot_state_time_s": 0.0,
+  "state_next_time": "not produced by this fixed-state gate",
+  "state_snapshot_id": "frozen H0 / native pre_command control_tick=0",
+  "task": "P48-T01/P48-T02",
+  "tau_apply_time": "assigned as ctrl=-tau before MuJoCo constraint evaluation",
+  "tau_extract_time": "immediately after the same QP solve",
+  "temporal_provenance": "PASS",
+  "tick_id": 0
+}

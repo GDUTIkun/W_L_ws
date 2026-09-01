@@ -1,0 +1,21 @@
+{
+  "created_utc": "2026-09-01T02:35:32.860890+00:00",
+  "dependencies": {
+    "mujoco": "3.7.0",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3"
+  },
+  "git_revision": "350f9bc3b75ebd97ef68b97a59ef95ec00dcf566",
+  "python": "/home/t/.local/share/uv/python/cpython-3.10.20-linux-x86_64-gnu/bin/python3.10",
+  "sources": {
+    "docs/workflow/phases/48-weighted-wbc-qp-realization-closure/evidence/automated/phase48-a-baseline-formal-v1/baseline.csv": "a36da0a1bace7f1993ff2589714fa6d719f23dd2d7db02a934fa6bca07fd562d",
+    "docs/workflow/phases/48-weighted-wbc-qp-realization-closure/evidence/automated/phase48-a-baseline-replay-v1/baseline.csv": "81b865fcb52b47a7fb3fb22b680d6f41e42576de412e0b83c7464590a10ab4a8",
+    "docs/workflow/phases/48-weighted-wbc-qp-realization-closure/evidence/automated/phase48-a-primitive-formal-v1/compatible-h0.csv": "af921400512cf4b44021024cefa044c2621b22d43eabeb765a71d0e8f5262292",
+    "docs/workflow/phases/48-weighted-wbc-qp-realization-closure/evidence/automated/phase48-a-primitive-formal-v1/r2-mujoco-primitive-contact-law-repair.json": "fe5b2e95b7a38dfddee0d8e7bed14ed588f291127bb26e0721635fe7f08dfbf0",
+    "docs/workflow/phases/48-weighted-wbc-qp-realization-closure/evidence/automated/phase48-a-primitive-replay-v1/r2-mujoco-primitive-contact-law-repair.json": "fe5b2e95b7a38dfddee0d8e7bed14ed588f291127bb26e0721635fe7f08dfbf0",
+    "docs/workflow/phases/48-weighted-wbc-qp-realization-closure/evidence/automated/phase48-a-semantic-baseline-formal-v1/wrench-components.csv": "dd5008030466f3767bb36e776e4cf78fed2ababba8719e3a57579fea44dae5b0",
+    "docs/workflow/phases/48-weighted-wbc-qp-realization-closure/evidence/automated/phase48-a-slack-formal-v1/r2-mujoco-primitive-contact-law-repair.json": "cfb594b97f377fdc94dfaed8edb74d25d88ab4e33461efd9f5dd56f465e6dbc3",
+    "docs/workflow/phases/48-weighted-wbc-qp-realization-closure/evidence/automated/phase48-a-slack-replay-v1/r2-mujoco-primitive-contact-law-repair.json": "cfb594b97f377fdc94dfaed8edb74d25d88ab4e33461efd9f5dd56f465e6dbc3",
+    "tools/experiments/summarize_phase48_semantic_baseline.py": "3f49c0c7400bae5ab6058ccc237862bafd6ed24e0f22bd33b8d372e4d131909f"
+  }
+}

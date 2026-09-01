@@ -1,0 +1,210 @@
+{
+  "COMP": "PASS",
+  "EQ": "FAIL (historical Phase46 verdict preserved)",
+  "W1_W6": "PASS",
+  "W_reference_primitive_feasible": false,
+  "architecture_decision_required": false,
+  "authoritative_control_path": "UNIQUE",
+  "checks": {
+    "COMP": true,
+    "W1_W6": true,
+    "baseline_slack": true,
+    "hard_infeasible": true,
+    "minimum_deviation": true,
+    "primitive_slack": true,
+    "replay": true,
+    "slack_reconstruction": true,
+    "w5_offset": true,
+    "w5_operator": true,
+    "witness_42d": true
+  },
+  "cleanup_regression": false,
+  "common_wrench_contract": {
+    "actor_receiver": "wheel follower wrench on leg/base",
+    "frame": "controller body FLU",
+    "order": [
+      "left_Fx",
+      "left_Fy",
+      "left_Fz",
+      "left_Tx",
+      "left_Ty",
+      "left_Tz",
+      "right_Fx",
+      "right_Fy",
+      "right_Fz",
+      "right_Tx",
+      "right_Ty",
+      "right_Tz"
+    ],
+    "reference_point": "corresponding wheel-body origin",
+    "units": {
+      "force": "N",
+      "moment": "N m"
+    }
+  },
+  "contracts": {
+    "W_MJ": {
+      "actor_receiver": "wheel follower wrench on leg/base",
+      "frame": "controller body FLU",
+      "order": [
+        "left_Fx",
+        "left_Fy",
+        "left_Fz",
+        "left_Tx",
+        "left_Ty",
+        "left_Tz",
+        "right_Fx",
+        "right_Fy",
+        "right_Fz",
+        "right_Tx",
+        "right_Ty",
+        "right_Tz"
+      ],
+      "reconstruction": "contact row reaction -> Cartesian point force -> left/right grouping -> rank-5 production-reference aggregate",
+      "reference_point": "corresponding wheel-body origin",
+      "sampling": "same fixed pre-command state after command assignment and mj_forward/constraint solve; no integration; not next-state reaction",
+      "source": "MuJoCo efc/contact constrained reaction at frozen pre-command qpos/qvel with ctrl=-tau",
+      "units": {
+        "force": "N",
+        "moment": "N m"
+      }
+    },
+    "W_WBC": {
+      "actor_receiver": "wheel follower wrench on leg/base",
+      "frame": "controller body FLU",
+      "order": [
+        "left_Fx",
+        "left_Fy",
+        "left_Fz",
+        "left_Tx",
+        "left_Ty",
+        "left_Tz",
+        "right_Fx",
+        "right_Fy",
+        "right_Fz",
+        "right_Tx",
+        "right_Ty",
+        "right_Tz"
+      ],
+      "physical_projection": "per-side rank-5 point-force projector",
+      "post_solve_reference_transport": "NONE",
+      "reconstruction": "interaction_acceleration_map*nudot + interaction_contact_map*wrench + interaction_bias",
+      "reference_point": "corresponding wheel-body origin",
+      "source": "physical_solution z[18:30] plus production maps",
+      "units": {
+        "force": "N",
+        "moment": "N m"
+      }
+    },
+    "W_ref": {
+      "actor_receiver": "wheel follower wrench on leg/base",
+      "consumer": "WeightedWbcProblem::assemble",
+      "frame": "controller body FLU",
+      "order": [
+        "left_Fx",
+        "left_Fy",
+        "left_Fz",
+        "left_Tx",
+        "left_Ty",
+        "left_Tz",
+        "right_Fx",
+        "right_Fy",
+        "right_Fz",
+        "right_Tx",
+        "right_Ty",
+        "right_Tz"
+      ],
+      "producer": "fixed Phase46 H0 reference stager",
+      "reference_point": "corresponding wheel-body origin",
+      "state_ownership": "same RobotState snapshot passed to WeightedWbcController::step",
+      "storage": "WbcReference::interaction_wrench_flu[12]",
+      "units": {
+        "force": "N",
+        "moment": "N m"
+      }
+    },
+    "tau": {
+      "adapter_mapping": "same named actuator order; MuJoCo ctrl = -TorqueCommand",
+      "controller_mapping": "identity after variable-scale decode; reject rather than clamp on limit violation",
+      "decision_block": "physical_solution z[12:18]",
+      "gear_ratio": 1.0,
+      "joint_order": [
+        "left_hip",
+        "left_knee",
+        "left_wheel",
+        "right_hip",
+        "right_knee",
+        "right_wheel"
+      ],
+      "motor_conversion": "NONE",
+      "unit": "N m"
+    }
+  },
+  "dominant_channel": "right_Tx",
+  "minimum_unavoidable_normalized_linf": 0.07832043067340007,
+  "normalization": {
+    "definition": "physical_component / scale_component",
+    "maximum_normalized_slack": {
+      "baseline": 0.001522220395389018,
+      "primitive_r2": 0.05850370867784012
+    },
+    "scale": [
+      50.0,
+      50.0,
+      50.0,
+      2.5,
+      2.5,
+      2.5,
+      50.0,
+      50.0,
+      50.0,
+      2.5,
+      2.5,
+      2.5
+    ]
+  },
+  "phase": 48,
+  "profiles": {
+    "baseline": {
+      "case": "R46P-H0",
+      "enum": "kPhase46PointRealizableRolling",
+      "name": "phase46_point_realizable_rolling_v1"
+    },
+    "primitive_r2": {
+      "case": "R46M-H0",
+      "enum": "kPhase46MujocoContactResponse",
+      "name": "phase46_mujoco_contact_response_v1"
+    }
+  },
+  "schema_version": 1,
+  "semantic_bug_found": false,
+  "semantic_parity_results": {
+    "P48-A-PARITY-01": "PASS",
+    "P48-A-PARITY-02": "PASS",
+    "P48-A-PARITY-03": "PASS",
+    "P48-A-PARITY-04": "PASS",
+    "P48-A-PARITY-05": "PASS",
+    "P48-A-PARITY-06": "PASS"
+  },
+  "slack": {
+    "dimension": 12,
+    "equation": "W_WBC-W_ref-signed_slack=wrench_task_residual",
+    "reconstruction_max_abs": {
+      "baseline": 0.0,
+      "primitive_r2": 0.0
+    },
+    "role": "interaction-wrench fidelity only"
+  },
+  "status": "PASS",
+  "task": "P48-T01/P48-T02",
+  "witness_42d": {
+    "R1_residual": 1.2258392916278746e-14,
+    "eq_max_residual": 3.623378202098832e-09,
+    "minimum_inequality_margin": 0.2197161714633595,
+    "primitive_law_residual": 2.74192713867194e-07,
+    "slack_admissible": true,
+    "status": "PASS",
+    "torque_minimum_margin": 1.9990801609079853,
+    "wrench_cone_minimum_margin": 0.2197161714633595
+  }
+}

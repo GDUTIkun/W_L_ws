@@ -1,0 +1,5 @@
+{
+  "baseline_csv_max_abs_excluding_wbc_time_s": 0.0,
+  "closure_decision_equal": true,
+  "primitive_decision_equal": true
+}

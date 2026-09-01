@@ -68,7 +68,7 @@
 | 35 | Contact-consistent rolling repair | review | [Phase 45](phases/45-contact-consistent-rolling-repair/REVIEW.md) | REWORK：compatible wrench使DG45-EQ PASS，但DG45-AUTH common projected gain在三档scale均QP/MuJoCo反号`+0.998/-1.876`；mandatory stop，未进入REAL/SHORT/10s/REAUDIT，不授权Phase46 |
 | 36 | Hip-common-safe rolling realization repair | review | [Phase 46](phases/46-hip-common-safe-rolling-realization-repair/REVIEW.md) | REWORK/E：contact为unique source；native `f=D(aref-Jqacc)` oracle精确重建same-tau reaction，但等价coupled/Schur law的closed-loop diagnostic在H0 feasibility、equilibrium、branch和scale均FAIL；无可信R2 law获授权，production unchanged，下一步仅允许继续contact-response source attribution |
 | 37 | MuJoCo-only workspace cleanup + interface freeze | complete | [Phase 47](phases/47-workspace-cleanup-interface-freeze/RECORD.md) | hardware source removed；ROS current WBC path、interfaces、legacy inventory 与 pre/post regression 冻结 |
-| 38 | Weighted-WBC / QP realization closure | planned | Phase 48（待建） | 只研究 W_ref→W_WBC→tau→W_MJ，不改 Phase47 接口 authority |
+| 38 | Weighted-WBC / QP realization closure | active | [Phase 48](phases/48-weighted-wbc-qp-realization-closure/PLAN.md) | P48-T01/T02 baseline/semantics PASS；下一步 P48-T03 fixed-H0 hard realizability；不改 Phase47 接口 authority |
 | 39 | 12X / 16X NMPC candidate comparison | planned | Phase 49（待建） | 两 candidate 共用冻结 W_ref contract 和 current ROS/MuJoCo path |
 
 ### Retired route items
