@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "phase": 48,
+  "task_id": "P48-T03",
+  "verdict": "PASS",
+  "state": "authoritative fixed H0",
+  "nominal_h0_regression": true,
+  "primary_request_basis": "R1-PHYSICAL",
+  "left_physical_rank": 5,
+  "right_physical_rank": 5,
+  "number_of_primary_cases": 13,
+  "counts_excluding_nominal_regression_anchor": {
+    "EXACT HARD-FEASIBLE": 1,
+    "HARD-INFEASIBLE": 12,
+    "UNTRUSTED": 0
+  },
+  "representative_feasible_cases": [
+    "P48B-H0-R1-INTERIOR"
+  ],
+  "representative_infeasible_cases": [
+    "P48B-H0-COMMON-FX-POSITIVE",
+    "P48B-H0-COMMON-FX-NEGATIVE",
+    "P48B-H0-COMMON-FZ-POSITIVE",
+    "P48B-H0-COMMON-FZ-NEGATIVE",
+    "P48B-H0-COMMON-TY-POSITIVE",
+    "P48B-H0-COMMON-TY-NEGATIVE",
+    "P48B-H0-DIFFERENTIAL-FY-POSITIVE",
+    "P48B-H0-DIFFERENTIAL-FY-NEGATIVE",
+    "P48B-H0-DIFFERENTIAL-TX-POSITIVE",
+    "P48B-H0-DIFFERENTIAL-TX-NEGATIVE",
+    "P48B-H0-DIFFERENTIAL-TZ-POSITIVE",
+    "P48B-H0-DIFFERENTIAL-TZ-NEGATIVE"
+  ],
+  "nominal_minimum_normalized_linf": 0.07832043067340007,
+  "worst_minimum_normalized_linf": 0.07832043067340007,
+  "worst_case": "P48B-H0-NOMINAL",
+  "dominant_deviation_channels": [
+    "left_Fx",
+    "left_Fz",
+    "left_Tz",
+    "right_Fx",
+    "right_Fz",
+    "right_Tx"
+  ],
+  "soft_objectives_used_in_feasibility_verdict": false,
+  "closest_wrench_solve": true,
+  "deterministic_tie_break": true,
+  "semantic_regression": false,
+  "r1_w5_w1_w6_regression": false,
+  "p48_t04": "NOT ENTERED",
+  "p48_t05": "NOT ENTERED",
+  "p48_t06_plus": "NOT ENTERED",
+  "p48_t03_closed": true
+}

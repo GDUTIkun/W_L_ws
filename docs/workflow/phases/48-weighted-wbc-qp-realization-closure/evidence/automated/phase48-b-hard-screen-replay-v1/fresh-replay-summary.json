@@ -1,0 +1,10 @@
+{
+  "replay_of": "/home/t/W_L_ws/docs/workflow/phases/48-weighted-wbc-qp-realization-closure/evidence/automated/phase48-b-hard-screen-formal-v1",
+  "case_count_exact": true,
+  "request_hash_exact": true,
+  "classification_exact": true,
+  "numeric_within_tolerance": true,
+  "closest_wrench_tie_break_deterministic": true,
+  "formal_verdict": "PASS",
+  "verdict": "PASS"
+}

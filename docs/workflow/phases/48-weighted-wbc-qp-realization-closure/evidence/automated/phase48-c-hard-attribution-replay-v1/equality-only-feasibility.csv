@@ -1,0 +1,4 @@
+case_id,feasible,solver_status,solver_message,equality_residual,wrench_equality_residual,finite,projector_direct_consistent
+P48B-H0-NOMINAL,NO,2,The problem is infeasible. (HiGHS Status 8: model_status is Infeasible; primal_status is None),0.10624099106372555,0.03562976143494884,True,True
+P48B-H0-DIFFERENTIAL-TZ-POSITIVE,NO,2,The problem is infeasible. (HiGHS Status 8: model_status is Infeasible; primal_status is None),0.06084486450138547,0.01804377464655607,True,True
+P48B-H0-COMMON-FX-NEGATIVE,NO,2,The problem is infeasible. (HiGHS Status 8: model_status is Infeasible; primal_status is None),0.009057215423732744,0.0026862394529567866,True,True

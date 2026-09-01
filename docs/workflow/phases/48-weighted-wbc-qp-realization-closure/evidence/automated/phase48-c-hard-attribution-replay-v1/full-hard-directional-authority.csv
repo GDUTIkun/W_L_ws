@@ -1,0 +1,3 @@
+case_id,requested_alpha,equality_direction_reachable,full_hard_alpha_min,full_hard_alpha_max,requested_branch_inside_interval,skip_reason
+P48B-H0-DIFFERENTIAL-TZ-POSITIVE,0.05,NO,,,NOT ENTERED,direction equality-unreachable; equality layer has no finite alpha limit
+P48B-H0-COMMON-FX-NEGATIVE,0.05,NO,,,NOT ENTERED,direction equality-unreachable; equality layer has no finite alpha limit

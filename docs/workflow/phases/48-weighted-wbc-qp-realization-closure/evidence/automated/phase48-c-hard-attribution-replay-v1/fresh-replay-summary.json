@@ -1,0 +1,24 @@
+{
+  "replay_of": "/home/t/W_L_ws/docs/workflow/phases/48-weighted-wbc-qp-realization-closure/evidence/automated/phase48-c-hard-attribution-formal-v1",
+  "file_hash_parity": {
+    "selected-cases.json": true,
+    "hard-equality-inventory.json": true,
+    "hard-inequality-inventory.json": true,
+    "equality-subspace.json": true,
+    "equality-singular-values.csv": true,
+    "direction-projection.csv": true,
+    "equality-only-feasibility.csv": true,
+    "equality-family-leave-one-out.csv": true,
+    "equality-progressive-rank.csv": true,
+    "full-hard-directional-authority.csv": true,
+    "inequality-family-scales.json": true,
+    "family-relaxation.csv": true,
+    "inequality-family-leave-one-out.csv": true,
+    "hard-attribution-summary.json": true
+  },
+  "selected_case_hash_exact": true,
+  "rank_spectrum_exact": true,
+  "classification_exact": true,
+  "numeric_within_tolerance": true,
+  "verdict": "PASS"
+}

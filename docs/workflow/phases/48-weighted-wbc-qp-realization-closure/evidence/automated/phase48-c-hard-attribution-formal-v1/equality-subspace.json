@@ -1,0 +1,30 @@
+{
+  "equality_rows": 22,
+  "rank_a_eq": 22,
+  "nullity_a_eq": 20,
+  "rank_k_w": 6,
+  "physical_wrench_rank": 10,
+  "rank_tolerance": 1e-10,
+  "svd_tolerance": 1e-10,
+  "reachability_tolerance": 1e-09,
+  "nullspace_method": "scipy.linalg.null_space SVD",
+  "a_eq_sha256": "c631b3663d00b5b8d54fb501bd51e1b72cd5de135b487400e93499d1b0100c31",
+  "c_w_sha256": "d6e7973dc51e3662be4c61dd89274769d05550d58ab60bbea709632d8e94fd18",
+  "n_eq_sha256": "aa0e24424e1c8c78088af1312eaa3a39e2b7da0a9337499276bf37a10e504f7c",
+  "k_w_sha256": "001b0340ba85930f2ee7a9c705123cff6a8e8219747a869cd3e6f089727a619b",
+  "p_eq_sha256": "adcc3000fef5949e0fd0526d92d1294ac8bd7978233944668e9f66f0aa421ed7",
+  "singular_values": [
+    18.076142992532123,
+    11.172537127290722,
+    4.070067492473444,
+    0.8905872744036493,
+    0.19692254357935407,
+    0.0224064798696153,
+    8.024266055493385e-16,
+    1.5471417225526134e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ]
+}

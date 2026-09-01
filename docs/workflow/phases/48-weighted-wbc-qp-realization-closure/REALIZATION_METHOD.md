@@ -131,6 +131,46 @@ No contact, rolling, base, orientation or leg task residual is called slack. Per
 and both wheels share the same scales. `maximum_normalized_slack` is the maximum absolute normalized
 component.
 
+## P48-T03 Frozen Numerical Contract
+
+The following tolerances were frozen before the first P48-T03 formal output and are not selected from
+the probe results:
+
+| Quantity | Tolerance |
+| --- | ---: |
+| projector/basis numerical rank | `1e-10` |
+| primary request R1-image residual | `1e-9` |
+| hard equality, wrench equality, primitive-law and applied-R1 residual | `1e-7` |
+| accepted minimum inequality margin | `-1e-8` |
+| active / near-active row margin | `1e-7` / `1e-5` |
+| closest-wrench L∞ tie constraint | `t* + 1e-9` |
+| fresh replay numeric parity | `1e-9` |
+| nominal H0 minimum normalized L∞ regression | `1e-9` absolute |
+
+The small artificial-request magnitude is `0.05` in normalized wrench units. Each canonical source
+direction is first projected by the per-wheel production `Pg`, then divided by
+`max(abs(direction)/[50,50,50,2.5,2.5,2.5])`. Exact feasibility and first-level closest wrench use
+HiGHS LPs. The second level fixes the first-level L∞ value within the frozen numerical tie tolerance
+and minimizes normalized L2 with a convex SLSQP solve in the null space of the hard equalities.
+Production soft tasks, their Hessian and their gradient are excluded from all P48-T03 verdicts.
+
+## P48-T04 Frozen Attribution Contract
+
+Before the first P48-T04 formal output, equality rank/SVD/nullspace uses the existing `1e-10` rank
+tolerance. A requested equality-preserving wrench direction is reachable only when its normalized L∞
+orthogonal projection residual is at most `1e-9`; direct equality-only feasibility additionally requires
+finite values and hard/wrench equality residuals at most `1e-7`. A leave-one-family-out change is
+material only if it changes numerical rank or changes a selected case from equality-infeasible to
+equality-feasible under those same tolerances. Matrix hashes are SHA-256 over deterministic little-endian
+`float64` shape-and-data payloads.
+
+Equality families and inequality families are derived from finite bounds in the authoritative dump and
+checked against the production row layout; inactive capacity rows are not promoted into invented
+families. Inequality relaxation is entered only for a selected case that is equality-only feasible but
+full-hard infeasible. If no selected case satisfies that condition, every inequality output records the
+fixed skip reason and no cross-family relaxation ranking is authorized. Production objective matrices
+remain excluded.
+
 ## Parity Gates
 
 | Gate | Result | Evidence basis |
@@ -153,4 +193,3 @@ component.
 - `tools/experiments/run_phase46_wrench_slack_closure.py`
 
 Any future conflict is a semantic regression and stops before P48-T03.
-

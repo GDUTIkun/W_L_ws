@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "phase": 48,
+  "task_id": "P48-T04",
+  "command": "tools/experiments/run_phase48_hard_attribution.py --phase48b-runner tools/experiments/run_phase48_hard_wrench_screen.py --qp-dump docs/workflow/phases/48-weighted-wbc-qp-realization-closure/evidence/automated/phase48-a-slack-formal-v1/candidate-qp-operators.csv --t03-formal docs/workflow/phases/48-weighted-wbc-qp-realization-closure/evidence/automated/phase48-b-hard-screen-formal-v1 --phase48a-summary docs/workflow/phases/48-weighted-wbc-qp-realization-closure/evidence/automated/phase48-a-semantic-baseline-formal-v2/semantic-baseline.json --output docs/workflow/phases/48-weighted-wbc-qp-realization-closure/evidence/automated/phase48-c-hard-attribution-replay-v1 --replay-of docs/workflow/phases/48-weighted-wbc-qp-realization-closure/evidence/automated/phase48-c-hard-attribution-formal-v1",
+  "interpreter": "/home/t/W_L_ws/.venv/bin/python",
+  "python": "3.10.20",
+  "numpy": "2.2.6",
+  "scipy": "1.15.3",
+  "solvers": "SVD/null_space/pinv plus HiGHS equality-only LP",
+  "thresholds": {
+    "rank_svd": 1e-10,
+    "reachability": 1e-09,
+    "residual": 1e-07,
+    "replay": 1e-09
+  },
+  "git_commit": "6c3d94f0bd646fbd43a00a6bd59a693e95e6ae66",
+  "git_dirty_files": [
+    "D \"docs/legacy/hardware/\\344\\274\\240\\346\\204\\237\\345\\231\\250\\350\\277\\207\\344\\275\\216\\351\\200\\232.md\"",
+    " D \"docs/legacy/hardware/\\346\\213\\206\\346\\234\\272\\345\\212\\233\\347\\237\\251\\346\\265\\213\\350\\257\\225.md\"",
+    " D \"docs/legacy/hardware/\\347\\255\\211\\346\\225\\210\\350\\275\\254\\345\\212\\250\\346\\203\\257\\351\\207\\217\\346\\265\\213\\351\\207\\217.md\"",
+    " M docs/workflow/ROADMAP.md",
+    " M docs/workflow/phases/48-weighted-wbc-qp-realization-closure/PLAN.md",
+    " M docs/workflow/phases/48-weighted-wbc-qp-realization-closure/QP_REALIZABILITY.md",
+    " M docs/workflow/phases/48-weighted-wbc-qp-realization-closure/REALIZATION_METHOD.md",
+    "?? docs/workflow/phases/48-weighted-wbc-qp-realization-closure/evidence/automated/phase48-b-hard-screen-formal-v1/",
+    "?? docs/workflow/phases/48-weighted-wbc-qp-realization-closure/evidence/automated/phase48-b-hard-screen-replay-v1/",
+    "?? docs/workflow/phases/48-weighted-wbc-qp-realization-closure/evidence/automated/phase48-c-hard-attribution-formal-v1/",
+    "?? docs/workflow/phases/48-weighted-wbc-qp-realization-closure/evidence/automated/phase48-c-hard-attribution-replay-v1/",
+    "?? tools/experiments/run_phase48_hard_attribution.py",
+    "?? tools/experiments/run_phase48_hard_wrench_screen.py"
+  ],
+  "inputs": {
+    "qp_dump": "836ed659429b5ca7208dc5dd1fe12abdd4e5ded9a6df6de86521a513522c86b8",
+    "t03_catalogue": "56765f0eab83228e8a18fdd241fe8f896c7c1fa4bb9bab7cdf321f95d365cf8d",
+    "t03_probes": "4a9f5f3c3c29f07d6064724b263db94db5eb2857393aca96b167c38b88d99f42",
+    "phase48a_summary": "e9f4e4045e66470aa4ce358c1527bb0e5e120075bdf042365c1accfe99869a16"
+  },
+  "matrix_hashes": {
+    "a_eq_sha256": "c631b3663d00b5b8d54fb501bd51e1b72cd5de135b487400e93499d1b0100c31",
+    "c_w_sha256": "d6e7973dc51e3662be4c61dd89274769d05550d58ab60bbea709632d8e94fd18",
+    "n_eq_sha256": "aa0e24424e1c8c78088af1312eaa3a39e2b7da0a9337499276bf37a10e504f7c",
+    "k_w_sha256": "001b0340ba85930f2ee7a9c705123cff6a8e8219747a869cd3e6f089727a619b",
+    "p_eq_sha256": "adcc3000fef5949e0fd0526d92d1294ac8bd7978233944668e9f66f0aa421ed7"
+  },
+  "runner": "/home/t/W_L_ws/tools/experiments/run_phase48_hard_attribution.py",
+  "runner_sha256": "0b35514b714b8b15fbf7d659edfccffe1ac8c1abbe421d873e9e39696932d930",
+  "phase48b_runner_sha256": "7ca029bcd0f307f3a09ee2c89cdacb6165079efcea8a2ee270e937c2cc96e49f",
+  "soft_objectives_used": false,
+  "controller_changed": false
+}

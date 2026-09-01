@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "phase": 48,
+  "task_id": "P48-T04",
+  "verdict": "PASS",
+  "selected_cases": [
+    "P48B-H0-NOMINAL",
+    "P48B-H0-DIFFERENTIAL-TZ-POSITIVE",
+    "P48B-H0-COMMON-FX-NEGATIVE"
+  ],
+  "control_anchor": "P48B-H0-R1-INTERIOR",
+  "common_contrast_case": "P48B-H0-COMMON-FX-NEGATIVE",
+  "regressions": {
+    "phase48_a_semantics": true,
+    "r1": true,
+    "w5": true,
+    "w1_w6": true,
+    "witness_42d": true,
+    "comp": true,
+    "t03_request_catalogue_hash_unchanged": true,
+    "selected_w_ref_unchanged": true,
+    "feasible_anchor_still_exact": true,
+    "t03_classifications_unchanged": true,
+    "nominal_minimum_reproduced": true
+  },
+  "full_hard_equality_rows": 22,
+  "full_hard_equality_rank": 22,
+  "hard_equality_nullity": 20,
+  "physical_wrench_rank": 10,
+  "equality_reachable_wrench_rank": 6,
+  "equality_reachable_singular_values": [
+    18.076142992532123,
+    11.172537127290722,
+    4.070067492473444,
+    0.8905872744036493,
+    0.19692254357935407,
+    0.0224064798696153,
+    8.024266055493385e-16,
+    1.5471417225526134e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "case_results": [
+    {
+      "case_id": "P48B-H0-NOMINAL",
+      "equality_only_feasible": "NO",
+      "equality_direction_reachable": "NO",
+      "normalized_equality_projection_residual": 0.12552971006032715,
+      "full_hard_feasible": "NO",
+      "primitive_hard_law_material": true,
+      "primary_classification": "HARD-PRIMITIVE-LAW-STRUCTURAL"
+    },
+    {
+      "case_id": "P48B-H0-DIFFERENTIAL-TZ-POSITIVE",
+      "equality_only_feasible": "NO",
+      "equality_direction_reachable": "NO",
+      "normalized_equality_projection_residual": 0.05005313685764943,
+      "full_hard_feasible": "NO",
+      "primitive_hard_law_material": true,
+      "primary_classification": "HARD-PRIMITIVE-LAW-STRUCTURAL"
+    },
+    {
+      "case_id": "P48B-H0-COMMON-FX-NEGATIVE",
+      "equality_only_feasible": "NO",
+      "equality_direction_reachable": "NO",
+      "normalized_equality_projection_residual": 0.0074550259751212464,
+      "full_hard_feasible": "NO",
+      "primitive_hard_law_material": true,
+      "primary_classification": "HARD-PRIMITIVE-LAW-STRUCTURAL"
+    }
+  ],
+  "nominal_minimum_normalized_linf": 0.07832043067340007,
+  "primitive_hard_law_material": "YES",
+  "torque_bounds_material": "NOT ENTERED",
+  "contact_friction_unilateral_material": "NOT ENTERED",
+  "acceleration_other_bounds_material": "NOT ENTERED",
+  "mixed_limitation": false,
+  "phenomenon_12_of_12": "Hard equalities restrict fixed-H0 wrench variations to a rank-6 affine subspace; all twelve tested projected +/-0.05 directions have a nonzero component outside it. Primitive-family removal restores the selected requests and expands wrench rank to 12.",
+  "all_12_directional_equality_unreachable": true,
+  "all_12_directional_projection_residual_range": [
+    0.0074550259751212464,
+    0.1341500903050426
+  ],
+  "bug_b_found": false,
+  "bugfix_applied": "NONE",
+  "controller_changed": false,
+  "t03_classifications_preserved": true,
+  "architecture_decision_required": true,
+  "p48_t04_closed": true,
+  "p48_t05_eligibility": "NOT CHECKED",
+  "g2": "PARTIAL"
+}

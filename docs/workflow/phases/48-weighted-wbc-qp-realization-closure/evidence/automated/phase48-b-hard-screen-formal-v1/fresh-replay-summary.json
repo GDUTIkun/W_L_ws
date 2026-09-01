@@ -1,0 +1,9 @@
+{
+  "replay_of": null,
+  "case_count_exact": null,
+  "request_hash_exact": null,
+  "classification_exact": null,
+  "numeric_within_tolerance": null,
+  "closest_wrench_tie_break_deterministic": null,
+  "verdict": "FORMAL"
+}

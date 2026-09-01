@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "phase": 48,
+  "task_id": "P48-T03",
+  "command": "tools/experiments/run_phase48_hard_wrench_screen.py --candidate docs/workflow/phases/48-weighted-wbc-qp-realization-closure/evidence/automated/phase48-a-primitive-formal-v1/compatible-h0.csv --qp-dump docs/workflow/phases/48-weighted-wbc-qp-realization-closure/evidence/automated/phase48-a-slack-formal-v1/candidate-qp-operators.csv --output docs/workflow/phases/48-weighted-wbc-qp-realization-closure/evidence/automated/phase48-b-hard-screen-formal-v1",
+  "interpreter": "/home/t/W_L_ws/.venv/bin/python",
+  "python": "3.10.20",
+  "numpy": "2.2.6",
+  "scipy": "1.15.3",
+  "solver": "SciPy HiGHS LP + SLSQP convex L2 tie-break",
+  "solver_settings": {
+    "linprog_method": "highs",
+    "slsqp_ftol": 1e-13,
+    "slsqp_maxiter": 2000
+  },
+  "thresholds": {
+    "rank": 1e-10,
+    "residual": 1e-07,
+    "margin": 1e-08,
+    "projection": 1e-09,
+    "active": 1e-07,
+    "near_active": 1e-05,
+    "replay": 1e-09,
+    "tie": 1e-09,
+    "nominal_anchor": 1e-09
+  },
+  "normalization_scale": [
+    50.0,
+    50.0,
+    50.0,
+    2.5,
+    2.5,
+    2.5,
+    50.0,
+    50.0,
+    50.0,
+    2.5,
+    2.5,
+    2.5
+  ],
+  "seed": null,
+  "git_commit": "6c3d94f0bd646fbd43a00a6bd59a693e95e6ae66",
+  "git_dirty_files": [
+    "D \"docs/legacy/hardware/\\344\\274\\240\\346\\204\\237\\345\\231\\250\\350\\277\\207\\344\\275\\216\\351\\200\\232.md\"",
+    " D \"docs/legacy/hardware/\\346\\213\\206\\346\\234\\272\\345\\212\\233\\347\\237\\251\\346\\265\\213\\350\\257\\225.md\"",
+    " D \"docs/legacy/hardware/\\347\\255\\211\\346\\225\\210\\350\\275\\254\\345\\212\\250\\346\\203\\257\\351\\207\\217\\346\\265\\213\\351\\207\\217.md\"",
+    "?? docs/workflow/phases/48-weighted-wbc-qp-realization-closure/evidence/automated/phase48-b-hard-screen-formal-v1/",
+    "?? tools/experiments/run_phase48_hard_wrench_screen.py"
+  ],
+  "inputs": {
+    "compatible-h0.csv": "af921400512cf4b44021024cefa044c2621b22d43eabeb765a71d0e8f5262292",
+    "candidate-qp-operators.csv": "836ed659429b5ca7208dc5dd1fe12abdd4e5ded9a6df6de86521a513522c86b8"
+  },
+  "request_catalogue_sha256": "56765f0eab83228e8a18fdd241fe8f896c7c1fa4bb9bab7cdf321f95d365cf8d",
+  "runner": "/home/t/W_L_ws/tools/experiments/run_phase48_hard_wrench_screen.py",
+  "runner_sha256": "7ca029bcd0f307f3a09ee2c89cdacb6165079efcea8a2ee270e937c2cc96e49f",
+  "soft_objectives_used_in_verdict": false
+}
