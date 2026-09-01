@@ -248,3 +248,41 @@ TEST(Adapter, ResetReplaysFloatingZeroTorqueDeterministically) {
     EXPECT_TRUE(std::isfinite(second.base_linear_velocity_n_m_s[axis]));
   }
 }
+
+TEST(Adapter, CurrentWeightedWbcH0MatchesFrozenStateAndResets) {
+  char error[1024]{};
+  ModelPtr model(mj_loadXML(
+      WHEEL_LEG_CURRENT_WBC_SCENE_PATH, nullptr, error, sizeof(error)));
+  ASSERT_NE(model, nullptr) << error;
+  DataPtr data(mj_makeData(model.get()));
+  wheel_leg_mujoco::AdapterConfig config;
+  config.floating_base = true;
+  wheel_leg_mujoco::Adapter adapter(model.get(), config);
+
+  auto initialize = [&]() {
+    adapter.reset(data.get());
+    wheel_leg_mujoco::initializeCurrentWeightedWbcH0(model.get(), data.get());
+    return adapter.extractState(data.get());
+  };
+  const auto first = initialize();
+  const auto second = initialize();
+  constexpr std::array<double, 3> base{
+      -0.077378152000000006, 8.1e-7, 0.31543998403249462};
+  constexpr wheel_leg::JointVector joints{
+      -0.97199891583533837, 1.6393957458903228, 0.0,
+      -0.98339093564557467, 1.6394010277077622, 0.0};
+  for (std::size_t axis = 0; axis < base.size(); ++axis) {
+    EXPECT_NEAR(first.base_position_n_m[axis], base[axis], 1.0e-12);
+    EXPECT_DOUBLE_EQ(second.base_position_n_m[axis], first.base_position_n_m[axis]);
+    EXPECT_DOUBLE_EQ(first.base_linear_velocity_n_m_s[axis], 0.0);
+    EXPECT_DOUBLE_EQ(first.base_angular_velocity_n_rad_s[axis], 0.0);
+  }
+  EXPECT_DOUBLE_EQ(first.q_n_from_b[0], 1.0);
+  for (std::size_t joint = 0; joint < joints.size(); ++joint) {
+    EXPECT_NEAR(first.joint_position_rad[joint], joints[joint], 1.0e-12);
+    EXPECT_DOUBLE_EQ(second.joint_position_rad[joint], first.joint_position_rad[joint]);
+    EXPECT_DOUBLE_EQ(first.joint_velocity_rad_s[joint], 0.0);
+  }
+  EXPECT_EQ(first.contact_state[0], wheel_leg::ContactState::kContact);
+  EXPECT_EQ(first.contact_state[1], wheel_leg::ContactState::kContact);
+}

@@ -53,7 +53,9 @@ ControllerNode::ControllerNode(const rclcpp::NodeOptions &options)
     : Node("wheel_leg_controller", options) {
   wheel_leg::ControllerConfig config;
   const auto mode = declare_parameter<std::string>("controller.mode", "zero");
-  if (mode == "joint_pd_gravity") {
+  if (mode == "weighted_wbc") {
+    config = wheel_leg::currentNominalWeightedWbcControllerConfig();
+  } else if (mode == "joint_pd_gravity") {
     config.mode = wheel_leg::ControllerMode::kJointPdGravity;
     config.enable_pd = declare_parameter<bool>("controller.enable_pd", true);
     config.enable_gravity =
@@ -101,7 +103,8 @@ ControllerNode::ControllerNode(const rclcpp::NodeOptions &options)
       throw std::runtime_error("unknown controller.gravity_profile");
     }
   } else if (mode != "zero") {
-    throw std::runtime_error("controller.mode must be zero or joint_pd_gravity");
+    throw std::runtime_error(
+        "controller.mode must be zero, joint_pd_gravity, or weighted_wbc");
   }
   if (!core_.configure(config)) {
     throw std::runtime_error("invalid Controller Core configuration");

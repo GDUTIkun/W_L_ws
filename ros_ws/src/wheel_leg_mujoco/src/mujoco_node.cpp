@@ -47,9 +47,15 @@ class MuJoCoNode final : public rclcpp::Node {
         declare_parameter<std::int64_t>("max_source_lag_ms", 50);
     publish_decimation_ =
         declare_parameter<std::int64_t>("state_publish_decimation", 5);
+    initial_state_profile_ =
+        declare_parameter<std::string>("initial_state_profile", "model_default");
     if (command_timeout_ms <= 0 || max_source_lag_ms <= 0 ||
         publish_decimation_ <= 0) {
       throw std::invalid_argument("MuJoCo timing parameters must be positive");
+    }
+    if (initial_state_profile_ != "model_default" &&
+        initial_state_profile_ != "current_weighted_wbc_h0") {
+      throw std::invalid_argument("unknown initial_state_profile");
     }
     config.command_timeout_ns =
         static_cast<std::uint64_t>(command_timeout_ms) * 1'000'000U;
@@ -66,7 +72,7 @@ class MuJoCoNode final : public rclcpp::Node {
       throw std::runtime_error("MuJoCo data allocation failed");
     }
     adapter_ = std::make_unique<Adapter>(model_.get(), config);
-    adapter_->reset(data_.get());
+    resetSimulation();
 
     state_publisher_ = create_publisher<wheel_leg_msgs::msg::RobotState>(
         "robot_state", rclcpp::SensorDataQoS());
@@ -75,9 +81,11 @@ class MuJoCoNode final : public rclcpp::Node {
             "torque_command", 10,
             [this](wheel_leg_msgs::msg::TorqueCommand::SharedPtr message) {
               const auto command = wheel_leg_ros::fromRos(*message);
-              if (!adapter_->acceptCommand(
+              if (adapter_->acceptCommand(
                       command, steadyNowNs(),
                       Adapter::simulationTimeNs(data_->time))) {
+                awaiting_initial_command_ = false;
+              } else {
                 RCLCPP_WARN(get_logger(), "Rejected invalid/stale torque command");
               }
             });
@@ -85,7 +93,7 @@ class MuJoCoNode final : public rclcpp::Node {
         "reset_simulation",
         [this](const std::shared_ptr<std_srvs::srv::Trigger::Request>,
                std::shared_ptr<std_srvs::srv::Trigger::Response> response) {
-          adapter_->reset(data_.get());
+          resetSimulation();
           step_count_ = 0;
           response->success = true;
           response->message =
@@ -98,7 +106,22 @@ class MuJoCoNode final : public rclcpp::Node {
   }
 
  private:
+  void resetSimulation() {
+    adapter_->reset(data_.get());
+    if (initial_state_profile_ == "current_weighted_wbc_h0") {
+      initializeCurrentWeightedWbcH0(model_.get(), data_.get());
+      awaiting_initial_command_ = true;
+    }
+  }
+
   void step() {
+    if (awaiting_initial_command_) {
+      if (state_publisher_->get_subscription_count() > 0) {
+        state_publisher_->publish(
+            wheel_leg_ros::toRos(adapter_->extractState(data_.get())));
+      }
+      return;
+    }
     adapter_->writeControls(data_.get(), steadyNowNs());
     mj_step(model_.get(), data_.get());
     ++step_count_;
@@ -111,6 +134,8 @@ class MuJoCoNode final : public rclcpp::Node {
   std::unique_ptr<mjModel, ModelDeleter> model_;
   std::unique_ptr<mjData, DataDeleter> data_;
   std::unique_ptr<Adapter> adapter_;
+  std::string initial_state_profile_{"model_default"};
+  bool awaiting_initial_command_{false};
   std::int64_t publish_decimation_{5};
   std::int64_t step_count_{0};
   rclcpp::Publisher<wheel_leg_msgs::msg::RobotState>::SharedPtr state_publisher_;

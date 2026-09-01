@@ -150,6 +150,9 @@ struct ControllerConfig {
 
 [[nodiscard]] WeightedWbcConfig currentNominalWeightedWbcConfig();
 
+// Complete, frozen configuration for the current MuJoCo-only WBC runtime.
+[[nodiscard]] ControllerConfig currentNominalWeightedWbcControllerConfig();
+
 enum class StepStatus {
   kOk,
   kNotConfigured,

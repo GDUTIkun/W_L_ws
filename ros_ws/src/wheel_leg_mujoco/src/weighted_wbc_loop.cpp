@@ -666,14 +666,14 @@ void run(const Options &options) {
   adapter_config.floating_base = true;
   wheel_leg_mujoco::Adapter adapter(model.get(), adapter_config);
   model->opt.timestep = candidate_timing ? 0.001 : 0.002;
-  wheel_leg::ControllerConfig config;
+  wheel_leg::ControllerConfig config =
+      wheel_leg::currentNominalWeightedWbcControllerConfig();
   config.mode = options.controller_mode == "nominal_nmpc"
       ? wheel_leg::ControllerMode::kNominalNmpcWbc
       : options.controller_mode == "phase27_minimal_nmpc"
           ? wheel_leg::ControllerMode::kPhase27MinimalNmpcWbc
           : wheel_leg::ControllerMode::kWeightedWbc;
   config.torque_limit_nm = options.torque_limit;
-  config.weighted_wbc = wheel_leg::currentNominalWeightedWbcConfig();
   config.weighted_wbc.period_s = candidate_timing ? 0.005 : 0.01;
   if (options.phase28_diagnostic_continuation) {
     config.weighted_wbc.maximum_abs_x_m = 0.10;

@@ -23,6 +23,10 @@ struct AdapterConfig {
   bool floating_base{false};
 };
 
+// Applies the frozen, unperturbed H0 state used by the current WBC profile.
+// Adapter::reset must be called first so the floating-base equality state is set.
+void initializeCurrentWeightedWbcH0(const mjModel *model, mjData *data);
+
 class Adapter final {
  public:
   Adapter(const mjModel *model, AdapterConfig config = {});

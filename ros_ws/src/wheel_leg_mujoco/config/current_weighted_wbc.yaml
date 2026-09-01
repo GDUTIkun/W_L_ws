@@ -1,0 +1,12 @@
+wheel_leg_controller:
+  ros__parameters:
+    controller.mode: weighted_wbc
+
+wheel_leg_mujoco:
+  ros__parameters:
+    floating_base: true
+    command_enabled: true
+    command_timeout_ms: 100
+    max_source_lag_ms: 50
+    state_publish_decimation: 5
+    initial_state_profile: current_weighted_wbc_h0

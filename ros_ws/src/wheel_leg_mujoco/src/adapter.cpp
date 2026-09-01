@@ -36,6 +36,33 @@ bool pairMatches(int geom1, int geom2, int first, int second) {
 
 }  // namespace
 
+void initializeCurrentWeightedWbcH0(const mjModel *model, mjData *data) {
+  if (model == nullptr || data == nullptr || model->nq != 17 || model->nv != 16) {
+    throw std::invalid_argument("Invalid MuJoCo model/data for current WBC H0");
+  }
+  constexpr std::array<double, 9> equilibrium{
+      -0.34332947374181766, 0.5693992271789607,
+      -0.35472149355205396, 0.5694045089964002,
+      0.34771766403249466, -0.572545089643551,
+      -0.5729875480645877, 0.5725979309569537,
+      -0.5730345859812999};
+  constexpr std::array<const char *, 4> active{
+      "right_hip_joint", "right_knee_joint", "left_hip_joint", "left_knee_joint"};
+  constexpr std::array<const char *, 4> passive{
+      "right_connect1_joint", "right_connect2_joint",
+      "left_connect1_joint", "left_connect2_joint"};
+
+  data->qpos[2] = equilibrium[4];
+  data->qpos[3] = 1.0;
+  for (std::size_t index = 0; index < active.size(); ++index) {
+    data->qpos[model->jnt_qposadr[requiredId(model, mjOBJ_JOINT, active[index])]] =
+        equilibrium[index];
+    data->qpos[model->jnt_qposadr[requiredId(model, mjOBJ_JOINT, passive[index])]] =
+        equilibrium[index + 5];
+  }
+  mj_forward(model, data);
+}
+
 Adapter::Adapter(const mjModel *model, AdapterConfig config)
     : model_(model), config_(config) {
   if (std::string(mj_versionString()) != "3.7.0") {

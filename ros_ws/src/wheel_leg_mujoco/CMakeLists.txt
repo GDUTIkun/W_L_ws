@@ -61,6 +61,12 @@ add_executable(weighted_wbc_loop src/weighted_wbc_loop.cpp)
 target_link_libraries(weighted_wbc_loop wheel_leg_mujoco_adapter PkgConfig::GLFW)
 target_compile_options(weighted_wbc_loop PRIVATE -Wall -Wextra -Wpedantic -Werror)
 
+option(
+  WHEEL_LEG_BUILD_LEGACY_RUNNERS
+  "Build frozen Phase34-46 diagnostic/replay executables"
+  OFF)
+set(WHEEL_LEG_LEGACY_RUNNER_TARGETS)
+if(WHEEL_LEG_BUILD_LEGACY_RUNNERS)
 add_executable(phase34_xi_tracking_loop src/phase34_xi_tracking_loop.cpp)
 target_link_libraries(phase34_xi_tracking_loop wheel_leg_mujoco_adapter)
 target_compile_options(
@@ -185,13 +191,24 @@ target_compile_definitions(
 target_compile_options(
   phase46_mujoco_contact_response_loop PRIVATE
   -Wall -Wextra -Wpedantic -Werror)
+list(APPEND WHEEL_LEG_LEGACY_RUNNER_TARGETS
+  phase34_xi_tracking_loop phase35_workspace_attribution_loop
+  phase40_angle_domain_loop phase41_workspace_contract_loop
+  phase42_causal_attribution_loop phase43_rolling_repair_loop
+  phase45_contact_consistent_rolling_loop phase46_hip_common_safe_rolling_loop
+  phase46_hip_common_increment_limited_rolling_loop
+  phase46_point_realizable_rolling_loop
+  phase46_constraint_consistent_leg_closure_loop
+  phase46_mujoco_contact_response_loop)
+endif()
 
 if(BUILD_TESTING)
   find_package(ament_cmake_gtest REQUIRED)
   ament_add_gtest(test_adapter test/test_adapter.cpp)
   target_link_libraries(test_adapter wheel_leg_mujoco_adapter)
   target_compile_definitions(test_adapter PRIVATE
-    WHEEL_LEG_SCENE_PATH="${CMAKE_CURRENT_SOURCE_DIR}/../../../simulation/mujoco/model/scence.xml")
+    WHEEL_LEG_SCENE_PATH="${CMAKE_CURRENT_SOURCE_DIR}/../../../simulation/mujoco/model/scence.xml"
+    WHEEL_LEG_CURRENT_WBC_SCENE_PATH="${CMAKE_CURRENT_SOURCE_DIR}/../../../simulation/mujoco/model/scene_axisymmetric_centered_com_v1.xml")
   target_compile_options(test_adapter PRIVATE -Wall -Wextra -Wpedantic -Werror)
 endif()
 
@@ -202,14 +219,7 @@ install(DIRECTORY
   DESTINATION share/${PROJECT_NAME}/simulation)
 install(TARGETS wheel_leg_mujoco_adapter mujoco_node deterministic_loop
   planar_standing_loop standing_3d_loop weighted_wbc_loop
-  phase34_xi_tracking_loop phase35_workspace_attribution_loop
-  phase40_angle_domain_loop phase41_workspace_contract_loop
-  phase42_causal_attribution_loop phase43_rolling_repair_loop
-  phase45_contact_consistent_rolling_loop phase46_hip_common_safe_rolling_loop
-  phase46_hip_common_increment_limited_rolling_loop
-  phase46_point_realizable_rolling_loop
-  phase46_constraint_consistent_leg_closure_loop
-  phase46_mujoco_contact_response_loop
+  ${WHEEL_LEG_LEGACY_RUNNER_TARGETS}
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION lib/${PROJECT_NAME})

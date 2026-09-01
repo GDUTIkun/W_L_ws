@@ -290,6 +290,14 @@ WeightedWbcConfig currentNominalWeightedWbcConfig() {
   return config;
 }
 
+ControllerConfig currentNominalWeightedWbcControllerConfig() {
+  ControllerConfig config;
+  config.mode = ControllerMode::kWeightedWbc;
+  config.torque_limit_nm = {10.0, 10.0, 2.0, 10.0, 10.0, 2.0};
+  config.weighted_wbc = currentNominalWeightedWbcConfig();
+  return config;
+}
+
 ValidationError validateRobotState(
     const RobotState &state, double quaternion_norm_tolerance) {
   if (!std::isfinite(quaternion_norm_tolerance) ||
