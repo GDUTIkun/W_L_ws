@@ -908,3 +908,43 @@ MuJoCo `qacc` also predicts minimum row force `-3.73503`; it is diagnostic only 
 legal witness. Therefore 42D witness, COMP, EQ, AUTH, REAL, SHORT and 10 s are `NOT ENTERED`; no formal
 output directory was created. The next allowed action is to resolve the production-reference/operator
 commuting mismatch, not to relax the law, add soft fallback, or revive `Qc(tau)`.
+
+## REWORK addendum — primitive contact-law W5 closure and H0 witness
+
+The first wrong edge was the base-reference direction in the runtime acceleration/generalized-force
+pair: the implementation used `X_PM` where the authoritative `P→M` acceleration lift and its dual require
+`X_MP`. Changing only that edge preserves the general affine form (`Xdot*nu=0` at frozen H0) and closes
+the three independent static routes. Historical operator/offset residuals reproduce as
+`7.65679467796/7.20091636793`; fixed operator/offset residuals are
+`1.06581410364e-14/2.66453525910e-15`, with `K_A/K_B/K_C` pairwise residual at most
+`8.88178419700e-16`.
+
+W1–W6 pass with decision-row rank and hard-rank increment `10/10`. The complete 42D H0 witness also
+passes: solver `SOLVED`, hard residual `3.62337820210e-9`, minimum cone margin `0.219716171463`, minimum
+torque margin `1.99908016091`, R1 residual `1.22583929163e-14`, and raw primitive-law residual
+`2.74192713867e-7` against the existing `1e-6` controller contract. Candidate row-force margin is
+`3.54963614369`; the old arbitrary-qacc negative-row diagnostic is no longer a pre-assembly veto.
+
+`COMP=PASS`, but ordered execution stops at `EQ`: normalized slack is `0.0585037086778`, above the
+frozen `0.05` threshold. A nominal 223-tick invocation therefore writes only tick 0 before the existing
+independent gate stops it; it is not a completed SHORT rollout. AUTH, REAL, SHORT and 10 s remain
+`NOT ENTERED`. Classification is `I-EQ-FAIL`; Phase46 remains `review/REWORK`, ROADMAP is unchanged,
+and no RECORD is created. Formal and fresh replay agree exactly. See
+[primitive contact-law repair](R2_MUJOCO_PRIMITIVE_CONTACT_LAW_REPAIR.md).
+
+## REWORK addendum — primitive-R2 wrench-request feasibility
+
+P46-R142～R146 supersede the earlier `I-EQ-FAIL` causal label without changing its frozen gate results.
+The 12D slack contract and sign reconstruct exactly. The point-realizable baseline maximum normalized
+slack is `0.001522220395389018`; primitive R2 is `0.05850370867784012`, dominated by right-wheel `Tx`
+(`1.52229396509e-6 → -0.0585037086778`).
+
+The direct frozen-state test includes all 12 dynamics and 10 primitive hard equalities plus the frozen
+inequalities and enforces the full rank-12 realized interaction wrench equal to `W_reference`.
+That system is infeasible. The minimum possible normalized L-infinity wrench deviation is
+`0.07832043067340007` (hard equality `2.50e-11`, inequality margin `0.0`). Classification is therefore
+`A-WRENCH-REFERENCE-NOT-PRIMITIVE-FEASIBLE`: the remaining EQ slack failure is an upstream
+request-realizability conflict, not an authorized soft-objective repair. Soft inventory, KKT, ablations,
+AUTH, REAL, SHORT and 10 s are `NOT ENTERED`; no production semantics or frozen parameter changed.
+Fresh formal/replay decisions are byte-identical. See the
+[wrench-slack closure evidence](evidence/automated/r2-wrench-slack-closure-formal-v1/r2-mujoco-primitive-contact-law-repair.json).

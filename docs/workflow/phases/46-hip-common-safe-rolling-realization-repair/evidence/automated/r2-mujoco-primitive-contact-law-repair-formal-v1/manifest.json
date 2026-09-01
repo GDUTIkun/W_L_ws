@@ -1,0 +1,21 @@
+{
+  "command": [
+    "/home/t/W_L_ws/ros_ws/build/wheel_leg_mujoco/phase46_mujoco_contact_response_loop",
+    "/home/t/W_L_ws/simulation/mujoco/model/scene_axisymmetric_centered_com_v1.xml",
+    "/home/t/W_L_ws/docs/workflow/phases/46-hip-common-safe-rolling-realization-repair/evidence/automated/r2-mujoco-primitive-contact-law-repair-formal-v1/compatible-h0.csv",
+    "R46M-H0",
+    "mujoco_r2",
+    "483.61061565337855",
+    "43.982297150257104",
+    "0.0",
+    "-0.06319271068216474",
+    "-0.187485780522428",
+    "0.0025935527300793705",
+    "0.0027966651369644964",
+    "1"
+  ],
+  "config": "simulation/mujoco/config/phase46_mujoco_contact_response_v1.json",
+  "config_sha256": "eb38bb2cd5975b1de4f6a80255734a85d7847ee6cf890b84f3cdcedc40d86f02",
+  "runner": "tools/experiments/run_phase46_mujoco_primitive_contact_law_repair.py",
+  "runner_sha256": "c60ce057ec96a22bd23f405015287bee9126c8bd9480498c282c5d827d397b3f"
+}

@@ -473,6 +473,27 @@ production-reference aggregate wrench and the frozen two rank-5 image bases. The
 generic hard row over `[nudot,W_L,W_R]`; `tau` has no direct coefficient. Entry order remains
 `W1→W2→W3→W4→W5→W6→42D witness→COMP` and stops at the first failure.
 
+| ID | Task | Deliverable / validation | Status |
+| --- | --- | --- | --- |
+| P46-R137 | primitive-law hard-row implementation | per-tick contact rows；rank-10 compressed hard payload | done |
+| P46-R138 | W5 three-route closure | `K_A/K_B/K_C` static parity；historical `7.65679/7.20092` reproduced；fixed at machine scale | done |
+| P46-R139 | 42D witness and COMP | solver/hard/cone/torque/R1/primitive-law witness PASS；COMP PASS | done |
+| P46-R140 | EQ and ordered stop | normalized slack `0.0585037 > 0.05`；EQ FAIL；SHORT/10 s NOT ENTERED | done |
+| P46-R141 | formal replay and regressions | fresh replay equal；targeted tests、canonicalization self-check、diff check PASS | done |
+
+### REWORK tasks — primitive-R2 wrench-slack closure
+
+本轮不调 weight/gain/threshold/contact/solver；先执行 frozen-H0 request-feasibility mandatory gate，
+若 infeasible 则在 soft/KKT/ablation 前停止。
+
+| ID | Task | Deliverable / validation | Status |
+| --- | --- | --- | --- |
+| P46-R142 | fresh slack reproduce and semantic decode | `0.0585037086778` reproduced；12D order/frame/origin/sign/scale and exact reconstruction | done |
+| P46-R143 | baseline/R2 component decomposition | point-realizable baseline `0.00152222039539`；dominant right `Tx` | done |
+| P46-R144 | direct fixed-H0 request feasibility | 22 hard equalities；full rank-12 wrench equality infeasible；minimum deviation `0.0783204306734` | done |
+| P46-R145 | mandatory classification and stop | `A-WRENCH-REFERENCE-NOT-PRIMITIVE-FEASIBLE`；soft/KKT/ablation/repair NOT ENTERED | done |
+| P46-R146 | append-only formal/replay evidence | fresh formal/replay decision byte-identical | done |
+
 ## REWORK — Frozen Nominal, Limited Increment
 
 本次 REWORK 不新开 Phase。Phase46 static row projection 已可靠地在 EQ FAIL，故唯一允许的替代是：

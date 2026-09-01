@@ -337,15 +337,32 @@ void writeHeader(std::ostream &output) {
 #endif
 #ifdef WHEEL_LEG_PHASE46_MUJOCO_CONTACT_RESPONSE
   output << ",r2_same_snapshot,r2_post_response_leakage"
-         << ",r2_contact_equality_partition,r2_partition_max_abs"
-         << ",r2_force_dual_covariance,r2_virtual_power_max_abs"
-         << ",r2_full_space_legal,r2_reduced_legal"
+         << ",r2_primitive_law,r2_primitive_law_residual"
+         << ",r2_point_decode,r2_point_decode_residual"
+         << ",r2_full_space_legal,r2_production_dynamics_compatible"
          << ",r2_current_hard_rank,r2_rank_with_response,r2_incremental_rank"
          << ",r2_decision_row_rank,r2_decision_row_condition"
-         << ",r2_contact_image_compatible,r2_contact_image_residual"
+         << ",r2_generalized_commuting,r2_generalized_commuting_residual"
          << ",r2_active_set_consistent,r2_minimum_predicted_row_force"
-         << ",r2_oracle_qacc_max_abs,r2_qc0_norm,r2_qct_norm"
-         << ",r2_active_set_signature";
+         << ",r2_raw_qacc_diagnostic_max_abs,r2_rank5_projector_residual,r2_acceleration_lift_residual"
+         << ",r2_active_set_signature,r2_static_ab_residual"
+         << ",r2_static_bc_residual,r2_static_ac_residual"
+         << ",r2_historical_operator_residual,r2_historical_offset_residual"
+         << ",r2_affine_offset_residual,r2_affine_nudot_residual"
+         << ",r2_dominant_nudot_column,r2_dominant_contact_row"
+         << ",r2_dominant_wheel,r2_dominant_generalized_force_dof"
+         << ",r2_candidate_primitive_residual,r2_candidate_r1_residual";
+  for (const char route : {'a', 'b', 'c'})
+    for (int row = 0; row < 12; ++row)
+      for (int column = 0; column < 16; ++column)
+        output << ",r2_k_" << route << '_' << row << '_' << column;
+  for (int row = 0; row < 12; ++row) {
+    for (int column = 0; column < 12; ++column)
+      output << ",r2_decision_nudot_" << row << '_' << column;
+    for (int column = 0; column < 12; ++column)
+      output << ",r2_decision_wrench_" << row << '_' << column;
+    output << ",r2_decision_rhs_" << row;
+  }
 #endif
   output << '\n';
 }
@@ -689,6 +706,9 @@ void run(const std::string &model_path, const std::string &output_path,
 #endif
 
     wheel_leg::WeightedWbcController::Result result;
+    [[maybe_unused]] double candidate_minimum_contact_row_force = nan;
+    [[maybe_unused]] double candidate_primitive_residual = nan;
+    [[maybe_unused]] double candidate_r1_residual = nan;
     double wbc_time = 0.0;
     if (measurement.ok()) {
       const auto start = std::chrono::steady_clock::now();
@@ -704,6 +724,18 @@ void run(const std::string &model_path, const std::string &output_path,
       const auto candidate_rows =
           contact_response.predictedContactRowForce(
               result.physical_solution.head<12>());
+      candidate_minimum_contact_row_force = candidate_rows.minCoeff();
+      candidate_primitive_residual =
+          result.contact_response_hard_residual
+              .head(contact_response.decision_row_rank).cwiseAbs().maxCoeff();
+      candidate_r1_residual = 0.0;
+      for (int side = 0; side < 2; ++side)
+        candidate_r1_residual = std::max(
+            candidate_r1_residual,
+            ((Eigen::Matrix<double, 6, 6>::Identity() -
+              measurement.point_force_wrench_projector[side]) *
+             result.physical_solution.segment<6>(18 + 6 * side))
+                .cwiseAbs().maxCoeff());
       if (candidate_rows.minCoeff() < -1.0e-9) {
         throw std::runtime_error(
             "Phase46 MuJoCo R2 candidate invalidates active set");
@@ -906,12 +938,38 @@ void run(const std::string &model_path, const std::string &output_path,
            << ',' << contact_response.decision_row_condition
            << ',' << contact_response.generalized_commuting
            << ',' << contact_response.generalized_commuting_residual
-           << ',' << contact_response.active_set_consistent
-           << ',' << contact_response.minimum_predicted_contact_row_force
+           << ',' << (candidate_minimum_contact_row_force >= -1.0e-9)
+           << ',' << candidate_minimum_contact_row_force
            << ',' << contact_response.raw_qacc_diagnostic_max_abs
            << ',' << contact_response.rank5_projector_residual
            << ',' << contact_response.acceleration_lift_residual
-           << ',' << contact_response.active_set_signature;
+           << ',' << contact_response.active_set_signature
+           << ',' << contact_response.static_ab_residual
+           << ',' << contact_response.static_bc_residual
+           << ',' << contact_response.static_ac_residual
+           << ',' << contact_response.historical_operator_residual
+           << ',' << contact_response.historical_offset_residual
+           << ',' << contact_response.affine_offset_residual
+           << ',' << contact_response.affine_nudot_residual
+           << ',' << contact_response.dominant_nudot_column
+           << ',' << contact_response.dominant_contact_row
+           << ',' << contact_response.dominant_wheel
+           << ',' << contact_response.dominant_generalized_force_dof
+           << ',' << candidate_primitive_residual
+           << ',' << candidate_r1_residual;
+    for (const auto* route : {&contact_response.k_a_reduced,
+                              &contact_response.k_b_reduced,
+                              &contact_response.k_c_reduced})
+      for (int row = 0; row < 12; ++row)
+        for (int column = 0; column < 16; ++column)
+          output << ',' << (*route)(row, column);
+    for (int row = 0; row < 12; ++row) {
+      for (int column = 0; column < 12; ++column)
+        output << ',' << contact_response.decision_nudot(row, column);
+      for (int column = 0; column < 12; ++column)
+        output << ',' << contact_response.decision_wrench(row, column);
+      output << ',' << contact_response.decision_rhs[row];
+    }
 #endif
     output << '\n';
 

@@ -13,6 +13,14 @@
 #include "wheel_leg_core/weighted_wbc_problem.hpp"
 #include "nominal_wbc_profile_data.hpp"
 
+// This standalone diagnostic links only the model/problem translation units.
+// The frozen runtime row has already passed the production state validator.
+namespace wheel_leg {
+ValidationError validateRobotState(const RobotState &, double) {
+  return ValidationError::kNone;
+}
+}  // namespace wheel_leg
+
 namespace {
 
 using Row = std::unordered_map<std::string, std::string>;
@@ -88,6 +96,21 @@ wheel_leg::WbcReference referenceFrom(const Row &row) {
           row, "rolling_map_" + std::to_string(side) + '_' + std::to_string(column));
   for (int i = 0; i < 12; ++i)
     reference.interaction_wrench_flu[i] = number(row, "requested_wrench" + std::to_string(i));
+  if (row.find("r2_decision_row_rank") != row.end()) {
+    reference.primitive_contact_active = true;
+    reference.primitive_contact_row_count =
+        static_cast<int>(number(row, "r2_decision_row_rank"));
+    for (int r = 0; r < 12; ++r) {
+      for (int c = 0; c < 12; ++c) {
+        reference.primitive_contact_nudot(r, c) = number(
+            row, "r2_decision_nudot_" + std::to_string(r) + '_' + std::to_string(c));
+        reference.primitive_contact_wrench(r, c) = number(
+            row, "r2_decision_wrench_" + std::to_string(r) + '_' + std::to_string(c));
+      }
+      reference.primitive_contact_rhs[r] =
+          number(row, "r2_decision_rhs_" + std::to_string(r));
+    }
+  }
   const double common = 0.5 * (number(row, "delta2") + number(row, "delta3"));
   const double differential = 0.5 * (number(row, "delta3") - number(row, "delta2"));
   reference.hip_common_increment_limit_active =
@@ -110,7 +133,7 @@ int main(int argc, char **argv) {
     const auto reference = referenceFrom(row);
     const auto profile = argc == 3
         ? wheel_leg::WeightedWbcProfile::kPhase46PointRealizableRolling
-        : wheel_leg::WeightedWbcProfile::kPhase46HipCommonIncrementLimitedRolling;
+        : wheel_leg::WeightedWbcProfile::kPhase46MujocoContactResponse;
     const auto problem = wheel_leg::WeightedWbcProblem{}.assemble(
         model, reference, profile);
     if (!problem.ok()) throw std::runtime_error("WeightedWbcProblem rejected frozen row");
@@ -131,6 +154,10 @@ int main(int argc, char **argv) {
            model.interaction_acceleration_map[side]);
       emit(("interaction_contact_map_" + suffix).c_str(), model.interaction_contact_map[side]);
       emit(("interaction_bias_" + suffix).c_str(), model.interaction_bias[side]);
+      emit(("wheel_longitudinal_map_" + suffix).c_str(),
+           model.wheel_longitudinal_acceleration_map[side]);
+      std::cout << "wheel_longitudinal_bias_" << suffix << ",0,0,"
+                << model.wheel_longitudinal_acceleration_bias_m_s2[side] << '\n';
     }
     emit("h", problem.h);
     emit("g", problem.g);
